@@ -16,6 +16,7 @@ body {
   background: #0A0A0F;
 }
 
+/* Glass card system */
 .glass {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(20px);
@@ -25,6 +26,10 @@ body {
               0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
+.glass-hover {
+  transition: all 0.5s ease;
+}
+
 .glass-hover:hover {
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.15);
@@ -32,25 +37,70 @@ body {
               0 8px 40px rgba(74, 108, 247, 0.08);
 }
 
-.glass-btn-gold {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
-  border: 1px solid rgba(212, 175, 55, 0.3);
+/* Nav glass - lighter blur */
+.glass-nav {
+  background: rgba(10, 10, 15, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-.glass-btn-gold:hover {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.1));
-  border-color: rgba(212, 175, 55, 0.5);
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
+.glass-nav.scrolled {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.glass-btn {
+/* Gold filled CTA */
+.btn-gold {
+  background: linear-gradient(135deg, #D4AF37, #C4A030);
+  color: #0A0A0F;
+  font-weight: 600;
+  transition: all 0.4s ease;
+}
+
+.btn-gold:hover {
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Gold outline CTA (small) */
+.btn-gold-outline {
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: #D4AF37;
+  transition: all 0.4s ease;
+}
+
+.btn-gold-outline:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.6);
+}
+
+/* Ghost button */
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #E8E8ED;
+  transition: all 0.4s ease;
+}
+
+.btn-ghost:hover {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
-.glass-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+/* Glassmorphic outline CTA */
+.btn-glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #E8E8ED;
+  transition: all 0.4s ease;
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
 }
 
 /* Fade-up animation triggered by intersection observer */
@@ -63,4 +113,12 @@ body {
 .fade-up-element.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Mobile menu */
+.mobile-menu {
+  background: rgba(10, 10, 15, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }

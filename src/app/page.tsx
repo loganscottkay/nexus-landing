@@ -1,4 +1,6 @@
+import Navbar from "@/components/Navbar";
 import FadeUp from "@/components/FadeUp";
+import CountUp from "@/components/CountUp";
 
 export default function Home() {
   return (
@@ -10,31 +12,17 @@ export default function Home() {
         <div className="absolute bottom-[-10%] left-[30%] w-[400px] h-[400px] rounded-full bg-accent-gold/8 blur-[130px] animate-float-slowest" />
       </div>
 
-      {/* Nav */}
-      <nav className="relative z-10 flex items-center justify-between px-6 md:px-12 py-6 max-w-7xl mx-auto">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-blue to-accent-violet flex items-center justify-center">
-            <span className="font-playfair text-sm font-bold text-white">N</span>
-          </div>
-          <span className="font-outfit font-semibold text-lg tracking-tight">Nexus</span>
-        </div>
-        <a
-          href="#how-it-works"
-          className="text-silver hover:text-foreground transition-colors text-sm"
-        >
-          How It Works
-        </a>
-      </nav>
+      <Navbar />
 
       {/* Hero */}
-      <section className="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-24 pb-32 md:pt-36 md:pb-44 max-w-5xl mx-auto">
+      <section className="relative z-10 flex flex-col items-center justify-center text-center px-6 min-h-screen max-w-5xl mx-auto">
         <FadeUp>
-          <p className="text-silver text-sm tracking-[0.25em] uppercase mb-6 font-outfit">
-            By Invitation. By Design.
+          <p className="font-outfit text-silver text-xs md:text-sm tracking-[0.2em] md:tracking-[0.25em] uppercase mb-6">
+            The Curated Investment Marketplace
           </p>
         </FadeUp>
         <FadeUp delay={150}>
-          <h1 className="font-playfair text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight mb-8">
+          <h1 className="font-playfair text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight mb-8">
             Where Capital
             <br />
             Meets{" "}
@@ -44,86 +32,66 @@ export default function Home() {
           </h1>
         </FadeUp>
         <FadeUp delay={300}>
-          <p className="text-silver text-lg md:text-xl max-w-2xl mb-12 leading-relaxed">
-            A curated marketplace connecting vetted startups with accredited investors
-            through intelligent matching. No noise. Just signal.
+          <p className="font-outfit text-silver text-base md:text-lg max-w-[500px] mb-10 leading-relaxed">
+            Nexus connects vetted startups with accredited investors through intelligent
+            daily matching. No cold emails. No noise. Just high-signal connections that
+            lead to real conversations.
           </p>
         </FadeUp>
         <FadeUp delay={450} className="flex flex-col sm:flex-row gap-4">
-          <a
-            href="#"
-            className="glass-btn-gold px-8 py-4 rounded-xl font-outfit font-medium text-accent-gold transition-all duration-500 hover:scale-[1.02]"
-          >
+          <a href="#" className="btn-gold px-8 py-4 rounded-xl font-outfit text-sm md:text-base font-semibold">
             Apply as Investor
           </a>
-          <a
-            href="#"
-            className="glass-btn px-8 py-4 rounded-xl font-outfit font-medium text-foreground transition-all duration-500 hover:scale-[1.02]"
-          >
+          <a href="#" className="btn-glass px-8 py-4 rounded-xl font-outfit text-sm md:text-base font-medium">
             Apply as Startup
           </a>
+        </FadeUp>
+        <FadeUp delay={550}>
+          <p className="font-outfit text-silver/50 text-xs mt-8 tracking-wide">
+            By invitation only. Currently accepting applications.
+          </p>
         </FadeUp>
       </section>
 
       {/* How It Works */}
       <section id="how-it-works" className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
         <FadeUp>
-          <h2 className="font-playfair text-3xl md:text-5xl font-bold text-center mb-4">
+          <h2 className="font-playfair text-3xl md:text-5xl font-bold text-center mb-16">
             How It Works
           </h2>
-        </FadeUp>
-        <FadeUp delay={100}>
-          <p className="text-silver text-center mb-16 max-w-xl mx-auto">
-            Three steps from application to handshake. We handle the vetting so you can focus on the deal.
-          </p>
         </FadeUp>
 
         <div className="grid md:grid-cols-3 gap-6 md:gap-8">
           {[
             {
-              step: "01",
+              num: "01",
               title: "Apply & Get Vetted",
-              description:
-                "Submit your profile. Our team reviews every application against strict quality benchmarks before you ever enter the marketplace.",
-              icon: (
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                </svg>
-              ),
+              desc: "Submit your profile for review by our curation team. We accept fewer than 25% of applicants to maintain network quality.",
             },
             {
-              step: "02",
+              num: "02",
               title: "Get Matched Daily",
-              description:
-                "Our algorithm surfaces high-fit connections based on sector, stage, thesis, and check size. New matches land in your inbox every morning.",
-              icon: (
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
-                </svg>
-              ),
+              desc: "Our algorithm delivers 3-5 highly compatible matches to your feed each morning. No endless scrolling, just signal.",
             },
             {
-              step: "03",
+              num: "03",
               title: "Take Chemistry Calls",
-              description:
-                "When both sides signal interest, we set up an introductory call. No cold outreach. Every conversation starts warm.",
-              icon: (
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 3.75v4.5m0-4.5h-4.5m4.5 0l-6 6m3 6v4.5m0-4.5h4.5m-4.5 0l6-6M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0l6-6m-6-6V3.75m0 4.5h-4.5m4.5 0L3.75 3.75" />
-                </svg>
-              ),
+              desc: "When interest is mutual, we schedule a structured 20-minute intro call automatically. No scheduling back-and-forth.",
             },
-          ].map((item, i) => (
-            <FadeUp key={item.step} delay={i * 150}>
-              <div className="glass glass-hover rounded-2xl p-8 md:p-10 transition-all duration-500 group h-full">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="text-accent-blue group-hover:text-accent-violet transition-colors duration-500">
-                    {item.icon}
-                  </div>
-                  <span className="text-silver/40 font-outfit text-sm font-mono">{item.step}</span>
+          ].map((card, i) => (
+            <FadeUp key={card.num} delay={i * 150}>
+              <div className="glass glass-hover rounded-2xl p-8 md:p-10 h-full relative overflow-hidden">
+                <span className="font-playfair text-[48px] md:text-[56px] font-bold text-white/[0.04] absolute top-4 right-6 leading-none select-none">
+                  {card.num}
+                </span>
+                <div className="relative">
+                  <h3 className="font-outfit text-lg md:text-xl font-semibold mb-3 text-foreground">
+                    {card.title}
+                  </h3>
+                  <p className="font-outfit text-silver text-sm md:text-base leading-relaxed">
+                    {card.desc}
+                  </p>
                 </div>
-                <h3 className="font-playfair text-xl md:text-2xl font-bold mb-3">{item.title}</h3>
-                <p className="text-silver leading-relaxed text-sm md:text-base">{item.description}</p>
               </div>
             </FadeUp>
           ))}
@@ -131,24 +99,27 @@ export default function Home() {
       </section>
 
       {/* Stats */}
-      <section className="relative z-10 px-6 py-24 md:py-32 max-w-5xl mx-auto">
+      <section className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
         <FadeUp>
-          <div className="glass rounded-3xl p-10 md:p-16">
-            <h2 className="font-playfair text-3xl md:text-5xl font-bold text-center mb-16">
-              The Numbers Speak
-            </h2>
-            <div className="grid md:grid-cols-3 gap-10 md:gap-6 text-center">
+          <div className="glass rounded-3xl px-6 py-12 md:px-16 md:py-16">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6 text-center">
               {[
-                { value: "500+", label: "Vetted Startups" },
-                { value: "$2.1B+", label: "in Deal Flow" },
-                { value: "89%", label: "Call-to-Follow-Up Rate" },
+                { target: 500, prefix: "", suffix: "+", label: "Vetted Startups", decimals: 0 },
+                { target: 2.1, prefix: "$", suffix: "B+", label: "In Deal Flow", decimals: 1 },
+                { target: 89, prefix: "", suffix: "%", label: "Call-to-Follow-Up Rate", decimals: 0 },
+                { target: 4.8, prefix: "", suffix: "", label: "Average Match Rating", decimals: 1 },
               ].map((stat, i) => (
-                <FadeUp key={stat.label} delay={i * 150}>
+                <FadeUp key={stat.label} delay={i * 100}>
                   <div>
-                    <p className="font-playfair text-4xl md:text-6xl font-bold bg-gradient-to-r from-accent-blue to-accent-violet bg-clip-text text-transparent mb-2">
-                      {stat.value}
+                    <p className="font-playfair text-3xl sm:text-4xl md:text-[48px] font-bold text-foreground leading-none mb-2">
+                      <CountUp
+                        target={stat.target}
+                        prefix={stat.prefix}
+                        suffix={stat.suffix}
+                        decimals={stat.decimals}
+                      />
                     </p>
-                    <p className="text-silver text-sm md:text-base">{stat.label}</p>
+                    <p className="font-outfit text-silver text-xs md:text-sm">{stat.label}</p>
                   </div>
                 </FadeUp>
               ))}
@@ -157,46 +128,108 @@ export default function Home() {
         </FadeUp>
       </section>
 
-      {/* CTA */}
+      {/* For Investors / For Startups */}
+      <section className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+          <FadeUp>
+            <div id="for-investors" className="glass glass-hover rounded-2xl p-8 md:p-10 h-full flex flex-col">
+              <h3 className="font-playfair text-2xl md:text-3xl font-bold mb-8">For Investors</h3>
+              <ul className="flex flex-col gap-4 flex-1">
+                {[
+                  "Pre-vetted deal flow matched to your thesis",
+                  "No more sorting through hundreds of cold pitches",
+                  "Structured intro calls save you 10+ hours per week",
+                  "See engagement data on every startup",
+                  "First-look advantage on emerging companies",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-accent-blue mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    <span className="font-outfit text-silver text-sm md:text-base leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <a href="#" className="btn-gold-outline px-6 py-3 rounded-xl font-outfit text-sm font-medium mt-8 text-center">
+                Apply Now
+              </a>
+            </div>
+          </FadeUp>
+
+          <FadeUp delay={150}>
+            <div id="for-startups" className="glass glass-hover rounded-2xl p-8 md:p-10 h-full flex flex-col">
+              <h3 className="font-playfair text-2xl md:text-3xl font-bold mb-8">For Startups</h3>
+              <ul className="flex flex-col gap-4 flex-1">
+                {[
+                  "Direct access to investors actively looking for you",
+                  "Know exactly who viewed your deck",
+                  "72-hour response guarantee on every match",
+                  "Structured calls that actually lead to follow-ups",
+                  "Join a network that signals credibility",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-accent-violet mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    <span className="font-outfit text-silver text-sm md:text-base leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <a href="#" className="btn-gold-outline px-6 py-3 rounded-xl font-outfit text-sm font-medium mt-8 text-center">
+                Apply Now
+              </a>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* Final CTA */}
       <section className="relative z-10 px-6 py-24 md:py-32 max-w-4xl mx-auto text-center">
         <FadeUp>
           <h2 className="font-playfair text-3xl md:text-5xl font-bold mb-6">
-            Ready to Enter the Room?
+            Ready to Join?
           </h2>
         </FadeUp>
         <FadeUp delay={150}>
-          <p className="text-silver text-lg mb-12 max-w-xl mx-auto">
-            Nexus is not for everyone. That is the point. Apply today and join a network built on quality, not quantity.
+          <p className="font-outfit text-silver text-base md:text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+            Nexus is built for people who value quality over quantity. Apply today and get access to a network that actually moves the needle.
           </p>
         </FadeUp>
-        <FadeUp delay={300} className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="#"
-            className="glass-btn-gold px-8 py-4 rounded-xl font-outfit font-medium text-accent-gold transition-all duration-500 hover:scale-[1.02]"
-          >
-            Apply as Investor
+        <FadeUp delay={300}>
+          <a href="#" className="btn-gold px-10 py-4 rounded-xl font-outfit text-sm md:text-base font-semibold inline-block">
+            Apply for Access
           </a>
-          <a
-            href="#"
-            className="glass-btn px-8 py-4 rounded-xl font-outfit font-medium text-foreground transition-all duration-500 hover:scale-[1.02]"
-          >
-            Apply as Startup
-          </a>
+          <p className="font-outfit text-silver/40 text-xs mt-6">
+            Applications reviewed within 48 hours.
+          </p>
         </FadeUp>
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-white/5 px-6 py-10 max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-gradient-to-br from-accent-blue to-accent-violet flex items-center justify-center">
-              <span className="font-playfair text-[10px] font-bold text-white">N</span>
+      <footer className="relative z-10 mt-12">
+        <div className="glass-nav border-t border-white/[0.06]">
+          <div className="max-w-7xl mx-auto px-6 md:px-12 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <a href="#" className="font-playfair text-sm font-bold tracking-[0.25em] text-foreground">
+              NEXUS
+            </a>
+            <p className="font-outfit text-silver/40 text-xs">
+              &copy; 2025 Nexus. All rights reserved.
+            </p>
+            <div className="flex items-center gap-4">
+              {/* X / Twitter */}
+              <a href="#" className="text-silver/40 hover:text-silver transition-colors" aria-label="Twitter">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              </a>
+              {/* LinkedIn */}
+              <a href="#" className="text-silver/40 hover:text-silver transition-colors" aria-label="LinkedIn">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+              </a>
             </div>
-            <span className="font-outfit font-medium text-sm">Nexus</span>
           </div>
-          <p className="text-silver/50 text-xs">
-            &copy; {new Date().getFullYear()} Nexus. All rights reserved.
-          </p>
         </div>
       </footer>
     </main>
