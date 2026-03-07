@@ -9,41 +9,39 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#0A0A0F",
-        foreground: "#E8E8ED",
+        base: "#FAFAF9",
+        "text-primary": "#0F172A",
+        "text-secondary": "#64748B",
+        "text-muted": "#94A3B8",
         "accent-blue": "#4A6CF7",
         "accent-violet": "#7C5CFC",
-        "accent-gold": "#D4AF37",
-        silver: "#9CA3AF",
+        "dark-section": "#0A0A0F",
       },
       fontFamily: {
-        playfair: ["var(--font-playfair)", "serif"],
-        outfit: ["var(--font-outfit)", "sans-serif"],
+        serif: ["var(--font-instrument)", "serif"],
+        sans: ["var(--font-dm-sans)", "sans-serif"],
       },
       keyframes: {
-        "orb-drift-1": {
+        "blob-1": {
           "0%, 100%": { transform: "translate(0, 0)" },
-          "25%": { transform: "translate(30px, -20px)" },
-          "50%": { transform: "translate(-15px, 25px)" },
-          "75%": { transform: "translate(20px, 10px)" },
+          "33%": { transform: "translate(20px, -15px)" },
+          "66%": { transform: "translate(-10px, 20px)" },
         },
-        "orb-drift-2": {
+        "blob-2": {
           "0%, 100%": { transform: "translate(0, 0)" },
-          "25%": { transform: "translate(-25px, 15px)" },
-          "50%": { transform: "translate(20px, -30px)" },
-          "75%": { transform: "translate(-10px, -20px)" },
+          "33%": { transform: "translate(-25px, 10px)" },
+          "66%": { transform: "translate(15px, -20px)" },
         },
-        "orb-drift-3": {
+        "blob-3": {
           "0%, 100%": { transform: "translate(0, 0)" },
-          "25%": { transform: "translate(15px, 25px)" },
-          "50%": { transform: "translate(-30px, -10px)" },
-          "75%": { transform: "translate(25px, -15px)" },
+          "33%": { transform: "translate(15px, 25px)" },
+          "66%": { transform: "translate(-20px, -10px)" },
         },
       },
       animation: {
-        "orb-1": "orb-drift-1 25s ease-in-out infinite",
-        "orb-2": "orb-drift-2 22s ease-in-out infinite",
-        "orb-3": "orb-drift-3 28s ease-in-out infinite",
+        "blob-1": "blob-1 30s ease-in-out infinite",
+        "blob-2": "blob-2 35s ease-in-out infinite",
+        "blob-3": "blob-3 28s ease-in-out infinite",
       },
     },
   },

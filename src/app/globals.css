@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---- CSS Custom Property for animated border ---- */
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -13,102 +20,443 @@ html {
 }
 
 body {
-  background: #0A0A0F;
+  background: #FAFAF9;
 }
 
-/* Glassmorphic card - exact spec */
+/* ---- Noise texture overlay ---- */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ---- Gradient blobs ---- */
+.blob {
+  position: absolute;
+  filter: blur(90px);
+  will-change: transform;
+}
+
+.blob-blue {
+  width: 500px;
+  height: 500px;
+  background: rgba(184, 212, 227, 0.4);
+}
+
+.blob-lavender {
+  width: 400px;
+  height: 400px;
+  background: rgba(196, 181, 224, 0.3);
+}
+
+.blob-peach {
+  width: 350px;
+  height: 350px;
+  background: rgba(232, 213, 183, 0.25);
+}
+
+/* ---- Glass cards - light sections ---- */
 .glass {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glass:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* ---- Glass cards - dark section ---- */
+.glass-dark {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.glass-hover-blue:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(74, 108, 247, 0.12);
-}
-
-.glass-hover-violet:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(124, 92, 252, 0.12);
-}
-
-/* Nav glass */
+/* ---- Nav glass - light ---- */
 .glass-nav {
-  background: rgba(10, 10, 15, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  transition: all 0.3s ease;
 }
 
 .glass-nav.scrolled {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.04);
 }
 
-/* Gold filled CTA */
-.btn-gold {
-  background: linear-gradient(135deg, #D4AF37, #C4A030);
-  color: #0A0A0F;
+/* ---- Primary CTA ---- */
+.btn-primary {
+  background: linear-gradient(135deg, #4A6CF7, #7C5CFC);
+  color: #ffffff;
   font-weight: 600;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+  border-radius: 9999px;
+  box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
   transition: all 0.3s ease;
 }
 
-.btn-gold:hover {
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.45);
-  transform: translateY(-1px);
+.btn-primary:hover {
+  box-shadow: 0 6px 25px rgba(74, 108, 247, 0.4);
+  transform: translateY(-2px);
 }
 
-/* Gold outline CTA */
-.btn-gold-outline {
-  background: transparent;
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  color: #D4AF37;
-  transition: all 0.3s ease;
-}
-
-.btn-gold-outline:hover {
-  background: rgba(212, 175, 55, 0.1);
-  border-color: rgba(212, 175, 55, 0.6);
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
-}
-
-/* Ghost button */
-.btn-ghost {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #E8E8ED;
-  transition: all 0.3s ease;
-}
-
-.btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-/* Glassmorphic outline CTA */
-.btn-glass {
-  background: rgba(255, 255, 255, 0.04);
+/* ---- Secondary CTA ---- */
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #E8E8ED;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  color: #0F172A;
+  border-radius: 9999px;
   transition: all 0.3s ease;
 }
 
-.btn-glass:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(15, 23, 42, 0.25);
   transform: translateY(-1px);
 }
 
-/* Mobile menu */
+/* ---- Mobile menu ---- */
 .mobile-menu {
-  background: rgba(10, 10, 15, 0.95);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* ---- Gentle pulse ---- */
+@keyframes pulse-gentle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   NEW: Floating dashboard animations
+   ============================================================ */
+
+/* Entrance animation */
+.dashboard-entrance {
+  opacity: 0;
+  animation: dashboard-enter 1s ease-out forwards;
+}
+
+@keyframes dashboard-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* Floating bob animation */
+@keyframes float-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float-bob 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-delayed {
+  animation: float-bob 4s ease-in-out 2s infinite;
+  will-change: transform;
+}
+
+/* Dashboard card base styles */
+.dashboard-card {
+  position: relative;
+  isolation: isolate;
+  transition: transform 0.4s ease, border-color 0.4s ease;
+  will-change: transform;
+}
+
+.dashboard-card::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  background: conic-gradient(
+    from var(--border-angle),
+    #4A6CF7,
+    #7C5CFC,
+    #E8B84B,
+    #4A6CF7
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: rotate-border 3s linear infinite;
+}
+
+.dashboard-card:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.dashboard-card:hover::after {
+  opacity: 1;
+}
+
+/* 3D perspective rotations */
+.dashboard-card-left {
+  transform: perspective(1200px) rotateY(8deg) rotateX(3deg);
+}
+.dashboard-card-left:hover {
+  transform: perspective(1200px) rotateY(8deg) rotateX(3deg) translateZ(20px);
+}
+
+.dashboard-card-right {
+  transform: perspective(1200px) rotateY(-8deg) rotateX(3deg);
+}
+.dashboard-card-right:hover {
+  transform: perspective(1200px) rotateY(-8deg) rotateX(3deg) translateZ(20px);
+}
+
+/* Glow behind dashboard cards */
+.glow-behind {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: -1;
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.glow-behind-blue {
+  background: radial-gradient(circle, rgba(74, 108, 247, 0.15) 0%, transparent 70%);
+}
+
+.glow-behind-violet {
+  background: radial-gradient(circle, rgba(124, 92, 252, 0.15) 0%, transparent 70%);
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Intensify glow on card hover */
+.dashboard-group:hover .glow-behind {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.15);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* ============================================================
+   NEW: Rotating gradient border keyframe
+   ============================================================ */
+@keyframes rotate-border {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+/* ============================================================
+   NEW: Glow card wrapper (How It Works, For Investors/Startups)
+   ============================================================ */
+.glow-card-wrapper {
+  position: relative;
+  isolation: isolate;
+  border-radius: 24px;
+}
+
+.glow-card-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 26px;
+  background: conic-gradient(
+    from var(--border-angle),
+    #4A6CF7,
+    #7C5CFC,
+    #14b8a6,
+    #4A6CF7
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: rotate-border 3s linear infinite;
+}
+
+.glow-card-wrapper:hover::after {
+  opacity: 1;
+}
+
+/* Override glass hover when inside glow wrapper */
+.glow-card-wrapper:hover > .glass {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Step number gradient on hover */
+.step-number {
+  transition: all 0.3s ease;
+}
+
+.glow-card-wrapper:hover .step-number {
+  background: linear-gradient(135deg, #4A6CF7, #7C5CFC);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 1 !important;
+}
+
+/* Button pulse on card hover */
+.glow-card-wrapper:hover .btn-pulse-target {
+  animation: btn-glow-pulse 0.6s ease-in-out;
+}
+
+@keyframes btn-glow-pulse {
+  0% { box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3); }
+  50% { box-shadow: 0 8px 35px rgba(74, 108, 247, 0.55); }
+  100% { box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3); }
+}
+
+/* ============================================================
+   NEW: Stats section enhancements
+   ============================================================ */
+
+/* Grid overlay */
+.grid-overlay {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* Sweep line */
+.sweep-line {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, #4A6CF7, #7C5CFC, transparent);
+  animation: sweep 4s linear infinite;
+  will-change: transform;
+}
+
+@keyframes sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Stat glow flash */
+.stat-glow-flash {
+  animation: stat-flash 0.5s ease-out forwards;
+}
+
+@keyframes stat-flash {
+  0% {
+    text-shadow:
+      0 0 20px rgba(74, 108, 247, 0.8),
+      0 0 40px rgba(74, 108, 247, 0.4),
+      0 0 60px rgba(124, 92, 252, 0.2);
+  }
+  100% {
+    text-shadow: none;
+  }
+}
+
+/* ============================================================
+   NEW: Blob morphing (added to existing blob keyframes via tailwind)
+   ============================================================ */
+@keyframes blob-morph {
+  0%, 100% { border-radius: 50% 40% 60% 50% / 50% 60% 40% 50%; }
+  25% { border-radius: 40% 60% 50% 50% / 60% 40% 50% 60%; }
+  50% { border-radius: 60% 50% 40% 60% / 40% 50% 60% 40%; }
+  75% { border-radius: 50% 50% 60% 40% / 50% 60% 50% 40%; }
+}
+
+.blob {
+  animation-name: blob-morph;
+  animation-duration: 25s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+/* Combine blob movement + morph via additional class */
+.blob.animate-blob-1 {
+  animation: blob-1-full 30s ease-in-out infinite;
+}
+.blob.animate-blob-2 {
+  animation: blob-2-full 35s ease-in-out infinite;
+}
+.blob.animate-blob-3 {
+  animation: blob-3-full 28s ease-in-out infinite;
+}
+
+@keyframes blob-1-full {
+  0%, 100% {
+    transform: translate(0, 0);
+    border-radius: 50% 40% 60% 50% / 50% 60% 40% 50%;
+  }
+  33% {
+    transform: translate(20px, -15px);
+    border-radius: 40% 60% 50% 50% / 60% 40% 50% 60%;
+  }
+  66% {
+    transform: translate(-10px, 20px);
+    border-radius: 60% 50% 40% 60% / 40% 50% 60% 40%;
+  }
+}
+
+@keyframes blob-2-full {
+  0%, 100% {
+    transform: translate(0, 0);
+    border-radius: 50% 50% 60% 40% / 50% 60% 50% 40%;
+  }
+  33% {
+    transform: translate(-25px, 10px);
+    border-radius: 60% 40% 50% 50% / 40% 50% 60% 50%;
+  }
+  66% {
+    transform: translate(15px, -20px);
+    border-radius: 40% 60% 50% 60% / 60% 40% 50% 60%;
+  }
+}
+
+@keyframes blob-3-full {
+  0%, 100% {
+    transform: translate(0, 0);
+    border-radius: 40% 60% 50% 50% / 60% 50% 40% 50%;
+  }
+  33% {
+    transform: translate(15px, 25px);
+    border-radius: 50% 40% 60% 50% / 50% 60% 50% 40%;
+  }
+  66% {
+    transform: translate(-20px, -10px);
+    border-radius: 60% 50% 40% 60% / 40% 50% 60% 50%;
+  }
 }
