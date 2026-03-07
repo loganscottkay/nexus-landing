@@ -2,11 +2,13 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
 export default function LoginPage() {
+  const router = useRouter();
   return (
     <main className="relative min-h-screen bg-base text-text-primary">
       <div className="noise-overlay" />
@@ -62,16 +64,16 @@ export default function LoginPage() {
             />
           </div>
 
-          <Link
-            href="/dashboard/investor"
-            className="w-full h-[52px] rounded-full text-white text-[16px] font-semibold transition-all duration-300 hover:-translate-y-0.5 mb-4 flex items-center justify-center"
+          <button
+            onClick={() => router.push("/dashboard/investor")}
+            className="w-full h-[52px] rounded-full text-white text-[16px] font-semibold transition-all duration-300 hover:-translate-y-0.5 mb-4 flex items-center justify-center cursor-pointer"
             style={{
               background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
               boxShadow: "0 4px 15px rgba(74, 108, 247, 0.3)",
             }}
           >
             Sign In
-          </Link>
+          </button>
 
           <p className="text-text-muted text-[14px] text-center">
             Don&apos;t have an account?{" "}
