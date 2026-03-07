@@ -662,5 +662,5 @@ body {
 }
 
 .connection-dot {
-  animation: connection-dot-travel 1.5s ease-in-out infinite;
+  animation: connection-dot-travel 2s ease-in-out infinite;
 }

@@ -63,7 +63,7 @@ export default function LoginPage() {
           </div>
 
           <Link
-            href="/drops"
+            href="/dashboard/investor"
             className="w-full h-[52px] rounded-full text-white text-[16px] font-semibold transition-all duration-300 hover:-translate-y-0.5 mb-4 flex items-center justify-center"
             style={{
               background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
@@ -76,7 +76,11 @@ export default function LoginPage() {
           <p className="text-text-muted text-[14px] text-center">
             Don&apos;t have an account?{" "}
             <Link href="/apply/investor" className="text-accent-blue hover:underline font-medium">
-              Apply Now
+              Apply as Investor
+            </Link>
+            <span className="mx-1.5 text-text-muted/40">|</span>
+            <Link href="/apply/startup" className="text-accent-blue hover:underline font-medium">
+              Apply as Startup
             </Link>
           </p>
         </motion.div>

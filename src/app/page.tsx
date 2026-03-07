@@ -348,34 +348,59 @@ function MatchAnalyticsCard() {
 function MatchNotificationCard() {
   return (
     <div
-      className="w-[230px] rounded-xl p-5 dashboard-card relative"
+      className="w-[280px] rounded-2xl p-5 dashboard-card relative"
       style={{
-        background: "rgba(10, 10, 15, 0.88)",
-        backdropFilter: "blur(20px)",
+        background: "rgba(10, 10, 15, 0.85)",
+        backdropFilter: "blur(24px)",
         border: "1px solid rgba(74, 108, 247, 0.2)",
       }}
     >
-      {/* Notification badge */}
-      <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-red-500" />
+      {/* Header */}
+      <div className="flex items-center gap-1.5 mb-5">
+        <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] live-dot-pulse" />
+        <span className="text-white/50 text-[11px] tracking-[2px] uppercase">New Match</span>
+      </div>
 
-      {/* Avatars with animated connection line */}
-      <div className="flex items-center justify-center mb-3">
-        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#4A6CF7] to-[#6C5CE7] flex items-center justify-center text-white text-[10px] font-bold shrink-0 relative z-10 border-2 border-[rgba(10,10,15,0.88)]">
-          SC
+      {/* Connection visual: Investor — line — Startup */}
+      <div className="flex items-center justify-between mb-5">
+        {/* Investor */}
+        <div className="flex flex-col items-center gap-1.5">
+          <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#4A6CF7] to-[#6C5CE7] flex items-center justify-center text-white text-[11px] font-bold border-2 border-[rgba(10,10,15,0.85)]">
+            SC
+          </div>
+          <p className="text-white text-[11px] font-medium">Sarah C.</p>
+          <p className="text-white/30 text-[10px]">Gradient Ventures</p>
         </div>
-        <div className="w-10 h-[2px] relative overflow-hidden mx-[-2px]">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#4A6CF7]/30 to-[#7C5CFC]/30" />
+
+        {/* Animated connection line */}
+        <div className="flex-1 mx-3 h-[2px] relative overflow-hidden">
+          <div className="absolute inset-0 rounded-full" style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)" , opacity: 0.3 }} />
           <div
-            className="connection-dot absolute top-[-1px] w-2 h-1 rounded-full"
-            style={{ background: "rgba(255,255,255,0.6)", filter: "blur(0.5px)" }}
+            className="connection-dot absolute top-[-1px] w-2.5 h-1 rounded-full"
+            style={{ background: "rgba(255,255,255,0.7)", filter: "blur(0.5px)" }}
           />
         </div>
-        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#7C5CFC] to-[#B06CFC] flex items-center justify-center text-white text-[10px] font-bold shrink-0 relative z-10 border-2 border-[rgba(10,10,15,0.88)]">
-          LA
+
+        {/* Startup */}
+        <div className="flex flex-col items-center gap-1.5">
+          <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#7C5CFC] to-[#B06CFC] flex items-center justify-center text-white text-[11px] font-bold border-2 border-[rgba(10,10,15,0.85)]">
+            LA
+          </div>
+          <p className="text-white text-[11px] font-medium">Luminary AI</p>
+          <p className="text-white/30 text-[10px]">AI/ML Startup</p>
         </div>
       </div>
-      <p className="text-white text-[14px] font-semibold text-center">New Match</p>
-      <p className="text-white/25 text-[11px] text-center mt-1">2:34 PM</p>
+
+      {/* Status + CTA */}
+      <p className="text-white text-[13px] text-center mb-3">Mutual interest confirmed</p>
+      <div className="flex justify-center">
+        <div
+          className="px-4 py-1.5 rounded-full text-[11px] font-medium text-white"
+          style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+        >
+          Schedule Call
+        </div>
+      </div>
     </div>
   );
 }
@@ -383,30 +408,58 @@ function MatchNotificationCard() {
 function ChemistryCallCard() {
   return (
     <div
-      className="w-[230px] rounded-xl p-5 dashboard-card"
+      className="w-[280px] rounded-2xl p-5 dashboard-card"
       style={{
-        background: "rgba(10, 10, 15, 0.88)",
-        backdropFilter: "blur(20px)",
+        background: "rgba(10, 10, 15, 0.85)",
+        backdropFilter: "blur(24px)",
         border: "1px solid rgba(124, 92, 252, 0.2)",
       }}
     >
-      <div className="flex items-center justify-center gap-2 mb-3">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* Header */}
+      <div className="flex items-center gap-1.5 mb-4">
+        <div className="w-1.5 h-1.5 rounded-full bg-[#4A6CF7]" />
+        <span className="text-white/50 text-[11px] tracking-[2px] uppercase">Upcoming Call</span>
+      </div>
+
+      {/* Call title */}
+      <div className="flex items-center gap-2.5 mb-3">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
           <rect x="2" y="3" width="20" height="14" rx="2" />
           <path d="M8 21h8m-4-4v4" />
         </svg>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-40">
-          <rect x="3" y="4" width="18" height="18" rx="2" />
-          <line x1="16" y1="2" x2="16" y2="6" />
-          <line x1="8" y1="2" x2="8" y2="6" />
-          <line x1="3" y1="10" x2="21" y2="10" />
-        </svg>
+        <p className="text-white text-[15px] font-semibold">Chemistry Call</p>
       </div>
-      <p className="text-white text-[14px] font-semibold text-center">Call Scheduled</p>
-      <p className="text-white/30 text-[11px] text-center mt-1">Tomorrow at 3:00 PM</p>
-      <div className="flex justify-center gap-2 mt-3">
-        <div className="w-7 h-7 rounded-full bg-[#4A6CF7]/15 border border-[#4A6CF7]/25 flex items-center justify-center text-white text-[8px] font-bold">SC</div>
-        <div className="w-7 h-7 rounded-full bg-[#7C5CFC]/15 border border-[#7C5CFC]/25 flex items-center justify-center text-white text-[8px] font-bold">TH</div>
+
+      {/* Date/time */}
+      <p className="text-white/40 text-[14px] mb-4">Tomorrow at 3:00 PM</p>
+
+      {/* Participants */}
+      <div className="flex items-center gap-3 mb-2">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#4A6CF7] to-[#6C5CE7] flex items-center justify-center text-white text-[9px] font-bold border-2 border-[rgba(10,10,15,0.85)]">
+            SC
+          </div>
+          <span className="text-white/60 text-[11px]">Sarah C.</span>
+        </div>
+        <span className="text-white/15 text-[10px]">&amp;</span>
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#7C5CFC] to-[#B06CFC] flex items-center justify-center text-white text-[9px] font-bold border-2 border-[rgba(10,10,15,0.85)]">
+            LA
+          </div>
+          <span className="text-white/60 text-[11px]">Luminary AI</span>
+        </div>
+      </div>
+
+      <p className="text-white/25 text-[12px] mb-4">Duration: 20 min</p>
+
+      {/* Join Call button */}
+      <div className="flex justify-center">
+        <div
+          className="px-4 py-1.5 rounded-full text-[11px] font-medium text-white"
+          style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+        >
+          Join Call
+        </div>
       </div>
     </div>
   );
@@ -929,7 +982,7 @@ export default function Home() {
             style={{ animationDelay: "0.3s" }}
           >
             <div className="dashboard-group relative">
-              <div className="glow-behind glow-behind-blue" style={{ width: "250px", height: "250px" }} />
+              <div className="glow-behind glow-behind-blue" style={{ width: "280px", height: "280px" }} />
               <div className="animate-float">
                 <MatchNotificationCard />
               </div>
@@ -942,7 +995,7 @@ export default function Home() {
             style={{ animationDelay: "0.5s" }}
           >
             <div className="dashboard-group relative">
-              <div className="glow-behind glow-behind-violet" style={{ width: "250px", height: "250px" }} />
+              <div className="glow-behind glow-behind-violet" style={{ width: "280px", height: "280px" }} />
               <div className="animate-float-delayed">
                 <ChemistryCallCard />
               </div>
