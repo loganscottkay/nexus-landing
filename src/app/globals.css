@@ -139,6 +139,44 @@ body {
   box-shadow: 0 1px 12px rgba(0, 0, 0, 0.04);
 }
 
+/* ---- Nav link hover underline ---- */
+.nav-link {
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #4A6CF7, #7C5CFC);
+  border-radius: 1px;
+  transition: width 0.25s ease;
+}
+
+.nav-link:hover {
+  color: #4A6CF7 !important;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ---- Nav Sign In hover ---- */
+.nav-signin {
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.nav-signin:hover {
+  background: rgba(74, 108, 247, 0.06);
+  color: #4A6CF7 !important;
+}
+
 /* ---- Primary CTA ---- */
 .btn-primary {
   background: linear-gradient(135deg, #4A6CF7, #7C5CFC);
@@ -150,8 +188,8 @@ body {
 }
 
 .btn-primary:hover {
-  box-shadow: 0 6px 25px rgba(74, 108, 247, 0.4);
-  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(74, 108, 247, 0.4);
+  transform: translateY(-2px) scale(1.03);
 }
 
 /* ---- Secondary CTA ---- */
@@ -169,6 +207,81 @@ body {
   background: rgba(255, 255, 255, 0.5);
   border-color: rgba(15, 23, 42, 0.25);
   transform: translateY(-1px);
+}
+
+/* ---- Hero secondary button ---- */
+.btn-hero-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(74, 108, 247, 0.25);
+  color: #0F172A;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.btn-hero-secondary:hover {
+  border-color: rgba(74, 108, 247, 0.5);
+  background: rgba(74, 108, 247, 0.08);
+  color: #4A6CF7;
+  transform: translateY(-2px);
+}
+
+/* ---- Button shimmer sweep ---- */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 70%
+  );
+  transform: skewX(-15deg);
+  will-change: left;
+}
+
+.btn-shimmer:hover::after {
+  animation: shimmer-sweep 0.6s ease forwards;
+}
+
+@keyframes shimmer-sweep {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* ---- Hero CTA pulse glow ---- */
+.btn-hero-glow {
+  animation: hero-glow-pulse 2s ease-in-out infinite;
+  will-change: box-shadow;
+}
+
+.btn-hero-glow:hover {
+  animation: none;
+  box-shadow: 0 0 35px rgba(74, 108, 247, 0.45) !important;
+  transform: scale(1.04);
+}
+
+@keyframes hero-glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(74, 108, 247, 0.2); }
+  50% { box-shadow: 0 0 30px rgba(74, 108, 247, 0.35); }
+}
+
+/* ---- Gradient text ---- */
+.gradient-text {
+  background: linear-gradient(135deg, #4A6CF7, #7C5CFC);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ---- Mobile menu ---- */
@@ -190,7 +303,7 @@ body {
 }
 
 /* ============================================================
-   NEW: Floating dashboard animations
+   Floating dashboard animations
    ============================================================ */
 
 /* Entrance animation */
@@ -219,12 +332,12 @@ body {
 }
 
 .animate-float {
-  animation: float-bob 4s ease-in-out infinite;
+  animation: float-bob 5s ease-in-out infinite;
   will-change: transform;
 }
 
 .animate-float-delayed {
-  animation: float-bob 4s ease-in-out 2s infinite;
+  animation: float-bob 5s ease-in-out 2s infinite;
   will-change: transform;
 }
 
@@ -232,7 +345,7 @@ body {
 .dashboard-card {
   position: relative;
   isolation: isolate;
-  transition: transform 0.4s ease, border-color 0.4s ease;
+  transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
   will-change: transform;
 }
 
@@ -245,7 +358,7 @@ body {
     from var(--border-angle),
     #4A6CF7,
     #7C5CFC,
-    #E8B84B,
+    #14b8a6,
     #4A6CF7
   );
   z-index: -1;
@@ -259,22 +372,23 @@ body {
 }
 
 .dashboard-card:hover::after {
-  opacity: 1;
+  opacity: 0.5;
+  box-shadow: 0 0 8px rgba(74, 108, 247, 0.3);
 }
 
 /* 3D perspective rotations */
 .dashboard-card-left {
-  transform: perspective(1200px) rotateY(8deg) rotateX(3deg);
+  transform: perspective(1200px) rotateY(10deg) rotateX(3deg);
 }
 .dashboard-card-left:hover {
-  transform: perspective(1200px) rotateY(8deg) rotateX(3deg) translateZ(20px);
+  transform: perspective(1200px) rotateY(10deg) rotateX(3deg) translateZ(20px);
 }
 
 .dashboard-card-right {
-  transform: perspective(1200px) rotateY(-8deg) rotateX(3deg);
+  transform: perspective(1200px) rotateY(-10deg) rotateX(3deg);
 }
 .dashboard-card-right:hover {
-  transform: perspective(1200px) rotateY(-8deg) rotateX(3deg) translateZ(20px);
+  transform: perspective(1200px) rotateY(-10deg) rotateX(3deg) translateZ(20px);
 }
 
 /* Glow behind dashboard cards */
@@ -292,11 +406,11 @@ body {
 }
 
 .glow-behind-blue {
-  background: radial-gradient(circle, rgba(74, 108, 247, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(74, 108, 247, 0.2) 0%, transparent 70%);
 }
 
 .glow-behind-violet {
-  background: radial-gradient(circle, rgba(124, 92, 252, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(124, 92, 252, 0.2) 0%, transparent 70%);
 }
 
 @keyframes glow-pulse {
@@ -312,7 +426,7 @@ body {
 }
 
 /* ============================================================
-   NEW: Rotating gradient border keyframe
+   Rotating gradient border keyframe
    ============================================================ */
 @keyframes rotate-border {
   to {
@@ -321,7 +435,7 @@ body {
 }
 
 /* ============================================================
-   NEW: Glow card wrapper (How It Works, For Investors/Startups)
+   Glow card wrapper (How It Works, For Investors/Startups)
    ============================================================ */
 .glow-card-wrapper {
   position: relative;
@@ -383,7 +497,7 @@ body {
 }
 
 /* ============================================================
-   NEW: Stats section enhancements
+   Stats section enhancements
    ============================================================ */
 
 /* Grid overlay */
@@ -427,7 +541,7 @@ body {
 }
 
 /* ============================================================
-   NEW: Blob morphing (added to existing blob keyframes via tailwind)
+   Blob morphing
    ============================================================ */
 @keyframes blob-morph {
   0%, 100% { border-radius: 50% 40% 60% 50% / 50% 60% 40% 50%; }
@@ -497,4 +611,16 @@ body {
     transform: translate(-20px, -10px);
     border-radius: 60% 50% 40% 60% / 40% 50% 60% 50%;
   }
+}
+
+/* ============================================================
+   Connection dot animation (match notification card)
+   ============================================================ */
+@keyframes connection-dot-travel {
+  0% { left: -8px; }
+  100% { left: calc(100% + 4px); }
+}
+
+.connection-dot {
+  animation: connection-dot-travel 1.5s ease-in-out infinite;
 }

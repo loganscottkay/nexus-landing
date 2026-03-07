@@ -54,34 +54,39 @@ export default function Navbar() {
           <Link
             href="/#how-it-works"
             onClick={(e) => scrollToSection(e, "how-it-works")}
-            className="text-text-secondary hover:text-text-primary transition-colors text-[15px]"
+            className="nav-link text-text-secondary text-[15px] font-medium"
+            style={{ letterSpacing: "0.3px" }}
           >
             How It Works
           </Link>
           <Link
             href="/#for-investors"
             onClick={(e) => scrollToSection(e, "for-investors")}
-            className="text-text-secondary hover:text-text-primary transition-colors text-[15px]"
+            className="nav-link text-text-secondary text-[15px] font-medium"
+            style={{ letterSpacing: "0.3px" }}
           >
             For Investors
           </Link>
           <Link
             href="/#for-startups"
             onClick={(e) => scrollToSection(e, "for-startups")}
-            className="text-text-secondary hover:text-text-primary transition-colors text-[15px]"
+            className="nav-link text-text-secondary text-[15px] font-medium"
+            style={{ letterSpacing: "0.3px" }}
           >
             For Startups
           </Link>
-          <div className="flex items-center gap-3 ml-4" style={{ gap: "12px" }}>
+          <div className="flex items-center ml-4" style={{ gap: "24px" }}>
             <Link
               href="/login"
-              className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
+              className="nav-signin text-text-secondary text-[15px] font-medium"
+              style={{ letterSpacing: "0.3px" }}
             >
               Sign In
             </Link>
             <Link
               href="/apply/investor"
-              className="btn-primary px-5 py-2.5 text-[14px] font-medium"
+              className="btn-primary btn-shimmer px-5 py-2.5 text-[15px] font-medium"
+              style={{ letterSpacing: "0.3px" }}
             >
               Apply Now
             </Link>
@@ -138,7 +143,7 @@ export default function Navbar() {
           >
             For Startups
           </Link>
-          <div className="flex gap-3 pt-2">
+          <div className="flex gap-4 pt-2">
             <Link
               href="/login"
               onClick={() => setMenuOpen(false)}
