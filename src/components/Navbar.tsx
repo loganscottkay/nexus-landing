@@ -66,15 +66,15 @@ export default function Navbar() {
             For Investors
           </Link>
           <Link
-            href="/#for-investors"
-            onClick={(e) => scrollToSection(e, "for-investors")}
+            href="/#for-startups"
+            onClick={(e) => scrollToSection(e, "for-startups")}
             className="text-text-secondary hover:text-text-primary transition-colors text-[15px]"
           >
             For Startups
           </Link>
           <div className="flex items-center gap-3 ml-4" style={{ gap: "12px" }}>
             <Link
-              href="/drops"
+              href="/login"
               className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
             >
               Sign In
@@ -132,8 +132,8 @@ export default function Navbar() {
             For Investors
           </Link>
           <Link
-            href="/#for-investors"
-            onClick={(e) => { scrollToSection(e, "for-investors"); setMenuOpen(false); }}
+            href="/#for-startups"
+            onClick={(e) => { scrollToSection(e, "for-startups"); setMenuOpen(false); }}
             className="text-text-secondary hover:text-text-primary transition-colors text-[15px]"
           >
             For Startups

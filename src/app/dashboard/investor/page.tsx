@@ -16,26 +16,51 @@ function getGreeting() {
 
 const today = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
-function GlassCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div className={`rounded-3xl ${className}`} style={{
-      background: "rgba(255, 255, 255, 0.45)",
-      backdropFilter: "blur(20px) saturate(1.2)",
-      WebkitBackdropFilter: "blur(20px) saturate(1.2)",
-      border: "1px solid rgba(255, 255, 255, 0.6)",
-      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8)",
-    }}>
-      {children}
-    </div>
-  );
+/* ─── Animated Counter Hook ─── */
+function useCountUp(target: number, duration = 1200, delay = 0) {
+  const [value, setValue] = useState(0);
+  const [started, setStarted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.3 });
+
+  useEffect(() => {
+    if (inView && !started) setStarted(true);
+  }, [inView, started]);
+
+  useEffect(() => {
+    if (!started) return;
+    const timeout = setTimeout(() => {
+      const startTime = performance.now();
+      const tick = (now: number) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setValue(eased * target);
+        if (progress < 1) requestAnimationFrame(tick);
+        else setValue(target);
+      };
+      requestAnimationFrame(tick);
+    }, delay);
+    return () => clearTimeout(timeout);
+  }, [started, target, duration, delay]);
+
+  return { ref, value };
 }
 
-function Stat({ value, label, trend, trendDir }: { value: string; label: string; trend: string; trendDir: "up" | "down" | "flat" }) {
+/* ─── Stat with Counter Animation ─── */
+function Stat({ target, decimals = 0, suffix = "", label, trend, trendDir, delay = 0 }: {
+  target: number; decimals?: number; suffix?: string; label: string; trend: string; trendDir: "up" | "down" | "flat"; delay?: number;
+}) {
+  const { ref, value } = useCountUp(target, 1200, delay);
   const colors = { up: "#059669", down: "#EF4444", flat: "#64748B" };
   const bgs = { up: "rgba(5,150,105,0.08)", down: "rgba(239,68,68,0.08)", flat: "rgba(100,116,139,0.08)" };
+  const display = decimals > 0 ? value.toFixed(decimals) : Math.round(value).toString();
+
   return (
-    <div className="text-center">
-      <p className="text-[28px] md:text-[32px] font-semibold text-text-primary leading-none">{value}</p>
+    <div className="text-center" ref={ref}>
+      <p className="text-[28px] md:text-[32px] font-semibold text-text-primary leading-none">
+        {display}{suffix}
+      </p>
       <p className="text-[11px] md:text-[12px] uppercase tracking-[1px] text-text-muted mt-1.5">{label}</p>
       <span className="inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded-full text-[11px] font-medium" style={{ background: bgs[trendDir], color: colors[trendDir] }}>
         {trendDir === "up" && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="18 15 12 9 6 15" /></svg>}
@@ -60,7 +85,13 @@ function EngagementRing({ score }: { score: number }) {
         <svg width="100" height="100" viewBox="0 0 100 100" className="w-full h-full">
           <circle cx="50" cy="50" r={r} fill="none" stroke="rgba(0,0,0,0.04)" strokeWidth="8" />
           <defs><linearGradient id="engGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#4A6CF7" /><stop offset="100%" stopColor="#7C5CFC" /></linearGradient></defs>
-          <circle cx="50" cy="50" r={r} fill="none" stroke="url(#engGrad)" strokeWidth="8" strokeLinecap="round" transform="rotate(-90 50 50)" strokeDasharray={circ} strokeDashoffset={inView ? offset : circ} style={{ transition: "stroke-dashoffset 1.2s ease-out" }} />
+          <circle
+            cx="50" cy="50" r={r} fill="none" stroke="url(#engGrad)" strokeWidth="8" strokeLinecap="round"
+            transform="rotate(-90 50 50)"
+            strokeDasharray={circ}
+            strokeDashoffset={inView ? offset : circ}
+            style={{ transition: "stroke-dashoffset 1.5s cubic-bezier(0.25, 0.4, 0.25, 1)", willChange: "stroke-dashoffset" }}
+          />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center gap-0.5">
           <span className="text-[32px] font-bold text-text-primary leading-none" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>{score}</span>
@@ -92,11 +123,15 @@ function SectorBars() {
         <div key={d.label} className="flex items-center gap-3">
           <span className="text-[13px] text-text-secondary w-[130px] shrink-0 truncate">{d.label}</span>
           <div className="flex-1 h-2 rounded-full bg-black/[0.04] overflow-hidden">
-            <div className="h-full rounded-full transition-all duration-600" style={{
-              width: inView ? `${(d.count / max) * 100}%` : "0%",
-              background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-              transitionDelay: `${i * 60}ms`,
-            }} />
+            <div
+              className="h-full rounded-full"
+              style={{
+                width: inView ? `${(d.count / max) * 100}%` : "0%",
+                background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                transition: `width 0.6s cubic-bezier(0.25, 0.4, 0.25, 1) ${i * 60}ms`,
+                willChange: "width",
+              }}
+            />
           </div>
           <span className="text-[13px] text-text-muted w-6 text-right shrink-0">{d.count}</span>
         </div>
@@ -104,6 +139,26 @@ function SectorBars() {
     </div>
   );
 }
+
+/* ─── Card entrance variants ─── */
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.08, ease },
+  }),
+};
+
+/* ─── Pipeline item entrance variants ─── */
+const pipelineItemVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, delay: i * 0.06, ease },
+  }),
+};
 
 export default function InvestorDashboard() {
   const [mounted, setMounted] = useState(false);
@@ -123,7 +178,12 @@ export default function InvestorDashboard() {
       <div className="flex-1 md:ml-[240px] relative z-10 pb-20 md:pb-8">
         <div className="max-w-[1100px] mx-auto px-4 md:px-8 pt-8">
           {/* Greeting */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, ease }} className="flex items-center justify-between mb-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, ease }}
+            className="flex items-center justify-between mb-8"
+          >
             <h1 className="text-[24px] md:text-[28px] font-normal text-text-primary" style={{ fontFamily: "'Instrument Serif', serif" }}>
               {mounted ? getGreeting() : "Good morning"}, Sarah
             </h1>
@@ -131,34 +191,39 @@ export default function InvestorDashboard() {
           </motion.div>
 
           {/* Engagement Scorecard */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1, ease }}>
-            <GlassCard className="p-6 md:p-8 mb-6">
+          <motion.div
+            custom={0}
+            variants={cardVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <div className="glass p-6 md:p-8 mb-6">
               <div className="flex flex-col md:flex-row md:items-center gap-8">
                 <div className="flex flex-wrap justify-between gap-6 flex-1">
-                  <Stat value="23" label="Startups Reviewed" trend="this week" trendDir="flat" />
+                  <Stat target={23} label="Startups Reviewed" trend="this week" trendDir="flat" delay={0} />
                   <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
-                  <Stat value="7" label="Interests Sent" trend="40%" trendDir="up" />
+                  <Stat target={7} label="Interests Sent" trend="40%" trendDir="up" delay={150} />
                   <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
-                  <Stat value="5" label="Matches Made" trend="25%" trendDir="up" />
+                  <Stat target={5} label="Matches Made" trend="25%" trendDir="up" delay={300} />
                   <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
-                  <Stat value="4" label="Calls Completed" trend="100%" trendDir="up" />
+                  <Stat target={4} label="Calls Completed" trend="100%" trendDir="up" delay={450} />
                   <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
-                  <Stat value="3.2m" label="Avg Response" trend="fast" trendDir="up" />
+                  <Stat target={3.2} decimals={1} suffix="m" label="Avg Response" trend="fast" trendDir="up" delay={600} />
                 </div>
                 <div className="border-t md:border-t-0 md:border-l border-black/[0.06] pt-6 md:pt-0 md:pl-8">
                   <EngagementRing score={94} />
                 </div>
               </div>
-            </GlassCard>
+            </div>
           </motion.div>
 
           {/* Grid */}
           <div className="grid md:grid-cols-[1fr_0.65fr] gap-5">
             {/* LEFT */}
             <div className="flex flex-col gap-5">
-              {/* Today's Matches */}
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.2, ease }}>
-                <GlassCard className="p-6">
+              {/* Daily Drops */}
+              <motion.div custom={1} variants={cardVariants} initial="hidden" animate="visible">
+                <div className="glass p-6">
                   <div className="flex items-center justify-between mb-5">
                     <div className="flex items-center gap-2">
                       <h3 className="text-[18px] font-semibold text-text-primary">Daily Drops</h3>
@@ -183,12 +248,12 @@ export default function InvestorDashboard() {
                       </div>
                     </Link>
                   ))}
-                </GlassCard>
+                </div>
               </motion.div>
 
               {/* Pipeline */}
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.28, ease }}>
-                <GlassCard className="p-6">
+              <motion.div custom={2} variants={cardVariants} initial="hidden" animate="visible">
+                <div className="glass p-6">
                   <div className="flex items-center justify-between mb-5">
                     <h3 className="text-[18px] font-semibold text-text-primary">Your Pipeline</h3>
                     <Link href="/matches" className="text-accent-blue text-[14px] hover:underline">View All</Link>
@@ -201,14 +266,22 @@ export default function InvestorDashboard() {
                         {[
                           { name: "Luminary AI", sub: "47h remaining" },
                           { name: "Stackpay", sub: "Sent 2 days ago" },
-                        ].map((c) => (
-                          <div key={c.name} className="rounded-lg p-3" style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}>
+                        ].map((c, i) => (
+                          <motion.div
+                            key={c.name}
+                            custom={i}
+                            variants={pipelineItemVariants}
+                            initial="hidden"
+                            animate="visible"
+                            className="rounded-lg p-3"
+                            style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}
+                          >
                             <p className="text-[13px] font-semibold text-text-primary">{c.name}</p>
                             <p className="text-[11px] text-text-muted flex items-center gap-1 mt-0.5">
                               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                               {c.sub}
                             </p>
-                          </div>
+                          </motion.div>
                         ))}
                       </div>
                     </div>
@@ -219,37 +292,52 @@ export default function InvestorDashboard() {
                         {[
                           { name: "Terraform Health", sub: "Call Mar 15" },
                           { name: "Canopy Analytics", sub: "Scheduling..." },
-                        ].map((c) => (
-                          <div key={c.name} className="rounded-lg p-3" style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}>
+                        ].map((c, i) => (
+                          <motion.div
+                            key={c.name}
+                            custom={i}
+                            variants={pipelineItemVariants}
+                            initial="hidden"
+                            animate="visible"
+                            className="rounded-lg p-3"
+                            style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}
+                          >
                             <p className="text-[13px] font-semibold text-text-primary">{c.name}</p>
                             <p className="text-[11px] text-text-muted flex items-center gap-1 mt-0.5">
                               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /></svg>
                               {c.sub}
                             </p>
-                          </div>
+                          </motion.div>
                         ))}
                       </div>
                     </div>
-                    {/* In Conversation */}
+                    {/* Talking */}
                     <div>
                       <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3">Talking <span className="text-text-primary">(1)</span></p>
                       <div className="space-y-2">
-                        <div className="rounded-lg p-3" style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}>
+                        <motion.div
+                          custom={0}
+                          variants={pipelineItemVariants}
+                          initial="hidden"
+                          animate="visible"
+                          className="rounded-lg p-3"
+                          style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}
+                        >
                           <p className="text-[13px] font-semibold text-text-primary">Briefly</p>
                           <p className="text-[11px] text-text-muted flex items-center gap-1 mt-0.5">
                             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" /></svg>
                             Both continue
                           </p>
-                        </div>
+                        </motion.div>
                       </div>
                     </div>
                   </div>
-                </GlassCard>
+                </div>
               </motion.div>
 
-              {/* Upcoming Calls */}
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.36, ease }}>
-                <GlassCard className="p-6">
+              {/* Scheduled Calls */}
+              <motion.div custom={3} variants={cardVariants} initial="hidden" animate="visible">
+                <div className="glass p-6">
                   <div className="flex items-center justify-between mb-5">
                     <h3 className="text-[18px] font-semibold text-text-primary">Scheduled Calls</h3>
                     <Link href="/matches" className="text-accent-blue text-[14px] hover:underline">View All</Link>
@@ -270,15 +358,15 @@ export default function InvestorDashboard() {
                       </div>
                     </div>
                   ))}
-                </GlassCard>
+                </div>
               </motion.div>
             </div>
 
             {/* RIGHT */}
             <div className="flex flex-col gap-5">
               {/* Saved */}
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.35, ease }}>
-                <GlassCard className="p-6">
+              <motion.div custom={4} variants={cardVariants} initial="hidden" animate="visible">
+                <div className="glass p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-[18px] font-semibold text-text-primary">Saved <span className="text-text-muted font-normal">(7)</span></h3>
                     <Link href="/saved" className="text-accent-blue text-[14px] hover:underline">View All</Link>
@@ -298,20 +386,20 @@ export default function InvestorDashboard() {
                     </div>
                   ))}
                   <Link href="/saved" className="text-accent-blue text-[13px] hover:underline mt-3 inline-block">View all 7 saved</Link>
-                </GlassCard>
+                </div>
               </motion.div>
 
               {/* Sector Activity */}
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.43, ease }}>
-                <GlassCard className="p-6">
+              <motion.div custom={5} variants={cardVariants} initial="hidden" animate="visible">
+                <div className="glass p-6">
                   <h3 className="text-[16px] font-semibold text-text-primary mb-4">Sector Activity</h3>
                   <SectorBars />
-                </GlassCard>
+                </div>
               </motion.div>
 
-              {/* Weekly Summary */}
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.51, ease }}>
-                <GlassCard className="p-6">
+              {/* This Week */}
+              <motion.div custom={6} variants={cardVariants} initial="hidden" animate="visible">
+                <div className="glass p-6">
                   <h3 className="text-[16px] font-semibold text-text-primary mb-4">This Week</h3>
                   <div className="space-y-4">
                     {[
@@ -325,7 +413,7 @@ export default function InvestorDashboard() {
                       </div>
                     ))}
                   </div>
-                </GlassCard>
+                </div>
               </motion.div>
             </div>
           </div>

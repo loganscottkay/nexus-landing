@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import CountUp from "@/components/CountUp";
 import ParticleField from "@/components/ParticleField";
@@ -60,6 +60,52 @@ function Section({
     >
       {children}
     </motion.section>
+  );
+}
+
+/* ---- FAQ Accordion ---- */
+function FAQSection() {
+  const faqs = [
+    { q: "How does the matching algorithm work?", a: "Our algorithm analyzes your investment thesis, sector preferences, check size, and past behavior to surface 3-5 highly compatible startups each morning. It learns from your feedback to improve over time." },
+    { q: "What does the vetting process look like?", a: "Every startup goes through a multi-step review: team background checks, financial verification, product assessment, and reference calls. We accept fewer than 25% of applicants." },
+    { q: "How are chemistry calls structured?", a: "Chemistry calls are 20-minute structured video calls. Both parties receive a brief ahead of time. After the call, both sides rate the interaction and indicate whether they want to continue the conversation." },
+    { q: "Is there a cost to join?", a: "Nexus is free during our early access period. We plan to introduce a premium tier with additional features, but core matching will always have a free option." },
+    { q: "How is my data protected?", a: "All data is encrypted at rest and in transit. Pitch decks are only shared with matched investors who have signed our NDA framework. You control exactly what information is visible." },
+  ];
+  const [openIndex, setOpenIndex] = React.useState<number | null>(null);
+  return (
+    <div className="space-y-3">
+      {faqs.map((faq, i) => (
+        <motion.div key={i} variants={fadeUp} transition={{ duration: 0.5, ease }}>
+          <div className="glass overflow-hidden">
+            <button
+              onClick={() => setOpenIndex(openIndex === i ? null : i)}
+              className="w-full flex items-center justify-between p-6 text-left"
+            >
+              <span className="text-[16px] font-semibold text-text-primary pr-4">{faq.q}</span>
+              <svg
+                width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round"
+                className={`shrink-0 transition-transform duration-300 ${openIndex === i ? "rotate-180" : ""}`}
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <AnimatePresence>
+              {openIndex === i && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, ease }}
+                >
+                  <p className="px-6 pb-6 text-text-secondary text-[15px] leading-[1.7]">{faq.a}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </motion.div>
+      ))}
+    </div>
   );
 }
 
@@ -601,6 +647,7 @@ export default function Home() {
           </motion.div>
 
           <motion.div
+            id="for-startups"
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
           >
@@ -636,6 +683,139 @@ export default function Home() {
                 </Link>
               </div>
             </div>
+          </motion.div>
+        </motion.div>
+      </Section>
+
+      {/* ============ TESTIMONIALS ============ */}
+      <Section className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
+        <motion.div
+          variants={cardStagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="flex flex-col items-center"
+        >
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-text-muted text-[13px] tracking-[3px] uppercase mb-4"
+          >
+            From the Network
+          </motion.p>
+          <motion.h2
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[36px] md:text-[44px] font-normal text-center mb-16"
+            style={{ fontFamily: "'Instrument Serif', serif" }}
+          >
+            What Members Are Saying
+          </motion.h2>
+
+          <motion.div
+            variants={cardStagger}
+            className="grid md:grid-cols-3 gap-6 md:gap-8 w-full"
+          >
+            {[
+              {
+                quote: "I used to spend 15 hours a week sorting through cold pitches. Nexus cut that to under an hour. The match quality is unreal.",
+                name: "Sarah Chen",
+                title: "Partner, Gradient Ventures",
+                initials: "SC",
+                color: "#4A6CF7",
+              },
+              {
+                quote: "We closed our seed round in 3 weeks. Every investor we talked to through Nexus actually understood our space.",
+                name: "Marcus Obi",
+                title: "CEO, Stackpay",
+                initials: "MO",
+                color: "#0d9488",
+              },
+              {
+                quote: "The chemistry calls are a game changer. 20 minutes, structured, no fluff. Both sides know if there is a fit immediately.",
+                name: "Elena Rodriguez",
+                title: "GP, Precursor Ventures",
+                initials: "ER",
+                color: "#7C5CFC",
+              },
+            ].map((testimonial) => (
+              <motion.div
+                key={testimonial.name}
+                variants={fadeUp}
+                transition={{ duration: 0.6, ease }}
+              >
+                <div className="glow-card-wrapper h-full">
+                  <div className="glass p-8 md:p-10 h-full flex flex-col">
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="text-accent-blue/20 mb-5 shrink-0"
+                    >
+                      <path
+                        d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 .997 0 1.031 1 1.031z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                    <p className="text-text-secondary text-[15px] md:text-[16px] leading-[1.7] flex-1 mb-6">
+                      &ldquo;{testimonial.quote}&rdquo;
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0"
+                        style={{ backgroundColor: testimonial.color }}
+                      >
+                        {testimonial.initials}
+                      </div>
+                      <div>
+                        <p className="text-[14px] font-semibold text-text-primary">
+                          {testimonial.name}
+                        </p>
+                        <p className="text-[13px] text-text-muted">
+                          {testimonial.title}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </Section>
+
+      {/* ============ FAQ ============ */}
+      <Section id="faq" className="relative z-10 px-6 py-24 md:py-32 max-w-3xl mx-auto">
+        <motion.div
+          variants={cardStagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="flex flex-col items-center"
+        >
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-text-muted text-[13px] tracking-[3px] uppercase mb-4"
+          >
+            Questions
+          </motion.p>
+          <motion.h2
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[36px] md:text-[44px] font-normal text-center mb-12"
+            style={{ fontFamily: "'Instrument Serif', serif" }}
+          >
+            Frequently Asked
+          </motion.h2>
+
+          <motion.div variants={cardStagger} className="w-full">
+            <FAQSection />
           </motion.div>
         </motion.div>
       </Section>

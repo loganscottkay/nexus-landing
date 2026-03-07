@@ -20,7 +20,9 @@ html {
 }
 
 #how-it-works,
-#for-investors {
+#for-investors,
+#for-startups,
+#faq {
   scroll-margin-top: 80px;
 }
 
@@ -67,19 +69,50 @@ body {
 
 /* ---- Glass cards - light sections ---- */
 .glass {
+  position: relative;
+  isolation: isolate;
   background: rgba(255, 255, 255, 0.45);
   backdrop-filter: blur(20px) saturate(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 24px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  will-change: transform;
+}
+
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 25px;
+  background: conic-gradient(
+    from var(--border-angle),
+    #4A6CF7,
+    #7C5CFC,
+    #14b8a6,
+    #4A6CF7
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  animation: rotate-border 3s linear infinite;
+  will-change: opacity;
 }
 
 .glass:hover {
   transform: translateY(-3px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
   border-color: rgba(255, 255, 255, 0.8);
+}
+
+.glass:hover::before {
+  opacity: 0.3;
+}
+
+/* Disable glass glow when inside glow-card-wrapper (it has its own) */
+.glow-card-wrapper .glass::before {
+  display: none;
 }
 
 /* ---- Glass cards - dark section ---- */

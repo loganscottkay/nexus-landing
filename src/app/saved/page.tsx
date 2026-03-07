@@ -50,14 +50,7 @@ export default function SavedPage() {
               >
                 <Link
                   href={`/startup/${s.id}`}
-                  className="flex items-center gap-4 p-5 rounded-3xl transition-all duration-200 hover:-translate-y-0.5"
-                  style={{
-                    background: "rgba(255, 255, 255, 0.45)",
-                    backdropFilter: "blur(20px) saturate(1.2)",
-                    WebkitBackdropFilter: "blur(20px) saturate(1.2)",
-                    border: "1px solid rgba(255, 255, 255, 0.6)",
-                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8)",
-                  }}
+                  className="glass flex items-center gap-4 p-5"
                 >
                   <div
                     className="w-11 h-11 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0"
