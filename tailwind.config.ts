@@ -21,27 +21,29 @@ const config: Config = {
         outfit: ["var(--font-outfit)", "sans-serif"],
       },
       keyframes: {
-        "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(30px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        "float": {
+        "orb-drift-1": {
           "0%, 100%": { transform: "translate(0, 0)" },
-          "33%": { transform: "translate(30px, -20px)" },
-          "66%": { transform: "translate(-20px, 15px)" },
+          "25%": { transform: "translate(30px, -20px)" },
+          "50%": { transform: "translate(-15px, 25px)" },
+          "75%": { transform: "translate(20px, 10px)" },
         },
-        "shimmer": {
-          "0%": { opacity: "0.5" },
-          "50%": { opacity: "0.8" },
-          "100%": { opacity: "0.5" },
+        "orb-drift-2": {
+          "0%, 100%": { transform: "translate(0, 0)" },
+          "25%": { transform: "translate(-25px, 15px)" },
+          "50%": { transform: "translate(20px, -30px)" },
+          "75%": { transform: "translate(-10px, -20px)" },
+        },
+        "orb-drift-3": {
+          "0%, 100%": { transform: "translate(0, 0)" },
+          "25%": { transform: "translate(15px, 25px)" },
+          "50%": { transform: "translate(-30px, -10px)" },
+          "75%": { transform: "translate(25px, -15px)" },
         },
       },
       animation: {
-        "fade-up": "fade-up 0.8s ease-out forwards",
-        "float-slow": "float 20s ease-in-out infinite",
-        "float-slower": "float 25s ease-in-out infinite reverse",
-        "float-slowest": "float 30s ease-in-out infinite",
-        "shimmer": "shimmer 3s ease-in-out infinite",
+        "orb-1": "orb-drift-1 25s ease-in-out infinite",
+        "orb-2": "orb-drift-2 22s ease-in-out infinite",
+        "orb-3": "orb-drift-3 28s ease-in-out infinite",
       },
     },
   },
