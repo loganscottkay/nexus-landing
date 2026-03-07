@@ -93,9 +93,9 @@ function EngagementRing({ score }: { score: number }) {
             style={{ transition: "stroke-dashoffset 1.5s cubic-bezier(0.25, 0.4, 0.25, 1)", willChange: "stroke-dashoffset" }}
           />
         </svg>
-        <div className="absolute inset-0 flex items-center justify-center gap-0.5">
-          <span className="text-[32px] font-bold text-text-primary leading-none" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>{score}</span>
-          <span className="text-[14px] text-text-muted self-center mt-1">/100</span>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-[28px] font-bold text-text-primary leading-none" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>{score}</span>
+          <span className="text-[11px] text-text-muted leading-none ml-[2px]">/100</span>
         </div>
       </div>
       <p className="text-[13px] text-text-muted text-center mt-2">Engagement Score</p>
