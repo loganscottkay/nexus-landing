@@ -148,75 +148,93 @@ function ArrowRight({ className = "" }: { className?: string }) {
   );
 }
 
+/* ---- Ticker number effect ---- */
+function TickerValue({ value }: { value: string }) {
+  const [display, setDisplay] = React.useState(() =>
+    value.split("").map((c) => (/\d/.test(c) ? "0" : c)).join("")
+  );
+
+  useEffect(() => {
+    const chars = value.split("");
+    const digits = "0123456789";
+    let frame = 0;
+    const totalFrames = 8;
+    const interval = 1500 / totalFrames;
+
+    const timer = setInterval(() => {
+      frame++;
+      if (frame >= totalFrames) {
+        setDisplay(value);
+        clearInterval(timer);
+      } else {
+        setDisplay(
+          chars
+            .map((c) =>
+              /\d/.test(c) ? digits[Math.floor(Math.random() * 10)] : c
+            )
+            .join("")
+        );
+      }
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [value]);
+
+  return <>{display}</>;
+}
+
 /* ---- Floating Dashboard Mockups ---- */
 function InvestorFeedCard() {
   return (
-    <div className="relative">
-      {/* Stacked card peek - Stackpay */}
-      <div
-        className="absolute top-[20px] left-[6px] right-[-6px] bottom-[-20px] rounded-2xl"
-        style={{
-          background: "rgba(10, 10, 15, 0.6)",
-          border: "1px solid rgba(255,255,255,0.04)",
-        }}
-      >
-        <div className="flex items-center gap-2 p-4 pt-3 opacity-40">
-          <div className="w-6 h-6 rounded-full bg-[#0d9488]/30 flex items-center justify-center text-white text-[7px] font-bold">S</div>
-          <span className="text-white/50 text-[11px]">Stackpay</span>
+    <div
+      className="w-[300px] min-h-[380px] rounded-2xl p-5 dashboard-card relative"
+      style={{
+        background: "rgba(10, 10, 15, 0.88)",
+        backdropFilter: "blur(20px)",
+        border: "1px solid rgba(74, 108, 247, 0.2)",
+      }}
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
+        <p className="text-white/50 text-[11px] tracking-[2px] uppercase">Investor Feed</p>
+        <div className="flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] live-dot-pulse" />
+          <span className="text-[10px] text-[#22c55e]/70">Live</span>
         </div>
       </div>
 
-      {/* Main card */}
-      <div
-        className="w-[300px] rounded-2xl p-5 dashboard-card dashboard-card-left relative"
-        style={{
-          background: "rgba(10, 10, 15, 0.88)",
-          backdropFilter: "blur(20px)",
-          border: "1px solid rgba(74, 108, 247, 0.2)",
-        }}
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between mb-4">
-          <p className="text-white/50 text-[11px] tracking-[2px] uppercase">Investor Feed</p>
-          <div className="flex items-center gap-1.5">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse-gentle" />
-            <span className="text-[10px] text-[#22c55e]/70">Live</span>
+      {/* Startup card mockup */}
+      <div className="bg-white/[0.05] rounded-xl p-4 mb-3 border border-white/[0.06]">
+        <div className="flex items-center gap-2.5 mb-3">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#4A6CF7] to-[#7C5CFC] flex items-center justify-center text-white text-[11px] font-bold shrink-0">
+            L
+          </div>
+          <div>
+            <p className="text-white text-[14px] font-semibold leading-tight">Luminary AI</p>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#4A6CF7]/20 text-[#4A6CF7] inline-block mt-0.5">
+              AI / ML
+            </span>
           </div>
         </div>
-
-        {/* Startup card mockup */}
-        <div className="bg-white/[0.05] rounded-xl p-4 mb-3 border border-white/[0.06]">
-          <div className="flex items-center gap-2.5 mb-3">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#4A6CF7] to-[#7C5CFC] flex items-center justify-center text-white text-[11px] font-bold shrink-0">
-              L
-            </div>
-            <div>
-              <p className="text-white text-[14px] font-semibold leading-tight">Luminary AI</p>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#4A6CF7]/20 text-[#4A6CF7] inline-block mt-0.5">
-                AI / ML
-              </span>
-            </div>
-          </div>
-          {/* 2x2 metrics grid */}
-          <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-[11px]">
-            <div><p className="text-white/30 text-[9px]">MRR</p><p className="text-white font-medium">$45K</p></div>
-            <div><p className="text-white/30 text-[9px]">Users</p><p className="text-white font-medium">2.4K</p></div>
-            <div><p className="text-white/30 text-[9px]">Growth</p><p className="text-white font-medium text-[#22c55e]">180%</p></div>
-            <div><p className="text-white/30 text-[9px]">Pipeline</p><p className="text-white font-medium">$2M</p></div>
-          </div>
+        {/* 2x2 metrics grid with ticker effect */}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-[11px]">
+          <div><p className="text-white/30 text-[9px]">MRR</p><p className="text-white font-medium"><TickerValue value="$45K" /></p></div>
+          <div><p className="text-white/30 text-[9px]">Users</p><p className="text-white font-medium"><TickerValue value="2.4K" /></p></div>
+          <div><p className="text-white/30 text-[9px]">Growth</p><p className="text-white font-medium text-[#22c55e]"><TickerValue value="180%" /></p></div>
+          <div><p className="text-white/30 text-[9px]">Pipeline</p><p className="text-white font-medium"><TickerValue value="$2M" /></p></div>
         </div>
+      </div>
 
-        {/* Action buttons with colored glows */}
-        <div className="flex justify-center gap-3.5 pt-1">
-          <div className="w-9 h-9 rounded-full border border-red-400/20 bg-red-400/5 flex items-center justify-center text-red-400/50 cursor-default">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
-          </div>
-          <div className="w-9 h-9 rounded-full border border-[#4A6CF7]/25 bg-[#4A6CF7]/8 flex items-center justify-center text-[#4A6CF7]/60 cursor-default">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
-          </div>
-          <div className="w-9 h-9 rounded-full border border-[#22c55e]/25 bg-[#22c55e]/8 flex items-center justify-center text-[#22c55e]/60 cursor-default">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-          </div>
+      {/* Action buttons with sequential pulse on load */}
+      <div className="flex justify-center gap-3.5 pt-1">
+        <div className="w-9 h-9 rounded-full border border-red-400/20 bg-red-400/5 flex items-center justify-center text-red-400/50 cursor-default action-pulse-red">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
+        </div>
+        <div className="w-9 h-9 rounded-full border border-[#4A6CF7]/25 bg-[#4A6CF7]/8 flex items-center justify-center text-[#4A6CF7]/60 cursor-default action-pulse-blue">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+        </div>
+        <div className="w-9 h-9 rounded-full border border-[#22c55e]/25 bg-[#22c55e]/8 flex items-center justify-center text-[#22c55e]/60 cursor-default action-pulse-green">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
         </div>
       </div>
     </div>
@@ -230,7 +248,7 @@ function MatchAnalyticsCard() {
 
   return (
     <div
-      className="w-[300px] rounded-2xl p-5 dashboard-card dashboard-card-right"
+      className="w-[300px] min-h-[380px] rounded-2xl p-5 dashboard-card"
       style={{
         background: "rgba(10, 10, 15, 0.88)",
         backdropFilter: "blur(20px)",
@@ -242,7 +260,7 @@ function MatchAnalyticsCard() {
         <p className="text-white/50 text-[11px] tracking-[2px] uppercase">Match Analytics</p>
         <div className="flex items-center gap-1.5">
           <div className="w-1 h-1 rounded-full bg-[#4A6CF7]" />
-          <span className="text-[10px] text-[#4A6CF7]/70">Updated</span>
+          <span className="text-[10px] text-[#4A6CF7]/70 updated-fade-in">Updated</span>
         </div>
       </div>
 
@@ -285,7 +303,7 @@ function MatchAnalyticsCard() {
               <stop offset="100%" stopColor="#4A6CF7" stopOpacity="0" />
             </linearGradient>
           </defs>
-          <path d="M0,35 L50,28 L100,32 L150,18 L200,8" fill="none" stroke="url(#lineGrad)" strokeWidth="2" strokeLinecap="round" />
+          <path d="M0,35 L50,28 L100,32 L150,18 L200,8" fill="none" stroke="url(#lineGrad)" strokeWidth="2" strokeLinecap="round" className="chart-line-draw" />
           <path d="M0,35 L50,28 L100,32 L150,18 L200,8 L200,50 L0,50 Z" fill="url(#areaGrad)" />
           {[{ x: 0, y: 35 }, { x: 50, y: 28 }, { x: 100, y: 32 }, { x: 150, y: 18 }, { x: 200, y: 8 }].map((p, i) => (
             <circle key={i} cx={p.x} cy={p.y} r="3" fill="#4A6CF7" stroke="rgba(10,10,15,0.88)" strokeWidth="1.5" />
@@ -330,7 +348,7 @@ function MatchAnalyticsCard() {
 function MatchNotificationCard() {
   return (
     <div
-      className="w-[230px] rounded-xl p-5 dashboard-card dashboard-card-left relative"
+      className="w-[230px] rounded-xl p-5 dashboard-card relative"
       style={{
         background: "rgba(10, 10, 15, 0.88)",
         backdropFilter: "blur(20px)",
@@ -365,7 +383,7 @@ function MatchNotificationCard() {
 function ChemistryCallCard() {
   return (
     <div
-      className="w-[230px] rounded-xl p-5 dashboard-card dashboard-card-right"
+      className="w-[230px] rounded-xl p-5 dashboard-card"
       style={{
         background: "rgba(10, 10, 15, 0.88)",
         backdropFilter: "blur(20px)",

@@ -309,19 +309,17 @@ body {
 /* Entrance animation */
 .dashboard-entrance {
   opacity: 0;
-  animation: dashboard-enter 1s ease-out forwards;
+  animation: dashboard-enter 0.8s ease-out forwards;
 }
 
 @keyframes dashboard-enter {
   from {
     opacity: 0;
-    transform: scale(0.88);
-    filter: blur(4px);
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
     transform: scale(1);
-    filter: blur(0px);
   }
 }
 
@@ -337,7 +335,7 @@ body {
 }
 
 .animate-float-delayed {
-  animation: float-bob 5s ease-in-out 2s infinite;
+  animation: float-bob 5s ease-in-out 2.5s infinite;
   will-change: transform;
 }
 
@@ -376,19 +374,61 @@ body {
   box-shadow: 0 0 8px rgba(74, 108, 247, 0.3);
 }
 
-/* 3D perspective rotations */
-.dashboard-card-left {
-  transform: perspective(1200px) rotateY(10deg) rotateX(3deg);
-}
-.dashboard-card-left:hover {
-  transform: perspective(1200px) rotateY(10deg) rotateX(3deg) translateZ(20px);
+/* ---- SVG stroke draw animation (line chart) ---- */
+@keyframes stroke-draw {
+  from { stroke-dashoffset: 210; }
+  to { stroke-dashoffset: 0; }
 }
 
-.dashboard-card-right {
-  transform: perspective(1200px) rotateY(-10deg) rotateX(3deg);
+.chart-line-draw {
+  stroke-dasharray: 210;
+  stroke-dashoffset: 210;
+  animation: stroke-draw 1.2s ease-out 0.8s forwards;
 }
-.dashboard-card-right:hover {
-  transform: perspective(1200px) rotateY(-10deg) rotateX(3deg) translateZ(20px);
+
+/* ---- Sequential button pulse on load ---- */
+@keyframes btn-seq-pulse-red {
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: 0 0 12px rgba(248, 113, 113, 0.6); }
+}
+@keyframes btn-seq-pulse-blue {
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: 0 0 12px rgba(74, 108, 247, 0.6); }
+}
+@keyframes btn-seq-pulse-green {
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: 0 0 12px rgba(34, 197, 94, 0.6); }
+}
+
+.action-pulse-red {
+  animation: btn-seq-pulse-red 0.5s ease-out 1.2s 1;
+}
+.action-pulse-blue {
+  animation: btn-seq-pulse-blue 0.5s ease-out 1.4s 1;
+}
+.action-pulse-green {
+  animation: btn-seq-pulse-green 0.5s ease-out 1.6s 1;
+}
+
+/* ---- Live dot pulse ---- */
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
+
+.live-dot-pulse {
+  animation: live-pulse 1.5s ease-in-out infinite;
+}
+
+/* ---- Updated indicator fade-in ---- */
+@keyframes fade-in-delayed {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.updated-fade-in {
+  opacity: 0;
+  animation: fade-in-delayed 0.6s ease-out 1s forwards;
 }
 
 /* Glow behind dashboard cards */
