@@ -48,23 +48,27 @@ function Stat({ value, label, trend, trendDir }: { value: string; label: string;
 
 /* ─── Engagement Ring ─── */
 function EngagementRing({ score }: { score: number }) {
-  const ref = useRef<SVGSVGElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.5 });
   const r = 42;
   const circ = 2 * Math.PI * r;
   const offset = circ - (score / 100) * circ;
 
   return (
-    <div className="flex flex-col items-center gap-2 min-w-[120px]">
-      <svg ref={ref} width="100" height="100" viewBox="0 0 100 100" className="shrink-0">
-        <circle cx="50" cy="50" r={r} fill="none" stroke="rgba(0,0,0,0.04)" strokeWidth="8" />
-        <defs><linearGradient id="engGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#4A6CF7" /><stop offset="100%" stopColor="#7C5CFC" /></linearGradient></defs>
-        <circle cx="50" cy="50" r={r} fill="none" stroke="url(#engGrad)" strokeWidth="8" strokeLinecap="round" transform="rotate(-90 50 50)" strokeDasharray={circ} strokeDashoffset={inView ? offset : circ} style={{ transition: "stroke-dashoffset 1.2s ease-out" }} />
-        <text x="44" y="54" textAnchor="middle" fill="#0F172A" fontSize="28" fontWeight="700" fontFamily="var(--font-dm-sans), sans-serif">{score}</text>
-        <text x="70" y="54" textAnchor="start" fill="#94A3B8" fontSize="11" fontFamily="var(--font-dm-sans), sans-serif">/100</text>
-      </svg>
-      <p className="text-[12px] text-text-muted text-center leading-tight">Engagement Score</p>
-      <span className="text-[11px] px-2.5 py-1 rounded-full font-medium bg-[rgba(5,150,105,0.08)] text-[#059669]">Top 5%</span>
+    <div ref={ref} className="flex flex-col items-center shrink-0" style={{ minWidth: "160px" }}>
+      <div className="relative w-[100px] h-[100px]">
+        <svg width="100" height="100" viewBox="0 0 100 100" className="w-full h-full">
+          <circle cx="50" cy="50" r={r} fill="none" stroke="rgba(0,0,0,0.04)" strokeWidth="8" />
+          <defs><linearGradient id="engGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#4A6CF7" /><stop offset="100%" stopColor="#7C5CFC" /></linearGradient></defs>
+          <circle cx="50" cy="50" r={r} fill="none" stroke="url(#engGrad)" strokeWidth="8" strokeLinecap="round" transform="rotate(-90 50 50)" strokeDasharray={circ} strokeDashoffset={inView ? offset : circ} style={{ transition: "stroke-dashoffset 1.2s ease-out" }} />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center gap-0.5">
+          <span className="text-[32px] font-bold text-text-primary leading-none" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>{score}</span>
+          <span className="text-[14px] text-text-muted self-center mt-1">/100</span>
+        </div>
+      </div>
+      <p className="text-[13px] text-text-muted text-center mt-2">Engagement Score</p>
+      <span className="text-[11px] px-2.5 py-1 rounded-full font-medium bg-[rgba(5,150,105,0.08)] text-[#059669] mt-1.5">Top 5%</span>
     </div>
   );
 }
@@ -277,7 +281,7 @@ export default function InvestorDashboard() {
                 <GlassCard className="p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-[18px] font-semibold text-text-primary">Saved <span className="text-text-muted font-normal">(7)</span></h3>
-                    <Link href="/drops" className="text-accent-blue text-[14px] hover:underline">View All</Link>
+                    <Link href="/saved" className="text-accent-blue text-[14px] hover:underline">View All</Link>
                   </div>
                   {[
                     { initials: "LA", color: "#4A6CF7", name: "Luminary AI", sector: "AI/ML" },
@@ -293,7 +297,7 @@ export default function InvestorDashboard() {
                       <Link href="/startup/1" className="text-accent-blue text-[13px] hover:underline shrink-0 ml-2">Review</Link>
                     </div>
                   ))}
-                  <Link href="/drops" className="text-accent-blue text-[13px] hover:underline mt-3 inline-block">View all 7 saved</Link>
+                  <Link href="/saved" className="text-accent-blue text-[13px] hover:underline mt-3 inline-block">View all 7 saved</Link>
                 </GlassCard>
               </motion.div>
 

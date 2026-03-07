@@ -261,21 +261,22 @@ export default function MatchesPage() {
             <h1 className="text-[24px] md:text-[28px] font-normal text-text-primary" style={{ fontFamily: "'Instrument Serif', serif" }}>Your Matches</h1>
 
             {/* Segmented Toggle */}
-            <div className="relative flex rounded-full p-1" style={{ background: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.5)" }}>
+            <div className="relative flex rounded-full p-1" style={{ background: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.5)", minWidth: "280px" }}>
               {/* Sliding indicator */}
               <div
-                className="absolute top-1 bottom-1 rounded-full transition-transform duration-250"
+                className="absolute top-1 bottom-1 rounded-full"
                 style={{
-                  width: `${100 / tabs.length}%`,
+                  width: `calc(${100 / tabs.length}%)`,
                   background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                   transform: `translateX(${tabIndex * 100}%)`,
+                  transition: "transform 0.25s ease-out",
                 }}
               />
               {tabs.map((t) => (
                 <button
                   key={t.key}
                   onClick={() => setTab(t.key)}
-                  className={`relative z-10 px-5 py-2 rounded-full text-[14px] font-medium transition-colors duration-200 ${tab === t.key ? "text-white" : "text-text-muted hover:text-text-primary"}`}
+                  className={`relative z-10 flex-1 py-2 rounded-full text-[14px] font-medium text-center transition-colors duration-200 ${tab === t.key ? "text-white" : "text-[#64748B] hover:text-text-primary"}`}
                 >
                   {t.label}
                 </button>

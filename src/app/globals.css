@@ -19,6 +19,11 @@ html {
   scroll-behavior: smooth;
 }
 
+#how-it-works,
+#for-investors {
+  scroll-margin-top: 80px;
+}
+
 body {
   background: #FAFAF9;
 }

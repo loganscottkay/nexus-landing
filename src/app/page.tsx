@@ -601,7 +601,6 @@ export default function Home() {
           </motion.div>
 
           <motion.div
-            id="for-startups"
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
           >
@@ -747,7 +746,7 @@ export default function Home() {
               NEXUS
             </a>
             <p className="text-text-muted/60 text-[13px]">
-              &copy; 2025 Nexus. All rights reserved.
+              &copy; 2026 Nexus. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
               <a

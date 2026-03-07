@@ -12,6 +12,12 @@ interface NavItem {
 }
 
 const icons = {
+  home: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+      <polyline points="9 22 9 12 15 12 15 22" />
+    </svg>
+  ),
   dashboard: (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" />
@@ -62,7 +68,7 @@ const icons = {
 const investorNav: NavItem[] = [
   { label: "Dashboard", icon: icons.dashboard, href: "/dashboard/investor" },
   { label: "Daily Drops", icon: icons.drops, href: "/drops" },
-  { label: "Saved", icon: icons.saved, href: "/drops" },
+  { label: "Saved", icon: icons.saved, href: "/saved" },
   { label: "Matches", icon: icons.matches, href: "/matches" },
   { label: "Messages", icon: icons.messages, href: "/messages" },
   { label: "Settings", icon: icons.settings, href: "/settings" },
@@ -85,6 +91,7 @@ export default function Sidebar({
   activeLabel: string;
 }) {
   const navList = role === "investor" ? investorNav : founderNav;
+  const isHomeActive = activeLabel === "Home";
 
   return (
     <>
@@ -105,6 +112,24 @@ export default function Sidebar({
           <Link href="/" className="text-lg font-bold tracking-[0.3em] text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>NEXUS</Link>
         </div>
         <nav className="flex-1 px-3">
+          {/* Home button */}
+          <Link
+            href="/"
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1 text-[15px] transition-all duration-200 relative ${
+              isHomeActive
+                ? "text-accent-blue font-medium"
+                : "text-text-secondary hover:text-text-primary hover:bg-black/[0.03]"
+            }`}
+          >
+            {isHomeActive && (
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-accent-blue rounded-full" />
+            )}
+            {icons.home}
+            Home
+          </Link>
+          {/* Divider */}
+          <div className="border-b border-black/[0.06] mx-2 mb-2 mt-1" />
+
           {navList.map((item) => {
             const isActive = item.label === activeLabel;
             return (
@@ -143,7 +168,12 @@ export default function Sidebar({
           borderTop: "1px solid rgba(0, 0, 0, 0.06)",
         }}
       >
-        {navList.slice(0, 5).map((item) => {
+        {/* Home tab on mobile */}
+        <Link href="/" className={`flex flex-col items-center gap-1 px-3 py-1 ${isHomeActive ? "text-accent-blue" : "text-text-muted"}`}>
+          {icons.home}
+          <span className="text-[10px]">Home</span>
+        </Link>
+        {navList.slice(0, 4).map((item) => {
           const isActive = item.label === activeLabel;
           return (
             <Link key={item.label} href={item.href} className={`flex flex-col items-center gap-1 px-3 py-1 ${isActive ? "text-accent-blue" : "text-text-muted"}`}>

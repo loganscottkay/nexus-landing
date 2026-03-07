@@ -422,6 +422,8 @@ export default function DropsPage() {
   const [exitDirection, setExitDirection] = useState<"left" | "right" | null>(
     null
   );
+  const [savedIds, setSavedIds] = useState<Set<number>>(new Set());
+  const [toast, setToast] = useState<string | null>(null);
   const total = startups.length;
   const remaining = total - currentIndex;
   const allDone = currentIndex >= total;
@@ -447,13 +449,49 @@ export default function DropsPage() {
   const handlePass = useCallback(() => advance("left"), [advance]);
   const handleInterested = useCallback(() => advance("right"), [advance]);
   const handleSave = useCallback(() => {
-    /* save action - stays on card */
-  }, []);
+    if (allDone) return;
+    const startup = startups[currentIndex];
+    setSavedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(startup.id)) {
+        next.delete(startup.id);
+      } else {
+        next.add(startup.id);
+        setToast(`${startup.name} saved to your list`);
+        setTimeout(() => setToast(null), 2500);
+      }
+      return next;
+    });
+  }, [currentIndex, allDone]);
+
+  const isSaved = !allDone && currentIndex < startups.length && savedIds.has(startups[currentIndex]?.id);
 
   return (
     <div className="h-screen flex bg-base text-text-primary overflow-hidden relative">
       {/* Noise overlay */}
       <div className="noise-overlay" />
+
+      {/* Toast notification */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-full text-[14px] font-medium text-text-primary whitespace-nowrap"
+            style={{
+              background: "rgba(255, 255, 255, 0.85)",
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
+              border: "1px solid rgba(255, 255, 255, 0.6)",
+              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            {toast}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Background blobs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
@@ -623,7 +661,7 @@ export default function DropsPage() {
                     e.currentTarget.style.boxShadow = "0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8)";
                   }}
                 >
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill={isSaved ? "#4A6CF7" : "none"} stroke="#4A6CF7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-all duration-200">
                     <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
                   </svg>
                 </button>

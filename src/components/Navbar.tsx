@@ -1,11 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -20,6 +23,17 @@ export default function Navbar() {
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
+
+  const scrollToSection = (e: React.MouseEvent, id: string) => {
+    if (isHome) {
+      e.preventDefault();
+      const el = document.getElementById(id);
+      if (el) {
+        const y = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+    }
+  };
 
   return (
     <nav
@@ -37,27 +51,27 @@ export default function Navbar() {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          <a
-            href="#how-it-works"
-            onClick={(e) => { e.preventDefault(); document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" }); }}
+          <Link
+            href="/#how-it-works"
+            onClick={(e) => scrollToSection(e, "how-it-works")}
             className="text-text-secondary hover:text-text-primary transition-colors text-[15px]"
           >
             How It Works
-          </a>
-          <a
-            href="#for-investors"
-            onClick={(e) => { e.preventDefault(); document.getElementById("for-investors")?.scrollIntoView({ behavior: "smooth" }); }}
+          </Link>
+          <Link
+            href="/#for-investors"
+            onClick={(e) => scrollToSection(e, "for-investors")}
             className="text-text-secondary hover:text-text-primary transition-colors text-[15px]"
           >
             For Investors
-          </a>
-          <a
-            href="#for-startups"
-            onClick={(e) => { e.preventDefault(); document.getElementById("for-startups")?.scrollIntoView({ behavior: "smooth" }); }}
+          </Link>
+          <Link
+            href="/#for-investors"
+            onClick={(e) => scrollToSection(e, "for-investors")}
             className="text-text-secondary hover:text-text-primary transition-colors text-[15px]"
           >
             For Startups
-          </a>
+          </Link>
           <div className="flex items-center gap-3 ml-4" style={{ gap: "12px" }}>
             <Link
               href="/drops"
@@ -103,27 +117,27 @@ export default function Navbar() {
         }`}
       >
         <div className="px-6 py-6 flex flex-col gap-5">
-          <a
-            href="#how-it-works"
-            onClick={(e) => { e.preventDefault(); setMenuOpen(false); document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" }); }}
+          <Link
+            href="/#how-it-works"
+            onClick={(e) => { scrollToSection(e, "how-it-works"); setMenuOpen(false); }}
             className="text-text-secondary hover:text-text-primary transition-colors text-[15px]"
           >
             How It Works
-          </a>
-          <a
-            href="#for-investors"
-            onClick={(e) => { e.preventDefault(); setMenuOpen(false); document.getElementById("for-investors")?.scrollIntoView({ behavior: "smooth" }); }}
+          </Link>
+          <Link
+            href="/#for-investors"
+            onClick={(e) => { scrollToSection(e, "for-investors"); setMenuOpen(false); }}
             className="text-text-secondary hover:text-text-primary transition-colors text-[15px]"
           >
             For Investors
-          </a>
-          <a
-            href="#for-startups"
-            onClick={(e) => { e.preventDefault(); setMenuOpen(false); document.getElementById("for-startups")?.scrollIntoView({ behavior: "smooth" }); }}
+          </Link>
+          <Link
+            href="/#for-investors"
+            onClick={(e) => { scrollToSection(e, "for-investors"); setMenuOpen(false); }}
             className="text-text-secondary hover:text-text-primary transition-colors text-[15px]"
           >
             For Startups
-          </a>
+          </Link>
           <div className="flex gap-3 pt-2">
             <Link
               href="/login"
