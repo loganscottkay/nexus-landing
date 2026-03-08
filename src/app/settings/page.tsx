@@ -51,94 +51,95 @@ function NotifRow({ label, desc, checked, onChange }: { label: string; desc: str
 
 /* ─── Profile Tab ─── */
 function ProfileTab() {
-  const [companyName, setCompanyName] = useState("Luminary AI");
-  const [oneLiner, setOneLiner] = useState("AI-powered contract analysis for legal teams");
-  const [website, setWebsite] = useState("https://luminary.ai");
-  const [location, setLocation] = useState("San Francisco, CA");
-  const [mrr, setMrr] = useState("45,000");
-  const [users, setUsers] = useState("2,400");
-  const [growth, setGrowth] = useState("180");
-  const [pipeline, setPipeline] = useState("2,000,000");
-  const [raiseAmount, setRaiseAmount] = useState("1,500,000");
-  const [prevFunding, setPrevFunding] = useState("500,000");
-  const [idealInvestor, setIdealInvestor] = useState("Investors with AI/SaaS B2B experience who can provide enterprise customer introductions. Check sizes $100K-$500K preferred.");
+  const [fullName, setFullName] = useState("Jordan Chen");
+  const [firmName, setFirmName] = useState("Apex Ventures");
+  const [title, setTitle] = useState("Managing Partner");
+  const [email, setEmail] = useState("jordan@apexventures.com");
+  const [linkedIn, setLinkedIn] = useState("");
+  const [thesis, setThesis] = useState("We back technical founders building AI-native products across seed and Series A. Check sizes $100K-$500K.");
+  const [checkMin, setCheckMin] = useState("100,000");
+  const [checkMax, setCheckMax] = useState("500,000");
+
+  const [selectedSectors, setSelectedSectors] = useState(["AI/ML", "SaaS", "Fintech"]);
+  const [selectedStages, setSelectedStages] = useState(["Seed", "Series A"]);
+
+  const allSectors = ["AI/ML", "SaaS", "Fintech", "Health Tech", "Climate Tech", "Dev Tools", "Enterprise", "Consumer", "Web3"];
+  const allStages = ["Pre-Seed", "Seed", "Series A", "Series B", "Growth"];
+
+  const toggleSector = (s: string) => setSelectedSectors((prev) => prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]);
+  const toggleStage = (s: string) => setSelectedStages((prev) => prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]);
 
   return (
     <div className="space-y-5">
-      {/* Company Info */}
+      {/* Personal Info */}
       <GlassCard className="p-7">
         <div className="flex items-center gap-2 mb-6">
-          <h3 className="text-[18px] font-semibold text-text-primary">Company Information</h3>
+          <h3 className="text-[18px] font-semibold text-text-primary">Investor Profile</h3>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="1.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" /><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>
         </div>
         <div className="space-y-4">
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-20 h-20 rounded-full bg-accent-blue flex items-center justify-center text-white text-2xl font-bold shrink-0 cursor-pointer hover:opacity-80 transition-opacity">LA</div>
-            <p className="text-[13px] text-text-muted">Click to upload logo</p>
+            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-accent-blue to-accent-violet flex items-center justify-center text-white text-2xl font-bold shrink-0 cursor-pointer hover:opacity-80 transition-opacity">JC</div>
+            <p className="text-[13px] text-text-muted">Click to upload headshot</p>
           </div>
-          <div><p className="text-[14px] font-semibold text-text-primary mb-2">Company Name</p><GlassInput value={companyName} onChange={setCompanyName} /></div>
-          <div><p className="text-[14px] font-semibold text-text-primary mb-2">One-liner<span className="text-[12px] text-text-muted ml-2">{oneLiner.length}/80</span></p><GlassInput value={oneLiner} onChange={(v) => setOneLiner(v.slice(0, 80))} /></div>
-          <div><p className="text-[14px] font-semibold text-text-primary mb-2">Website</p><GlassInput value={website} onChange={setWebsite} /></div>
-          <div><p className="text-[14px] font-semibold text-text-primary mb-2">Location</p><GlassInput value={location} onChange={setLocation} /></div>
+          <div><p className="text-[14px] font-semibold text-text-primary mb-2">Full Name</p><GlassInput value={fullName} onChange={setFullName} /></div>
+          <div><p className="text-[14px] font-semibold text-text-primary mb-2">Firm Name</p><GlassInput value={firmName} onChange={setFirmName} /></div>
+          <div><p className="text-[14px] font-semibold text-text-primary mb-2">Title</p><GlassInput value={title} onChange={setTitle} /></div>
+          <div><p className="text-[14px] font-semibold text-text-primary mb-2">Email</p><GlassInput value={email} onChange={setEmail} type="email" /></div>
+          <div><p className="text-[14px] font-semibold text-text-primary mb-2">LinkedIn URL</p><GlassInput value={linkedIn} onChange={setLinkedIn} placeholder="https://linkedin.com/in/..." /></div>
         </div>
       </GlassCard>
 
-      {/* Metrics */}
+      {/* Investment Thesis */}
       <GlassCard className="p-7">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-[18px] font-semibold text-text-primary">Your Metrics</h3>
-          <span className="text-[13px] text-text-muted">Last updated 3 days ago</span>
-        </div>
-        <div className="space-y-3">
-          {[
-            { label: "Monthly Revenue", value: mrr, onChange: setMrr, prefix: "$", trend: "+22%" },
-            { label: "Active Users", value: users, onChange: setUsers, trend: "+18%" },
-            { label: "MoM Growth", value: growth, onChange: setGrowth, suffix: "%" },
-            { label: "Pipeline Value", value: pipeline, onChange: setPipeline, prefix: "$", trend: "+35%" },
-          ].map((m) => (
-            <div key={m.label} className="flex items-center gap-4 rounded-xl p-4" style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.35)" }}>
-              <span className="text-[15px] font-semibold text-text-primary flex-1">{m.label}</span>
-              <div className="w-[140px]"><GlassInput value={m.value} onChange={m.onChange} prefix={m.prefix} /></div>
-              {m.trend && <span className="text-[12px] text-[#059669] font-medium shrink-0">{m.trend}</span>}
-            </div>
-          ))}
-        </div>
-      </GlassCard>
-
-      {/* Team */}
-      <GlassCard className="p-7">
-        <h3 className="text-[18px] font-semibold text-text-primary mb-6">Your Team</h3>
-        <div className="space-y-3">
-          {[
-            { initials: "AR", color: "#4A6CF7", name: "Alex Rivera", title: "CEO & Co-Founder" },
-            { initials: "JK", color: "#7C5CFC", name: "Jordan Kim", title: "CTO & Co-Founder" },
-            { initials: "SO", color: "#0d9488", name: "Sam Okafor", title: "Head of Sales" },
-          ].map((m) => (
-            <div key={m.name} className="flex items-center gap-4 rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.25)", border: "1px solid rgba(255,255,255,0.4)" }}>
-              <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold text-sm shrink-0" style={{ backgroundColor: m.color }}>{m.initials}</div>
-              <div className="flex-1 min-w-0">
-                <p className="text-[16px] font-semibold text-text-primary">{m.name}</p>
-                <p className="text-[14px] text-text-muted">{m.title}</p>
-              </div>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="1.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" /><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>
-            </div>
-          ))}
-        </div>
-      </GlassCard>
-
-      {/* Investment Preferences */}
-      <GlassCard className="p-7">
-        <h3 className="text-[18px] font-semibold text-text-primary mb-6">What You Are Looking For</h3>
+        <h3 className="text-[18px] font-semibold text-text-primary mb-6">Investment Thesis</h3>
         <div className="space-y-4">
-          <div><p className="text-[14px] font-semibold text-text-primary mb-2">Target Raise Amount</p><GlassInput value={raiseAmount} onChange={setRaiseAmount} prefix="$" /></div>
-          <div><p className="text-[14px] font-semibold text-text-primary mb-2">Previously Raised</p><GlassInput value={prevFunding} onChange={setPrevFunding} prefix="$" /></div>
           <div>
-            <p className="text-[14px] font-semibold text-text-primary mb-2">Ideal Investor Description</p>
-            <textarea value={idealInvestor} onChange={(e) => setIdealInvestor(e.target.value)} className="w-full rounded-xl text-[16px] text-text-primary placeholder:text-text-muted p-4 outline-none transition-all duration-200 resize-y min-h-[100px]"
+            <p className="text-[14px] font-semibold text-text-primary mb-2">Your Thesis</p>
+            <textarea value={thesis} onChange={(e) => setThesis(e.target.value)} className="w-full rounded-xl text-[16px] text-text-primary placeholder:text-text-muted p-4 outline-none transition-all duration-200 resize-y min-h-[100px]"
               style={{ background: "rgba(255,255,255,0.3)", border: "1px solid rgba(0,0,0,0.08)" }}
               onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(74,108,247,0.5)"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(74,108,247,0.1)"; }}
               onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.08)"; e.currentTarget.style.boxShadow = "none"; }}
             />
+          </div>
+        </div>
+      </GlassCard>
+
+      {/* Preferences */}
+      <GlassCard className="p-7">
+        <h3 className="text-[18px] font-semibold text-text-primary mb-6">Investment Preferences</h3>
+        <div className="space-y-5">
+          <div>
+            <p className="text-[14px] font-semibold text-text-primary mb-3">Sector Preferences</p>
+            <div className="flex flex-wrap gap-2">
+              {allSectors.map((s) => (
+                <button key={s} onClick={() => toggleSector(s)}
+                  className={`px-3.5 py-1.5 rounded-full text-[13px] font-medium transition-all duration-200 ${selectedSectors.includes(s) ? "text-white" : "text-text-secondary hover:bg-black/[0.04]"}`}
+                  style={selectedSectors.includes(s) ? { background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" } : { background: "rgba(255,255,255,0.3)", border: "1px solid rgba(0,0,0,0.08)" }}>
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className="text-[14px] font-semibold text-text-primary mb-3">Stage Preferences</p>
+            <div className="flex flex-wrap gap-2">
+              {allStages.map((s) => (
+                <button key={s} onClick={() => toggleStage(s)}
+                  className={`px-3.5 py-1.5 rounded-full text-[13px] font-medium transition-all duration-200 ${selectedStages.includes(s) ? "text-white" : "text-text-secondary hover:bg-black/[0.04]"}`}
+                  style={selectedStages.includes(s) ? { background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" } : { background: "rgba(255,255,255,0.3)", border: "1px solid rgba(0,0,0,0.08)" }}>
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className="text-[14px] font-semibold text-text-primary mb-3">Check Size Range</p>
+            <div className="flex items-center gap-3">
+              <div className="flex-1"><GlassInput value={checkMin} onChange={setCheckMin} prefix="$" /></div>
+              <span className="text-text-muted text-[14px] shrink-0">to</span>
+              <div className="flex-1"><GlassInput value={checkMax} onChange={setCheckMax} prefix="$" /></div>
+            </div>
           </div>
         </div>
       </GlassCard>
@@ -154,7 +155,7 @@ function AccountTab() {
         <h3 className="text-[18px] font-semibold text-text-primary mb-6">Account Details</h3>
         <div className="space-y-4">
           <div className="flex items-center justify-between py-3 border-b border-black/[0.04]">
-            <div><p className="text-[14px] font-semibold text-text-primary">Email</p><p className="text-[14px] text-text-muted">alex@luminary.ai</p></div>
+            <div><p className="text-[14px] font-semibold text-text-primary">Email</p><p className="text-[14px] text-text-muted">jordan@apexventures.com</p></div>
             <a href="#" className="text-accent-blue text-[14px] hover:underline">Change</a>
           </div>
           <div className="flex items-center justify-between py-3">
@@ -167,7 +168,7 @@ function AccountTab() {
       <GlassCard className="p-7">
         <h3 className="text-[18px] font-semibold text-text-primary mb-6">Connected Accounts</h3>
         {[
-          { name: "Google Calendar", connected: true, detail: "alex@luminary.ai" },
+          { name: "Google Calendar", connected: true, detail: "jordan@apexventures.com" },
           { name: "LinkedIn", connected: false, detail: "" },
         ].map((a) => (
           <div key={a.name} className="flex items-center justify-between py-3 px-4 rounded-xl mb-3" style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.35)" }}>
@@ -212,8 +213,8 @@ function NotificationsTab() {
   return (
     <GlassCard className="p-7">
       <p className="text-[12px] uppercase tracking-[2px] text-text-muted mb-2">Match Activity</p>
-      <NotifRow label="New investor interest" desc="When an investor expresses interest in your startup" checked={notifs.newInterest} onChange={set("newInterest")} />
-      <NotifRow label="Interest expiring soon" desc="Reminder when you have less than 12 hours to respond" checked={notifs.expiring} onChange={set("expiring")} />
+      <NotifRow label="New founder match" desc="When a founder you expressed interest in matches back" checked={notifs.newInterest} onChange={set("newInterest")} />
+      <NotifRow label="Interest expiring soon" desc="Reminder when you have less than 12 hours to respond to a match" checked={notifs.expiring} onChange={set("expiring")} />
       <NotifRow label="Match confirmed" desc="When a chemistry call is scheduled" checked={notifs.matchConfirm} onChange={set("matchConfirm")} />
 
       <div className="my-5 h-px bg-black/[0.04]" />
@@ -224,8 +225,8 @@ function NotificationsTab() {
 
       <div className="my-5 h-px bg-black/[0.04]" />
       <p className="text-[12px] uppercase tracking-[2px] text-text-muted mb-2">Profile & Deck</p>
-      <NotifRow label="Deck viewed" desc="When an investor views your pitch deck" checked={notifs.deckView} onChange={set("deckView")} />
-      <NotifRow label="Profile viewed" desc="When your profile appears in an investor daily drop" checked={notifs.profileView} onChange={set("profileView")} />
+      <NotifRow label="New daily drops" desc="When new startups are added to your daily drops feed" checked={notifs.deckView} onChange={set("deckView")} />
+      <NotifRow label="Startup updates" desc="When a startup you saved or matched with posts new metrics" checked={notifs.profileView} onChange={set("profileView")} />
       <NotifRow label="Weekly summary" desc="Weekly email digest of your activity and metrics" checked={notifs.weekly} onChange={set("weekly")} />
 
       <div className="my-5 h-px bg-black/[0.04]" />
@@ -276,9 +277,9 @@ function PrivacyTab() {
     <div className="space-y-5">
       <GlassCard className="p-7">
         <h3 className="text-[18px] font-semibold text-text-primary mb-5">Profile Visibility</h3>
-        <NotifRow label="Show my startup in daily drops" desc="When off, your profile will be hidden from all investor feeds" checked={showInDrops} onChange={setShowInDrops} />
-        <NotifRow label="Allow deck downloads" desc="When off, investors can only view your deck in-browser" checked={allowDownloads} onChange={setAllowDownloads} />
-        <NotifRow label="Show team LinkedIn profiles" desc="When off, LinkedIn links are hidden from your public profile" checked={showLinkedIn} onChange={setShowLinkedIn} />
+        <NotifRow label="Show my profile to founders" desc="When off, your profile will be hidden from startup founder feeds" checked={showInDrops} onChange={setShowInDrops} />
+        <NotifRow label="Show investment thesis publicly" desc="When off, founders cannot see your thesis until matched" checked={allowDownloads} onChange={setAllowDownloads} />
+        <NotifRow label="Show LinkedIn profile" desc="When off, your LinkedIn link is hidden from your public profile" checked={showLinkedIn} onChange={setShowLinkedIn} />
       </GlassCard>
 
       <GlassCard className="p-7">
@@ -290,9 +291,9 @@ function PrivacyTab() {
       </GlassCard>
 
       <GlassCard className="p-7">
-        <h3 className="text-[18px] font-semibold text-text-primary mb-5">Blocked Investors</h3>
-        <p className="text-[14px] text-text-muted">You have not blocked any investors.</p>
-        <p className="text-[13px] text-text-muted mt-2">Blocked investors will never see your profile in their daily drops.</p>
+        <h3 className="text-[18px] font-semibold text-text-primary mb-5">Blocked Startups</h3>
+        <p className="text-[14px] text-text-muted">You have not blocked any startups.</p>
+        <p className="text-[13px] text-text-muted mt-2">Blocked startups will never appear in your daily drops or matches.</p>
       </GlassCard>
     </div>
   );

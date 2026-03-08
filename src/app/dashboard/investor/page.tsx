@@ -185,7 +185,7 @@ export default function InvestorDashboard() {
             className="flex items-center justify-between mb-8"
           >
             <h1 className="text-[24px] md:text-[28px] font-normal text-text-primary" style={{ fontFamily: "'Instrument Serif', serif" }}>
-              {mounted ? getGreeting() : "Good morning"}, Sarah
+              {mounted ? getGreeting() : "Good morning"}, Jordan
             </h1>
             <p className="text-text-muted text-[14px] hidden sm:block">{today}</p>
           </motion.div>
