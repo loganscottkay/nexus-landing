@@ -39,7 +39,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const onResize = () => {
-      if (window.innerWidth >= 1280) setMenuOpen(false);
+      if (window.innerWidth >= 1400) setMenuOpen(false);
     };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
@@ -84,7 +84,7 @@ export default function Navbar() {
         <div className="nav-shimmer-line absolute inset-0" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-16 xl:h-20">
+      <div className="mx-auto px-6 flex items-center justify-between h-16 nav:h-20">
         {/* Far left: Logo */}
         <Link
           href="/"
@@ -173,13 +173,13 @@ export default function Navbar() {
         </Link>
 
         {/* Center: Nav links */}
-        <div className="hidden xl:flex items-center" style={{ gap: "28px" }}>
+        <div className="hidden nav:flex items-center absolute left-1/2 -translate-x-1/2" style={{ gap: "20px" }}>
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={link.scrollId ? (e) => scrollToSection(e, link.scrollId!) : undefined}
-              className="nav-link text-text-secondary text-[14px] whitespace-nowrap"
+              className="nav-link text-text-secondary text-[13px] whitespace-nowrap"
               style={{ letterSpacing: "0.3px", fontWeight: 500 }}
             >
               {link.label}
@@ -188,10 +188,10 @@ export default function Navbar() {
         </div>
 
         {/* Far right: Action buttons */}
-        <div className="hidden xl:flex items-center shrink-0" style={{ gap: "16px" }}>
+        <div className="hidden nav:flex items-center shrink-0" style={{ gap: "12px" }}>
           <Link
             href="/login"
-            className="nav-signin-premium text-text-secondary text-[14px]"
+            className="nav-signin-premium text-text-secondary text-[13px]"
             style={{ letterSpacing: "0.3px", fontWeight: 500 }}
           >
             Sign In
@@ -200,7 +200,7 @@ export default function Navbar() {
           <div className="relative" ref={applyRef}>
             <button
               onClick={() => setApplyOpen(!applyOpen)}
-              className="nav-apply-btn flex items-center gap-1.5 text-[14px] font-semibold text-white"
+              className="nav-apply-btn flex items-center gap-1.5 text-[13px] font-semibold text-white"
               style={{ letterSpacing: "0.3px" }}
             >
               Apply Now
@@ -301,7 +301,7 @@ export default function Navbar() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="xl:hidden flex flex-col gap-1.5 p-2"
+          className="nav:hidden flex flex-col gap-1.5 p-2"
           aria-label="Toggle menu"
         >
           <span
@@ -324,7 +324,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div
-        className={`xl:hidden mobile-menu overflow-hidden transition-all duration-300 ${
+        className={`nav:hidden mobile-menu overflow-hidden transition-all duration-300 ${
           menuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
