@@ -1263,14 +1263,14 @@ export default function Home() {
             >
               <Image
                 src="/images/ben.jpeg"
-                alt="Ben Kay"
+                alt="Ben Matiash"
                 width={80}
                 height={80}
                 className="w-12 h-12 rounded-full object-cover shrink-0"
                 style={{ border: "2px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
               />
               <div>
-                <p className="text-[16px] font-semibold text-text-primary">Ben Kay</p>
+                <p className="text-[16px] font-semibold text-text-primary">Ben Matiash</p>
                 <p className="text-[13px] text-text-muted">Co-Founder</p>
                 <p className="text-[13px] text-text-muted">Northeastern University | Institutional Equity @ Morgan Stanley</p>
               </div>

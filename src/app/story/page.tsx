@@ -198,14 +198,14 @@ export default function StoryPage() {
               <div className="flex items-center gap-4 mb-5">
                 <Image
                   src="/images/ben.jpeg"
-                  alt="Ben Kay"
+                  alt="Ben Matiash"
                   width={100}
                   height={100}
                   className="w-[100px] h-[100px] rounded-full object-cover shrink-0"
                   style={{ border: "2px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
                 />
                 <div>
-                  <p className="text-[22px] font-semibold text-text-primary">Ben Kay</p>
+                  <p className="text-[22px] font-semibold text-text-primary">Ben Matiash</p>
                   <p className="text-[15px] text-text-muted">Co-Founder</p>
                   <p className="text-[14px] text-text-muted mt-0.5">
                     Northeastern University | Finance &amp; Marketing | Institutional Equity @ Morgan Stanley
