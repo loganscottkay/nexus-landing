@@ -125,24 +125,40 @@ body {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-/* ---- Nav glass - light ---- */
-.glass-nav {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(16px) saturate(1.2);
-  -webkit-backdrop-filter: blur(16px) saturate(1.2);
-  transition: all 0.3s ease;
+/* ---- Nav shimmer line (animated gradient at bottom edge) ---- */
+@keyframes nav-shimmer-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
-.glass-nav.scrolled {
-  background: rgba(255, 255, 255, 0.8);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.04);
+.nav-shimmer-line {
+  background: linear-gradient(90deg, transparent 0%, transparent 30%, #4A6CF7 45%, #7C5CFC 55%, transparent 70%, transparent 100%);
+  animation: nav-shimmer-sweep 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* ---- Nav logo pulsing dot ---- */
+@keyframes nav-logo-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+.nav-logo-dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4A6CF7, #7C5CFC);
+  animation: nav-logo-pulse 2s ease-in-out infinite;
+  vertical-align: middle;
+  margin-left: 1px;
+  margin-bottom: 2px;
 }
 
 /* ---- Nav link hover underline ---- */
 .nav-link {
   position: relative;
-  transition: color 0.25s ease;
+  transition: color 0.2s ease;
 }
 
 .nav-link::after {
@@ -165,16 +181,61 @@ body {
   width: 100%;
 }
 
-/* ---- Nav Sign In hover ---- */
-.nav-signin {
-  padding: 6px 12px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+/* On mouse leave: line slides out right */
+.nav-link:not(:hover)::after {
+  left: auto;
+  right: 0;
 }
 
-.nav-signin:hover {
+/* ---- Nav Sign In - premium glass treatment ---- */
+.nav-signin-premium {
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all 0.25s ease;
+}
+
+.nav-signin-premium:hover {
   background: rgba(74, 108, 247, 0.06);
+  border-color: rgba(74, 108, 247, 0.15);
   color: #4A6CF7 !important;
+  box-shadow: inset 0 0 12px rgba(74, 108, 247, 0.06);
+}
+
+/* ---- Nav Apply button - premium with shimmer ---- */
+.nav-apply-btn {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #4A6CF7, #7C5CFC);
+  padding: 12px 28px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
+  transition: all 0.3s ease;
+}
+
+.nav-apply-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 20px rgba(74, 108, 247, 0.35);
+  filter: brightness(1.08);
+}
+
+/* Auto shimmer every 4s */
+@keyframes nav-apply-shimmer {
+  0%, 85% { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(300%) skewX(-15deg); }
+}
+
+.nav-apply-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+  animation: nav-apply-shimmer 4s ease-in-out infinite;
+  will-change: transform;
 }
 
 /* ---- Primary CTA ---- */

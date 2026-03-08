@@ -8,12 +8,13 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [applyOpen, setApplyOpen] = useState(false);
+  const [logoHovered, setLogoHovered] = useState(false);
   const applyRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isHome = pathname === "/";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -49,97 +50,179 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 glass-nav ${
-        scrolled ? "scrolled" : ""
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      style={{
+        background: scrolled ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.7)",
+        backdropFilter: "blur(40px) saturate(1.3)",
+        WebkitBackdropFilter: "blur(40px) saturate(1.3)",
+        borderBottom: "1px solid rgba(0,0,0,0.04)",
+      }}
     >
+      {/* Bottom shimmer line */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-[1px] overflow-hidden transition-opacity duration-300"
+        style={{ opacity: scrolled ? 0.35 : 0.2 }}
+      >
+        <div className="nav-shimmer-line absolute inset-0" />
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-16 md:h-20">
+        {/* Logo */}
         <Link
           href="/"
-          className="text-lg md:text-xl font-bold tracking-[0.3em] text-text-primary"
-          style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+          className="flex items-center gap-0 text-lg md:text-xl font-bold tracking-[0.3em] transition-all duration-300"
+          style={{
+            fontFamily: "var(--font-dm-sans), sans-serif",
+            ...(logoHovered
+              ? {
+                  background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }
+              : { color: "#0F172A" }),
+          }}
+          onMouseEnter={() => setLogoHovered(true)}
+          onMouseLeave={() => setLogoHovered(false)}
         >
           NEXUS
+          <span className="relative ml-[-0.15em]">
+            <span className="nav-logo-dot" />
+          </span>
         </Link>
 
+        {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
-          <Link
-            href="/#how-it-works"
-            onClick={(e) => scrollToSection(e, "how-it-works")}
-            className="nav-link text-text-secondary text-[15px] font-medium"
-            style={{ letterSpacing: "0.3px" }}
-          >
-            How It Works
-          </Link>
-          <Link
-            href="/#for-investors"
-            onClick={(e) => scrollToSection(e, "for-investors")}
-            className="nav-link text-text-secondary text-[15px] font-medium"
-            style={{ letterSpacing: "0.3px" }}
-          >
-            For Investors
-          </Link>
-          <Link
-            href="/#for-startups"
-            onClick={(e) => scrollToSection(e, "for-startups")}
-            className="nav-link text-text-secondary text-[15px] font-medium"
-            style={{ letterSpacing: "0.3px" }}
-          >
-            For Startups
-          </Link>
+          {[
+            { label: "How It Works", id: "how-it-works" },
+            { label: "For Investors", id: "for-investors" },
+            { label: "For Startups", id: "for-startups" },
+          ].map((link) => (
+            <Link
+              key={link.id}
+              href={`/#${link.id}`}
+              onClick={(e) => scrollToSection(e, link.id)}
+              className="nav-link text-text-secondary text-[15px]"
+              style={{ letterSpacing: "0.3px", fontWeight: 500 }}
+            >
+              {link.label}
+            </Link>
+          ))}
+
           <div className="flex items-center ml-4" style={{ gap: "24px" }}>
+            {/* Sign In */}
             <Link
               href="/login"
-              className="nav-signin text-text-secondary text-[15px] font-medium"
-              style={{ letterSpacing: "0.3px" }}
+              className="nav-signin-premium text-text-secondary text-[15px]"
+              style={{ letterSpacing: "0.3px", fontWeight: 500 }}
             >
               Sign In
             </Link>
+
+            {/* Apply Now */}
             <div className="relative" ref={applyRef}>
               <button
                 onClick={() => setApplyOpen(!applyOpen)}
-                className="btn-primary btn-shimmer px-5 py-2.5 text-[15px] font-medium flex items-center gap-1.5"
+                className="nav-apply-btn flex items-center gap-1.5 text-[15px] font-semibold text-white"
                 style={{ letterSpacing: "0.3px" }}
               >
                 Apply Now
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${applyOpen ? "rotate-180" : ""}`}>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="transition-transform duration-200"
+                  style={{ transform: applyOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                >
                   <polyline points="6 9 12 15 18 9" />
                 </svg>
               </button>
+
+              {/* Dropdown */}
               <div
-                className="absolute right-0 top-full mt-2 w-[220px] rounded-2xl p-2 transition-all duration-200"
+                className="absolute right-0 top-full mt-3 w-[240px] transition-all duration-200"
                 style={{
-                  background: "rgba(255, 255, 255, 0.8)",
-                  backdropFilter: "blur(24px)",
-                  WebkitBackdropFilter: "blur(24px)",
-                  border: "1px solid rgba(0, 0, 0, 0.06)",
-                  boxShadow: "0 10px 40px rgba(0, 0, 0, 0.1)",
                   opacity: applyOpen ? 1 : 0,
                   transform: applyOpen ? "translateY(0)" : "translateY(-8px)",
                   pointerEvents: applyOpen ? "auto" : "none",
                 }}
               >
-                <Link
-                  href="/apply/investor"
-                  onClick={() => setApplyOpen(false)}
-                  className="block px-5 py-3 rounded-xl text-[15px] text-text-primary font-medium transition-colors duration-150 hover:bg-[rgba(74,108,247,0.05)] hover:text-[#4A6CF7]"
-                  style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                {/* Triangle connector */}
+                <div className="absolute -top-[7px] right-[40px] w-0 h-0"
+                  style={{
+                    borderLeft: "8px solid transparent",
+                    borderRight: "8px solid transparent",
+                    borderBottom: "8px solid rgba(74, 108, 247, 0.3)",
+                  }}
+                />
+                <div className="absolute -top-[6px] right-[41px] w-0 h-0"
+                  style={{
+                    borderLeft: "7px solid transparent",
+                    borderRight: "7px solid transparent",
+                    borderBottom: "7px solid rgba(255, 255, 255, 0.9)",
+                  }}
+                />
+
+                <div
+                  className="rounded-2xl p-2 relative overflow-hidden"
+                  style={{
+                    background: "rgba(255, 255, 255, 0.85)",
+                    backdropFilter: "blur(24px)",
+                    WebkitBackdropFilter: "blur(24px)",
+                    boxShadow: "0 10px 40px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0,0,0,0.04)",
+                  }}
                 >
-                  Apply as Investor
-                </Link>
-                <Link
-                  href="/apply/startup"
-                  onClick={() => setApplyOpen(false)}
-                  className="block px-5 py-3 rounded-xl text-[15px] text-text-primary font-medium transition-colors duration-150 hover:bg-[rgba(74,108,247,0.05)] hover:text-[#4A6CF7]"
-                  style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-                >
-                  Apply as Startup
-                </Link>
+                  {/* Gradient border overlay */}
+                  <div
+                    className="absolute inset-0 rounded-2xl pointer-events-none"
+                    style={{
+                      padding: "1px",
+                      background: "linear-gradient(135deg, rgba(74,108,247,0.15), rgba(124,92,252,0.15), rgba(74,108,247,0.08))",
+                      mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                      WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                      maskComposite: "xor" as const,
+                      WebkitMaskComposite: "xor" as const,
+                    }}
+                  />
+
+                  <Link
+                    href="/apply/investor"
+                    onClick={() => setApplyOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[15px] text-text-primary font-medium transition-all duration-150 hover:bg-[rgba(74,108,247,0.05)] hover:text-[#4A6CF7]"
+                    style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                      <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" />
+                    </svg>
+                    Apply as Investor
+                  </Link>
+                  <Link
+                    href="/apply/startup"
+                    onClick={() => setApplyOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[15px] text-text-primary font-medium transition-all duration-150 hover:bg-[rgba(74,108,247,0.05)] hover:text-[#4A6CF7]"
+                    style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z" />
+                      <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z" />
+                      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+                      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+                    </svg>
+                    Apply as Startup
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
+        {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden flex flex-col gap-1.5 p-2"
@@ -163,6 +246,7 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* Mobile menu */}
       <div
         className={`md:hidden mobile-menu overflow-hidden transition-all duration-300 ${
           menuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
@@ -172,21 +256,21 @@ export default function Navbar() {
           <Link
             href="/#how-it-works"
             onClick={(e) => { scrollToSection(e, "how-it-works"); setMenuOpen(false); }}
-            className="text-text-secondary hover:text-text-primary transition-colors text-[15px]"
+            className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
           >
             How It Works
           </Link>
           <Link
             href="/#for-investors"
             onClick={(e) => { scrollToSection(e, "for-investors"); setMenuOpen(false); }}
-            className="text-text-secondary hover:text-text-primary transition-colors text-[15px]"
+            className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
           >
             For Investors
           </Link>
           <Link
             href="/#for-startups"
             onClick={(e) => { scrollToSection(e, "for-startups"); setMenuOpen(false); }}
-            className="text-text-secondary hover:text-text-primary transition-colors text-[15px]"
+            className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
           >
             For Startups
           </Link>
@@ -201,14 +285,14 @@ export default function Navbar() {
             <Link
               href="/apply/investor"
               onClick={() => setMenuOpen(false)}
-              className="btn-primary px-5 py-2.5 text-[14px] font-medium"
+              className="nav-apply-btn text-[14px] font-medium text-white"
             >
               Apply as Investor
             </Link>
             <Link
               href="/apply/startup"
               onClick={() => setMenuOpen(false)}
-              className="btn-primary px-5 py-2.5 text-[14px] font-medium"
+              className="nav-apply-btn text-[14px] font-medium text-white"
             >
               Apply as Startup
             </Link>
