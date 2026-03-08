@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import ParticleField from "@/components/ParticleField";
-import { ScoringPreview, MatchingPreview, AccountabilityPreview, DefaultPreview } from "@/components/HowItWorksPreviews";
+import { ScoringPreview, MatchingPreview, AccountabilityPreview } from "@/components/HowItWorksPreviews";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
@@ -149,8 +149,8 @@ const howItWorksCards = [
   {
     num: "02",
     icon: <SparkleIcon />,
-    title: "Get Matched in 48 Hours",
-    desc: "Our algorithm pairs you by fit. Small investors see early-stage founders. Larger checks see proven traction. Every match is intentional and delivered daily.",
+    title: "Get Matched by Tier",
+    desc: "Our algorithm pairs investors with startups at their level. Small checks see raw early-stage founders. Bigger checks see proven traction. Startups that do not perform get removed, so your feed stays fresh with only the best ideas.",
   },
   {
     num: "03",
@@ -160,155 +160,299 @@ const howItWorksCards = [
   },
 ];
 
+const CYCLE_DURATION = 6000; // 6 seconds per demo
+const RESUME_DELAY = 2000; // 2 seconds before auto-cycle resumes
+const STEPS = ["01", "02", "03"] as const;
+
 function HowItWorksSection() {
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [activeCard, setActiveCard] = useState<string>("01");
+  const [isHovering, setIsHovering] = useState(false);
+  const [inViewport, setInViewport] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const cycleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const progressRafRef = useRef<number>(0);
+  const cycleStartRef = useRef<number>(0);
+
+  // Viewport detection - start auto-cycle when section enters view
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInViewport(entry.isIntersecting),
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Advance to next card in cycle
+  const advanceToNext = useCallback(() => {
+    setActiveCard((prev) => {
+      const idx = STEPS.indexOf(prev as typeof STEPS[number]);
+      return STEPS[(idx + 1) % STEPS.length];
+    });
+  }, []);
+
+  // Progress animation loop
+  const startProgressAnimation = useCallback(() => {
+    cycleStartRef.current = performance.now();
+    cancelAnimationFrame(progressRafRef.current);
+
+    const animate = (now: number) => {
+      const elapsed = now - cycleStartRef.current;
+      const p = Math.min(elapsed / CYCLE_DURATION, 1);
+      setProgress(p);
+      if (p < 1) {
+        progressRafRef.current = requestAnimationFrame(animate);
+      }
+    };
+    progressRafRef.current = requestAnimationFrame(animate);
+  }, []);
+
+  // Auto-cycle logic
+  useEffect(() => {
+    // Clear any existing timers
+    if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current);
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    cancelAnimationFrame(progressRafRef.current);
+
+    if (!inViewport || isHovering) return;
+
+    // Start progress bar and schedule next advance
+    startProgressAnimation();
+    cycleTimerRef.current = setTimeout(() => {
+      advanceToNext();
+    }, CYCLE_DURATION);
+
+    return () => {
+      if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current);
+      cancelAnimationFrame(progressRafRef.current);
+    };
+  }, [activeCard, inViewport, isHovering, advanceToNext, startProgressAnimation]);
+
+  // Hover handlers
+  const handleMouseEnter = useCallback((cardNum: string) => {
+    setIsHovering(true);
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current);
+    cancelAnimationFrame(progressRafRef.current);
+    setActiveCard(cardNum);
+    setProgress(0);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovering(false);
+    // Resume auto-cycle after delay, continuing from the currently active card
+    resumeTimerRef.current = setTimeout(() => {
+      // Trigger a re-run of the auto-cycle effect by toggling a state
+      setActiveCard((prev) => prev); // force effect re-run via isHovering change
+    }, RESUME_DELAY);
+  }, []);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current);
+      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+      cancelAnimationFrame(progressRafRef.current);
+    };
+  }, []);
+
+  const activeIndex = STEPS.indexOf(activeCard as typeof STEPS[number]);
 
   return (
     <Section id="how-it-works" className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
-      <motion.div
-        variants={cardStagger}
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewportConfig}
-        className="flex flex-col items-center"
-      >
-        <motion.p
-          variants={fadeUp}
-          transition={{ duration: 0.6, ease }}
-          className="text-text-muted text-[13px] tracking-[3px] uppercase mb-4"
+      <div ref={sectionRef}>
+        <motion.div
+          variants={cardStagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="flex flex-col items-center"
         >
-          The Process
-        </motion.p>
-        <motion.h2
-          variants={fadeUp}
-          transition={{ duration: 0.6, ease }}
-          className="text-[36px] md:text-[44px] font-normal text-center mb-16"
-          style={{ fontFamily: "'Instrument Serif', serif" }}
-        >
-          How It Works
-        </motion.h2>
-
-        {/* Two-column layout: cards left, preview right */}
-        <motion.div variants={cardStagger} className="flex flex-col lg:flex-row gap-8 w-full">
-          {/* Left: Compact cards */}
-          <div className="flex flex-col gap-4 lg:w-[360px] shrink-0">
-            {howItWorksCards.map((card) => (
-              <motion.div
-                key={card.num}
-                variants={fadeUp}
-                transition={{ duration: 0.6, ease }}
-                onMouseEnter={() => setHoveredCard(card.num)}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                <div
-                  className={`glow-card-wrapper h-full transition-all duration-300 ${
-                    hoveredCard === card.num ? "hiw-card-active" : ""
-                  }`}
-                >
-                  <div className="glass p-5 md:p-6 h-full relative overflow-hidden">
-                    <span
-                      className="step-number text-[48px] font-normal text-text-primary/[0.06] absolute top-3 right-4 leading-none select-none"
-                      style={{ fontFamily: "'Instrument Serif', serif" }}
-                    >
-                      {card.num}
-                    </span>
-                    <div className="relative">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="shrink-0">{card.icon}</div>
-                        <h3 className="text-[17px] md:text-[18px] font-semibold text-text-primary">
-                          {card.title}
-                        </h3>
-                      </div>
-                      <p className="text-text-secondary text-[14px] leading-[1.6] line-clamp-2">
-                        {card.desc}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Right: Preview area */}
-          <motion.div
+          <motion.p
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
-            className="flex-1 min-h-[450px] rounded-3xl p-6 md:p-8 relative overflow-hidden"
-            style={{
-              background: "rgba(10, 10, 15, 0.9)",
-              border: "1px solid transparent",
-              backgroundClip: "padding-box",
-            }}
+            className="text-text-muted text-[13px] tracking-[3px] uppercase mb-4"
           >
-            {/* Gradient border */}
-            <div
-              className="absolute inset-0 rounded-3xl pointer-events-none"
-              style={{
-                padding: "1px",
-                background: "linear-gradient(135deg, rgba(74, 108, 247, 0.2), rgba(124, 92, 252, 0.2), rgba(74, 108, 247, 0.1))",
-                mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                maskComposite: "xor",
-                WebkitMaskComposite: "xor",
-              }}
-            />
+            The Process
+          </motion.p>
+          <motion.h2
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[36px] md:text-[44px] font-normal text-center mb-16"
+            style={{ fontFamily: "'Instrument Serif', serif" }}
+          >
+            How It Works
+          </motion.h2>
 
-            {/* Preview content */}
-            <div className="relative h-full">
-              <AnimatePresence mode="wait">
-                {hoveredCard === "01" && (
-                  <motion.div
-                    key="scoring"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
-                    className="h-full"
+          {/* Two-column layout: cards left, preview right */}
+          <motion.div variants={cardStagger} className="flex flex-col lg:flex-row gap-8 w-full">
+            {/* Left: Compact cards */}
+            <div className="flex flex-col gap-4 lg:w-[360px] shrink-0">
+              {howItWorksCards.map((card) => (
+                <motion.div
+                  key={card.num}
+                  variants={fadeUp}
+                  transition={{ duration: 0.6, ease }}
+                  onMouseEnter={() => handleMouseEnter(card.num)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <div
+                    className={`glow-card-wrapper h-full transition-all duration-300 ${
+                      activeCard === card.num ? "hiw-card-active" : ""
+                    }`}
                   >
-                    <ScoringPreview active={hoveredCard === "01"} />
-                  </motion.div>
-                )}
-                {hoveredCard === "02" && (
-                  <motion.div
-                    key="matching"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
-                    className="h-full"
-                  >
-                    <MatchingPreview active={hoveredCard === "02"} />
-                  </motion.div>
-                )}
-                {hoveredCard === "03" && (
-                  <motion.div
-                    key="accountability"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
-                    className="h-full"
-                  >
-                    <AccountabilityPreview active={hoveredCard === "03"} />
-                  </motion.div>
-                )}
-                {hoveredCard === null && (
-                  <motion.div
-                    key="default"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="h-full"
-                  >
-                    <DefaultPreview />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    <div className="glass p-5 md:p-6 h-full relative overflow-hidden">
+                      <span
+                        className="step-number text-[48px] font-normal text-text-primary/[0.06] absolute top-3 right-4 leading-none select-none"
+                        style={{ fontFamily: "'Instrument Serif', serif" }}
+                      >
+                        {card.num}
+                      </span>
+                      <div className="relative">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="shrink-0">{card.icon}</div>
+                          <h3 className="text-[17px] md:text-[18px] font-semibold text-text-primary">
+                            {card.title}
+                          </h3>
+                        </div>
+                        <p className="text-text-secondary text-[14px] leading-[1.6] line-clamp-2">
+                          {card.desc}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Right: Preview area + progress dots */}
+            <div className="flex-1 flex flex-col gap-4">
+              <motion.div
+                variants={fadeUp}
+                transition={{ duration: 0.6, ease }}
+                className="flex-1 min-h-[450px] rounded-3xl p-6 md:p-8 relative overflow-hidden"
+                style={{
+                  background: "rgba(10, 10, 15, 0.9)",
+                  border: "1px solid transparent",
+                  backgroundClip: "padding-box",
+                }}
+              >
+                {/* Gradient border */}
+                <div
+                  className="absolute inset-0 rounded-3xl pointer-events-none"
+                  style={{
+                    padding: "1px",
+                    background: "linear-gradient(135deg, rgba(74, 108, 247, 0.2), rgba(124, 92, 252, 0.2), rgba(74, 108, 247, 0.1))",
+                    mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    maskComposite: "xor",
+                    WebkitMaskComposite: "xor",
+                  }}
+                />
+
+                {/* Preview content */}
+                <div className="relative h-full">
+                  <AnimatePresence mode="wait">
+                    {activeCard === "01" && (
+                      <motion.div
+                        key="scoring"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.98 }}
+                        transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+                        className="h-full"
+                      >
+                        <ScoringPreview active={activeCard === "01"} />
+                      </motion.div>
+                    )}
+                    {activeCard === "02" && (
+                      <motion.div
+                        key="matching"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.98 }}
+                        transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+                        className="h-full"
+                      >
+                        <MatchingPreview active={activeCard === "02"} />
+                      </motion.div>
+                    )}
+                    {activeCard === "03" && (
+                      <motion.div
+                        key="accountability"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.98 }}
+                        transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+                        className="h-full"
+                      >
+                        <AccountabilityPreview active={activeCard === "03"} />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+
+              {/* Progress dots */}
+              <div className="flex items-center justify-center gap-3">
+                {STEPS.map((step, i) => (
+                  <div key={step} className="relative flex items-center justify-center">
+                    {/* Background dot */}
+                    <div
+                      className="w-2 h-2 rounded-full transition-colors duration-300"
+                      style={{
+                        background: i === activeIndex
+                          ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)"
+                          : "rgba(255, 255, 255, 0.1)",
+                      }}
+                    />
+                    {/* Progress ring around active dot */}
+                    {i === activeIndex && !isHovering && (
+                      <svg
+                        className="absolute"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        style={{ transform: "rotate(-90deg)" }}
+                      >
+                        <circle
+                          cx="8"
+                          cy="8"
+                          r="6"
+                          fill="none"
+                          stroke="rgba(255,255,255,0.06)"
+                          strokeWidth="1.5"
+                        />
+                        <circle
+                          cx="8"
+                          cy="8"
+                          r="6"
+                          fill="none"
+                          stroke="url(#progressGrad)"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeDasharray={`${progress * 37.7} 37.7`}
+                        />
+                        <defs>
+                          <linearGradient id="progressGrad" x1="0" y1="0" x2="16" y2="16">
+                            <stop stopColor="#4A6CF7" />
+                            <stop offset="1" stopColor="#7C5CFC" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </Section>
   );
 }
