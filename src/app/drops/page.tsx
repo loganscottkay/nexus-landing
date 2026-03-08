@@ -21,6 +21,11 @@ interface Founder {
   title: string;
 }
 
+interface Milestone {
+  date: string;
+  text: string;
+}
+
 interface Startup {
   id: number;
   name: string;
@@ -29,10 +34,17 @@ interface Startup {
   oneLiner: string;
   sector: string;
   stage: string;
-  metrics: { value: string; label: string }[];
+  location: string;
+  founded: string;
+  metrics: { value: string; label: string; trend: string; trendDir: "up" | "down" }[];
   askAmount: string;
+  askDisplay: string;
+  fundAllocation: { label: string; pct: number; color: string }[];
   askBullets: string[];
   founders: Founder[];
+  milestones: Milestone[];
+  nexusScore: number;
+  pitchFounder: { name: string; title: string; initials: string; color: string };
 }
 
 const startups: Startup[] = [
@@ -44,23 +56,38 @@ const startups: Startup[] = [
     oneLiner: "AI-powered contract analysis for legal teams",
     sector: "AI / Machine Learning",
     stage: "Seed Stage",
+    location: "San Francisco, CA",
+    founded: "Jun 2025",
     metrics: [
-      { value: "$45K", label: "MRR" },
-      { value: "2,400", label: "Users" },
-      { value: "180%", label: "MoM Growth" },
-      { value: "$2M", label: "Pipeline" },
+      { value: "$45K", label: "MRR", trend: "+22%", trendDir: "up" },
+      { value: "2,400", label: "Active Users", trend: "+18%", trendDir: "up" },
+      { value: "180%", label: "MoM Growth", trend: "+12%", trendDir: "up" },
+      { value: "$2M", label: "Pipeline", trend: "+35%", trendDir: "up" },
     ],
     askAmount: "$1.5M Seed Round",
+    askDisplay: "Raising $1.5M Seed Round",
+    fundAllocation: [
+      { label: "Engineering", pct: 55, color: "#4A6CF7" },
+      { label: "Go-to-Market", pct: 30, color: "#7C5CFC" },
+      { label: "Operations", pct: 15, color: "#94A3B8" },
+    ],
     askBullets: [
       "Investors with AI/SaaS expertise",
-      "Check sizes $100K-$500K",
+      "$100K-$500K check sizes",
       "Strategic value beyond capital",
     ],
     founders: [
-      { initials: "SK", color: "#4A6CF7", name: "Sarah Kim", title: "CEO" },
-      { initials: "JR", color: "#7C5CFC", name: "James Rivera", title: "CTO" },
-      { initials: "AP", color: "#0d9488", name: "Anika Patel", title: "CPO" },
+      { initials: "AR", color: "#4A6CF7", name: "Alex Rivera", title: "CEO & Co-Founder" },
+      { initials: "JK", color: "#7C5CFC", name: "Jordan Kim", title: "CTO & Co-Founder" },
+      { initials: "SO", color: "#0d9488", name: "Sam Okafor", title: "Head of Sales" },
     ],
+    milestones: [
+      { date: "Mar 2026", text: "Closed $500K pre-seed" },
+      { date: "Jan 2026", text: "Launched v2.0 with AI contract comparison" },
+      { date: "Nov 2025", text: "First 1,000 users milestone" },
+    ],
+    nexusScore: 87,
+    pitchFounder: { name: "Alex Rivera", title: "CEO & Co-Founder", initials: "AR", color: "#4A6CF7" },
   },
   {
     id: 2,
@@ -70,23 +97,38 @@ const startups: Startup[] = [
     oneLiner: "Embedded payroll infrastructure for platforms",
     sector: "Fintech / Infrastructure",
     stage: "Seed Stage",
+    location: "New York, NY",
+    founded: "Mar 2025",
     metrics: [
-      { value: "$82K", label: "MRR" },
-      { value: "34", label: "Enterprise Clients" },
-      { value: "22%", label: "MoM Growth" },
-      { value: "$4.1M", label: "Pipeline" },
+      { value: "$82K", label: "MRR", trend: "+28%", trendDir: "up" },
+      { value: "34", label: "Enterprise Clients", trend: "+6", trendDir: "up" },
+      { value: "22%", label: "MoM Growth", trend: "+3%", trendDir: "up" },
+      { value: "$4.1M", label: "Pipeline", trend: "+41%", trendDir: "up" },
     ],
     askAmount: "$3M Seed Round",
+    askDisplay: "Raising $3M Seed Round",
+    fundAllocation: [
+      { label: "Engineering", pct: 45, color: "#4A6CF7" },
+      { label: "Go-to-Market", pct: 35, color: "#7C5CFC" },
+      { label: "Operations", pct: 20, color: "#94A3B8" },
+    ],
     askBullets: [
       "Fintech operators or former founders",
-      "Check sizes $250K-$750K",
+      "$250K-$750K check sizes",
       "Distribution partnerships in payroll/HR",
     ],
     founders: [
-      { initials: "MO", color: "#0d9488", name: "Marcus Obi", title: "CEO" },
+      { initials: "MO", color: "#0d9488", name: "Marcus Obi", title: "CEO & Founder" },
       { initials: "LW", color: "#4A6CF7", name: "Lisa Wang", title: "CTO" },
       { initials: "DK", color: "#7C5CFC", name: "David Ko", title: "COO" },
     ],
+    milestones: [
+      { date: "Feb 2026", text: "Signed 3 Fortune 500 pilots" },
+      { date: "Dec 2025", text: "$50K MRR milestone" },
+      { date: "Aug 2025", text: "Launched public API" },
+    ],
+    nexusScore: 91,
+    pitchFounder: { name: "Marcus Obi", title: "CEO & Founder", initials: "MO", color: "#0d9488" },
   },
   {
     id: 3,
@@ -96,23 +138,38 @@ const startups: Startup[] = [
     oneLiner: "Predictive diagnostics using wearable biosignals",
     sector: "Health Tech / AI",
     stage: "Pre-Seed",
+    location: "Boston, MA",
+    founded: "Sep 2025",
     metrics: [
-      { value: "$12K", label: "MRR" },
-      { value: "890", label: "Beta Users" },
-      { value: "340%", label: "MoM Growth" },
-      { value: "$800K", label: "Pipeline" },
+      { value: "$12K", label: "MRR", trend: "+45%", trendDir: "up" },
+      { value: "890", label: "Beta Users", trend: "+120", trendDir: "up" },
+      { value: "340%", label: "MoM Growth", trend: "+80%", trendDir: "up" },
+      { value: "$800K", label: "Pipeline", trend: "+25%", trendDir: "up" },
     ],
     askAmount: "$750K Pre-Seed Round",
+    askDisplay: "Raising $750K Pre-Seed Round",
+    fundAllocation: [
+      { label: "R&D", pct: 60, color: "#4A6CF7" },
+      { label: "Clinical Trials", pct: 25, color: "#7C5CFC" },
+      { label: "Operations", pct: 15, color: "#94A3B8" },
+    ],
     askBullets: [
       "Health tech or biotech investors",
-      "Check sizes $50K-$200K",
+      "$50K-$200K check sizes",
       "Clinical trial connections",
     ],
     founders: [
-      { initials: "EN", color: "#7C5CFC", name: "Elena Navarro", title: "CEO" },
+      { initials: "EN", color: "#7C5CFC", name: "Elena Navarro", title: "CEO & Co-Founder" },
       { initials: "RT", color: "#0d9488", name: "Raj Thakur", title: "CTO" },
-      { initials: "CM", color: "#4A6CF7", name: "Claire Moore", title: "CSO" },
+      { initials: "CM", color: "#4A6CF7", name: "Claire Moore", title: "Chief Science Officer" },
     ],
+    milestones: [
+      { date: "Feb 2026", text: "FDA pre-submission meeting scheduled" },
+      { date: "Dec 2025", text: "500 beta users onboarded" },
+      { date: "Oct 2025", text: "Published peer-reviewed validation study" },
+    ],
+    nexusScore: 78,
+    pitchFounder: { name: "Elena Navarro", title: "CEO & Co-Founder", initials: "EN", color: "#7C5CFC" },
   },
   {
     id: 4,
@@ -122,23 +179,38 @@ const startups: Startup[] = [
     oneLiner: "Real-time carbon tracking for supply chains",
     sector: "Climate Tech / Analytics",
     stage: "Seed Stage",
+    location: "Austin, TX",
+    founded: "Jan 2025",
     metrics: [
-      { value: "$67K", label: "MRR" },
-      { value: "18", label: "Enterprise Clients" },
-      { value: "15%", label: "MoM Growth" },
-      { value: "$3.2M", label: "Pipeline" },
+      { value: "$67K", label: "MRR", trend: "+15%", trendDir: "up" },
+      { value: "18", label: "Enterprise Clients", trend: "+4", trendDir: "up" },
+      { value: "15%", label: "MoM Growth", trend: "-2%", trendDir: "down" },
+      { value: "$3.2M", label: "Pipeline", trend: "+52%", trendDir: "up" },
     ],
     askAmount: "$2.5M Seed Round",
+    askDisplay: "Raising $2.5M Seed Round",
+    fundAllocation: [
+      { label: "Engineering", pct: 50, color: "#4A6CF7" },
+      { label: "Go-to-Market", pct: 30, color: "#7C5CFC" },
+      { label: "Operations", pct: 20, color: "#94A3B8" },
+    ],
     askBullets: [
       "Climate-focused or ESG investors",
-      "Check sizes $200K-$500K",
+      "$200K-$500K check sizes",
       "Enterprise procurement introductions",
     ],
     founders: [
-      { initials: "TJ", color: "#059669", name: "Tomas Jensen", title: "CEO" },
+      { initials: "TJ", color: "#059669", name: "Tomas Jensen", title: "CEO & Co-Founder" },
       { initials: "NB", color: "#4A6CF7", name: "Nadia Brooks", title: "CTO" },
       { initials: "KL", color: "#7C5CFC", name: "Kevin Liu", title: "Head of Sales" },
     ],
+    milestones: [
+      { date: "Mar 2026", text: "Partnered with 2 Fortune 100 companies" },
+      { date: "Jan 2026", text: "Crossed $50K MRR" },
+      { date: "Sep 2025", text: "Won TechCrunch Disrupt Climate category" },
+    ],
+    nexusScore: 83,
+    pitchFounder: { name: "Tomas Jensen", title: "CEO & Co-Founder", initials: "TJ", color: "#059669" },
   },
   {
     id: 5,
@@ -148,23 +220,38 @@ const startups: Startup[] = [
     oneLiner: "AI meeting assistant that writes follow-ups that actually get read",
     sector: "Productivity / AI",
     stage: "Pre-Seed",
+    location: "Los Angeles, CA",
+    founded: "Nov 2025",
     metrics: [
-      { value: "$8K", label: "MRR" },
-      { value: "4,200", label: "Users" },
-      { value: "210%", label: "MoM Growth" },
-      { value: "$500K", label: "Pipeline" },
+      { value: "$8K", label: "MRR", trend: "+62%", trendDir: "up" },
+      { value: "4,200", label: "Users", trend: "+800", trendDir: "up" },
+      { value: "210%", label: "MoM Growth", trend: "+30%", trendDir: "up" },
+      { value: "$500K", label: "Pipeline", trend: "+18%", trendDir: "up" },
     ],
     askAmount: "$600K Pre-Seed Round",
+    askDisplay: "Raising $600K Pre-Seed Round",
+    fundAllocation: [
+      { label: "Engineering", pct: 60, color: "#4A6CF7" },
+      { label: "Go-to-Market", pct: 30, color: "#7C5CFC" },
+      { label: "Operations", pct: 10, color: "#94A3B8" },
+    ],
     askBullets: [
       "SaaS or productivity-focused investors",
-      "Check sizes $25K-$150K",
+      "$25K-$150K check sizes",
       "GTM and distribution expertise",
     ],
     founders: [
-      { initials: "AZ", color: "#e67e22", name: "Ava Zhang", title: "CEO" },
+      { initials: "AZ", color: "#e67e22", name: "Ava Zhang", title: "CEO & Co-Founder" },
       { initials: "BT", color: "#4A6CF7", name: "Ben Torres", title: "CTO" },
       { initials: "JP", color: "#0d9488", name: "Jess Park", title: "Head of Product" },
     ],
+    milestones: [
+      { date: "Feb 2026", text: "4,000 users, viral growth on LinkedIn" },
+      { date: "Jan 2026", text: "Launched Chrome extension" },
+      { date: "Dec 2025", text: "First 1,000 users in 3 weeks" },
+    ],
+    nexusScore: 74,
+    pitchFounder: { name: "Ava Zhang", title: "CEO & Co-Founder", initials: "AZ", color: "#e67e22" },
   },
 ];
 
@@ -195,6 +282,15 @@ function useCountdown() {
   return timeLeft;
 }
 
+/* ─── LinkedIn Icon ─── */
+function LinkedInIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-accent-blue hover:opacity-70 transition-opacity cursor-pointer">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  );
+}
+
 /* ─── Startup Card ─── */
 function StartupCard({
   startup,
@@ -221,6 +317,8 @@ function StartupCard({
     }
   };
 
+  const scoreColor = startup.nexusScore >= 85 ? "#059669" : startup.nexusScore >= 75 ? "#4A6CF7" : "#D97706";
+
   return (
     <motion.div
       className="absolute inset-0 flex items-center justify-center cursor-grab active:cursor-grabbing"
@@ -245,7 +343,7 @@ function StartupCard({
       </motion.div>
 
       <div
-        className="w-full max-w-[600px] mx-4 rounded-3xl overflow-y-auto max-h-[calc(100vh-220px)]"
+        className="w-full max-w-[620px] mx-4 rounded-3xl overflow-y-auto max-h-[calc(100vh-220px)]"
         style={{
           background: "rgba(255, 255, 255, 0.5)",
           backdropFilter: "blur(24px) saturate(1.3)",
@@ -255,39 +353,73 @@ function StartupCard({
             "0 8px 40px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9)",
         }}
       >
-        <div className="p-8 md:p-10">
-          {/* Header */}
-          <div className="flex items-center gap-4 mb-6">
+        <div className="p-7 md:p-9">
+          {/* ═══ HEADER ═══ */}
+          <div className="flex items-start gap-4 mb-2">
             <div
               className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0"
               style={{ backgroundColor: startup.color }}
             >
               {startup.initials}
             </div>
-            <div>
-              <h2 className="text-[22px] md:text-[24px] font-bold text-text-primary">
-                <Link href={`/startup/${startup.id}`} className="hover:underline">
-                  {startup.name}
-                </Link>
-              </h2>
-              <p className="text-text-secondary text-[15px] md:text-[16px]">
-                {startup.oneLiner}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h2 className="text-[22px] md:text-[24px] font-semibold text-text-primary">
+                    <Link href={`/startup/${startup.id}`} className="hover:underline">
+                      {startup.name}
+                    </Link>
+                  </h2>
+                  <p className="text-text-muted text-[15px] md:text-[16px]">
+                    {startup.oneLiner}
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-1.5 shrink-0">
+                  <span className="px-2.5 py-1 rounded-full text-[11px] text-accent-blue bg-accent-blue/5 border border-accent-blue/20">
+                    {startup.sector}
+                  </span>
+                  <span className="px-2.5 py-1 rounded-full text-[11px] text-accent-violet bg-accent-violet/5 border border-accent-violet/20">
+                    {startup.stage}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 ml-16 mb-6">
+            <span className="flex items-center gap-1 text-[12px] text-text-muted px-2 py-0.5 rounded-full" style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)" }}>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" />
+              </svg>
+              {startup.location}
+            </span>
+            <span className="text-[12px] text-text-muted">Founded {startup.founded}</span>
+          </div>
+
+          {/* ═══ VIDEO PITCH ═══ */}
+          <div className="mb-6">
+            <div className="relative rounded-2xl overflow-hidden bg-[#0F172A] aspect-video flex items-center justify-center cursor-pointer group">
+              {/* 60 sec pill */}
+              <span className="absolute top-3 left-3 z-10 text-[11px] text-white/80 bg-black/40 px-2.5 py-1 rounded-full backdrop-blur-sm">60 sec pitch</span>
+              {/* Play button */}
+              <div className="w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110" style={{ background: "rgba(255,255,255,0.2)", backdropFilter: "blur(8px)" }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                  <polygon points="8,5 20,12 8,19" />
+                </svg>
+              </div>
+              <span className="absolute bottom-3 right-3 text-white/50 text-[12px] bg-black/30 px-2 py-0.5 rounded">1:00</span>
+            </div>
+            <div className="flex items-center gap-2.5 mt-3">
+              <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[10px] font-semibold shrink-0" style={{ backgroundColor: startup.pitchFounder.color }}>
+                {startup.pitchFounder.initials}
+              </div>
+              <p className="text-[13px] text-text-secondary">
+                <span className="font-medium text-text-primary">{startup.pitchFounder.name}</span>, {startup.pitchFounder.title}
               </p>
             </div>
           </div>
 
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 mb-8">
-            <span className="px-3 py-1.5 rounded-full text-[13px] text-accent-blue bg-accent-blue/5 border border-accent-blue/20">
-              {startup.sector}
-            </span>
-            <span className="px-3 py-1.5 rounded-full text-[13px] text-accent-blue bg-accent-blue/5 border border-accent-blue/20">
-              {startup.stage}
-            </span>
-          </div>
-
-          {/* Metrics */}
-          <div className="grid grid-cols-2 gap-3 mb-8">
+          {/* ═══ KEY METRICS ═══ */}
+          <div className="grid grid-cols-2 gap-3 mb-6">
             {startup.metrics.map((m) => (
               <div
                 key={m.label}
@@ -300,24 +432,42 @@ function StartupCard({
                 <p className="text-[22px] md:text-[24px] font-semibold text-text-primary">
                   {m.value}
                 </p>
-                <p className="text-[13px] text-text-muted">{m.label}</p>
+                <p className="text-[12px] text-text-muted mb-1">{m.label}</p>
+                <span className={`inline-flex items-center gap-0.5 text-[11px] font-medium ${m.trendDir === "up" ? "text-[#059669]" : "text-[#EF4444]"}`}>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    {m.trendDir === "up" ? <polyline points="18 15 12 9 6 15" /> : <polyline points="6 9 12 15 18 9" />}
+                  </svg>
+                  {m.trend}
+                </span>
               </div>
             ))}
           </div>
 
-          {/* The Ask */}
-          <div className="mb-8">
-            <p className="text-text-muted text-[12px] tracking-[2px] uppercase mb-3">
-              Looking For
+          {/* ═══ THE ASK ═══ */}
+          <div className="mb-6">
+            <p className="text-text-primary text-[18px] md:text-[20px] font-semibold mb-3">
+              {startup.askDisplay}
             </p>
-            <p className="text-text-primary text-[17px] font-semibold mb-3">
-              {startup.askAmount}
-            </p>
-            <ul className="flex flex-col gap-2">
+            {/* Stacked bar */}
+            <div className="flex h-2.5 rounded-full overflow-hidden mb-2">
+              {startup.fundAllocation.map((f) => (
+                <div key={f.label} className="h-full" style={{ width: `${f.pct}%`, backgroundColor: f.color }} />
+              ))}
+            </div>
+            <div className="flex gap-4 mb-4">
+              {startup.fundAllocation.map((f) => (
+                <span key={f.label} className="flex items-center gap-1.5 text-[11px] text-text-muted">
+                  <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: f.color }} />
+                  {f.label} {f.pct}%
+                </span>
+              ))}
+            </div>
+            <p className="text-text-muted text-[12px] tracking-[2px] uppercase mb-2">Looking for</p>
+            <ul className="flex flex-col gap-1.5">
               {startup.askBullets.map((b) => (
-                <li key={b} className="flex items-start gap-2.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 shrink-0" />
-                  <span className="text-text-secondary text-[15px] leading-[1.6]">
+                <li key={b} className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-1.5 shrink-0" />
+                  <span className="text-text-secondary text-[14px] leading-[1.5]">
                     {b}
                   </span>
                 </li>
@@ -325,45 +475,76 @@ function StartupCard({
             </ul>
           </div>
 
-          {/* Team */}
+          {/* ═══ TEAM ═══ */}
           <div className="mb-6">
-            <p className="text-text-muted text-[12px] tracking-[2px] uppercase mb-4">
+            <p className="text-text-muted text-[12px] tracking-[2px] uppercase mb-3">
               Team
             </p>
-            <div className="flex gap-6">
+            <div className="flex gap-5">
               {startup.founders.map((f) => (
                 <div key={f.name} className="flex flex-col items-center">
                   <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold mb-2"
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold mb-1.5"
                     style={{ backgroundColor: f.color }}
                   >
                     {f.initials}
                   </div>
-                  <p className="text-text-primary text-[13px] font-medium">
+                  <p className="text-text-primary text-[12px] font-medium text-center">
                     {f.name}
                   </p>
-                  <p className="text-text-muted text-[12px]">{f.title}</p>
+                  <p className="text-text-muted text-[11px] text-center">{f.title}</p>
+                  <div className="mt-1">
+                    <LinkedInIcon />
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* View Deck */}
+          {/* ═══ TRACTION HIGHLIGHTS ═══ */}
+          <div className="mb-6">
+            <p className="text-text-muted text-[12px] tracking-[2px] uppercase mb-3">
+              Traction
+            </p>
+            <div className="space-y-0">
+              {startup.milestones.map((m, i) => (
+                <div key={m.date} className="flex gap-3 relative">
+                  <div className="flex flex-col items-center">
+                    <div className="w-2 h-2 rounded-full bg-accent-blue shrink-0 mt-1.5" />
+                    {i < startup.milestones.length - 1 && (
+                      <div className="w-px flex-1 bg-black/[0.08]" />
+                    )}
+                  </div>
+                  <div className="pb-3">
+                    <p className="text-text-muted text-[11px]">{m.date}</p>
+                    <p className="text-text-primary text-[13px]">{m.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ═══ NEXUS SCORE ═══ */}
+          <div className="rounded-xl p-4 mb-4" style={{ background: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.5)" }}>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[14px] font-semibold text-text-primary">Nexus Score: {startup.nexusScore}/100</span>
+              <span className="text-[12px] font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: `${scoreColor}12`, color: scoreColor }}>
+                {startup.nexusScore >= 85 ? "Strong" : startup.nexusScore >= 75 ? "Promising" : "Early"}
+              </span>
+            </div>
+            <div className="h-1.5 rounded-full bg-black/[0.04] overflow-hidden mb-2">
+              <div className="h-full rounded-full" style={{ width: `${startup.nexusScore}%`, background: `linear-gradient(135deg, #4A6CF7, #7C5CFC)` }} />
+            </div>
+            <p className="text-[11px] text-text-muted">Scored on vision, team, market, defensibility, and momentum</p>
+          </div>
+
+          {/* ═══ VIEW FULL PROFILE ═══ */}
           <Link
             href={`/startup/${startup.id}`}
-            className="inline-flex items-center gap-1.5 text-accent-blue text-[15px] font-medium hover:underline"
+            className="inline-flex items-center gap-1.5 text-accent-blue text-[14px] font-medium hover:underline"
           >
-            View Pitch Deck
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
+            View Full Profile
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M7 17l9.2-9.2M17 17V7H7" />
             </svg>
           </Link>
@@ -557,7 +738,7 @@ export default function DropsPage() {
           ) : (
             <>
               {/* Card stack */}
-              <div className="relative w-full max-w-[640px] mx-auto flex-1 flex items-center justify-center">
+              <div className="relative w-full max-w-[660px] mx-auto flex-1 flex items-center justify-center">
                 {/* Next card preview */}
                 {currentIndex + 1 < total && !exitDirection && (
                   <div
@@ -565,7 +746,7 @@ export default function DropsPage() {
                     style={{ transform: "scale(0.95)", opacity: 0.4 }}
                   >
                     <div
-                      className="w-full max-w-[600px] mx-4 h-[400px] rounded-3xl"
+                      className="w-full max-w-[620px] mx-4 h-[400px] rounded-3xl"
                       style={{
                         background: "rgba(255, 255, 255, 0.3)",
                         border: "1px solid rgba(255, 255, 255, 0.4)",

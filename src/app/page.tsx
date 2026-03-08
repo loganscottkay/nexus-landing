@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import ParticleField from "@/components/ParticleField";
+import { ScoringPreview, MatchingPreview, AccountabilityPreview, DefaultPreview } from "@/components/HowItWorksPreviews";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
@@ -134,6 +135,181 @@ function PhoneIcon() {
       <path d="M8 21h8m-4-4v4" />
       <circle cx="12" cy="10" r="2" />
     </svg>
+  );
+}
+
+/* ---- How It Works Section with Interactive Preview ---- */
+const howItWorksCards = [
+  {
+    num: "01",
+    icon: <ShieldIcon />,
+    title: "Apply & Get Scored",
+    desc: "Every application runs through our proprietary scoring system built with faculty from HBS, BU, and Northeastern. Less than 15% make the cut.",
+  },
+  {
+    num: "02",
+    icon: <SparkleIcon />,
+    title: "Get Matched in 48 Hours",
+    desc: "Our algorithm pairs founders and investors by fit. Every match is intentional. No browsing, no noise, just high-signal introductions.",
+  },
+  {
+    num: "03",
+    icon: <PhoneIcon />,
+    title: "Move Fast or Move On",
+    desc: "72 hours to take the call. No-shows get removed. Founders without traction get cycled out. Investors who ghost get banned.",
+  },
+];
+
+function HowItWorksSection() {
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+
+  return (
+    <Section id="how-it-works" className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
+      <motion.div
+        variants={cardStagger}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportConfig}
+        className="flex flex-col items-center"
+      >
+        <motion.p
+          variants={fadeUp}
+          transition={{ duration: 0.6, ease }}
+          className="text-text-muted text-[13px] tracking-[3px] uppercase mb-4"
+        >
+          The Process
+        </motion.p>
+        <motion.h2
+          variants={fadeUp}
+          transition={{ duration: 0.6, ease }}
+          className="text-[36px] md:text-[44px] font-normal text-center mb-16"
+          style={{ fontFamily: "'Instrument Serif', serif" }}
+        >
+          How It Works
+        </motion.h2>
+
+        {/* Two-column layout: cards left, preview right */}
+        <motion.div variants={cardStagger} className="flex flex-col lg:flex-row gap-8 w-full">
+          {/* Left: Compact cards */}
+          <div className="flex flex-col gap-4 lg:w-[360px] shrink-0">
+            {howItWorksCards.map((card) => (
+              <motion.div
+                key={card.num}
+                variants={fadeUp}
+                transition={{ duration: 0.6, ease }}
+                onMouseEnter={() => setHoveredCard(card.num)}
+                onMouseLeave={() => setHoveredCard(null)}
+              >
+                <div
+                  className={`glow-card-wrapper h-full transition-all duration-300 ${
+                    hoveredCard === card.num ? "hiw-card-active" : ""
+                  }`}
+                >
+                  <div className="glass p-5 md:p-6 h-full relative overflow-hidden">
+                    <span
+                      className="step-number text-[48px] font-normal text-text-primary/[0.06] absolute top-3 right-4 leading-none select-none"
+                      style={{ fontFamily: "'Instrument Serif', serif" }}
+                    >
+                      {card.num}
+                    </span>
+                    <div className="relative">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="shrink-0">{card.icon}</div>
+                        <h3 className="text-[17px] md:text-[18px] font-semibold text-text-primary">
+                          {card.title}
+                        </h3>
+                      </div>
+                      <p className="text-text-secondary text-[14px] leading-[1.6] line-clamp-2">
+                        {card.desc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Right: Preview area */}
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="flex-1 min-h-[450px] rounded-3xl p-6 md:p-8 relative overflow-hidden"
+            style={{
+              background: "rgba(10, 10, 15, 0.9)",
+              border: "1px solid transparent",
+              backgroundClip: "padding-box",
+            }}
+          >
+            {/* Gradient border */}
+            <div
+              className="absolute inset-0 rounded-3xl pointer-events-none"
+              style={{
+                padding: "1px",
+                background: "linear-gradient(135deg, rgba(74, 108, 247, 0.2), rgba(124, 92, 252, 0.2), rgba(74, 108, 247, 0.1))",
+                mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                maskComposite: "xor",
+                WebkitMaskComposite: "xor",
+              }}
+            />
+
+            {/* Preview content */}
+            <div className="relative h-full">
+              <AnimatePresence mode="wait">
+                {hoveredCard === "01" && (
+                  <motion.div
+                    key="scoring"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+                    className="h-full"
+                  >
+                    <ScoringPreview active={hoveredCard === "01"} />
+                  </motion.div>
+                )}
+                {hoveredCard === "02" && (
+                  <motion.div
+                    key="matching"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+                    className="h-full"
+                  >
+                    <MatchingPreview active={hoveredCard === "02"} />
+                  </motion.div>
+                )}
+                {hoveredCard === "03" && (
+                  <motion.div
+                    key="accountability"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+                    className="h-full"
+                  >
+                    <AccountabilityPreview active={hoveredCard === "03"} />
+                  </motion.div>
+                )}
+                {hoveredCard === null && (
+                  <motion.div
+                    key="default"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="h-full"
+                  >
+                    <DefaultPreview />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+    </Section>
   );
 }
 
@@ -620,83 +796,7 @@ export default function Home() {
       </section>
 
       {/* ============ HOW IT WORKS ============ */}
-      <Section id="how-it-works" className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
-        <motion.div
-          variants={cardStagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="flex flex-col items-center"
-        >
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-text-muted text-[13px] tracking-[3px] uppercase mb-4"
-          >
-            The Process
-          </motion.p>
-          <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[36px] md:text-[44px] font-normal text-center mb-16"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
-          >
-            How It Works
-          </motion.h2>
-
-          <motion.div
-            variants={cardStagger}
-            className="grid md:grid-cols-3 gap-6 md:gap-8 w-full"
-          >
-            {[
-              {
-                num: "01",
-                icon: <ShieldIcon />,
-                title: "Apply & Get Scored",
-                desc: "Founders submit a pitch deck and 60-second video elevator pitch. Every application runs through our proprietary holistic scoring system developed with entrepreneurship faculty from HBS, BU, and Northeastern. We evaluate vision, founding team, market size, defensibility, and momentum. Revenue helps but it is not required. A first-time founder with a brilliant insight competes on equal footing. Less than 15% of applicants make the cut.",
-              },
-              {
-                num: "02",
-                icon: <SparkleIcon />,
-                title: "Get Matched in 48 Hours",
-                desc: "Accepted founders start receiving investor matches within 48 hours. Our algorithm pairs you by fit: $5K investors see early-stage founders with raw potential, $100K+ investors see startups with real traction. Every match is intentional. No browsing, no noise, just high-signal introductions delivered to your feed daily.",
-              },
-              {
-                num: "03",
-                icon: <PhoneIcon />,
-                title: "Move Fast or Move On",
-                desc: "This is not a platform for window shoppers. Matched? You have 72 hours to take the call. No-shows get removed. Founders without meaningful traction after 30 days get cycled out. Investors who ghost get banned. The result: a platform where every conversation is between two serious people who are ready to move.",
-              },
-            ].map((card) => (
-              <motion.div
-                key={card.num}
-                variants={fadeUp}
-                transition={{ duration: 0.6, ease }}
-              >
-                <div className="glow-card-wrapper h-full">
-                  <div className="glass p-8 md:p-10 h-full relative overflow-hidden">
-                    <span
-                      className="step-number text-[60px] font-normal text-text-primary/[0.06] absolute top-4 right-6 leading-none select-none"
-                      style={{ fontFamily: "'Instrument Serif', serif" }}
-                    >
-                      {card.num}
-                    </span>
-                    <div className="relative">
-                      <div className="mb-5">{card.icon}</div>
-                      <h3 className="text-[18px] md:text-[20px] font-semibold mb-3 text-text-primary">
-                        {card.title}
-                      </h3>
-                      <p className="text-text-secondary text-[15px] md:text-[16px] leading-[1.7]">
-                        {card.desc}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </Section>
+      <HowItWorksSection />
 
       {/* ============ STATS (DARK SECTION) ============ */}
       <section className="relative z-10 py-24 md:py-32 bg-dark-section overflow-hidden">

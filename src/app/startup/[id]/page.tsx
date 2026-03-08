@@ -3,73 +3,9 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
+import Sidebar from "@/components/Sidebar";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
-
-/* ─── Sidebar Nav (Investor view) ─── */
-const navItems = [
-  {
-    label: "Dashboard",
-    href: "/dashboard/investor",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="7" height="7" rx="1" />
-        <rect x="14" y="3" width="7" height="7" rx="1" />
-        <rect x="3" y="14" width="7" height="7" rx="1" />
-        <rect x="14" y="14" width="7" height="7" rx="1" />
-      </svg>
-    ),
-  },
-  {
-    label: "Daily Drops",
-    href: "/drops",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2L2 7l10 5 10-5-10-5z" />
-        <path d="M2 17l10 5 10-5" />
-        <path d="M2 12l10 5 10-5" />
-      </svg>
-    ),
-    active: true,
-  },
-  {
-    label: "Saved",
-    href: "/saved",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
-      </svg>
-    ),
-  },
-  {
-    label: "Matches",
-    href: "/matches",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-      </svg>
-    ),
-  },
-  {
-    label: "Messages",
-    href: "#",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
-      </svg>
-    ),
-  },
-  {
-    label: "Settings",
-    href: "/settings",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="3" />
-        <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
-      </svg>
-    ),
-  },
-];
 
 /* ─── Chart Data ─── */
 const mrrData = [
@@ -170,30 +106,6 @@ function MRRChart() {
   );
 }
 
-/* ─── Progress Bar ─── */
-function FundBar({ label, pct }: { label: string; pct: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.5 });
-
-  return (
-    <div ref={ref} className="mb-4 last:mb-0">
-      <div className="flex justify-between text-[15px] mb-1.5">
-        <span className="text-text-primary">{label}</span>
-        <span className="text-text-secondary font-medium">{pct}%</span>
-      </div>
-      <div className="h-1 rounded-full bg-black/[0.04] overflow-hidden">
-        <div
-          className="h-full rounded-full transition-all duration-1000 ease-out"
-          style={{
-            width: inView ? `${pct}%` : "0%",
-            background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-          }}
-        />
-      </div>
-    </div>
-  );
-}
-
 /* ─── Section Wrapper ─── */
 function SectionCard({
   children,
@@ -272,51 +184,7 @@ export default function StartupProfilePage() {
         <div className="blob blob-peach animate-blob-3 top-[55%] right-[25%]" />
       </div>
 
-      {/* ─── Desktop Sidebar ─── */}
-      <motion.aside
-        initial={{ x: -20, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.4, ease }}
-        className="hidden md:flex flex-col w-[240px] shrink-0 h-screen fixed left-0 top-0 z-30"
-        style={{
-          background: "rgba(255, 255, 255, 0.5)",
-          backdropFilter: "blur(24px) saturate(1.2)",
-          WebkitBackdropFilter: "blur(24px) saturate(1.2)",
-          borderRight: "1px solid rgba(0, 0, 0, 0.06)",
-        }}
-      >
-        <div className="px-6 pt-7 pb-8">
-          <Link href="/" className="text-lg font-bold tracking-[0.3em] text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-            NEXUS
-          </Link>
-        </div>
-
-        <nav className="flex-1 px-3">
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href || "#"}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1 text-[15px] transition-all duration-200 relative ${
-                item.active ? "text-accent-blue font-medium" : "text-text-secondary hover:text-text-primary hover:bg-black/[0.03]"
-              }`}
-            >
-              {item.active && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-accent-blue rounded-full" />}
-              {item.icon}
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="px-6 py-5 border-t border-black/[0.06]">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-accent-blue to-accent-violet flex items-center justify-center text-white text-sm font-semibold">JC</div>
-            <div>
-              <p className="text-[14px] font-medium text-text-primary">Jordan Chen</p>
-              <span className="text-[11px] px-2 py-0.5 rounded-full bg-accent-blue/10 text-accent-blue font-medium">Investor</span>
-            </div>
-          </div>
-        </div>
-      </motion.aside>
+      <Sidebar role="investor" activeLabel="Daily Drops" />
 
       {/* ─── Main Content ─── */}
       <div className="flex-1 md:ml-[240px] relative z-10 pb-28">
@@ -345,13 +213,13 @@ export default function StartupProfilePage() {
             transition={{ duration: 0.5, delay: 0.1, ease }}
           >
             <SectionCard>
-              <div className="flex items-start gap-5 mb-6">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0" style={{ backgroundColor: "#4A6CF7" }}>
+              <div className="flex items-start gap-5 mb-4">
+                <div className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0" style={{ backgroundColor: "#4A6CF7" }}>
                   LA
                 </div>
-                <div>
-                  <h1 className="text-[24px] md:text-[28px] font-bold text-text-primary">Luminary AI</h1>
-                  <p className="text-text-secondary text-[16px] md:text-[17px] mt-1">AI-powered contract analysis for legal teams</p>
+                <div className="flex-1 min-w-0">
+                  <h1 className="text-[24px] md:text-[28px] font-semibold text-text-primary">Luminary AI</h1>
+                  <p className="text-text-muted text-[16px] md:text-[17px] mt-1">AI-powered contract analysis for legal teams</p>
                   <div className="flex flex-wrap gap-2 mt-3">
                     <span className="px-3 py-1.5 rounded-full text-[13px] text-accent-blue bg-accent-blue/5 border border-accent-blue/20">AI / Machine Learning</span>
                     <span className="px-3 py-1.5 rounded-full text-[13px] text-accent-blue bg-accent-blue/5 border border-accent-blue/20">Enterprise SaaS</span>
@@ -366,60 +234,82 @@ export default function StartupProfilePage() {
                   </div>
                 </div>
               </div>
-
-              {/* Metrics */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={{
-                  hidden: {},
-                  visible: { transition: { staggerChildren: 0.08 } },
-                }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-3"
-              >
-                {[
-                  { value: "$45K", label: "Monthly Revenue", color: "#4A6CF7" },
-                  { value: "2,400", label: "Active Users", color: "#7C5CFC" },
-                  { value: "180%", label: "MoM Growth", color: "#059669" },
-                  { value: "$2M", label: "Pipeline Value", color: "#D97706" },
-                ].map((m) => (
-                  <motion.div
-                    key={m.label}
-                    variants={{
-                      hidden: { opacity: 0, y: 10 },
-                      visible: { opacity: 1, y: 0 },
-                    }}
-                    transition={{ duration: 0.4, ease }}
-                    className="rounded-xl p-5"
-                    style={{
-                      background: "rgba(255, 255, 255, 0.35)",
-                      border: "1px solid rgba(255, 255, 255, 0.5)",
-                      borderTop: `2px solid ${m.color}`,
-                    }}
-                  >
-                    <p className="text-[24px] md:text-[28px] font-semibold text-text-primary">{m.value}</p>
-                    <p className="text-[12px] text-text-muted uppercase tracking-[1px] mt-1">{m.label}</p>
-                  </motion.div>
-                ))}
-              </motion.div>
+              <p className="text-[12px] text-text-muted ml-[76px]">Founded Jun 2025</p>
             </SectionCard>
           </motion.div>
 
-          {/* ═══ VIDEO PITCH ═══ */}
-          <SectionCard delay={0.1}>
+          {/* ═══ VIDEO PITCH (PROMINENT) ═══ */}
+          <SectionCard delay={0.05}>
             <h2 className="text-[20px] md:text-[22px] font-normal text-text-primary mb-5" style={{ fontFamily: "'Instrument Serif', serif" }}>
               Founder Pitch
             </h2>
             <div className="relative rounded-2xl overflow-hidden bg-[#0F172A] aspect-video flex items-center justify-center cursor-pointer group">
-              <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:bg-white/30">
+              {/* 60 sec pill */}
+              <span className="absolute top-3 left-3 z-10 text-[11px] text-white/80 bg-black/40 px-2.5 py-1 rounded-full backdrop-blur-sm">60 sec pitch</span>
+              {/* Play button */}
+              <div className="w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110" style={{ background: "rgba(255,255,255,0.2)", backdropFilter: "blur(8px)" }}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                   <polygon points="8,5 20,12 8,19" />
                 </svg>
               </div>
-              <span className="absolute bottom-4 right-4 text-white/60 text-[13px] bg-black/30 px-2 py-0.5 rounded">1:24</span>
+              <span className="absolute bottom-3 right-3 text-white/50 text-[12px] bg-black/30 px-2 py-0.5 rounded">1:00</span>
             </div>
-            <p className="text-text-muted text-[13px] mt-3">Recorded Feb 28, 2026</p>
+            <div className="flex items-center gap-2.5 mt-3">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0" style={{ backgroundColor: "#4A6CF7" }}>
+                AR
+              </div>
+              <p className="text-[14px] text-text-secondary">
+                <span className="font-medium text-text-primary">Alex Rivera</span>, CEO & Co-Founder
+              </p>
+            </div>
+          </SectionCard>
+
+          {/* ═══ KEY METRICS ═══ */}
+          <SectionCard delay={0.1}>
+            <h2 className="text-[20px] md:text-[22px] font-normal text-text-primary mb-5" style={{ fontFamily: "'Instrument Serif', serif" }}>
+              Key Metrics
+            </h2>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.08 } },
+              }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-3"
+            >
+              {[
+                { value: "$45K", label: "Monthly Revenue", trend: "+22%", trendDir: "up" as const, color: "#4A6CF7" },
+                { value: "2,400", label: "Active Users", trend: "+18%", trendDir: "up" as const, color: "#7C5CFC" },
+                { value: "180%", label: "MoM Growth", trend: "+12%", trendDir: "up" as const, color: "#059669" },
+                { value: "$2M", label: "Pipeline Value", trend: "+35%", trendDir: "up" as const, color: "#D97706" },
+              ].map((m) => (
+                <motion.div
+                  key={m.label}
+                  variants={{
+                    hidden: { opacity: 0, y: 10 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.4, ease }}
+                  className="rounded-xl p-5"
+                  style={{
+                    background: "rgba(255, 255, 255, 0.35)",
+                    border: "1px solid rgba(255, 255, 255, 0.5)",
+                    borderTop: `2px solid ${m.color}`,
+                  }}
+                >
+                  <p className="text-[24px] md:text-[28px] font-semibold text-text-primary">{m.value}</p>
+                  <p className="text-[12px] text-text-muted uppercase tracking-[1px] mt-1 mb-1">{m.label}</p>
+                  <span className={`inline-flex items-center gap-0.5 text-[11px] font-medium ${m.trendDir === "up" ? "text-[#059669]" : "text-[#EF4444]"}`}>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      {m.trendDir === "up" ? <polyline points="18 15 12 9 6 15" /> : <polyline points="6 9 12 15 18 9" />}
+                    </svg>
+                    {m.trend}
+                  </span>
+                </motion.div>
+              ))}
+            </motion.div>
           </SectionCard>
 
           {/* ═══ THE ASK ═══ */}
@@ -427,14 +317,31 @@ export default function StartupProfilePage() {
             <h2 className="text-[20px] md:text-[22px] font-normal text-text-primary mb-5" style={{ fontFamily: "'Instrument Serif', serif" }}>
               The Ask
             </h2>
-            <p className="text-[20px] md:text-[22px] font-semibold text-text-primary mb-6">Raising $1.5M Seed Round</p>
+            <p className="text-[20px] md:text-[22px] font-semibold text-text-primary mb-5">Raising $1.5M Seed Round</p>
 
             <p className="text-text-muted text-[12px] tracking-[2px] uppercase mb-4">Use of Funds</p>
-            <FundBar label="Engineering & Product" pct={55} />
-            <FundBar label="Go-to-Market" pct={30} />
-            <FundBar label="Operations" pct={15} />
+            {/* Stacked bar */}
+            <div className="flex h-3 rounded-full overflow-hidden mb-3">
+              <div className="h-full" style={{ width: "55%", backgroundColor: "#4A6CF7" }} />
+              <div className="h-full" style={{ width: "30%", backgroundColor: "#7C5CFC" }} />
+              <div className="h-full" style={{ width: "15%", backgroundColor: "#94A3B8" }} />
+            </div>
+            <div className="flex gap-4 mb-6">
+              <span className="flex items-center gap-1.5 text-[12px] text-text-muted">
+                <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: "#4A6CF7" }} />
+                Engineering 55%
+              </span>
+              <span className="flex items-center gap-1.5 text-[12px] text-text-muted">
+                <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: "#7C5CFC" }} />
+                Go-to-Market 30%
+              </span>
+              <span className="flex items-center gap-1.5 text-[12px] text-text-muted">
+                <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: "#94A3B8" }} />
+                Operations 15%
+              </span>
+            </div>
 
-            <p className="text-text-muted text-[12px] tracking-[2px] uppercase mt-8 mb-3">Ideal Investor Profile</p>
+            <p className="text-text-muted text-[12px] tracking-[2px] uppercase mt-6 mb-3">Ideal Investor Profile</p>
             <ul className="flex flex-col gap-2.5">
               {[
                 "Experience in AI/SaaS B2B sales cycles",
@@ -524,6 +431,26 @@ export default function StartupProfilePage() {
                 </motion.div>
               ))}
             </motion.div>
+          </SectionCard>
+
+          {/* ═══ NEXUS SCORE ═══ */}
+          <SectionCard delay={0.28}>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-[20px] md:text-[22px] font-normal text-text-primary" style={{ fontFamily: "'Instrument Serif', serif" }}>
+                Nexus Score
+              </h2>
+              <span className="text-[13px] font-medium px-3 py-1 rounded-full" style={{ backgroundColor: "rgba(5,150,105,0.08)", color: "#059669" }}>
+                Strong
+              </span>
+            </div>
+            <div className="flex items-baseline gap-2 mb-3">
+              <span className="text-[36px] font-semibold text-text-primary">87</span>
+              <span className="text-[16px] text-text-muted">/100</span>
+            </div>
+            <div className="h-2 rounded-full bg-black/[0.04] overflow-hidden mb-3">
+              <div className="h-full rounded-full" style={{ width: "87%", background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }} />
+            </div>
+            <p className="text-[13px] text-text-muted">Scored on vision, team, market, defensibility, and momentum</p>
           </SectionCard>
 
           {/* ═══ PITCH DECK ═══ */}
