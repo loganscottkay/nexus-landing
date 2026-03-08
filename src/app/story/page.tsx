@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 
 const ease = [0.25, 0.4, 0.25, 1] as [number, number, number, number];
@@ -164,12 +165,14 @@ export default function StoryPage() {
               className="glass p-7"
             >
               <div className="flex items-center gap-4 mb-5">
-                <div
-                  className="w-20 h-20 rounded-full flex items-center justify-center text-white text-[18px] font-bold shrink-0"
-                  style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
-                >
-                  LK
-                </div>
+                <Image
+                  src="/images/logan.webp"
+                  alt="Logan Kay"
+                  width={100}
+                  height={100}
+                  className="w-[100px] h-[100px] rounded-full object-cover shrink-0"
+                  style={{ border: "2px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
+                />
                 <div>
                   <p className="text-[22px] font-semibold text-text-primary">Logan Kay</p>
                   <p className="text-[15px] text-text-muted">Co-Founder</p>
@@ -193,12 +196,14 @@ export default function StoryPage() {
               className="glass p-7"
             >
               <div className="flex items-center gap-4 mb-5">
-                <div
-                  className="w-20 h-20 rounded-full flex items-center justify-center text-white text-[18px] font-bold shrink-0"
-                  style={{ background: "linear-gradient(135deg, #7C5CFC, #B06CFC)" }}
-                >
-                  BK
-                </div>
+                <Image
+                  src="/images/ben.jpeg"
+                  alt="Ben Kay"
+                  width={100}
+                  height={100}
+                  className="w-[100px] h-[100px] rounded-full object-cover shrink-0"
+                  style={{ border: "2px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
+                />
                 <div>
                   <p className="text-[22px] font-semibold text-text-primary">Ben Kay</p>
                   <p className="text-[15px] text-text-muted">Co-Founder</p>

@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import ParticleField from "@/components/ParticleField";
 import { ScoringPreview, MatchingPreview, AccountabilityPreview } from "@/components/HowItWorksPreviews";
@@ -1240,12 +1241,14 @@ export default function Home() {
               transition={{ duration: 0.6, ease }}
               className="glass p-5 flex items-center gap-3 max-w-[280px]"
             >
-              <div
-                className="w-12 h-12 rounded-full flex items-center justify-center text-white text-[13px] font-bold shrink-0"
-                style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
-              >
-                LK
-              </div>
+              <Image
+                src="/images/logan.webp"
+                alt="Logan Kay"
+                width={80}
+                height={80}
+                className="w-12 h-12 rounded-full object-cover shrink-0"
+                style={{ border: "2px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
+              />
               <div>
                 <p className="text-[16px] font-semibold text-text-primary">Logan Kay</p>
                 <p className="text-[13px] text-text-muted">Co-Founder</p>
@@ -1258,12 +1261,14 @@ export default function Home() {
               transition={{ duration: 0.6, ease }}
               className="glass p-5 flex items-center gap-3 max-w-[280px]"
             >
-              <div
-                className="w-12 h-12 rounded-full flex items-center justify-center text-white text-[13px] font-bold shrink-0"
-                style={{ background: "linear-gradient(135deg, #7C5CFC, #B06CFC)" }}
-              >
-                BK
-              </div>
+              <Image
+                src="/images/ben.jpeg"
+                alt="Ben Kay"
+                width={80}
+                height={80}
+                className="w-12 h-12 rounded-full object-cover shrink-0"
+                style={{ border: "2px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
+              />
               <div>
                 <p className="text-[16px] font-semibold text-text-primary">Ben Kay</p>
                 <p className="text-[13px] text-text-muted">Co-Founder</p>
