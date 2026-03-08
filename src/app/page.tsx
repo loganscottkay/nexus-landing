@@ -4,7 +4,6 @@ import React, { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import CountUp from "@/components/CountUp";
 import ParticleField from "@/components/ParticleField";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
@@ -551,7 +550,7 @@ export default function Home() {
               transition={{ duration: 0.7, ease }}
               className="gradient-text text-[13px] tracking-[5px] uppercase mb-6 font-medium"
             >
-              The Curated Investment Marketplace
+              Where Startups Get Funded Faster
             </motion.p>
 
             {/* Headline */}
@@ -573,8 +572,7 @@ export default function Home() {
               className="text-[17px] md:text-[19px] max-w-[540px] mb-12 leading-[1.8]"
               style={{ color: "#475569" }}
             >
-              Nexus connects vetted startups with accredited investors through
-              intelligent daily matching. No cold emails. No noise. Just signal.
+              The startup world moves fast and the best deals close faster. Nexus matches investors of any size with vetted startups at their level in days, not months. No cold emails. No endless networking. Deploy $1K or $500K. The only thing that matters is showing up.
             </motion.p>
 
             {/* CTAs */}
@@ -615,7 +613,7 @@ export default function Home() {
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0110 0v4" />
               </svg>
-              By invitation only. Currently accepting applications.
+              Proprietary scoring system built with entrepreneurship professors from Harvard Business School, Boston University, and Northeastern.
             </motion.div>
           </motion.div>
         </div>
@@ -654,20 +652,20 @@ export default function Home() {
               {
                 num: "01",
                 icon: <ShieldIcon />,
-                title: "Apply & Get Vetted",
-                desc: "Submit your profile for review by our curation team. We accept fewer than 25% of applicants to maintain network quality.",
+                title: "Apply & Get Scored",
+                desc: "Founders submit a pitch deck and 60-second video elevator pitch. Every application runs through our proprietary holistic scoring system developed with entrepreneurship faculty from HBS, BU, and Northeastern. We evaluate vision, founding team, market size, defensibility, and momentum. Revenue helps but it is not required. A first-time founder with a brilliant insight competes on equal footing. Less than 15% of applicants make the cut.",
               },
               {
                 num: "02",
                 icon: <SparkleIcon />,
-                title: "Get Matched Daily",
-                desc: "Our algorithm delivers 3-5 highly compatible matches to your feed each morning. No endless scrolling, just signal.",
+                title: "Get Matched in 48 Hours",
+                desc: "Accepted founders start receiving investor matches within 48 hours. Our algorithm pairs you by fit: $5K investors see early-stage founders with raw potential, $100K+ investors see startups with real traction. Every match is intentional. No browsing, no noise, just high-signal introductions delivered to your feed daily.",
               },
               {
                 num: "03",
                 icon: <PhoneIcon />,
-                title: "Take Chemistry Calls",
-                desc: "When interest is mutual, we schedule a structured 20-minute intro call. No scheduling back-and-forth.",
+                title: "Move Fast or Move On",
+                desc: "This is not a platform for window shoppers. Matched? You have 72 hours to take the call. No-shows get removed. Founders without meaningful traction after 30 days get cycled out. Investors who ghost get banned. The result: a platform where every conversation is between two serious people who are ready to move.",
               },
             ].map((card) => (
               <motion.div
@@ -719,23 +717,17 @@ export default function Home() {
           <div className="glass-dark px-6 py-12 md:px-16 md:py-16">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6 text-center">
               {[
-                { target: 500, prefix: "", suffix: "+", label: "Vetted Startups", decimals: 0 },
-                { target: 2.1, prefix: "$", suffix: "B+", label: "In Deal Flow", decimals: 1 },
-                { target: 89, prefix: "", suffix: "%", label: "Call-to-Follow-Up Rate", decimals: 0 },
-                { target: 4.8, prefix: "", suffix: "", label: "Avg Match Rating", decimals: 1 },
-              ].map((stat, index) => (
+                { value: "<15%", label: "Acceptance Rate" },
+                { value: "48hrs", label: "To First Match" },
+                { value: "72hrs", label: "To Take the Call" },
+                { value: "30 days", label: "To Prove Traction" },
+              ].map((stat) => (
                 <div key={stat.label}>
                   <p
                     className="text-[32px] sm:text-[40px] md:text-[52px] font-normal text-white leading-none mb-2"
                     style={{ fontFamily: "'Instrument Serif', serif" }}
                   >
-                    <CountUp
-                      target={stat.target}
-                      prefix={stat.prefix}
-                      suffix={stat.suffix}
-                      decimals={stat.decimals}
-                      delay={index * 200}
-                    />
+                    {stat.value}
                   </p>
                   <p className="text-[#9CA3AF] text-[13px] md:text-[14px]">
                     {stat.label}
@@ -770,15 +762,15 @@ export default function Home() {
                   className="text-[28px] md:text-[32px] font-normal mb-8 text-text-primary"
                   style={{ fontFamily: "'Instrument Serif', serif" }}
                 >
-                  For Investors
+                  For Investors (Any Size)
                 </h3>
                 <ul className="flex flex-col gap-4 flex-1">
                   {[
-                    "Pre-vetted deal flow matched to your thesis",
-                    "No more sorting through hundreds of cold pitches",
-                    "Structured intro calls save you 10+ hours per week",
-                    "See engagement data on every startup",
-                    "First-look advantage on emerging companies",
+                    "Deploy $1K or $500K. You get matched with startups at your investment level automatically.",
+                    "Every founder scored by our proprietary system built with HBS, BU, and Northeastern faculty. Not just revenue. Vision, team, market, and defensibility.",
+                    "Stale founders get removed after 30 days. Your feed only shows startups that are actively building and gaining momentum.",
+                    "Structured 20-minute chemistry calls replace months of back-and-forth emails and awkward networking events.",
+                    "The best opportunities move fast. Nexus makes sure you are in the room when they do.",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-accent-blue mt-2 shrink-0" />
@@ -813,11 +805,11 @@ export default function Home() {
                 </h3>
                 <ul className="flex flex-col gap-4 flex-1">
                   {[
-                    "Direct access to investors actively looking for you",
-                    "Know exactly who viewed your deck",
-                    "72-hour response guarantee on every match",
-                    "Structured calls that actually lead to follow-ups",
-                    "Join a network that signals credibility",
+                    "Get in front of investors who are actually ready to deploy capital at your stage. No more pitching into the void.",
+                    "Your 60-second video pitch and deck are your application. Revenue is one factor of many. Vision and team carry real weight.",
+                    "Matched with investors in 48 hours. Most founders spend 6 months fundraising. Nexus compresses that timeline dramatically.",
+                    "Accountability is the price of admission. 30 days to show traction or you are cycled out. This keeps the platform elite and keeps you focused.",
+                    "Less than 15% of applicants make it in. Being on Nexus is a credibility signal to every investor who sees your profile.",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-accent-violet mt-2 shrink-0" />
@@ -1034,8 +1026,7 @@ export default function Home() {
               className="text-[17px] md:text-[18px] mb-10 max-w-xl leading-[1.7]"
               style={{ color: "#475569" }}
             >
-              Nexus is built for people who value quality over quantity. Apply
-              today and get access to a network that actually moves the needle.
+              The startup world does not wait and neither does Nexus. Whether you are deploying your first $1,000 or building your first product, apply now. Less than 15% get in. Matches start within 48 hours of acceptance. The next great company is already on the platform. The question is whether you will be the one to back it or build it.
             </motion.p>
 
             <motion.div
