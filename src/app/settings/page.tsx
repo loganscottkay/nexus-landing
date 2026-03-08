@@ -71,6 +71,17 @@ function ProfileTab() {
 
   return (
     <div className="space-y-5">
+      {/* Investor Tier Badge */}
+      <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: "rgba(255,255,255,0.35)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid transparent", backgroundClip: "padding-box", boxShadow: "0 4px 16px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(74,108,247,0.15)" }}>
+        <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
+        </div>
+        <div>
+          <p className="text-[11px] uppercase tracking-[2px] text-text-muted mb-0.5">Investor Tier</p>
+          <p className="text-[16px] font-semibold text-text-primary">Growth Tier: $100K - $500K</p>
+        </div>
+      </div>
+
       {/* Personal Info */}
       <GlassCard className="p-7">
         <div className="flex items-center gap-2 mb-6">
@@ -337,11 +348,20 @@ export default function SettingsPage() {
 
           {/* Tab Bar */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.1, ease }}
-            className="rounded-2xl p-1.5 mb-8 overflow-x-auto flex gap-1" style={{ background: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.5)" }}>
+            className="relative rounded-full p-1 mb-8 overflow-x-auto flex" style={{ background: "rgba(255,255,255,0.3)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.5)" }}>
+            {/* Sliding indicator */}
+            <div
+              className="absolute top-1 bottom-1 rounded-full pointer-events-none"
+              style={{
+                width: `calc(${100 / tabs.length}%)`,
+                background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                transform: `translateX(${tabs.findIndex((t) => t.key === activeTab) * 100}%)`,
+                transition: "transform 0.25s ease-out",
+              }}
+            />
             {tabs.map((t) => (
               <button key={t.key} onClick={() => setActiveTab(t.key)}
-                className={`px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200 whitespace-nowrap relative ${activeTab === t.key ? "text-text-primary" : "text-text-muted hover:text-text-primary"}`}>
-                {activeTab === t.key && <div className="absolute bottom-0 left-1/4 right-1/4 h-0.5 rounded-full" style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }} />}
+                className={`relative z-10 flex-1 px-4 py-2.5 rounded-full text-[14px] font-medium transition-colors duration-200 whitespace-nowrap text-center ${activeTab === t.key ? "text-white" : "text-text-muted hover:text-text-primary"}`}>
                 {t.label}
               </button>
             ))}

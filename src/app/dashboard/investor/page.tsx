@@ -1,11 +1,25 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
+
+const GLOW_SHADOW = "0 8px 32px rgba(74, 108, 247, 0.08), 0 0 0 1px rgba(74, 108, 247, 0.06)";
+
+function useGlassHover() {
+  const onMouseEnter = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const glass = e.currentTarget.querySelector(".glass") as HTMLElement | null;
+    if (glass) glass.style.boxShadow = GLOW_SHADOW;
+  }, []);
+  const onMouseLeave = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const glass = e.currentTarget.querySelector(".glass") as HTMLElement | null;
+    if (glass) glass.style.boxShadow = "";
+  }, []);
+  return { onMouseEnter, onMouseLeave };
+}
 
 function getGreeting() {
   const h = new Date().getHours();
@@ -142,11 +156,11 @@ function SectorBars() {
 
 /* ─── Card entrance variants ─── */
 const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 15 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, delay: i * 0.08, ease },
+    transition: { duration: 0.4, delay: i * 0.06, ease },
   }),
 };
 
@@ -163,6 +177,7 @@ const pipelineItemVariants = {
 export default function InvestorDashboard() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
+  const glassHover = useGlassHover();
 
   return (
     <div className="min-h-screen flex bg-base text-text-primary relative">
@@ -196,6 +211,7 @@ export default function InvestorDashboard() {
             variants={cardVariants}
             initial="hidden"
             animate="visible"
+            {...glassHover}
           >
             <div className="glass p-6 md:p-8 mb-6">
               <div className="flex flex-col md:flex-row md:items-center gap-8">
@@ -222,7 +238,7 @@ export default function InvestorDashboard() {
             {/* LEFT */}
             <div className="flex flex-col gap-5">
               {/* Daily Drops */}
-              <motion.div custom={1} variants={cardVariants} initial="hidden" animate="visible">
+              <motion.div custom={1} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
                 <div className="glass p-6">
                   <div className="flex items-center justify-between mb-5">
                     <div className="flex items-center gap-2">
@@ -236,7 +252,7 @@ export default function InvestorDashboard() {
                     { initials: "CA", color: "#059669", name: "Canopy Analytics", desc: "Real-time carbon tracking for supply chains", sector: "Climate Tech", stage: "Seed" },
                     { initials: "Br", color: "#e67e22", name: "Briefly", desc: "AI meeting assistant that writes follow-ups", sector: "AI/SaaS", stage: "Pre-Seed" },
                   ].map((s, i, arr) => (
-                    <Link key={s.name} href="/drops" className={`flex items-center gap-3 py-3 cursor-pointer hover:bg-black/[0.02] -mx-2 px-2 rounded-lg transition-colors ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
+                    <Link key={s.name} href="/drops" className={`flex items-center gap-3 py-3 cursor-pointer hover:bg-black/[0.02] hover:-translate-y-px hover:shadow-sm -mx-2 px-2 rounded-lg transition-all duration-200 ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
                       <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0" style={{ backgroundColor: s.color }}>{s.initials}</div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[15px] font-semibold text-text-primary">{s.name}</p>
@@ -252,7 +268,7 @@ export default function InvestorDashboard() {
               </motion.div>
 
               {/* Pipeline */}
-              <motion.div custom={2} variants={cardVariants} initial="hidden" animate="visible">
+              <motion.div custom={2} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
                 <div className="glass p-6">
                   <div className="flex items-center justify-between mb-5">
                     <h3 className="text-[18px] font-semibold text-text-primary">Your Pipeline</h3>
@@ -261,7 +277,7 @@ export default function InvestorDashboard() {
                   <div className="grid grid-cols-3 gap-3">
                     {/* Interested */}
                     <div>
-                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3">Interested <span className="text-text-primary">(2)</span></p>
+                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #4A6CF7", paddingLeft: "8px" }}>Interested <span className="text-text-primary">(2)</span></p>
                       <div className="space-y-2">
                         {[
                           { name: "Luminary AI", sub: "47h remaining" },
@@ -287,7 +303,7 @@ export default function InvestorDashboard() {
                     </div>
                     {/* Matched */}
                     <div>
-                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3">Matched <span className="text-text-primary">(2)</span></p>
+                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #7C5CFC", paddingLeft: "8px" }}>Matched <span className="text-text-primary">(2)</span></p>
                       <div className="space-y-2">
                         {[
                           { name: "Terraform Health", sub: "Call Mar 15" },
@@ -313,7 +329,7 @@ export default function InvestorDashboard() {
                     </div>
                     {/* Talking */}
                     <div>
-                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3">Talking <span className="text-text-primary">(1)</span></p>
+                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #059669", paddingLeft: "8px" }}>Talking <span className="text-text-primary">(1)</span></p>
                       <div className="space-y-2">
                         <motion.div
                           custom={0}
@@ -336,7 +352,7 @@ export default function InvestorDashboard() {
               </motion.div>
 
               {/* Scheduled Calls */}
-              <motion.div custom={3} variants={cardVariants} initial="hidden" animate="visible">
+              <motion.div custom={3} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
                 <div className="glass p-6">
                   <div className="flex items-center justify-between mb-5">
                     <h3 className="text-[18px] font-semibold text-text-primary">Scheduled Calls</h3>
@@ -346,7 +362,7 @@ export default function InvestorDashboard() {
                     { initials: "TH", color: "#7C5CFC", name: "Terraform Health", desc: "Predictive diagnostics", time: "Mar 15, 3:00 PM", relative: "In 6 days" },
                     { initials: "CA", color: "#059669", name: "Canopy Analytics", desc: "Carbon tracking", time: "Mar 17, 11:00 AM", relative: "In 8 days" },
                   ].map((c, i, arr) => (
-                    <div key={c.name} className={`flex items-center gap-3 py-3 ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
+                    <div key={c.name} className={`flex items-center gap-3 py-3 hover:bg-black/[0.02] transition-all duration-200 cursor-pointer rounded-lg -mx-2 px-2 hover:-translate-y-px hover:shadow-sm ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
                       <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0" style={{ backgroundColor: c.color }}>{c.initials}</div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[15px] font-semibold text-text-primary">{c.name}</p>
@@ -365,7 +381,7 @@ export default function InvestorDashboard() {
             {/* RIGHT */}
             <div className="flex flex-col gap-5">
               {/* Saved */}
-              <motion.div custom={4} variants={cardVariants} initial="hidden" animate="visible">
+              <motion.div custom={4} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
                 <div className="glass p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-[18px] font-semibold text-text-primary">Saved <span className="text-text-muted font-normal">(7)</span></h3>
@@ -378,7 +394,7 @@ export default function InvestorDashboard() {
                     { initials: "GG", color: "#059669", name: "GreenGrid", sector: "Climate" },
                     { initials: "AR", color: "#e67e22", name: "Archetype", sector: "Enterprise" },
                   ].map((s, i, arr) => (
-                    <div key={s.name} className={`flex items-center gap-2.5 py-2.5 ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
+                    <div key={s.name} className={`flex items-center gap-2.5 py-2.5 hover:bg-black/[0.02] transition-all duration-200 cursor-pointer rounded-lg -mx-2 px-2 hover:-translate-y-px hover:shadow-sm ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
                       <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[10px] font-semibold shrink-0" style={{ backgroundColor: s.color }}>{s.initials}</div>
                       <span className="text-[14px] font-semibold text-text-primary flex-1">{s.name}</span>
                       <span className="text-[11px] px-2 py-0.5 rounded-full bg-accent-blue/5 text-accent-blue border border-accent-blue/15">{s.sector}</span>
@@ -390,7 +406,7 @@ export default function InvestorDashboard() {
               </motion.div>
 
               {/* Sector Activity */}
-              <motion.div custom={5} variants={cardVariants} initial="hidden" animate="visible">
+              <motion.div custom={5} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
                 <div className="glass p-6">
                   <h3 className="text-[16px] font-semibold text-text-primary mb-4">Sector Activity</h3>
                   <SectorBars />
@@ -398,7 +414,7 @@ export default function InvestorDashboard() {
               </motion.div>
 
               {/* This Week */}
-              <motion.div custom={6} variants={cardVariants} initial="hidden" animate="visible">
+              <motion.div custom={6} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
                 <div className="glass p-6">
                   <h3 className="text-[16px] font-semibold text-text-primary mb-4">This Week</h3>
                   <div className="space-y-4">

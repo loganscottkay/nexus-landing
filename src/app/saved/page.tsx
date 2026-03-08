@@ -1,22 +1,34 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
-const savedStartups = [
-  { id: 1, initials: "LA", color: "#4A6CF7", name: "Luminary AI", desc: "AI-powered contract analysis for legal teams", sector: "AI/ML", stage: "Seed" },
-  { id: 2, initials: "SP", color: "#0d9488", name: "Stackpay", desc: "Embedded payroll infrastructure for platforms", sector: "Fintech", stage: "Seed" },
-  { id: 3, initials: "NP", color: "#7C5CFC", name: "NeuralPath", desc: "Developer productivity tools powered by AI", sector: "Dev Tools", stage: "Pre-Seed" },
-  { id: 4, initials: "GG", color: "#059669", name: "GreenGrid", desc: "Smart energy management for commercial buildings", sector: "Climate", stage: "Seed" },
-  { id: 5, initials: "AR", color: "#e67e22", name: "Archetype", desc: "AI-driven customer persona generation", sector: "Enterprise", stage: "Pre-Seed" },
-  { id: 6, initials: "TH", color: "#7C5CFC", name: "Terraform Health", desc: "Predictive diagnostics using wearable biosignals", sector: "Health Tech", stage: "Pre-Seed" },
-  { id: 7, initials: "CA", color: "#059669", name: "Canopy Analytics", desc: "Real-time carbon tracking for supply chains", sector: "Climate Tech", stage: "Seed" },
+const initialStartups = [
+  { id: 1, initials: "LA", color: "#4A6CF7", name: "Luminary AI", desc: "AI-powered contract analysis for legal teams", sector: "AI/ML", stage: "Seed", metrics: ["$45K MRR", "2.4K Users"], nexusScore: 87 },
+  { id: 2, initials: "SP", color: "#0d9488", name: "Stackpay", desc: "Embedded payroll infrastructure for platforms", sector: "Fintech", stage: "Seed", metrics: ["$82K MRR", "34 Clients"], nexusScore: 91 },
+  { id: 3, initials: "NP", color: "#7C5CFC", name: "NeuralPath", desc: "Developer productivity tools powered by AI", sector: "Dev Tools", stage: "Pre-Seed", metrics: ["$18K MRR", "1.2K Users"], nexusScore: 74 },
+  { id: 4, initials: "GG", color: "#059669", name: "GreenGrid", desc: "Smart energy management for commercial buildings", sector: "Climate", stage: "Seed", metrics: ["$67K MRR", "18 Clients"], nexusScore: 83 },
+  { id: 5, initials: "AR", color: "#e67e22", name: "Archetype", desc: "AI-driven customer persona generation", sector: "Enterprise", stage: "Pre-Seed", metrics: ["$9K MRR", "680 Users"], nexusScore: 69 },
+  { id: 6, initials: "TH", color: "#7C5CFC", name: "Terraform Health", desc: "Predictive diagnostics using wearable biosignals", sector: "Health Tech", stage: "Pre-Seed", metrics: ["$12K MRR", "890 Users"], nexusScore: 78 },
+  { id: 7, initials: "CA", color: "#059669", name: "Canopy Analytics", desc: "Real-time carbon tracking for supply chains", sector: "Climate Tech", stage: "Seed", metrics: ["$67K MRR", "18 Clients"], nexusScore: 83 },
 ];
 
 export default function SavedPage() {
+  const [startups, setStartups] = useState(initialStartups);
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
+
+  const handleRemove = (e: React.MouseEvent, id: number, name: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (window.confirm(`Remove ${name} from saved?`)) {
+      setStartups((prev) => prev.filter((s) => s.id !== id));
+    }
+  };
+
   return (
     <div className="min-h-screen flex bg-base text-text-primary relative">
       <div className="noise-overlay" />
@@ -41,31 +53,89 @@ export default function SavedPage() {
           </motion.h1>
 
           <div className="space-y-3">
-            {savedStartups.map((s, i) => (
+            {startups.map((s, i) => (
               <motion.div
                 key={s.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.06, ease }}
+                transition={{ duration: 0.3, delay: i * 0.05, ease }}
               >
                 <Link
                   href={`/startup/${s.id}`}
-                  className="glass flex items-center gap-4 p-5"
+                  className="group relative flex items-center gap-4 rounded-2xl p-5 transition-all duration-300"
+                  style={{
+                    background: "rgba(255,255,255,0.45)",
+                    backdropFilter: "blur(20px) saturate(1.2)",
+                    WebkitBackdropFilter: "blur(20px) saturate(1.2)",
+                    border: "1px solid rgba(255,255,255,0.6)",
+                    boxShadow:
+                      hoveredId === s.id
+                        ? "0 8px 32px rgba(74,108,247,0.12), 0 2px 8px rgba(124,92,252,0.08), inset 0 1px 0 rgba(255,255,255,0.8)"
+                        : "0 4px 20px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.8)",
+                    transform: hoveredId === s.id ? "translateY(-3px)" : "translateY(0)",
+                  }}
+                  onMouseEnter={() => setHoveredId(s.id)}
+                  onMouseLeave={() => setHoveredId(null)}
                 >
+                  {/* Remove button */}
+                  <button
+                    onClick={(e) => handleRemove(e, s.id, s.name)}
+                    className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/[0.06] text-text-muted"
+                    aria-label={`Remove ${s.name}`}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
+
+                  {/* Avatar */}
                   <div
                     className="w-11 h-11 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0"
                     style={{ backgroundColor: s.color }}
                   >
                     {s.initials}
                   </div>
+
+                  {/* Info */}
                   <div className="flex-1 min-w-0">
                     <p className="text-[16px] font-semibold text-text-primary">{s.name}</p>
                     <p className="text-[14px] text-text-muted truncate">{s.desc}</p>
                   </div>
+
+                  {/* Metrics */}
+                  <div className="hidden md:flex flex-col gap-0.5 shrink-0 text-right mr-1">
+                    {s.metrics.map((m, mi) => (
+                      <span key={mi} className="text-[11px] text-text-muted/70 whitespace-nowrap">{m}</span>
+                    ))}
+                  </div>
+
+                  {/* Sector / Stage pills */}
                   <div className="hidden sm:flex gap-1.5 shrink-0">
                     <span className="text-[11px] px-2 py-0.5 rounded-full bg-accent-blue/5 text-accent-blue border border-accent-blue/15">{s.sector}</span>
                     <span className="text-[11px] px-2 py-0.5 rounded-full bg-black/[0.03] text-text-muted border border-black/[0.06]">{s.stage}</span>
                   </div>
+
+                  {/* Nexus Score badge */}
+                  <div
+                    className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+                    style={{
+                      background: "white",
+                      border: "2px solid transparent",
+                      backgroundClip: "padding-box",
+                      boxShadow: "0 0 0 2px transparent",
+                      backgroundImage:
+                        "linear-gradient(white, white), linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                      backgroundOrigin: "border-box",
+                      WebkitBackgroundClip: "padding-box, border-box",
+                    }}
+                  >
+                    <span className="text-[11px] font-bold bg-gradient-to-br from-[#4A6CF7] to-[#7C5CFC] bg-clip-text text-transparent">
+                      {s.nexusScore}
+                    </span>
+                  </div>
+
+                  {/* Chevron */}
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
                     <polyline points="9 18 15 12 9 6" />
                   </svg>
@@ -73,6 +143,16 @@ export default function SavedPage() {
               </motion.div>
             ))}
           </div>
+
+          {startups.length === 0 && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center text-text-muted mt-16 text-[15px]"
+            >
+              No saved startups yet.
+            </motion.p>
+          )}
         </div>
       </div>
     </div>

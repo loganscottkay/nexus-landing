@@ -11,7 +11,11 @@ type Tab = "upcoming" | "completed" | "all";
 
 function GlassCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`glass ${className}`}>{children}</div>
+    <div
+      className={`glass transition-shadow duration-300 hover:shadow-[0_8px_32px_rgba(74,108,247,0.08),0_0_0_1px_rgba(74,108,247,0.06)] ${className}`}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -93,7 +97,7 @@ function UpcomingCard({ match }: { match: typeof upcomingMatches[0] }) {
             transition={{ duration: 0.3, ease }}
             className="overflow-hidden"
           >
-            <div className="pt-4 space-y-4">
+            <div className="pt-4 mt-4 space-y-4 rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)" }}>
               {/* Key metrics */}
               <div className="grid grid-cols-4 gap-2">
                 {(match.metrics || []).map((m) => (
@@ -171,7 +175,7 @@ function CompletedCard({ match }: { match: typeof completedMatches[0] }) {
           </div>
           <div>
             {match.mutual ? (
-              <span className="text-[13px] px-3 py-1.5 rounded-full bg-[rgba(5,150,105,0.08)] text-[#059669] font-medium flex items-center gap-1.5">
+              <span className="text-[13px] px-3 py-1.5 rounded-full bg-[rgba(5,150,105,0.08)] text-[#059669] font-medium flex items-center gap-1.5" style={{ boxShadow: "0 0 12px rgba(5, 150, 105, 0.15)" }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" /></svg>
                 Mutual Interest
               </span>

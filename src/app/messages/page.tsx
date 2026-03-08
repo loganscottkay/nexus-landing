@@ -33,9 +33,15 @@ const conversations: Conversation[] = [
     lastMessageTime: "2h ago",
     lastMessagePreview: "That works for me. Let us do Thursday at 2pm?",
     messages: [
-      { id: 1, sender: "them", text: "Hi Jordan! Thanks for your interest in Luminary AI. Happy to share more about our contract analysis platform.", time: "10:30 AM" },
-      { id: 2, sender: "me", text: "Really impressed by your traction numbers. The 180% MoM growth caught my eye. Are you available for a deeper dive this week?", time: "10:45 AM" },
-      { id: 3, sender: "them", text: "That works for me. Let us do Thursday at 2pm?", time: "2:15 PM" },
+      { id: 1, sender: "them", text: "Hi Jordan! Thanks for your interest in Luminary AI. Happy to share more about our contract analysis platform.", time: "Mon 10:30 AM" },
+      { id: 2, sender: "me", text: "Really impressed by your traction numbers. The 180% MoM growth caught my eye. How are you handling the enterprise sales cycle?", time: "Mon 10:45 AM" },
+      { id: 3, sender: "them", text: "Great question. Our average sales cycle is about 45 days for mid-market and 90 days for enterprise. We have been shortening it with a PLG motion where legal teams can start with a free tier.", time: "Mon 11:02 AM" },
+      { id: 4, sender: "me", text: "That is a smart approach. What does retention look like once teams onboard?", time: "Mon 11:15 AM" },
+      { id: 5, sender: "them", text: "Net revenue retention is at 140%. Once a legal team starts using contract analysis, they typically expand to other departments within 3 months. Our churn is under 2% monthly.", time: "Mon 11:30 AM" },
+      { id: 6, sender: "me", text: "Those are strong numbers. I would love to do a deeper dive this week. Are you available for a 30-minute call?", time: "Tue 9:00 AM" },
+      { id: 7, sender: "them", text: "Absolutely! I have availability Thursday afternoon or Friday morning. What works best?", time: "Tue 9:45 AM" },
+      { id: 8, sender: "me", text: "Thursday at 2pm works perfectly. I will send a calendar invite.", time: "Tue 10:00 AM" },
+      { id: 9, sender: "them", text: "That works for me. Let us do Thursday at 2pm?", time: "2h ago" },
     ],
   },
   {
@@ -45,13 +51,15 @@ const conversations: Conversation[] = [
     avatar: { initials: "MW", color: "#059669" },
     unread: false,
     lastMessageTime: "Yesterday",
-    lastMessagePreview: "Absolutely. I can walk you through our unit economics on the call.",
+    lastMessagePreview: "Absolutely. I can walk you through our unit economics and compliance roadmap on the call.",
     messages: [
-      { id: 1, sender: "me", text: "Hey Marcus! Stackpay caught my attention in the daily drops. The embedded payroll angle is interesting.", time: "Mon 9:00 AM" },
-      { id: 2, sender: "them", text: "Thanks Jordan! We have been growing fast in the SMB segment. Happy to share more details.", time: "Mon 9:15 AM" },
-      { id: 3, sender: "me", text: "What does your current customer acquisition look like? And how are unit economics trending?", time: "Mon 10:00 AM" },
-      { id: 4, sender: "them", text: "We are at about $30K MRR with 85% gross margins. CAC payback is under 4 months.", time: "Mon 2:30 PM" },
-      { id: 5, sender: "them", text: "Absolutely. I can walk you through our unit economics on the call.", time: "Yesterday" },
+      { id: 1, sender: "me", text: "Hey Marcus! Stackpay caught my attention in the daily drops. The embedded payroll angle is interesting. How are you differentiating from existing payroll APIs?", time: "Mon 9:00 AM" },
+      { id: 2, sender: "them", text: "Thanks Jordan! The key difference is we are building payroll as an embedded feature, not a standalone product. Platforms can add payroll to their existing workflows in under a week of integration.", time: "Mon 9:15 AM" },
+      { id: 3, sender: "me", text: "That is compelling. What does your current customer acquisition funnel look like? And how are unit economics trending?", time: "Mon 10:00 AM" },
+      { id: 4, sender: "them", text: "We are at $82K MRR with 85% gross margins. CAC payback is under 4 months. Most growth is inbound from platform partners who find us through our docs and developer community.", time: "Mon 2:30 PM" },
+      { id: 5, sender: "me", text: "Impressive margins for infra. What is the biggest risk you see in scaling from here?", time: "Tue 9:00 AM" },
+      { id: 6, sender: "them", text: "Compliance complexity across states is the main challenge. We are investing heavily in our compliance engine. That is actually where most of the $3M raise will go.", time: "Tue 10:15 AM" },
+      { id: 7, sender: "them", text: "Absolutely. I can walk you through our unit economics and compliance roadmap on the call.", time: "Yesterday" },
     ],
   },
   {
@@ -165,9 +173,10 @@ export default function MessagesPage() {
                 onClick={() => setActiveId(conv.id)}
                 className={`w-full flex items-center gap-3 px-5 py-3.5 text-left transition-colors duration-150 ${
                   activeId === conv.id
-                    ? "bg-[#4A6CF7]/5 border-l-[3px] border-l-[#4A6CF7]"
+                    ? "bg-[#4A6CF7]/5 border-l-[3px]"
                     : "border-l-[3px] border-l-transparent hover:bg-black/[0.02]"
                 }`}
+                style={activeId === conv.id ? { borderImage: "linear-gradient(to bottom, #4A6CF7, #7C5CFC) 1" } : undefined}
               >
                 {/* Avatar */}
                 <div className="relative shrink-0">
@@ -178,7 +187,7 @@ export default function MessagesPage() {
                     {conv.avatar.initials}
                   </div>
                   {conv.unread && (
-                    <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#4A6CF7] ring-2 ring-white" />
+                    <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#4A6CF7] ring-2 ring-white" style={{ animation: "pulse-gentle 1.5s ease-in-out infinite" }} />
                   )}
                 </div>
                 {/* Content */}

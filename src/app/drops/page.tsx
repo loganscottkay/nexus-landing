@@ -350,7 +350,7 @@ function StartupCard({
           WebkitBackdropFilter: "blur(24px) saturate(1.3)",
           border: "1px solid rgba(255, 255, 255, 0.65)",
           boxShadow:
-            "0 8px 40px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9)",
+            "0 8px 40px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 0 0 1px rgba(74, 108, 247, 0.08)",
         }}
       >
         <div className="p-7 md:p-9">
@@ -714,6 +714,7 @@ export default function DropsPage() {
               WebkitBackdropFilter: "blur(12px)",
               border: "1px solid rgba(255, 255, 255, 0.6)",
               boxShadow: "0 2px 12px rgba(0, 0, 0, 0.04)",
+              animation: allDone ? "none" : "pulse-gentle 3s ease-in-out infinite",
             }}
           >
             {/* Blue fill bar */}
@@ -758,16 +759,14 @@ export default function DropsPage() {
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={startups[currentIndex].id}
-                    initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                    initial={{ opacity: 0, scale: 1.05 }}
                     animate={{
                       opacity: 1,
-                      y: 0,
                       scale: 1,
                     }}
                     exit={{
                       opacity: 0,
-                      x: exitDirection === "left" ? -300 : 300,
-                      rotate: exitDirection === "left" ? -10 : 10,
+                      scale: 0.95,
                       transition: { duration: 0.3, ease },
                     }}
                     transition={{ duration: 0.4, ease }}
@@ -805,12 +804,14 @@ export default function DropsPage() {
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = "rgba(239, 68, 68, 0.1)";
                     e.currentTarget.style.borderColor = "rgba(239, 68, 68, 0.3)";
-                    e.currentTarget.style.boxShadow = "0 4px 20px rgba(239, 68, 68, 0.15)";
+                    e.currentTarget.style.boxShadow = "0 0 20px rgba(239, 68, 68, 0.3)";
+                    e.currentTarget.style.transform = "scale(1.1)";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = "rgba(255, 255, 255, 0.45)";
                     e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.6)";
                     e.currentTarget.style.boxShadow = "0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8)";
+                    e.currentTarget.style.transform = "scale(1)";
                   }}
                 >
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -834,12 +835,14 @@ export default function DropsPage() {
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = "rgba(74, 108, 247, 0.1)";
                     e.currentTarget.style.borderColor = "rgba(74, 108, 247, 0.3)";
-                    e.currentTarget.style.boxShadow = "0 4px 20px rgba(74, 108, 247, 0.15)";
+                    e.currentTarget.style.boxShadow = "0 0 20px rgba(74, 108, 247, 0.3)";
+                    e.currentTarget.style.transform = "scale(1.1)";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = "rgba(255, 255, 255, 0.45)";
                     e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.6)";
                     e.currentTarget.style.boxShadow = "0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8)";
+                    e.currentTarget.style.transform = "scale(1)";
                   }}
                 >
                   <svg width="22" height="22" viewBox="0 0 24 24" fill={isSaved ? "#4A6CF7" : "none"} stroke="#4A6CF7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-all duration-200">
@@ -857,11 +860,11 @@ export default function DropsPage() {
                     boxShadow: "0 4px 20px rgba(74, 108, 247, 0.35)",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-2px)";
-                    e.currentTarget.style.boxShadow = "0 8px 30px rgba(124, 92, 252, 0.4)";
+                    e.currentTarget.style.transform = "scale(1.1)";
+                    e.currentTarget.style.boxShadow = "0 0 20px rgba(5, 150, 105, 0.3)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.transform = "scale(1)";
                     e.currentTarget.style.boxShadow = "0 4px 20px rgba(74, 108, 247, 0.35)";
                   }}
                 >
