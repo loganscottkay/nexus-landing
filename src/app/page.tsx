@@ -1155,7 +1155,7 @@ export default function Home() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6 text-center">
               {[
                 { value: "<15%", label: "Acceptance Rate" },
-                { value: "48hrs", label: "To First Match" },
+                { value: "$1K-$500K+", label: "Investment Range" },
                 { value: "72hrs", label: "To Take the Call" },
                 { value: "30 days", label: "To Prove Traction" },
               ].map((stat) => (
