@@ -187,140 +187,191 @@ export function ScoringPreview({ active }: { active: boolean }) {
 }
 
 /* ================================================================
-   CARD 02 — MATCHING PREVIEW
+   CARD 02 — TIER MATCHING PREVIEW
    ================================================================ */
 
+const tiers = [
+  {
+    label: "$100K+",
+    color: "#22c55e",
+    bg: "rgba(34, 197, 94, 0.08)",
+    border: "rgba(34, 197, 94, 0.2)",
+    startup: { name: "Stackpay", tag: "Fintech", mrr: "$82K MRR", users: "34 Clients", initial: "S", grad: "linear-gradient(135deg, #22c55e, #14b8a6)" },
+    investor: { name: "Jordan C.", firm: "Apex Ventures", initial: "JC", grad: "linear-gradient(135deg, #4A6CF7, #6366f1)" },
+  },
+  {
+    label: "$10K-$100K",
+    color: "#4A6CF7",
+    bg: "rgba(74, 108, 247, 0.08)",
+    border: "rgba(74, 108, 247, 0.2)",
+    startup: { name: "Luminary AI", tag: "AI/ML", mrr: "$45K MRR", users: "2.4K Users", initial: "L", grad: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" },
+    investor: { name: "Maria K.", firm: "Angel", initial: "MK", grad: "linear-gradient(135deg, #7C5CFC, #a855f7)" },
+  },
+  {
+    label: "$1K-$10K",
+    color: "#f59e0b",
+    bg: "rgba(245, 158, 11, 0.08)",
+    border: "rgba(245, 158, 11, 0.2)",
+    startup: { name: "Terraform Health", tag: "HealthTech", mrr: "Pre-revenue", users: "890 Waitlist", initial: "T", grad: "linear-gradient(135deg, #f59e0b, #ef4444)" },
+    investor: { name: "Sam T.", firm: "First Check", initial: "ST", grad: "linear-gradient(135deg, #f59e0b, #ef4444)" },
+  },
+];
+
 export function MatchingPreview({ active }: { active: boolean }) {
-  const [phase, setPhase] = useState(0); // 0=connecting, 1=matched, 2=notification
-  const matchScore = useCountUp(94, 0.5, phase >= 1);
+  const [visibleTiers, setVisibleTiers] = useState(0);
+  const [matchedTier, setMatchedTier] = useState(-1);
+  const [showLabel, setShowLabel] = useState(false);
 
   useEffect(() => {
     if (!active) {
-      setPhase(0);
+      setVisibleTiers(0);
+      setMatchedTier(-1);
+      setShowLabel(false);
       return;
     }
-    const t1 = setTimeout(() => setPhase(1), 1800);
-    const t2 = setTimeout(() => setPhase(2), 2600);
-    // Loop
-    const t3 = setTimeout(() => setPhase(0), 6000);
-    const t4 = setTimeout(() => setPhase(1), 7800);
-    const t5 = setTimeout(() => setPhase(2), 8600);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); };
+
+    // Stagger tiers in
+    const t1 = setTimeout(() => setVisibleTiers(1), 300);
+    const t2 = setTimeout(() => setVisibleTiers(2), 600);
+    const t3 = setTimeout(() => setVisibleTiers(3), 900);
+
+    // Animate match connections one by one
+    const t4 = setTimeout(() => setMatchedTier(0), 1500);
+    const t5 = setTimeout(() => setMatchedTier(1), 2200);
+    const t6 = setTimeout(() => setMatchedTier(2), 2900);
+    const t7 = setTimeout(() => setShowLabel(true), 3500);
+
+    // Loop: reset and replay
+    const t8 = setTimeout(() => {
+      setVisibleTiers(0);
+      setMatchedTier(-1);
+      setShowLabel(false);
+    }, 7000);
+    const t9 = setTimeout(() => setVisibleTiers(1), 7300);
+    const t10 = setTimeout(() => setVisibleTiers(2), 7600);
+    const t11 = setTimeout(() => setVisibleTiers(3), 7900);
+    const t12 = setTimeout(() => setMatchedTier(0), 8500);
+    const t13 = setTimeout(() => setMatchedTier(1), 9200);
+    const t14 = setTimeout(() => setMatchedTier(2), 9900);
+    const t15 = setTimeout(() => setShowLabel(true), 10500);
+
+    return () => {
+      [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15].forEach(clearTimeout);
+    };
   }, [active]);
 
   return (
     <div className="h-full flex flex-col">
-      <PreviewLabel label="MATCHING ENGINE" statusText="Active" dotColor="blue" />
+      <PreviewLabel label="TIER MATCHING" statusText="Active" dotColor="blue" />
 
-      {/* Match visualization */}
-      <div className="flex-1 flex flex-col items-center justify-center">
-        <div className="flex items-center gap-4 w-full max-w-[360px] mx-auto mb-6">
-          {/* Investor */}
-          <div className="flex flex-col items-center text-center flex-1">
-            <div className="w-12 h-12 rounded-full mb-2 flex items-center justify-center text-white font-bold text-[14px]" style={{ background: "linear-gradient(135deg, #4A6CF7, #6366f1)" }}>
-              JC
-            </div>
-            <span className="text-white text-[13px] font-semibold">Jordan C.</span>
-            <span className="text-[11px] text-white/40">Apex Ventures</span>
-            <span className="text-[10px] text-white/30 mt-0.5">$100K-$500K</span>
-          </div>
+      <div className="flex-1 flex flex-col justify-center">
+        <div className="space-y-3">
+          {tiers.map((tier, i) => (
+            <AnimatePresence key={tier.label}>
+              {visibleTiers > i && (
+                <motion.div
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="rounded-xl p-3 relative"
+                  style={{ background: tier.bg, border: `1px solid ${tier.border}` }}
+                >
+                  {/* Tier label */}
+                  <div className="flex items-center gap-2 mb-2.5">
+                    <span
+                      className="text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wider"
+                      style={{ background: `${tier.color}20`, color: tier.color, border: `1px solid ${tier.color}40` }}
+                    >
+                      {tier.label}
+                    </span>
+                    <div className="flex-1 h-[1px]" style={{ background: `${tier.color}15` }} />
+                  </div>
 
-          {/* Connection line */}
-          <div className="flex-1 relative h-[2px] mx-2">
-            <div className="absolute inset-0 rounded-full" style={{ background: "rgba(255,255,255,0.08)" }} />
-            {phase === 0 && (
-              <>
-                <div className="connection-dot absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full" style={{ background: "#4A6CF7", boxShadow: "0 0 6px #4A6CF7", animationDuration: "1.2s" }} />
-                <div className="connection-dot absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full" style={{ background: "#7C5CFC", boxShadow: "0 0 6px #7C5CFC", animationDuration: "1.2s", animationDelay: "0.4s" }} />
-                <div className="connection-dot absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full" style={{ background: "#4A6CF7", boxShadow: "0 0 6px #4A6CF7", animationDuration: "1.2s", animationDelay: "0.8s" }} />
-              </>
-            )}
-            {phase >= 1 && (
-              <motion.div
-                initial={{ opacity: 0, scale: 2 }}
-                animate={{ opacity: [1, 0], scale: [1, 3] }}
-                transition={{ duration: 0.6 }}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full"
-                style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", boxShadow: "0 0 20px rgba(74, 108, 247, 0.8)" }}
-              />
-            )}
-          </div>
+                  {/* Investor -> Connection -> Startup row */}
+                  <div className="flex items-center gap-2">
+                    {/* Investor */}
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                      <div
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[9px] font-bold shrink-0"
+                        style={{ background: tier.investor.grad }}
+                      >
+                        {tier.investor.initial}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-white text-[11px] font-semibold truncate">{tier.investor.name}</p>
+                        <p className="text-[9px] text-white/35 truncate">{tier.investor.firm}</p>
+                      </div>
+                    </div>
 
-          {/* Startup */}
-          <div className="flex flex-col items-center text-center flex-1">
-            <div className="w-12 h-12 rounded-full mb-2 flex items-center justify-center text-white font-bold text-[14px]" style={{ background: "linear-gradient(135deg, #7C5CFC, #a855f7)" }}>
-              AR
-            </div>
-            <span className="text-white text-[13px] font-semibold">Alex R.</span>
-            <span className="text-[11px] text-white/40">Luminary AI</span>
-            <span className="text-[10px] text-white/30 mt-0.5">Seed Stage</span>
-          </div>
+                    {/* Connection line */}
+                    <div className="w-[50px] h-[2px] relative shrink-0 mx-1">
+                      <div className="absolute inset-0 rounded-full" style={{ background: "rgba(255,255,255,0.06)" }} />
+                      {matchedTier >= i ? (
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: "100%" }}
+                          transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
+                          className="absolute inset-y-0 left-0 rounded-full"
+                          style={{ background: `linear-gradient(90deg, ${tier.color}, ${tier.color}90)`, boxShadow: `0 0 8px ${tier.color}60` }}
+                        />
+                      ) : (
+                        <div className="connection-dot absolute top-[-1px] w-1.5 h-1.5 rounded-full" style={{ background: tier.color, boxShadow: `0 0 4px ${tier.color}`, animationDuration: "1.5s" }} />
+                      )}
+                    </div>
+
+                    {/* Startup */}
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                      <div
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[9px] font-bold shrink-0"
+                        style={{ background: tier.startup.grad }}
+                      >
+                        {tier.startup.initial}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <p className="text-white text-[11px] font-semibold truncate">{tier.startup.name}</p>
+                          <span className="text-[8px] px-1.5 py-0.5 rounded-full shrink-0" style={{ background: `${tier.color}15`, color: tier.color }}>{tier.startup.tag}</span>
+                        </div>
+                        <p className="text-[9px] text-white/35">{tier.startup.mrr} · {tier.startup.users}</p>
+                      </div>
+                    </div>
+
+                    {/* Match indicator */}
+                    <AnimatePresence>
+                      {matchedTier >= i && (
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.5 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          className="w-5 h-5 rounded-full flex items-center justify-center shrink-0"
+                          style={{ background: `${tier.color}20` }}
+                        >
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={tier.color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          ))}
         </div>
 
-        {/* Match result */}
+        {/* Bottom summary */}
         <AnimatePresence>
-          {phase >= 1 && (
+          {showLabel && (
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="text-center mb-4"
+              className="mt-4 pt-3 flex items-center justify-between"
+              style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
             >
-              <span className="text-[22px] font-bold text-white tabular-nums">Match Score: {matchScore}%</span>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Compatibility indicators */}
-        <AnimatePresence>
-          {phase >= 1 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="flex flex-wrap justify-center gap-2 mb-4"
-            >
-              {[
-                { label: "Sector Fit: AI/ML", delay: 0 },
-                { label: "Stage Fit: Seed", delay: 0.15 },
-                { label: "Check Size: $250K", delay: 0.3 },
-              ].map((item) => (
-                <motion.span
-                  key={item.label}
-                  initial={{ opacity: 0, y: 4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: item.delay, duration: 0.2 }}
-                  className="text-[11px] px-2.5 py-1 rounded-full flex items-center gap-1"
-                  style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22c55e", border: "1px solid rgba(34, 197, 94, 0.2)" }}
-                >
-                  {item.label} <span>&#10003;</span>
-                </motion.span>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Notification */}
-        <AnimatePresence>
-          {phase >= 2 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
-              className="w-full max-w-[320px] rounded-xl p-3.5"
-              style={{ background: "rgba(74, 108, 247, 0.1)", border: "1px solid rgba(74, 108, 247, 0.2)" }}
-            >
-              <div className="flex items-start gap-2.5">
-                <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(74, 108, 247, 0.2)" }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 01-3.46 0" /></svg>
-                </div>
-                <div>
-                  <p className="text-[12px] font-semibold text-white mb-0.5">New Match!</p>
-                  <p className="text-[11px] text-white/50 leading-relaxed">You have been matched with Luminary AI. Take the call within 72 hours.</p>
-                </div>
-              </div>
+              <span className="text-[12px] text-white/40">Every investor sees startups at their level</span>
+              <span className="text-[11px] font-semibold px-2.5 py-1 rounded-md" style={{ background: "rgba(74, 108, 247, 0.15)", color: "#4A6CF7" }}>
+                3 tiers matched
+              </span>
             </motion.div>
           )}
         </AnimatePresence>
