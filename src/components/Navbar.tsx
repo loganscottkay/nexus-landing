@@ -18,6 +18,7 @@ export default function Navbar() {
   const [applyOpen, setApplyOpen] = useState(false);
   const [logoHovered, setLogoHovered] = useState(false);
   const [moonSettled, setMoonSettled] = useState(false);
+  const [moonHovered, setMoonHovered] = useState(false);
   const applyRef = useRef<HTMLDivElement>(null);
   const moonRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
@@ -100,65 +101,51 @@ export default function Navbar() {
             </>
           )}
 
-          {/* Crescent Moon */}
+          {/* Full Moon */}
           <div
             ref={moonRef}
-            className={`nav-moon${moonSettled ? " settled" : ""}`}
+            className={`nav-moon${moonSettled ? " settled" : ""}${moonHovered ? " hovered" : ""}`}
+            onMouseEnter={() => setMoonHovered(true)}
+            onMouseLeave={() => setMoonHovered(false)}
           >
+            {/* Lunar flare (one-time shockwave after settling) */}
+            {moonSettled && <div className="lunar-flare" />}
+
+            {/* Twinkle stars around the moon */}
+            {moonSettled && (
+              <>
+                <span className="moon-twinkle moon-twinkle-1" />
+                <span className="moon-twinkle moon-twinkle-2" />
+                <span className="moon-twinkle moon-twinkle-3" />
+                <span className="moon-twinkle moon-twinkle-4" />
+              </>
+            )}
+
             <svg
               width="32"
               height="32"
               viewBox="0 0 32 32"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              style={{ transform: "scaleX(-1)" }}
+              className="relative z-10"
             >
               <defs>
-                {/* Main gradient: slate to cool blue-gray */}
-                <linearGradient id="moon-grad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#6B7B95" />
-                  <stop offset="50%" stopColor="#8494AB" />
-                  <stop offset="100%" stopColor="#5A6A82" />
-                </linearGradient>
-                {/* Inner shadow for dimensionality */}
-                <filter id="moon-shadow" x="-30%" y="-30%" width="160%" height="160%">
-                  <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur" />
-                  <feOffset dx="0.5" dy="0.5" result="offset" />
-                  <feFlood floodColor="#3A4A5E" floodOpacity="0.3" />
-                  <feComposite in2="offset" operator="in" result="shadow" />
-                  <feMerge>
-                    <feMergeNode in="shadow" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-                {/* Highlight for realism */}
-                <radialGradient id="moon-highlight" cx="30%" cy="25%" r="45%">
-                  <stop offset="0%" stopColor="#C8D0DC" stopOpacity="0.7" />
-                  <stop offset="100%" stopColor="#C8D0DC" stopOpacity="0" />
+                {/* Spherical gradient: bright center to darker edges */}
+                <radialGradient id="moon-sphere" cx="45%" cy="40%" r="50%">
+                  <stop offset="0%" stopColor="#F0F0F5" />
+                  <stop offset="70%" stopColor="#E8E8ED" />
+                  <stop offset="100%" stopColor="#D8DDE5" />
                 </radialGradient>
-                {/* Crescent mask: white = visible, black = hidden */}
-                <mask id="crescent-mask">
-                  <circle cx="16" cy="16" r="13" fill="white" />
-                  <circle cx="22" cy="14" r="11" fill="black" />
-                </mask>
               </defs>
-              {/* Main crescent body */}
-              <circle
-                cx="16"
-                cy="16"
-                r="13"
-                fill="url(#moon-grad)"
-                mask="url(#crescent-mask)"
-                filter="url(#moon-shadow)"
-              />
-              {/* Highlight overlay */}
-              <circle
-                cx="16"
-                cy="16"
-                r="13"
-                fill="url(#moon-highlight)"
-                mask="url(#crescent-mask)"
-              />
+              {/* Main moon body */}
+              <circle cx="16" cy="16" r="13" fill="url(#moon-sphere)" stroke="rgba(200,210,220,0.3)" strokeWidth="1" />
+              {/* Craters */}
+              <circle cx="10" cy="11" r="3" fill="#C8CDD4" opacity="0.5" />
+              <circle cx="19" cy="9" r="2" fill="#D0D5DC" opacity="0.45" />
+              <circle cx="21" cy="18" r="3.5" fill="#C8CDD4" opacity="0.4" />
+              <circle cx="12" cy="20" r="2.5" fill="#D0D5DC" opacity="0.35" />
+              <circle cx="16" cy="15" r="1.5" fill="#C8CDD4" opacity="0.3" />
+              <circle cx="8" cy="17" r="2" fill="#D0D5DC" opacity="0.3" />
             </svg>
           </div>
 

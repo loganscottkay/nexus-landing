@@ -155,7 +155,7 @@ body {
   margin-bottom: 2px;
 }
 
-/* ---- Crescent Moon Logo ---- */
+/* ---- Full Moon Logo ---- */
 
 /* Roll-in entrance: translateX -100px→0, rotate -360→0 */
 @keyframes moon-roll-in {
@@ -173,25 +173,114 @@ body {
 }
 
 .nav-moon {
+  position: relative;
   width: 32px;
   height: 32px;
   flex-shrink: 0;
   opacity: 0;
   will-change: transform, opacity;
   animation: moon-roll-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  filter: drop-shadow(0 0 12px rgba(200, 210, 230, 0.4));
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(200,215,235,0.5), 0 0 30px rgba(180,200,230,0.2);
+  transition: filter 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Continuous glow pulse after settling — opacity: 1 so moon stays visible */
+/* Continuous glow pulse after settling */
 @keyframes moon-glow-pulse {
-  0%, 100% { filter: drop-shadow(0 0 12px rgba(200, 210, 230, 0.3)); }
-  50% { filter: drop-shadow(0 0 12px rgba(200, 210, 230, 0.5)); }
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(200,215,235,0.4), 0 0 30px rgba(180,200,230,0.15);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(200,215,235,0.7), 0 0 30px rgba(180,200,230,0.3);
+  }
 }
 
 .nav-moon.settled {
   opacity: 1;
   will-change: auto;
   animation: moon-glow-pulse 3s ease-in-out infinite;
+}
+
+/* Hover: brighten + intensify glow */
+.nav-moon.hovered {
+  filter: brightness(1.2);
+  box-shadow: 0 0 20px rgba(200,215,235,0.9), 0 0 40px rgba(180,200,230,0.4) !important;
+}
+
+.nav-moon.hovered .moon-twinkle {
+  opacity: 0.9 !important;
+}
+
+/* ---- Lunar flare (one-time shockwave) ---- */
+@keyframes lunar-flare {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 0;
+  }
+}
+
+.lunar-flare {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+  pointer-events: none;
+  z-index: 5;
+  transform: translate(-50%, -50%) scale(1);
+  animation: lunar-flare 0.8s ease-out 0.3s forwards;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+/* ---- Twinkle stars around the moon ---- */
+@keyframes twinkle-1 { 0%, 100% { opacity: 0; } 50% { opacity: 0.8; } }
+@keyframes twinkle-2 { 0%, 100% { opacity: 0.1; } 40% { opacity: 0.7; } 80% { opacity: 0.2; } }
+@keyframes twinkle-3 { 0%, 100% { opacity: 0; } 30% { opacity: 0.6; } 70% { opacity: 0.1; } }
+@keyframes twinkle-4 { 0%, 100% { opacity: 0.15; } 60% { opacity: 0.75; } }
+
+.moon-twinkle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: white;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  animation-fill-mode: both;
+  transition: opacity 0.3s ease;
+}
+
+.moon-twinkle-1 {
+  top: -6px;
+  left: 22px;
+  animation: twinkle-1 2.2s ease-in-out 1.1s infinite;
+}
+
+.moon-twinkle-2 {
+  top: 28px;
+  left: -4px;
+  animation: twinkle-2 1.7s ease-in-out 1.4s infinite;
+}
+
+.moon-twinkle-3 {
+  top: -4px;
+  left: -5px;
+  animation: twinkle-3 2.8s ease-in-out 1.2s infinite;
+}
+
+.moon-twinkle-4 {
+  top: 24px;
+  left: 26px;
+  animation: twinkle-4 1.4s ease-in-out 1.6s infinite;
 }
 
 /* Sparkle trail particles */
