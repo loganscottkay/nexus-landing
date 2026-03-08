@@ -4,6 +4,14 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
+const navLinks = [
+  { label: "Startup Qualifications", href: "/qualifications/startup" },
+  { label: "Investor Qualifications", href: "/qualifications/investor" },
+  { label: "How It Works", href: "/#how-it-works", scrollId: "how-it-works" },
+  { label: "For Investors", href: "/#for-investors", scrollId: "for-investors" },
+  { label: "For Startups", href: "/#for-startups", scrollId: "for-startups" },
+];
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -21,7 +29,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const onResize = () => {
-      if (window.innerWidth >= 768) setMenuOpen(false);
+      if (window.innerWidth >= 1280) setMenuOpen(false);
     };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
@@ -66,11 +74,11 @@ export default function Navbar() {
         <div className="nav-shimmer-line absolute inset-0" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-16 md:h-20">
-        {/* Logo */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-16 xl:h-20">
+        {/* Far left: Logo */}
         <Link
           href="/"
-          className="flex items-center gap-0 text-lg md:text-xl font-bold tracking-[0.3em] transition-all duration-300"
+          className="flex items-center gap-0 text-lg md:text-xl font-bold tracking-[0.3em] transition-all duration-300 shrink-0"
           style={{
             fontFamily: "var(--font-dm-sans), sans-serif",
             ...(logoHovered
@@ -91,132 +99,126 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-8">
-          {[
-            { label: "How It Works", id: "how-it-works" },
-            { label: "For Investors", id: "for-investors" },
-            { label: "For Startups", id: "for-startups" },
-          ].map((link) => (
+        {/* Center: Nav links */}
+        <div className="hidden xl:flex items-center" style={{ gap: "28px" }}>
+          {navLinks.map((link) => (
             <Link
-              key={link.id}
-              href={`/#${link.id}`}
-              onClick={(e) => scrollToSection(e, link.id)}
-              className="nav-link text-text-secondary text-[15px]"
+              key={link.href}
+              href={link.href}
+              onClick={link.scrollId ? (e) => scrollToSection(e, link.scrollId!) : undefined}
+              className="nav-link text-text-secondary text-[14px] whitespace-nowrap"
               style={{ letterSpacing: "0.3px", fontWeight: 500 }}
             >
               {link.label}
             </Link>
           ))}
+        </div>
 
-          <div className="flex items-center ml-4" style={{ gap: "24px" }}>
-            {/* Sign In */}
-            <Link
-              href="/login"
-              className="nav-signin-premium text-text-secondary text-[15px]"
-              style={{ letterSpacing: "0.3px", fontWeight: 500 }}
+        {/* Far right: Action buttons */}
+        <div className="hidden xl:flex items-center shrink-0" style={{ gap: "16px" }}>
+          <Link
+            href="/login"
+            className="nav-signin-premium text-text-secondary text-[14px]"
+            style={{ letterSpacing: "0.3px", fontWeight: 500 }}
+          >
+            Sign In
+          </Link>
+
+          <div className="relative" ref={applyRef}>
+            <button
+              onClick={() => setApplyOpen(!applyOpen)}
+              className="nav-apply-btn flex items-center gap-1.5 text-[14px] font-semibold text-white"
+              style={{ letterSpacing: "0.3px" }}
             >
-              Sign In
-            </Link>
-
-            {/* Apply Now */}
-            <div className="relative" ref={applyRef}>
-              <button
-                onClick={() => setApplyOpen(!applyOpen)}
-                className="nav-apply-btn flex items-center gap-1.5 text-[15px] font-semibold text-white"
-                style={{ letterSpacing: "0.3px" }}
+              Apply Now
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="transition-transform duration-200"
+                style={{ transform: applyOpen ? "rotate(180deg)" : "rotate(0deg)" }}
               >
-                Apply Now
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="transition-transform duration-200"
-                  style={{ transform: applyOpen ? "rotate(180deg)" : "rotate(0deg)" }}
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </button>
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
 
-              {/* Dropdown */}
-              <div
-                className="absolute right-0 top-full mt-3 w-[240px] transition-all duration-200"
+            {/* Dropdown */}
+            <div
+              className="absolute right-0 top-full mt-3 w-[240px] transition-all duration-200"
+              style={{
+                opacity: applyOpen ? 1 : 0,
+                transform: applyOpen ? "translateY(0)" : "translateY(-8px)",
+                pointerEvents: applyOpen ? "auto" : "none",
+              }}
+            >
+              {/* Triangle connector */}
+              <div className="absolute -top-[7px] right-[40px] w-0 h-0"
                 style={{
-                  opacity: applyOpen ? 1 : 0,
-                  transform: applyOpen ? "translateY(0)" : "translateY(-8px)",
-                  pointerEvents: applyOpen ? "auto" : "none",
+                  borderLeft: "8px solid transparent",
+                  borderRight: "8px solid transparent",
+                  borderBottom: "8px solid rgba(74, 108, 247, 0.3)",
+                }}
+              />
+              <div className="absolute -top-[6px] right-[41px] w-0 h-0"
+                style={{
+                  borderLeft: "7px solid transparent",
+                  borderRight: "7px solid transparent",
+                  borderBottom: "7px solid rgba(255, 255, 255, 0.9)",
+                }}
+              />
+
+              <div
+                className="rounded-2xl p-2 relative overflow-hidden"
+                style={{
+                  background: "rgba(255, 255, 255, 0.85)",
+                  backdropFilter: "blur(24px)",
+                  WebkitBackdropFilter: "blur(24px)",
+                  boxShadow: "0 10px 40px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0,0,0,0.04)",
                 }}
               >
-                {/* Triangle connector */}
-                <div className="absolute -top-[7px] right-[40px] w-0 h-0"
-                  style={{
-                    borderLeft: "8px solid transparent",
-                    borderRight: "8px solid transparent",
-                    borderBottom: "8px solid rgba(74, 108, 247, 0.3)",
-                  }}
-                />
-                <div className="absolute -top-[6px] right-[41px] w-0 h-0"
-                  style={{
-                    borderLeft: "7px solid transparent",
-                    borderRight: "7px solid transparent",
-                    borderBottom: "7px solid rgba(255, 255, 255, 0.9)",
-                  }}
-                />
-
                 <div
-                  className="rounded-2xl p-2 relative overflow-hidden"
+                  className="absolute inset-0 rounded-2xl pointer-events-none"
                   style={{
-                    background: "rgba(255, 255, 255, 0.85)",
-                    backdropFilter: "blur(24px)",
-                    WebkitBackdropFilter: "blur(24px)",
-                    boxShadow: "0 10px 40px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0,0,0,0.04)",
+                    padding: "1px",
+                    background: "linear-gradient(135deg, rgba(74,108,247,0.15), rgba(124,92,252,0.15), rgba(74,108,247,0.08))",
+                    mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    maskComposite: "xor" as const,
+                    WebkitMaskComposite: "xor" as const,
                   }}
-                >
-                  {/* Gradient border overlay */}
-                  <div
-                    className="absolute inset-0 rounded-2xl pointer-events-none"
-                    style={{
-                      padding: "1px",
-                      background: "linear-gradient(135deg, rgba(74,108,247,0.15), rgba(124,92,252,0.15), rgba(74,108,247,0.08))",
-                      mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                      WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                      maskComposite: "xor" as const,
-                      WebkitMaskComposite: "xor" as const,
-                    }}
-                  />
+                />
 
-                  <Link
-                    href="/apply/investor"
-                    onClick={() => setApplyOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[15px] text-text-primary font-medium transition-all duration-150 hover:bg-[rgba(74,108,247,0.05)] hover:text-[#4A6CF7]"
-                    style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
-                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                      <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" />
-                    </svg>
-                    Apply as Investor
-                  </Link>
-                  <Link
-                    href="/apply/startup"
-                    onClick={() => setApplyOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[15px] text-text-primary font-medium transition-all duration-150 hover:bg-[rgba(74,108,247,0.05)] hover:text-[#4A6CF7]"
-                    style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
-                      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z" />
-                      <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z" />
-                      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
-                      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-                    </svg>
-                    Apply as Startup
-                  </Link>
-                </div>
+                <Link
+                  href="/apply/investor"
+                  onClick={() => setApplyOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] text-text-primary font-medium transition-all duration-150 hover:bg-[rgba(74,108,247,0.05)] hover:text-[#4A6CF7]"
+                  style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                    <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" />
+                  </svg>
+                  Apply as Investor
+                </Link>
+                <Link
+                  href="/apply/startup"
+                  onClick={() => setApplyOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] text-text-primary font-medium transition-all duration-150 hover:bg-[rgba(74,108,247,0.05)] hover:text-[#4A6CF7]"
+                  style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z" />
+                    <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z" />
+                    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+                    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+                  </svg>
+                  Apply as Startup
+                </Link>
               </div>
             </div>
           </div>
@@ -225,7 +227,7 @@ export default function Navbar() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden flex flex-col gap-1.5 p-2"
+          className="xl:hidden flex flex-col gap-1.5 p-2"
           aria-label="Toggle menu"
         >
           <span
@@ -248,32 +250,24 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div
-        className={`md:hidden mobile-menu overflow-hidden transition-all duration-300 ${
-          menuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+        className={`xl:hidden mobile-menu overflow-hidden transition-all duration-300 ${
+          menuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div className="px-6 py-6 flex flex-col gap-5">
-          <Link
-            href="/#how-it-works"
-            onClick={(e) => { scrollToSection(e, "how-it-works"); setMenuOpen(false); }}
-            className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
-          >
-            How It Works
-          </Link>
-          <Link
-            href="/#for-investors"
-            onClick={(e) => { scrollToSection(e, "for-investors"); setMenuOpen(false); }}
-            className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
-          >
-            For Investors
-          </Link>
-          <Link
-            href="/#for-startups"
-            onClick={(e) => { scrollToSection(e, "for-startups"); setMenuOpen(false); }}
-            className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
-          >
-            For Startups
-          </Link>
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={(e) => {
+                if (link.scrollId) scrollToSection(e, link.scrollId);
+                setMenuOpen(false);
+              }}
+              className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
+            >
+              {link.label}
+            </Link>
+          ))}
           <Link
             href="/login"
             onClick={() => setMenuOpen(false)}
