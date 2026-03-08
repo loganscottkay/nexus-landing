@@ -17,9 +17,17 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [applyOpen, setApplyOpen] = useState(false);
   const [logoHovered, setLogoHovered] = useState(false);
+  const [moonSettled, setMoonSettled] = useState(false);
   const applyRef = useRef<HTMLDivElement>(null);
+  const moonRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isHome = pathname === "/";
+
+  // Remove will-change after entrance animation completes
+  useEffect(() => {
+    const timer = setTimeout(() => setMoonSettled(true), 1300);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -78,24 +86,102 @@ export default function Navbar() {
         {/* Far left: Logo */}
         <Link
           href="/"
-          className="flex items-center gap-0 text-lg md:text-xl font-bold tracking-[0.3em] transition-all duration-300 shrink-0"
-          style={{
-            fontFamily: "var(--font-dm-sans), sans-serif",
-            ...(logoHovered
-              ? {
-                  background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }
-              : { color: "#0F172A" }),
-          }}
+          className="flex items-center gap-[10px] shrink-0 relative"
           onMouseEnter={() => setLogoHovered(true)}
           onMouseLeave={() => setLogoHovered(false)}
         >
-          NEXUS
-          <span className="relative ml-[-0.15em]">
-            <span className="nav-logo-dot" />
+          {/* Sparkle trail particles */}
+          {!moonSettled && (
+            <>
+              <span className="moon-sparkle moon-sparkle-1" />
+              <span className="moon-sparkle moon-sparkle-2" />
+              <span className="moon-sparkle moon-sparkle-3" />
+              <span className="moon-sparkle moon-sparkle-4" />
+            </>
+          )}
+
+          {/* Crescent Moon */}
+          <div
+            ref={moonRef}
+            className={`nav-moon${moonSettled ? " settled" : ""}`}
+          >
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 28 28"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                {/* Main gradient: silver-white to cool blue */}
+                <linearGradient id="moon-grad" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#E8E8ED" />
+                  <stop offset="100%" stopColor="#B8C4D4" />
+                </linearGradient>
+                {/* Inner shadow filter for dimensionality */}
+                <filter id="moon-inner-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feComponentTransfer in="SourceAlpha">
+                    <feFuncA type="table" tableValues="1 0" />
+                  </feComponentTransfer>
+                  <feGaussianBlur stdDeviation="1.5" />
+                  <feOffset dx="1" dy="1" result="offsetblur" />
+                  <feFlood floodColor="#8090A8" floodOpacity="0.35" />
+                  <feComposite in2="offsetblur" operator="in" />
+                  <feComposite in2="SourceAlpha" operator="in" />
+                  <feMerge>
+                    <feMergeNode in="SourceGraphic" />
+                    <feMergeNode />
+                  </feMerge>
+                </filter>
+                {/* Subtle highlight */}
+                <radialGradient id="moon-highlight" cx="35%" cy="30%" r="50%">
+                  <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.5" />
+                  <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+              {/* Crescent shape: full circle minus an overlapping circle offset to the right */}
+              <clipPath id="crescent-clip">
+                <path d="M14 1 A13 13 0 1 0 14 27 A10 10 0 0 1 14 1 Z" />
+              </clipPath>
+              {/* Main crescent body */}
+              <circle
+                cx="14"
+                cy="14"
+                r="13"
+                fill="url(#moon-grad)"
+                clipPath="url(#crescent-clip)"
+                filter="url(#moon-inner-shadow)"
+              />
+              {/* Highlight overlay */}
+              <circle
+                cx="14"
+                cy="14"
+                r="13"
+                fill="url(#moon-highlight)"
+                clipPath="url(#crescent-clip)"
+              />
+            </svg>
+          </div>
+
+          {/* NEXUS text */}
+          <span
+            className="text-lg md:text-xl font-bold tracking-[0.3em] transition-all duration-300"
+            style={{
+              fontFamily: "var(--font-dm-sans), sans-serif",
+              ...(logoHovered
+                ? {
+                    background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }
+                : { color: "#0F172A" }),
+            }}
+          >
+            NEXUS
+            <span className="relative ml-[-0.15em]">
+              <span className="nav-logo-dot" />
+            </span>
           </span>
         </Link>
 
