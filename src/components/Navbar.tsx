@@ -108,57 +108,55 @@ export default function Navbar() {
             <svg
               width="32"
               height="32"
-              viewBox="0 0 28 28"
+              viewBox="0 0 32 32"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <defs>
-                {/* Main gradient: silver-white to cool blue */}
-                <linearGradient id="moon-grad" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#E8E8ED" />
-                  <stop offset="100%" stopColor="#B8C4D4" />
+                {/* Main gradient: slate to cool blue-gray */}
+                <linearGradient id="moon-grad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#6B7B95" />
+                  <stop offset="50%" stopColor="#8494AB" />
+                  <stop offset="100%" stopColor="#5A6A82" />
                 </linearGradient>
-                {/* Inner shadow filter for dimensionality */}
-                <filter id="moon-inner-shadow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feComponentTransfer in="SourceAlpha">
-                    <feFuncA type="table" tableValues="1 0" />
-                  </feComponentTransfer>
-                  <feGaussianBlur stdDeviation="1.5" />
-                  <feOffset dx="1" dy="1" result="offsetblur" />
-                  <feFlood floodColor="#8090A8" floodOpacity="0.35" />
-                  <feComposite in2="offsetblur" operator="in" />
-                  <feComposite in2="SourceAlpha" operator="in" />
+                {/* Inner shadow for dimensionality */}
+                <filter id="moon-shadow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur" />
+                  <feOffset dx="0.5" dy="0.5" result="offset" />
+                  <feFlood floodColor="#3A4A5E" floodOpacity="0.3" />
+                  <feComposite in2="offset" operator="in" result="shadow" />
                   <feMerge>
+                    <feMergeNode in="shadow" />
                     <feMergeNode in="SourceGraphic" />
-                    <feMergeNode />
                   </feMerge>
                 </filter>
-                {/* Subtle highlight */}
-                <radialGradient id="moon-highlight" cx="35%" cy="30%" r="50%">
-                  <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.5" />
-                  <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+                {/* Highlight for realism */}
+                <radialGradient id="moon-highlight" cx="30%" cy="25%" r="45%">
+                  <stop offset="0%" stopColor="#C8D0DC" stopOpacity="0.7" />
+                  <stop offset="100%" stopColor="#C8D0DC" stopOpacity="0" />
                 </radialGradient>
+                {/* Crescent mask: white = visible, black = hidden */}
+                <mask id="crescent-mask">
+                  <circle cx="16" cy="16" r="13" fill="white" />
+                  <circle cx="22" cy="14" r="11" fill="black" />
+                </mask>
               </defs>
-              {/* Crescent shape: full circle minus an overlapping circle offset to the right */}
-              <clipPath id="crescent-clip">
-                <path d="M14 1 A13 13 0 1 0 14 27 A10 10 0 0 1 14 1 Z" />
-              </clipPath>
               {/* Main crescent body */}
               <circle
-                cx="14"
-                cy="14"
+                cx="16"
+                cy="16"
                 r="13"
                 fill="url(#moon-grad)"
-                clipPath="url(#crescent-clip)"
-                filter="url(#moon-inner-shadow)"
+                mask="url(#crescent-mask)"
+                filter="url(#moon-shadow)"
               />
               {/* Highlight overlay */}
               <circle
-                cx="14"
-                cy="14"
+                cx="16"
+                cy="16"
                 r="13"
                 fill="url(#moon-highlight)"
-                clipPath="url(#crescent-clip)"
+                mask="url(#crescent-mask)"
               />
             </svg>
           </div>
