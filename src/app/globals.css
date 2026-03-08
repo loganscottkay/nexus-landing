@@ -668,6 +668,54 @@ body {
 /* ============================================================
    How It Works — interactive preview card states
    ============================================================ */
+/* ============================================================
+   Sector bar breathing animation
+   ============================================================ */
+@keyframes sector-breathe {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(1.05); }
+}
+
+.sector-bar-breathe {
+  transform-origin: left;
+  animation: sector-breathe 4s ease-in-out infinite;
+}
+
+/* ============================================================
+   Match dot travel (CTA section match card)
+   ============================================================ */
+@keyframes match-dot-travel {
+  0% { left: -8px; }
+  100% { left: calc(100% + 4px); }
+}
+
+.match-dot-travel {
+  animation: match-dot-travel 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   Avatar ripple (CTA section cards)
+   ============================================================ */
+@keyframes avatar-ripple {
+  0% { box-shadow: 0 0 0 0 rgba(74, 108, 247, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(74, 108, 247, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(74, 108, 247, 0); }
+}
+
+.avatar-ripple {
+  animation: avatar-ripple 3s ease-out infinite;
+}
+
+@keyframes avatar-ripple-sm {
+  0% { box-shadow: 0 0 0 0 rgba(124, 92, 252, 0.3); }
+  70% { box-shadow: 0 0 0 6px rgba(124, 92, 252, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(124, 92, 252, 0); }
+}
+
+.avatar-ripple-sm {
+  animation: avatar-ripple-sm 3s ease-out infinite;
+}
+
 .hiw-card-active::after {
   opacity: 0.3 !important;
   background: linear-gradient(135deg, #4A6CF7, #7C5CFC) !important;

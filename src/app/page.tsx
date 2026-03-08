@@ -323,46 +323,45 @@ function ArrowRight({ className = "" }: { className?: string }) {
   );
 }
 
-/* ---- Ticker number effect ---- */
-function TickerValue({ value }: { value: string }) {
-  const [display, setDisplay] = React.useState(() =>
-    value.split("").map((c) => (/\d/.test(c) ? "0" : c)).join("")
-  );
+/* ---- Floating Dashboard Mockups ---- */
+
+const feedStartups = [
+  { name: "Luminary AI", initial: "L", tag: "AI / ML", mrr: "$45K", users: "2.4K", growth: "180%", pipeline: "$2M", gradFrom: "#4A6CF7", gradTo: "#7C5CFC" },
+  { name: "Stackpay", initial: "S", tag: "Fintech", mrr: "$82K", users: "34", usersLabel: "Clients", growth: "95%", pipeline: "$4.1M", gradFrom: "#22c55e", gradTo: "#14b8a6" },
+  { name: "Terraform Health", initial: "T", tag: "HealthTech", mrr: "$12K", users: "890", growth: "240%", pipeline: "$800K", gradFrom: "#f59e0b", gradTo: "#ef4444" },
+];
+
+function InvestorFeedCard() {
+  const [idx, setIdx] = useState(0);
+  const [matchCount, setMatchCount] = useState(247);
+  const [greenPulse, setGreenPulse] = useState(false);
 
   useEffect(() => {
-    const chars = value.split("");
-    const digits = "0123456789";
-    let frame = 0;
-    const totalFrames = 8;
-    const interval = 1500 / totalFrames;
+    // Cycle startups every 4s
+    const t = setInterval(() => setIdx((p) => (p + 1) % feedStartups.length), 4000);
+    return () => clearInterval(t);
+  }, []);
 
-    const timer = setInterval(() => {
-      frame++;
-      if (frame >= totalFrames) {
-        setDisplay(value);
-        clearInterval(timer);
-      } else {
-        setDisplay(
-          chars
-            .map((c) =>
-              /\d/.test(c) ? digits[Math.floor(Math.random() * 10)] : c
-            )
-            .join("")
-        );
-      }
-    }, interval);
+  useEffect(() => {
+    // Match counter every 3s
+    const t = setInterval(() => setMatchCount((p) => p + 1), 3000);
+    return () => clearInterval(t);
+  }, []);
 
-    return () => clearInterval(timer);
-  }, [value]);
+  useEffect(() => {
+    // Green button pulse every 6s
+    const t = setInterval(() => {
+      setGreenPulse(true);
+      setTimeout(() => setGreenPulse(false), 800);
+    }, 6000);
+    return () => clearInterval(t);
+  }, []);
 
-  return <>{display}</>;
-}
+  const s = feedStartups[idx];
 
-/* ---- Floating Dashboard Mockups ---- */
-function InvestorFeedCard() {
   return (
     <div
-      className="w-[300px] min-h-[380px] rounded-2xl p-5 dashboard-card relative"
+      className="w-[340px] min-h-[420px] rounded-2xl p-5 dashboard-card relative"
       style={{
         background: "rgba(10, 10, 15, 0.88)",
         backdropFilter: "blur(20px)",
@@ -370,7 +369,7 @@ function InvestorFeedCard() {
       }}
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-1.5">
         <p className="text-white/50 text-[11px] tracking-[2px] uppercase">Investor Feed</p>
         <div className="flex items-center gap-1.5">
           <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] live-dot-pulse" />
@@ -378,37 +377,57 @@ function InvestorFeedCard() {
         </div>
       </div>
 
-      {/* Startup card mockup */}
-      <div className="bg-white/[0.05] rounded-xl p-4 mb-3 border border-white/[0.06]">
-        <div className="flex items-center gap-2.5 mb-3">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#4A6CF7] to-[#7C5CFC] flex items-center justify-center text-white text-[11px] font-bold shrink-0">
-            L
-          </div>
-          <div>
-            <p className="text-white text-[14px] font-semibold leading-tight">Luminary AI</p>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#4A6CF7]/20 text-[#4A6CF7] inline-block mt-0.5">
-              AI / ML
-            </span>
-          </div>
-        </div>
-        {/* 2x2 metrics grid with ticker effect */}
-        <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-[11px]">
-          <div><p className="text-white/30 text-[9px]">MRR</p><p className="text-white font-medium"><TickerValue value="$45K" /></p></div>
-          <div><p className="text-white/30 text-[9px]">Users</p><p className="text-white font-medium"><TickerValue value="2.4K" /></p></div>
-          <div><p className="text-white/30 text-[9px]">Growth</p><p className="text-white font-medium text-[#22c55e]"><TickerValue value="180%" /></p></div>
-          <div><p className="text-white/30 text-[9px]">Pipeline</p><p className="text-white font-medium"><TickerValue value="$2M" /></p></div>
-        </div>
+      {/* Match counter */}
+      <p className="text-white/25 text-[10px] mb-4">
+        <span className="text-white/50 font-medium tabular-nums">{matchCount}</span> matches today
+      </p>
+
+      {/* Startup card mockup - crossfade */}
+      <div className="bg-white/[0.05] rounded-xl p-4 mb-3 border border-white/[0.06] relative min-h-[130px]">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex items-center gap-2.5 mb-3">
+              <div
+                className="w-9 h-9 rounded-full flex items-center justify-center text-white text-[11px] font-bold shrink-0"
+                style={{ background: `linear-gradient(135deg, ${s.gradFrom}, ${s.gradTo})` }}
+              >
+                {s.initial}
+              </div>
+              <div>
+                <p className="text-white text-[14px] font-semibold leading-tight">{s.name}</p>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#4A6CF7]/20 text-[#4A6CF7] inline-block mt-0.5">
+                  {s.tag}
+                </span>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-[11px]">
+              <div><p className="text-white/30 text-[9px]">MRR</p><p className="text-white font-medium">{s.mrr}</p></div>
+              <div><p className="text-white/30 text-[9px]">{s.usersLabel || "Users"}</p><p className="text-white font-medium">{s.users}</p></div>
+              <div><p className="text-white/30 text-[9px]">Growth</p><p className="text-white font-medium text-[#22c55e]">{s.growth}</p></div>
+              <div><p className="text-white/30 text-[9px]">Pipeline</p><p className="text-white font-medium">{s.pipeline}</p></div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      {/* Action buttons with sequential pulse on load */}
+      {/* Action buttons */}
       <div className="flex justify-center gap-3.5 pt-1">
-        <div className="w-9 h-9 rounded-full border border-red-400/20 bg-red-400/5 flex items-center justify-center text-red-400/50 cursor-default action-pulse-red">
+        <div className="w-9 h-9 rounded-full border border-red-400/20 bg-red-400/5 flex items-center justify-center text-red-400/50 cursor-default">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
         </div>
-        <div className="w-9 h-9 rounded-full border border-[#4A6CF7]/25 bg-[#4A6CF7]/8 flex items-center justify-center text-[#4A6CF7]/60 cursor-default action-pulse-blue">
+        <div className="w-9 h-9 rounded-full border border-[#4A6CF7]/25 bg-[#4A6CF7]/8 flex items-center justify-center text-[#4A6CF7]/60 cursor-default">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
         </div>
-        <div className="w-9 h-9 rounded-full border border-[#22c55e]/25 bg-[#22c55e]/8 flex items-center justify-center text-[#22c55e]/60 cursor-default action-pulse-green">
+        <div
+          className="w-9 h-9 rounded-full border border-[#22c55e]/25 bg-[#22c55e]/8 flex items-center justify-center text-[#22c55e]/60 cursor-default transition-shadow duration-300"
+          style={greenPulse ? { boxShadow: "0 0 16px rgba(34, 197, 94, 0.6)" } : {}}
+        >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
         </div>
       </div>
@@ -416,14 +435,89 @@ function InvestorFeedCard() {
   );
 }
 
+/* Chart data sets that rotate */
+const chartDataSets = [
+  [35, 28, 32, 18, 8],
+  [30, 22, 28, 15, 12],
+  [38, 32, 20, 25, 6],
+];
+
 function MatchAnalyticsCard() {
   const r = 28;
   const circ = 2 * Math.PI * r;
-  const offset = circ * (1 - 0.94);
+
+  const [engScore, setEngScore] = useState(94);
+  const [scoreGlow, setScoreGlow] = useState(false);
+  const [updatedBlink, setUpdatedBlink] = useState(false);
+  const [activeInvestors, setActiveInvestors] = useState(89);
+  const [chartIdx, setChartIdx] = useState(0);
+  const [chartProgress, setChartProgress] = useState(0);
+
+  const offset = circ * (1 - engScore / 100);
+
+  // Engagement score tick every 8s
+  useEffect(() => {
+    const t = setInterval(() => {
+      setEngScore(95);
+      setScoreGlow(true);
+      setTimeout(() => { setEngScore(94); setScoreGlow(false); }, 2000);
+    }, 8000);
+    return () => clearInterval(t);
+  }, []);
+
+  // Updated blink every 5s
+  useEffect(() => {
+    const t = setInterval(() => {
+      setUpdatedBlink(true);
+      setTimeout(() => setUpdatedBlink(false), 600);
+    }, 5000);
+    return () => clearInterval(t);
+  }, []);
+
+  // Active investors counter every 5s
+  useEffect(() => {
+    const t = setInterval(() => setActiveInvestors((p) => p + 1), 5000);
+    return () => clearInterval(t);
+  }, []);
+
+  // Animate chart: draw over 2s, pause 2s, then reset with new data
+  useEffect(() => {
+    let raf: number;
+    let start: number;
+    const drawDuration = 2000;
+    const pauseDuration = 2000;
+    const totalCycle = drawDuration + pauseDuration;
+
+    const animate = (ts: number) => {
+      if (!start) start = ts;
+      const elapsed = (ts - start) % totalCycle;
+      if (elapsed < drawDuration) {
+        setChartProgress(elapsed / drawDuration);
+      } else {
+        setChartProgress(1);
+        // At the end of pause, switch data
+        if (elapsed >= totalCycle - 50) {
+          start = ts;
+          setChartIdx((p) => (p + 1) % chartDataSets.length);
+        }
+      }
+      raf = requestAnimationFrame(animate);
+    };
+    raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  const points = chartDataSets[chartIdx];
+  const buildPath = (pts: number[]) => pts.map((y, i) => `${i === 0 ? "M" : "L"}${i * 50},${y}`).join(" ");
+  const fullPath = buildPath(points);
+  const areaPath = `${fullPath} L200,50 L0,50 Z`;
+
+  // Calculate total path length for stroke-dasharray animation
+  const pathLength = 210; // approximate
 
   return (
     <div
-      className="w-[300px] min-h-[380px] rounded-2xl p-5 dashboard-card"
+      className="w-[340px] min-h-[420px] rounded-2xl p-5 dashboard-card"
       style={{
         background: "rgba(10, 10, 15, 0.88)",
         backdropFilter: "blur(20px)",
@@ -431,15 +525,28 @@ function MatchAnalyticsCard() {
       }}
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-1.5">
         <p className="text-white/50 text-[11px] tracking-[2px] uppercase">Match Analytics</p>
         <div className="flex items-center gap-1.5">
-          <div className="w-1 h-1 rounded-full bg-[#4A6CF7]" />
-          <span className="text-[10px] text-[#4A6CF7]/70 updated-fade-in">Updated</span>
+          <div
+            className="w-1 h-1 rounded-full bg-[#4A6CF7] transition-all duration-300"
+            style={updatedBlink ? { boxShadow: "0 0 6px #4A6CF7", transform: "scale(1.5)" } : {}}
+          />
+          <span
+            className="text-[10px] transition-opacity duration-300"
+            style={{ color: updatedBlink ? "rgba(74, 108, 247, 1)" : "rgba(74, 108, 247, 0.7)" }}
+          >
+            Updated
+          </span>
         </div>
       </div>
 
-      {/* Score ring + label - 70px */}
+      {/* Active investors counter */}
+      <p className="text-white/25 text-[10px] mb-4">
+        Active investors: <span className="text-white/50 font-medium tabular-nums">{activeInvestors}</span>
+      </p>
+
+      {/* Score ring + label */}
       <div className="flex items-center gap-4 mb-4">
         <div className="relative w-[70px] h-[70px] shrink-0">
           <svg viewBox="0 0 70 70" className="w-full h-full -rotate-90">
@@ -454,9 +561,15 @@ function MatchAnalyticsCard() {
               cx="35" cy="35" r={r} fill="none"
               stroke="url(#scoreGrad)" strokeWidth="5" strokeLinecap="round"
               strokeDasharray={circ} strokeDashoffset={offset}
+              style={{ transition: "stroke-dashoffset 0.6s ease" }}
             />
           </svg>
-          <span className="absolute inset-0 flex items-center justify-center text-white text-[18px] font-bold">94</span>
+          <span
+            className="absolute inset-0 flex items-center justify-center text-white text-[18px] font-bold transition-all duration-300"
+            style={scoreGlow ? { textShadow: "0 0 12px rgba(74, 108, 247, 0.8)" } : {}}
+          >
+            {engScore}
+          </span>
         </div>
         <div className="text-[11px]">
           <p className="text-white/30">Engagement</p>
@@ -465,7 +578,7 @@ function MatchAnalyticsCard() {
         </div>
       </div>
 
-      {/* Mini line chart */}
+      {/* Animated line chart */}
       <div className="mb-4 px-1">
         <svg viewBox="0 0 200 50" className="w-full h-[40px]">
           <defs>
@@ -478,10 +591,19 @@ function MatchAnalyticsCard() {
               <stop offset="100%" stopColor="#4A6CF7" stopOpacity="0" />
             </linearGradient>
           </defs>
-          <path d="M0,35 L50,28 L100,32 L150,18 L200,8" fill="none" stroke="url(#lineGrad)" strokeWidth="2" strokeLinecap="round" className="chart-line-draw" />
-          <path d="M0,35 L50,28 L100,32 L150,18 L200,8 L200,50 L0,50 Z" fill="url(#areaGrad)" />
-          {[{ x: 0, y: 35 }, { x: 50, y: 28 }, { x: 100, y: 32 }, { x: 150, y: 18 }, { x: 200, y: 8 }].map((p, i) => (
-            <circle key={i} cx={p.x} cy={p.y} r="3" fill="#4A6CF7" stroke="rgba(10,10,15,0.88)" strokeWidth="1.5" />
+          <path d={areaPath} fill="url(#areaGrad)" style={{ opacity: chartProgress }} />
+          <path
+            d={fullPath}
+            fill="none" stroke="url(#lineGrad)" strokeWidth="2" strokeLinecap="round"
+            strokeDasharray={pathLength}
+            strokeDashoffset={pathLength * (1 - chartProgress)}
+          />
+          {points.map((y, i) => (
+            <circle
+              key={i} cx={i * 50} cy={y} r="3"
+              fill="#4A6CF7" stroke="rgba(10,10,15,0.88)" strokeWidth="1.5"
+              style={{ opacity: chartProgress > (i / points.length) ? 1 : 0, transition: "opacity 0.2s" }}
+            />
           ))}
         </svg>
       </div>
@@ -498,19 +620,26 @@ function MatchAnalyticsCard() {
         </div>
       </div>
 
-      {/* Top Sectors */}
+      {/* Top Sectors with breathing bars */}
       <div>
         <p className="text-white/30 text-[10px] mb-2">Top Sectors</p>
         <div className="space-y-1.5">
           {[
-            { label: "AI", width: "85%" },
-            { label: "SaaS", width: "60%" },
-            { label: "Fintech", width: "40%" },
-          ].map((s) => (
+            { label: "AI", width: 85 },
+            { label: "SaaS", width: 60 },
+            { label: "Fintech", width: 40 },
+          ].map((s, i) => (
             <div key={s.label} className="flex items-center gap-2">
               <span className="text-white/40 text-[9px] w-[36px]">{s.label}</span>
               <div className="flex-1 h-1.5 rounded-full bg-white/[0.05] overflow-hidden">
-                <div className="h-full rounded-full" style={{ width: s.width, background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)" }} />
+                <div
+                  className="h-full rounded-full sector-bar-breathe"
+                  style={{
+                    width: `${s.width}%`,
+                    background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)",
+                    animationDelay: `${i * 0.5}s`,
+                  }}
+                />
               </div>
             </div>
           ))}
@@ -521,6 +650,22 @@ function MatchAnalyticsCard() {
 }
 
 function MatchNotificationCard() {
+  const [flash, setFlash] = useState(false);
+  const [textGlow, setTextGlow] = useState(false);
+
+  useEffect(() => {
+    // Flash every 5s when dot reaches middle
+    const t = setInterval(() => {
+      setFlash(true);
+      setTimeout(() => {
+        setFlash(false);
+        setTextGlow(true);
+      }, 300);
+      setTimeout(() => setTextGlow(false), 1500);
+    }, 5000);
+    return () => clearInterval(t);
+  }, []);
+
   return (
     <div
       className="w-[280px] rounded-2xl p-5 dashboard-card relative"
@@ -536,29 +681,38 @@ function MatchNotificationCard() {
         <span className="text-white/50 text-[11px] tracking-[2px] uppercase">New Match</span>
       </div>
 
-      {/* Connection visual: Investor — line — Startup */}
+      {/* Connection visual */}
       <div className="flex items-center justify-between mb-5">
         {/* Investor */}
         <div className="flex flex-col items-center gap-1.5">
-          <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#4A6CF7] to-[#6C5CE7] flex items-center justify-center text-white text-[11px] font-bold border-2 border-[rgba(10,10,15,0.85)]">
+          <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#4A6CF7] to-[#6C5CE7] flex items-center justify-center text-white text-[11px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple">
             SC
           </div>
           <p className="text-white text-[11px] font-medium">Sarah C.</p>
           <p className="text-white/30 text-[10px]">Gradient Ventures</p>
         </div>
 
-        {/* Animated connection line */}
+        {/* Animated connection line with traveling dot */}
         <div className="flex-1 mx-3 h-[2px] relative overflow-hidden">
-          <div className="absolute inset-0 rounded-full" style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)" , opacity: 0.3 }} />
+          <div className="absolute inset-0 rounded-full" style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)", opacity: 0.3 }} />
           <div
-            className="connection-dot absolute top-[-1px] w-2.5 h-1 rounded-full"
-            style={{ background: "rgba(255,255,255,0.7)", filter: "blur(0.5px)" }}
+            className="match-dot-travel absolute top-[-2px] w-2 h-2 rounded-full"
+            style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", boxShadow: "0 0 8px rgba(74,108,247,0.8)" }}
+          />
+          {/* Center flash */}
+          <div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full transition-all duration-300"
+            style={{
+              background: flash ? "rgba(255,255,255,0.9)" : "transparent",
+              boxShadow: flash ? "0 0 20px rgba(124, 92, 252, 0.8), 0 0 40px rgba(74, 108, 247, 0.5)" : "none",
+              transform: `translate(-50%, -50%) scale(${flash ? 2 : 0})`,
+            }}
           />
         </div>
 
         {/* Startup */}
         <div className="flex flex-col items-center gap-1.5">
-          <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#7C5CFC] to-[#B06CFC] flex items-center justify-center text-white text-[11px] font-bold border-2 border-[rgba(10,10,15,0.85)]">
+          <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#7C5CFC] to-[#B06CFC] flex items-center justify-center text-white text-[11px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple" style={{ animationDelay: "1.5s" }}>
             LA
           </div>
           <p className="text-white text-[11px] font-medium">Luminary AI</p>
@@ -567,7 +721,12 @@ function MatchNotificationCard() {
       </div>
 
       {/* Status + CTA */}
-      <p className="text-white text-[13px] text-center mb-3">Mutual interest confirmed</p>
+      <p
+        className="text-white text-[13px] text-center mb-3 transition-all duration-500"
+        style={textGlow ? { textShadow: "0 0 12px rgba(124, 92, 252, 0.8), 0 0 24px rgba(74, 108, 247, 0.4)" } : {}}
+      >
+        Mutual interest confirmed
+      </p>
       <div className="flex justify-center">
         <div
           className="px-4 py-1.5 rounded-full text-[11px] font-medium text-white"
@@ -580,7 +739,25 @@ function MatchNotificationCard() {
   );
 }
 
+const callTimes = ["Tomorrow at 3:00 PM", "Today at 4:30 PM", "Wednesday at 11:00 AM"];
+
 function ChemistryCallCard() {
+  const [timeIdx, setTimeIdx] = useState(0);
+  const [btnPulse, setBtnPulse] = useState(false);
+
+  useEffect(() => {
+    const t = setInterval(() => setTimeIdx((p) => (p + 1) % callTimes.length), 6000);
+    return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setBtnPulse(true);
+      setTimeout(() => setBtnPulse(false), 800);
+    }, 4000);
+    return () => clearInterval(t);
+  }, []);
+
   return (
     <div
       className="w-[280px] rounded-2xl p-5 dashboard-card"
@@ -605,20 +782,33 @@ function ChemistryCallCard() {
         <p className="text-white text-[15px] font-semibold">Chemistry Call</p>
       </div>
 
-      {/* Date/time */}
-      <p className="text-white/40 text-[14px] mb-4">Tomorrow at 3:00 PM</p>
+      {/* Date/time - crossfade */}
+      <div className="relative h-[20px] mb-4">
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={timeIdx}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.4 }}
+            className="text-white/40 text-[14px] absolute"
+          >
+            {callTimes[timeIdx]}
+          </motion.p>
+        </AnimatePresence>
+      </div>
 
-      {/* Participants */}
+      {/* Participants with ripple */}
       <div className="flex items-center gap-3 mb-2">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#4A6CF7] to-[#6C5CE7] flex items-center justify-center text-white text-[9px] font-bold border-2 border-[rgba(10,10,15,0.85)]">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#4A6CF7] to-[#6C5CE7] flex items-center justify-center text-white text-[9px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple-sm">
             SC
           </div>
           <span className="text-white/60 text-[11px]">Sarah C.</span>
         </div>
         <span className="text-white/15 text-[10px]">&amp;</span>
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#7C5CFC] to-[#B06CFC] flex items-center justify-center text-white text-[9px] font-bold border-2 border-[rgba(10,10,15,0.85)]">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#7C5CFC] to-[#B06CFC] flex items-center justify-center text-white text-[9px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple-sm" style={{ animationDelay: "1.5s" }}>
             LA
           </div>
           <span className="text-white/60 text-[11px]">Luminary AI</span>
@@ -627,11 +817,14 @@ function ChemistryCallCard() {
 
       <p className="text-white/25 text-[12px] mb-4">Duration: 20 min</p>
 
-      {/* Join Call button */}
+      {/* Join Call button with periodic pulse */}
       <div className="flex justify-center">
         <div
-          className="px-4 py-1.5 rounded-full text-[11px] font-medium text-white"
-          style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+          className="px-4 py-1.5 rounded-full text-[11px] font-medium text-white transition-shadow duration-300"
+          style={{
+            background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+            boxShadow: btnPulse ? "0 0 20px rgba(74, 108, 247, 0.6), 0 0 40px rgba(124, 92, 252, 0.3)" : "none",
+          }}
         >
           Join Call
         </div>
