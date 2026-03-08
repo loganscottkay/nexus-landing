@@ -177,7 +177,7 @@ export default function StoryPage() {
                   <p className="text-[22px] font-semibold text-text-primary">Logan Kay</p>
                   <p className="text-[15px] text-text-muted">Co-Founder</p>
                   <p className="text-[14px] text-text-muted mt-0.5">
-                    Boston University | Hospitality Administration &amp; Data Science | AI Implementation @ Harvard Business School
+                    Boston University | AI Implementation @ Harvard Business School
                   </p>
                 </div>
               </div>
@@ -208,7 +208,7 @@ export default function StoryPage() {
                   <p className="text-[22px] font-semibold text-text-primary">Ben Matiash</p>
                   <p className="text-[15px] text-text-muted">Co-Founder</p>
                   <p className="text-[14px] text-text-muted mt-0.5">
-                    Northeastern University | Finance &amp; Marketing | Institutional Equity @ Morgan Stanley
+                    Northeastern University | Institutional Equity @ Morgan Stanley
                   </p>
                 </div>
               </div>

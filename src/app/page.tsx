@@ -1252,7 +1252,7 @@ export default function Home() {
               <div>
                 <p className="text-[16px] font-semibold text-text-primary">Logan Kay</p>
                 <p className="text-[13px] text-text-muted">Co-Founder</p>
-                <p className="text-[13px] text-text-muted">Boston University | Hospitality Admin &amp; Data Science | AI Implementation @ Harvard Business School</p>
+                <p className="text-[13px] text-text-muted">Boston University | AI Implementation @ Harvard Business School</p>
               </div>
             </motion.div>
 
