@@ -10,6 +10,7 @@ const navLinks = [
   { label: "How It Works", href: "/#how-it-works", scrollId: "how-it-works" },
   { label: "For Investors", href: "/#for-investors", scrollId: "for-investors" },
   { label: "For Startups", href: "/#for-startups", scrollId: "for-startups" },
+  { label: "Our Story", href: "/story" },
 ];
 
 export default function Navbar() {

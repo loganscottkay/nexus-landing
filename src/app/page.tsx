@@ -1278,6 +1278,21 @@ export default function Home() {
               </div>
             </motion.div>
           </motion.div>
+
+          {/* Read Our Full Story CTA */}
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="mt-10"
+          >
+            <Link
+              href="/story"
+              className="group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
+            >
+              Read Our Full Story
+              <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+          </motion.div>
         </motion.div>
       </Section>
 
