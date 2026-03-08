@@ -177,7 +177,7 @@ export default function StoryPage() {
                   <p className="text-[22px] font-semibold text-text-primary">Logan Kay</p>
                   <p className="text-[15px] text-text-muted">Co-Founder</p>
                   <p className="text-[14px] text-text-muted mt-0.5">
-                    Boston University | Data Science &amp; Hospitality | AI &amp; Ops @ Harvard Business School
+                    Boston University | Hospitality Administration &amp; Data Science | AI Implementation @ Harvard Business School
                   </p>
                 </div>
               </div>
@@ -185,7 +185,7 @@ export default function StoryPage() {
                 className="text-[15px] leading-[1.8]"
                 style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
-                Logan brings the technical firepower and operational rigor. From building AI systems at Harvard Business School to leading data-driven projects, he obsesses over making complex systems simple and accessible. He is the architect behind the Nexus scoring engine and platform infrastructure.
+                Logan brings the technical firepower and operational rigor. He studies Hospitality Administration and Data Science at Boston University and helped spearhead AI implementation across admissions and operations at Harvard Business School. He obsesses over making complex systems simple and accessible. He is the architect behind the Nexus scoring engine and platform infrastructure, and co-leads go-to-market strategy and product ideation.
               </p>
             </motion.div>
 
