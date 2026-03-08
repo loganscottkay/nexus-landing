@@ -1565,6 +1565,205 @@ export default function Home() {
         </motion.div>
       </Section>
 
+      {/* ============ EXPLORE THE PLATFORM ============ */}
+      <Section className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
+        <motion.div
+          variants={cardStagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="flex flex-col items-center"
+        >
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="gradient-text text-[13px] tracking-[4px] uppercase mb-4 font-medium"
+          >
+            Preview
+          </motion.p>
+          <motion.h2
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[36px] font-normal text-center mb-4"
+            style={{ fontFamily: "'Instrument Serif', serif" }}
+          >
+            See What Nexus Looks Like Inside
+          </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-center max-w-[700px] text-[16px] leading-[1.7] mb-14"
+            style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
+          >
+            Explore the full platform experience from both sides. These are live previews of what the app looks like.
+          </motion.p>
+
+          <motion.div
+            variants={cardStagger}
+            className="grid md:grid-cols-2 gap-6 md:gap-8 w-full"
+            style={{ maxWidth: "1000px" }}
+          >
+            {/* Investor Experience */}
+            <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
+              <div className="glow-card-wrapper h-full">
+                <div className="glass p-6 md:p-8 h-full flex flex-col">
+                  {/* Mini dashboard preview */}
+                  <div
+                    className="rounded-xl mb-6 overflow-hidden"
+                    style={{
+                      background: "rgba(10, 10, 15, 0.95)",
+                      border: "1px solid rgba(255, 255, 255, 0.08)",
+                    }}
+                  >
+                    {/* Browser chrome */}
+                    <div
+                      className="flex items-center gap-1.5 px-4 py-2.5"
+                      style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.06)" }}
+                    >
+                      <span className="w-[7px] h-[7px] rounded-full" style={{ background: "#FF5F57" }} />
+                      <span className="w-[7px] h-[7px] rounded-full" style={{ background: "#FFBD2E" }} />
+                      <span className="w-[7px] h-[7px] rounded-full" style={{ background: "#28CA41" }} />
+                    </div>
+                    {/* Mock dashboard content */}
+                    <div className="p-4 space-y-3">
+                      {/* Stats row */}
+                      <div className="grid grid-cols-3 gap-2">
+                        {["12", "4", "89%"].map((val, i) => (
+                          <div
+                            key={i}
+                            className="rounded-lg px-3 py-2.5 text-center"
+                            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
+                          >
+                            <p className="text-white text-[16px] font-semibold leading-none mb-1">{val}</p>
+                            <p className="text-[9px]" style={{ color: "rgba(255,255,255,0.35)" }}>
+                              {["Matches", "Calls", "Score"][i]}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                      {/* Card outlines */}
+                      <div className="space-y-2">
+                        {[0, 1].map((i) => (
+                          <div
+                            key={i}
+                            className="rounded-lg px-3 py-3 flex items-center gap-3"
+                            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
+                          >
+                            <div
+                              className="w-8 h-8 rounded-full shrink-0"
+                              style={{ background: i === 0 ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)" : "linear-gradient(135deg, #7C5CFC, #14b8a6)" }}
+                            />
+                            <div className="flex-1">
+                              <div className="h-2 rounded-full mb-1.5" style={{ background: "rgba(255,255,255,0.12)", width: i === 0 ? "70%" : "55%" }} />
+                              <div className="h-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.06)", width: i === 0 ? "45%" : "35%" }} />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <h3
+                    className="text-[20px] font-semibold text-text-primary mb-2"
+                    style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                  >
+                    Investor Dashboard
+                  </h3>
+                  <p className="text-[15px] text-text-muted leading-[1.6] mb-6 flex-1">
+                    Browse vetted startups. Watch 60-second pitches. Match with founders who fit your thesis. See the full investor experience.
+                  </p>
+                  <Link
+                    href="/dashboard/investor"
+                    className="btn-primary btn-pulse-target px-6 py-3.5 text-[15px] font-medium text-center"
+                  >
+                    Explore Investor View
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Startup Experience */}
+            <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
+              <div className="glow-card-wrapper h-full">
+                <div className="glass p-6 md:p-8 h-full flex flex-col">
+                  {/* Mini dashboard preview */}
+                  <div
+                    className="rounded-xl mb-6 overflow-hidden"
+                    style={{
+                      background: "rgba(10, 10, 15, 0.95)",
+                      border: "1px solid rgba(255, 255, 255, 0.08)",
+                    }}
+                  >
+                    {/* Browser chrome */}
+                    <div
+                      className="flex items-center gap-1.5 px-4 py-2.5"
+                      style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.06)" }}
+                    >
+                      <span className="w-[7px] h-[7px] rounded-full" style={{ background: "#FF5F57" }} />
+                      <span className="w-[7px] h-[7px] rounded-full" style={{ background: "#FFBD2E" }} />
+                      <span className="w-[7px] h-[7px] rounded-full" style={{ background: "#28CA41" }} />
+                    </div>
+                    {/* Mock dashboard content */}
+                    <div className="p-4 space-y-3">
+                      {/* Stats row */}
+                      <div className="grid grid-cols-3 gap-2">
+                        {["8", "156", "78%"].map((val, i) => (
+                          <div
+                            key={i}
+                            className="rounded-lg px-3 py-2.5 text-center"
+                            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
+                          >
+                            <p className="text-white text-[16px] font-semibold leading-none mb-1">{val}</p>
+                            <p className="text-[9px]" style={{ color: "rgba(255,255,255,0.35)" }}>
+                              {["Interested", "Views", "Profile"][i]}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                      {/* Card outlines */}
+                      <div className="space-y-2">
+                        {[0, 1].map((i) => (
+                          <div
+                            key={i}
+                            className="rounded-lg px-3 py-3 flex items-center gap-3"
+                            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
+                          >
+                            <div
+                              className="w-8 h-8 rounded-full shrink-0"
+                              style={{ background: i === 0 ? "linear-gradient(135deg, #F59E0B, #EF4444)" : "linear-gradient(135deg, #4A6CF7, #14b8a6)" }}
+                            />
+                            <div className="flex-1">
+                              <div className="h-2 rounded-full mb-1.5" style={{ background: "rgba(255,255,255,0.12)", width: i === 0 ? "60%" : "50%" }} />
+                              <div className="h-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.06)", width: i === 0 ? "40%" : "30%" }} />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <h3
+                    className="text-[20px] font-semibold text-text-primary mb-2"
+                    style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                  >
+                    Startup Dashboard
+                  </h3>
+                  <p className="text-[15px] text-text-muted leading-[1.6] mb-6 flex-1">
+                    See who is interested in your company. Track deck views. Manage investor conversations. See the full founder experience.
+                  </p>
+                  <Link
+                    href="/dashboard/founder"
+                    className="btn-primary btn-pulse-target px-6 py-3.5 text-[15px] font-medium text-center"
+                  >
+                    Explore Startup View
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </Section>
+
       {/* ============ FINAL CTA ============ */}
       <section className="relative z-10 py-24 md:py-32">
         {/* Floating decorative cards */}

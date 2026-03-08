@@ -197,6 +197,14 @@ export default function Navbar() {
             Sign In
           </Link>
 
+          <Link
+            href="/status"
+            className="nav-signin-premium text-text-secondary text-[13px]"
+            style={{ letterSpacing: "0.3px", fontWeight: 500 }}
+          >
+            Check Status
+          </Link>
+
           <div className="relative" ref={applyRef}>
             <button
               onClick={() => setApplyOpen(!applyOpen)}
@@ -348,6 +356,13 @@ export default function Navbar() {
             className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
           >
             Sign In
+          </Link>
+          <Link
+            href="/status"
+            onClick={() => setMenuOpen(false)}
+            className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
+          >
+            Check Status
           </Link>
           <div className="flex gap-3 pt-2">
             <Link
