@@ -173,8 +173,8 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Center: Nav links */}
-        <div className="hidden nav:flex items-center absolute left-1/2 -translate-x-1/2" style={{ gap: "20px" }}>
+        {/* Center: Nav links — positioned relative to the full-width <nav>, not this padded container */}
+        <div className="hidden nav:flex items-center fixed left-1/2 -translate-x-1/2 h-16 nav:h-20 z-50" style={{ gap: "20px" }}>
           {navLinks.map((link) => (
             <Link
               key={link.href}
