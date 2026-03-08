@@ -144,19 +144,19 @@ const howItWorksCards = [
     num: "01",
     icon: <ShieldIcon />,
     title: "Apply & Get Scored",
-    desc: "Every application runs through our proprietary scoring system built with faculty from HBS, BU, and Northeastern. Less than 15% make the cut.",
+    desc: "Submit your pitch deck and 60-second video. Our proprietary scoring system, built with faculty from HBS, BU, and Northeastern, evaluates vision, team, market, and momentum. Less than 15% get in.",
   },
   {
     num: "02",
     icon: <SparkleIcon />,
     title: "Get Matched in 48 Hours",
-    desc: "Our algorithm pairs founders and investors by fit. Every match is intentional. No browsing, no noise, just high-signal introductions.",
+    desc: "Our algorithm pairs you by fit. Small investors see early-stage founders. Larger checks see proven traction. Every match is intentional and delivered daily.",
   },
   {
     num: "03",
     icon: <PhoneIcon />,
     title: "Move Fast or Move On",
-    desc: "72 hours to take the call. No-shows get removed. Founders without traction get cycled out. Investors who ghost get banned.",
+    desc: "72 hours to take the call. 30 days to show traction. No-shows and ghosters get removed. Every conversation on Nexus is between two serious people.",
   },
 ];
 
@@ -941,7 +941,7 @@ export default function Home() {
               className="text-[17px] md:text-[19px] max-w-[540px] mb-12 leading-[1.8]"
               style={{ color: "#475569" }}
             >
-              The startup world moves fast and the best deals close faster. Nexus matches investors of any size with vetted startups at their level in days, not months. No cold emails. No endless networking. Deploy $1K or $500K. The only thing that matters is showing up.
+              The startup world moves fast. Nexus matches investors of any size with vetted startups at their level, in days not months. No cold emails. No noise. Just signal.
             </motion.p>
 
             {/* CTAs */}
@@ -1059,11 +1059,11 @@ export default function Home() {
                 </h3>
                 <ul className="flex flex-col gap-4 flex-1">
                   {[
-                    "Deploy $1K or $500K. You get matched with startups at your investment level automatically.",
-                    "Every founder scored by our proprietary system built with HBS, BU, and Northeastern faculty. Not just revenue. Vision, team, market, and defensibility.",
-                    "Stale founders get removed after 30 days. Your feed only shows startups that are actively building and gaining momentum.",
-                    "Structured 20-minute chemistry calls replace months of back-and-forth emails and awkward networking events.",
-                    "The best opportunities move fast. Nexus makes sure you are in the room when they do.",
+                    "Deploy $1K or $500K. Matched to startups at your level.",
+                    "Every founder scored on vision, team, market, and defensibility.",
+                    "Stale founders removed after 30 days. No dead deals.",
+                    "Structured 20-min calls replace months of cold outreach.",
+                    "The best deals move fast. Be in the room when they do.",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-accent-blue mt-2 shrink-0" />
@@ -1098,11 +1098,11 @@ export default function Home() {
                 </h3>
                 <ul className="flex flex-col gap-4 flex-1">
                   {[
-                    "Get in front of investors who are actually ready to deploy capital at your stage. No more pitching into the void.",
-                    "Your 60-second video pitch and deck are your application. Revenue is one factor of many. Vision and team carry real weight.",
-                    "Matched with investors in 48 hours. Most founders spend 6 months fundraising. Nexus compresses that timeline dramatically.",
-                    "Accountability is the price of admission. 30 days to show traction or you are cycled out. This keeps the platform elite and keeps you focused.",
-                    "Less than 15% of applicants make it in. Being on Nexus is a credibility signal to every investor who sees your profile.",
+                    "Access investors ready to deploy at your stage.",
+                    "Your video pitch and vision matter more than revenue.",
+                    "Matched with investors in 48 hours, not 6 months.",
+                    "30 days to show traction or you are cycled out. Stay sharp.",
+                    "Less than 15% get in. Being here is the credibility signal.",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-accent-violet mt-2 shrink-0" />
@@ -1319,7 +1319,7 @@ export default function Home() {
               className="text-[17px] md:text-[18px] mb-10 max-w-xl leading-[1.7]"
               style={{ color: "#475569" }}
             >
-              The startup world does not wait and neither does Nexus. Whether you are deploying your first $1,000 or building your first product, apply now. Less than 15% get in. Matches start within 48 hours of acceptance. The next great company is already on the platform. The question is whether you will be the one to back it or build it.
+              Less than 15% get in. Matches start within 48 hours. Whether you are deploying capital or building a company, the question is simple: are you serious?
             </motion.p>
 
             <motion.div
