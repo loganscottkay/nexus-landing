@@ -132,20 +132,20 @@ export default function Navbar() {
               <defs>
                 {/* Spherical gradient: bright center to darker edges */}
                 <radialGradient id="moon-sphere" cx="45%" cy="40%" r="50%">
-                  <stop offset="0%" stopColor="#F0F0F5" />
-                  <stop offset="70%" stopColor="#E8E8ED" />
-                  <stop offset="100%" stopColor="#D8DDE5" />
+                  <stop offset="0%" stopColor="#C8CED8" />
+                  <stop offset="70%" stopColor="#B0B8C4" />
+                  <stop offset="100%" stopColor="#9AA2AE" />
                 </radialGradient>
               </defs>
               {/* Main moon body */}
               <circle cx="16" cy="16" r="13" fill="url(#moon-sphere)" stroke="rgba(200,210,220,0.3)" strokeWidth="1" />
               {/* Craters */}
-              <circle cx="10" cy="11" r="3" fill="#C8CDD4" opacity="0.5" />
-              <circle cx="19" cy="9" r="2" fill="#D0D5DC" opacity="0.45" />
-              <circle cx="21" cy="18" r="3.5" fill="#C8CDD4" opacity="0.4" />
-              <circle cx="12" cy="20" r="2.5" fill="#D0D5DC" opacity="0.35" />
-              <circle cx="16" cy="15" r="1.5" fill="#C8CDD4" opacity="0.3" />
-              <circle cx="8" cy="17" r="2" fill="#D0D5DC" opacity="0.3" />
+              <circle cx="10" cy="11" r="3" fill="#9AA2B0" opacity="0.5" />
+              <circle cx="19" cy="9" r="2" fill="#A8B0BC" opacity="0.45" />
+              <circle cx="21" cy="18" r="3.5" fill="#9AA2B0" opacity="0.4" />
+              <circle cx="12" cy="20" r="2.5" fill="#A8B0BC" opacity="0.35" />
+              <circle cx="16" cy="15" r="1.5" fill="#9AA2B0" opacity="0.3" />
+              <circle cx="8" cy="17" r="2" fill="#A8B0BC" opacity="0.3" />
             </svg>
           </div>
 
