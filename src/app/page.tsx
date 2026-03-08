@@ -1463,7 +1463,7 @@ export default function Home() {
               className="text-[17px] md:text-[18px] mb-10 max-w-xl leading-[1.7]"
               style={{ color: "#475569" }}
             >
-              Less than 15% get in. Matches start within 48 hours. Whether you are deploying capital or building a company, the question is simple: are you serious?
+              Less than 15% get in. Whether you are deploying capital or building a company, the question is simple: are you serious? Startups that do not perform get removed. Investors who ghost get banned. This is a platform for people who move.
             </motion.p>
 
             <motion.div
