@@ -63,49 +63,91 @@ function Section({
   );
 }
 
-/* ---- FAQ Accordion ---- */
-function FAQSection() {
-  const faqs = [
-    { q: "How does the matching algorithm work?", a: "Our algorithm analyzes your investment thesis, sector preferences, check size, and past behavior to surface 3-5 highly compatible startups each morning. It learns from your feedback to improve over time." },
-    { q: "What does the vetting process look like?", a: "Every startup goes through a multi-step review: team background checks, financial verification, product assessment, and reference calls. We accept fewer than 25% of applicants." },
-    { q: "How are chemistry calls structured?", a: "Chemistry calls are 20-minute structured video calls. Both parties receive a brief ahead of time. After the call, both sides rate the interaction and indicate whether they want to continue the conversation." },
-    { q: "Is there a cost to join?", a: "Nexus is free during our early access period. We plan to introduce a premium tier with additional features, but core matching will always have a free option." },
-    { q: "How is my data protected?", a: "All data is encrypted at rest and in transit. Pitch decks are only shared with matched investors who have signed our NDA framework. You control exactly what information is visible." },
-  ];
-  const [openIndex, setOpenIndex] = React.useState<number | null>(null);
+/* ---- Waitlist Counter with CountUp ---- */
+function WaitlistCountUp({ target, duration = 1500 }: { target: number; duration?: number }) {
+  const [value, setValue] = React.useState(0);
+  const [started, setStarted] = React.useState(false);
+  const ref = React.useRef<HTMLSpanElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting && !started) setStarted(true); },
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [started]);
+
+  React.useEffect(() => {
+    if (!started) return;
+    const startTime = performance.now();
+    const tick = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // easeOut cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(Math.round(eased * target));
+      if (progress < 1) requestAnimationFrame(tick);
+      else setValue(target);
+    };
+    requestAnimationFrame(tick);
+  }, [started, target, duration]);
+
+  return <span ref={ref} className="font-semibold" style={{ color: "#0F172A" }}>{value}</span>;
+}
+
+/* ---- Email Capture ---- */
+function EmailCapture() {
+  const [submitted, setSubmitted] = React.useState(false);
+  const [email, setEmail] = React.useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setEmail("");
+  };
+
   return (
-    <div className="space-y-3">
-      {faqs.map((faq, i) => (
-        <motion.div key={i} variants={fadeUp} transition={{ duration: 0.5, ease }}>
-          <div className="glass overflow-hidden">
-            <button
-              onClick={() => setOpenIndex(openIndex === i ? null : i)}
-              className="w-full flex items-center justify-between p-6 text-left"
-            >
-              <span className="text-[16px] font-semibold text-text-primary pr-4">{faq.q}</span>
-              <svg
-                width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round"
-                className={`shrink-0 transition-transform duration-300 ${openIndex === i ? "rotate-180" : ""}`}
-              >
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <AnimatePresence>
-              {openIndex === i && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease }}
-                >
-                  <p className="px-6 pb-6 text-text-secondary text-[15px] leading-[1.7]">{faq.a}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </motion.div>
-      ))}
-    </div>
+    <Section className="relative z-10 px-6 py-16 max-w-[500px] mx-auto text-center">
+      <p className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+        Not ready to apply yet?
+      </p>
+      <p className="text-[15px] mb-6" style={{ color: "#64748B" }}>
+        {submitted ? "Thank you! We will keep you posted." : "Get notified when we launch and hear about early access opportunities."}
+      </p>
+      {!submitted && (
+        <form onSubmit={handleSubmit} className="flex gap-2 items-center">
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="your@email.com"
+            className="flex-grow h-[48px] rounded-xl px-4 text-[15px] text-text-primary placeholder:text-text-muted/50 outline-none"
+            style={{
+              background: "rgba(255, 255, 255, 0.3)",
+              backdropFilter: "blur(8px)",
+              border: "1px solid rgba(0, 0, 0, 0.06)",
+            }}
+          />
+          <button
+            type="submit"
+            className="h-[48px] px-6 rounded-xl text-[15px] font-semibold text-white shrink-0"
+            style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+          >
+            Subscribe
+          </button>
+        </form>
+      )}
+      {submitted && (
+        <div className="flex items-center justify-center gap-2 h-[48px]">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          <span className="text-[15px] font-semibold" style={{ color: "#22c55e" }}>Subscribed!</span>
+        </div>
+      )}
+    </Section>
   );
 }
 
@@ -149,8 +191,8 @@ const howItWorksCards = [
   {
     num: "02",
     icon: <SparkleIcon />,
-    title: "Get Matched by Tier",
-    desc: "Our algorithm pairs investors with startups at their level. Small checks see raw early-stage founders. Bigger checks see proven traction. Startups that do not perform get removed, so your feed stays fresh with only the best ideas.",
+    title: "Get Matched by Fit",
+    desc: "Our algorithm pairs investors with startups at their level. We are launching with investments up to $25K matched with early-stage startups. As the platform grows, higher tiers unlock. Your investment size determines your match tier.",
   },
   {
     num: "03",
@@ -1063,7 +1105,7 @@ export default function Home() {
               transition={{ duration: 0.7, ease }}
               className="gradient-text text-[13px] tracking-[5px] uppercase mb-6 font-medium"
             >
-              Where Startups Get Funded Faster
+              Launching Spring 2026 | Founding Cohort Now Open
             </motion.p>
 
             {/* Headline */}
@@ -1082,10 +1124,10 @@ export default function Home() {
             <motion.p
               variants={fadeUp}
               transition={{ duration: 0.7, ease }}
-              className="text-[17px] md:text-[19px] max-w-[540px] mb-12 leading-[1.8]"
+              className="text-[17px] md:text-[19px] max-w-[600px] mb-12 leading-[1.8]"
               style={{ color: "#475569" }}
             >
-              The startup world moves fast. Nexus matches investors of any size with vetted startups at their level, in days not months. No cold emails. No noise. Just signal.
+              Think of it like a dating app, but for startups and investors. Founders post their pitch. Investors browse and match with the ones they believe in. When both sides are interested, they connect. Nexus handles the vetting, the matching, and the introductions. You just show up. We are now accepting applications for our founding cohort.
             </motion.p>
 
             {/* CTAs */}
@@ -1111,11 +1153,29 @@ export default function Home() {
               </Link>
             </motion.div>
 
-            {/* Invitation pill */}
+            {/* Waitlist counter */}
             <motion.div
               variants={fadeUp}
               transition={{ duration: 0.7, ease }}
-              className="mt-8 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[13px] text-text-muted/70"
+              className="mt-8 inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-[15px]"
+              style={{
+                background: "rgba(255, 255, 255, 0.4)",
+                backdropFilter: "blur(8px)",
+                border: "1px solid rgba(0, 0, 0, 0.06)",
+                fontFamily: "var(--font-dm-sans), sans-serif",
+              }}
+            >
+              <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse shrink-0" />
+              <span style={{ color: "#64748B" }}>
+                <WaitlistCountUp target={412} duration={1500} /> founders and <WaitlistCountUp target={203} duration={1500} /> investors have applied
+              </span>
+            </motion.div>
+
+            {/* University pill */}
+            <motion.div
+              variants={fadeUp}
+              transition={{ duration: 0.7, ease }}
+              className="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[13px] text-text-muted/70"
               style={{
                 background: "rgba(255, 255, 255, 0.3)",
                 border: "1px solid rgba(0, 0, 0, 0.04)",
@@ -1126,11 +1186,88 @@ export default function Home() {
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0110 0v4" />
               </svg>
-              Proprietary scoring system built with entrepreneurship professors from Harvard Business School, Boston University, and Northeastern.
+              Every application scored by a proprietary system built with entrepreneurship faculty from HBS, BU, and Northeastern.
             </motion.div>
           </motion.div>
         </div>
       </section>
+
+      {/* ============ WHY WE BUILT THIS ============ */}
+      <Section className="relative z-10 px-6 py-24 md:py-32 max-w-4xl mx-auto">
+        <motion.div
+          variants={cardStagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="flex flex-col items-center"
+        >
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="gradient-text text-[13px] tracking-[4px] uppercase mb-4 font-medium"
+          >
+            Our Story
+          </motion.p>
+          <motion.h2
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[36px] font-normal text-center mb-8"
+            style={{ fontFamily: "'Instrument Serif', serif" }}
+          >
+            We Built Nexus Because We Needed It
+          </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-center max-w-[680px] text-[17px] leading-[1.8] mb-12"
+            style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
+          >
+            We spent months trying to break into the startup world. We had the ambition but not the access. Every door felt closed. The VC world was opaque. The networking events were awkward. The cold emails went nowhere. Then we realized something: thousands of other people feel the exact same way. Investors who want to back the next big thing but do not know where to look. Founders with brilliant ideas but no way to reach the right people. Everyone is watching the startup wave from the sidelines, afraid they are missing out. So we stopped trying to find the perfect idea and built the platform that connects the ideas with the people who believe in them. Nexus is a matching app. Founders post their startup. Investors browse and match with the ones that excite them. When interest is mutual, they connect. Simple.
+          </motion.p>
+
+          {/* Founder cards */}
+          <motion.div
+            variants={cardStagger}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
+            <motion.div
+              variants={fadeUp}
+              transition={{ duration: 0.6, ease }}
+              className="glass p-5 flex items-center gap-3 max-w-[280px]"
+            >
+              <div
+                className="w-12 h-12 rounded-full flex items-center justify-center text-white text-[13px] font-bold shrink-0"
+                style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+              >
+                LK
+              </div>
+              <div>
+                <p className="text-[16px] font-semibold text-text-primary">Logan Kay</p>
+                <p className="text-[13px] text-text-muted">Co-Founder</p>
+                <p className="text-[13px] text-text-muted">BU Hospitality Admin, AI &amp; Ops at Harvard Business School</p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              variants={fadeUp}
+              transition={{ duration: 0.6, ease }}
+              className="glass p-5 flex items-center gap-3 max-w-[280px]"
+            >
+              <div
+                className="w-12 h-12 rounded-full flex items-center justify-center text-white text-[13px] font-bold shrink-0"
+                style={{ background: "linear-gradient(135deg, #7C5CFC, #B06CFC)" }}
+              >
+                BK
+              </div>
+              <div>
+                <p className="text-[16px] font-semibold text-text-primary">Ben [Last Name]</p>
+                <p className="text-[13px] text-text-muted">Co-Founder</p>
+                <p className="text-[13px] text-text-muted">Background placeholder</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </Section>
 
       {/* ============ HOW IT WORKS ============ */}
       <HowItWorksSection />
@@ -1154,9 +1291,9 @@ export default function Home() {
           <div className="glass-dark px-6 py-12 md:px-16 md:py-16">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6 text-center">
               {[
-                { value: "<15%", label: "Acceptance Rate" },
-                { value: "$1K-$500K+", label: "Investment Range" },
-                { value: "72hrs", label: "To Take the Call" },
+                { value: "Up to $25K", label: "Launch Investment Tier" },
+                { value: "<15%", label: "Target Acceptance Rate" },
+                { value: "72hrs", label: "Match Response Window" },
                 { value: "30 days", label: "To Prove Traction" },
               ].map((stat) => (
                 <div key={stat.label}>
@@ -1180,6 +1317,141 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ============ THE FOUNDING COHORT ============ */}
+      <Section className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
+        <motion.div
+          variants={cardStagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="flex flex-col items-center"
+        >
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="gradient-text text-[13px] tracking-[4px] uppercase mb-4 font-medium"
+          >
+            Early Access
+          </motion.p>
+          <motion.h2
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[36px] font-normal text-center mb-4"
+            style={{ fontFamily: "'Instrument Serif', serif" }}
+          >
+            The Founding Cohort
+          </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-center max-w-[700px] text-[17px] leading-[1.7] mb-12"
+            style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
+          >
+            Before Nexus opens to the public, we are hand-selecting 100 startups and 50 investors to be our founding members. This is for people who want to be first, not people who want to wait and see. Founding members get permanent benefits that will never be offered again.
+          </motion.p>
+
+          {/* Benefit cards */}
+          <motion.div
+            variants={cardStagger}
+            className="grid md:grid-cols-3 gap-6 w-full mb-10"
+          >
+            <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
+              <div className="glow-card-wrapper h-full">
+                <div className="glass p-7 h-full" style={{ background: "rgba(255,255,255,0.45)", backdropFilter: "blur(40px)" }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
+                    <path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6" />
+                    <polyline points="12 3 12 15" />
+                    <path d="M8 7l4-4 4 4" />
+                    <rect x="2" y="12" width="20" height="2" rx="1" />
+                  </svg>
+                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Lifetime Free Access</h3>
+                  <p className="text-[15px] text-text-muted leading-[1.6]">No subscription fees. Ever. As Nexus scales and pricing increases, you stay free. Permanently.</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
+              <div className="glow-card-wrapper h-full">
+                <div className="glass p-7 h-full" style={{ background: "rgba(255,255,255,0.45)", backdropFilter: "blur(40px)" }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                  </svg>
+                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>First to Match</h3>
+                  <p className="text-[15px] text-text-muted leading-[1.6]">You get access to matches before anyone else. When the platform opens publicly, you already have a head start and an established profile.</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
+              <div className="glow-card-wrapper h-full">
+                <div className="glass p-7 h-full" style={{ background: "rgba(255,255,255,0.45)", backdropFilter: "blur(40px)" }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
+                    <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
+                  </svg>
+                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Build It With Us</h3>
+                  <p className="text-[15px] text-text-muted leading-[1.6]">Direct line to the founders. Vote on features. Influence the scoring system. You are not just using Nexus, you are shaping it.</p>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* For Founders / For Investors details */}
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="w-full mb-10 rounded-2xl p-6 md:p-8 grid md:grid-cols-2 gap-8"
+            style={{
+              background: "rgba(255, 255, 255, 0.3)",
+              backdropFilter: "blur(12px)",
+              border: "1px solid rgba(0, 0, 0, 0.06)",
+            }}
+          >
+            <div>
+              <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Founders:</p>
+              <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                You have an idea, a team, or early traction. You want investors who actually get what you are building. You are willing to put yourself on camera for 60 seconds and be held accountable. Apply and get scored by our system. If you make the cut, you are in the founding class.
+              </p>
+            </div>
+            <div>
+              <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Investors:</p>
+              <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                You have been watching the startup wave and want in. Maybe it is your first investment. Maybe your tenth. The amount does not matter as much as the conviction. You will be matched with startups scored and vetted by our system. Show up, take the calls, and back what excites you.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* CTAs */}
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="flex flex-col sm:flex-row gap-4 mb-4"
+          >
+            <Link
+              href="/apply/startup"
+              className="group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
+              style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+            >
+              Apply as Founder
+              <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+            <Link
+              href="/apply/investor"
+              className="group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
+            >
+              Apply as Investor
+              <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+          </motion.div>
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[13px] text-text-muted"
+          >
+            100 startup spots. 50 investor spots. First come, first evaluated.
+          </motion.p>
+        </motion.div>
+      </Section>
+
       {/* ============ FOR INVESTORS / FOR STARTUPS ============ */}
       <Section id="for-investors" className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
         <motion.div
@@ -1199,15 +1471,15 @@ export default function Home() {
                   className="text-[28px] md:text-[32px] font-normal mb-8 text-text-primary"
                   style={{ fontFamily: "'Instrument Serif', serif" }}
                 >
-                  For Investors (Any Size)
+                  For Investors
                 </h3>
                 <ul className="flex flex-col gap-4 flex-1">
                   {[
-                    "Deploy $1K or $500K. Matched to startups at your level.",
-                    "Every founder scored on vision, team, market, and defensibility.",
-                    "Stale founders removed after 30 days. No dead deals.",
-                    "Structured 20-min calls replace months of cold outreach.",
-                    "The best deals move fast. Be in the room when they do.",
+                    "Founding cohort members get lifetime free access. Apply now before spots close.",
+                    "First time investing in a startup? Nexus is literally built for you. No experience required.",
+                    "Every founder has been scored on vision, team, market, and momentum by our proprietary system.",
+                    "You browse. You match. You take a 20-minute chemistry call. That is the whole process.",
+                    "Everyone is talking about startups and AI. This is how you actually get involved instead of watching from the sidelines.",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-accent-blue mt-2 shrink-0" />
@@ -1242,11 +1514,11 @@ export default function Home() {
                 </h3>
                 <ul className="flex flex-col gap-4 flex-1">
                   {[
-                    "Access investors ready to deploy at your stage.",
-                    "Your video pitch and vision matter more than revenue.",
-                    "Matched with investors in 48 hours, not 6 months.",
-                    "30 days to show traction or you are cycled out. Stay sharp.",
-                    "Less than 15% get in. Being here is the credibility signal.",
+                    "Founding startup members get lifetime benefits and first access to the investor network.",
+                    "Your 60-second video pitch and vision matter more than your revenue. Pre-revenue founders welcome.",
+                    "Stop spending 6 months fundraising. Get matched with interested investors in days.",
+                    "30 days to show traction or you get cycled out. This keeps you accountable and the platform elite.",
+                    "Less than 15% of startups get accepted. Being on Nexus is a credibility signal in itself.",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-accent-violet mt-2 shrink-0" />
@@ -1264,139 +1536,6 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-          </motion.div>
-        </motion.div>
-      </Section>
-
-      {/* ============ TESTIMONIALS ============ */}
-      <Section className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
-        <motion.div
-          variants={cardStagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="flex flex-col items-center"
-        >
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-text-muted text-[13px] tracking-[3px] uppercase mb-4"
-          >
-            From the Network
-          </motion.p>
-          <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[36px] md:text-[44px] font-normal text-center mb-16"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
-          >
-            What Members Are Saying
-          </motion.h2>
-
-          <motion.div
-            variants={cardStagger}
-            className="grid md:grid-cols-3 gap-6 md:gap-8 w-full"
-          >
-            {[
-              {
-                quote: "I used to spend 15 hours a week sorting through cold pitches. Nexus cut that to under an hour. The match quality is unreal.",
-                name: "Sarah Chen",
-                title: "Partner, Gradient Ventures",
-                initials: "SC",
-                color: "#4A6CF7",
-              },
-              {
-                quote: "We closed our seed round in 3 weeks. Every investor we talked to through Nexus actually understood our space.",
-                name: "Marcus Obi",
-                title: "CEO, Stackpay",
-                initials: "MO",
-                color: "#0d9488",
-              },
-              {
-                quote: "The chemistry calls are a game changer. 20 minutes, structured, no fluff. Both sides know if there is a fit immediately.",
-                name: "Elena Rodriguez",
-                title: "GP, Precursor Ventures",
-                initials: "ER",
-                color: "#7C5CFC",
-              },
-            ].map((testimonial) => (
-              <motion.div
-                key={testimonial.name}
-                variants={fadeUp}
-                transition={{ duration: 0.6, ease }}
-              >
-                <div className="glow-card-wrapper h-full">
-                  <div className="glass p-8 md:p-10 h-full flex flex-col">
-                    <svg
-                      width="32"
-                      height="32"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      className="text-accent-blue/20 mb-5 shrink-0"
-                    >
-                      <path
-                        d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21z"
-                        fill="currentColor"
-                      />
-                      <path
-                        d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 .997 0 1.031 1 1.031z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                    <p className="text-text-secondary text-[15px] md:text-[16px] leading-[1.7] flex-1 mb-6">
-                      &ldquo;{testimonial.quote}&rdquo;
-                    </p>
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0"
-                        style={{ backgroundColor: testimonial.color }}
-                      >
-                        {testimonial.initials}
-                      </div>
-                      <div>
-                        <p className="text-[14px] font-semibold text-text-primary">
-                          {testimonial.name}
-                        </p>
-                        <p className="text-[13px] text-text-muted">
-                          {testimonial.title}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </Section>
-
-      {/* ============ FAQ ============ */}
-      <Section id="faq" className="relative z-10 px-6 py-24 md:py-32 max-w-3xl mx-auto">
-        <motion.div
-          variants={cardStagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="flex flex-col items-center"
-        >
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-text-muted text-[13px] tracking-[3px] uppercase mb-4"
-          >
-            Questions
-          </motion.p>
-          <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[36px] md:text-[44px] font-normal text-center mb-12"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
-          >
-            Frequently Asked
-          </motion.h2>
-
-          <motion.div variants={cardStagger} className="w-full">
-            <FAQSection />
           </motion.div>
         </motion.div>
       </Section>
@@ -1463,12 +1602,13 @@ export default function Home() {
               className="text-[17px] md:text-[18px] mb-10 max-w-xl leading-[1.7]"
               style={{ color: "#475569" }}
             >
-              Less than 15% get in. Whether you are deploying capital or building a company, the question is simple: are you serious? Startups that do not perform get removed. Investors who ghost get banned. This is a platform for people who move.
+              The founding cohort is filling up. Founding members get lifetime free access, priority matching, and a voice in building the platform. Whether you want to invest in startups or raise from investors who actually care, the door is open. For now.
             </motion.p>
 
             <motion.div
               variants={fadeUp}
               transition={{ duration: 0.6, ease }}
+              className="flex flex-col items-center"
             >
               <Link
                 href="/apply/investor"
@@ -1478,16 +1618,35 @@ export default function Home() {
                 Apply for Access
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
-              <p className="text-text-muted/50 text-[13px] mt-6">
-                Applications reviewed within 48 hours.
-              </p>
+
+              {/* Urgency pill */}
+              <div
+                className="mt-6 inline-flex items-center gap-2 px-5 py-2 rounded-full text-[14px]"
+                style={{
+                  background: "rgba(245, 158, 11, 0.05)",
+                  border: "1px solid rgba(245, 158, 11, 0.15)",
+                  color: "#92400E",
+                  fontFamily: "var(--font-dm-sans), sans-serif",
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                67 of 100 startup spots remaining. 38 of 50 investor spots remaining.
+              </div>
             </motion.div>
           </motion.div>
         </motion.div>
       </section>
 
+      {/* ============ EMAIL CAPTURE ============ */}
+      <div className="relative z-10 border-t" style={{ borderColor: "rgba(0, 0, 0, 0.06)" }}>
+        <EmailCapture />
+      </div>
+
       {/* ============ FOOTER ============ */}
-      <footer className="relative z-10 mt-12">
+      <footer className="relative z-10">
         <div className="border-t border-black/[0.06]">
           <div className="max-w-7xl mx-auto px-6 md:px-12 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
             <a
