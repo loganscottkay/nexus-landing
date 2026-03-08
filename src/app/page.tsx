@@ -547,74 +547,80 @@ function InvestorFeedCard() {
 
   return (
     <div
-      className="w-[340px] min-h-[420px] rounded-2xl p-5 dashboard-card relative"
+      className="w-[340px] rounded-2xl p-6 dashboard-card relative overflow-hidden"
       style={{
-        background: "rgba(10, 10, 15, 0.88)",
-        backdropFilter: "blur(20px)",
-        border: "1px solid rgba(74, 108, 247, 0.2)",
+        background: "rgba(10, 10, 15, 0.92)",
+        backdropFilter: "blur(24px)",
+        border: "1px solid rgba(74, 108, 247, 0.25)",
+        boxShadow: "0 0 40px rgba(74, 108, 247, 0.06), inset 0 1px 0 rgba(255,255,255,0.04)",
       }}
     >
-      {/* Header */}
-      <div className="flex items-center justify-between mb-1.5">
-        <p className="text-white/50 text-[11px] tracking-[2px] uppercase">Investor Feed</p>
-        <div className="flex items-center gap-1.5">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] live-dot-pulse" />
-          <span className="text-[10px] text-[#22c55e]/70">Live</span>
+      {/* Inner depth gradient */}
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.3))" }} />
+
+      <div className="relative">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-white/60 text-[12px] tracking-[2px] uppercase font-medium">Investor Feed</p>
+          <div className="flex items-center gap-1.5">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] live-dot-pulse" />
+            <span className="text-[11px] text-[#22c55e]/80">Live</span>
+          </div>
         </div>
-      </div>
 
-      {/* Match counter */}
-      <p className="text-white/25 text-[10px] mb-4">
-        <span className="text-white/50 font-medium tabular-nums">{matchCount}</span> matches today
-      </p>
+        {/* Match counter */}
+        <p className="text-white/30 text-[11px] mb-4">
+          <span className="text-white/60 font-medium tabular-nums">{matchCount}</span> matches today
+        </p>
 
-      {/* Startup card mockup - crossfade */}
-      <div className="bg-white/[0.05] rounded-xl p-4 mb-3 border border-white/[0.06] relative min-h-[130px]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+        {/* Startup card mockup - crossfade */}
+        <div className="bg-white/[0.06] rounded-xl p-4 mb-4 border border-white/[0.08]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-white text-[12px] font-bold shrink-0"
+                  style={{ background: `linear-gradient(135deg, ${s.gradFrom}, ${s.gradTo})` }}
+                >
+                  {s.initial}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-white text-[15px] font-semibold leading-tight">{s.name}</p>
+                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#4A6CF7]/20 text-[#4A6CF7] inline-block mt-1">
+                    {s.tag}
+                  </span>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
+                <div><p className="text-white/35 text-[10px] mb-0.5">MRR</p><p className="text-white font-medium text-[13px]">{s.mrr}</p></div>
+                <div><p className="text-white/35 text-[10px] mb-0.5">{s.usersLabel || "Users"}</p><p className="text-white font-medium text-[13px]">{s.users}</p></div>
+                <div><p className="text-white/35 text-[10px] mb-0.5">Growth</p><p className="text-white font-medium text-[13px] text-[#22c55e]">{s.growth}</p></div>
+                <div><p className="text-white/35 text-[10px] mb-0.5">Pipeline</p><p className="text-white font-medium text-[13px]">{s.pipeline}</p></div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Action buttons */}
+        <div className="flex justify-center gap-4 pt-1">
+          <div className="w-10 h-10 rounded-full border border-red-400/20 bg-red-400/5 flex items-center justify-center text-red-400/50 cursor-default">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
+          </div>
+          <div className="w-10 h-10 rounded-full border border-[#4A6CF7]/25 bg-[#4A6CF7]/8 flex items-center justify-center text-[#4A6CF7]/60 cursor-default">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+          </div>
+          <div
+            className="w-10 h-10 rounded-full border border-[#22c55e]/25 bg-[#22c55e]/8 flex items-center justify-center text-[#22c55e]/60 cursor-default transition-shadow duration-300"
+            style={greenPulse ? { boxShadow: "0 0 16px rgba(34, 197, 94, 0.6)" } : {}}
           >
-            <div className="flex items-center gap-2.5 mb-3">
-              <div
-                className="w-9 h-9 rounded-full flex items-center justify-center text-white text-[11px] font-bold shrink-0"
-                style={{ background: `linear-gradient(135deg, ${s.gradFrom}, ${s.gradTo})` }}
-              >
-                {s.initial}
-              </div>
-              <div>
-                <p className="text-white text-[14px] font-semibold leading-tight">{s.name}</p>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#4A6CF7]/20 text-[#4A6CF7] inline-block mt-0.5">
-                  {s.tag}
-                </span>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-[11px]">
-              <div><p className="text-white/30 text-[9px]">MRR</p><p className="text-white font-medium">{s.mrr}</p></div>
-              <div><p className="text-white/30 text-[9px]">{s.usersLabel || "Users"}</p><p className="text-white font-medium">{s.users}</p></div>
-              <div><p className="text-white/30 text-[9px]">Growth</p><p className="text-white font-medium text-[#22c55e]">{s.growth}</p></div>
-              <div><p className="text-white/30 text-[9px]">Pipeline</p><p className="text-white font-medium">{s.pipeline}</p></div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Action buttons */}
-      <div className="flex justify-center gap-3.5 pt-1">
-        <div className="w-9 h-9 rounded-full border border-red-400/20 bg-red-400/5 flex items-center justify-center text-red-400/50 cursor-default">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
-        </div>
-        <div className="w-9 h-9 rounded-full border border-[#4A6CF7]/25 bg-[#4A6CF7]/8 flex items-center justify-center text-[#4A6CF7]/60 cursor-default">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
-        </div>
-        <div
-          className="w-9 h-9 rounded-full border border-[#22c55e]/25 bg-[#22c55e]/8 flex items-center justify-center text-[#22c55e]/60 cursor-default transition-shadow duration-300"
-          style={greenPulse ? { boxShadow: "0 0 16px rgba(34, 197, 94, 0.6)" } : {}}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+          </div>
         </div>
       </div>
     </div>
@@ -703,132 +709,138 @@ function MatchAnalyticsCard() {
 
   return (
     <div
-      className="w-[340px] min-h-[420px] rounded-2xl p-5 dashboard-card"
+      className="w-[340px] rounded-2xl p-6 dashboard-card relative overflow-hidden"
       style={{
-        background: "rgba(10, 10, 15, 0.88)",
-        backdropFilter: "blur(20px)",
-        border: "1px solid rgba(124, 92, 252, 0.2)",
+        background: "rgba(10, 10, 15, 0.92)",
+        backdropFilter: "blur(24px)",
+        border: "1px solid rgba(124, 92, 252, 0.25)",
+        boxShadow: "0 0 40px rgba(124, 92, 252, 0.06), inset 0 1px 0 rgba(255,255,255,0.04)",
       }}
     >
-      {/* Header */}
-      <div className="flex items-center justify-between mb-1.5">
-        <p className="text-white/50 text-[11px] tracking-[2px] uppercase">Match Analytics</p>
-        <div className="flex items-center gap-1.5">
-          <div
-            className="w-1 h-1 rounded-full bg-[#4A6CF7] transition-all duration-300"
-            style={updatedBlink ? { boxShadow: "0 0 6px #4A6CF7", transform: "scale(1.5)" } : {}}
-          />
-          <span
-            className="text-[10px] transition-opacity duration-300"
-            style={{ color: updatedBlink ? "rgba(74, 108, 247, 1)" : "rgba(74, 108, 247, 0.7)" }}
-          >
-            Updated
-          </span>
+      {/* Inner depth gradient */}
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.3))" }} />
+
+      <div className="relative">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-white/60 text-[12px] tracking-[2px] uppercase font-medium">Match Analytics</p>
+          <div className="flex items-center gap-1.5">
+            <div
+              className="w-1.5 h-1.5 rounded-full bg-[#4A6CF7] transition-all duration-300"
+              style={updatedBlink ? { boxShadow: "0 0 8px #4A6CF7", transform: "scale(1.5)" } : {}}
+            />
+            <span
+              className="text-[11px] transition-opacity duration-300"
+              style={{ color: updatedBlink ? "rgba(74, 108, 247, 1)" : "rgba(74, 108, 247, 0.7)" }}
+            >
+              Updated
+            </span>
+          </div>
         </div>
-      </div>
 
-      {/* Active investors counter */}
-      <p className="text-white/25 text-[10px] mb-4">
-        Active investors: <span className="text-white/50 font-medium tabular-nums">{activeInvestors}</span>
-      </p>
+        {/* Active investors counter */}
+        <p className="text-white/30 text-[11px] mb-4">
+          Active investors: <span className="text-white/60 font-medium tabular-nums">{activeInvestors}</span>
+        </p>
 
-      {/* Score ring + label */}
-      <div className="flex items-center gap-4 mb-4">
-        <div className="relative w-[70px] h-[70px] shrink-0">
-          <svg viewBox="0 0 70 70" className="w-full h-full -rotate-90">
-            <circle cx="35" cy="35" r={r} fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="5" />
+        {/* Score ring + label */}
+        <div className="flex items-center gap-4 mb-5">
+          <div className="relative w-[72px] h-[72px] shrink-0">
+            <svg viewBox="0 0 70 70" className="w-full h-full -rotate-90">
+              <circle cx="35" cy="35" r={r} fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="5" />
+              <defs>
+                <linearGradient id="scoreGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#4A6CF7" />
+                  <stop offset="100%" stopColor="#7C5CFC" />
+                </linearGradient>
+              </defs>
+              <circle
+                cx="35" cy="35" r={r} fill="none"
+                stroke="url(#scoreGrad)" strokeWidth="5" strokeLinecap="round"
+                strokeDasharray={circ} strokeDashoffset={offset}
+                style={{ transition: "stroke-dashoffset 0.6s ease" }}
+              />
+            </svg>
+            <span
+              className="absolute inset-0 flex items-center justify-center text-white text-[20px] font-bold transition-all duration-300"
+              style={scoreGlow ? { textShadow: "0 0 12px rgba(74, 108, 247, 0.8)" } : {}}
+            >
+              {engScore}
+            </span>
+          </div>
+          <div className="text-[12px]">
+            <p className="text-white/35">Engagement</p>
+            <p className="text-white font-semibold text-[14px]">Score</p>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#22c55e]/10 text-[#22c55e] mt-1 inline-block">Top 5%</span>
+          </div>
+        </div>
+
+        {/* Animated line chart */}
+        <div className="mb-5 px-1">
+          <svg viewBox="0 0 200 50" className="w-full h-[44px]">
             <defs>
-              <linearGradient id="scoreGrad" x1="0" y1="0" x2="1" y2="1">
+              <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stopColor="#4A6CF7" />
                 <stop offset="100%" stopColor="#7C5CFC" />
               </linearGradient>
+              <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#4A6CF7" stopOpacity="0.15" />
+                <stop offset="100%" stopColor="#4A6CF7" stopOpacity="0" />
+              </linearGradient>
             </defs>
-            <circle
-              cx="35" cy="35" r={r} fill="none"
-              stroke="url(#scoreGrad)" strokeWidth="5" strokeLinecap="round"
-              strokeDasharray={circ} strokeDashoffset={offset}
-              style={{ transition: "stroke-dashoffset 0.6s ease" }}
+            <path d={areaPath} fill="url(#areaGrad)" style={{ opacity: chartProgress }} />
+            <path
+              d={fullPath}
+              fill="none" stroke="url(#lineGrad)" strokeWidth="2" strokeLinecap="round"
+              strokeDasharray={pathLength}
+              strokeDashoffset={pathLength * (1 - chartProgress)}
             />
+            {points.map((y, i) => (
+              <circle
+                key={i} cx={i * 50} cy={y} r="3"
+                fill="#4A6CF7" stroke="rgba(10,10,15,0.92)" strokeWidth="1.5"
+                style={{ opacity: chartProgress > (i / points.length) ? 1 : 0, transition: "opacity 0.2s" }}
+              />
+            ))}
           </svg>
-          <span
-            className="absolute inset-0 flex items-center justify-center text-white text-[18px] font-bold transition-all duration-300"
-            style={scoreGlow ? { textShadow: "0 0 12px rgba(74, 108, 247, 0.8)" } : {}}
-          >
-            {engScore}
-          </span>
         </div>
-        <div className="text-[11px]">
-          <p className="text-white/30">Engagement</p>
-          <p className="text-white font-medium text-[13px]">Score</p>
-          <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-[#22c55e]/10 text-[#22c55e] mt-1 inline-block">Top 5%</span>
-        </div>
-      </div>
 
-      {/* Animated line chart */}
-      <div className="mb-4 px-1">
-        <svg viewBox="0 0 200 50" className="w-full h-[40px]">
-          <defs>
-            <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#4A6CF7" />
-              <stop offset="100%" stopColor="#7C5CFC" />
-            </linearGradient>
-            <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#4A6CF7" stopOpacity="0.15" />
-              <stop offset="100%" stopColor="#4A6CF7" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <path d={areaPath} fill="url(#areaGrad)" style={{ opacity: chartProgress }} />
-          <path
-            d={fullPath}
-            fill="none" stroke="url(#lineGrad)" strokeWidth="2" strokeLinecap="round"
-            strokeDasharray={pathLength}
-            strokeDashoffset={pathLength * (1 - chartProgress)}
-          />
-          {points.map((y, i) => (
-            <circle
-              key={i} cx={i * 50} cy={y} r="3"
-              fill="#4A6CF7" stroke="rgba(10,10,15,0.88)" strokeWidth="1.5"
-              style={{ opacity: chartProgress > (i / points.length) ? 1 : 0, transition: "opacity 0.2s" }}
-            />
-          ))}
-        </svg>
-      </div>
-
-      {/* Stats */}
-      <div className="space-y-2 text-[12px] mb-4">
-        <div className="flex justify-between">
-          <span className="text-white/30">Matches This Week</span>
-          <span className="text-white font-medium">7</span>
+        {/* Stats */}
+        <div className="space-y-2.5 text-[13px] mb-5">
+          <div className="flex justify-between">
+            <span className="text-white/35">Matches This Week</span>
+            <span className="text-white font-medium">7</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-white/35">Follow-Up Rate</span>
+            <span className="text-white font-medium">89%</span>
+          </div>
         </div>
-        <div className="flex justify-between">
-          <span className="text-white/30">Follow-Up Rate</span>
-          <span className="text-white font-medium">89%</span>
-        </div>
-      </div>
 
-      {/* Top Sectors with breathing bars */}
-      <div>
-        <p className="text-white/30 text-[10px] mb-2">Top Sectors</p>
-        <div className="space-y-1.5">
-          {[
-            { label: "AI", width: 85 },
-            { label: "SaaS", width: 60 },
-            { label: "Fintech", width: 40 },
-          ].map((s, i) => (
-            <div key={s.label} className="flex items-center gap-2">
-              <span className="text-white/40 text-[9px] w-[36px]">{s.label}</span>
-              <div className="flex-1 h-1.5 rounded-full bg-white/[0.05] overflow-hidden">
-                <div
-                  className="h-full rounded-full sector-bar-breathe"
-                  style={{
-                    width: `${s.width}%`,
-                    background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)",
-                    animationDelay: `${i * 0.5}s`,
-                  }}
-                />
+        {/* Top Sectors with breathing bars */}
+        <div>
+          <p className="text-white/35 text-[11px] mb-2">Top Sectors</p>
+          <div className="space-y-2">
+            {[
+              { label: "AI", width: 85 },
+              { label: "SaaS", width: 60 },
+              { label: "Fintech", width: 40 },
+            ].map((s, i) => (
+              <div key={s.label} className="flex items-center gap-2">
+                <span className="text-white/45 text-[10px] w-[40px]">{s.label}</span>
+                <div className="flex-1 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                  <div
+                    className="h-full rounded-full sector-bar-breathe"
+                    style={{
+                      width: `${s.width}%`,
+                      background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)",
+                      animationDelay: `${i * 0.5}s`,
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -1127,7 +1139,7 @@ export default function Home() {
               className="text-[17px] md:text-[19px] max-w-[600px] mb-12 leading-[1.8]"
               style={{ color: "#475569" }}
             >
-              Think of it like a dating app, but for startups and investors. Founders post their pitch. Investors browse and match with the ones they believe in. When both sides are interested, they connect. Nexus handles the vetting, the matching, and the introductions. You just show up. We are now accepting applications for our founding cohort.
+              A matching app for startups and investors. Founders pitch. Investors browse. When interest is mutual, they connect. Not everyone gets in. Less than 15% of applicants are accepted. We are now accepting applications for our founding cohort.
             </motion.p>
 
             {/* CTAs */}
@@ -1214,7 +1226,7 @@ export default function Home() {
             className="text-[36px] font-normal text-center mb-8"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
-            We Built Nexus Because We Needed It
+            Best Friends. Different Paths. One Mission.
           </motion.h2>
           <motion.p
             variants={fadeUp}
@@ -1222,7 +1234,7 @@ export default function Home() {
             className="text-center max-w-[680px] text-[17px] leading-[1.8] mb-12"
             style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
-            We spent months trying to break into the startup world. We had the ambition but not the access. Every door felt closed. The VC world was opaque. The networking events were awkward. The cold emails went nowhere. Then we realized something: thousands of other people feel the exact same way. Investors who want to back the next big thing but do not know where to look. Founders with brilliant ideas but no way to reach the right people. Everyone is watching the startup wave from the sidelines, afraid they are missing out. So we stopped trying to find the perfect idea and built the platform that connects the ideas with the people who believe in them. Nexus is a matching app. Founders post their startup. Investors browse and match with the ones that excite them. When interest is mutual, they connect. Simple.
+            We have been best friends since high school. We both ended up in Boston but went completely different directions. Logan studied Data Science and Hospitality at BU. Ben studied Finance and Marketing at Northeastern. For years we tried to build something together. We chased ideas, debated concepts, and kept hitting the same wall: the startup world felt impossible to break into. Then it clicked. The problem was never finding the right idea. The problem was that founders with great ideas and people who want to back them have no way to find each other. Everyone is watching the startup wave, afraid they are missing out. So we stopped looking for the perfect startup idea and built the platform that connects them. Nexus exists because we believe being a founder or an investor should be attainable for anyone willing to do the work.
           </motion.p>
 
           {/* Founder cards */}
@@ -1244,7 +1256,7 @@ export default function Home() {
               <div>
                 <p className="text-[16px] font-semibold text-text-primary">Logan Kay</p>
                 <p className="text-[13px] text-text-muted">Co-Founder</p>
-                <p className="text-[13px] text-text-muted">BU Hospitality Admin, AI &amp; Ops at Harvard Business School</p>
+                <p className="text-[13px] text-text-muted">Boston University | AI &amp; Ops @ Harvard Business School</p>
               </div>
             </motion.div>
 
@@ -1260,9 +1272,9 @@ export default function Home() {
                 BK
               </div>
               <div>
-                <p className="text-[16px] font-semibold text-text-primary">Ben [Last Name]</p>
+                <p className="text-[16px] font-semibold text-text-primary">Ben Kay</p>
                 <p className="text-[13px] text-text-muted">Co-Founder</p>
-                <p className="text-[13px] text-text-muted">Background placeholder</p>
+                <p className="text-[13px] text-text-muted">Northeastern University | Institutional Equity @ Morgan Stanley</p>
               </div>
             </motion.div>
           </motion.div>
@@ -1364,8 +1376,8 @@ export default function Home() {
                     <path d="M8 7l4-4 4 4" />
                     <rect x="2" y="12" width="20" height="2" rx="1" />
                   </svg>
-                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Lifetime Free Access</h3>
-                  <p className="text-[15px] text-text-muted leading-[1.6]">No subscription fees. Ever. As Nexus scales and pricing increases, you stay free. Permanently.</p>
+                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Early Access</h3>
+                  <p className="text-[15px] text-text-muted leading-[1.6]">Founding members get access to the platform before it opens to the public. Start building your profile and network ahead of everyone else.</p>
                 </div>
               </div>
             </motion.div>
@@ -1376,8 +1388,8 @@ export default function Home() {
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
                     <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                   </svg>
-                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>First to Match</h3>
-                  <p className="text-[15px] text-text-muted leading-[1.6]">You get access to matches before anyone else. When the platform opens publicly, you already have a head start and an established profile.</p>
+                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Discounted Premium</h3>
+                  <p className="text-[15px] text-text-muted leading-[1.6]">Founding members lock in a permanently discounted rate on premium features. As pricing scales, yours stays low.</p>
                 </div>
               </div>
             </motion.div>
@@ -1388,8 +1400,8 @@ export default function Home() {
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
                     <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
                   </svg>
-                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Build It With Us</h3>
-                  <p className="text-[15px] text-text-muted leading-[1.6]">Direct line to the founders. Vote on features. Influence the scoring system. You are not just using Nexus, you are shaping it.</p>
+                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Direct Founder Access</h3>
+                  <p className="text-[15px] text-text-muted leading-[1.6]">A direct line to Logan and Ben. Share feedback, suggest features, and help shape the direction of Nexus as it grows.</p>
                 </div>
               </div>
             </motion.div>
