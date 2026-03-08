@@ -77,10 +77,11 @@ const investorNav: NavItem[] = [
 const founderNav: NavItem[] = [
   { label: "Dashboard", icon: icons.dashboard, href: "/dashboard/founder" },
   { label: "Interests", icon: icons.interests, href: "/interests" },
-  { label: "Matches", icon: icons.matches, href: "/matches" },
-  { label: "Deck Analytics", icon: icons.analytics, href: "/dashboard/founder" },
-  { label: "Profile", icon: icons.profile, href: "/settings" },
-  { label: "Settings", icon: icons.settings, href: "/settings" },
+  { label: "Matches", icon: icons.matches, href: "/matches/founder" },
+  { label: "Deck Analytics", icon: icons.analytics, href: "/deck-analytics" },
+  { label: "Messages", icon: icons.messages, href: "/messages/founder" },
+  { label: "Profile", icon: icons.profile, href: "/settings/founder" },
+  { label: "Settings", icon: icons.settings, href: "/settings/founder" },
 ];
 
 export default function Sidebar({
@@ -132,9 +133,11 @@ export default function Sidebar({
 
           {navList.map((item) => {
             const isActive = item.label === activeLabel;
+            const activeColor = role === "founder" ? "text-accent-violet" : "text-accent-blue";
+            const barColor = role === "founder" ? "bg-accent-violet" : "bg-accent-blue";
             return (
-              <Link key={item.label} href={item.href} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1 text-[15px] transition-all duration-200 relative ${isActive ? "text-accent-blue font-medium" : "text-text-secondary hover:text-text-primary hover:bg-black/[0.03]"}`}>
-                {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-accent-blue rounded-full" />}
+              <Link key={item.label} href={item.href} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1 text-[15px] transition-all duration-200 relative ${isActive ? `${activeColor} font-medium` : "text-text-secondary hover:text-text-primary hover:bg-black/[0.03]"}`}>
+                {isActive && <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 ${barColor} rounded-full`} />}
                 {item.icon}
                 {item.label}
               </Link>
@@ -175,8 +178,9 @@ export default function Sidebar({
         </Link>
         {navList.slice(0, 4).map((item) => {
           const isActive = item.label === activeLabel;
+          const activeColor = role === "founder" ? "text-accent-violet" : "text-accent-blue";
           return (
-            <Link key={item.label} href={item.href} className={`flex flex-col items-center gap-1 px-3 py-1 ${isActive ? "text-accent-blue" : "text-text-muted"}`}>
+            <Link key={item.label} href={item.href} className={`flex flex-col items-center gap-1 px-3 py-1 ${isActive ? activeColor : "text-text-muted"}`}>
               {item.icon}
               <span className="text-[10px]">{item.label}</span>
             </Link>
