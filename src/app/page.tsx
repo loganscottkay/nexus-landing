@@ -547,7 +547,7 @@ function InvestorFeedCard() {
 
   return (
     <div
-      className="w-[340px] rounded-2xl p-6 dashboard-card relative overflow-hidden"
+      className="w-[320px] h-[420px] rounded-2xl p-6 dashboard-card relative overflow-hidden"
       style={{
         background: "rgba(10, 10, 15, 0.92)",
         backdropFilter: "blur(24px)",
@@ -709,7 +709,7 @@ function MatchAnalyticsCard() {
 
   return (
     <div
-      className="w-[340px] rounded-2xl p-6 dashboard-card relative overflow-hidden"
+      className="w-[320px] h-[420px] rounded-2xl p-6 dashboard-card relative overflow-hidden"
       style={{
         background: "rgba(10, 10, 15, 0.92)",
         backdropFilter: "blur(24px)",
@@ -1213,13 +1213,6 @@ export default function Home() {
           viewport={viewportConfig}
           className="flex flex-col items-center"
         >
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="gradient-text text-[13px] tracking-[4px] uppercase mb-4 font-medium"
-          >
-            Our Story
-          </motion.p>
           <motion.h2
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
@@ -1234,7 +1227,7 @@ export default function Home() {
             className="text-center max-w-[680px] text-[17px] leading-[1.8] mb-12"
             style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
-            We have been best friends since high school. We both ended up in Boston but went completely different directions. Logan studied Data Science and Hospitality at BU. Ben studied Finance and Marketing at Northeastern. For years we tried to build something together. We chased ideas, debated concepts, and kept hitting the same wall: the startup world felt impossible to break into. Then it clicked. The problem was never finding the right idea. The problem was that founders with great ideas and people who want to back them have no way to find each other. Everyone is watching the startup wave, afraid they are missing out. So we stopped looking for the perfect startup idea and built the platform that connects them. Nexus exists because we believe being a founder or an investor should be attainable for anyone willing to do the work.
+            Best friends since high school. Different paths through Boston. Same frustration: the startup world felt impossible to break into. So we built the door. Nexus exists because we believe being a founder or investor should be attainable for anyone willing to do the work.
           </motion.p>
 
           {/* Founder cards */}
