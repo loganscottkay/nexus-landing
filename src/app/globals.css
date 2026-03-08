@@ -173,8 +173,8 @@ body {
 }
 
 .nav-moon {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
   opacity: 0;
   will-change: transform, opacity;
@@ -182,18 +182,15 @@ body {
   filter: drop-shadow(0 0 12px rgba(200, 210, 230, 0.4));
 }
 
-/* Remove will-change after entrance */
-.nav-moon.settled {
-  will-change: auto;
-}
-
-/* Continuous glow pulse after settling */
+/* Continuous glow pulse after settling — opacity: 1 so moon stays visible */
 @keyframes moon-glow-pulse {
   0%, 100% { filter: drop-shadow(0 0 12px rgba(200, 210, 230, 0.3)); }
   50% { filter: drop-shadow(0 0 12px rgba(200, 210, 230, 0.5)); }
 }
 
 .nav-moon.settled {
+  opacity: 1;
+  will-change: auto;
   animation: moon-glow-pulse 3s ease-in-out infinite;
 }
 

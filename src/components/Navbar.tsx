@@ -106,8 +106,8 @@ export default function Navbar() {
             className={`nav-moon${moonSettled ? " settled" : ""}`}
           >
             <svg
-              width="28"
-              height="28"
+              width="32"
+              height="32"
               viewBox="0 0 28 28"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
