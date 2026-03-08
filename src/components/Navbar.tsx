@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [applyOpen, setApplyOpen] = useState(false);
+  const applyRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isHome = pathname === "/";
 
@@ -23,6 +25,16 @@ export default function Navbar() {
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
+
+  useEffect(() => {
+    const onClickOutside = (e: MouseEvent) => {
+      if (applyRef.current && !applyRef.current.contains(e.target as Node)) {
+        setApplyOpen(false);
+      }
+    };
+    if (applyOpen) document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, [applyOpen]);
 
   const scrollToSection = (e: React.MouseEvent, id: string) => {
     if (isHome) {
@@ -83,13 +95,48 @@ export default function Navbar() {
             >
               Sign In
             </Link>
-            <Link
-              href="/apply/investor"
-              className="btn-primary btn-shimmer px-5 py-2.5 text-[15px] font-medium"
-              style={{ letterSpacing: "0.3px" }}
-            >
-              Apply Now
-            </Link>
+            <div className="relative" ref={applyRef}>
+              <button
+                onClick={() => setApplyOpen(!applyOpen)}
+                className="btn-primary btn-shimmer px-5 py-2.5 text-[15px] font-medium flex items-center gap-1.5"
+                style={{ letterSpacing: "0.3px" }}
+              >
+                Apply Now
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${applyOpen ? "rotate-180" : ""}`}>
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              <div
+                className="absolute right-0 top-full mt-2 w-[220px] rounded-2xl p-2 transition-all duration-200"
+                style={{
+                  background: "rgba(255, 255, 255, 0.8)",
+                  backdropFilter: "blur(24px)",
+                  WebkitBackdropFilter: "blur(24px)",
+                  border: "1px solid rgba(0, 0, 0, 0.06)",
+                  boxShadow: "0 10px 40px rgba(0, 0, 0, 0.1)",
+                  opacity: applyOpen ? 1 : 0,
+                  transform: applyOpen ? "translateY(0)" : "translateY(-8px)",
+                  pointerEvents: applyOpen ? "auto" : "none",
+                }}
+              >
+                <Link
+                  href="/apply/investor"
+                  onClick={() => setApplyOpen(false)}
+                  className="block px-5 py-3 rounded-xl text-[15px] text-text-primary font-medium transition-colors duration-150 hover:bg-[rgba(74,108,247,0.05)] hover:text-[#4A6CF7]"
+                  style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                >
+                  Apply as Investor
+                </Link>
+                <Link
+                  href="/apply/startup"
+                  onClick={() => setApplyOpen(false)}
+                  className="block px-5 py-3 rounded-xl text-[15px] text-text-primary font-medium transition-colors duration-150 hover:bg-[rgba(74,108,247,0.05)] hover:text-[#4A6CF7]"
+                  style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                >
+                  Apply as Startup
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -143,20 +190,27 @@ export default function Navbar() {
           >
             For Startups
           </Link>
-          <div className="flex gap-4 pt-2">
-            <Link
-              href="/login"
-              onClick={() => setMenuOpen(false)}
-              className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
-            >
-              Sign In
-            </Link>
+          <Link
+            href="/login"
+            onClick={() => setMenuOpen(false)}
+            className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
+          >
+            Sign In
+          </Link>
+          <div className="flex gap-3 pt-2">
             <Link
               href="/apply/investor"
               onClick={() => setMenuOpen(false)}
               className="btn-primary px-5 py-2.5 text-[14px] font-medium"
             >
-              Apply Now
+              Apply as Investor
+            </Link>
+            <Link
+              href="/apply/startup"
+              onClick={() => setMenuOpen(false)}
+              className="btn-primary px-5 py-2.5 text-[14px] font-medium"
+            >
+              Apply as Startup
             </Link>
           </div>
         </div>

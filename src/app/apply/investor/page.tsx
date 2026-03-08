@@ -26,7 +26,33 @@ const SECTORS = [
 
 const STAGES = ["Pre-Seed", "Seed", "Series A"];
 
+const VALUE_ADD_OPTIONS = [
+  "Mentorship",
+  "Industry Connections",
+  "Technical Expertise",
+  "Go-to-Market Help",
+  "Hiring Network",
+];
+
+const CAPITAL_ALLOCATED = [
+  "Under $5K",
+  "$5K-$25K",
+  "$25K-$100K",
+  "$100K-$500K",
+  "$500K+",
+];
+
+const CHECK_SIZES = [
+  "$1K-$5K",
+  "$5K-$25K",
+  "$25K-$100K",
+  "$100K-$250K",
+  "$250K+",
+];
+
 const INVESTMENTS_PER_YEAR = ["1-2", "3-5", "6-10", "10+"];
+
+const ROLES = ["Lead", "Participated", "Advisor"];
 
 const SOURCES = [
   "Referral",
@@ -38,10 +64,8 @@ const SOURCES = [
   "Other",
 ];
 
-const ROLES = ["Lead", "Participated", "Advisor"];
-
 export default function InvestorApply() {
-  // Step 1
+  // Step 1 — About You
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [isIndependent, setIsIndependent] = useState(false);
@@ -50,24 +74,31 @@ export default function InvestorApply() {
   const [linkedin, setLinkedin] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
+  const [isFirstTime, setIsFirstTime] = useState(false);
 
-  // Step 2
+  // Step 2 — Investment Thesis
   const [thesis, setThesis] = useState("");
   const [sectorPrefs, setSectorPrefs] = useState<string[]>([]);
   const [stagePrefs, setStagePrefs] = useState<string[]>([]);
-  const [checkMin, setCheckMin] = useState("50");
-  const [checkMax, setCheckMax] = useState("500");
+  const [valueBeyondCapital, setValueBeyondCapital] = useState("");
+  const [valueAddSkills, setValueAddSkills] = useState<string[]>([]);
+
+  // Step 3 — Your Budget
+  const [capitalAllocated, setCapitalAllocated] = useState("");
+  const [checkSize, setCheckSize] = useState("");
   const [investmentsPerYear, setInvestmentsPerYear] = useState("");
 
-  // Step 3
+  // Step 4 — Track Record
   const [portfolio, setPortfolio] = useState([
     { company: "", role: "", year: "" },
   ]);
   const [exits, setExits] = useState("");
   const [boardSeats, setBoardSeats] = useState("");
 
-  // Step 4
+  // Step 5 — Verification & Commitment
   const [accredited, setAccredited] = useState(false);
+  const [notAccredited, setNotAccredited] = useState(false);
+  const [acceptAccountability, setAcceptAccountability] = useState(false);
   const [source, setSource] = useState("");
   const [anythingElse, setAnythingElse] = useState("");
 
@@ -92,20 +123,8 @@ export default function InvestorApply() {
     setPortfolio((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const checkSizes = [
-    "$10K",
-    "$25K",
-    "$50K",
-    "$100K",
-    "$250K",
-    "$500K",
-    "$1M",
-    "$2M",
-    "$5M+",
-  ];
-
   const steps = [
-    // Step 1
+    // Step 1 — About You
     <div key="s1">
       <h3
         className="text-[22px] font-normal text-text-primary mb-6"
@@ -184,10 +203,48 @@ export default function InvestorApply() {
             />
           </div>
         </div>
+
+        <div>
+          <Checkbox
+            checked={isFirstTime}
+            onChange={setIsFirstTime}
+            label="I am a first-time investor"
+          />
+        </div>
+
+        {isFirstTime && (
+          <div
+            className="rounded-xl p-4 flex items-start gap-3"
+            style={{
+              background: "rgba(74, 108, 247, 0.05)",
+              border: "1px solid rgba(74, 108, 247, 0.15)",
+            }}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#4A6CF7"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="shrink-0 mt-0.5"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 16v-4M12 8h.01" />
+            </svg>
+            <p className="text-[14px] text-accent-blue leading-[1.5]">
+              First-time investors are welcome on Nexus. We will match you with
+              early-stage founders where your capital and perspective can make a
+              real impact.
+            </p>
+          </div>
+        )}
       </div>
     </div>,
 
-    // Step 2
+    // Step 2 — Investment Thesis
     <div key="s2">
       <h3
         className="text-[22px] font-normal text-text-primary mb-6"
@@ -200,8 +257,8 @@ export default function InvestorApply() {
         <div>
           <FormLabel required>Your Investment Thesis</FormLabel>
           <p className="text-text-muted text-[13px] mb-3">
-            Describe what you invest in and why. This helps us match you with
-            relevant startups.
+            What excites you? What kind of founders do you want to back? Be
+            specific. This directly influences your matches.
           </p>
           <TextArea
             value={thesis}
@@ -232,31 +289,72 @@ export default function InvestorApply() {
         </div>
 
         <div>
-          <FormLabel required>Typical Check Size Range</FormLabel>
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <p className="text-text-muted text-[12px] mb-1">Minimum</p>
-              <SelectInput
-                options={checkSizes}
-                value={checkMin}
-                onChange={setCheckMin}
-                placeholder="Min"
-              />
-            </div>
-            <div>
-              <p className="text-text-muted text-[12px] mb-1">Maximum</p>
-              <SelectInput
-                options={checkSizes}
-                value={checkMax}
-                onChange={setCheckMax}
-                placeholder="Max"
-              />
-            </div>
-          </div>
+          <FormLabel>What value do you bring beyond capital?</FormLabel>
+          <TextArea
+            value={valueBeyondCapital}
+            onChange={(v) => setValueBeyondCapital(v.slice(0, 300))}
+            placeholder="How can you help the founders you back beyond writing a check..."
+            maxLength={300}
+            rows={3}
+          />
         </div>
 
         <div>
-          <FormLabel required>Investments Per Year</FormLabel>
+          <FormLabel>Your Strengths</FormLabel>
+          <p className="text-text-muted text-[13px] mb-3">
+            Select all that apply. This helps us match you with founders who need
+            what you offer.
+          </p>
+          <MultiSelect
+            options={VALUE_ADD_OPTIONS}
+            selected={valueAddSkills}
+            onChange={setValueAddSkills}
+            placeholder="Select your strengths"
+          />
+        </div>
+      </div>
+    </div>,
+
+    // Step 3 — Your Budget
+    <div key="s3">
+      <h3
+        className="text-[22px] font-normal text-text-primary mb-2"
+        style={{ fontFamily: "'Instrument Serif', serif" }}
+      >
+        Your Budget
+      </h3>
+      <p className="text-text-muted text-[15px] italic mb-6">
+        There is no minimum. We match you with startups at your level. A $2K
+        check is just as valid as a $200K check.
+      </p>
+
+      <div className="space-y-5">
+        <div>
+          <FormLabel required>
+            Total capital allocated for startup investments this year
+          </FormLabel>
+          <SelectInput
+            options={CAPITAL_ALLOCATED}
+            value={capitalAllocated}
+            onChange={setCapitalAllocated}
+            placeholder="Select range"
+          />
+        </div>
+
+        <div>
+          <FormLabel required>Typical check size per startup</FormLabel>
+          <SelectInput
+            options={CHECK_SIZES}
+            value={checkSize}
+            onChange={setCheckSize}
+            placeholder="Select range"
+          />
+        </div>
+
+        <div>
+          <FormLabel required>
+            How many startups do you plan to invest in this year?
+          </FormLabel>
           <SelectInput
             options={INVESTMENTS_PER_YEAR}
             value={investmentsPerYear}
@@ -267,17 +365,17 @@ export default function InvestorApply() {
       </div>
     </div>,
 
-    // Step 3
-    <div key="s3">
+    // Step 4 — Track Record
+    <div key="s4">
       <h3
         className="text-[22px] font-normal text-text-primary mb-2"
         style={{ fontFamily: "'Instrument Serif', serif" }}
       >
         Track Record
       </h3>
-      <p className="text-text-muted text-[13px] mb-6">
-        Sharing your portfolio builds credibility with founders. Optional but
-        encouraged.
+      <p className="text-text-muted text-[15px] italic mb-6">
+        New to investing? Skip this section. Your thesis and commitment matter
+        more than your track record.
       </p>
 
       <div className="space-y-5">
@@ -382,16 +480,95 @@ export default function InvestorApply() {
       </div>
     </div>,
 
-    // Step 4
-    <div key="s4">
+    // Step 5 — Verification & Commitment
+    <div key="s5">
       <h3
         className="text-[22px] font-normal text-text-primary mb-6"
         style={{ fontFamily: "'Instrument Serif', serif" }}
       >
-        Verification
+        Verification & Commitment
       </h3>
 
       <div className="space-y-6">
+        {!notAccredited && (
+          <div
+            className="rounded-xl p-5"
+            style={{
+              background: "rgba(255, 255, 255, 0.25)",
+              border: "1px solid rgba(0, 0, 0, 0.08)",
+            }}
+          >
+            <Checkbox
+              checked={accredited}
+              onChange={(v) => {
+                setAccredited(v);
+                if (v) setNotAccredited(false);
+              }}
+              label={
+                <span className="text-[14px] leading-[1.6]">
+                  I certify that I am an accredited investor as defined by SEC
+                  Rule 501 of Regulation D. I understand that Nexus will verify
+                  this status through a third-party verification service before
+                  granting full platform access.
+                </span>
+              }
+            />
+          </div>
+        )}
+
+        {!accredited && (
+          <div
+            className="rounded-xl p-5"
+            style={{
+              background: "rgba(255, 255, 255, 0.25)",
+              border: "1px solid rgba(0, 0, 0, 0.08)",
+            }}
+          >
+            <Checkbox
+              checked={notAccredited}
+              onChange={(v) => {
+                setNotAccredited(v);
+                if (v) setAccredited(false);
+              }}
+              label={
+                <span className="text-[14px] leading-[1.6]">
+                  I am not currently accredited but I am committed to investing
+                  in startups on this platform.
+                </span>
+              }
+            />
+          </div>
+        )}
+
+        {notAccredited && (
+          <div
+            className="rounded-xl p-4 flex items-start gap-3"
+            style={{
+              background: "rgba(74, 108, 247, 0.05)",
+              border: "1px solid rgba(74, 108, 247, 0.15)",
+            }}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#4A6CF7"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="shrink-0 mt-0.5"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 16v-4M12 8h.01" />
+            </svg>
+            <p className="text-[14px] text-accent-blue leading-[1.5]">
+              Non-accredited investors are welcome. Your matches will be filtered
+              to comply with relevant regulations.
+            </p>
+          </div>
+        )}
+
         <div
           className="rounded-xl p-5"
           style={{
@@ -400,14 +577,13 @@ export default function InvestorApply() {
           }}
         >
           <Checkbox
-            checked={accredited}
-            onChange={setAccredited}
+            checked={acceptAccountability}
+            onChange={setAcceptAccountability}
             label={
               <span className="text-[14px] leading-[1.6]">
-                I certify that I am an accredited investor as defined by SEC
-                Rule 501 of Regulation D. I understand that Nexus will verify
-                this status through a third-party verification service before
-                granting full platform access.
+                I understand that investors who fail to respond to matches within
+                72 hours or who ghost after scheduling calls may be removed from
+                the platform.
               </span>
             }
           />
@@ -440,8 +616,9 @@ export default function InvestorApply() {
   const stepLabels = [
     "About You",
     "Investment Thesis",
+    "Your Budget",
     "Track Record",
-    "Verification",
+    "Verification & Commitment",
   ];
 
   return (

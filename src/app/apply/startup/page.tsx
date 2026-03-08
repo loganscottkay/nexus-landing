@@ -8,23 +8,33 @@ import FormShell, {
   SelectInput,
   MultiSelect,
   FileUpload,
+  Checkbox,
 } from "@/components/apply/FormShell";
 
-const SECTORS = [
+const VERTICALS = [
   "AI/ML",
   "SaaS",
   "Fintech",
-  "Health Tech",
+  "HealthTech",
   "Climate Tech",
-  "Enterprise",
-  "Consumer",
+  "EdTech",
   "Marketplace",
-  "Developer Tools",
+  "Consumer",
   "Hardware",
   "Other",
 ];
 
 const STAGES = ["Pre-Seed", "Seed", "Series A"];
+
+const TEAM_SIZES = ["1", "2-3", "4-6", "7-10", "10+"];
+
+const INVESTOR_TIERS = [
+  "Micro ($1K-$10K)",
+  "Small ($10K-$50K)",
+  "Growth ($50K-$250K)",
+  "Institutional ($250K+)",
+  "Open to All",
+];
 
 const SOURCES = [
   "Referral",
@@ -37,7 +47,7 @@ const SOURCES = [
 ];
 
 export default function StartupApply() {
-  // Step 1
+  // Step 1 — Company Basics
   const [companyName, setCompanyName] = useState("");
   const [oneLiner, setOneLiner] = useState("");
   const [website, setWebsite] = useState("");
@@ -47,29 +57,40 @@ export default function StartupApply() {
   const [country, setCountry] = useState("");
   const [sectors, setSectors] = useState<string[]>([]);
   const [stage, setStage] = useState("");
+  const [vertical, setVertical] = useState("");
+  const [teamSize, setTeamSize] = useState("");
 
-  // Step 2
+  // Step 2 — Your Vision
+  const [problemSolving, setProblemSolving] = useState("");
+  const [unfairAdvantage, setUnfairAdvantage] = useState("");
+  const [threeYearVision, setThreeYearVision] = useState("");
+
+  // Step 3 — Traction & Metrics
   const [mrr, setMrr] = useState("");
   const [users, setUsers] = useState("");
   const [growth, setGrowth] = useState("");
   const [pipeline, setPipeline] = useState("");
   const [otherMetricLabel, setOtherMetricLabel] = useState("");
   const [otherMetricValue, setOtherMetricValue] = useState("");
+  const [biggestMilestone, setBiggestMilestone] = useState("");
 
-  // Step 3
+  // Step 4 — Your Team
   const [teamMembers, setTeamMembers] = useState([
     { name: "", title: "", linkedin: "", bio: "", isFounder: true },
   ]);
+  const [whyThisTeam, setWhyThisTeam] = useState("");
 
-  // Step 4
+  // Step 5 — Pitch Materials
   const [videoUrl, setVideoUrl] = useState("");
 
-  // Step 5
+  // Step 6 — Investment Preferences
   const [raiseAmount, setRaiseAmount] = useState("");
   const [previousRaise, setPreviousRaise] = useState("");
   const [previousInvestors, setPreviousInvestors] = useState("");
   const [idealInvestor, setIdealInvestor] = useState("");
+  const [investorTier, setInvestorTier] = useState("");
   const [source, setSource] = useState("");
+  const [acceptAccountability, setAcceptAccountability] = useState(false);
 
   const hasMetric = !!(mrr || users || growth || pipeline || otherMetricValue);
 
@@ -123,7 +144,7 @@ export default function StartupApply() {
   );
 
   const steps = [
-    // Step 1
+    // Step 1 — Company Basics
     <div key="s1">
       <h3
         className="text-[22px] font-normal text-text-primary mb-6"
@@ -202,10 +223,20 @@ export default function StartupApply() {
         <div>
           <FormLabel required>Sector</FormLabel>
           <MultiSelect
-            options={SECTORS}
+            options={VERTICALS}
             selected={sectors}
             onChange={setSectors}
             placeholder="Select sectors"
+          />
+        </div>
+
+        <div>
+          <FormLabel required>Industry Vertical</FormLabel>
+          <SelectInput
+            options={VERTICALS}
+            value={vertical}
+            onChange={setVertical}
+            placeholder="Select your primary vertical"
           />
         </div>
 
@@ -218,11 +249,71 @@ export default function StartupApply() {
             placeholder="Select stage"
           />
         </div>
+
+        <div>
+          <FormLabel required>Full-Time Team Members</FormLabel>
+          <SelectInput
+            options={TEAM_SIZES}
+            value={teamSize}
+            onChange={setTeamSize}
+            placeholder="Select team size"
+          />
+        </div>
       </div>
     </div>,
 
-    // Step 2
+    // Step 2 — Your Vision
     <div key="s2">
+      <h3
+        className="text-[22px] font-normal text-text-primary mb-2"
+        style={{ fontFamily: "'Instrument Serif', serif" }}
+      >
+        Your Vision
+      </h3>
+      <p className="text-text-muted text-[15px] italic mb-6">
+        This is the most important part of your application. Revenue is one
+        factor. Vision, timing, and conviction matter just as much.
+      </p>
+
+      <div className="space-y-5">
+        <div>
+          <FormLabel required>
+            What problem are you solving and why now?
+          </FormLabel>
+          <TextArea
+            value={problemSolving}
+            onChange={(v) => setProblemSolving(v.slice(0, 500))}
+            placeholder="Describe the problem, why it matters, and why the timing is right..."
+            maxLength={500}
+          />
+        </div>
+
+        <div>
+          <FormLabel>What is your unfair advantage?</FormLabel>
+          <TextArea
+            value={unfairAdvantage}
+            onChange={(v) => setUnfairAdvantage(v.slice(0, 300))}
+            placeholder="What do you have that competitors do not? Proprietary tech, unique insight, team background..."
+            maxLength={300}
+            rows={3}
+          />
+        </div>
+
+        <div>
+          <FormLabel>Where do you see this company in 3 years?</FormLabel>
+          <TextArea
+            value={threeYearVision}
+            onChange={(v) => setThreeYearVision(v.slice(0, 300))}
+            placeholder="Describe the scale, impact, and position you are building toward..."
+            maxLength={300}
+            rows={3}
+          />
+        </div>
+      </div>
+    </div>,
+
+    // Step 3 — Traction & Metrics
+    <div key="s3">
       <h3
         className="text-[22px] font-normal text-text-primary mb-2"
         style={{ fontFamily: "'Instrument Serif', serif" }}
@@ -230,8 +321,8 @@ export default function StartupApply() {
         Traction & Metrics
       </h3>
       <p className="text-text-muted text-[15px] italic mb-6">
-        Share at least one traction metric. Honest numbers at any scale are
-        better than no numbers.
+        Share what you have. Pre-revenue? That is fine. We evaluate momentum at
+        every stage.
       </p>
 
       <div className="space-y-5">
@@ -290,6 +381,19 @@ export default function StartupApply() {
           </div>
         </div>
 
+        <div>
+          <FormLabel required>
+            What is your biggest traction milestone to date?
+          </FormLabel>
+          <TextArea
+            value={biggestMilestone}
+            onChange={(v) => setBiggestMilestone(v.slice(0, 200))}
+            placeholder="LOIs signed, waitlist size, key partnerships, press coverage, pilot results..."
+            maxLength={200}
+            rows={3}
+          />
+        </div>
+
         <div
           className={`flex items-center gap-2 text-[13px] transition-colors ${
             hasMetric ? "text-[#059669]" : "text-text-muted"
@@ -316,8 +420,8 @@ export default function StartupApply() {
       </div>
     </div>,
 
-    // Step 3
-    <div key="s3">
+    // Step 4 — Your Team
+    <div key="s4">
       <h3
         className="text-[22px] font-normal text-text-primary mb-6"
         style={{ fontFamily: "'Instrument Serif', serif" }}
@@ -461,11 +565,24 @@ export default function StartupApply() {
             Add Team Member
           </button>
         )}
+
+        <div className="mt-2">
+          <FormLabel required>
+            Why is this the right team to build this?
+          </FormLabel>
+          <TextArea
+            value={whyThisTeam}
+            onChange={(v) => setWhyThisTeam(v.slice(0, 300))}
+            placeholder="What about your backgrounds, skills, and experiences makes this team uniquely positioned..."
+            maxLength={300}
+            rows={3}
+          />
+        </div>
       </div>
     </div>,
 
-    // Step 4
-    <div key="s4">
+    // Step 5 — Pitch Materials
+    <div key="s5">
       <h3
         className="text-[22px] font-normal text-text-primary mb-6"
         style={{ fontFamily: "'Instrument Serif', serif" }}
@@ -484,49 +601,24 @@ export default function StartupApply() {
         </div>
 
         <div>
-          <FormLabel>Video Pitch</FormLabel>
+          <FormLabel required>Video Pitch</FormLabel>
           <p className="text-text-muted text-[13px] mb-3">
-            A 60-90 second video pitch dramatically increases your match rate.
-            We strongly recommend it.
+            Your 60-second video pitch is required. This is how investors
+            evaluate you on Nexus. Record yourself explaining your company as if
+            you had one minute with a potential investor. Loom, YouTube, or Vimeo
+            links accepted.
           </p>
           <TextInput
             value={videoUrl}
             onChange={setVideoUrl}
-            placeholder="Loom or YouTube URL"
+            placeholder="Loom, YouTube, or Vimeo URL"
           />
-        </div>
-
-        <div
-          className="rounded-xl p-4 flex items-start gap-3"
-          style={{
-            background: "rgba(124, 92, 252, 0.05)",
-            border: "1px solid rgba(124, 92, 252, 0.15)",
-          }}
-        >
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#7C5CFC"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="shrink-0 mt-0.5"
-          >
-            <path d="M12 3v1m0 16v1m-7.07-2.93l.71-.71M18.36 5.64l.71-.71M3 12h1m16 0h1M5.64 5.64l-.71-.71m13.43 13.43l-.71-.71" />
-            <circle cx="12" cy="12" r="4" />
-          </svg>
-          <p className="text-[14px] text-accent-violet leading-[1.5]">
-            Startups with a video pitch are 3x more likely to receive investor
-            interest
-          </p>
         </div>
       </div>
     </div>,
 
-    // Step 5
-    <div key="s5">
+    // Step 6 — Investment Preferences
+    <div key="s6">
       <h3
         className="text-[22px] font-normal text-text-primary mb-6"
         style={{ fontFamily: "'Instrument Serif', serif" }}
@@ -577,6 +669,18 @@ export default function StartupApply() {
         </div>
 
         <div>
+          <FormLabel required>
+            What tier of investor are you looking for?
+          </FormLabel>
+          <SelectInput
+            options={INVESTOR_TIERS}
+            value={investorTier}
+            onChange={setInvestorTier}
+            placeholder="Select investor tier"
+          />
+        </div>
+
+        <div>
           <FormLabel required>How did you hear about Nexus?</FormLabel>
           <SelectInput
             options={SOURCES}
@@ -585,12 +689,33 @@ export default function StartupApply() {
             placeholder="Select one"
           />
         </div>
+
+        <div
+          className="rounded-xl p-5"
+          style={{
+            background: "rgba(255, 255, 255, 0.25)",
+            border: "1px solid rgba(0, 0, 0, 0.08)",
+          }}
+        >
+          <Checkbox
+            checked={acceptAccountability}
+            onChange={setAcceptAccountability}
+            label={
+              <span className="text-[14px] leading-[1.6]">
+                I understand that if my startup does not demonstrate meaningful
+                traction within 30 days of acceptance, my profile may be removed
+                from the platform.
+              </span>
+            }
+          />
+        </div>
       </div>
     </div>,
   ];
 
   const stepLabels = [
     "Company Basics",
+    "Your Vision",
     "Traction & Metrics",
     "Your Team",
     "Pitch Materials",
