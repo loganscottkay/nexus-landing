@@ -11,6 +11,7 @@ const navLinks = [
   { label: "For Investors", href: "/#for-investors", scrollId: "for-investors" },
   { label: "For Startups", href: "/#for-startups", scrollId: "for-startups" },
   { label: "Our Story", href: "/story" },
+  { label: "Preview", href: "/#preview", scrollId: "preview" },
 ];
 
 export default function Navbar() {
