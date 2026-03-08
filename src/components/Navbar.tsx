@@ -18,6 +18,7 @@ export default function Navbar() {
   const [applyOpen, setApplyOpen] = useState(false);
   const [logoHovered, setLogoHovered] = useState(false);
   const [moonSettled, setMoonSettled] = useState(false);
+  const [starSettled, setStarSettled] = useState(false);
   const applyRef = useRef<HTMLDivElement>(null);
   const moonRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
@@ -25,8 +26,9 @@ export default function Navbar() {
 
   // Remove will-change after entrance animation completes
   useEffect(() => {
-    const timer = setTimeout(() => setMoonSettled(true), 1300);
-    return () => clearTimeout(timer);
+    const moonTimer = setTimeout(() => setMoonSettled(true), 1300);
+    const starTimer = setTimeout(() => setStarSettled(true), 1600); // 0.3s after moon
+    return () => { clearTimeout(moonTimer); clearTimeout(starTimer); };
   }, []);
 
   useEffect(() => {
@@ -304,6 +306,57 @@ export default function Navbar() {
                   Apply as Startup
                 </Link>
               </div>
+            </div>
+          </div>
+
+          {/* Star */}
+          <div className="relative" style={{ marginLeft: "10px" }}>
+            {!starSettled && (
+              <>
+                <span className="star-sparkle star-sparkle-1" />
+                <span className="star-sparkle star-sparkle-2" />
+                <span className="star-sparkle star-sparkle-3" />
+                <span className="star-sparkle star-sparkle-4" />
+              </>
+            )}
+            <div className={`nav-star${starSettled ? " settled" : ""}`}>
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <defs>
+                  <linearGradient id="star-grad" x1="4" y1="4" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#D4AF37" />
+                    <stop offset="100%" stopColor="#F5D76E" />
+                  </linearGradient>
+                  <radialGradient id="star-highlight" cx="40%" cy="35%" r="35%">
+                    <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.75" />
+                    <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+                  </radialGradient>
+                  <filter id="star-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="0.8" result="blur" />
+                    <feOffset dx="0.4" dy="0.6" result="offset" />
+                    <feFlood floodColor="#8B7020" floodOpacity="0.35" />
+                    <feComposite in2="offset" operator="in" result="shadow" />
+                    <feMerge>
+                      <feMergeNode in="shadow" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+                <polygon
+                  points="14,2 17.2,10.2 26,10.8 19.2,16.6 21.2,25.2 14,20.4 6.8,25.2 8.8,16.6 2,10.8 10.8,10.2"
+                  fill="url(#star-grad)"
+                  filter="url(#star-shadow)"
+                />
+                <polygon
+                  points="14,2 17.2,10.2 26,10.8 19.2,16.6 21.2,25.2 14,20.4 6.8,25.2 8.8,16.6 2,10.8 10.8,10.2"
+                  fill="url(#star-highlight)"
+                />
+              </svg>
             </div>
           </div>
         </div>

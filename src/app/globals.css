@@ -250,6 +250,95 @@ body {
   animation-delay: 0.1s;
 }
 
+/* ---- Gold Star Logo ---- */
+
+/* Roll-in entrance: translateX 100px→0, rotate 360→0 (mirrored from moon) */
+@keyframes star-roll-in {
+  0% {
+    transform: translateX(100px) rotate(360deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.nav-star {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: star-roll-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.4));
+}
+
+/* Continuous glow pulse + slow spin after settling */
+@keyframes star-glow-pulse {
+  0%, 100% { filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.3)); }
+  50% { filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.5)); }
+}
+
+@keyframes star-slow-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.nav-star.settled {
+  opacity: 1;
+  will-change: auto;
+  animation: star-glow-pulse 3s ease-in-out 1.5s infinite, star-slow-spin 20s linear infinite;
+}
+
+/* Star sparkle trail particles (from the right) */
+.star-sparkle {
+  position: absolute;
+  border-radius: 50%;
+  background: #F5D76E;
+  pointer-events: none;
+  animation: sparkle-fade 0.8s ease-out forwards;
+}
+
+.star-sparkle-1 {
+  width: 3px;
+  height: 3px;
+  --sparkle-opacity: 0.5;
+  right: -60px;
+  top: 50%;
+  animation-delay: 0.5s;
+}
+
+.star-sparkle-2 {
+  width: 2px;
+  height: 2px;
+  --sparkle-opacity: 0.35;
+  right: -40px;
+  top: 30%;
+  animation-delay: 0.7s;
+}
+
+.star-sparkle-3 {
+  width: 3px;
+  height: 3px;
+  --sparkle-opacity: 0.2;
+  right: -20px;
+  top: 65%;
+  animation-delay: 0.9s;
+}
+
+.star-sparkle-4 {
+  width: 2px;
+  height: 2px;
+  --sparkle-opacity: 0.4;
+  right: -80px;
+  top: 45%;
+  animation-delay: 0.4s;
+}
+
 /* ---- Nav link hover underline ---- */
 .nav-link {
   position: relative;
