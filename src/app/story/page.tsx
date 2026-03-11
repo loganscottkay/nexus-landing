@@ -1,20 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 
 const ease = [0.25, 0.4, 0.25, 1] as [number, number, number, number];
-
-const cardStyle = {
-  background: "rgba(255, 255, 255, 0.5)",
-  backdropFilter: "blur(24px)",
-  WebkitBackdropFilter: "blur(24px)",
-  border: "1px solid rgba(0, 0, 0, 0.06)",
-  padding: "32px",
-  borderRadius: "16px",
-} as const;
 
 const storySections = [
   {
@@ -38,6 +30,38 @@ const storySections = [
     body: "AI is lowering the barrier to build. More people than ever want in. Urgenc is the door.",
   },
 ];
+
+function HoverCard({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.4, ease, delay }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div
+        className="rounded-2xl"
+        style={{
+          background: "rgba(255, 255, 255, 0.5)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          border: `1px solid rgba(0, 0, 0, ${hovered ? 0.1 : 0.06})`,
+          padding: "32px",
+          borderRadius: "16px",
+          transform: hovered ? "translateY(-3px)" : "translateY(0)",
+          boxShadow: hovered ? "0 8px 30px rgba(0, 0, 0, 0.08)" : "0 0 0 rgba(0, 0, 0, 0)",
+          transition: "all 0.25s ease",
+        }}
+      >
+        {children}
+      </div>
+    </motion.div>
+  );
+}
 
 export default function StoryPage() {
   return (
@@ -86,48 +110,28 @@ export default function StoryPage() {
         <div className="max-w-[700px] mx-auto px-6">
           <div className="flex flex-col" style={{ gap: "20px" }}>
             {storySections.map((section, i) => (
-              <motion.div
-                key={section.title}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.4, ease, delay: i * 0.06 }}
-                className="group"
-              >
-                <div
-                  className="transition-all duration-[250ms]"
-                  style={cardStyle}
+              <HoverCard key={section.title} delay={i * 0.06}>
+                <h2
+                  className="font-normal mb-4"
+                  style={{
+                    fontFamily: "'Instrument Serif', serif",
+                    fontSize: "28px",
+                    color: "#0F172A",
+                  }}
                 >
-                  <h2
-                    className="font-normal mb-4"
-                    style={{
-                      fontFamily: "'Instrument Serif', serif",
-                      fontSize: "28px",
-                      color: "#0F172A",
-                    }}
-                  >
-                    {section.title}
-                  </h2>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontSize: "16px",
-                      color: "#475569",
-                      lineHeight: 1.7,
-                    }}
-                  >
-                    {section.body}
-                  </p>
-                </div>
-
-                <style jsx>{`
-                  .group:hover > div:first-child {
-                    transform: translateY(-3px);
-                    border-color: rgba(0, 0, 0, 0.1);
-                    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-                  }
-                `}</style>
-              </motion.div>
+                  {section.title}
+                </h2>
+                <p
+                  style={{
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                    fontSize: "16px",
+                    color: "#475569",
+                    lineHeight: 1.7,
+                  }}
+                >
+                  {section.body}
+                </p>
+              </HoverCard>
             ))}
           </div>
         </div>
@@ -147,132 +151,94 @@ export default function StoryPage() {
 
           <div className="grid md:grid-cols-2" style={{ gap: "20px" }}>
             {/* Logan */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.4, ease }}
-              className="group"
-            >
-              <div
-                className="transition-all duration-[250ms]"
-                style={cardStyle}
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <Image
-                    src="/images/logan.webp"
-                    alt="Logan Kay"
-                    width={80}
-                    height={80}
-                    className="rounded-full object-cover shrink-0"
-                    style={{ width: "80px", height: "80px" }}
-                  />
-                  <div>
-                    <p
-                      className="font-semibold"
-                      style={{
-                        fontFamily: "var(--font-dm-sans), sans-serif",
-                        fontSize: "20px",
-                        color: "#0F172A",
-                      }}
-                    >
-                      Logan Kay
-                    </p>
-                    <p
-                      style={{
-                        fontFamily: "var(--font-dm-sans), sans-serif",
-                        fontSize: "14px",
-                        color: "#94A3B8",
-                      }}
-                    >
-                      Co-Founder
-                    </p>
-                  </div>
+            <HoverCard>
+              <div className="flex items-center gap-4 mb-4">
+                <Image
+                  src="/images/logan.webp"
+                  alt="Logan Kay"
+                  width={80}
+                  height={80}
+                  className="rounded-full object-cover shrink-0"
+                  style={{ width: "80px", height: "80px" }}
+                />
+                <div>
+                  <p
+                    className="font-semibold"
+                    style={{
+                      fontFamily: "var(--font-dm-sans), sans-serif",
+                      fontSize: "20px",
+                      color: "#0F172A",
+                    }}
+                  >
+                    Logan Kay
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-dm-sans), sans-serif",
+                      fontSize: "14px",
+                      color: "#94A3B8",
+                    }}
+                  >
+                    Co-Founder
+                  </p>
                 </div>
-                <p
-                  style={{
-                    fontFamily: "var(--font-dm-sans), sans-serif",
-                    fontSize: "15px",
-                    color: "#475569",
-                    lineHeight: 1.7,
-                  }}
-                >
-                  Logan brings the technical firepower and operational rigor. He studies Hospitality Administration and Data Science at Boston University and helped spearhead AI implementation across admissions and operations at Harvard Business School. He obsesses over making complex systems simple and accessible. He is the architect behind the Urgenc scoring engine and platform infrastructure, and co-leads go-to-market strategy and product ideation.
-                </p>
               </div>
-
-              <style jsx>{`
-                .group:hover > div:first-child {
-                  transform: translateY(-3px);
-                  border-color: rgba(0, 0, 0, 0.1);
-                  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-                }
-              `}</style>
-            </motion.div>
+              <p
+                style={{
+                  fontFamily: "var(--font-dm-sans), sans-serif",
+                  fontSize: "15px",
+                  color: "#475569",
+                  lineHeight: 1.7,
+                }}
+              >
+                Logan brings the technical firepower and operational rigor. He studies Hospitality Administration and Data Science at Boston University and helped spearhead AI implementation across admissions and operations at Harvard Business School. He obsesses over making complex systems simple and accessible. He is the architect behind the Urgenc scoring engine and platform infrastructure, and co-leads go-to-market strategy and product ideation.
+              </p>
+            </HoverCard>
 
             {/* Ben */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.4, ease, delay: 0.06 }}
-              className="group"
-            >
-              <div
-                className="transition-all duration-[250ms]"
-                style={cardStyle}
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <Image
-                    src="/images/ben.jpeg"
-                    alt="Ben Matiash"
-                    width={80}
-                    height={80}
-                    className="rounded-full object-cover shrink-0"
-                    style={{ width: "80px", height: "80px" }}
-                  />
-                  <div>
-                    <p
-                      className="font-semibold"
-                      style={{
-                        fontFamily: "var(--font-dm-sans), sans-serif",
-                        fontSize: "20px",
-                        color: "#0F172A",
-                      }}
-                    >
-                      Ben Matiash
-                    </p>
-                    <p
-                      style={{
-                        fontFamily: "var(--font-dm-sans), sans-serif",
-                        fontSize: "14px",
-                        color: "#94A3B8",
-                      }}
-                    >
-                      Co-Founder
-                    </p>
-                  </div>
+            <HoverCard delay={0.06}>
+              <div className="flex items-center gap-4 mb-4">
+                <Image
+                  src="/images/ben.jpeg"
+                  alt="Ben Matiash"
+                  width={80}
+                  height={80}
+                  className="rounded-full object-cover shrink-0"
+                  style={{ width: "80px", height: "80px" }}
+                />
+                <div>
+                  <p
+                    className="font-semibold"
+                    style={{
+                      fontFamily: "var(--font-dm-sans), sans-serif",
+                      fontSize: "20px",
+                      color: "#0F172A",
+                    }}
+                  >
+                    Ben Matiash
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-dm-sans), sans-serif",
+                      fontSize: "14px",
+                      color: "#94A3B8",
+                    }}
+                  >
+                    Co-Founder
+                  </p>
                 </div>
-                <p
-                  style={{
-                    fontFamily: "var(--font-dm-sans), sans-serif",
-                    fontSize: "15px",
-                    color: "#475569",
-                    lineHeight: 1.7,
-                  }}
-                >
-                  Ben brings the financial acumen and investor perspective. His experience in institutional equity at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became Urgenc: that the people with ideas and the people who want to back them have no efficient way to find each other. He leads investor relations, scoring methodology, and go-to-market strategy at Urgenc.
-                </p>
               </div>
-
-              <style jsx>{`
-                .group:hover > div:first-child {
-                  transform: translateY(-3px);
-                  border-color: rgba(0, 0, 0, 0.1);
-                  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-                }
-              `}</style>
-            </motion.div>
+              <p
+                style={{
+                  fontFamily: "var(--font-dm-sans), sans-serif",
+                  fontSize: "15px",
+                  color: "#475569",
+                  lineHeight: 1.7,
+                }}
+              >
+                Ben brings the financial acumen and investor perspective. His experience in institutional equity at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became Urgenc: that the people with ideas and the people who want to back them have no efficient way to find each other. He leads investor relations, scoring methodology, and go-to-market strategy at Urgenc.
+              </p>
+            </HoverCard>
           </div>
         </div>
 
