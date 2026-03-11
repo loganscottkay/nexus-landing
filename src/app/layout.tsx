@@ -9,7 +9,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Nexus | Where Capital Meets Vision",
+  title: "Urgenc | Where Capital Meets Vision",
   description:
     "A curated marketplace connecting vetted startups with accredited investors through intelligent matching.",
 };

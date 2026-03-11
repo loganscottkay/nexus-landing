@@ -47,7 +47,7 @@ export default function LoginPage() {
               Sign In
             </h1>
             <p className="text-text-muted text-[15px] text-center mb-8">
-              Access your Nexus account
+              Access your Urgenc account
             </p>
 
             <div className="space-y-4">
@@ -98,7 +98,7 @@ export default function LoginPage() {
           </div>
 
           <p className="text-text-muted text-[14px] text-center mt-6">
-            Account access will be available once Nexus launches.
+            Account access will be available once Urgenc launches.
           </p>
         </motion.div>
       </div>

@@ -160,7 +160,7 @@ function Confirmation({ email }: { email: string }) {
         Application Received
       </h2>
       <p className="text-text-secondary text-[16px] leading-[1.7] mb-8 max-w-md mx-auto">
-        Thank you for applying to Nexus. Our review team will evaluate your
+        Thank you for applying to Urgenc. Our review team will evaluate your
         application within 48 hours. You will receive an email at{" "}
         <span className="font-medium text-text-primary">{email || "your address"}</span>{" "}
         with our decision.

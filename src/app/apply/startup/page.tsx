@@ -604,7 +604,7 @@ export default function StartupApply() {
           <FormLabel required>Video Pitch</FormLabel>
           <p className="text-text-muted text-[13px] mb-3">
             Your 60-second video pitch is required. This is how investors
-            evaluate you on Nexus. Record yourself explaining your company as if
+            evaluate you on Urgenc. Record yourself explaining your company as if
             you had one minute with a potential investor. Loom, YouTube, or Vimeo
             links accepted.
           </p>
@@ -681,7 +681,7 @@ export default function StartupApply() {
         </div>
 
         <div>
-          <FormLabel required>How did you hear about Nexus?</FormLabel>
+          <FormLabel required>How did you hear about Urgenc?</FormLabel>
           <SelectInput
             options={SOURCES}
             value={source}

@@ -18,61 +18,65 @@ const stagger = {
 
 const cards = [
   {
+    num: 1,
     title: "Founding Team",
     items: [
-      "At least one full-time founder committed to the venture",
-      "Verifiable LinkedIn profiles for all founders",
+      "At least one full-time committed founder",
+      "Verifiable LinkedIn profiles",
       "Relevant experience or domain knowledge",
-      "Student founders welcome with proof of enrollment",
+      "Student founders welcome with enrollment proof",
     ],
-    why: "Strong team with no revenue outranks a weak team with traction.",
+    why: "We bet on people first.",
   },
   {
+    num: 2,
     title: "The Idea & Vision",
     items: [
-      "Clearly defined problem and target customer",
+      "Clearly defined problem and customer",
       "Why now is the right time",
-      "What makes your approach different or hard to replicate",
+      "What makes your approach hard to replicate",
       "Realistic 3-year vision",
     ],
-    why: "Our scoring weights vision and timing heavily. Pre-revenue founders with exceptional clarity get accepted.",
+    why: "Clarity of thought beats a perfect business plan.",
   },
   {
+    num: 3,
     title: "Required Materials",
     items: [
-      "Pitch deck (PDF, content matters more than design)",
-      "60-second video elevator pitch (required, Loom or similar)",
-      "Registered legal entity OR commit to incorporating within 30 days",
+      "Pitch deck (PDF, any stage of polish)",
+      "60-second video pitch (required)",
+      "Registered entity or commit to incorporating in 30 days",
     ],
-    why: "The video pitch is how investors evaluate you. Most important part of your application.",
+    why: "The video pitch is how investors evaluate you.",
   },
   {
+    num: 4,
     title: "Traction (Flexible)",
     items: [
-      "Evaluated relative to your stage. Pre-revenue welcome.",
-      "Pre-revenue: LOIs, waitlist signups, pilots, partnerships, press, grants",
-      "Revenue stage: MRR, growth rate, users, pipeline",
+      "Pre-revenue? Show LOIs, waitlists, pilots, press, grants",
+      "Revenue stage? Share MRR, growth, users, pipeline",
     ],
-    why: "500 waitlist signups with a plan scores higher than $10K MRR with no strategy.",
+    why: "500 waitlist signups with a plan beats $10K MRR without one.",
   },
   {
+    num: 5,
     title: "Accountability Agreement",
     items: [
       "Update metrics every 14 days",
       "Respond to investor interest within 72 hours",
       "No traction after 30 days may mean removal",
-      "Attend scheduled calls or give 24hr cancellation notice",
+      "Attend calls or give 24hr cancellation notice",
     ],
-    why: "This keeps Nexus elite. Every startup here is active and responsive.",
+    why: "This is what keeps Urgenc elite.",
   },
   {
+    num: 6,
     title: "What Gets You Rejected",
     items: [
       "No deck or video submitted",
-      "Unverifiable identity or fake profiles",
+      "Unverifiable identity",
       "No clear problem or customer",
-      "Refusing accountability agreement",
-      "Fraudulent claims about traction or team",
+      "Fraudulent claims",
     ],
     why: null,
     isRejection: true,
@@ -115,62 +119,82 @@ export default function StartupQualifications() {
             We accept less than 15% of applicants. Here is what we look for.
           </motion.p>
 
-          {/* Cards */}
-          <div className="flex flex-col gap-4">
-            {cards.map((card) => (
+          {/* Cards with progress indicator */}
+          <div className="relative">
+            {/* Vertical progress line */}
+            <div className="absolute left-4 md:left-6 top-0 bottom-0 w-[2px] hidden md:block" style={{ background: "rgba(0,0,0,0.06)" }}>
               <motion.div
-                key={card.title}
-                variants={fadeUp}
-                transition={{ duration: 0.5, ease }}
-              >
-                <div
-                  className="glow-card-wrapper"
+                className="w-full rounded-full"
+                style={{ background: "linear-gradient(180deg, #4A6CF7, #7C5CFC)", transformOrigin: "top" }}
+                initial={{ height: "0%" }}
+                whileInView={{ height: "100%" }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 2, ease: [0.25, 0.4, 0.25, 1] }}
+              />
+            </div>
+
+            <div className="flex flex-col gap-4">
+              {cards.map((card, i) => (
+                <motion.div
+                  key={card.title}
+                  variants={fadeUp}
+                  transition={{ duration: 0.4, ease, delay: i * 0.08 }}
+                  className="relative md:pl-16"
                 >
-                  <div
-                    className="glass p-8 relative overflow-hidden"
-                    style={
-                      card.isRejection
-                        ? {
-                            background: "rgba(239, 68, 68, 0.03)",
-                            border: "1px solid rgba(239, 68, 68, 0.1)",
-                          }
-                        : undefined
-                    }
-                  >
-                    <h3
-                      className="text-[20px] font-semibold text-text-primary mb-4"
-                      style={card.isRejection ? { color: "#DC2626" } : undefined}
+                  {/* Numbered circle on the line */}
+                  {card.num && (
+                    <div className="absolute left-0 md:left-1.5 top-8 w-7 h-7 rounded-full hidden md:flex items-center justify-center text-[11px] font-bold text-white z-10" style={{ background: card.isRejection ? "#EF4444" : "linear-gradient(135deg, #4A6CF7, #7C5CFC)", boxShadow: `0 0 12px ${card.isRejection ? "rgba(239,68,68,0.3)" : "rgba(74, 108, 247, 0.3)"}` }}>
+                      {card.num}
+                    </div>
+                  )}
+
+                  <div className="glow-card-wrapper">
+                    <div
+                      className="glass p-8 relative overflow-hidden"
+                      style={
+                        card.isRejection
+                          ? {
+                              background: "rgba(239, 68, 68, 0.03)",
+                              border: "1px solid rgba(239, 68, 68, 0.1)",
+                            }
+                          : undefined
+                      }
                     >
-                      {card.title}
-                    </h3>
+                      <h3
+                        className="text-[20px] font-semibold text-text-primary mb-2"
+                        style={card.isRejection ? { color: "#DC2626" } : undefined}
+                      >
+                        {card.title}
+                      </h3>
 
-                    <ul className="space-y-2.5 mb-4">
-                      {card.items.map((item) => (
-                        <li key={item} className="flex items-start gap-3">
-                          <div
-                            className="w-1.5 h-1.5 rounded-full mt-2.5 shrink-0"
-                            style={{
-                              background: card.isRejection
-                                ? "#EF4444"
-                                : "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                            }}
-                          />
-                          <span className="text-text-secondary text-[15px] leading-[1.7]">
-                            {item}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+                      {card.why && (
+                        <p className="text-text-muted text-[14px] italic mb-4">
+                          {card.why}
+                        </p>
+                      )}
 
-                    {card.why && (
-                      <p className="text-accent-blue text-[14px] italic leading-[1.6]">
-                        Why: {card.why}
-                      </p>
-                    )}
+                      <ul className="space-y-2">
+                        {card.items.map((item) => (
+                          <li key={item} className="flex items-start gap-3">
+                            <div
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{
+                                background: card.isRejection
+                                  ? "#EF4444"
+                                  : "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                              }}
+                            />
+                            <span className="text-text-secondary text-[15px] leading-[1.6]">
+                              {item}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
 
           {/* CTA */}

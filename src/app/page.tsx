@@ -187,19 +187,19 @@ const howItWorksCards = [
     num: "01",
     icon: <ShieldIcon />,
     title: "Apply & Get Scored",
-    desc: "Submit your pitch deck and 60-second video. Our proprietary scoring system, built with faculty from HBS, BU, and Northeastern, evaluates vision, team, market, and momentum. Less than 15% get in.",
+    desc: "Pitch deck. 60-second video. Scored on vision, team, market, and momentum. Less than 15% get in.",
   },
   {
     num: "02",
     icon: <SparkleIcon />,
     title: "Investors Set Their Feed",
-    desc: "Investors choose which industries, stages, and startup types they want to see. Your feed is personalized to your interests. You only see startups that match your criteria. No noise.",
+    desc: "Investors pick their industries and investment range. Your feed only shows startups that fit. No noise.",
   },
   {
     num: "03",
     icon: <PhoneIcon />,
     title: "Move Fast or Move On",
-    desc: "72 hours to take the call. 30 days to show traction. No-shows and ghosters get removed. Every conversation on Nexus is between two serious people.",
+    desc: "72 hours to take the call. 30 days to show traction. Ghost and you are gone. Every conversation on Urgenc is between two serious people.",
   },
 ];
 
@@ -999,7 +999,7 @@ const matchingSteps = [
   {
     num: "01",
     title: "Founders Pitch",
-    desc: "Record a 60-second video pitch and submit your deck. Our scoring system evaluates you on vision, team, market, and momentum.",
+    desc: "Record a 60-second pitch. Submit your deck. Get scored by our system.",
     color: "#4A6CF7",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -1011,7 +1011,7 @@ const matchingSteps = [
   {
     num: "02",
     title: "Investors Set Filters",
-    desc: "Choose your industry interests, investment range, and what kind of founders excite you. Your feed only shows startups that match your criteria.",
+    desc: "Pick your sectors, stage, and check size. See only what fits your thesis.",
     color: "#7C5CFC",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -1030,7 +1030,7 @@ const matchingSteps = [
   {
     num: "03",
     title: "Swipe & Match",
-    desc: "Investors browse their personalized feed daily. When an investor expresses interest and a founder accepts, it is a match.",
+    desc: "Browse your daily feed. Express interest. When a founder accepts, you are matched.",
     color: "#D4AF37",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -1041,7 +1041,7 @@ const matchingSteps = [
   {
     num: "04",
     title: "Chemistry Call",
-    desc: "Every match leads to a structured 20-minute video call within 72 hours. No ghosting. No endless back-and-forth. Just a real conversation.",
+    desc: "Every match gets a structured 20-minute video call within 72 hours. No flaking.",
     color: "#059669",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -1424,7 +1424,7 @@ export default function Home() {
             className="text-center max-w-[700px] text-[17px] leading-[1.7] mb-12"
             style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
-            Before Nexus opens to the public, we are hand-selecting 100 startups and 50 investors to be our founding members. This is for people who want to be first, not people who want to wait and see. Founding members get permanent benefits that will never be offered again.
+            We are hand-selecting 100 startups and 50 investors as founding members. First in, best perks. These benefits disappear at public launch.
           </motion.p>
 
           {/* Benefit cards */}
@@ -1442,7 +1442,7 @@ export default function Home() {
                     <rect x="2" y="12" width="20" height="2" rx="1" />
                   </svg>
                   <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Early Access</h3>
-                  <p className="text-[15px] text-text-muted leading-[1.6]">Founding members get access to the platform before it opens to the public. Start building your profile and network ahead of everyone else.</p>
+                  <p className="text-[15px] text-text-muted leading-[1.6]">Platform access before anyone else. Build your profile and start matching first.</p>
                 </div>
               </div>
             </motion.div>
@@ -1454,7 +1454,7 @@ export default function Home() {
                     <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                   </svg>
                   <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Discounted Premium</h3>
-                  <p className="text-[15px] text-text-muted leading-[1.6]">Founding members lock in a permanently discounted rate on premium features. As pricing scales, yours stays low.</p>
+                  <p className="text-[15px] text-text-muted leading-[1.6]">Lock in the lowest rate on premium features. Forever.</p>
                 </div>
               </div>
             </motion.div>
@@ -1466,7 +1466,7 @@ export default function Home() {
                     <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
                   </svg>
                   <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Direct Founder Access</h3>
-                  <p className="text-[15px] text-text-muted leading-[1.6]">A direct line to Logan and Ben. Share feedback, suggest features, and help shape the direction of Nexus as it grows.</p>
+                  <p className="text-[15px] text-text-muted leading-[1.6]">Direct line to Logan and Ben. Shape the product with us.</p>
                 </div>
               </div>
             </motion.div>
@@ -1486,13 +1486,13 @@ export default function Home() {
             <div>
               <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Founders:</p>
               <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                You have an idea, a team, or early traction. You want investors who actually get what you are building. You are willing to put yourself on camera for 60 seconds and be held accountable. Apply and get scored by our system. If you make the cut, you are in the founding class.
+                You have an idea and you are willing to pitch it on camera. Apply, get scored, and if you make the cut, you are in.
               </p>
             </div>
             <div>
               <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Investors:</p>
               <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                You have been watching the startup wave and want in. Maybe it is your first investment. Maybe your tenth. The amount does not matter as much as the conviction. You will be matched with startups scored and vetted by our system. Show up, take the calls, and back what excites you.
+                You want in on the startup wave. The amount does not matter. Show up, take the calls, and back what excites you.
               </p>
             </div>
           </motion.div>
@@ -1542,8 +1542,7 @@ export default function Home() {
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
           >
-            <div className="glow-card-wrapper h-full">
-              <div className="glass p-8 md:p-10 h-full flex flex-col">
+            <div className="h-full rounded-2xl p-8 md:p-10 flex flex-col" style={{ background: "rgba(255, 255, 255, 0.45)", backdropFilter: "blur(40px)", WebkitBackdropFilter: "blur(40px)", border: "1px solid rgba(0, 0, 0, 0.06)" }}>
                 <h3
                   className="text-[28px] md:text-[32px] font-normal mb-8 text-text-primary"
                   style={{ fontFamily: "'Instrument Serif', serif" }}
@@ -1552,11 +1551,11 @@ export default function Home() {
                 </h3>
                 <ul className="flex flex-col gap-4 flex-1">
                   {[
-                    "Founding cohort members get lifetime free access. Apply now before spots close.",
-                    "First time investing in a startup? Nexus is literally built for you. No experience required.",
-                    "Every founder has been scored on vision, team, market, and momentum by our proprietary system.",
-                    "You browse. You match. You take a 20-minute chemistry call. That is the whole process.",
-                    "Everyone is talking about startups and AI. This is how you actually get involved instead of watching from the sidelines.",
+                    "Founding cohort = lifetime free access. Apply before spots close.",
+                    "First time investing? Good. Urgenc is built for you.",
+                    "Every founder scored on vision, team, market, and momentum.",
+                    "Browse. Match. 20-minute call. That is the whole process.",
+                    "Everyone talks about startups. This is how you actually get involved.",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-accent-blue mt-2 shrink-0" />
@@ -1568,11 +1567,11 @@ export default function Home() {
                 </ul>
                 <Link
                   href="/apply/investor"
-                  className="btn-primary btn-pulse-target px-6 py-3.5 text-[15px] font-medium mt-8 text-center"
+                  className="inline-flex items-center justify-center w-full px-6 py-3.5 text-[15px] font-semibold text-white rounded-full mt-8"
+                  style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
                 >
                   Apply as Investor
                 </Link>
-              </div>
             </div>
           </motion.div>
 
@@ -1581,8 +1580,7 @@ export default function Home() {
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
           >
-            <div className="glow-card-wrapper h-full">
-              <div className="glass p-8 md:p-10 h-full flex flex-col">
+            <div className="h-full rounded-2xl p-8 md:p-10 flex flex-col" style={{ background: "rgba(255, 255, 255, 0.45)", backdropFilter: "blur(40px)", WebkitBackdropFilter: "blur(40px)", border: "1px solid rgba(0, 0, 0, 0.06)" }}>
                 <h3
                   className="text-[28px] md:text-[32px] font-normal mb-8 text-text-primary"
                   style={{ fontFamily: "'Instrument Serif', serif" }}
@@ -1591,11 +1589,11 @@ export default function Home() {
                 </h3>
                 <ul className="flex flex-col gap-4 flex-1">
                   {[
-                    "Founding startup members get lifetime benefits and first access to the investor network.",
-                    "Your 60-second video pitch and vision matter more than your revenue. Pre-revenue founders welcome.",
-                    "Stop spending 6 months fundraising. Get matched with interested investors in days.",
-                    "30 days to show traction or you get cycled out. This keeps you accountable and the platform elite.",
-                    "Less than 15% of startups get accepted. Being on Nexus is a credibility signal in itself.",
+                    "Founding members get first access to the investor network.",
+                    "Your video pitch matters more than your revenue. Pre-revenue welcome.",
+                    "Get matched with investors in days, not 6 months.",
+                    "No traction in 30 days? You get cycled out. Stay sharp.",
+                    "Less than 15% get in. Being on Urgenc is the credibility signal.",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-accent-violet mt-2 shrink-0" />
@@ -1607,11 +1605,11 @@ export default function Home() {
                 </ul>
                 <Link
                   href="/apply/startup"
-                  className="btn-primary btn-pulse-target px-6 py-3.5 text-[15px] font-medium mt-8 text-center"
+                  className="inline-flex items-center justify-center w-full px-6 py-3.5 text-[15px] font-semibold text-white rounded-full mt-8"
+                  style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
                 >
                   Apply as Startup
                 </Link>
-              </div>
             </div>
           </motion.div>
         </motion.div>
@@ -1640,7 +1638,7 @@ export default function Home() {
             className="text-center max-w-[680px] text-[17px] leading-[1.8] mb-12"
             style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
-            Best friends since high school. Different paths through Boston. Same frustration: the startup world felt impossible to break into. So we built the door. Urgenc exists because we believe being a founder or investor should be attainable for anyone willing to do the work.
+            Best friends since high school. Different paths through Boston. Same frustration: the startup world felt impossible to break into. So we built the door.
           </motion.p>
 
           {/* Founder cards */}
@@ -1728,7 +1726,7 @@ export default function Home() {
             className="text-[36px] font-normal text-center mb-4"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
-            See What Nexus Looks Like Inside
+            See What Urgenc Looks Like Inside
           </motion.h2>
           <motion.p
             variants={fadeUp}
@@ -1967,7 +1965,7 @@ export default function Home() {
               className="text-[17px] md:text-[18px] mb-10 max-w-xl leading-[1.7]"
               style={{ color: "#475569" }}
             >
-              The founding cohort is filling up. Founding members get lifetime free access, priority matching, and a voice in building the platform. Whether you want to invest in startups or raise from investors who actually care, the door is open. For now.
+              Founding members get early access, discounted premium, and a direct line to us. Spots are limited.
             </motion.p>
 
             <motion.div
@@ -2019,10 +2017,10 @@ export default function Home() {
               className="text-[14px] font-bold tracking-[0.3em] text-text-primary"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
-              NEXUS
+              URGENC
             </a>
             <p className="text-text-muted/60 text-[13px]">
-              &copy; 2026 Nexus. All rights reserved.
+              &copy; 2026 Urgenc. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
               <a

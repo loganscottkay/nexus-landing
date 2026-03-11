@@ -46,23 +46,23 @@ const ArrowRight = ({ className }: { className?: string }) => (
 const storySections = [
   {
     title: "Where It Started",
-    body: "We have been best friends since high school. After graduation we both landed in Boston but took completely different paths. Logan went to BU for Data Science and ended up leading AI implementation at Harvard Business School. Ben went to Northeastern for Finance and cut his teeth in institutional equity at Morgan Stanley. Different worlds, but every weekend we would meet up and brainstorm startup ideas.",
+    body: "Best friends since high school. Logan studied Hospitality and Data Science at BU. Ben studied Finance and Marketing at Northeastern. For years we brainstormed startup ideas every weekend and kept hitting the same wall.",
   },
   {
-    title: "The Problem We Kept Hitting",
-    body: "Every time we tried to break into the startup world, we hit the same walls. The VC ecosystem felt like a closed club. Cold emails disappeared into the void. We had ambition, skills, and capital to deploy but no way to connect with the founders actually building things. We knew we were not alone.",
+    title: "The Problem",
+    body: "The startup world felt like a closed club. Cold emails went nowhere. Networking events were useless. And everyone around us felt the same FOMO.",
   },
   {
     title: "The Moment It Clicked",
-    body: "One night Ben said something that changed everything: the problem is not that we can not think of an idea. The problem is that the people with ideas and the people who want to back them literally can not find each other. Founders spend months fundraising instead of building. So we stopped looking for the perfect idea and started building the infrastructure to connect ideas with the people who believe in them.",
+    body: "One night Ben said it: the problem is not finding an idea. The problem is that founders and investors literally cannot find each other. That was the moment.",
   },
   {
-    title: "What Nexus Is",
-    body: "Nexus is a matching platform. Think of it like a dating app, but for startups and investors. Founders submit their pitch deck and a 60-second video elevator pitch, scored through our proprietary evaluation system built with faculty from Harvard Business School, BU, and Northeastern. When interest is mutual, we schedule a structured 20-minute chemistry call. No cold emails, no gatekeeping, and everyone is held accountable.",
+    title: "What Urgenc Is",
+    body: "A matching app. Founders pitch. Investors swipe. Matches lead to real calls. Think Tinder but for startup deals.",
   },
   {
     title: "Why Now",
-    body: "There has never been a better time to start a company or invest in one. AI is lowering the barrier to building, remote work means talent is everywhere, and a massive wave of people want to participate in the startup economy but feel locked out. Nexus is the door. We are starting with investments up to $25K matched with early-stage founders.",
+    body: "AI is lowering the barrier to build. More people than ever want in. Urgenc is the door.",
   },
 ];
 
@@ -112,32 +112,44 @@ export default function StoryPage() {
           </motion.p>
         </motion.div>
 
-        {/* Story sections */}
-        <div className="max-w-[800px] mx-auto px-6 flex flex-col gap-10">
-          {storySections.map((section, i) => (
-            <motion.div
-              key={section.title}
-              variants={sectionFadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportConfig}
-              transition={{ duration: 0.6, ease, delay: i * 0.05 }}
-              className="glass p-8 md:p-10"
-            >
-              <h2
-                className="text-[28px] font-normal mb-5"
-                style={{ fontFamily: "'Instrument Serif', serif" }}
+        {/* Story sections with timeline */}
+        <div className="max-w-[800px] mx-auto px-6 relative">
+          {/* Vertical timeline line */}
+          <div className="absolute left-6 md:left-[24px] top-0 bottom-0 w-[2px] hidden md:block" style={{ background: "linear-gradient(180deg, #4A6CF7, #7C5CFC, #4A6CF7)" }} />
+
+          <div className="flex flex-col gap-10">
+            {storySections.map((section, i) => (
+              <motion.div
+                key={section.title}
+                variants={sectionFadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportConfig}
+                transition={{ duration: 0.6, ease, delay: i * 0.05 }}
+                className="relative md:pl-12"
               >
-                {section.title}
-              </h2>
-              <p
-                className="text-[15px] leading-[1.85]"
-                style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
-              >
-                {section.body}
-              </p>
-            </motion.div>
-          ))}
+                {/* Timeline dot */}
+                <div className="absolute left-0 top-8 w-4 h-4 rounded-full hidden md:flex items-center justify-center" style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", boxShadow: "0 0 12px rgba(74, 108, 247, 0.4)" }}>
+                  <div className="w-2 h-2 rounded-full bg-white" />
+                </div>
+
+                <div className="glass p-8 md:p-10">
+                  <h2
+                    className="text-[28px] font-normal mb-5"
+                    style={{ fontFamily: "'Instrument Serif', serif" }}
+                  >
+                    {section.title}
+                  </h2>
+                  <p
+                    className="text-[15px] leading-[1.85]"
+                    style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                  >
+                    {section.body}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         {/* Meet the Founders */}
@@ -185,7 +197,7 @@ export default function StoryPage() {
                 className="text-[15px] leading-[1.8]"
                 style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
-                Logan brings the technical firepower and operational rigor. He studies Hospitality Administration and Data Science at Boston University and helped spearhead AI implementation across admissions and operations at Harvard Business School. He obsesses over making complex systems simple and accessible. He is the architect behind the Nexus scoring engine and platform infrastructure, and co-leads go-to-market strategy and product ideation.
+                Logan brings the technical firepower and operational rigor. He studies Hospitality Administration and Data Science at Boston University and helped spearhead AI implementation across admissions and operations at Harvard Business School. He obsesses over making complex systems simple and accessible. He is the architect behind the Urgenc scoring engine and platform infrastructure, and co-leads go-to-market strategy and product ideation.
               </p>
             </motion.div>
 
@@ -216,7 +228,7 @@ export default function StoryPage() {
                 className="text-[15px] leading-[1.8]"
                 style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
-                Ben brings the financial acumen and investor perspective. His experience in institutional equity at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became Nexus: that the people with ideas and the people who want to back them have no efficient way to find each other. He leads investor relations, scoring methodology, and go-to-market strategy at Nexus.
+                Ben brings the financial acumen and investor perspective. His experience in institutional equity at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became Urgenc: that the people with ideas and the people who want to back them have no efficient way to find each other. He leads investor relations, scoring methodology, and go-to-market strategy at Urgenc.
               </p>
             </motion.div>
           </div>

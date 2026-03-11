@@ -38,7 +38,7 @@ const conversations: Conversation[] = [
       {
         id: 1,
         sender: "them",
-        text: "Hi Alex! I came across Luminary AI on Nexus and your contract analysis platform is exactly what we have been looking for in our portfolio. Would love to learn more.",
+        text: "Hi Alex! I came across Luminary AI on Urgenc and your contract analysis platform is exactly what we have been looking for in our portfolio. Would love to learn more.",
         time: "Mon 10:30 AM",
       },
       {
@@ -128,7 +128,7 @@ const conversations: Conversation[] = [
       {
         id: 1,
         sender: "them",
-        text: "Hey Alex, saw your profile on Nexus. The contract analysis space is interesting. What makes Luminary different from DocuSign's AI features?",
+        text: "Hey Alex, saw your profile on Urgenc. The contract analysis space is interesting. What makes Luminary different from DocuSign's AI features?",
         time: "Mar 3",
       },
       {

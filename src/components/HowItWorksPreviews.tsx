@@ -157,7 +157,7 @@ export function ScoringPreview({ active }: { active: boolean }) {
       {/* Overall score */}
       <div className="mt-auto pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="flex items-center justify-between">
-          <span className="text-[13px] text-white/50">Overall Nexus Score</span>
+          <span className="text-[13px] text-white/50">Overall Urgenc Score</span>
           <div className="flex items-center gap-3">
             <span className="text-[28px] font-bold text-white tabular-nums">
               {active ? overallScore : 0}<span className="text-[16px] text-white/40">/100</span>
@@ -614,7 +614,7 @@ export function AccountabilityPreview({ active }: { active: boolean }) {
 export function DefaultPreview() {
   return (
     <div className="h-full flex flex-col items-center justify-center">
-      {/* Nexus logo mark */}
+      {/* Urgenc logo mark */}
       <motion.div
         animate={{ opacity: [0.3, 0.6, 0.3] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}

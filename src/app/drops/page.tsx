@@ -527,7 +527,7 @@ function StartupCard({
           {/* ═══ NEXUS SCORE ═══ */}
           <div className="rounded-xl p-4 mb-4" style={{ background: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.5)" }}>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[14px] font-semibold text-text-primary">Nexus Score: {startup.nexusScore}/100</span>
+              <span className="text-[14px] font-semibold text-text-primary">Urgenc Score: {startup.nexusScore}/100</span>
               <span className="text-[12px] font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: `${scoreColor}12`, color: scoreColor }}>
                 {startup.nexusScore >= 85 ? "Strong" : startup.nexusScore >= 75 ? "Promising" : "Early"}
               </span>
