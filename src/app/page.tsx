@@ -514,84 +514,95 @@ function ArrowRight({ className = "" }: { className?: string }) {
 
 function FounderPitchCard() {
   const [scoreWidth, setScoreWidth] = useState(0);
-  const [showScore, setShowScore] = useState(false);
+  const [scoreNum, setScoreNum] = useState(0);
   const [showAccepted, setShowAccepted] = useState(false);
   const [cardVisible, setCardVisible] = useState(false);
 
   useEffect(() => {
-    // Card appears, then score bar animates
     const t1 = setTimeout(() => setCardVisible(true), 200);
-    const t2 = setTimeout(() => setScoreWidth(87), 1200); // 1s after card appears
-    const t3 = setTimeout(() => setShowScore(true), 2700); // after 1.5s fill
-    const t4 = setTimeout(() => setShowAccepted(true), 3200); // after score appears
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+    // Start score bar animation 1s after card appears
+    const t2 = setTimeout(() => {
+      setScoreWidth(87);
+      // Count up the score number over 1.5s
+      let start = 0;
+      const end = 87;
+      const duration = 1500;
+      const stepTime = duration / end;
+      const counter = setInterval(() => {
+        start++;
+        setScoreNum(start);
+        if (start >= end) clearInterval(counter);
+      }, stepTime);
+    }, 1200);
+    const t3 = setTimeout(() => setShowAccepted(true), 3200);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, []);
 
   return (
     <div
-      className="w-[320px] rounded-2xl p-6 dashboard-card relative overflow-hidden"
+      className="w-[300px] h-[380px] rounded-2xl p-5 dashboard-card relative overflow-hidden flex flex-col"
       style={{
-        background: "rgba(10, 10, 15, 0.85)",
-        backdropFilter: "blur(24px)",
-        border: "1px solid rgba(74, 108, 247, 0.25)",
-        boxShadow: "0 0 40px rgba(74, 108, 247, 0.06), inset 0 1px 0 rgba(255,255,255,0.04)",
+        background: "rgba(15, 20, 40, 0.75)",
+        backdropFilter: "blur(40px)",
+        border: "none",
         opacity: cardVisible ? 1 : 0,
         transition: "opacity 0.5s ease",
       }}
     >
-      {/* Inner depth gradient */}
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.3))" }} />
-
-      <div className="relative">
+      <div className="relative flex flex-col justify-between h-full">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <p className="text-white/60 text-[11px] tracking-[2px] uppercase font-medium">Founder Pitch</p>
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-white/50 text-[11px] tracking-[3px] uppercase font-medium">Founder Pitch</p>
           <div className="flex items-center gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-[#ef4444] rec-dot-pulse" />
-            <span className="text-[11px] text-[#ef4444]/80">REC</span>
+            <span className="text-[11px] text-[#ef4444]/80 font-medium">REC</span>
           </div>
         </div>
 
-        {/* Play button */}
-        <div className="flex flex-col items-center mb-5">
+        {/* Avatar + Name */}
+        <div className="flex items-center gap-3 mb-4">
           <div
-            className="w-[80px] h-[80px] rounded-full flex items-center justify-center cursor-default"
+            className="w-[48px] h-[48px] rounded-full flex items-center justify-center flex-shrink-0"
             style={{
-              background: "rgba(255, 255, 255, 0.15)",
-              backdropFilter: "blur(12px)",
-              border: "1px solid rgba(255,255,255,0.15)",
+              background: "rgba(15, 20, 40, 0.9)",
+              border: "2px solid transparent",
+              backgroundClip: "padding-box",
+              boxShadow: "0 0 0 2px #4A6CF7, 0 0 0 3px #7C5CFC",
             }}
           >
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <span className="text-white font-semibold text-[16px]">AR</span>
+          </div>
+          <div>
+            <p className="text-white font-semibold text-[16px] leading-tight">Alex Rivera</p>
+            <p className="text-white/50 text-[13px] leading-tight">Luminary AI</p>
+          </div>
+        </div>
+
+        {/* 60-second pitch sub-card */}
+        <div
+          className="rounded-xl px-3 py-3 flex items-center gap-3 mb-5"
+          style={{
+            background: "rgba(255, 255, 255, 0.08)",
+          }}
+        >
+          <div className="flex-shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
               <polygon points="8,5 20,12 8,19" />
             </svg>
           </div>
-          <p className="text-white/40 text-[14px] mt-2 tabular-nums">0:60</p>
+          <p className="text-white text-[13px] flex-1">60-second Video Pitch</p>
+          <p className="text-white/40 text-[12px] tabular-nums">1:00</p>
         </div>
 
-        {/* Company info */}
-        <div className="text-center mb-5">
-          <p className="text-white text-[18px] font-semibold mb-1">Luminary AI</p>
-          <p className="text-white/50 text-[13px] mb-2">AI-powered contract analysis</p>
-          <span className="text-[11px] px-3 py-1 rounded-full bg-[#4A6CF7]/15 text-[#4A6CF7] border border-[#4A6CF7]/20 inline-block"
-            style={{ backdropFilter: "blur(8px)" }}
-          >
-            AI / ML
-          </span>
-        </div>
-
-        {/* Urgenc Score bar */}
-        <div className="mb-3">
-          <div className="flex items-center justify-between mb-1.5">
-            <p className="text-white/40 text-[11px]">Urgenc Score</p>
-            <p
-              className="text-white text-[13px] font-semibold tabular-nums transition-opacity duration-300"
-              style={{ opacity: showScore ? 1 : 0 }}
-            >
-              87/100
+        {/* Urgenc Score */}
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-white/40 text-[10px] tracking-[2px] uppercase">Urgenc Score</p>
+            <p className="text-white font-semibold text-[16px] tabular-nums">
+              {scoreNum}/100
             </p>
           </div>
-          <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+          <div className="h-1.5 rounded-full bg-white/[0.08] overflow-hidden">
             <div
               className="h-full rounded-full"
               style={{
@@ -603,14 +614,19 @@ function FounderPitchCard() {
           </div>
         </div>
 
-        {/* Accepted label */}
+        {/* Accepted pill */}
         <div className="flex justify-center">
-          <p
-            className="text-[#22c55e] text-[11px] tracking-[2px] uppercase font-semibold transition-opacity duration-500"
-            style={{ opacity: showAccepted ? 1 : 0 }}
+          <div
+            className="px-4 py-1.5 rounded-full text-[12px] uppercase tracking-[2px] font-semibold transition-opacity duration-500 accepted-pill-glow"
+            style={{
+              opacity: showAccepted ? 1 : 0,
+              background: "rgba(5, 150, 105, 0.2)",
+              border: "1px solid rgba(5, 150, 105, 0.4)",
+              color: "#34D399",
+            }}
           >
             Accepted
-          </p>
+          </div>
         </div>
       </div>
     </div>
@@ -618,108 +634,162 @@ function FounderPitchCard() {
 }
 
 const swipeStartups = [
-  { name: "Luminary AI", tag: "AI / ML", mrr: "$45K MRR", score: "87/100 Score" },
-  { name: "Stackpay", tag: "Fintech", mrr: "$82K MRR", score: "91/100 Score" },
-  { name: "Terraform Health", tag: "HealthTech", mrr: "$28K MRR", score: "79/100 Score" },
+  { name: "Luminary AI", tag: "AI / ML", mrr: "$45K MRR", score: "87", initial: "L", color: "#4A6CF7" },
+  { name: "Stackpay", tag: "Fintech", mrr: "$82K MRR", score: "91", initial: "S", color: "#7C5CFC" },
+  { name: "Terraform Health", tag: "HealthTech", mrr: "$28K MRR", score: "79", initial: "T", color: "#06B6D4" },
 ];
 
 function InvestorMatchCard() {
   const [idx, setIdx] = useState(0);
-  const [slideDir, setSlideDir] = useState<"left" | "right">("left");
   const [showMatched, setShowMatched] = useState(false);
   const [greenPulse, setGreenPulse] = useState(false);
+  const [slideOut, setSlideOut] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Pulse the checkmark
+      // Pulse the green button
       setGreenPulse(true);
 
-      // After pulse, slide out right and show matched text
+      // After pulse, slide out right with green tint
       setTimeout(() => {
         setGreenPulse(false);
-        setSlideDir("right");
+        setSlideOut(true);
         setShowMatched(true);
       }, 400);
 
-      // After matched text shows for 1.5s, slide in new card from left
+      // Advance to next card, reset
       setTimeout(() => {
+        setSlideOut(false);
         setShowMatched(false);
-        setSlideDir("left");
         setIdx((p) => (p + 1) % swipeStartups.length);
-      }, 2400);
-    }, 4000);
+      }, 2800);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
 
   const s = swipeStartups[idx];
+  const nextS = swipeStartups[(idx + 1) % swipeStartups.length];
 
   return (
     <div
-      className="w-[320px] rounded-2xl p-6 dashboard-card relative overflow-hidden"
+      className="w-[300px] h-[380px] rounded-2xl p-5 dashboard-card relative overflow-hidden flex flex-col"
       style={{
-        background: "rgba(10, 10, 15, 0.85)",
-        backdropFilter: "blur(24px)",
-        border: "1px solid rgba(124, 92, 252, 0.25)",
-        boxShadow: "0 0 40px rgba(124, 92, 252, 0.06), inset 0 1px 0 rgba(255,255,255,0.04)",
+        background: "rgba(15, 20, 40, 0.75)",
+        backdropFilter: "blur(40px)",
+        border: "none",
       }}
     >
-      {/* Inner depth gradient */}
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.3))" }} />
-
-      <div className="relative">
+      <div className="relative flex flex-col h-full">
         {/* Header */}
-        <div className="flex items-center justify-between mb-5">
-          <p className="text-white/60 text-[11px] tracking-[2px] uppercase font-medium">Investor Match</p>
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-white/50 text-[11px] tracking-[3px] uppercase font-medium">Investor Feed</p>
           <div className="flex items-center gap-1.5">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] live-dot-pulse" />
-            <span className="text-[11px] text-[#22c55e]/80">Active</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-[#34D399] live-dot-pulse" />
+            <span className="text-[11px] text-[#34D399]/80 font-medium">Live</span>
           </div>
         </div>
 
-        {/* Swipe card area */}
-        <div className="mb-4 min-h-[130px] relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, x: slideDir === "left" ? -40 : 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: slideDir === "right" ? 60 : -60 }}
-              transition={{ duration: 0.35, ease: [0.25, 0.4, 0.25, 1] }}
-              className="bg-white/[0.08] rounded-xl p-4 border border-white/[0.08]"
-            >
-              <p className="text-white text-[15px] font-semibold mb-2">{s.name}</p>
+        {/* Card stack area */}
+        <div className="relative mb-4 flex-1" style={{ minHeight: "170px" }}>
+          {/* Peeking card behind (next card) */}
+          <div
+            className="absolute inset-x-2 top-2 rounded-xl p-4 transition-all duration-300"
+            style={{
+              background: "rgba(255, 255, 255, 0.05)",
+              border: "1px solid rgba(255,255,255,0.05)",
+              transform: slideOut ? "translateY(0) scale(1)" : "translateY(8px) scale(0.95)",
+              opacity: slideOut ? 0.8 : 0.4,
+              zIndex: 1,
+            }}
+          >
+            <div className="flex items-center gap-2.5 mb-2">
+              <div
+                className="w-[36px] h-[36px] rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ background: `linear-gradient(135deg, ${nextS.color}, ${nextS.color}88)` }}
+              >
+                <span className="text-white font-semibold text-[14px]">{nextS.initial}</span>
+              </div>
+              <p className="text-white font-semibold text-[15px]">{nextS.name}</p>
+            </div>
+          </div>
+
+          {/* Active top card */}
+          <div
+            className="absolute inset-0 rounded-xl p-4 transition-all duration-300"
+            style={{
+              background: "rgba(255, 255, 255, 0.10)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              transform: slideOut ? "translateX(120%) rotate(8deg)" : "translateX(0)",
+              opacity: slideOut ? 0 : 1,
+              zIndex: 2,
+              boxShadow: slideOut ? "0 0 20px rgba(52,211,153,0.3)" : "none",
+            }}
+          >
+            <div className="flex items-center gap-2.5 mb-2.5">
+              <div
+                className="w-[36px] h-[36px] rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ background: `linear-gradient(135deg, ${s.color}, ${s.color}88)` }}
+              >
+                <span className="text-white font-semibold text-[14px]">{s.initial}</span>
+              </div>
+              <p className="text-white font-semibold text-[15px]">{s.name}</p>
+            </div>
+            <div className="mb-2.5">
               <span
-                className="text-[11px] px-2.5 py-0.5 rounded-full bg-[#4A6CF7]/15 text-[#4A6CF7] border border-[#4A6CF7]/20 inline-block mb-3"
+                className="text-[10px] px-2 py-0.5 rounded-full inline-block"
+                style={{
+                  background: "rgba(74, 108, 247, 0.25)",
+                  color: "#818CF8",
+                }}
               >
                 {s.tag}
               </span>
-              <div className="flex items-center gap-4">
-                <p className="text-white/60 text-[13px]">{s.mrr}</p>
-                <p className="text-white/60 text-[13px]">{s.score}</p>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+            </div>
+            <div className="flex items-center gap-4">
+              <p className="text-white/60 text-[12px]">{s.mrr}</p>
+              <p className="text-white/60 text-[12px]">Score: {s.score}</p>
+            </div>
+          </div>
         </div>
 
         {/* Action buttons */}
-        <div className="flex justify-center gap-5 mb-4">
-          <div className="w-9 h-9 rounded-full border border-red-400/20 bg-red-400/5 flex items-center justify-center text-red-400/50 cursor-default">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
-          </div>
-          <div className="w-9 h-9 rounded-full border border-[#4A6CF7]/25 bg-[#4A6CF7]/8 flex items-center justify-center text-[#4A6CF7]/60 cursor-default">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
-          </div>
+        <div className="flex justify-center gap-3 mb-3">
+          {/* Pass */}
           <div
-            className="w-9 h-9 rounded-full border border-[#22c55e]/25 bg-[#22c55e]/8 flex items-center justify-center text-[#22c55e]/60 cursor-default transition-shadow duration-300"
-            style={greenPulse ? { boxShadow: "0 0 16px rgba(34, 197, 94, 0.6)", borderColor: "rgba(34, 197, 94, 0.5)" } : {}}
+            className="w-[40px] h-[40px] rounded-full flex items-center justify-center cursor-default"
+            style={{
+              background: "rgba(239, 68, 68, 0.2)",
+              border: "1px solid rgba(239, 68, 68, 0.4)",
+            }}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F87171" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
+          </div>
+          {/* Save */}
+          <div
+            className="w-[40px] h-[40px] rounded-full flex items-center justify-center cursor-default"
+            style={{
+              background: "rgba(74, 108, 247, 0.2)",
+              border: "1px solid rgba(74, 108, 247, 0.4)",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818CF8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+          </div>
+          {/* Interested */}
+          <div
+            className="w-[40px] h-[40px] rounded-full flex items-center justify-center cursor-default transition-all duration-300"
+            style={{
+              background: "rgba(52, 211, 153, 0.2)",
+              border: `1px solid rgba(52, 211, 153, ${greenPulse ? "0.7" : "0.4"})`,
+              boxShadow: greenPulse ? "0 0 20px rgba(52, 211, 153, 0.5)" : "none",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
           </div>
         </div>
 
         {/* Matched notification */}
-        <div className="h-[20px] flex items-center justify-center">
+        <div className="h-[24px] flex items-center justify-center">
           <AnimatePresence>
             {showMatched && (
               <motion.p
@@ -727,9 +797,10 @@ function InvestorMatchCard() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.3 }}
-                className="text-white/70 text-[12px] text-center"
+                className="text-[13px] text-center font-medium matched-text-glow"
+                style={{ color: "#34D399" }}
               >
-                Matched! Chemistry call in 48hrs
+                Matched! Call in 48hrs
               </motion.p>
             )}
           </AnimatePresence>
@@ -1122,8 +1193,8 @@ export default function Home() {
 
       {/* ============ HERO ============ */}
       <section className="relative z-10 min-h-screen">
-        {/* Floating dashboards */}
-        <div className="absolute inset-0 overflow-hidden hidden xl:block pointer-events-none">
+        {/* Floating dashboards - hidden below 1100px */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none hero-cards-container">
           {/* Left: Founder Pitch */}
           <div
             className="absolute left-[3%] 2xl:left-[5%] top-1/2 -translate-y-1/2 pointer-events-auto dashboard-entrance"
