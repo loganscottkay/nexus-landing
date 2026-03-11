@@ -192,8 +192,8 @@ const howItWorksCards = [
   {
     num: "02",
     icon: <SparkleIcon />,
-    title: "Get Matched by Fit",
-    desc: "Our algorithm pairs investors with startups at their level. We are launching with investments up to $25K matched with early-stage startups. As the platform grows, higher tiers unlock. Your investment size determines your match tier.",
+    title: "Investors Set Their Feed",
+    desc: "Investors choose which industries, stages, and startup types they want to see. Your feed is personalized to your interests. You only see startups that match your criteria. No noise.",
   },
   {
     num: "03",
@@ -363,7 +363,7 @@ function HowItWorksSection() {
                             {card.title}
                           </h3>
                         </div>
-                        <p className="text-text-secondary text-[14px] leading-[1.6] line-clamp-2">
+                        <p className="text-text-secondary text-[14px] leading-[1.6]">
                           {card.desc}
                         </p>
                       </div>
@@ -923,6 +923,163 @@ function ChemistryCallCard() {
   );
 }
 
+/* ---- Matching Flow Section ---- */
+const matchingSteps = [
+  {
+    num: "01",
+    title: "Founders Pitch",
+    desc: "Record a 60-second video pitch and submit your deck. Our scoring system evaluates you on vision, team, market, and momentum.",
+    color: "#4A6CF7",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="23 7 16 12 23 17 23 7" />
+        <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+      </svg>
+    ),
+  },
+  {
+    num: "02",
+    title: "Investors Set Filters",
+    desc: "Choose your industry interests, investment range, and what kind of founders excite you. Your feed only shows startups that match your criteria.",
+    color: "#7C5CFC",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="4" y1="21" x2="4" y2="14" />
+        <line x1="4" y1="10" x2="4" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="12" />
+        <line x1="12" y1="8" x2="12" y2="3" />
+        <line x1="20" y1="21" x2="20" y2="16" />
+        <line x1="20" y1="12" x2="20" y2="3" />
+        <line x1="1" y1="14" x2="7" y2="14" />
+        <line x1="9" y1="8" x2="15" y2="8" />
+        <line x1="17" y1="16" x2="23" y2="16" />
+      </svg>
+    ),
+  },
+  {
+    num: "03",
+    title: "Swipe & Match",
+    desc: "Investors browse their personalized feed daily. When an investor expresses interest and a founder accepts, it is a match.",
+    color: "#D4AF37",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+    ),
+  },
+  {
+    num: "04",
+    title: "Chemistry Call",
+    desc: "Every match leads to a structured 20-minute video call within 72 hours. No ghosting. No endless back-and-forth. Just a real conversation.",
+    color: "#059669",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
+      </svg>
+    ),
+  },
+];
+
+function MatchingFlowSection() {
+  return (
+    <Section className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
+      <motion.div
+        variants={cardStagger}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportConfig}
+        className="flex flex-col items-center"
+      >
+        <motion.p
+          variants={fadeUp}
+          transition={{ duration: 0.6, ease }}
+          className="gradient-text text-[13px] tracking-[3px] uppercase mb-4 font-medium"
+        >
+          The Matching Flow
+        </motion.p>
+        <motion.h2
+          variants={fadeUp}
+          transition={{ duration: 0.6, ease }}
+          className="text-[36px] md:text-[44px] font-normal text-center mb-4"
+          style={{ fontFamily: "'Instrument Serif', serif" }}
+        >
+          Swipe. Match. Meet.
+        </motion.h2>
+        <motion.p
+          variants={fadeUp}
+          transition={{ duration: 0.6, ease }}
+          className="text-center max-w-[600px] text-[17px] leading-[1.7] mb-16"
+          style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
+        >
+          Like a dating app, but for startup deals.
+        </motion.p>
+
+        {/* Step flow - horizontal on desktop, vertical on mobile */}
+        <motion.div
+          variants={cardStagger}
+          className="flex flex-col lg:flex-row items-center lg:items-stretch gap-0 w-full"
+        >
+          {matchingSteps.map((step, i) => (
+            <React.Fragment key={step.num}>
+              {/* Connecting line between steps */}
+              {i > 0 && (
+                <div className="flex items-center justify-center lg:py-0 py-2">
+                  {/* Desktop: horizontal line */}
+                  <div className="hidden lg:block w-[40px] xl:w-[60px] h-[2px] relative overflow-hidden shrink-0">
+                    <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)", opacity: 0.3 }} />
+                    <div
+                      className="matching-flow-dot absolute top-[-2px] w-1.5 h-1.5 rounded-full"
+                      style={{
+                        background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                        boxShadow: "0 0 6px rgba(74,108,247,0.6)",
+                      }}
+                    />
+                  </div>
+                  {/* Mobile: vertical line */}
+                  <div className="lg:hidden w-[2px] h-[32px] relative overflow-hidden">
+                    <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, #4A6CF7, #7C5CFC)", opacity: 0.3 }} />
+                  </div>
+                </div>
+              )}
+
+              {/* Step card */}
+              <motion.div
+                variants={fadeUp}
+                transition={{ duration: 0.6, delay: i * 0.1, ease }}
+                className="flex-1 max-w-[240px] w-full"
+              >
+                <div className="glow-card-wrapper h-full">
+                  <div
+                    className="h-full rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-[3px]"
+                    style={{
+                      background: "rgba(255, 255, 255, 0.45)",
+                      backdropFilter: "blur(40px)",
+                      WebkitBackdropFilter: "blur(40px)",
+                      border: "1px solid rgba(0, 0, 0, 0.06)",
+                    }}
+                  >
+                    <div className="mb-4">{step.icon}</div>
+                    <p className="text-[11px] tracking-[2px] uppercase mb-2 font-medium" style={{ color: step.color }}>
+                      Step {step.num}
+                    </p>
+                    <h3
+                      className="text-[17px] font-semibold text-text-primary mb-2"
+                      style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                    >
+                      {step.title}
+                    </h3>
+                    <p className="text-[14px] text-text-muted leading-[1.6]">{step.desc}</p>
+                  </div>
+                </div>
+              </motion.div>
+            </React.Fragment>
+          ))}
+        </motion.div>
+      </motion.div>
+    </Section>
+  );
+}
+
 /* ---- Main Page ---- */
 export default function Home() {
   const blobsRef = useRef<HTMLDivElement>(null);
@@ -1115,97 +1272,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ WHY WE BUILT THIS ============ */}
-      <Section className="relative z-10 px-6 py-24 md:py-32 max-w-4xl mx-auto">
-        <motion.div
-          variants={cardStagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="flex flex-col items-center"
-        >
-          <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[36px] font-normal text-center mb-8"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
-          >
-            Best Friends. Different Paths. One Mission.
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-center max-w-[680px] text-[17px] leading-[1.8] mb-12"
-            style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
-          >
-            Best friends since high school. Different paths through Boston. Same frustration: the startup world felt impossible to break into. So we built the door. Nexus exists because we believe being a founder or investor should be attainable for anyone willing to do the work.
-          </motion.p>
-
-          {/* Founder cards */}
-          <motion.div
-            variants={cardStagger}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, ease }}
-              className="glass p-5 flex items-center gap-3 max-w-[280px]"
-            >
-              <Image
-                src="/images/logan.webp"
-                alt="Logan Kay"
-                width={80}
-                height={80}
-                className="w-12 h-12 rounded-full object-cover shrink-0"
-                style={{ border: "2px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
-              />
-              <div>
-                <p className="text-[16px] font-semibold text-text-primary">Logan Kay</p>
-                <p className="text-[13px] text-text-muted">Co-Founder</p>
-                <p className="text-[13px] text-text-muted">Boston University | AI Implementation @ Harvard Business School</p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, ease }}
-              className="glass p-5 flex items-center gap-3 max-w-[280px]"
-            >
-              <Image
-                src="/images/ben.jpeg"
-                alt="Ben Matiash"
-                width={80}
-                height={80}
-                className="w-12 h-12 rounded-full object-cover shrink-0"
-                style={{ border: "2px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
-              />
-              <div>
-                <p className="text-[16px] font-semibold text-text-primary">Ben Matiash</p>
-                <p className="text-[13px] text-text-muted">Co-Founder</p>
-                <p className="text-[13px] text-text-muted">Northeastern University | Institutional Equity @ Morgan Stanley</p>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Read Our Full Story CTA */}
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="mt-10"
-          >
-            <Link
-              href="/story"
-              className="group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
-            >
-              Read Our Full Story
-              <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
-            </Link>
-          </motion.div>
-        </motion.div>
-      </Section>
-
       {/* ============ HOW IT WORKS ============ */}
       <HowItWorksSection />
+
+      {/* ============ HOW MATCHING WORKS ============ */}
+      <MatchingFlowSection />
 
       {/* ============ STATS (DARK SECTION) ============ */}
       <section className="relative z-10 py-24 md:py-32 bg-dark-section overflow-hidden">
@@ -1471,6 +1542,95 @@ export default function Home() {
                 </Link>
               </div>
             </div>
+          </motion.div>
+        </motion.div>
+      </Section>
+
+      {/* ============ WHY WE BUILT THIS ============ */}
+      <Section className="relative z-10 px-6 py-24 md:py-32 max-w-4xl mx-auto">
+        <motion.div
+          variants={cardStagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="flex flex-col items-center"
+        >
+          <motion.h2
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[36px] font-normal text-center mb-8"
+            style={{ fontFamily: "'Instrument Serif', serif" }}
+          >
+            Why We Built This
+          </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-center max-w-[680px] text-[17px] leading-[1.8] mb-12"
+            style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
+          >
+            Best friends since high school. Different paths through Boston. Same frustration: the startup world felt impossible to break into. So we built the door. Urgenc exists because we believe being a founder or investor should be attainable for anyone willing to do the work.
+          </motion.p>
+
+          {/* Founder cards */}
+          <motion.div
+            variants={cardStagger}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
+            <motion.div
+              variants={fadeUp}
+              transition={{ duration: 0.6, ease }}
+              className="glass p-5 flex items-center gap-3 max-w-[280px]"
+            >
+              <Image
+                src="/images/logan.webp"
+                alt="Logan Kay"
+                width={80}
+                height={80}
+                className="w-12 h-12 rounded-full object-cover shrink-0"
+                style={{ border: "2px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
+              />
+              <div>
+                <p className="text-[16px] font-semibold text-text-primary">Logan Kay</p>
+                <p className="text-[13px] text-text-muted">Co-Founder</p>
+                <p className="text-[13px] text-text-muted">Boston University | AI Implementation @ Harvard Business School</p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              variants={fadeUp}
+              transition={{ duration: 0.6, ease }}
+              className="glass p-5 flex items-center gap-3 max-w-[280px]"
+            >
+              <Image
+                src="/images/ben.jpeg"
+                alt="Ben Matiash"
+                width={80}
+                height={80}
+                className="w-12 h-12 rounded-full object-cover shrink-0"
+                style={{ border: "2px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
+              />
+              <div>
+                <p className="text-[16px] font-semibold text-text-primary">Ben Matiash</p>
+                <p className="text-[13px] text-text-muted">Co-Founder</p>
+                <p className="text-[13px] text-text-muted">Northeastern University | Institutional Equity @ Morgan Stanley</p>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Read Our Full Story CTA */}
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="mt-10"
+          >
+            <Link
+              href="/story"
+              className="group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
+            >
+              Read Our Full Story
+              <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
           </motion.div>
         </motion.div>
       </Section>

@@ -667,6 +667,15 @@ body {
 }
 
 /* ---- REC dot pulse (red recording indicator) ---- */
+/* ---- Matching flow connecting dot ---- */
+.matching-flow-dot {
+  animation: matching-flow-travel 3s linear infinite;
+}
+@keyframes matching-flow-travel {
+  0% { left: -4px; }
+  100% { left: calc(100% - 2px); }
+}
+
 .rec-dot-pulse {
   animation: rec-pulse 1s ease-in-out infinite;
 }
