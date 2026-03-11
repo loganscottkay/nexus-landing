@@ -636,40 +636,43 @@ function FounderPitchCard() {
 const swipeStartups = [
   { name: "Luminary AI", tag: "AI / ML", mrr: "$45K MRR", score: "87", initial: "L", color: "#4A6CF7" },
   { name: "Stackpay", tag: "Fintech", mrr: "$82K MRR", score: "91", initial: "S", color: "#7C5CFC" },
-  { name: "Terraform Health", tag: "HealthTech", mrr: "$28K MRR", score: "79", initial: "T", color: "#06B6D4" },
+  { name: "Terraform Health", tag: "HealthTech", mrr: "$12K MRR", score: "78", initial: "T", color: "#06B6D4" },
 ];
 
 function InvestorMatchCard() {
   const [idx, setIdx] = useState(0);
+  const [cardVisible, setCardVisible] = useState(true);
   const [showMatched, setShowMatched] = useState(false);
   const [greenPulse, setGreenPulse] = useState(false);
-  const [slideOut, setSlideOut] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
       // Pulse the green button
       setGreenPulse(true);
 
-      // After pulse, slide out right with green tint
+      // Fade out current card
       setTimeout(() => {
         setGreenPulse(false);
-        setSlideOut(true);
-        setShowMatched(true);
+        setCardVisible(false);
       }, 400);
 
-      // Advance to next card, reset
+      // After fade out completes, swap to next startup and fade in
       setTimeout(() => {
-        setSlideOut(false);
-        setShowMatched(false);
         setIdx((p) => (p + 1) % swipeStartups.length);
-      }, 2800);
+        setCardVisible(true);
+        setShowMatched(true);
+      }, 700);
+
+      // Hide matched text before next cycle
+      setTimeout(() => {
+        setShowMatched(false);
+      }, 2700);
     }, 5000);
 
     return () => clearInterval(interval);
   }, []);
 
   const s = swipeStartups[idx];
-  const nextS = swipeStartups[(idx + 1) % swipeStartups.length];
 
   return (
     <div
@@ -690,40 +693,15 @@ function InvestorMatchCard() {
           </div>
         </div>
 
-        {/* Card stack area */}
-        <div className="relative mb-4 flex-1" style={{ minHeight: "170px" }}>
-          {/* Peeking card behind (next card) */}
+        {/* Single card area - only ONE card rendered at a time */}
+        <div className="relative mb-4 flex-1 overflow-hidden" style={{ minHeight: "170px" }}>
           <div
-            className="absolute inset-x-2 top-2 rounded-xl p-4 transition-all duration-300"
-            style={{
-              background: "rgba(255, 255, 255, 0.05)",
-              border: "1px solid rgba(255,255,255,0.05)",
-              transform: slideOut ? "translateY(0) scale(1)" : "translateY(8px) scale(0.95)",
-              opacity: slideOut ? 0.8 : 0.4,
-              zIndex: 1,
-            }}
-          >
-            <div className="flex items-center gap-2.5 mb-2">
-              <div
-                className="w-[36px] h-[36px] rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ background: `linear-gradient(135deg, ${nextS.color}, ${nextS.color}88)` }}
-              >
-                <span className="text-white font-semibold text-[14px]">{nextS.initial}</span>
-              </div>
-              <p className="text-white font-semibold text-[15px]">{nextS.name}</p>
-            </div>
-          </div>
-
-          {/* Active top card */}
-          <div
-            className="absolute inset-0 rounded-xl p-4 transition-all duration-300"
+            className="absolute inset-0 rounded-xl p-4"
             style={{
               background: "rgba(255, 255, 255, 0.10)",
               border: "1px solid rgba(255,255,255,0.08)",
-              transform: slideOut ? "translateX(120%) rotate(8deg)" : "translateX(0)",
-              opacity: slideOut ? 0 : 1,
-              zIndex: 2,
-              boxShadow: slideOut ? "0 0 20px rgba(52,211,153,0.3)" : "none",
+              opacity: cardVisible ? 1 : 0,
+              transition: "opacity 0.3s ease",
             }}
           >
             <div className="flex items-center gap-2.5 mb-2.5">
@@ -790,20 +768,16 @@ function InvestorMatchCard() {
 
         {/* Matched notification */}
         <div className="h-[24px] flex items-center justify-center">
-          <AnimatePresence>
-            {showMatched && (
-              <motion.p
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.3 }}
-                className="text-[13px] text-center font-medium matched-text-glow"
-                style={{ color: "#34D399" }}
-              >
-                Matched! Call in 48hrs
-              </motion.p>
-            )}
-          </AnimatePresence>
+          <p
+            className="text-[13px] text-center font-medium matched-text-glow"
+            style={{
+              color: "#34D399",
+              opacity: showMatched ? 1 : 0,
+              transition: "opacity 0.3s ease",
+            }}
+          >
+            Matched! Call in 48hrs
+          </p>
         </div>
       </div>
     </div>

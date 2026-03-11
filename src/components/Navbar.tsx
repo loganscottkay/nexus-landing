@@ -1,17 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const navLinks = [
+  { label: "About", href: "/story" },
   { label: "Startup Qualifications", href: "/qualifications/startup" },
   { label: "Investor Qualifications", href: "/qualifications/investor" },
-  { label: "How It Works", href: "/#how-it-works", scrollId: "how-it-works" },
-  { label: "For Investors", href: "/#for-investors", scrollId: "for-investors" },
-  { label: "For Startups", href: "/#for-startups", scrollId: "for-startups" },
-  { label: "Our Story", href: "/story" },
-  { label: "Preview", href: "/#preview", scrollId: "preview" },
 ];
 
 export default function Navbar() {
@@ -23,9 +18,6 @@ export default function Navbar() {
   const [moonHovered, setMoonHovered] = useState(false);
   const applyRef = useRef<HTMLDivElement>(null);
   const moonRef = useRef<HTMLDivElement>(null);
-  const pathname = usePathname();
-  const isHome = pathname === "/";
-
   // Remove will-change after entrance animation completes
   useEffect(() => {
     const timer = setTimeout(() => setMoonSettled(true), 1300);
@@ -56,40 +48,30 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", onClickOutside);
   }, [applyOpen]);
 
-  const scrollToSection = (e: React.MouseEvent, id: string) => {
-    if (isHome) {
-      e.preventDefault();
-      const el = document.getElementById(id);
-      if (el) {
-        const y = el.getBoundingClientRect().top + window.scrollY - 80;
-        window.scrollTo({ top: y, behavior: "smooth" });
-      }
-    }
-  };
-
   return (
     <nav
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
-        background: scrolled ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.7)",
+        background: scrolled ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.8)",
         backdropFilter: "blur(40px) saturate(1.3)",
         WebkitBackdropFilter: "blur(40px) saturate(1.3)",
         borderBottom: "1px solid rgba(0,0,0,0.04)",
+        boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.04)" : "none",
       }}
     >
       {/* Bottom shimmer line */}
       <div
         className="absolute bottom-0 left-0 right-0 h-[1px] overflow-hidden transition-opacity duration-300"
-        style={{ opacity: scrolled ? 0.35 : 0.2 }}
+        style={{ opacity: scrolled ? 0.2 : 0.15 }}
       >
         <div className="nav-shimmer-line absolute inset-0" />
       </div>
 
-      <div className="mx-auto px-6 flex items-center justify-between h-16 nav:h-20">
+      <div className="mx-auto px-6 grid items-center h-16 nav:h-20" style={{ gridTemplateColumns: "1fr auto 1fr" }}>
         {/* Far left: Logo */}
         <Link
           href="/"
-          className="flex items-center gap-[10px] shrink-0 relative"
+          className="flex items-center gap-[10px] shrink-0 relative justify-self-start"
           onMouseEnter={() => setLogoHovered(true)}
           onMouseLeave={() => setLogoHovered(false)}
         >
@@ -151,11 +133,13 @@ export default function Navbar() {
             </svg>
           </div>
 
-          {/* NEXUS text */}
           <span
-            className="text-lg md:text-xl font-bold tracking-[0.3em] transition-all duration-300"
+            className="transition-all duration-300"
             style={{
               fontFamily: "var(--font-dm-sans), sans-serif",
+              fontSize: "18px",
+              letterSpacing: "5px",
+              fontWeight: 600,
               ...(logoHovered
                 ? {
                     background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
@@ -173,15 +157,14 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Center: Nav links — positioned relative to the full-width <nav>, not this padded container */}
-        <div className="hidden nav:flex items-center fixed left-1/2 -translate-x-1/2 h-16 nav:h-20 z-50" style={{ gap: "20px" }}>
+        {/* Center: Nav links */}
+        <div className="hidden nav:flex items-center justify-self-center" style={{ gap: "32px" }}>
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              onClick={link.scrollId ? (e) => scrollToSection(e, link.scrollId!) : undefined}
-              className="nav-link text-text-secondary text-[13px] whitespace-nowrap"
-              style={{ letterSpacing: "0.3px", fontWeight: 500 }}
+              className="nav-link whitespace-nowrap"
+              style={{ fontSize: "14px", fontWeight: 500, color: "#475569", letterSpacing: "0.3px" }}
             >
               {link.label}
             </Link>
@@ -189,19 +172,19 @@ export default function Navbar() {
         </div>
 
         {/* Far right: Action buttons */}
-        <div className="hidden nav:flex items-center shrink-0" style={{ gap: "12px" }}>
+        <div className="hidden nav:flex items-center justify-self-end shrink-0" style={{ gap: "16px" }}>
           <Link
             href="/login"
-            className="nav-signin-premium text-text-secondary text-[13px]"
-            style={{ letterSpacing: "0.3px", fontWeight: 500 }}
+            className="nav-text-btn"
+            style={{ fontSize: "14px", fontWeight: 500, color: "#475569" }}
           >
             Sign In
           </Link>
 
           <Link
             href="/status"
-            className="nav-signin-premium text-text-secondary text-[13px]"
-            style={{ letterSpacing: "0.3px", fontWeight: 500 }}
+            className="nav-text-btn"
+            style={{ fontSize: "14px", fontWeight: 500, color: "#475569" }}
           >
             Check Status
           </Link>
@@ -209,8 +192,8 @@ export default function Navbar() {
           <div className="relative" ref={applyRef}>
             <button
               onClick={() => setApplyOpen(!applyOpen)}
-              className="nav-apply-btn flex items-center gap-1.5 text-[13px] font-semibold text-white"
-              style={{ letterSpacing: "0.3px" }}
+              className="nav-apply-btn flex items-center gap-1.5 font-semibold text-white"
+              style={{ letterSpacing: "0.3px", fontSize: "13px", padding: "10px 22px" }}
             >
               Apply Now
               <svg
@@ -342,10 +325,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              onClick={(e) => {
-                if (link.scrollId) scrollToSection(e, link.scrollId);
-                setMenuOpen(false);
-              }}
+              onClick={() => setMenuOpen(false)}
               className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
             >
               {link.label}
