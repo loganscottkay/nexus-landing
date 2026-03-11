@@ -164,15 +164,15 @@ export default function FounderDashboard() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1, ease }}>
             <GlassCard className="p-6 md:p-8 mb-6">
               <div className="flex flex-wrap justify-between gap-6">
-                <Stat value="47" label="Profile Views This Week" trend="12%" trendDir="up" />
+                <Stat value="47" label="Investors Saw Your Pitch" trend="↑ 12%" trendDir="up" />
                 <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
-                <Stat value="8" label="Investor Interests" trend="33%" trendDir="up" />
+                <Stat value="8" label="Investors Interested" trend="↑ 33%" trendDir="up" />
                 <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
-                <Stat value="4" label="Active Matches" trend="100%" trendDir="up" />
+                <Stat value="4" label="Mutual Matches" trend="↑ 100%" trendDir="up" />
                 <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
-                <Stat value="3" label="Calls Completed" trend="New" trendDir="new" />
+                <Stat value="3" label="Calls Completed" trend="this month" trendDir="flat" />
                 <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
-                <Stat value="12" label="Deck Views" trend="20%" trendDir="up" />
+                <Stat value="12" label="Deck Views" trend="↑ 20%" trendDir="up" />
               </div>
             </GlassCard>
           </motion.div>

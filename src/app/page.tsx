@@ -973,7 +973,9 @@ const matchingSteps = [
   {
     num: "01",
     title: "Founders Pitch",
-    desc: "Record a 60-second pitch. Submit your deck. Get scored by our system.",
+    label: "FOR FOUNDERS",
+    labelColor: "#7C5CFC",
+    desc: "Record a 60-second video explaining your startup. Upload your pitch deck. Our proprietary scoring system evaluates you on vision, team, market size, and momentum. If you score in the top 15%, you are in.",
     color: "#4A6CF7",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -985,7 +987,9 @@ const matchingSteps = [
   {
     num: "02",
     title: "Investors Set Filters",
-    desc: "Your investment size determines your match tier. Small checks see early-stage founders. Larger checks see proven traction.",
+    label: "FOR INVESTORS",
+    labelColor: "#4A6CF7",
+    desc: "Tell us what excites you. Pick your industries, preferred startup stage, and investment range. Your daily feed only shows startups that match your criteria. No scrolling through irrelevant deals.",
     color: "#7C5CFC",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -1004,7 +1008,9 @@ const matchingSteps = [
   {
     num: "03",
     title: "Swipe & Match",
-    desc: "Browse your daily feed. Express interest. When a founder accepts, you are matched.",
+    label: "BOTH SIDES",
+    labelColor: "#D4AF37",
+    desc: "Investors browse their personalized feed and express interest in startups they like. Founders see who is interested and decide whether to accept. When both sides say yes, it is a match. Simple as that.",
     color: "#D4AF37",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -1015,7 +1021,9 @@ const matchingSteps = [
   {
     num: "04",
     title: "Chemistry Call",
-    desc: "Every match gets a structured 20-minute video call within 72 hours. No flaking.",
+    label: "BOTH SIDES",
+    labelColor: "#059669",
+    desc: "Every match leads to a structured 20-minute video call scheduled automatically within 72 hours. No scheduling headaches. No ghosting. If either side does not show up, they get flagged and eventually removed from the platform.",
     color: "#059669",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -1056,7 +1064,7 @@ function MatchingFlowSection() {
           className="text-center max-w-[600px] text-[17px] leading-[1.7] mb-16"
           style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
         >
-          Like a dating app, but for startup deals.
+          Here is how it works for both sides.
         </motion.p>
 
         {/* Step flow - horizontal on desktop, vertical on mobile */}
@@ -1091,7 +1099,7 @@ function MatchingFlowSection() {
               <motion.div
                 variants={fadeUp}
                 transition={{ duration: 0.6, delay: i * 0.1, ease }}
-                className="flex-1 max-w-[240px] w-full"
+                className="flex-1 max-w-[280px] w-full"
               >
                 <div className="glow-card-wrapper h-full">
                   <div
@@ -1104,6 +1112,9 @@ function MatchingFlowSection() {
                     }}
                   >
                     <div className="mb-4">{step.icon}</div>
+                    <p className="text-[10px] tracking-[2px] uppercase mb-1.5 font-medium" style={{ color: step.labelColor, letterSpacing: "2px" }}>
+                      {step.label}
+                    </p>
                     <p className="text-[11px] tracking-[2px] uppercase mb-2 font-medium" style={{ color: step.color }}>
                       Step {step.num}
                     </p>

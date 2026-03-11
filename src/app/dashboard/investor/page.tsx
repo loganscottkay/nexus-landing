@@ -216,15 +216,15 @@ export default function InvestorDashboard() {
             <div className="glass p-6 md:p-8 mb-6">
               <div className="flex flex-col md:flex-row md:items-center gap-8">
                 <div className="flex flex-wrap justify-between gap-6 flex-1">
-                  <Stat target={23} label="Startups Reviewed" trend="this week" trendDir="flat" delay={0} />
+                  <Stat target={14} label="Startups in Your Feed" trend="this week" trendDir="flat" delay={0} />
                   <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
-                  <Stat target={7} label="Interests Sent" trend="40%" trendDir="up" delay={150} />
+                  <Stat target={5} label="Interests Sent" trend="↑ 2 this week" trendDir="up" delay={150} />
                   <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
-                  <Stat target={5} label="Matches Made" trend="25%" trendDir="up" delay={300} />
+                  <Stat target={3} label="Mutual Matches" trend="↑ 1 new" trendDir="up" delay={300} />
                   <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
-                  <Stat target={4} label="Calls Completed" trend="100%" trendDir="up" delay={450} />
+                  <Stat target={2} label="Calls Scheduled" trend="next: tomorrow" trendDir="up" delay={450} />
                   <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
-                  <Stat target={3.2} decimals={1} suffix="m" label="Avg Response" trend="fast" trendDir="up" delay={600} />
+                  <Stat target={4} label="Video Pitches Watched" trend="today" trendDir="flat" delay={600} />
                 </div>
                 <div className="border-t md:border-t-0 md:border-l border-black/[0.06] pt-6 md:pt-0 md:pl-8">
                   <EngagementRing score={94} />
@@ -242,7 +242,7 @@ export default function InvestorDashboard() {
                 <div className="glass p-6">
                   <div className="flex items-center justify-between mb-5">
                     <div className="flex items-center gap-2">
-                      <h3 className="text-[18px] font-semibold text-text-primary">Daily Drops</h3>
+                      <h3 className="text-[18px] font-semibold text-text-primary">New in Your Feed</h3>
                       <span className="text-[11px] px-2.5 py-1 rounded-full font-semibold text-white" style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}>New</span>
                     </div>
                     <Link href="/drops" className="text-accent-blue text-[14px] hover:underline">Open Feed</Link>
