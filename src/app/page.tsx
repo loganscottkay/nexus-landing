@@ -193,7 +193,7 @@ const howItWorksCards = [
     num: "02",
     icon: <SparkleIcon />,
     title: "Investors Set Their Feed",
-    desc: "Investors pick their industries and investment range. Your feed only shows startups that fit. No noise.",
+    desc: "Your investment size determines your match tier. Small checks see early-stage founders. Larger checks see proven traction.",
   },
   {
     num: "03",
@@ -985,7 +985,7 @@ const matchingSteps = [
   {
     num: "02",
     title: "Investors Set Filters",
-    desc: "Pick your sectors, stage, and check size. See only what fits your thesis.",
+    desc: "Your investment size determines your match tier. Small checks see early-stage founders. Larger checks see proven traction.",
     color: "#7C5CFC",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -1342,7 +1342,7 @@ export default function Home() {
           <div className="glass-dark px-6 py-12 md:px-16 md:py-16">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6 text-center">
               {[
-                { value: "Up to $25K", label: "Launch Investment Tier" },
+                { value: "$1K - $500K+", label: "Investment Range" },
                 { value: "<15%", label: "Target Acceptance Rate" },
                 { value: "72hrs", label: "Match Response Window" },
                 { value: "30 days", label: "To Prove Traction" },

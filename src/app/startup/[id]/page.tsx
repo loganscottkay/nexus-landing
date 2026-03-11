@@ -283,7 +283,7 @@ const startupData: Record<string, StartupData> = {
     ],
     idealProfile: [
       "Enterprise SaaS investors",
-      "Check sizes between $25K-$100K",
+      "Check sizes from $1K-$500K+",
       "Marketing/analytics connections",
     ],
     team: [

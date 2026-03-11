@@ -7,41 +7,14 @@ import Navbar from "@/components/Navbar";
 
 const ease = [0.25, 0.4, 0.25, 1] as [number, number, number, number];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const sectionFadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const stagger = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12 },
-  },
-};
-
-const viewportConfig = { once: true, amount: 0.2 };
-
-const ArrowRight = ({ className }: { className?: string }) => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <line x1="5" y1="12" x2="19" y2="12" />
-    <polyline points="12 5 19 12 12 19" />
-  </svg>
-);
+const cardStyle = {
+  background: "rgba(255, 255, 255, 0.5)",
+  backdropFilter: "blur(24px)",
+  WebkitBackdropFilter: "blur(24px)",
+  border: "1px solid rgba(0, 0, 0, 0.06)",
+  padding: "32px",
+  borderRadius: "16px",
+} as const;
 
 const storySections = [
   {
@@ -74,9 +47,9 @@ export default function StoryPage() {
       {/* Atmospheric background */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-[#FAFAF9]" />
-        <div className="blob-1 blob-blue" style={{ top: "10%", left: "15%" }} />
-        <div className="blob-2 blob-lavender" style={{ top: "40%", right: "10%" }} />
-        <div className="blob-3 blob-peach" style={{ top: "70%", left: "30%" }} />
+        <div className="blob blob-blue animate-blob-1" style={{ top: "10%", left: "15%" }} />
+        <div className="blob blob-lavender animate-blob-2" style={{ top: "40%", right: "10%" }} />
+        <div className="blob blob-peach animate-blob-3" style={{ top: "70%", left: "30%" }} />
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -88,180 +61,256 @@ export default function StoryPage() {
 
       <main className="relative z-10 pt-32 pb-24">
         {/* Header */}
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          animate="visible"
-          className="max-w-3xl mx-auto px-6 text-center mb-20"
-        >
+        <div className="max-w-[700px] mx-auto px-6 text-center mb-16">
           <motion.h1
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[48px] font-normal mb-5"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease }}
+            className="text-[40px] md:text-[48px] font-normal mb-5"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
             Our Story
           </motion.h1>
           <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease, delay: 0.06 }}
             className="text-[18px] leading-[1.7]"
             style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
             How two best friends from high school ended up building the platform they wished existed.
           </motion.p>
-        </motion.div>
+        </div>
 
-        {/* Story sections with timeline */}
-        <div className="max-w-[800px] mx-auto px-6 relative">
-          {/* Vertical timeline line */}
-          <div className="absolute left-6 md:left-[24px] top-0 bottom-0 w-[2px] hidden md:block" style={{ background: "linear-gradient(180deg, #4A6CF7, #7C5CFC, #4A6CF7)" }} />
-
-          <div className="flex flex-col gap-10">
+        {/* Story sections */}
+        <div className="max-w-[700px] mx-auto px-6">
+          <div className="flex flex-col" style={{ gap: "20px" }}>
             {storySections.map((section, i) => (
               <motion.div
                 key={section.title}
-                variants={sectionFadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={viewportConfig}
-                transition={{ duration: 0.6, ease, delay: i * 0.05 }}
-                className="relative md:pl-12"
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.4, ease, delay: i * 0.06 }}
+                className="group"
               >
-                {/* Timeline dot */}
-                <div className="absolute left-0 top-8 w-4 h-4 rounded-full hidden md:flex items-center justify-center" style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", boxShadow: "0 0 12px rgba(74, 108, 247, 0.4)" }}>
-                  <div className="w-2 h-2 rounded-full bg-white" />
-                </div>
-
-                <div className="glass p-8 md:p-10">
+                <div
+                  className="transition-all duration-[250ms]"
+                  style={cardStyle}
+                >
                   <h2
-                    className="text-[28px] font-normal mb-5"
-                    style={{ fontFamily: "'Instrument Serif', serif" }}
+                    className="font-normal mb-4"
+                    style={{
+                      fontFamily: "'Instrument Serif', serif",
+                      fontSize: "28px",
+                      color: "#0F172A",
+                    }}
                   >
                     {section.title}
                   </h2>
                   <p
-                    className="text-[15px] leading-[1.85]"
-                    style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                    style={{
+                      fontFamily: "var(--font-dm-sans), sans-serif",
+                      fontSize: "16px",
+                      color: "#475569",
+                      lineHeight: 1.7,
+                    }}
                   >
                     {section.body}
                   </p>
                 </div>
+
+                <style jsx>{`
+                  .group:hover > div:first-child {
+                    transform: translateY(-3px);
+                    border-color: rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+                  }
+                `}</style>
               </motion.div>
             ))}
           </div>
         </div>
 
         {/* Meet the Founders */}
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="max-w-[800px] mx-auto px-6 mt-16"
-        >
+        <div className="max-w-[700px] mx-auto px-6 mt-16">
           <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, ease }}
             className="text-[32px] font-normal text-center mb-10"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
             Meet the Founders
           </motion.h2>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2" style={{ gap: "20px" }}>
             {/* Logan */}
             <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, ease }}
-              className="glass p-7"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.4, ease }}
+              className="group"
             >
-              <div className="flex items-center gap-4 mb-5">
-                <Image
-                  src="/images/logan.webp"
-                  alt="Logan Kay"
-                  width={100}
-                  height={100}
-                  className="w-[100px] h-[100px] rounded-full object-cover shrink-0"
-                  style={{ border: "2px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
-                />
-                <div>
-                  <p className="text-[22px] font-semibold text-text-primary">Logan Kay</p>
-                  <p className="text-[15px] text-text-muted">Co-Founder</p>
-                  <p className="text-[14px] text-text-muted mt-0.5">
-                    Boston University | AI Implementation @ Harvard Business School
-                  </p>
-                </div>
-              </div>
-              <p
-                className="text-[15px] leading-[1.8]"
-                style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
+              <div
+                className="transition-all duration-[250ms]"
+                style={cardStyle}
               >
-                Logan brings the technical firepower and operational rigor. He studies Hospitality Administration and Data Science at Boston University and helped spearhead AI implementation across admissions and operations at Harvard Business School. He obsesses over making complex systems simple and accessible. He is the architect behind the Urgenc scoring engine and platform infrastructure, and co-leads go-to-market strategy and product ideation.
-              </p>
+                <div className="flex items-center gap-4 mb-4">
+                  <Image
+                    src="/images/logan.webp"
+                    alt="Logan Kay"
+                    width={80}
+                    height={80}
+                    className="rounded-full object-cover shrink-0"
+                    style={{ width: "80px", height: "80px" }}
+                  />
+                  <div>
+                    <p
+                      className="font-semibold"
+                      style={{
+                        fontFamily: "var(--font-dm-sans), sans-serif",
+                        fontSize: "20px",
+                        color: "#0F172A",
+                      }}
+                    >
+                      Logan Kay
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-dm-sans), sans-serif",
+                        fontSize: "14px",
+                        color: "#94A3B8",
+                      }}
+                    >
+                      Co-Founder
+                    </p>
+                  </div>
+                </div>
+                <p
+                  style={{
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                    fontSize: "15px",
+                    color: "#475569",
+                    lineHeight: 1.7,
+                  }}
+                >
+                  Logan brings the technical firepower and operational rigor. He studies Hospitality Administration and Data Science at Boston University and helped spearhead AI implementation across admissions and operations at Harvard Business School. He obsesses over making complex systems simple and accessible. He is the architect behind the Urgenc scoring engine and platform infrastructure, and co-leads go-to-market strategy and product ideation.
+                </p>
+              </div>
+
+              <style jsx>{`
+                .group:hover > div:first-child {
+                  transform: translateY(-3px);
+                  border-color: rgba(0, 0, 0, 0.1);
+                  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+                }
+              `}</style>
             </motion.div>
 
             {/* Ben */}
             <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, ease }}
-              className="glass p-7"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.4, ease, delay: 0.06 }}
+              className="group"
             >
-              <div className="flex items-center gap-4 mb-5">
-                <Image
-                  src="/images/ben.jpeg"
-                  alt="Ben Matiash"
-                  width={100}
-                  height={100}
-                  className="w-[100px] h-[100px] rounded-full object-cover shrink-0"
-                  style={{ border: "2px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
-                />
-                <div>
-                  <p className="text-[22px] font-semibold text-text-primary">Ben Matiash</p>
-                  <p className="text-[15px] text-text-muted">Co-Founder</p>
-                  <p className="text-[14px] text-text-muted mt-0.5">
-                    Northeastern University | Institutional Equity @ Morgan Stanley
-                  </p>
-                </div>
-              </div>
-              <p
-                className="text-[15px] leading-[1.8]"
-                style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
+              <div
+                className="transition-all duration-[250ms]"
+                style={cardStyle}
               >
-                Ben brings the financial acumen and investor perspective. His experience in institutional equity at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became Urgenc: that the people with ideas and the people who want to back them have no efficient way to find each other. He leads investor relations, scoring methodology, and go-to-market strategy at Urgenc.
-              </p>
+                <div className="flex items-center gap-4 mb-4">
+                  <Image
+                    src="/images/ben.jpeg"
+                    alt="Ben Matiash"
+                    width={80}
+                    height={80}
+                    className="rounded-full object-cover shrink-0"
+                    style={{ width: "80px", height: "80px" }}
+                  />
+                  <div>
+                    <p
+                      className="font-semibold"
+                      style={{
+                        fontFamily: "var(--font-dm-sans), sans-serif",
+                        fontSize: "20px",
+                        color: "#0F172A",
+                      }}
+                    >
+                      Ben Matiash
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-dm-sans), sans-serif",
+                        fontSize: "14px",
+                        color: "#94A3B8",
+                      }}
+                    >
+                      Co-Founder
+                    </p>
+                  </div>
+                </div>
+                <p
+                  style={{
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                    fontSize: "15px",
+                    color: "#475569",
+                    lineHeight: 1.7,
+                  }}
+                >
+                  Ben brings the financial acumen and investor perspective. His experience in institutional equity at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became Urgenc: that the people with ideas and the people who want to back them have no efficient way to find each other. He leads investor relations, scoring methodology, and go-to-market strategy at Urgenc.
+                </p>
+              </div>
+
+              <style jsx>{`
+                .group:hover > div:first-child {
+                  transform: translateY(-3px);
+                  border-color: rgba(0, 0, 0, 0.1);
+                  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+                }
+              `}</style>
             </motion.div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Bottom CTA */}
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="max-w-3xl mx-auto px-6 text-center mt-24"
-        >
+        <div className="max-w-[700px] mx-auto px-6 text-center mt-24">
           <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[32px] font-normal mb-8"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease }}
+            className="font-normal mb-8"
+            style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: "28px",
+              color: "#0F172A",
+            }}
           >
             Ready to be part of the story?
           </motion.h2>
           <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease, delay: 0.06 }}
             className="flex flex-col items-center gap-4"
           >
             <Link
               href="/apply/startup"
-              className="group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
-              style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+              className="inline-flex items-center gap-2 px-10 py-4 text-[16px] font-semibold text-white rounded-full transition-all duration-300 hover:-translate-y-0.5"
+              style={{
+                background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                boxShadow: "0 6px 25px rgba(74, 108, 247, 0.35)",
+              }}
             >
               Apply for the Founding Cohort
-              <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </Link>
             <Link
               href="/apply/investor"
@@ -271,7 +320,7 @@ export default function StoryPage() {
               Or apply as an investor
             </Link>
           </motion.div>
-        </motion.div>
+        </div>
       </main>
     </>
   );

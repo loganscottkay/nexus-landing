@@ -237,7 +237,7 @@ const startups: Startup[] = [
     ],
     askBullets: [
       "SaaS or productivity-focused investors",
-      "$25K-$150K check sizes",
+      "$10K-$150K+ check sizes",
       "GTM and distribution expertise",
     ],
     founders: [

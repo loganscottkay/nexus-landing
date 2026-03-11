@@ -334,7 +334,7 @@ export function MatchingPreview({ active }: { active: boolean }) {
                     className="text-[11px] font-medium transition-opacity duration-300"
                     style={{ color: "#4A6CF7", opacity: sliderPos > 50 ? 1 : 0 }}
                   >
-                    $5K - $25K
+                    $1K - $500K+
                   </span>
                   <span className="text-[10px] text-white/30">$100K+</span>
                 </div>

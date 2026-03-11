@@ -1,24 +1,60 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
+const icons: Record<string, React.ReactNode> = {
+  team: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 00-3-3.87" />
+      <path d="M16 3.13a4 4 0 010 7.75" />
+    </svg>
+  ),
+  idea: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 18h6" />
+      <path d="M10 22h4" />
+      <path d="M12 2a7 7 0 00-4 12.7V17h8v-2.3A7 7 0 0012 2z" />
+    </svg>
+  ),
+  materials: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="16" y1="13" x2="8" y2="13" />
+      <line x1="16" y1="17" x2="8" y2="17" />
+    </svg>
+  ),
+  traction: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+      <polyline points="17 6 23 6 23 12" />
+    </svg>
+  ),
+  accountability: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      <polyline points="9 12 11 14 15 10" />
+    </svg>
+  ),
+  rejected: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <line x1="15" y1="9" x2="9" y2="15" />
+      <line x1="9" y1="9" x2="15" y2="15" />
+    </svg>
+  ),
 };
 
 const cards = [
   {
-    num: 1,
+    icon: "team",
     title: "Founding Team",
     items: [
       "At least one full-time committed founder",
@@ -29,7 +65,7 @@ const cards = [
     why: "We bet on people first.",
   },
   {
-    num: 2,
+    icon: "idea",
     title: "The Idea & Vision",
     items: [
       "Clearly defined problem and customer",
@@ -40,7 +76,7 @@ const cards = [
     why: "Clarity of thought beats a perfect business plan.",
   },
   {
-    num: 3,
+    icon: "materials",
     title: "Required Materials",
     items: [
       "Pitch deck (PDF, any stage of polish)",
@@ -50,7 +86,7 @@ const cards = [
     why: "The video pitch is how investors evaluate you.",
   },
   {
-    num: 4,
+    icon: "traction",
     title: "Traction (Flexible)",
     items: [
       "Pre-revenue? Show LOIs, waitlists, pilots, press, grants",
@@ -59,7 +95,7 @@ const cards = [
     why: "500 waitlist signups with a plan beats $10K MRR without one.",
   },
   {
-    num: 5,
+    icon: "accountability",
     title: "Accountability Agreement",
     items: [
       "Update metrics every 14 days",
@@ -70,7 +106,7 @@ const cards = [
     why: "This is what keeps Urgenc elite.",
   },
   {
-    num: 6,
+    icon: "rejected",
     title: "What Gets You Rejected",
     items: [
       "No deck or video submitted",
@@ -83,11 +119,116 @@ const cards = [
   },
 ];
 
+function QualCard({ card, index }: { card: typeof cards[number]; index: number }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.4, ease, delay: index * 0.06 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div
+        className="relative rounded-2xl"
+        style={{
+          background: "rgba(255, 255, 255, 0.5)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          border: card.isRejection
+            ? `1px solid rgba(239, 68, 68, ${hovered ? 0.2 : 0.12})`
+            : `1px solid rgba(0, 0, 0, ${hovered ? 0.1 : 0.06})`,
+          padding: "32px",
+          transform: hovered ? "translateY(-3px)" : "translateY(0)",
+          boxShadow: hovered ? "0 8px 30px rgba(0, 0, 0, 0.08)" : "0 0 0 rgba(0, 0, 0, 0)",
+          transition: "all 0.25s ease",
+        }}
+      >
+        {/* Step counter */}
+        <span
+          className="absolute top-6 right-6 select-none"
+          style={{
+            fontFamily: "var(--font-dm-sans), sans-serif",
+            fontSize: "36px",
+            fontWeight: 600,
+            color: "rgba(0, 0, 0, 0.08)",
+            lineHeight: 1,
+          }}
+        >
+          {String(index + 1).padStart(2, "0")}
+        </span>
+
+        {/* Icon + Title */}
+        <div className="flex items-center gap-3 mb-2">
+          <span style={{ color: card.isRejection ? "rgba(239, 68, 68, 0.7)" : "#4A6CF7" }}>
+            {icons[card.icon]}
+          </span>
+          <h3
+            className="font-semibold"
+            style={{
+              fontFamily: "var(--font-dm-sans), sans-serif",
+              fontSize: "20px",
+              color: card.isRejection ? "#DC2626" : "#0F172A",
+            }}
+          >
+            {card.title}
+          </h3>
+        </div>
+
+        {/* Why line */}
+        {card.why && (
+          <p
+            className="italic mb-4"
+            style={{
+              fontFamily: "var(--font-dm-sans), sans-serif",
+              fontSize: "14px",
+              color: "#7C5CFC",
+            }}
+          >
+            {card.why}
+          </p>
+        )}
+
+        {/* Requirements */}
+        <div className="flex flex-col" style={{ gap: "12px" }}>
+          {card.items.map((item) => (
+            <div key={item} className="flex items-start gap-3">
+              <span
+                className="shrink-0 rounded-full mt-[7px]"
+                style={{
+                  width: "6px",
+                  height: "6px",
+                  background: card.isRejection
+                    ? "rgba(239, 68, 68, 0.7)"
+                    : "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "var(--font-dm-sans), sans-serif",
+                  fontSize: "15px",
+                  color: "#475569",
+                  lineHeight: 1.6,
+                }}
+              >
+                {item}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function StartupQualifications() {
   return (
-    <main className="relative min-h-screen bg-base text-text-primary">
+    <main className="relative min-h-screen text-[#0F172A]">
       <div className="noise-overlay" />
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute inset-0 bg-[#FAFAF9]" />
         <div className="blob blob-blue animate-blob-1 -top-[5%] right-[10%]" />
         <div className="blob blob-lavender animate-blob-2 top-[50%] -left-[5%]" />
         <div className="blob blob-peach animate-blob-3 bottom-[5%] right-[20%]" />
@@ -96,111 +237,40 @@ export default function StartupQualifications() {
       <Navbar />
 
       <div className="relative z-10 pt-28 md:pt-36 pb-20 px-6">
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          animate="visible"
-          className="max-w-[800px] mx-auto"
-        >
+        <div className="max-w-[700px] mx-auto">
           {/* Header */}
           <motion.h1
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease }}
             className="text-[32px] md:text-[40px] font-normal text-center mb-4"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
             Startup Qualification Standards
           </motion.h1>
           <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-text-muted text-[16px] md:text-[18px] text-center mb-12 max-w-lg mx-auto leading-[1.7]"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease, delay: 0.06 }}
+            className="text-[16px] md:text-[18px] text-center mb-12 max-w-lg mx-auto leading-[1.7]"
+            style={{ color: "#94A3B8" }}
           >
             We accept less than 15% of applicants. Here is what we look for.
           </motion.p>
 
-          {/* Cards with progress indicator */}
-          <div className="relative">
-            {/* Vertical progress line */}
-            <div className="absolute left-4 md:left-6 top-0 bottom-0 w-[2px] hidden md:block" style={{ background: "rgba(0,0,0,0.06)" }}>
-              <motion.div
-                className="w-full rounded-full"
-                style={{ background: "linear-gradient(180deg, #4A6CF7, #7C5CFC)", transformOrigin: "top" }}
-                initial={{ height: "0%" }}
-                whileInView={{ height: "100%" }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 2, ease: [0.25, 0.4, 0.25, 1] }}
-              />
-            </div>
-
-            <div className="flex flex-col gap-4">
-              {cards.map((card, i) => (
-                <motion.div
-                  key={card.title}
-                  variants={fadeUp}
-                  transition={{ duration: 0.4, ease, delay: i * 0.08 }}
-                  className="relative md:pl-16"
-                >
-                  {/* Numbered circle on the line */}
-                  {card.num && (
-                    <div className="absolute left-0 md:left-1.5 top-8 w-7 h-7 rounded-full hidden md:flex items-center justify-center text-[11px] font-bold text-white z-10" style={{ background: card.isRejection ? "#EF4444" : "linear-gradient(135deg, #4A6CF7, #7C5CFC)", boxShadow: `0 0 12px ${card.isRejection ? "rgba(239,68,68,0.3)" : "rgba(74, 108, 247, 0.3)"}` }}>
-                      {card.num}
-                    </div>
-                  )}
-
-                  <div className="glow-card-wrapper">
-                    <div
-                      className="glass p-8 relative overflow-hidden"
-                      style={
-                        card.isRejection
-                          ? {
-                              background: "rgba(239, 68, 68, 0.03)",
-                              border: "1px solid rgba(239, 68, 68, 0.1)",
-                            }
-                          : undefined
-                      }
-                    >
-                      <h3
-                        className="text-[20px] font-semibold text-text-primary mb-2"
-                        style={card.isRejection ? { color: "#DC2626" } : undefined}
-                      >
-                        {card.title}
-                      </h3>
-
-                      {card.why && (
-                        <p className="text-text-muted text-[14px] italic mb-4">
-                          {card.why}
-                        </p>
-                      )}
-
-                      <ul className="space-y-2">
-                        {card.items.map((item) => (
-                          <li key={item} className="flex items-start gap-3">
-                            <div
-                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                              style={{
-                                background: card.isRejection
-                                  ? "#EF4444"
-                                  : "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                              }}
-                            />
-                            <span className="text-text-secondary text-[15px] leading-[1.6]">
-                              {item}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          {/* Cards */}
+          <div className="flex flex-col" style={{ gap: "20px" }}>
+            {cards.map((card, i) => (
+              <QualCard key={card.title} card={card} index={i} />
+            ))}
           </div>
 
           {/* CTA */}
           <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease }}
             className="text-center mt-12"
           >
             <Link
@@ -217,7 +287,7 @@ export default function StartupQualifications() {
               </svg>
             </Link>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </main>
   );
