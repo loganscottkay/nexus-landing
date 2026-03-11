@@ -191,7 +191,7 @@ export default function AdminPage() {
         style={{ background: "rgba(15, 23, 42, 0.95)", borderRight: "1px solid rgba(255,255,255,0.06)" }}
       >
         <div className="px-5 pt-7 pb-6">
-          <span className="text-lg font-bold tracking-[0.3em] text-white/90">NEXUS</span>
+          <span className="text-lg font-bold tracking-[0.3em] text-white/90">URGENC</span>
           <p className="text-[11px] text-white/30 mt-0.5 tracking-wider">ADMIN</p>
         </div>
         <nav className="flex-1 px-3">

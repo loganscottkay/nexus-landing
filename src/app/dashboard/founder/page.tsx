@@ -191,6 +191,7 @@ export default function FounderDashboard() {
                     </div>
                     <Link href="/interests" className="text-accent-violet text-[14px] hover:underline">View All</Link>
                   </div>
+                  <p className="text-[12px] text-text-muted italic mb-3">Investors who expressed interest in your startup. Accept or decline within 72 hours.</p>
                   {[
                     { initials: "SC", color: "#4A6CF7", name: "Sarah Chen", firm: "Gradient Ventures", checkSize: "$250K-$1M", hours: 47, urgent: false },
                     { initials: "MW", color: "#7C5CFC", name: "Marcus Webb", firm: "Founder Collective", checkSize: "$100K-$500K", hours: 31, urgent: false },
@@ -301,10 +302,10 @@ export default function FounderDashboard() {
                   <h3 className="text-[16px] font-semibold text-text-primary mb-3">Quick Actions</h3>
                   <div className="space-y-2">
                     {[
-                      { label: "Update Metrics", icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></svg>, highlight: false, href: "/settings/founder" },
-                      { label: "Edit Profile", icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>, highlight: false, href: "/settings/founder" },
-                      { label: "Upload Video Pitch", icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" /></svg>, highlight: true, href: "/settings/founder" },
-                      { label: "View Public Profile", icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>, highlight: false, href: "/startup/1" },
+                      { label: "Update Your Metrics", icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></svg>, highlight: false, href: "/settings/founder" },
+                      { label: "Edit Your Profile", icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>, highlight: false, href: "/settings/founder" },
+                      { label: "Record Video Pitch", icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" /></svg>, highlight: true, href: "/settings/founder" },
+                      { label: "Preview Your Public Profile", icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>, highlight: false, href: "/startup/1" },
                     ].map((action) => (
                       <Link key={action.label} href={action.href} className={`flex items-center gap-3 p-4 rounded-xl transition-all duration-200 hover:-translate-y-0.5 ${action.highlight ? "bg-accent-violet/[0.06]" : ""}`} style={{ background: action.highlight ? undefined : "rgba(255,255,255,0.25)", border: `1px solid ${action.highlight ? "rgba(124,92,252,0.15)" : "rgba(255,255,255,0.3)"}` }}>
                         {action.icon}

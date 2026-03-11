@@ -247,6 +247,7 @@ export default function InvestorDashboard() {
                     </div>
                     <Link href="/drops" className="text-accent-blue text-[14px] hover:underline">Open Feed</Link>
                   </div>
+                  <p className="text-[12px] text-text-muted italic mb-3">Startups that match your filters, refreshed daily.</p>
                   {[
                     { initials: "TH", color: "#7C5CFC", name: "Terraform Health", desc: "Predictive diagnostics using wearable biosignals", sector: "Health Tech", stage: "Pre-Seed" },
                     { initials: "CA", color: "#059669", name: "Canopy Analytics", desc: "Real-time carbon tracking for supply chains", sector: "Climate Tech", stage: "Seed" },
@@ -277,7 +278,7 @@ export default function InvestorDashboard() {
                   <div className="grid grid-cols-3 gap-3">
                     {/* Interested */}
                     <div>
-                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #4A6CF7", paddingLeft: "8px" }}>Interested <span className="text-text-primary">(2)</span></p>
+                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #4A6CF7", paddingLeft: "8px" }}>Waiting <span className="text-text-primary">(2)</span></p>
                       <div className="space-y-2">
                         {[
                           { name: "Luminary AI", sub: "47h remaining" },
@@ -303,7 +304,7 @@ export default function InvestorDashboard() {
                     </div>
                     {/* Matched */}
                     <div>
-                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #7C5CFC", paddingLeft: "8px" }}>Matched <span className="text-text-primary">(2)</span></p>
+                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #7C5CFC", paddingLeft: "8px" }}>Call Booked <span className="text-text-primary">(2)</span></p>
                       <div className="space-y-2">
                         {[
                           { name: "Terraform Health", sub: "Call Mar 15" },
@@ -329,7 +330,7 @@ export default function InvestorDashboard() {
                     </div>
                     {/* Talking */}
                     <div>
-                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #059669", paddingLeft: "8px" }}>Talking <span className="text-text-primary">(1)</span></p>
+                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #059669", paddingLeft: "8px" }}>In Progress <span className="text-text-primary">(1)</span></p>
                       <div className="space-y-2">
                         <motion.div
                           custom={0}

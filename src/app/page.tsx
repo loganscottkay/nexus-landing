@@ -1689,7 +1689,7 @@ export default function Home() {
         </motion.div>
       </Section>
 
-      {/* ============ EXPLORE THE PLATFORM ============ */}
+      {/* ============ SEE URGENC IN ACTION ============ */}
       <Section id="preview" className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
         <motion.div
           variants={cardStagger}
@@ -1698,20 +1698,13 @@ export default function Home() {
           viewport={viewportConfig}
           className="flex flex-col items-center"
         >
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="gradient-text text-[13px] tracking-[4px] uppercase mb-4 font-medium"
-          >
-            Preview
-          </motion.p>
           <motion.h2
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
             className="text-[36px] font-normal text-center mb-4"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
-            See What Urgenc Looks Like Inside
+            See Urgenc in Action
           </motion.h2>
           <motion.p
             variants={fadeUp}
@@ -1719,7 +1712,7 @@ export default function Home() {
             className="text-center max-w-[700px] text-[16px] leading-[1.7] mb-14"
             style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
-            Explore the full platform experience from both sides. These are live previews of what the app looks like.
+            Click into the full demo dashboards and explore exactly what the app looks like from both sides.
           </motion.p>
 
           <motion.div
@@ -1730,77 +1723,45 @@ export default function Home() {
             {/* Investor Experience */}
             <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
               <div className="glow-card-wrapper h-full">
-                <div className="glass p-6 md:p-8 h-full flex flex-col">
-                  {/* Mini dashboard preview */}
+                <div className="glass p-6 md:p-8 h-full flex flex-col hover:-translate-y-1 transition-transform duration-300">
+                  {/* Mini feature preview rows */}
                   <div
-                    className="rounded-xl mb-6 overflow-hidden"
+                    className="rounded-xl mb-6 p-4 space-y-3"
                     style={{
-                      background: "rgba(10, 10, 15, 0.95)",
-                      border: "1px solid rgba(255, 255, 255, 0.08)",
+                      background: "rgba(255, 255, 255, 0.5)",
+                      backdropFilter: "blur(24px)",
+                      WebkitBackdropFilter: "blur(24px)",
+                      border: "1px solid rgba(255, 255, 255, 0.3)",
                     }}
                   >
-                    {/* Browser chrome */}
-                    <div
-                      className="flex items-center gap-1.5 px-4 py-2.5"
-                      style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.06)" }}
-                    >
-                      <span className="w-[7px] h-[7px] rounded-full" style={{ background: "#FF5F57" }} />
-                      <span className="w-[7px] h-[7px] rounded-full" style={{ background: "#FFBD2E" }} />
-                      <span className="w-[7px] h-[7px] rounded-full" style={{ background: "#28CA41" }} />
+                    <div className="flex items-center gap-3">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M8 21h8" style={{ transform: "rotate(15deg)", transformOrigin: "center" }} /></svg>
+                      <span className="text-[14px] text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Browse startup pitches daily</span>
                     </div>
-                    {/* Mock dashboard content */}
-                    <div className="p-4 space-y-3">
-                      {/* Stats row */}
-                      <div className="grid grid-cols-3 gap-2">
-                        {["12", "4", "89%"].map((val, i) => (
-                          <div
-                            key={i}
-                            className="rounded-lg px-3 py-2.5 text-center"
-                            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
-                          >
-                            <p className="text-white text-[16px] font-semibold leading-none mb-1">{val}</p>
-                            <p className="text-[9px]" style={{ color: "rgba(255,255,255,0.35)" }}>
-                              {["Matches", "Calls", "Score"][i]}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                      {/* Card outlines */}
-                      <div className="space-y-2">
-                        {[0, 1].map((i) => (
-                          <div
-                            key={i}
-                            className="rounded-lg px-3 py-3 flex items-center gap-3"
-                            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
-                          >
-                            <div
-                              className="w-8 h-8 rounded-full shrink-0"
-                              style={{ background: i === 0 ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)" : "linear-gradient(135deg, #7C5CFC, #14b8a6)" }}
-                            />
-                            <div className="flex-1">
-                              <div className="h-2 rounded-full mb-1.5" style={{ background: "rgba(255,255,255,0.12)", width: i === 0 ? "70%" : "55%" }} />
-                              <div className="h-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.06)", width: i === 0 ? "45%" : "35%" }} />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                    <div className="flex items-center gap-3">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></svg>
+                      <span className="text-[14px] text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Watch 60-second founder videos</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14b8a6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                      <span className="text-[14px] text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Get matched and take chemistry calls</span>
                     </div>
                   </div>
 
                   <h3
-                    className="text-[20px] font-semibold text-text-primary mb-2"
+                    className="text-[22px] font-semibold text-text-primary mb-2"
                     style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
                   >
-                    Investor Dashboard
+                    See the Investor Side
                   </h3>
                   <p className="text-[15px] text-text-muted leading-[1.6] mb-6 flex-1">
-                    Browse vetted startups. Watch 60-second pitches. Match with founders who fit your thesis. See the full investor experience.
+                    This is exactly what you see as an investor on Urgenc. Browse vetted startups, watch their pitches, and match with the ones you believe in.
                   </p>
                   <Link
                     href="/dashboard/investor"
                     className="btn-primary btn-pulse-target px-6 py-3.5 text-[15px] font-medium text-center"
                   >
-                    Explore Investor View
+                    Explore Investor Dashboard &rarr;
                   </Link>
                 </div>
               </div>
@@ -1809,77 +1770,45 @@ export default function Home() {
             {/* Startup Experience */}
             <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
               <div className="glow-card-wrapper h-full">
-                <div className="glass p-6 md:p-8 h-full flex flex-col">
-                  {/* Mini dashboard preview */}
+                <div className="glass p-6 md:p-8 h-full flex flex-col hover:-translate-y-1 transition-transform duration-300">
+                  {/* Mini feature preview rows */}
                   <div
-                    className="rounded-xl mb-6 overflow-hidden"
+                    className="rounded-xl mb-6 p-4 space-y-3"
                     style={{
-                      background: "rgba(10, 10, 15, 0.95)",
-                      border: "1px solid rgba(255, 255, 255, 0.08)",
+                      background: "rgba(255, 255, 255, 0.5)",
+                      backdropFilter: "blur(24px)",
+                      WebkitBackdropFilter: "blur(24px)",
+                      border: "1px solid rgba(255, 255, 255, 0.3)",
                     }}
                   >
-                    {/* Browser chrome */}
-                    <div
-                      className="flex items-center gap-1.5 px-4 py-2.5"
-                      style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.06)" }}
-                    >
-                      <span className="w-[7px] h-[7px] rounded-full" style={{ background: "#FF5F57" }} />
-                      <span className="w-[7px] h-[7px] rounded-full" style={{ background: "#FFBD2E" }} />
-                      <span className="w-[7px] h-[7px] rounded-full" style={{ background: "#28CA41" }} />
+                    <div className="flex items-center gap-3">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
+                      <span className="text-[14px] text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>See which investors are interested in you</span>
                     </div>
-                    {/* Mock dashboard content */}
-                    <div className="p-4 space-y-3">
-                      {/* Stats row */}
-                      <div className="grid grid-cols-3 gap-2">
-                        {["8", "156", "78%"].map((val, i) => (
-                          <div
-                            key={i}
-                            className="rounded-lg px-3 py-2.5 text-center"
-                            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
-                          >
-                            <p className="text-white text-[16px] font-semibold leading-none mb-1">{val}</p>
-                            <p className="text-[9px]" style={{ color: "rgba(255,255,255,0.35)" }}>
-                              {["Interested", "Views", "Profile"][i]}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                      {/* Card outlines */}
-                      <div className="space-y-2">
-                        {[0, 1].map((i) => (
-                          <div
-                            key={i}
-                            className="rounded-lg px-3 py-3 flex items-center gap-3"
-                            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
-                          >
-                            <div
-                              className="w-8 h-8 rounded-full shrink-0"
-                              style={{ background: i === 0 ? "linear-gradient(135deg, #F59E0B, #EF4444)" : "linear-gradient(135deg, #4A6CF7, #14b8a6)" }}
-                            />
-                            <div className="flex-1">
-                              <div className="h-2 rounded-full mb-1.5" style={{ background: "rgba(255,255,255,0.12)", width: i === 0 ? "60%" : "50%" }} />
-                              <div className="h-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.06)", width: i === 0 ? "40%" : "30%" }} />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                    <div className="flex items-center gap-3">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
+                      <span className="text-[14px] text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Track who viewed your pitch deck</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14b8a6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+                      <span className="text-[14px] text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Message matched investors directly</span>
                     </div>
                   </div>
 
                   <h3
-                    className="text-[20px] font-semibold text-text-primary mb-2"
+                    className="text-[22px] font-semibold text-text-primary mb-2"
                     style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
                   >
-                    Startup Dashboard
+                    See the Startup Side
                   </h3>
                   <p className="text-[15px] text-text-muted leading-[1.6] mb-6 flex-1">
-                    See who is interested in your company. Track deck views. Manage investor conversations. See the full founder experience.
+                    This is what founders see on Urgenc. Track investor interest, manage your fundraise, and connect with backers who get your vision.
                   </p>
                   <Link
                     href="/dashboard/founder"
                     className="btn-primary btn-pulse-target px-6 py-3.5 text-[15px] font-medium text-center"
                   >
-                    Explore Startup View
+                    Explore Startup Dashboard &rarr;
                   </Link>
                 </div>
               </div>
