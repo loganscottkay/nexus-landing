@@ -166,7 +166,7 @@ export default function Navbar() {
                 : { color: "#0F172A" }),
             }}
           >
-            NEXUS
+            URGENC
             <span className="relative ml-[-0.15em]">
               <span className="nav-logo-dot" />
             </span>
