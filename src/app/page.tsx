@@ -1315,7 +1315,7 @@ export default function Home() {
                   "Your pitch gets in front of real people, not algorithms.",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="mt-[2px] shrink-0">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="mt-[2px] shrink-0" style={{ minWidth: 18, minHeight: 18 }}>
                       <path d="M3.5 9.5L7 13.5L14.5 4.5" stroke="#059669" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     <span className="text-[15px] leading-[1.6]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
@@ -1339,7 +1339,7 @@ export default function Home() {
                   "That staying on the platform is guaranteed. You earn your spot.",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="mt-[2px] shrink-0" style={{ opacity: 0.6 }}>
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="mt-[2px] shrink-0" style={{ minWidth: 18, minHeight: 18 }}>
                       <path d="M4.5 4.5L13.5 13.5M13.5 4.5L4.5 13.5" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     <span className="text-[15px] leading-[1.6]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
@@ -1664,7 +1664,7 @@ export default function Home() {
             className="text-center max-w-[700px] text-[17px] leading-[1.7] mb-12"
             style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
-            We are hand-selecting 100 startups and 20 investors as founding members. First in, best perks. These benefits disappear at public launch.
+            We are building the founding cohort now. Join the waitlist to be considered. If your idea scores well, we will invite you to complete the full application and join as a founding member.
           </motion.p>
 
           {/* Benefit cards */}
@@ -1726,13 +1726,13 @@ export default function Home() {
             <div>
               <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Founders:</p>
               <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                You have an idea and you are willing to pitch it on camera. If you make the cut and an investor shows interest, we guarantee the meeting happens. What you do with that opportunity is on you.
+                Step 1: Join the waitlist. Tell us your idea in 60 seconds. Step 2: If we like what we see, we invite you to submit the full application with your pitch deck and video. Step 3: Get accepted and start matching with investors.
               </p>
             </div>
             <div>
               <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Investors:</p>
               <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                You want to discover startups early. Browse vetted founders, express interest, and if they accept, you get a guaranteed 20-minute call. No obligations beyond showing up.
+                Investors apply directly. No waitlist. Tell us your thesis, your investment range, and what kind of founders excite you. If accepted, you start seeing matches immediately.
               </p>
             </div>
           </motion.div>
@@ -1748,7 +1748,7 @@ export default function Home() {
               className="w-full sm:w-auto group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
               style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
             >
-              Apply as Founder
+              Join the Waitlist
               <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
             <Link
@@ -1884,7 +1884,7 @@ export default function Home() {
                   className="inline-flex items-center justify-center w-full px-6 py-3.5 text-[15px] font-semibold text-white rounded-full mt-8"
                   style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
                 >
-                  Apply as Startup
+                  Join the Waitlist
                 </Link>
             </div>
           </motion.div>
@@ -2234,7 +2234,7 @@ export default function Home() {
                 className="group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
                 style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
               >
-                Apply for Access
+                Join the Waitlist
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
 

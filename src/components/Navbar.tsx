@@ -258,6 +258,14 @@ export default function Navbar() {
                 Join Waitlist
               </Link>
             </div>
+            <Link
+              href="/apply/investor"
+              onClick={() => setMenuOpen(false)}
+              className="mt-4 text-[14px] transition-colors hover:opacity-80"
+              style={{ color: "#4A6CF7", fontFamily: "var(--font-dm-sans), sans-serif" }}
+            >
+              I am an investor &rarr;
+            </Link>
           </div>
         </div>
       </div>
