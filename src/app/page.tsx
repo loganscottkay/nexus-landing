@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
-import ParticleField from "@/components/ParticleField";
 import { ScoringPreview, MatchingPreview, AccountabilityPreview } from "@/components/HowItWorksPreviews";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
@@ -1248,7 +1247,7 @@ export default function Home() {
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
               <Link
-                href="/apply/startup"
+                href="/waitlist"
                 className="group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
               >
                 Apply as Startup
@@ -1530,42 +1529,49 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ============ STATS (DARK SECTION) ============ */}
-      <section className="relative z-10 py-24 md:py-32 bg-dark-section overflow-hidden">
-        {/* Top gradient fade from light to dark */}
-        <div className="absolute top-0 left-0 right-0 h-[40px] pointer-events-none z-10" style={{ background: "linear-gradient(to bottom, #FAFAF9, transparent)" }} />
-        {/* Bottom gradient fade from dark to light */}
-        <div className="absolute bottom-0 left-0 right-0 h-[40px] pointer-events-none z-10" style={{ background: "linear-gradient(to top, #FAFAF9, transparent)" }} />
-        <ParticleField />
-        <div className="grid-overlay absolute inset-0" />
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-[600px] h-[400px] rounded-full bg-[radial-gradient(circle,_rgba(74,108,247,0.08)_0%,_rgba(124,92,252,0.05)_40%,_transparent_70%)]" />
-        </div>
-
+      {/* ============ STATS ============ */}
+      <Section className="relative z-10 px-6 py-24 md:py-32">
         <motion.div
           variants={sectionFadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
           transition={{ duration: 0.6, ease }}
-          className="relative max-w-6xl mx-auto px-6"
+          className="max-w-[900px] mx-auto"
         >
-          <div className="glass-dark px-6 py-12 md:px-16 md:py-16">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6 text-center">
+          <div
+            className="px-6 py-10 md:px-12 md:py-10 rounded-2xl"
+            style={{
+              background: "rgba(255, 255, 255, 0.5)",
+              backdropFilter: "blur(40px)",
+              WebkitBackdropFilter: "blur(40px)",
+              border: "1px solid rgba(0, 0, 0, 0.06)",
+            }}
+          >
+            <div className="grid grid-cols-2 md:grid-cols-4 text-center">
               {[
                 { value: "$1K-500K+", label: "Investment Range" },
                 { value: "<15%", label: "Target Acceptance Rate" },
                 { value: "72hrs", label: "Match Response Window" },
                 { value: "30 days", label: "To Prove Traction" },
-              ].map((stat) => (
-                <div key={stat.label}>
+              ].map((stat, i) => (
+                <div
+                  key={stat.label}
+                  className={`px-4 py-4 md:py-0 flex flex-col items-center justify-center ${
+                    i < 3 ? "md:border-r" : ""
+                  }`}
+                  style={{ borderColor: "rgba(0, 0, 0, 0.06)" }}
+                >
                   <p
-                    className="text-[32px] sm:text-[40px] md:text-[52px] font-normal text-white leading-none mb-2 whitespace-nowrap"
-                    style={{ fontFamily: "'Instrument Serif', serif" }}
+                    className="text-[28px] sm:text-[36px] md:text-[44px] font-normal leading-none mb-2 whitespace-nowrap"
+                    style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
                   >
                     {stat.value}
                   </p>
-                  <p className="text-[#9CA3AF] text-[13px] md:text-[14px]">
+                  <p
+                    className="text-[12px] md:text-[13px] uppercase tracking-[2px]"
+                    style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                  >
                     {stat.label}
                   </p>
                 </div>
@@ -1573,11 +1579,7 @@ export default function Home() {
             </div>
           </div>
         </motion.div>
-
-        <div className="absolute bottom-12 left-0 right-0 h-px overflow-hidden pointer-events-none">
-          <div className="sweep-line" />
-        </div>
-      </section>
+      </Section>
 
       {/* ============ THE FOUNDING COHORT ============ */}
       <Section className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
@@ -1689,7 +1691,7 @@ export default function Home() {
             className="flex flex-col sm:flex-row gap-4 mb-4"
           >
             <Link
-              href="/apply/startup"
+              href="/waitlist"
               className="group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
               style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
             >
@@ -1825,7 +1827,7 @@ export default function Home() {
                   ))}
                 </ul>
                 <Link
-                  href="/apply/startup"
+                  href="/waitlist"
                   className="inline-flex items-center justify-center w-full px-6 py-3.5 text-[15px] font-semibold text-white rounded-full mt-8"
                   style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
                 >
@@ -1837,76 +1839,55 @@ export default function Home() {
       </Section>
 
       {/* ============ NEVER COLD EMAIL AGAIN ============ */}
-      <section className="relative z-10 py-16 md:py-[60px] overflow-hidden" style={{ background: "rgba(10, 10, 15, 0.9)" }}>
-        {/* Top gradient fade from light to dark */}
-        <div className="absolute top-0 left-0 right-0 h-[40px] pointer-events-none z-10" style={{ background: "linear-gradient(to bottom, #FAFAF9, transparent)" }} />
-        {/* Bottom gradient fade from dark to light */}
-        <div className="absolute bottom-0 left-0 right-0 h-[40px] pointer-events-none z-10" style={{ background: "linear-gradient(to top, #FAFAF9, transparent)" }} />
-        {/* Floating particle dots */}
-        <div className="absolute inset-0 pointer-events-none">
-          {Array.from({ length: 25 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full"
-              style={{
-                width: `${2 + Math.random() * 2}px`,
-                height: `${2 + Math.random() * 2}px`,
-                background: "white",
-                opacity: 0.1 + Math.random() * 0.05,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animation: `float-particle ${8 + Math.random() * 12}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 5}s`,
-              }}
-            />
-          ))}
-        </div>
-
+      <Section className="relative z-10 px-6 py-24 md:py-32">
         <motion.div
-          variants={cardStagger}
+          variants={sectionFadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          className="relative max-w-[500px] mx-auto px-6 text-center flex flex-col items-center"
+          transition={{ duration: 0.6, ease }}
+          className="max-w-[800px] mx-auto"
         >
-          <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[36px] md:text-[44px] font-normal text-white mb-6"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
+          <div
+            className="rounded-2xl px-8 py-14 md:px-16 md:py-[60px] text-center flex flex-col items-center"
+            style={{
+              background: "linear-gradient(135deg, rgba(74, 108, 247, 0.04), rgba(124, 92, 252, 0.04))",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+              border: "1px solid rgba(74, 108, 247, 0.1)",
+            }}
           >
-            Never cold email for your startup again.
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[17px] leading-[1.7] mb-10 max-w-[500px]"
-            style={{ color: "rgba(255, 255, 255, 0.6)", fontFamily: "var(--font-dm-sans), sans-serif" }}
-          >
-            No more pitching into the void. No more LinkedIn stalking VCs. No more begging for warm intros. On Urgenc, investors come to you.
-          </motion.p>
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="flex flex-col items-center gap-3"
-          >
-            <Link
-              href="/apply/startup"
-              className="inline-flex items-center justify-center px-8 py-3.5 text-[15px] font-semibold text-white rounded-full"
-              style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+            <h2
+              className="text-[36px] md:text-[40px] font-normal mb-6"
+              style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
             >
-              Apply as a Founder &rarr;
-            </Link>
-            <Link
-              href="/apply/investor"
-              className="text-[14px] transition-colors duration-200 hover:text-white/70"
-              style={{ color: "rgba(255, 255, 255, 0.5)" }}
+              Never cold email for your startup again.
+            </h2>
+            <p
+              className="text-[17px] leading-[1.7] mb-10 max-w-[500px]"
+              style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
-              Or apply as an investor &rarr;
-            </Link>
-          </motion.div>
+              No more pitching into the void. No more LinkedIn stalking VCs. No more begging for warm intros. On Urgenc, investors come to you.
+            </p>
+            <div className="flex flex-col items-center gap-3">
+              <Link
+                href="/waitlist"
+                className="inline-flex items-center justify-center px-8 py-3.5 text-[15px] font-semibold text-white rounded-full"
+                style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+              >
+                Join the Waitlist &rarr;
+              </Link>
+              <Link
+                href="/apply/investor"
+                className="text-[14px] transition-colors duration-200 hover:opacity-80"
+                style={{ color: "#4A6CF7" }}
+              >
+                Or apply as an investor &rarr;
+              </Link>
+            </div>
+          </div>
         </motion.div>
-      </section>
+      </Section>
 
       {/* ============ WHY WE BUILT THIS ============ */}
       <Section className="relative z-10 px-6 py-24 md:py-32 max-w-4xl mx-auto">
@@ -2196,7 +2177,7 @@ export default function Home() {
               className="flex flex-col items-center"
             >
               <Link
-                href="/apply/investor"
+                href="/waitlist"
                 className="group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
                 style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
               >

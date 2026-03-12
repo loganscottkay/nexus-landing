@@ -498,6 +498,23 @@ body {
   100% { left: 200%; }
 }
 
+.btn-shimmer-sweep {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 70%
+  );
+  transform: skewX(-15deg);
+  animation: shimmer-sweep 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
 /* ---- Hero CTA pulse glow ---- */
 .btn-hero-glow {
   animation: hero-glow-pulse 2s ease-in-out infinite;
