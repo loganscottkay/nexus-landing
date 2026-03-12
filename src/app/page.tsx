@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import { ScoringPreview, MatchingPreview, AccountabilityPreview } from "@/components/HowItWorksPreviews";
 
@@ -273,7 +272,7 @@ function HowItWorksSection() {
   const activeIndex = STEPS.indexOf(activeCard as typeof STEPS[number]);
 
   return (
-    <Section id="how-it-works" className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
+    <Section id="how-it-works" className="relative z-10 px-6 py-20 max-w-6xl mx-auto">
       <div ref={sectionRef}>
         <motion.div
           variants={cardStagger}
@@ -1001,7 +1000,7 @@ const matchingSteps = [
 
 function MatchingFlowSection() {
   return (
-    <Section className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
+    <Section className="relative z-10 px-6 py-20 max-w-6xl mx-auto">
       <motion.div
         variants={cardStagger}
         initial="hidden"
@@ -1247,136 +1246,235 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ QUOTE BANNER ============ */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.5, ease }}
-        className="relative z-10 py-8 md:py-12"
-        style={{
-          background: "rgba(255, 255, 255, 0.25)",
-          backdropFilter: "blur(6px)",
-          WebkitBackdropFilter: "blur(6px)",
-        }}
-      >
-        <p
-          className="text-center px-6 max-w-4xl mx-auto text-[20px] md:text-[28px]"
-          style={{
-            fontFamily: "'Instrument Serif', serif",
-            fontStyle: "italic",
-            color: "#0F172A",
-            lineHeight: 1.4,
-          }}
-        >
-          The barrier to building a startup has never been lower. We are doing the same for fundraising.
-        </p>
-      </motion.div>
-
       {/* ============ HOW IT WORKS ============ */}
       <HowItWorksSection />
 
       {/* ============ HOW MATCHING WORKS ============ */}
       <MatchingFlowSection />
 
-      {/* ============ OUR PROMISE ============ */}
-      <Section className="relative z-10 px-6 py-24 md:py-32">
+      {/* ============ THE FOUNDING COHORT ============ */}
+      <Section className="relative z-10 px-6 py-20 max-w-6xl mx-auto">
         <motion.div
+          variants={cardStagger}
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          variants={cardStagger}
           className="flex flex-col items-center"
         >
-          <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[32px] font-normal text-center mb-12"
-            style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
-          >
-            What We Promise (and What We Don&apos;t)
-          </motion.h2>
-
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="w-full max-w-[800px] rounded-2xl mb-10"
-            style={{
-              background: "rgba(255, 255, 255, 0.5)",
-              backdropFilter: "blur(24px)",
-              WebkitBackdropFilter: "blur(24px)",
-              padding: "40px",
-              border: "1px solid rgba(0, 0, 0, 0.06)",
-            }}
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: "40px" }}>
-              {/* We Promise */}
-              <div>
-                <p className="text-[16px] font-semibold mb-5" style={{ color: "#059669", fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                  We Promise:
-                </p>
-                <div className="flex flex-col" style={{ gap: "20px" }}>
-                  {[
-                    "If an investor shows interest, you get a meeting. Guaranteed.",
-                    "If you ghost that meeting, you are removed.",
-                    "Every person on this platform is vetted and serious.",
-                    "Your pitch gets in front of real people, not algorithms.",
-                  ].map((item) => (
-                    <div key={item} className="flex items-start gap-3">
-                      <div className="shrink-0 flex items-center justify-center" style={{ width: 20, height: 20, marginTop: 2 }}>
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                          <path d="M13.3 4.3L6 11.6L2.7 8.3" stroke="#059669" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </div>
-                      <p className="text-[15px] leading-[1.6]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                        {item}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* We Don't Promise */}
-              <div>
-                <p className="text-[16px] font-semibold mb-5" style={{ color: "#EF4444", fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                  We Don&apos;t Promise:
-                </p>
-                <div className="flex flex-col" style={{ gap: "20px" }}>
-                  {[
-                    "Investment or funding of any kind.",
-                    "That every meeting will lead to a deal.",
-                    "Financial advice or transaction processing.",
-                    "That staying on the platform is guaranteed. You earn your spot.",
-                  ].map((item) => (
-                    <div key={item} className="flex items-start gap-3">
-                      <div className="shrink-0 flex items-center justify-center" style={{ width: 20, height: 20, marginTop: 2 }}>
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                          <path d="M4 4L12 12M12 4L4 12" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </div>
-                      <p className="text-[15px] leading-[1.6]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                        {item}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
           <motion.p
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
-            className="text-center text-[14px] italic max-w-[550px]"
-            style={{ color: "#94A3B8", fontFamily: "var(--font-dm-sans), sans-serif" }}
+            className="gradient-text text-[13px] tracking-[4px] uppercase mb-4 font-medium"
           >
-            Urgenc is a matching and meeting platform. No money moves through our app. All investment discussions and transactions happen directly between you and the other party, off-platform.
+            Early Access
+          </motion.p>
+          <motion.h2
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[36px] font-normal text-center mb-4"
+            style={{ fontFamily: "'Instrument Serif', serif" }}
+          >
+            The Founding Cohort
+          </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-center max-w-[700px] text-[17px] leading-[1.7] mb-12"
+            style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
+          >
+            Think of it like Y Combinator, but your idea can just be an idea. We are building the founding cohort now. Join the waitlist to be considered. If your idea scores well, we invite you to complete the full application.
+          </motion.p>
+
+          {/* Benefit cards */}
+          <motion.div
+            variants={cardStagger}
+            className="grid md:grid-cols-3 gap-6 w-full mb-10"
+          >
+            <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
+              <div className="glow-card-wrapper h-full">
+                <div className="glass p-7 h-full" style={{ background: "rgba(255,255,255,0.45)", backdropFilter: "blur(40px)" }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
+                    <path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6" />
+                    <polyline points="12 3 12 15" />
+                    <path d="M8 7l4-4 4 4" />
+                    <rect x="2" y="12" width="20" height="2" rx="1" />
+                  </svg>
+                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Early Access</h3>
+                  <p className="text-[15px] text-text-muted leading-[1.6]">Platform access before anyone else. Build your profile and start matching first.</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
+              <div className="glow-card-wrapper h-full">
+                <div className="glass p-7 h-full" style={{ background: "rgba(255,255,255,0.45)", backdropFilter: "blur(40px)" }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                  </svg>
+                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Discounted Premium</h3>
+                  <p className="text-[15px] text-text-muted leading-[1.6]">Lock in the lowest rate on premium features. Forever.</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
+              <div className="glow-card-wrapper h-full">
+                <div className="glass p-7 h-full" style={{ background: "rgba(255,255,255,0.45)", backdropFilter: "blur(40px)" }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
+                    <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
+                  </svg>
+                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Direct Founder Access</h3>
+                  <p className="text-[15px] text-text-muted leading-[1.6]">Direct line to Logan and Ben. Shape the product with us.</p>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* For Founders / For Investors details */}
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="w-full mb-10 rounded-2xl p-6 md:p-8 grid md:grid-cols-2 gap-8"
+            style={{
+              background: "rgba(255, 255, 255, 0.3)",
+              backdropFilter: "blur(12px)",
+              border: "1px solid rgba(0, 0, 0, 0.06)",
+            }}
+          >
+            <div>
+              <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Founders:</p>
+              <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                Step 1: Join the waitlist. Tell us your idea in 60 seconds. Step 2: If we like what we see, we invite you to submit the full application with your pitch deck and video. Step 3: Get accepted and start matching with investors.
+              </p>
+            </div>
+            <div>
+              <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Investors:</p>
+              <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                Investors apply directly. No waitlist. Tell us your thesis, your investment range, and what kind of founders excite you. If accepted, you start seeing matches immediately.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* CTAs */}
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="flex flex-col sm:flex-row gap-4 mb-4"
+          >
+            <Link
+              href="/waitlist"
+              className="w-full sm:w-auto group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
+              style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+            >
+              Join the Waitlist
+              <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+            <Link
+              href="/apply/investor"
+              className="w-full sm:w-auto group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
+            >
+              Apply as Investor
+              <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+          </motion.div>
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[13px] text-text-muted"
+          >
+            100 startup spots. 20 investor spots. First come, first evaluated.
           </motion.p>
         </motion.div>
       </Section>
 
+      {/* ============ FOR INVESTORS / FOR STARTUPS ============ */}
+      <Section id="for-investors" className="relative z-10 px-6 py-20 max-w-6xl mx-auto">
+        <motion.div
+          variants={cardStagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="grid md:grid-cols-2 gap-6 md:gap-8"
+        >
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+          >
+            <div className="h-full rounded-2xl p-8 md:p-10 flex flex-col" style={{ background: "rgba(255, 255, 255, 0.45)", backdropFilter: "blur(40px)", WebkitBackdropFilter: "blur(40px)", border: "1px solid rgba(0, 0, 0, 0.06)" }}>
+                <h3
+                  className="text-[28px] md:text-[32px] font-normal mb-8 text-text-primary"
+                  style={{ fontFamily: "'Instrument Serif', serif" }}
+                >
+                  For Investors
+                </h3>
+                <ul className="flex flex-col gap-4 flex-1">
+                  {[
+                    "Founding cohort = lifetime free access. Apply before spots close.",
+                    "First time investing? Good. Urgenc is built for you.",
+                    "Every founder scored on vision, team, market, and momentum.",
+                    "Browse. Match. 20-minute call. That is the whole process.",
+                    "No obligations. Express interest, take the call, decide from there. Simple.",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <div className="w-2 h-2 rounded-full bg-accent-blue mt-2 shrink-0" />
+                      <span className="text-text-secondary text-[15px] md:text-[16px] leading-[1.7]">
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href="/apply/investor"
+                  className="inline-flex items-center justify-center w-full px-6 py-3.5 text-[15px] font-semibold text-white rounded-full mt-8"
+                  style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+                >
+                  Apply as Investor
+                </Link>
+            </div>
+          </motion.div>
+
+          <motion.div
+            id="for-startups"
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+          >
+            <div className="h-full rounded-2xl p-8 md:p-10 flex flex-col" style={{ background: "rgba(255, 255, 255, 0.45)", backdropFilter: "blur(40px)", WebkitBackdropFilter: "blur(40px)", border: "1px solid rgba(0, 0, 0, 0.06)" }}>
+                <h3
+                  className="text-[28px] md:text-[32px] font-normal mb-8 text-text-primary"
+                  style={{ fontFamily: "'Instrument Serif', serif" }}
+                >
+                  For Startups
+                </h3>
+                <ul className="flex flex-col gap-4 flex-1">
+                  {[
+                    "Founding members get first access to the investor network.",
+                    "Your video pitch matters more than your revenue. Pre-revenue welcome.",
+                    "Get matched with investors in days, not 6 months.",
+                    "No traction in 30 days? You get cycled out. Stay sharp.",
+                    "We guarantee the meeting. We do not guarantee the deal. Your pitch does the rest.",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <div className="w-2 h-2 rounded-full bg-accent-violet mt-2 shrink-0" />
+                      <span className="text-text-secondary text-[15px] md:text-[16px] leading-[1.7]">
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href="/waitlist"
+                  className="inline-flex items-center justify-center w-full px-6 py-3.5 text-[15px] font-semibold text-white rounded-full mt-8"
+                  style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+                >
+                  Join the Waitlist
+                </Link>
+            </div>
+          </motion.div>
+        </motion.div>
+      </Section>
+
       {/* ============ iMESSAGE MOCKUP ============ */}
-      <Section className="relative z-10 px-6 py-20 md:py-20">
+      <Section className="relative z-10 px-6 py-20">
         <div className="flex flex-col items-center">
           {/* iMessage card */}
           <div
@@ -1595,585 +1693,8 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ============ STATS ============ */}
-      <Section className="relative z-10 px-6 py-24 md:py-32">
-        <motion.div
-          variants={sectionFadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          transition={{ duration: 0.6, ease }}
-          className="max-w-[900px] mx-auto"
-        >
-          <div
-            className="px-6 py-10 md:px-12 md:py-10 rounded-2xl"
-            style={{
-              background: "rgba(255, 255, 255, 0.5)",
-              backdropFilter: "blur(40px)",
-              WebkitBackdropFilter: "blur(40px)",
-              border: "1px solid rgba(0, 0, 0, 0.06)",
-            }}
-          >
-            <div className="grid grid-cols-2 md:grid-cols-4 text-center">
-              {[
-                { value: "$1K-500K+", label: "Investment Range" },
-                { value: "<15%", label: "Target Acceptance Rate" },
-                { value: "72hrs", label: "Match Response Window" },
-                { value: "30 days", label: "To Prove Traction" },
-              ].map((stat, i) => (
-                <div
-                  key={stat.label}
-                  className={`px-4 py-4 md:py-0 flex flex-col items-center justify-center ${
-                    i < 3 ? "md:border-r" : ""
-                  }`}
-                  style={{ borderColor: "rgba(0, 0, 0, 0.06)" }}
-                >
-                  <p
-                    className="text-[28px] sm:text-[32px] md:text-[36px] lg:text-[44px] font-normal leading-none mb-2 whitespace-nowrap"
-                    style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
-                  >
-                    {stat.value}
-                  </p>
-                  <p
-                    className="text-[12px] md:text-[13px] uppercase tracking-[2px]"
-                    style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
-                  >
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      </Section>
-
-      {/* ============ THE FOUNDING COHORT ============ */}
-      <Section className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
-        <motion.div
-          variants={cardStagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="flex flex-col items-center"
-        >
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="gradient-text text-[13px] tracking-[4px] uppercase mb-4 font-medium"
-          >
-            Early Access
-          </motion.p>
-          <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[36px] font-normal text-center mb-4"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
-          >
-            The Founding Cohort
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-center max-w-[700px] text-[17px] leading-[1.7] mb-12"
-            style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
-          >
-            We are building the founding cohort now. Join the waitlist to be considered. If your idea scores well, we will invite you to complete the full application and join as a founding member.
-          </motion.p>
-
-          {/* Benefit cards */}
-          <motion.div
-            variants={cardStagger}
-            className="grid md:grid-cols-3 gap-6 w-full mb-10"
-          >
-            <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
-              <div className="glow-card-wrapper h-full">
-                <div className="glass p-7 h-full" style={{ background: "rgba(255,255,255,0.45)", backdropFilter: "blur(40px)" }}>
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
-                    <path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6" />
-                    <polyline points="12 3 12 15" />
-                    <path d="M8 7l4-4 4 4" />
-                    <rect x="2" y="12" width="20" height="2" rx="1" />
-                  </svg>
-                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Early Access</h3>
-                  <p className="text-[15px] text-text-muted leading-[1.6]">Platform access before anyone else. Build your profile and start matching first.</p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
-              <div className="glow-card-wrapper h-full">
-                <div className="glass p-7 h-full" style={{ background: "rgba(255,255,255,0.45)", backdropFilter: "blur(40px)" }}>
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
-                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-                  </svg>
-                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Discounted Premium</h3>
-                  <p className="text-[15px] text-text-muted leading-[1.6]">Lock in the lowest rate on premium features. Forever.</p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
-              <div className="glow-card-wrapper h-full">
-                <div className="glass p-7 h-full" style={{ background: "rgba(255,255,255,0.45)", backdropFilter: "blur(40px)" }}>
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
-                    <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
-                  </svg>
-                  <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Direct Founder Access</h3>
-                  <p className="text-[15px] text-text-muted leading-[1.6]">Direct line to Logan and Ben. Shape the product with us.</p>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* For Founders / For Investors details */}
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="w-full mb-10 rounded-2xl p-6 md:p-8 grid md:grid-cols-2 gap-8"
-            style={{
-              background: "rgba(255, 255, 255, 0.3)",
-              backdropFilter: "blur(12px)",
-              border: "1px solid rgba(0, 0, 0, 0.06)",
-            }}
-          >
-            <div>
-              <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Founders:</p>
-              <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                Step 1: Join the waitlist. Tell us your idea in 60 seconds. Step 2: If we like what we see, we invite you to submit the full application with your pitch deck and video. Step 3: Get accepted and start matching with investors.
-              </p>
-            </div>
-            <div>
-              <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Investors:</p>
-              <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                Investors apply directly. No waitlist. Tell us your thesis, your investment range, and what kind of founders excite you. If accepted, you start seeing matches immediately.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* CTAs */}
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="flex flex-col sm:flex-row gap-4 mb-4"
-          >
-            <Link
-              href="/waitlist"
-              className="w-full sm:w-auto group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
-              style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
-            >
-              Join the Waitlist
-              <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
-            </Link>
-            <Link
-              href="/apply/investor"
-              className="w-full sm:w-auto group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
-            >
-              Apply as Investor
-              <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
-            </Link>
-          </motion.div>
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[13px] text-text-muted"
-          >
-            100 startup spots. 20 investor spots. First come, first evaluated.
-          </motion.p>
-        </motion.div>
-      </Section>
-
-      {/* ============ YC COMPARISON ============ */}
-      <Section className="relative z-10 px-6 py-[60px]">
-        <motion.div
-          variants={cardStagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="flex justify-center"
-        >
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.5, ease }}
-            className="max-w-[700px] w-full text-center p-6 md:p-10 rounded-2xl"
-            style={{
-              background: "rgba(255, 255, 255, 0.3)",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
-              border: "1px solid rgba(0, 0, 0, 0.04)",
-            }}
-          >
-            <h2
-              className="text-[24px] md:text-[32px] font-normal mb-6"
-              style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
-            >
-              Think of it like Y Combinator, but your idea can just be an idea.
-            </h2>
-            <p
-              className="text-[15px] md:text-[17px] leading-[1.7]"
-              style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
-            >
-              YC wants traction, revenue, and a team. Urgenc wants conviction. If you can explain your vision in 60 seconds and our scoring system sees potential, you are in. No warm intros. No pedigree. Just prove you have what it takes.
-            </p>
-          </motion.div>
-        </motion.div>
-      </Section>
-
-      {/* ============ FOR INVESTORS / FOR STARTUPS ============ */}
-      <Section id="for-investors" className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
-        <motion.div
-          variants={cardStagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="grid md:grid-cols-2 gap-6 md:gap-8"
-        >
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-          >
-            <div className="h-full rounded-2xl p-8 md:p-10 flex flex-col" style={{ background: "rgba(255, 255, 255, 0.45)", backdropFilter: "blur(40px)", WebkitBackdropFilter: "blur(40px)", border: "1px solid rgba(0, 0, 0, 0.06)" }}>
-                <h3
-                  className="text-[28px] md:text-[32px] font-normal mb-8 text-text-primary"
-                  style={{ fontFamily: "'Instrument Serif', serif" }}
-                >
-                  For Investors
-                </h3>
-                <ul className="flex flex-col gap-4 flex-1">
-                  {[
-                    "Founding cohort = lifetime free access. Apply before spots close.",
-                    "First time investing? Good. Urgenc is built for you.",
-                    "Every founder scored on vision, team, market, and momentum.",
-                    "Browse. Match. 20-minute call. That is the whole process.",
-                    "No obligations. Express interest, take the call, decide from there. Simple.",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-accent-blue mt-2 shrink-0" />
-                      <span className="text-text-secondary text-[15px] md:text-[16px] leading-[1.7]">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/apply/investor"
-                  className="inline-flex items-center justify-center w-full px-6 py-3.5 text-[15px] font-semibold text-white rounded-full mt-8"
-                  style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
-                >
-                  Apply as Investor
-                </Link>
-            </div>
-          </motion.div>
-
-          <motion.div
-            id="for-startups"
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-          >
-            <div className="h-full rounded-2xl p-8 md:p-10 flex flex-col" style={{ background: "rgba(255, 255, 255, 0.45)", backdropFilter: "blur(40px)", WebkitBackdropFilter: "blur(40px)", border: "1px solid rgba(0, 0, 0, 0.06)" }}>
-                <h3
-                  className="text-[28px] md:text-[32px] font-normal mb-8 text-text-primary"
-                  style={{ fontFamily: "'Instrument Serif', serif" }}
-                >
-                  For Startups
-                </h3>
-                <ul className="flex flex-col gap-4 flex-1">
-                  {[
-                    "Founding members get first access to the investor network.",
-                    "Your video pitch matters more than your revenue. Pre-revenue welcome.",
-                    "Get matched with investors in days, not 6 months.",
-                    "No traction in 30 days? You get cycled out. Stay sharp.",
-                    "We guarantee the meeting. We do not guarantee the deal. Your pitch does the rest.",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-accent-violet mt-2 shrink-0" />
-                      <span className="text-text-secondary text-[15px] md:text-[16px] leading-[1.7]">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/waitlist"
-                  className="inline-flex items-center justify-center w-full px-6 py-3.5 text-[15px] font-semibold text-white rounded-full mt-8"
-                  style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
-                >
-                  Join the Waitlist
-                </Link>
-            </div>
-          </motion.div>
-        </motion.div>
-      </Section>
-
-      {/* ============ NEVER COLD EMAIL AGAIN ============ */}
-      <Section className="relative z-10 px-6 py-24 md:py-32">
-        <motion.div
-          variants={sectionFadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          transition={{ duration: 0.6, ease }}
-          className="max-w-[800px] mx-auto"
-        >
-          <div
-            className="rounded-2xl px-6 py-8 md:px-16 md:py-[60px] text-center flex flex-col items-center"
-            style={{
-              background: "linear-gradient(135deg, rgba(74, 108, 247, 0.04), rgba(124, 92, 252, 0.04))",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
-              border: "1px solid rgba(74, 108, 247, 0.1)",
-            }}
-          >
-            <h2
-              className="text-[28px] md:text-[36px] lg:text-[40px] font-normal mb-6"
-              style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
-            >
-              Never cold email for your startup again.
-            </h2>
-            <p
-              className="text-[15px] md:text-[17px] leading-[1.7] mb-10 max-w-[500px]"
-              style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
-            >
-              No more pitching into the void. No more LinkedIn stalking VCs. No more begging for warm intros. On Urgenc, investors come to you.
-            </p>
-            <div className="flex flex-col items-center gap-3">
-              <Link
-                href="/waitlist"
-                className="inline-flex items-center justify-center px-8 py-3.5 text-[15px] font-semibold text-white rounded-full"
-                style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
-              >
-                Join the Waitlist &rarr;
-              </Link>
-              <Link
-                href="/apply/investor"
-                className="text-[14px] transition-colors duration-200 hover:opacity-80"
-                style={{ color: "#4A6CF7" }}
-              >
-                Or apply as an investor &rarr;
-              </Link>
-            </div>
-          </div>
-        </motion.div>
-      </Section>
-
-      {/* ============ WHY WE BUILT THIS ============ */}
-      <Section className="relative z-10 px-6 py-24 md:py-32 max-w-4xl mx-auto">
-        <motion.div
-          variants={cardStagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="flex flex-col items-center"
-        >
-          <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[36px] font-normal text-center mb-8"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
-          >
-            Why We Built This
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-center max-w-[680px] text-[17px] leading-[1.8] mb-12"
-            style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
-          >
-            Best friends since high school. Different paths through Boston. Same frustration: the startup world felt impossible to break into. So we built the door.
-          </motion.p>
-
-          {/* Founder cards */}
-          <motion.div
-            variants={cardStagger}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, ease }}
-              className="glass p-5 flex items-center gap-3 max-w-[280px]"
-            >
-              <Image
-                src="/images/logan.webp"
-                alt="Logan Kay"
-                width={80}
-                height={80}
-                className="w-12 h-12 rounded-full object-cover shrink-0"
-                style={{ border: "2px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
-              />
-              <div>
-                <p className="text-[16px] font-semibold text-text-primary">Logan Kay</p>
-                <p className="text-[13px] text-text-muted">Co-Founder</p>
-                <p className="text-[13px] text-text-muted">Boston University | AI Implementation @ Harvard Business School</p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, ease }}
-              className="glass p-5 flex items-center gap-3 max-w-[280px]"
-            >
-              <Image
-                src="/images/ben.jpeg"
-                alt="Ben Matiash"
-                width={80}
-                height={80}
-                className="w-12 h-12 rounded-full object-cover shrink-0"
-                style={{ border: "2px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
-              />
-              <div>
-                <p className="text-[16px] font-semibold text-text-primary">Ben Matiash</p>
-                <p className="text-[13px] text-text-muted">Co-Founder</p>
-                <p className="text-[13px] text-text-muted">Northeastern University | Institutional Equity @ Morgan Stanley</p>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Read Our Full Story CTA */}
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="mt-10"
-          >
-            <Link
-              href="/story"
-              className="group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
-            >
-              Read Our Full Story
-              <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
-            </Link>
-          </motion.div>
-        </motion.div>
-      </Section>
-
-      {/* ============ SEE URGENC IN ACTION ============ */}
-      <Section id="preview" className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
-        <motion.div
-          variants={cardStagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="flex flex-col items-center"
-        >
-          <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[36px] font-normal text-center mb-4"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
-          >
-            See Urgenc in Action
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-center max-w-[700px] text-[16px] leading-[1.7] mb-14"
-            style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
-          >
-            Click into the full demo dashboards and explore exactly what the app looks like from both sides.
-          </motion.p>
-
-          <motion.div
-            variants={cardStagger}
-            className="grid md:grid-cols-2 gap-6 md:gap-8 w-full"
-            style={{ maxWidth: "1000px" }}
-          >
-            {/* Investor Experience */}
-            <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
-              <div className="glow-card-wrapper h-full">
-                <div className="glass p-6 md:p-8 h-full flex flex-col hover:-translate-y-1 transition-transform duration-300">
-                  {/* Mini feature preview rows */}
-                  <div
-                    className="rounded-xl mb-6 p-4 space-y-3"
-                    style={{
-                      background: "rgba(255, 255, 255, 0.5)",
-                      backdropFilter: "blur(24px)",
-                      WebkitBackdropFilter: "blur(24px)",
-                      border: "1px solid rgba(255, 255, 255, 0.3)",
-                    }}
-                  >
-                    <div className="flex items-center gap-3">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M8 21h8" style={{ transform: "rotate(15deg)", transformOrigin: "center" }} /></svg>
-                      <span className="text-[14px] text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Browse startup pitches daily</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></svg>
-                      <span className="text-[14px] text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Watch 60-second founder videos</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14b8a6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                      <span className="text-[14px] text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Get matched and take chemistry calls</span>
-                    </div>
-                  </div>
-
-                  <h3
-                    className="text-[22px] font-semibold text-text-primary mb-2"
-                    style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-                  >
-                    See the Investor Side
-                  </h3>
-                  <p className="text-[15px] text-text-muted leading-[1.6] mb-6 flex-1">
-                    This is exactly what you see as an investor on Urgenc. Browse vetted startups, watch their pitches, and match with the ones you believe in.
-                  </p>
-                  <Link
-                    href="/dashboard/investor"
-                    className="btn-primary btn-pulse-target px-6 py-3.5 text-[15px] font-medium text-center"
-                  >
-                    Explore Investor Dashboard &rarr;
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Startup Experience */}
-            <motion.div variants={fadeUp} transition={{ duration: 0.6, ease }}>
-              <div className="glow-card-wrapper h-full">
-                <div className="glass p-6 md:p-8 h-full flex flex-col hover:-translate-y-1 transition-transform duration-300">
-                  {/* Mini feature preview rows */}
-                  <div
-                    className="rounded-xl mb-6 p-4 space-y-3"
-                    style={{
-                      background: "rgba(255, 255, 255, 0.5)",
-                      backdropFilter: "blur(24px)",
-                      WebkitBackdropFilter: "blur(24px)",
-                      border: "1px solid rgba(255, 255, 255, 0.3)",
-                    }}
-                  >
-                    <div className="flex items-center gap-3">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
-                      <span className="text-[14px] text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>See which investors are interested in you</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
-                      <span className="text-[14px] text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Track who viewed your pitch deck</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14b8a6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
-                      <span className="text-[14px] text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Message matched investors directly</span>
-                    </div>
-                  </div>
-
-                  <h3
-                    className="text-[22px] font-semibold text-text-primary mb-2"
-                    style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-                  >
-                    See the Startup Side
-                  </h3>
-                  <p className="text-[15px] text-text-muted leading-[1.6] mb-6 flex-1">
-                    This is what founders see on Urgenc. Track investor interest, manage your fundraise, and connect with backers who get your vision.
-                  </p>
-                  <Link
-                    href="/dashboard/founder"
-                    className="btn-primary btn-pulse-target px-6 py-3.5 text-[15px] font-medium text-center"
-                  >
-                    Explore Startup Dashboard &rarr;
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-      </Section>
-
       {/* ============ FINAL CTA ============ */}
-      <section className="relative z-10 py-24 md:py-32">
+      <section className="relative z-10 py-20">
         {/* Floating decorative cards */}
         <div className="absolute inset-0 overflow-hidden hidden lg:block pointer-events-none">
           {/* Left: Match Notification */}
