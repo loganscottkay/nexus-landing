@@ -14,6 +14,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [bannerVisible, setBannerVisible] = useState(true);
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [logoHovered, setLogoHovered] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -122,16 +123,34 @@ export default function Navbar() {
           <Link
             href="/"
             className="shrink-0 justify-self-start"
+            onMouseEnter={() => setLogoHovered(true)}
+            onMouseLeave={() => setLogoHovered(false)}
           >
             <span
-              className="text-[22px] font-normal"
+              className="text-[22px] md:text-[26px] font-normal transition-all duration-300"
               style={{
                 fontFamily: "'Instrument Serif', serif",
-                color: "#0F172A",
-                letterSpacing: "normal",
+                textShadow: logoHovered ? "0 0 20px rgba(74,108,247,0.15)" : "0 0 20px rgba(74,108,247,0)",
               }}
             >
-              UrgenC
+              <span
+                className="transition-all duration-300"
+                style={logoHovered ? {
+                  background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                } : {
+                  color: "#0F172A",
+                }}
+              >
+                Urgen
+              </span>
+              <span
+                className="gradient-text"
+              >
+                C
+              </span>
             </span>
           </Link>
 
