@@ -26,6 +26,13 @@ const icons: Record<string, React.ReactNode> = {
       <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
     </svg>
   ),
+  confidentiality: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      <rect x="9" y="9" width="6" height="7" rx="1" />
+      <path d="M10 9V7a2 2 0 114 0v2" />
+    </svg>
+  ),
   value: (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -77,6 +84,16 @@ const cards = [
       "Stage preferences selected",
     ],
     why: "Clear thesis = better matches.",
+  },
+  {
+    icon: "confidentiality",
+    title: "Confidentiality Agreement",
+    items: [
+      "By joining UrgenC, you agree to keep all startup information confidential",
+      "Pitch decks, financials, and strategies shared with you are for investment evaluation only",
+      "Misuse results in permanent removal and potential legal action",
+    ],
+    why: "Founders trust us with their ideas. We protect that trust.",
   },
   {
     icon: "value",

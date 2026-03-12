@@ -37,6 +37,13 @@ const icons: Record<string, React.ReactNode> = {
       <polyline points="17 6 23 6 23 12" />
     </svg>
   ),
+  protection: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      <rect x="9" y="9" width="6" height="7" rx="1" />
+      <path d="M10 9V7a2 2 0 114 0v2" />
+    </svg>
+  ),
   accountability: (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -84,6 +91,17 @@ const cards = [
       "Registered entity or commit to incorporating in 30 days",
     ],
     why: "The video pitch is how investors evaluate you.",
+  },
+  {
+    icon: "protection",
+    title: "Your Ideas Are Protected",
+    items: [
+      "Every investor on UrgenC agrees to a platform-wide confidentiality agreement",
+      "Your pitch deck, financials, and strategy are protected",
+      "Investors who violate confidentiality are permanently removed and may face legal action",
+      "We take idea protection seriously",
+    ],
+    why: "Your ideas deserve protection.",
   },
   {
     icon: "traction",
