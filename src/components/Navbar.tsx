@@ -202,96 +202,94 @@ export default function Navbar() {
                 <div
                   className="rounded-2xl"
                   style={{
-                    background: "rgba(255, 255, 255, 0.9)",
+                    background: "#FFFFFF",
                     backdropFilter: "blur(24px)",
                     WebkitBackdropFilter: "blur(24px)",
-                    border: "1px solid rgba(0, 0, 0, 0.06)",
-                    boxShadow: "0 8px 30px rgba(0, 0, 0, 0.1)",
-                    padding: "8px",
-                    minWidth: "260px",
+                    border: "1px solid rgba(0, 0, 0, 0.1)",
+                    boxShadow: "0 20px 60px rgba(0, 0, 0, 0.12)",
+                    padding: "12px",
+                    minWidth: "280px",
                     opacity: previewOpen ? 1 : 0,
-                    transform: previewOpen ? "translateY(0)" : "translateY(-8px)",
-                    transition: "opacity 0.2s ease, transform 0.2s ease",
+                    transform: previewOpen ? "scale(1)" : "scale(0.95)",
+                    transformOrigin: "top center",
+                    transition: previewOpen
+                      ? "opacity 0.15s ease-out, transform 0.15s ease-out"
+                      : "opacity 0.1s ease-in, transform 0.1s ease-in",
                   }}
                 >
                   <Link
                     href="/dashboard/investor"
                     onClick={() => setPreviewOpen(false)}
-                    className="flex items-start gap-3 rounded-xl transition-colors duration-150"
-                    style={{ padding: "12px 20px" }}
+                    className="group flex items-center gap-3 rounded-xl transition-all duration-150"
+                    style={{ padding: "14px 18px" }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "rgba(74, 108, 247, 0.05)";
-                      e.currentTarget.querySelectorAll("span, p").forEach((el) => {
-                        if ((el as HTMLElement).dataset.title) (el as HTMLElement).style.color = "#4A6CF7";
-                      });
+                      e.currentTarget.style.background = "#F0F4FF";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.background = "transparent";
-                      e.currentTarget.querySelectorAll("span, p").forEach((el) => {
-                        if ((el as HTMLElement).dataset.title) (el as HTMLElement).style.color = "#0F172A";
-                      });
                     }}
                   >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
                       <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
                       <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
                     </svg>
-                    <div>
+                    <div className="flex-1">
                       <span
-                        data-title="true"
-                        className="block font-semibold transition-colors duration-150"
-                        style={{ fontSize: "14px", color: "#0F172A", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                        className="block font-semibold"
+                        style={{ fontSize: "15px", color: "#0F172A", fontFamily: "var(--font-dm-sans), sans-serif" }}
                       >
                         Investor Dashboard
                       </span>
                       <span
                         className="block"
-                        style={{ fontSize: "11px", color: "#94A3B8", fontFamily: "var(--font-dm-sans), sans-serif", marginTop: "2px" }}
+                        style={{ fontSize: "12px", color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", marginTop: "2px" }}
                       >
                         See what investors see on UrgenC.
                       </span>
                     </div>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 transition-transform duration-200 group-hover:translate-x-1">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
                   </Link>
+
+                  {/* Divider */}
+                  <div className="mx-3" style={{ height: "1px", background: "rgba(0, 0, 0, 0.06)" }} />
 
                   <Link
                     href="/dashboard/founder"
                     onClick={() => setPreviewOpen(false)}
-                    className="flex items-start gap-3 rounded-xl transition-colors duration-150"
-                    style={{ padding: "12px 20px" }}
+                    className="group flex items-center gap-3 rounded-xl transition-all duration-150"
+                    style={{ padding: "14px 18px" }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "rgba(74, 108, 247, 0.05)";
-                      e.currentTarget.querySelectorAll("span, p").forEach((el) => {
-                        if ((el as HTMLElement).dataset.title) (el as HTMLElement).style.color = "#4A6CF7";
-                      });
+                      e.currentTarget.style.background = "#F0F4FF";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.background = "transparent";
-                      e.currentTarget.querySelectorAll("span, p").forEach((el) => {
-                        if ((el as HTMLElement).dataset.title) (el as HTMLElement).style.color = "#0F172A";
-                      });
                     }}
                   >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
                       <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z" />
                       <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z" />
                       <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
                       <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
                     </svg>
-                    <div>
+                    <div className="flex-1">
                       <span
-                        data-title="true"
-                        className="block font-semibold transition-colors duration-150"
-                        style={{ fontSize: "14px", color: "#0F172A", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                        className="block font-semibold"
+                        style={{ fontSize: "15px", color: "#0F172A", fontFamily: "var(--font-dm-sans), sans-serif" }}
                       >
                         Startup Dashboard
                       </span>
                       <span
                         className="block"
-                        style={{ fontSize: "11px", color: "#94A3B8", fontFamily: "var(--font-dm-sans), sans-serif", marginTop: "2px" }}
+                        style={{ fontSize: "12px", color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", marginTop: "2px" }}
                       >
                         See what founders see on UrgenC.
                       </span>
                     </div>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 transition-transform duration-200 group-hover:translate-x-1">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
                   </Link>
                 </div>
               </div>
