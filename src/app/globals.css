@@ -416,6 +416,39 @@ body {
   will-change: transform;
 }
 
+/* ---- Nav Waitlist button with pulse ---- */
+.nav-waitlist-btn {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(74, 108, 247, 0.2);
+  animation: nav-waitlist-pulse 2s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.nav-waitlist-btn:hover {
+  transform: scale(1.03);
+  animation: none;
+  box-shadow: 0 0 30px rgba(74, 108, 247, 0.4);
+  filter: brightness(1.08);
+}
+
+@keyframes nav-waitlist-pulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(74, 108, 247, 0.2); }
+  50% { box-shadow: 0 0 25px rgba(74, 108, 247, 0.35); }
+}
+
+.nav-waitlist-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+  animation: nav-apply-shimmer 4s ease-in-out infinite;
+  will-change: transform;
+}
+
 /* ---- Primary CTA ---- */
 .btn-primary {
   background: linear-gradient(135deg, #4A6CF7, #7C5CFC);

@@ -1239,18 +1239,18 @@ export default function Home() {
               className="flex flex-col sm:flex-row gap-4"
             >
               <Link
-                href="/apply/investor"
+                href="/waitlist"
                 className="group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
                 style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
               >
-                Apply as Investor
+                Join the Waitlist
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
               <Link
-                href="/waitlist"
+                href="/apply/investor"
                 className="group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
               >
-                Apply as Startup
+                I&apos;m an Investor
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             </motion.div>
@@ -2226,6 +2226,12 @@ export default function Home() {
               &copy; 2026 Urgenc. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
+              <Link
+                href="/apply/investor"
+                className="text-text-muted/60 hover:text-text-secondary transition-colors duration-300 text-[13px]"
+              >
+                Apply as Investor
+              </Link>
               <a
                 href="#"
                 className="text-text-muted/60 hover:text-text-secondary transition-colors duration-300 text-[13px]"
