@@ -1171,7 +1171,7 @@ export default function Home() {
               Founding Cohort Now Open
             </motion.p>
 
-            {/* Headline - 3 staggered lines */}
+            {/* Headline - 2 staggered lines */}
             <div className="mb-8">
               <motion.h1
                 initial={{ opacity: 0, y: 15 }}
@@ -1180,7 +1180,7 @@ export default function Home() {
                 className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] font-normal leading-[1.1] tracking-tight"
                 style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
               >
-                Life moves fast.
+                Where Real Ideas
               </motion.h1>
               <motion.h1
                 initial={{ opacity: 0, y: 15 }}
@@ -1189,16 +1189,7 @@ export default function Home() {
                 className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] font-normal leading-[1.1] tracking-tight"
                 style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
               >
-                Fundraising doesn&apos;t.
-              </motion.h1>
-              <motion.h1
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6, ease }}
-                className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] font-normal leading-[1.1] tracking-tight"
-                style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
-              >
-                That changes with <span className="gradient-text">Urgenc.</span>
+                Meet <span className="gradient-text">Real Capital.</span>
               </motion.h1>
             </div>
 
