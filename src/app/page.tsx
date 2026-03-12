@@ -1200,7 +1200,7 @@ export default function Home() {
               className="text-[15px] md:text-[19px] max-w-full px-2 md:max-w-[600px] md:px-0 mb-12 leading-[1.8]"
               style={{ color: "#475569" }}
             >
-              Urgenc is a matching app where startup founders pitch and investors swipe. Think Tinder, but instead of dates, you are finding your next investor or your next big bet. Every founder is scored and vetted. Every match leads to a real conversation. Less than 15% of applicants get in. Founding cohort applications are open now.
+              Urgenc is a matching app for startups and investors. Founders pitch. Investors swipe. When interest is mutual, you get a guaranteed meeting. We do not promise deals. We promise that if someone wants to talk to you, they will. What happens after is up to you.
             </motion.p>
 
             {/* CTAs */}
@@ -1278,6 +1278,89 @@ export default function Home() {
 
       {/* ============ HOW MATCHING WORKS ============ */}
       <MatchingFlowSection />
+
+      {/* ============ OUR PROMISE ============ */}
+      <Section className="relative z-10 px-6 py-24 md:py-32">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          variants={cardStagger}
+          className="flex flex-col items-center max-w-[650px] mx-auto"
+        >
+          <motion.h2
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[32px] font-normal text-center mb-12"
+            style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
+          >
+            What We Promise (and What We Don&apos;t)
+          </motion.h2>
+
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-8 w-full mb-10"
+          >
+            {/* We Promise */}
+            <div className="max-w-[300px] mx-auto md:mx-0 md:ml-auto">
+              <p className="text-[16px] font-semibold mb-4" style={{ color: "#059669", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                We Promise:
+              </p>
+              <ul className="flex flex-col gap-3">
+                {[
+                  "If an investor shows interest, you get a meeting. Guaranteed.",
+                  "If you ghost that meeting, you are removed.",
+                  "Every person on this platform is vetted and serious.",
+                  "Your pitch gets in front of real people, not algorithms.",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="mt-0.5 shrink-0">
+                      <path d="M3 8.5L6.5 12L13 4" stroke="#059669" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <span className="text-[15px] leading-[1.6]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* We Don't Promise */}
+            <div className="max-w-[300px] mx-auto md:mx-0 md:mr-auto">
+              <p className="text-[16px] font-semibold mb-4" style={{ color: "#EF4444", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                We Don&apos;t Promise:
+              </p>
+              <ul className="flex flex-col gap-3">
+                {[
+                  "Investment or funding of any kind.",
+                  "That every meeting will lead to a deal.",
+                  "Financial advice or transaction processing.",
+                  "That staying on the platform is guaranteed. You earn your spot.",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="mt-0.5 shrink-0" style={{ opacity: 0.6 }}>
+                      <path d="M4 4L12 12M12 4L4 12" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <span className="text-[15px] leading-[1.6]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-center text-[14px] italic max-w-[550px]"
+            style={{ color: "#94A3B8", fontFamily: "var(--font-dm-sans), sans-serif" }}
+          >
+            Urgenc is a matching and meeting platform. No money moves through our app. All investment discussions and transactions happen directly between you and the other party, off-platform.
+          </motion.p>
+        </motion.div>
+      </Section>
 
       {/* ============ iMESSAGE MOCKUP ============ */}
       <Section className="relative z-10 px-6 py-20 md:py-20">
@@ -1643,13 +1726,13 @@ export default function Home() {
             <div>
               <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Founders:</p>
               <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                You have an idea and you are willing to pitch it on camera. Apply, get scored, and if you make the cut, you are in.
+                You have an idea and you are willing to pitch it on camera. If you make the cut and an investor shows interest, we guarantee the meeting happens. What you do with that opportunity is on you.
               </p>
             </div>
             <div>
               <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Investors:</p>
               <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                You want in on the startup wave. The amount does not matter. Show up, take the calls, and back what excites you.
+                You want to discover startups early. Browse vetted founders, express interest, and if they accept, you get a guaranteed 20-minute call. No obligations beyond showing up.
               </p>
             </div>
           </motion.div>
@@ -1748,7 +1831,7 @@ export default function Home() {
                     "First time investing? Good. Urgenc is built for you.",
                     "Every founder scored on vision, team, market, and momentum.",
                     "Browse. Match. 20-minute call. That is the whole process.",
-                    "Everyone talks about startups. This is how you actually get involved.",
+                    "No obligations. Express interest, take the call, decide from there. Simple.",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-accent-blue mt-2 shrink-0" />
@@ -1786,7 +1869,7 @@ export default function Home() {
                     "Your video pitch matters more than your revenue. Pre-revenue welcome.",
                     "Get matched with investors in days, not 6 months.",
                     "No traction in 30 days? You get cycled out. Stay sharp.",
-                    "Less than 15% get in. Being on Urgenc is the credibility signal.",
+                    "We guarantee the meeting. We do not guarantee the deal. Your pitch does the rest.",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-accent-violet mt-2 shrink-0" />
@@ -2192,9 +2275,14 @@ export default function Home() {
             >
               Urgenc
             </Link>
-            <p className="text-text-muted/60 text-[13px]">
-              &copy; 2026 Urgenc. All rights reserved.
-            </p>
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-[12px] text-center max-w-[600px]" style={{ color: "#94A3B8" }}>
+                Urgenc is a matching and meeting platform. We do not provide investment advice, facilitate financial transactions, or act as a broker-dealer. All investment decisions and transactions occur off-platform between the parties involved.
+              </p>
+              <p className="text-text-muted/60 text-[13px]">
+                &copy; 2026 Urgenc. All rights reserved.
+              </p>
+            </div>
             <div className="flex items-center gap-6">
               <Link
                 href="/apply/investor"
