@@ -64,39 +64,6 @@ function Section({
   );
 }
 
-/* ---- Waitlist Counter with CountUp ---- */
-function WaitlistCountUp({ target, duration = 1500 }: { target: number; duration?: number }) {
-  const [value, setValue] = React.useState(0);
-  const [started, setStarted] = React.useState(false);
-  const ref = React.useRef<HTMLSpanElement>(null);
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting && !started) setStarted(true); },
-      { threshold: 0.3 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [started]);
-
-  React.useEffect(() => {
-    if (!started) return;
-    const startTime = performance.now();
-    const tick = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      // easeOut cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(eased * target));
-      if (progress < 1) requestAnimationFrame(tick);
-      else setValue(target);
-    };
-    requestAnimationFrame(tick);
-  }, [started, target, duration]);
-
-  return <span ref={ref} className="font-semibold" style={{ color: "#0F172A" }}>{value}</span>;
-}
-
 /* ---- Email Capture ---- */
 function EmailCapture() {
   const [submitted, setSubmitted] = React.useState(false);
@@ -975,7 +942,7 @@ const matchingSteps = [
     title: "Founders Pitch",
     label: "FOR FOUNDERS",
     labelColor: "#7C5CFC",
-    desc: "Record a 60-second video explaining your startup. Upload your pitch deck. Our proprietary scoring system evaluates you on vision, team, market size, and momentum. If you score in the top 15%, you are in.",
+    desc: "Record a 60-second video. Upload your deck. Get scored on vision, team, market, and momentum. Top 15% get in.",
     color: "#4A6CF7",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -989,7 +956,7 @@ const matchingSteps = [
     title: "Investors Set Filters",
     label: "FOR INVESTORS",
     labelColor: "#4A6CF7",
-    desc: "Tell us what excites you. Pick your industries, preferred startup stage, and investment range. Your daily feed only shows startups that match your criteria. No scrolling through irrelevant deals.",
+    desc: "Pick your industries, stage, and investment range. Your feed only shows startups that fit. No noise.",
     color: "#7C5CFC",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -1010,7 +977,7 @@ const matchingSteps = [
     title: "Swipe & Match",
     label: "BOTH SIDES",
     labelColor: "#D4AF37",
-    desc: "Investors browse their personalized feed and express interest in startups they like. Founders see who is interested and decide whether to accept. When both sides say yes, it is a match. Simple as that.",
+    desc: "Investors express interest. Founders accept or pass. When both say yes, it is a match.",
     color: "#D4AF37",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -1023,7 +990,7 @@ const matchingSteps = [
     title: "Chemistry Call",
     label: "BOTH SIDES",
     labelColor: "#059669",
-    desc: "Every match leads to a structured 20-minute video call scheduled automatically within 72 hours. No scheduling headaches. No ghosting. If either side does not show up, they get flagged and eventually removed from the platform.",
+    desc: "Every match gets a 20-minute video call within 72 hours. No ghosting or you are removed.",
     color: "#059669",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -1099,7 +1066,7 @@ function MatchingFlowSection() {
               <motion.div
                 variants={fadeUp}
                 transition={{ duration: 0.6, delay: i * 0.1, ease }}
-                className="flex-1 max-w-[280px] w-full"
+                className="flex-1 max-w-[280px] w-full min-h-[240px]"
               >
                 <div className="glow-card-wrapper h-full">
                   <div
@@ -1287,24 +1254,6 @@ export default function Home() {
                 Apply as Startup
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
-            </motion.div>
-
-            {/* Waitlist counter */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.7, ease }}
-              className="mt-8 inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-[15px]"
-              style={{
-                background: "rgba(255, 255, 255, 0.4)",
-                backdropFilter: "blur(8px)",
-                border: "1px solid rgba(0, 0, 0, 0.06)",
-                fontFamily: "var(--font-dm-sans), sans-serif",
-              }}
-            >
-              <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse shrink-0" />
-              <span style={{ color: "#64748B" }}>
-                <WaitlistCountUp target={412} duration={1500} /> founders and <WaitlistCountUp target={203} duration={1500} /> investors have applied
-              </span>
             </motion.div>
 
             {/* University pill */}
@@ -1602,14 +1551,14 @@ export default function Home() {
           <div className="glass-dark px-6 py-12 md:px-16 md:py-16">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6 text-center">
               {[
-                { value: "$1K - $500K+", label: "Investment Range" },
+                { value: "$1K-500K+", label: "Investment Range" },
                 { value: "<15%", label: "Target Acceptance Rate" },
                 { value: "72hrs", label: "Match Response Window" },
                 { value: "30 days", label: "To Prove Traction" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <p
-                    className="text-[32px] sm:text-[40px] md:text-[52px] font-normal text-white leading-none mb-2"
+                    className="text-[32px] sm:text-[40px] md:text-[52px] font-normal text-white leading-none mb-2 whitespace-nowrap"
                     style={{ fontFamily: "'Instrument Serif', serif" }}
                   >
                     {stat.value}
@@ -1658,7 +1607,7 @@ export default function Home() {
             className="text-center max-w-[700px] text-[17px] leading-[1.7] mb-12"
             style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
-            We are hand-selecting 100 startups and 50 investors as founding members. First in, best perks. These benefits disappear at public launch.
+            We are hand-selecting 100 startups and 20 investors as founding members. First in, best perks. These benefits disappear at public launch.
           </motion.p>
 
           {/* Benefit cards */}
@@ -1758,7 +1707,7 @@ export default function Home() {
             transition={{ duration: 0.6, ease }}
             className="text-[13px] text-text-muted"
           >
-            100 startup spots. 50 investor spots. First come, first evaluated.
+            100 startup spots. 20 investor spots. First come, first evaluated.
           </motion.p>
         </motion.div>
       </Section>
@@ -2255,7 +2204,7 @@ export default function Home() {
                   <circle cx="12" cy="12" r="10" />
                   <polyline points="12 6 12 12 16 14" />
                 </svg>
-                67 of 100 startup spots remaining. 38 of 50 investor spots remaining.
+                67 of 100 startup spots remaining. 14 of 20 investor spots remaining.
               </div>
             </motion.div>
           </motion.div>
