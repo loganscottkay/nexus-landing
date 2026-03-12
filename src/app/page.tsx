@@ -1328,11 +1328,260 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ============ QUOTE BANNER ============ */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.8, ease }}
+        className="relative z-10 py-7"
+        style={{
+          background: "rgba(255, 255, 255, 0.4)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+          borderTop: "1px solid rgba(0, 0, 0, 0.04)",
+          borderBottom: "1px solid rgba(0, 0, 0, 0.04)",
+        }}
+      >
+        <p
+          className="text-center px-6 max-w-4xl mx-auto"
+          style={{
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: "28px",
+            fontStyle: "italic",
+            color: "#0F172A",
+            lineHeight: 1.4,
+          }}
+        >
+          The barrier to building a startup has never been lower. We are doing the same for fundraising.
+        </p>
+      </motion.div>
+
       {/* ============ HOW IT WORKS ============ */}
       <HowItWorksSection />
 
       {/* ============ HOW MATCHING WORKS ============ */}
       <MatchingFlowSection />
+
+      {/* ============ iMESSAGE MOCKUP ============ */}
+      <Section className="relative z-10 px-6 py-24 md:py-32">
+        <div className="flex flex-col items-center">
+          {/* iMessage card */}
+          <div
+            className="w-full max-w-[380px] overflow-hidden"
+            style={{
+              background: "rgba(255, 255, 255, 0.6)",
+              backdropFilter: "blur(40px)",
+              WebkitBackdropFilter: "blur(40px)",
+              borderRadius: "24px",
+              border: "1px solid rgba(0, 0, 0, 0.06)",
+            }}
+          >
+            {/* iMessage header bar */}
+            <div
+              className="flex items-center justify-between px-4 py-3"
+              style={{ background: "rgba(0, 0, 0, 0.03)" }}
+            >
+              <svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="#007AFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="8 2 2 8 8 14" />
+              </svg>
+              <p
+                className="font-semibold text-[15px]"
+                style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#0F172A" }}
+              >
+                Jake
+              </p>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007AFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="23 7 16 12 23 17 23 7" />
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+              </svg>
+            </div>
+
+            {/* Message bubbles */}
+            <div className="px-4 py-4 flex flex-col gap-2.5">
+              {/* Received */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.4, delay: 0.1, ease }}
+                className="flex justify-start"
+              >
+                <div
+                  className="px-3.5 py-2.5 max-w-[260px] text-[14px]"
+                  style={{
+                    background: "rgba(0, 0, 0, 0.06)",
+                    borderRadius: "18px 18px 18px 6px",
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                    color: "#0F172A",
+                  }}
+                >
+                  Dude I literally just built an app with AI in my dorm
+                </div>
+              </motion.div>
+
+              {/* Sent */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.4, delay: 0.4, ease }}
+                className="flex justify-end"
+              >
+                <div
+                  className="px-3.5 py-2.5 max-w-[260px] text-[14px] text-white"
+                  style={{
+                    background: "#4A6CF7",
+                    borderRadius: "18px 18px 6px 18px",
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                  }}
+                >
+                  Wait what?? That is insane
+                </div>
+              </motion.div>
+
+              {/* Received */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.4, delay: 0.7, ease }}
+                className="flex justify-start"
+              >
+                <div
+                  className="px-3.5 py-2.5 max-w-[260px] text-[14px]"
+                  style={{
+                    background: "rgba(0, 0, 0, 0.06)",
+                    borderRadius: "18px 18px 18px 6px",
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                    color: "#0F172A",
+                  }}
+                >
+                  Yeah but there is no way I am gonna find an investor
+                </div>
+              </motion.div>
+
+              {/* Sent */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.4, delay: 1.0, ease }}
+                className="flex justify-end"
+              >
+                <div
+                  className="px-3.5 py-2.5 max-w-[260px] text-[14px] text-white"
+                  style={{
+                    background: "#4A6CF7",
+                    borderRadius: "18px 18px 6px 18px",
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                  }}
+                >
+                  Bro use Urgenc
+                </div>
+              </motion.div>
+
+              {/* Received */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.4, delay: 1.3, ease }}
+                className="flex justify-start"
+              >
+                <div
+                  className="px-3.5 py-2.5 max-w-[260px] text-[14px]"
+                  style={{
+                    background: "rgba(0, 0, 0, 0.06)",
+                    borderRadius: "18px 18px 18px 6px",
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                    color: "#0F172A",
+                  }}
+                >
+                  What is that?
+                </div>
+              </motion.div>
+
+              {/* Sent - the explanation */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.4, delay: 1.6, ease }}
+                className="flex justify-end"
+              >
+                <div
+                  className="px-3.5 py-2.5 max-w-[260px] text-[14px] text-white"
+                  style={{
+                    background: "#4A6CF7",
+                    borderRadius: "18px 18px 6px 18px",
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                  }}
+                >
+                  It is like Tinder but for startups and investors. You pitch, investors swipe, and if they like you they match and you get on a call
+                </div>
+              </motion.div>
+
+              {/* Link preview bubble */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 2.0, ease }}
+                className="flex justify-end"
+              >
+                <div
+                  className="max-w-[260px] overflow-hidden"
+                  style={{
+                    background: "rgba(255, 255, 255, 0.9)",
+                    borderRadius: "16px",
+                    border: "1px solid rgba(0, 0, 0, 0.08)",
+                  }}
+                >
+                  {/* Gradient top bar */}
+                  <div
+                    className="w-full"
+                    style={{
+                      height: "4px",
+                      background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)",
+                    }}
+                  />
+                  <div className="px-3 py-2.5">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="#7C5CFC" strokeWidth="1.5" />
+                        <path d="M8 12a4 4 0 108 0 4 4 0 00-8 0z" fill="#4A6CF7" opacity="0.6" />
+                      </svg>
+                      <span className="text-[11px]" style={{ color: "#94A3B8" }}>urgenc.com</span>
+                    </div>
+                    <p
+                      className="text-[13px] font-semibold mb-0.5"
+                      style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#0F172A" }}
+                    >
+                      Urgenc | Where Capital Meets Vision
+                    </p>
+                    <p className="text-[12px]" style={{ color: "#94A3B8" }}>
+                      A matching app for startups and investors.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Caption below */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.5, delay: 2.3, ease }}
+            className="mt-6 text-center text-[13px] italic"
+            style={{ color: "#94A3B8" }}
+          >
+            This is the conversation happening on every college campus right now.
+          </motion.p>
+        </div>
+      </Section>
 
       {/* ============ STATS (DARK SECTION) ============ */}
       <section className="relative z-10 py-24 md:py-32 bg-dark-section overflow-hidden">
@@ -1514,6 +1763,34 @@ export default function Home() {
         </motion.div>
       </Section>
 
+      {/* ============ YC COMPARISON ============ */}
+      <Section className="relative z-10 px-6 py-24 md:py-32">
+        <motion.div
+          variants={cardStagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="flex flex-col items-center max-w-[600px] mx-auto text-center"
+        >
+          <motion.h2
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[32px] font-normal mb-6"
+            style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
+          >
+            Think of it like Y Combinator, but your idea can just be an idea.
+          </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[17px] leading-[1.7]"
+            style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
+          >
+            YC wants traction, revenue, and a team. Urgenc wants conviction. If you can explain your vision in 60 seconds and our scoring system sees potential, you are in. No warm intros. No pedigree. Just prove you have what it takes.
+          </motion.p>
+        </motion.div>
+      </Section>
+
       {/* ============ FOR INVESTORS / FOR STARTUPS ============ */}
       <Section id="for-investors" className="relative z-10 px-6 py-24 md:py-32 max-w-6xl mx-auto">
         <motion.div
@@ -1599,6 +1876,74 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </Section>
+
+      {/* ============ NEVER COLD EMAIL AGAIN ============ */}
+      <section className="relative z-10 py-16 md:py-[60px] overflow-hidden" style={{ background: "rgba(10, 10, 15, 0.9)" }}>
+        {/* Floating particle dots */}
+        <div className="absolute inset-0 pointer-events-none">
+          {Array.from({ length: 25 }).map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full"
+              style={{
+                width: `${2 + Math.random() * 2}px`,
+                height: `${2 + Math.random() * 2}px`,
+                background: "white",
+                opacity: 0.1 + Math.random() * 0.05,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animation: `float-particle ${8 + Math.random() * 12}s ease-in-out infinite`,
+                animationDelay: `${Math.random() * 5}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        <motion.div
+          variants={cardStagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="relative max-w-[500px] mx-auto px-6 text-center flex flex-col items-center"
+        >
+          <motion.h2
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[36px] md:text-[44px] font-normal text-white mb-6"
+            style={{ fontFamily: "'Instrument Serif', serif" }}
+          >
+            Never cold email for your startup again.
+          </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[17px] leading-[1.7] mb-10 max-w-[500px]"
+            style={{ color: "rgba(255, 255, 255, 0.6)", fontFamily: "var(--font-dm-sans), sans-serif" }}
+          >
+            No more pitching into the void. No more LinkedIn stalking VCs. No more begging for warm intros. On Urgenc, investors come to you.
+          </motion.p>
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="flex flex-col items-center gap-3"
+          >
+            <Link
+              href="/apply/startup"
+              className="inline-flex items-center justify-center px-8 py-3.5 text-[15px] font-semibold text-white rounded-full"
+              style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+            >
+              Apply as a Founder &rarr;
+            </Link>
+            <Link
+              href="/apply/investor"
+              className="text-[14px] transition-colors duration-200 hover:text-white/70"
+              style={{ color: "rgba(255, 255, 255, 0.5)" }}
+            >
+              Or apply as an investor &rarr;
+            </Link>
+          </motion.div>
+        </motion.div>
+      </section>
 
       {/* ============ WHY WE BUILT THIS ============ */}
       <Section className="relative z-10 px-6 py-24 md:py-32 max-w-4xl mx-auto">
