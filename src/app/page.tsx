@@ -1325,7 +1325,7 @@ export default function Home() {
                     <div key={item} className="flex items-start gap-3">
                       <div className="shrink-0 flex items-center justify-center" style={{ width: 20, height: 20, marginTop: 2 }}>
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                          <path d="M3 8.5L6.5 12L13 4" stroke="#059669" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M13.3 4.3L6 11.6L2.7 8.3" stroke="#059669" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </div>
                       <p className="text-[15px] leading-[1.6]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
