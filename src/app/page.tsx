@@ -1286,7 +1286,7 @@ export default function Home() {
           whileInView="visible"
           viewport={viewportConfig}
           variants={cardStagger}
-          className="flex flex-col items-center max-w-[650px] mx-auto"
+          className="flex flex-col items-center"
         >
           <motion.h2
             variants={fadeUp}
@@ -1300,54 +1300,67 @@ export default function Home() {
           <motion.div
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-8 w-full mb-10"
+            className="w-full max-w-[800px] rounded-2xl mb-10"
+            style={{
+              background: "rgba(255, 255, 255, 0.5)",
+              backdropFilter: "blur(24px)",
+              WebkitBackdropFilter: "blur(24px)",
+              padding: "40px",
+              border: "1px solid rgba(0, 0, 0, 0.06)",
+            }}
           >
-            {/* We Promise */}
-            <div className="w-full">
-              <p className="text-[16px] font-semibold mb-4" style={{ color: "#059669", fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                We Promise:
-              </p>
-              <ul className="flex flex-col gap-4">
-                {[
-                  "If an investor shows interest, you get a meeting. Guaranteed.",
-                  "If you ghost that meeting, you are removed.",
-                  "Every person on this platform is vetted and serious.",
-                  "Your pitch gets in front of real people, not algorithms.",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="mt-[2px] shrink-0" style={{ minWidth: 18, minHeight: 18 }}>
-                      <path d="M3.5 9.5L7 13.5L14.5 4.5" stroke="#059669" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <span className="text-[15px] leading-[1.6]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: "40px" }}>
+              {/* We Promise */}
+              <div>
+                <p className="text-[16px] font-semibold mb-5" style={{ color: "#059669", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  We Promise:
+                </p>
+                <div className="flex flex-col" style={{ gap: "20px" }}>
+                  {[
+                    "If an investor shows interest, you get a meeting. Guaranteed.",
+                    "If you ghost that meeting, you are removed.",
+                    "Every person on this platform is vetted and serious.",
+                    "Your pitch gets in front of real people, not algorithms.",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-3">
+                      <div className="shrink-0 flex items-center justify-center" style={{ width: 20, height: 20, marginTop: 2 }}>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                          <path d="M3 8.5L6.5 12L13 4" stroke="#059669" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                      <p className="text-[15px] leading-[1.6]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                        {item}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-            {/* We Don't Promise */}
-            <div className="w-full">
-              <p className="text-[16px] font-semibold mb-4" style={{ color: "#EF4444", fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                We Don&apos;t Promise:
-              </p>
-              <ul className="flex flex-col gap-4">
-                {[
-                  "Investment or funding of any kind.",
-                  "That every meeting will lead to a deal.",
-                  "Financial advice or transaction processing.",
-                  "That staying on the platform is guaranteed. You earn your spot.",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="mt-[2px] shrink-0" style={{ minWidth: 18, minHeight: 18 }}>
-                      <path d="M4.5 4.5L13.5 13.5M13.5 4.5L4.5 13.5" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <span className="text-[15px] leading-[1.6]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              {/* We Don't Promise */}
+              <div>
+                <p className="text-[16px] font-semibold mb-5" style={{ color: "#EF4444", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  We Don&apos;t Promise:
+                </p>
+                <div className="flex flex-col" style={{ gap: "20px" }}>
+                  {[
+                    "Investment or funding of any kind.",
+                    "That every meeting will lead to a deal.",
+                    "Financial advice or transaction processing.",
+                    "That staying on the platform is guaranteed. You earn your spot.",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-3">
+                      <div className="shrink-0 flex items-center justify-center" style={{ width: 20, height: 20, marginTop: 2 }}>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                          <path d="M4 4L12 12M12 4L4 12" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                      <p className="text-[15px] leading-[1.6]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                        {item}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </motion.div>
 
