@@ -83,14 +83,14 @@ function EmailCapture() {
         {submitted ? "Thank you! We will keep you posted." : "Get notified when we launch and hear about early access opportunities."}
       </p>
       {!submitted && (
-        <form onSubmit={handleSubmit} className="flex gap-2 items-center">
+        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 items-center">
           <input
             type="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="your@email.com"
-            className="flex-grow h-[48px] rounded-xl px-4 text-[15px] text-text-primary placeholder:text-text-muted/50 outline-none"
+            className="w-full flex-grow h-[48px] rounded-xl px-4 text-[15px] text-text-primary placeholder:text-text-muted/50 outline-none"
             style={{
               background: "rgba(255, 255, 255, 0.3)",
               backdropFilter: "blur(8px)",
@@ -99,7 +99,7 @@ function EmailCapture() {
           />
           <button
             type="submit"
-            className="h-[48px] px-6 rounded-xl text-[15px] font-semibold text-white shrink-0"
+            className="h-[48px] px-6 rounded-xl text-[15px] font-semibold text-white w-full sm:w-auto sm:shrink-0"
             style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
           >
             Subscribe
@@ -340,7 +340,7 @@ function HowItWorksSection() {
             </div>
 
             {/* Right: Preview area + progress dots */}
-            <div className="flex-1 flex flex-col gap-4">
+            <div className="hidden lg:flex flex-1 flex-col gap-4">
               <motion.div
                 variants={fadeUp}
                 transition={{ duration: 0.6, ease }}
@@ -408,7 +408,7 @@ function HowItWorksSection() {
               </motion.div>
 
               {/* Progress dots */}
-              <div className="flex items-center justify-center gap-3">
+              <div className="hidden lg:flex items-center justify-center gap-3">
                 {STEPS.map((step, i) => (
                   <div key={step} className="relative flex items-center justify-center">
                     {/* Background dot */}
@@ -1036,13 +1036,13 @@ function MatchingFlowSection() {
         {/* Step flow - horizontal on desktop, vertical on mobile */}
         <motion.div
           variants={cardStagger}
-          className="flex flex-col lg:flex-row items-center lg:items-stretch gap-0 w-full"
+          className="grid grid-cols-1 md:grid-cols-2 lg:flex gap-4 w-full"
         >
           {matchingSteps.map((step, i) => (
             <React.Fragment key={step.num}>
               {/* Connecting line between steps */}
               {i > 0 && (
-                <div className="flex items-center justify-center lg:py-0 py-2">
+                <div className="hidden lg:flex items-center justify-center lg:py-0 py-2">
                   {/* Desktop: horizontal line */}
                   <div className="hidden lg:block w-[40px] xl:w-[60px] h-[2px] relative overflow-hidden shrink-0">
                     <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)", opacity: 0.3 }} />
@@ -1065,7 +1065,7 @@ function MatchingFlowSection() {
               <motion.div
                 variants={fadeUp}
                 transition={{ duration: 0.6, delay: i * 0.1, ease }}
-                className="flex-1 max-w-[280px] w-full min-h-[240px]"
+                className="flex-1 max-w-none md:max-w-none lg:max-w-[280px] w-full min-h-[240px]"
               >
                 <div className="glow-card-wrapper h-full">
                   <div
@@ -1186,7 +1186,7 @@ export default function Home() {
             <motion.p
               variants={fadeUp}
               transition={{ duration: 0.7, ease }}
-              className="gradient-text text-[13px] tracking-[5px] uppercase mb-6 font-medium"
+              className="gradient-text text-[10px] md:text-[13px] tracking-[2px] md:tracking-[5px] uppercase mb-6 font-medium"
             >
               Founding Cohort Now Open
             </motion.p>
@@ -1197,7 +1197,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3, ease }}
-                className="text-[44px] sm:text-[56px] md:text-[64px] lg:text-[72px] font-normal leading-[1.1] tracking-tight"
+                className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] font-normal leading-[1.1] tracking-tight"
                 style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
               >
                 Life moves fast.
@@ -1206,7 +1206,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.45, ease }}
-                className="text-[44px] sm:text-[56px] md:text-[64px] lg:text-[72px] font-normal leading-[1.1] tracking-tight"
+                className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] font-normal leading-[1.1] tracking-tight"
                 style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
               >
                 Fundraising doesn&apos;t.
@@ -1215,7 +1215,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6, ease }}
-                className="text-[44px] sm:text-[56px] md:text-[64px] lg:text-[72px] font-normal leading-[1.1] tracking-tight"
+                className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] font-normal leading-[1.1] tracking-tight"
                 style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
               >
                 That changes with <span className="gradient-text">Urgenc.</span>
@@ -1226,7 +1226,7 @@ export default function Home() {
             <motion.p
               variants={fadeUp}
               transition={{ duration: 0.7, ease }}
-              className="text-[17px] md:text-[19px] max-w-[600px] mb-12 leading-[1.8]"
+              className="text-[15px] md:text-[19px] max-w-full px-2 md:max-w-[600px] md:px-0 mb-12 leading-[1.8]"
               style={{ color: "#475569" }}
             >
               Urgenc is a matching app where startup founders pitch and investors swipe. Think Tinder, but instead of dates, you are finding your next investor or your next big bet. Every founder is scored and vetted. Every match leads to a real conversation. Less than 15% of applicants get in. Founding cohort applications are open now.
@@ -1236,11 +1236,11 @@ export default function Home() {
             <motion.div
               variants={fadeUp}
               transition={{ duration: 0.7, ease }}
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3"
             >
               <Link
                 href="/waitlist"
-                className="group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
+                className="w-full sm:w-auto group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
                 style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
               >
                 Join the Waitlist
@@ -1248,7 +1248,7 @@ export default function Home() {
               </Link>
               <Link
                 href="/apply/investor"
-                className="group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
+                className="w-full sm:w-auto group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
               >
                 I&apos;m an Investor
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
@@ -1259,7 +1259,7 @@ export default function Home() {
             <motion.div
               variants={fadeUp}
               transition={{ duration: 0.7, ease }}
-              className="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[13px] text-text-muted/70"
+              className="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[13px] text-text-muted/70 text-center"
               style={{
                 background: "rgba(255, 255, 255, 0.3)",
                 border: "1px solid rgba(0, 0, 0, 0.04)",
@@ -1282,7 +1282,7 @@ export default function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.5, ease }}
-        className="relative z-10 py-12"
+        className="relative z-10 py-8 md:py-12"
         style={{
           background: "rgba(255, 255, 255, 0.25)",
           backdropFilter: "blur(6px)",
@@ -1290,10 +1290,9 @@ export default function Home() {
         }}
       >
         <p
-          className="text-center px-6 max-w-4xl mx-auto"
+          className="text-center px-6 max-w-4xl mx-auto text-[20px] md:text-[28px]"
           style={{
             fontFamily: "'Instrument Serif', serif",
-            fontSize: "28px",
             fontStyle: "italic",
             color: "#0F172A",
             lineHeight: 1.4,
@@ -1314,7 +1313,7 @@ export default function Home() {
         <div className="flex flex-col items-center">
           {/* iMessage card */}
           <div
-            className="w-full max-w-[380px] overflow-hidden"
+            className="w-full max-w-[380px] mx-4 overflow-hidden"
             style={{
               background: "rgba(255, 255, 255, 0.6)",
               backdropFilter: "blur(40px)",
@@ -1563,7 +1562,7 @@ export default function Home() {
                   style={{ borderColor: "rgba(0, 0, 0, 0.06)" }}
                 >
                   <p
-                    className="text-[28px] sm:text-[36px] md:text-[44px] font-normal leading-none mb-2 whitespace-nowrap"
+                    className="text-[28px] sm:text-[32px] md:text-[36px] lg:text-[44px] font-normal leading-none mb-2 whitespace-nowrap"
                     style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
                   >
                     {stat.value}
@@ -1692,7 +1691,7 @@ export default function Home() {
           >
             <Link
               href="/waitlist"
-              className="group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
+              className="w-full sm:w-auto group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
               style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
             >
               Apply as Founder
@@ -1700,7 +1699,7 @@ export default function Home() {
             </Link>
             <Link
               href="/apply/investor"
-              className="group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
+              className="w-full sm:w-auto group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
             >
               Apply as Investor
               <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
@@ -1728,7 +1727,7 @@ export default function Home() {
           <motion.div
             variants={fadeUp}
             transition={{ duration: 0.5, ease }}
-            className="max-w-[700px] w-full text-center p-10 rounded-2xl"
+            className="max-w-[700px] w-full text-center p-6 md:p-10 rounded-2xl"
             style={{
               background: "rgba(255, 255, 255, 0.3)",
               backdropFilter: "blur(8px)",
@@ -1737,13 +1736,13 @@ export default function Home() {
             }}
           >
             <h2
-              className="text-[32px] font-normal mb-6"
+              className="text-[24px] md:text-[32px] font-normal mb-6"
               style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
             >
               Think of it like Y Combinator, but your idea can just be an idea.
             </h2>
             <p
-              className="text-[17px] leading-[1.7]"
+              className="text-[15px] md:text-[17px] leading-[1.7]"
               style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               YC wants traction, revenue, and a team. Urgenc wants conviction. If you can explain your vision in 60 seconds and our scoring system sees potential, you are in. No warm intros. No pedigree. Just prove you have what it takes.
@@ -1849,7 +1848,7 @@ export default function Home() {
           className="max-w-[800px] mx-auto"
         >
           <div
-            className="rounded-2xl px-8 py-14 md:px-16 md:py-[60px] text-center flex flex-col items-center"
+            className="rounded-2xl px-6 py-8 md:px-16 md:py-[60px] text-center flex flex-col items-center"
             style={{
               background: "linear-gradient(135deg, rgba(74, 108, 247, 0.04), rgba(124, 92, 252, 0.04))",
               backdropFilter: "blur(8px)",
@@ -1858,13 +1857,13 @@ export default function Home() {
             }}
           >
             <h2
-              className="text-[36px] md:text-[40px] font-normal mb-6"
+              className="text-[28px] md:text-[36px] lg:text-[40px] font-normal mb-6"
               style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
             >
               Never cold email for your startup again.
             </h2>
             <p
-              className="text-[17px] leading-[1.7] mb-10 max-w-[500px]"
+              className="text-[15px] md:text-[17px] leading-[1.7] mb-10 max-w-[500px]"
               style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               No more pitching into the void. No more LinkedIn stalking VCs. No more begging for warm intros. On Urgenc, investors come to you.
@@ -2156,7 +2155,7 @@ export default function Home() {
             <motion.h2
               variants={fadeUp}
               transition={{ duration: 0.6, ease }}
-              className="text-[36px] md:text-[48px] font-normal mb-6"
+              className="text-[28px] md:text-[36px] lg:text-[48px] font-normal mb-6"
               style={{ fontFamily: "'Instrument Serif', serif", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
             >
               Ready to Join the <span className="gradient-text">Network</span>?
@@ -2187,7 +2186,7 @@ export default function Home() {
 
               {/* Urgency pill */}
               <div
-                className="mt-6 inline-flex items-center gap-2 px-5 py-2 rounded-full text-[14px]"
+                className="mt-6 inline-flex items-center gap-2 px-5 py-2 rounded-full text-[14px] text-center"
                 style={{
                   background: "rgba(245, 158, 11, 0.05)",
                   border: "1px solid rgba(245, 158, 11, 0.15)",

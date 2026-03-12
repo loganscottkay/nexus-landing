@@ -163,7 +163,7 @@ export default function Sidebar({
 
       {/* Mobile bottom tab */}
       <div
-        className="md:hidden fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around py-3 px-2"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around h-[60px] px-2"
         style={{
           background: "rgba(255, 255, 255, 0.8)",
           backdropFilter: "blur(20px)",

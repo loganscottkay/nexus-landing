@@ -44,14 +44,12 @@ function HoverCard({ children, delay = 0 }: { children: React.ReactNode; delay?:
       onMouseLeave={() => setHovered(false)}
     >
       <div
-        className="rounded-2xl"
+        className="rounded-xl md:rounded-2xl p-6 md:p-8"
         style={{
           background: "rgba(255, 255, 255, 0.5)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
           border: `1px solid rgba(0, 0, 0, ${hovered ? 0.1 : 0.06})`,
-          padding: "32px",
-          borderRadius: "16px",
           transform: hovered ? "translateY(-3px)" : "translateY(0)",
           boxShadow: hovered ? "0 8px 30px rgba(0, 0, 0, 0.08)" : "0 0 0 rgba(0, 0, 0, 0)",
           transition: "all 0.25s ease",
@@ -152,7 +150,7 @@ export default function StoryPage() {
           <div className="grid md:grid-cols-2" style={{ gap: "20px" }}>
             {/* Logan */}
             <HoverCard>
-              <div className="flex items-center gap-4 mb-4">
+              <div className="flex flex-wrap items-center gap-4 mb-4">
                 <Image
                   src="/images/logan.webp"
                   alt="Logan Kay"
@@ -197,7 +195,7 @@ export default function StoryPage() {
 
             {/* Ben */}
             <HoverCard delay={0.06}>
-              <div className="flex items-center gap-4 mb-4">
+              <div className="flex flex-wrap items-center gap-4 mb-4">
                 <Image
                   src="/images/ben.jpeg"
                   alt="Ben Matiash"

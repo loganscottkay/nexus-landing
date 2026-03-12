@@ -16,6 +16,7 @@ export default function Navbar() {
   const [logoHovered, setLogoHovered] = useState(false);
   const [moonSettled, setMoonSettled] = useState(false);
   const [moonHovered, setMoonHovered] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const moonRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -30,12 +31,27 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth >= 1400) setMenuOpen(false);
+    const checkWidth = () => {
+      const desktop = window.innerWidth >= 1024;
+      setIsDesktop(desktop);
+      if (desktop) setMenuOpen(false);
     };
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    checkWidth();
+    window.addEventListener("resize", checkWidth);
+    return () => window.removeEventListener("resize", checkWidth);
   }, []);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   const topOffset = bannerVisible ? 40 : 0;
 
@@ -57,7 +73,12 @@ export default function Navbar() {
             fontFamily: "var(--font-dm-sans), sans-serif",
           }}
         >
-          <span className="mr-1">🚀</span> Founding cohort is open. 100 startup spots. Join the waitlist &rarr;
+          <span className="lg:hidden">
+            <span className="mr-1">🚀</span> Join the founding cohort &rarr;
+          </span>
+          <span className="hidden lg:inline">
+            <span className="mr-1">🚀</span> Founding cohort is open. 100 startup spots. Join the waitlist &rarr;
+          </span>
         </Link>
         <button
           onClick={(e) => {
@@ -94,7 +115,7 @@ export default function Navbar() {
           <div className="nav-shimmer-line absolute inset-0" />
         </div>
 
-        <div className="mx-auto px-6 grid items-center h-16 nav:h-20" style={{ gridTemplateColumns: "1fr auto 1fr" }}>
+        <div className="mx-auto px-6 grid items-center h-16 lg:h-20" style={{ gridTemplateColumns: "1fr auto 1fr" }}>
           {/* Far left: Logo */}
           <Link
             href="/"
@@ -165,7 +186,7 @@ export default function Navbar() {
               style={{
                 fontFamily: "var(--font-dm-sans), sans-serif",
                 fontSize: "18px",
-                letterSpacing: "5px",
+                letterSpacing: isDesktop ? "5px" : "3px",
                 fontWeight: 600,
                 ...(logoHovered
                   ? {
@@ -185,7 +206,7 @@ export default function Navbar() {
           </Link>
 
           {/* Center: Nav links */}
-          <div className="hidden nav:flex items-center justify-self-center" style={{ gap: "32px" }}>
+          <div className="hidden lg:flex items-center justify-self-center" style={{ gap: "32px" }}>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -199,7 +220,7 @@ export default function Navbar() {
           </div>
 
           {/* Far right: Action buttons */}
-          <div className="hidden nav:flex items-center justify-self-end shrink-0" style={{ gap: "16px" }}>
+          <div className="hidden lg:flex items-center justify-self-end shrink-0" style={{ gap: "16px" }}>
             <Link
               href="/login"
               className="nav-text-btn"
@@ -234,65 +255,89 @@ export default function Navbar() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="nav:hidden flex flex-col gap-1.5 p-2"
+            className="lg:hidden flex flex-col gap-1.5 p-2 justify-self-end"
             aria-label="Toggle menu"
           >
             <span
-              className={`block w-5 h-[1.5px] bg-text-primary transition-all duration-300 ${
-                menuOpen ? "rotate-45 translate-y-[4.5px]" : ""
-              }`}
+              className={`block w-6 h-[1.5px] transition-all duration-300`}
+              style={{ backgroundColor: "#0F172A", ...(menuOpen ? { transform: "rotate(45deg) translateY(4.5px)" } : {}) }}
             />
             <span
-              className={`block w-5 h-[1.5px] bg-text-primary transition-all duration-300 ${
-                menuOpen ? "opacity-0" : ""
-              }`}
+              className={`block w-6 h-[1.5px] transition-all duration-300`}
+              style={{ backgroundColor: "#0F172A", ...(menuOpen ? { opacity: 0 } : {}) }}
             />
             <span
-              className={`block w-5 h-[1.5px] bg-text-primary transition-all duration-300 ${
-                menuOpen ? "-rotate-45 -translate-y-[4.5px]" : ""
-              }`}
+              className={`block w-6 h-[1.5px] transition-all duration-300`}
+              style={{ backgroundColor: "#0F172A", ...(menuOpen ? { transform: "rotate(-45deg) translateY(-4.5px)" } : {}) }}
             />
           </button>
         </div>
+      </nav>
 
-        {/* Mobile menu */}
-        <div
-          className={`nav:hidden mobile-menu overflow-hidden transition-all duration-300 ${
-            menuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-          }`}
+      {/* Full-screen mobile menu overlay */}
+      <div
+        className={`lg:hidden fixed inset-0 z-[70] transition-all duration-300 ${
+          menuOpen
+            ? "opacity-100 pointer-events-auto translate-y-0"
+            : "opacity-0 pointer-events-none -translate-y-full"
+        }`}
+        style={{
+          background: "rgba(255, 255, 255, 0.95)",
+          backdropFilter: "blur(40px)",
+          WebkitBackdropFilter: "blur(40px)",
+        }}
+      >
+        {/* Close button top-right */}
+        <button
+          onClick={() => setMenuOpen(false)}
+          className="absolute flex items-center justify-center w-10 h-10"
+          style={{ top: "24px", right: "24px" }}
+          aria-label="Close menu"
         >
-          <div className="px-6 py-6 flex flex-col gap-5">
-            {navLinks.map((link) => (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+
+        {/* Nav links stacked vertically, centered */}
+        <div className="flex flex-col items-center justify-center h-full px-6">
+          <div className="flex flex-col items-center w-full">
+            {[
+              { label: "About", href: "/story" },
+              { label: "Startup Qualifications", href: "/qualifications/startup" },
+              { label: "Investor Qualifications", href: "/qualifications/investor" },
+              { label: "Sign In", href: "/login" },
+              { label: "Check Status", href: "/status" },
+            ].map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
+                className="flex items-center justify-center w-full transition-colors hover:text-accent-blue"
+                style={{
+                  height: "56px",
+                  fontSize: "18px",
+                  fontWeight: 600,
+                  fontFamily: "var(--font-dm-sans), sans-serif",
+                  color: "#0F172A",
+                }}
               >
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/login"
-              onClick={() => setMenuOpen(false)}
-              className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/status"
-              onClick={() => setMenuOpen(false)}
-              className="text-text-secondary hover:text-text-primary transition-colors text-[15px] font-medium"
-            >
-              Check Status
-            </Link>
-            <div className="pt-2">
+
+            {/* Large gradient Join Waitlist button */}
+            <div className="mt-8 w-full flex justify-center">
               <Link
                 href="/waitlist"
                 onClick={() => setMenuOpen(false)}
-                className="nav-waitlist-btn inline-flex items-center justify-center text-[14px] font-semibold text-white rounded-full"
+                className="flex items-center justify-center w-full font-semibold text-white rounded-full"
                 style={{
-                  padding: "10px 24px",
+                  maxWidth: "300px",
+                  height: "56px",
+                  fontSize: "18px",
+                  fontFamily: "var(--font-dm-sans), sans-serif",
                   background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                 }}
               >
@@ -301,7 +346,7 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-      </nav>
+      </div>
     </>
   );
 }

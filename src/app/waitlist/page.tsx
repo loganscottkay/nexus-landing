@@ -62,7 +62,7 @@ export default function WaitlistPage() {
   const ease = [0.25, 0.4, 0.25, 1] as const;
 
   const inputClass =
-    "w-full h-[48px] rounded-xl px-4 text-[15px] text-[#0F172A] placeholder:text-[#94A3B8] outline-none transition-all duration-200";
+    "w-full h-[44px] md:h-[48px] rounded-xl px-4 text-[15px] text-[#0F172A] placeholder:text-[#94A3B8] outline-none transition-all duration-200";
   const inputStyle = (field: string, hasError: boolean) => ({
     background: "rgba(255, 255, 255, 0.3)",
     backdropFilter: "blur(8px)",
@@ -118,7 +118,7 @@ export default function WaitlistPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease }}
-            className="w-full max-w-[560px] rounded-3xl p-6 sm:p-10 relative overflow-hidden"
+            className="w-full max-w-[560px] rounded-2xl md:rounded-3xl p-6 sm:p-10 relative overflow-hidden"
             style={{
               background: "rgba(255, 255, 255, 0.5)",
               backdropFilter: "blur(40px)",
@@ -727,7 +727,7 @@ export default function WaitlistPage() {
                   visible: { opacity: 1, y: 0 },
                 }}
                 transition={{ duration: 0.4, ease }}
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[13px]"
+                className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 rounded-full text-[13px]"
                 style={{
                   background: "rgba(255, 255, 255, 0.3)",
                   border: "1px solid rgba(0, 0, 0, 0.04)",

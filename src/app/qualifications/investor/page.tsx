@@ -125,7 +125,7 @@ function QualCard({ card, index }: { card: typeof cards[number]; index: number }
       onMouseLeave={() => setHovered(false)}
     >
       <div
-        className="relative rounded-2xl"
+        className="relative rounded-xl md:rounded-2xl p-6 md:p-8"
         style={{
           background: "rgba(255, 255, 255, 0.5)",
           backdropFilter: "blur(24px)",
@@ -133,7 +133,6 @@ function QualCard({ card, index }: { card: typeof cards[number]; index: number }
           border: card.isRejection
             ? `1px solid rgba(239, 68, 68, ${hovered ? 0.2 : 0.12})`
             : `1px solid rgba(0, 0, 0, ${hovered ? 0.1 : 0.06})`,
-          padding: "32px",
           transform: hovered ? "translateY(-3px)" : "translateY(0)",
           boxShadow: hovered ? "0 8px 30px rgba(0, 0, 0, 0.08)" : "0 0 0 rgba(0, 0, 0, 0)",
           transition: "all 0.25s ease",

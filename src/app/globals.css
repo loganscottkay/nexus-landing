@@ -15,6 +15,10 @@
   box-sizing: border-box;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -109,6 +113,16 @@ body {
 
 .glass:hover::before {
   opacity: 0.3;
+}
+
+/* Glass cards: smaller border-radius on mobile */
+@media (max-width: 768px) {
+  .glass {
+    border-radius: 16px;
+  }
+  .glass::before {
+    border-radius: 17px;
+  }
 }
 
 /* Disable glass glow when inside glow-card-wrapper (it has its own) */
@@ -678,6 +692,11 @@ body {
     display: block;
   }
 }
+@media (min-width: 1100px) and (max-width: 1279px) {
+  .hero-cards-container .dashboard-card {
+    transform: scale(0.85);
+  }
+}
 
 /* ---- SVG stroke draw animation (line chart) ---- */
 @keyframes stroke-draw {
@@ -1074,4 +1093,53 @@ body {
   25% { transform: translateY(-8px) translateX(4px); }
   50% { transform: translateY(-3px) translateX(-3px); }
   75% { transform: translateY(-10px) translateX(2px); }
+}
+
+/* ============================================================
+   Mobile responsive overrides
+   ============================================================ */
+@media (max-width: 768px) {
+  .glass {
+    border-radius: 16px;
+  }
+  .glass::before {
+    border-radius: 17px;
+  }
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) {
+  .glass:hover {
+    transform: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+  .glass:hover::before {
+    opacity: 0;
+  }
+  .glow-card-wrapper:hover::after {
+    opacity: 0;
+  }
+  .glow-card-wrapper:hover > .glass {
+    transform: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+  .nav-waitlist-btn:hover,
+  .nav-apply-btn:hover,
+  .btn-hero-glow:hover {
+    transform: none;
+  }
+  .dashboard-card:hover::after {
+    opacity: 0.7;
+  }
+}
+
+/* Hero floating cards at small desktop */
+@media (min-width: 1100px) and (max-width: 1279px) {
+  .hero-cards-container .dashboard-card {
+    transform: scale(0.85);
+  }
+  .hero-cards-container .glow-behind {
+    width: 300px;
+    height: 300px;
+  }
 }
