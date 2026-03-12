@@ -271,7 +271,7 @@ export default function Navbar() {
                   Apply as Investor
                 </Link>
                 <Link
-                  href="/apply/startup"
+                  href="/waitlist"
                   onClick={() => setApplyOpen(false)}
                   className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] text-text-primary font-medium transition-all duration-150 hover:bg-[rgba(74,108,247,0.05)] hover:text-[#4A6CF7]"
                   style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
@@ -282,7 +282,7 @@ export default function Navbar() {
                     <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
                     <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
                   </svg>
-                  Apply as Startup
+                  Join Waitlist
                 </Link>
               </div>
             </div>
@@ -354,11 +354,11 @@ export default function Navbar() {
               Apply as Investor
             </Link>
             <Link
-              href="/apply/startup"
+              href="/waitlist"
               onClick={() => setMenuOpen(false)}
               className="nav-apply-btn text-[14px] font-medium text-white"
             >
-              Apply as Startup
+              Join Waitlist
             </Link>
           </div>
         </div>
