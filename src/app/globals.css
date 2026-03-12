@@ -1,3 +1,4 @@
+/* ALL changes must be responsive. Test at 375px mobile, 768px tablet, and 1280px desktop. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -57,19 +58,19 @@ body {
 .blob-blue {
   width: 500px;
   height: 500px;
-  background: rgba(184, 212, 227, 0.4);
+  background: rgba(184, 212, 227, 0.15);
 }
 
 .blob-lavender {
   width: 400px;
   height: 400px;
-  background: rgba(196, 181, 224, 0.3);
+  background: rgba(196, 181, 224, 0.12);
 }
 
 .blob-peach {
   width: 350px;
   height: 350px;
-  background: rgba(232, 213, 183, 0.25);
+  background: rgba(232, 213, 183, 0.1);
 }
 
 /* ---- Glass cards - light sections ---- */

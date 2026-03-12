@@ -1104,36 +1104,16 @@ function MatchingFlowSection() {
 
 /* ---- Main Page ---- */
 export default function Home() {
-  const blobsRef = useRef<HTMLDivElement>(null);
-
-  /* Parallax scroll for background blobs */
-  useEffect(() => {
-    let ticking = false;
-    const onScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          if (blobsRef.current) {
-            blobsRef.current.style.transform = `translateY(${window.scrollY * 0.1}px)`;
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  /* Blobs are purely decorative, no parallax to avoid dark wash on scroll */
 
   return (
     <main className="relative min-h-screen bg-base text-text-primary">
       {/* Noise overlay */}
       <div className="noise-overlay" />
 
-      {/* Background gradient blobs with parallax */}
+      {/* Background gradient blobs */}
       <div
-        ref={blobsRef}
         className="fixed inset-0 overflow-hidden pointer-events-none z-0"
-        style={{ willChange: "transform" }}
       >
         <div className="blob blob-blue animate-blob-1 -top-[5%] right-[10%]" />
         <div className="blob blob-lavender animate-blob-2 top-[40%] -left-[5%]" />
@@ -2214,13 +2194,13 @@ export default function Home() {
       <footer className="relative z-10">
         <div className="border-t border-black/[0.06]">
           <div className="max-w-7xl mx-auto px-6 md:px-12 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <a
-              href="#"
-              className="text-[14px] font-bold tracking-[0.3em] text-text-primary"
-              style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+            <Link
+              href="/"
+              className="text-[18px] font-normal text-text-primary"
+              style={{ fontFamily: "'Instrument Serif', serif" }}
             >
-              URGENC
-            </a>
+              Urgenc
+            </Link>
             <p className="text-text-muted/60 text-[13px]">
               &copy; 2026 Urgenc. All rights reserved.
             </p>

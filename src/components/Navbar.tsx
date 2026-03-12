@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const navLinks = [
@@ -13,17 +13,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [bannerVisible, setBannerVisible] = useState(true);
-  const [logoHovered, setLogoHovered] = useState(false);
-  const [moonSettled, setMoonSettled] = useState(false);
-  const [moonHovered, setMoonHovered] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
-  const moonRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setMoonSettled(true), 1300);
-    return () => clearTimeout(timer);
-  }, []);
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -32,11 +21,8 @@ export default function Navbar() {
 
   useEffect(() => {
     const checkWidth = () => {
-      const desktop = window.innerWidth >= 1024;
-      setIsDesktop(desktop);
-      if (desktop) setMenuOpen(false);
+      if (window.innerWidth >= 1024) setMenuOpen(false);
     };
-    checkWidth();
     window.addEventListener("resize", checkWidth);
     return () => window.removeEventListener("resize", checkWidth);
   }, []);
@@ -119,89 +105,17 @@ export default function Navbar() {
           {/* Far left: Logo */}
           <Link
             href="/"
-            className="flex items-center gap-[10px] shrink-0 relative justify-self-start"
-            onMouseEnter={() => setLogoHovered(true)}
-            onMouseLeave={() => setLogoHovered(false)}
+            className="shrink-0 justify-self-start"
           >
-            {/* Sparkle trail particles */}
-            {!moonSettled && (
-              <>
-                <span className="moon-sparkle moon-sparkle-1" />
-                <span className="moon-sparkle moon-sparkle-2" />
-                <span className="moon-sparkle moon-sparkle-3" />
-                <span className="moon-sparkle moon-sparkle-4" />
-              </>
-            )}
-
-            {/* Full Moon */}
-            <div
-              ref={moonRef}
-              className={`nav-moon${moonSettled ? " settled" : ""}${moonHovered ? " hovered" : ""}`}
-              onMouseEnter={() => setMoonHovered(true)}
-              onMouseLeave={() => setMoonHovered(false)}
-            >
-              {/* Lunar flare (one-time shockwave after settling) */}
-              {moonSettled && <div className="lunar-flare" />}
-
-              {/* Twinkle stars around the moon */}
-              {moonSettled && (
-                <>
-                  <span className="moon-twinkle moon-twinkle-1" />
-                  <span className="moon-twinkle moon-twinkle-2" />
-                  <span className="moon-twinkle moon-twinkle-3" />
-                  <span className="moon-twinkle moon-twinkle-4" />
-                </>
-              )}
-
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="relative z-10"
-              >
-                <defs>
-                  {/* Spherical gradient: bright center to darker edges */}
-                  <radialGradient id="moon-sphere" cx="45%" cy="40%" r="50%">
-                    <stop offset="0%" stopColor="#C8CED8" />
-                    <stop offset="70%" stopColor="#B0B8C4" />
-                    <stop offset="100%" stopColor="#9AA2AE" />
-                  </radialGradient>
-                </defs>
-                {/* Main moon body */}
-                <circle cx="16" cy="16" r="13" fill="url(#moon-sphere)" stroke="rgba(200,210,220,0.3)" strokeWidth="1" />
-                {/* Craters */}
-                <circle cx="10" cy="11" r="3" fill="#9AA2B0" opacity="0.5" />
-                <circle cx="19" cy="9" r="2" fill="#A8B0BC" opacity="0.45" />
-                <circle cx="21" cy="18" r="3.5" fill="#9AA2B0" opacity="0.4" />
-                <circle cx="12" cy="20" r="2.5" fill="#A8B0BC" opacity="0.35" />
-                <circle cx="16" cy="15" r="1.5" fill="#9AA2B0" opacity="0.3" />
-                <circle cx="8" cy="17" r="2" fill="#A8B0BC" opacity="0.3" />
-              </svg>
-            </div>
-
             <span
-              className="transition-all duration-300"
+              className="text-[22px] font-normal"
               style={{
-                fontFamily: "var(--font-dm-sans), sans-serif",
-                fontSize: "18px",
-                letterSpacing: isDesktop ? "5px" : "3px",
-                fontWeight: 600,
-                ...(logoHovered
-                  ? {
-                      background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                    }
-                  : { color: "#0F172A" }),
+                fontFamily: "'Instrument Serif', serif",
+                color: "#0F172A",
+                letterSpacing: "normal",
               }}
             >
-              URGENC
-              <span className="relative ml-[-0.15em]">
-                <span className="nav-logo-dot" />
-              </span>
+              Urgenc
             </span>
           </Link>
 
