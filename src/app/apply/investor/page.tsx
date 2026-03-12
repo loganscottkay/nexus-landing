@@ -235,7 +235,7 @@ export default function InvestorApply() {
               <path d="M12 16v-4M12 8h.01" />
             </svg>
             <p className="text-[14px] text-accent-blue leading-[1.5]">
-              First-time investors are welcome on Urgenc. We will match you with
+              First-time investors are welcome on UrgenC. We will match you with
               early-stage founders where your capital and perspective can make a
               real impact.
             </p>
@@ -507,7 +507,7 @@ export default function InvestorApply() {
               label={
                 <span className="text-[14px] leading-[1.6]">
                   I certify that I am an accredited investor as defined by SEC
-                  Rule 501 of Regulation D. I understand that Urgenc will verify
+                  Rule 501 of Regulation D. I understand that UrgenC will verify
                   this status through a third-party verification service before
                   granting full platform access.
                 </span>
@@ -590,7 +590,7 @@ export default function InvestorApply() {
         </div>
 
         <div>
-          <FormLabel required>How did you hear about Urgenc?</FormLabel>
+          <FormLabel required>How did you hear about UrgenC?</FormLabel>
           <SelectInput
             options={SOURCES}
             value={source}

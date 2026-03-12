@@ -11,7 +11,7 @@ const ease = [0.25, 0.4, 0.25, 1] as [number, number, number, number];
 const storySections = [
   {
     title: "Where It Started",
-    body: "Best friends since high school. Logan studied Hospitality and Data Science at BU. Ben studied Finance and Marketing at Northeastern. For years we brainstormed startup ideas every weekend and kept hitting the same wall.",
+    body: "Best friends since high school. Logan studied Hospitality and Data Science at BU. Benjamin studied Finance and Marketing at Northeastern. For years we brainstormed startup ideas every weekend and kept hitting the same wall.",
   },
   {
     title: "The Problem",
@@ -19,15 +19,15 @@ const storySections = [
   },
   {
     title: "The Moment It Clicked",
-    body: "One night Ben said it: the problem is not finding an idea. The problem is that founders and investors literally cannot find each other. That was the moment.",
+    body: "One night Benjamin said it: the problem is not finding an idea. The problem is that founders and investors literally cannot find each other. That was the moment.",
   },
   {
-    title: "What Urgenc Is",
+    title: "What UrgenC Is",
     body: "A matching app. Founders pitch. Investors swipe. Matches lead to real calls. Think Tinder but for startup deals.",
   },
   {
     title: "Why Now",
-    body: "AI is lowering the barrier to build. More people than ever want in. Urgenc is the door.",
+    body: "AI is lowering the barrier to build. More people than ever want in. UrgenC is the door.",
   },
 ];
 
@@ -189,16 +189,16 @@ export default function StoryPage() {
                   lineHeight: 1.7,
                 }}
               >
-                Logan brings the technical firepower and operational rigor. He studies Hospitality Administration and Data Science at Boston University and helped spearhead AI implementation across admissions and operations at Harvard Business School. He obsesses over making complex systems simple and accessible. He is the architect behind the Urgenc scoring engine and platform infrastructure, and co-leads go-to-market strategy and product ideation.
+                Logan brings the technical firepower and operational rigor. He studies Hospitality Administration and Data Science at Boston University and helped spearhead AI implementation across admissions and operations at Harvard Business School. He obsesses over making complex systems simple and accessible. He is the architect behind the UrgenC scoring engine and platform infrastructure, and co-leads go-to-market strategy and product ideation.
               </p>
             </HoverCard>
 
-            {/* Ben */}
+            {/* Benjamin */}
             <HoverCard delay={0.06}>
               <div className="flex flex-wrap items-center gap-4 mb-4">
                 <Image
                   src="/images/ben.jpeg"
-                  alt="Ben Matiash"
+                  alt="Benjamin Matiash"
                   width={80}
                   height={80}
                   className="rounded-full object-cover shrink-0"
@@ -213,7 +213,7 @@ export default function StoryPage() {
                       color: "#0F172A",
                     }}
                   >
-                    Ben Matiash
+                    Benjamin Matiash
                   </p>
                   <p
                     style={{
@@ -234,7 +234,7 @@ export default function StoryPage() {
                   lineHeight: 1.7,
                 }}
               >
-                Ben brings the financial acumen and investor perspective. His experience in institutional equity at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became Urgenc: that the people with ideas and the people who want to back them have no efficient way to find each other. He leads investor relations, scoring methodology, and go-to-market strategy at Urgenc.
+                Benjamin brings the financial acumen and investor perspective. His experience in institutional equity at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became UrgenC: that the people with ideas and the people who want to back them have no efficient way to find each other. He leads investor relations, scoring methodology, and go-to-market strategy at UrgenC.
               </p>
             </HoverCard>
           </div>

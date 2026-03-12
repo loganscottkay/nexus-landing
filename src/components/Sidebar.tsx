@@ -110,7 +110,7 @@ export default function Sidebar({
         }}
       >
         <div className="px-6 pt-7 pb-8">
-          <Link href="/" className="text-[22px] font-normal text-text-primary" style={{ fontFamily: "'Instrument Serif', serif" }}>Urgenc</Link>
+          <Link href="/" className="text-[22px] font-normal text-text-primary" style={{ fontFamily: "'Instrument Serif', serif" }}>UrgenC</Link>
         </div>
         <nav className="flex-1 px-3">
           {/* Home button */}

@@ -103,7 +103,7 @@ const cards = [
       "No traction after 30 days may mean removal",
       "Attend calls or give 24hr cancellation notice",
     ],
-    why: "This is what keeps Urgenc elite.",
+    why: "This is what keeps UrgenC elite.",
   },
   {
     icon: "rejected",

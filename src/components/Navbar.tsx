@@ -115,7 +115,7 @@ export default function Navbar() {
                 letterSpacing: "normal",
               }}
             >
-              Urgenc
+              UrgenC
             </span>
           </Link>
 

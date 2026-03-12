@@ -409,7 +409,7 @@ const startupData: Record<string, StartupData> = {
   },
 };
 
-/* ─── Urgenc Score Label ─── */
+/* ─── UrgenC Score Label ─── */
 function nexusLabel(score: number): string {
   if (score >= 85) return "Strong";
   if (score >= 75) return "Promising";
@@ -812,7 +812,7 @@ export default function StartupProfilePage() {
           <SectionCard delay={0.28}>
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-[20px] md:text-[22px] font-normal text-text-primary" style={{ fontFamily: "'Instrument Serif', serif" }}>
-                Urgenc Score
+                UrgenC Score
               </h2>
               <span className="text-[13px] font-medium px-3 py-1 rounded-full" style={{ backgroundColor: "rgba(5,150,105,0.08)", color: "#059669" }}>
                 {scoreLabel}
@@ -842,7 +842,7 @@ export default function StartupProfilePage() {
                 </svg>
                 <div>
                   <p className="text-[14px] leading-[1.6]" style={{ color: "#92400E" }}>
-                    This document is confidential. By viewing, you agree to the Urgenc Mutual NDA. Your access is watermarked and logged.
+                    This document is confidential. By viewing, you agree to the UrgenC Mutual NDA. Your access is watermarked and logged.
                   </p>
                   <a href="#" className="text-[14px] font-medium mt-1 inline-block hover:underline" style={{ color: "#D97706" }}>
                     View NDA Terms

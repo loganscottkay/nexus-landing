@@ -56,7 +56,7 @@ const cards = [
       "Verified email and phone",
       "Location disclosure",
     ],
-    why: "Every investor on Urgenc is a real, verified person.",
+    why: "Every investor on UrgenC is a real, verified person.",
   },
   {
     icon: "readiness",
@@ -247,7 +247,7 @@ export default function InvestorQualifications() {
             className="text-[16px] md:text-[18px] text-center mb-12 max-w-lg mx-auto leading-[1.7]"
             style={{ color: "#94A3B8" }}
           >
-            Urgenc welcomes investors of all sizes. Here is how we verify you are serious.
+            UrgenC welcomes investors of all sizes. Here is how we verify you are serious.
           </motion.p>
 
           {/* Cards */}

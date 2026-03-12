@@ -78,10 +78,10 @@ export default function WaitlistPage() {
   return (
     <>
       <head>
-        <title>Join the Waitlist | Urgenc</title>
+        <title>Join the Waitlist | UrgenC</title>
         <meta
           name="description"
-          content="Join the Urgenc founding cohort. Tell us your startup idea in 60 seconds. No pitch deck needed."
+          content="Join the UrgenC founding cohort. Tell us your startup idea in 60 seconds. No pitch deck needed."
         />
       </head>
 
@@ -571,7 +571,7 @@ export default function WaitlistPage() {
                     className="text-[14px] font-semibold text-[#0F172A] mb-3"
                     style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
                   >
-                    Share Urgenc
+                    Share UrgenC
                   </p>
                   <div className="flex items-center gap-3 mb-8">
                     {/* Twitter/X share */}

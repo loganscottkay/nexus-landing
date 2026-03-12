@@ -164,7 +164,7 @@ const howItWorksCards = [
     num: "03",
     icon: <PhoneIcon />,
     title: "Move Fast or Move On",
-    desc: "72 hours to take the call. 30 days to show traction. Ghost and you are gone. Every conversation on Urgenc is between two serious people.",
+    desc: "72 hours to take the call. 30 days to show traction. Ghost and you are gone. Every conversation on UrgenC is between two serious people.",
   },
 ];
 
@@ -559,10 +559,10 @@ function FounderPitchCard() {
           <p className="text-white/40 text-[12px] tabular-nums">1:00</p>
         </div>
 
-        {/* Urgenc Score */}
+        {/* UrgenC Score */}
         <div className="mb-4">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-white/40 text-[10px] tracking-[2px] uppercase">Urgenc Score</p>
+            <p className="text-white/40 text-[10px] tracking-[2px] uppercase">UrgenC Score</p>
             <p className="text-white font-semibold text-[16px] tabular-nums">
               {scoreNum}/100
             </p>
@@ -1199,7 +1199,7 @@ export default function Home() {
               className="text-[15px] md:text-[19px] max-w-full px-2 md:max-w-[600px] md:px-0 mb-12 leading-[1.8]"
               style={{ color: "#475569" }}
             >
-              Urgenc is a matching app for startups and investors. Founders pitch. Investors swipe. When interest is mutual, you get a guaranteed meeting. We do not promise deals. We promise that if someone wants to talk to you, they will. What happens after is up to you.
+              UrgenC is a matching app for startups and investors. Founders pitch. Investors swipe. When interest is mutual, you get a guaranteed meeting. We do not promise deals. We promise that if someone wants to talk to you, they will. What happens after is up to you.
             </motion.p>
 
             {/* CTAs */}
@@ -1324,7 +1324,7 @@ export default function Home() {
                     <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
                   </svg>
                   <h3 className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Direct Founder Access</h3>
-                  <p className="text-[15px] text-text-muted leading-[1.6]">Direct line to Logan and Ben. Shape the product with us.</p>
+                  <p className="text-[15px] text-text-muted leading-[1.6]">Direct line to Logan and Benjamin. Shape the product with us.</p>
                 </div>
               </div>
             </motion.div>
@@ -1410,7 +1410,7 @@ export default function Home() {
                 <ul className="flex flex-col gap-4 flex-1">
                   {[
                     "Founding cohort = lifetime free access. Apply before spots close.",
-                    "First time investing? Good. Urgenc is built for you.",
+                    "First time investing? Good. UrgenC is built for you.",
                     "Every founder scored on vision, team, market, and momentum.",
                     "Browse. Match. 20-minute call. That is the whole process.",
                     "No obligations. Express interest, take the call, decide from there. Simple.",
@@ -1587,7 +1587,7 @@ export default function Home() {
                     fontFamily: "var(--font-dm-sans), sans-serif",
                   }}
                 >
-                  Bro use Urgenc
+                  Bro use UrgenC
                 </div>
               </motion.div>
 
@@ -1668,7 +1668,7 @@ export default function Home() {
                       className="text-[13px] font-semibold mb-0.5"
                       style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#0F172A" }}
                     >
-                      Urgenc | Where Capital Meets Vision
+                      UrgenC | Where Capital Meets Vision
                     </p>
                     <p className="text-[12px]" style={{ color: "#94A3B8" }}>
                       A matching app for startups and investors.
@@ -1807,14 +1807,14 @@ export default function Home() {
               className="text-[18px] font-normal text-text-primary"
               style={{ fontFamily: "'Instrument Serif', serif" }}
             >
-              Urgenc
+              UrgenC
             </Link>
             <div className="flex flex-col items-center gap-2">
               <p className="text-[12px] text-center max-w-[600px]" style={{ color: "#94A3B8" }}>
-                Urgenc is a matching and meeting platform. We do not provide investment advice, facilitate financial transactions, or act as a broker-dealer. All investment decisions and transactions occur off-platform between the parties involved.
+                UrgenC is a matching and meeting platform. We do not provide investment advice, facilitate financial transactions, or act as a broker-dealer. All investment decisions and transactions occur off-platform between the parties involved.
               </p>
               <p className="text-text-muted/60 text-[13px]">
-                &copy; 2026 Urgenc. All rights reserved.
+                &copy; 2026 UrgenC. All rights reserved.
               </p>
             </div>
             <div className="flex items-center gap-6">
