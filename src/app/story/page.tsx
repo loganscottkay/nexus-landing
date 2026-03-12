@@ -150,92 +150,116 @@ export default function StoryPage() {
           <div className="grid md:grid-cols-2" style={{ gap: "20px" }}>
             {/* Logan */}
             <HoverCard>
-              <div className="flex flex-wrap items-center gap-4 mb-4">
-                <Image
-                  src="/images/logan.webp"
-                  alt="Logan Kay"
-                  width={80}
-                  height={80}
-                  className="rounded-full object-cover shrink-0"
-                  style={{ width: "80px", height: "80px" }}
-                />
-                <div>
-                  <p
-                    className="font-semibold"
-                    style={{
-                      fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontSize: "20px",
-                      color: "#0F172A",
-                    }}
-                  >
-                    Logan Kay
-                  </p>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontSize: "14px",
-                      color: "#94A3B8",
-                    }}
-                  >
-                    Co-Founder
-                  </p>
+              <div className="p-0 md:p-0" style={{ minHeight: "280px" }}>
+                <div className="flex items-center gap-4 mb-3">
+                  <Image
+                    src="/images/logan.webp"
+                    alt="Logan Kay"
+                    width={80}
+                    height={80}
+                    className="rounded-full object-cover shrink-0"
+                    style={{ width: "80px", height: "80px" }}
+                  />
+                  <div>
+                    <p
+                      className="font-semibold"
+                      style={{
+                        fontFamily: "var(--font-dm-sans), sans-serif",
+                        fontSize: "20px",
+                        color: "#0F172A",
+                      }}
+                    >
+                      Logan Kay
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-dm-sans), sans-serif",
+                        fontSize: "14px",
+                        color: "#94A3B8",
+                      }}
+                    >
+                      Co-Founder
+                    </p>
+                  </div>
                 </div>
+                <p
+                  className="mb-4"
+                  style={{
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                    fontSize: "14px",
+                    color: "#94A3B8",
+                  }}
+                >
+                  Boston University | AI Implementation @ Harvard Business School
+                </p>
+                <p
+                  style={{
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                    fontSize: "15px",
+                    color: "#475569",
+                    lineHeight: 1.7,
+                  }}
+                >
+                  Logan brings the technical firepower and operational rigor. He spearheaded AI implementation across admissions and operations at Harvard Business School and obsesses over making complex systems simple and accessible. He is the architect behind the UrgenC scoring engine and platform infrastructure.
+                </p>
               </div>
-              <p
-                style={{
-                  fontFamily: "var(--font-dm-sans), sans-serif",
-                  fontSize: "15px",
-                  color: "#475569",
-                  lineHeight: 1.7,
-                }}
-              >
-                Logan brings the technical firepower and operational rigor. He studies Hospitality Administration and Data Science at Boston University and helped spearhead AI implementation across admissions and operations at Harvard Business School. He obsesses over making complex systems simple and accessible. He is the architect behind the UrgenC scoring engine and platform infrastructure, and co-leads go-to-market strategy and product ideation.
-              </p>
             </HoverCard>
 
             {/* Benjamin */}
             <HoverCard delay={0.06}>
-              <div className="flex flex-wrap items-center gap-4 mb-4">
-                <Image
-                  src="/images/ben.jpeg"
-                  alt="Benjamin Matiash"
-                  width={80}
-                  height={80}
-                  className="rounded-full object-cover shrink-0"
-                  style={{ width: "80px", height: "80px" }}
-                />
-                <div>
-                  <p
-                    className="font-semibold"
-                    style={{
-                      fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontSize: "20px",
-                      color: "#0F172A",
-                    }}
-                  >
-                    Benjamin Matiash
-                  </p>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontSize: "14px",
-                      color: "#94A3B8",
-                    }}
-                  >
-                    Co-Founder
-                  </p>
+              <div className="p-0 md:p-0" style={{ minHeight: "280px" }}>
+                <div className="flex items-center gap-4 mb-3">
+                  <Image
+                    src="/images/ben.jpeg"
+                    alt="Benjamin Matiash"
+                    width={80}
+                    height={80}
+                    className="rounded-full object-cover shrink-0"
+                    style={{ width: "80px", height: "80px" }}
+                  />
+                  <div>
+                    <p
+                      className="font-semibold"
+                      style={{
+                        fontFamily: "var(--font-dm-sans), sans-serif",
+                        fontSize: "20px",
+                        color: "#0F172A",
+                      }}
+                    >
+                      Benjamin Matiash
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-dm-sans), sans-serif",
+                        fontSize: "14px",
+                        color: "#94A3B8",
+                      }}
+                    >
+                      Co-Founder
+                    </p>
+                  </div>
                 </div>
+                <p
+                  className="mb-4"
+                  style={{
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                    fontSize: "14px",
+                    color: "#94A3B8",
+                  }}
+                >
+                  Northeastern University | Institutional Equity @ Morgan Stanley
+                </p>
+                <p
+                  style={{
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                    fontSize: "15px",
+                    color: "#475569",
+                    lineHeight: 1.7,
+                  }}
+                >
+                  Benjamin brings the financial acumen and investor perspective. His experience in institutional equity at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became UrgenC and leads investor relations, scoring methodology, and go-to-market strategy.
+                </p>
               </div>
-              <p
-                style={{
-                  fontFamily: "var(--font-dm-sans), sans-serif",
-                  fontSize: "15px",
-                  color: "#475569",
-                  lineHeight: 1.7,
-                }}
-              >
-                Benjamin brings the financial acumen and investor perspective. His experience in institutional equity at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became UrgenC: that the people with ideas and the people who want to back them have no efficient way to find each other. He leads investor relations, scoring methodology, and go-to-market strategy at UrgenC.
-              </p>
             </HoverCard>
           </div>
         </div>
