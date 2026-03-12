@@ -1175,7 +1175,7 @@ export default function Home() {
         </div>
 
         {/* Centered hero text */}
-        <div className="flex flex-col items-center justify-center text-center px-6 min-h-screen max-w-5xl mx-auto relative z-10">
+        <div className="flex flex-col items-center justify-center text-center px-6 min-h-screen max-w-5xl mx-auto relative z-10 pt-[120px]">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -1279,17 +1279,15 @@ export default function Home() {
 
       {/* ============ QUOTE BANNER ============ */}
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.8, ease }}
-        className="relative z-10 py-7"
+        transition={{ duration: 0.5, ease }}
+        className="relative z-10 py-12"
         style={{
-          background: "rgba(255, 255, 255, 0.4)",
-          backdropFilter: "blur(8px)",
-          WebkitBackdropFilter: "blur(8px)",
-          borderTop: "1px solid rgba(0, 0, 0, 0.04)",
-          borderBottom: "1px solid rgba(0, 0, 0, 0.04)",
+          background: "rgba(255, 255, 255, 0.25)",
+          backdropFilter: "blur(6px)",
+          WebkitBackdropFilter: "blur(6px)",
         }}
       >
         <p
@@ -1313,7 +1311,7 @@ export default function Home() {
       <MatchingFlowSection />
 
       {/* ============ iMESSAGE MOCKUP ============ */}
-      <Section className="relative z-10 px-6 py-24 md:py-32">
+      <Section className="relative z-10 px-6 py-20 md:py-20">
         <div className="flex flex-col items-center">
           {/* iMessage card */}
           <div
@@ -1534,6 +1532,10 @@ export default function Home() {
 
       {/* ============ STATS (DARK SECTION) ============ */}
       <section className="relative z-10 py-24 md:py-32 bg-dark-section overflow-hidden">
+        {/* Top gradient fade from light to dark */}
+        <div className="absolute top-0 left-0 right-0 h-[40px] pointer-events-none z-10" style={{ background: "linear-gradient(to bottom, #FAFAF9, transparent)" }} />
+        {/* Bottom gradient fade from dark to light */}
+        <div className="absolute bottom-0 left-0 right-0 h-[40px] pointer-events-none z-10" style={{ background: "linear-gradient(to top, #FAFAF9, transparent)" }} />
         <ParticleField />
         <div className="grid-overlay absolute inset-0" />
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -1713,30 +1715,38 @@ export default function Home() {
       </Section>
 
       {/* ============ YC COMPARISON ============ */}
-      <Section className="relative z-10 px-6 py-24 md:py-32">
+      <Section className="relative z-10 px-6 py-[60px]">
         <motion.div
           variants={cardStagger}
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          className="flex flex-col items-center max-w-[600px] mx-auto text-center"
+          className="flex justify-center"
         >
-          <motion.h2
+          <motion.div
             variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[32px] font-normal mb-6"
-            style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
+            transition={{ duration: 0.5, ease }}
+            className="max-w-[700px] w-full text-center p-10 rounded-2xl"
+            style={{
+              background: "rgba(255, 255, 255, 0.3)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+              border: "1px solid rgba(0, 0, 0, 0.04)",
+            }}
           >
-            Think of it like Y Combinator, but your idea can just be an idea.
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="text-[17px] leading-[1.7]"
-            style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
-          >
-            YC wants traction, revenue, and a team. Urgenc wants conviction. If you can explain your vision in 60 seconds and our scoring system sees potential, you are in. No warm intros. No pedigree. Just prove you have what it takes.
-          </motion.p>
+            <h2
+              className="text-[32px] font-normal mb-6"
+              style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
+            >
+              Think of it like Y Combinator, but your idea can just be an idea.
+            </h2>
+            <p
+              className="text-[17px] leading-[1.7]"
+              style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
+            >
+              YC wants traction, revenue, and a team. Urgenc wants conviction. If you can explain your vision in 60 seconds and our scoring system sees potential, you are in. No warm intros. No pedigree. Just prove you have what it takes.
+            </p>
+          </motion.div>
         </motion.div>
       </Section>
 
@@ -1828,6 +1838,10 @@ export default function Home() {
 
       {/* ============ NEVER COLD EMAIL AGAIN ============ */}
       <section className="relative z-10 py-16 md:py-[60px] overflow-hidden" style={{ background: "rgba(10, 10, 15, 0.9)" }}>
+        {/* Top gradient fade from light to dark */}
+        <div className="absolute top-0 left-0 right-0 h-[40px] pointer-events-none z-10" style={{ background: "linear-gradient(to bottom, #FAFAF9, transparent)" }} />
+        {/* Bottom gradient fade from dark to light */}
+        <div className="absolute bottom-0 left-0 right-0 h-[40px] pointer-events-none z-10" style={{ background: "linear-gradient(to top, #FAFAF9, transparent)" }} />
         {/* Floating particle dots */}
         <div className="absolute inset-0 pointer-events-none">
           {Array.from({ length: 25 }).map((_, i) => (
