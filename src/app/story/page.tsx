@@ -42,9 +42,10 @@ function HoverCard({ children, delay = 0 }: { children: React.ReactNode; delay?:
       transition={{ duration: 0.4, ease, delay }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      className="h-full"
     >
       <div
-        className="rounded-xl md:rounded-2xl p-6 md:p-8"
+        className="rounded-xl md:rounded-2xl p-6 md:p-8 h-full"
         style={{
           background: "rgba(255, 255, 255, 0.5)",
           backdropFilter: "blur(24px)",
@@ -147,7 +148,7 @@ export default function StoryPage() {
             Meet the Founders
           </motion.h2>
 
-          <div className="grid md:grid-cols-2" style={{ gap: "20px" }}>
+          <div className="grid md:grid-cols-2 items-stretch" style={{ gap: "20px" }}>
             {/* Logan */}
             <HoverCard>
               <div className="p-0 md:p-0" style={{ minHeight: "280px" }}>
