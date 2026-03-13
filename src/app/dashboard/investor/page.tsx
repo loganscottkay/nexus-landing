@@ -210,11 +210,11 @@ function SavedContent() {
         <Link href="/dashboard/investor/saved" className="text-accent-blue text-[14px] hover:underline">View All</Link>
       </div>
       {[
-        { initials: "LA", color: "#4A6CF7", name: "Luminary AI", sector: "AI/ML" },
-        { initials: "SP", color: "#0d9488", name: "Stackpay", sector: "Fintech" },
         { initials: "NP", color: "#7C5CFC", name: "NeuralPath", sector: "Dev Tools" },
         { initials: "GG", color: "#059669", name: "GreenGrid", sector: "Climate" },
         { initials: "AR", color: "#e67e22", name: "Archetype", sector: "Enterprise" },
+        { initials: "NB", color: "#4A6CF7", name: "NovaBridge", sector: "EdTech" },
+        { initials: "PW", color: "#0d9488", name: "Patchwork", sector: "Marketplace" },
       ].map((s, i, arr) => (
         <div key={s.name} className={`flex items-center gap-2.5 py-2.5 min-h-[44px] hover:bg-black/[0.02] transition-all duration-200 cursor-pointer rounded-lg -mx-2 px-2 hover:-translate-y-px hover:shadow-sm ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
           <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[12px] font-semibold shrink-0" style={{ backgroundColor: s.color }}>{s.initials}</div>
@@ -250,7 +250,7 @@ const pipelineItemVariants = {
 
 const clockIcon = <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>;
 const calIcon = <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /></svg>;
-const chatIcon = <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" /></svg>;
+
 
 /* ─── Section Title Icons ─── */
 const compassIcon = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" /></svg>;
@@ -367,9 +367,9 @@ function FilterPanelContent({ filters, setFilters }: { filters: FilterState; set
 /* ─── Meeting Queue Section ─── */
 function MeetingQueue() {
   const queueItems = [
-    { initials: "LA", color: "#4A6CF7", name: "Luminary AI", sector: "AI/ML", position: 1, active: true, status: "47h remaining", statusLabel: "ACTIVE" },
-    { initials: "TH", color: "#7C5CFC", name: "Terraform Health", sector: "Health Tech", position: 2, active: false, status: "Next up", statusLabel: "" },
-    { initials: "SP", color: "#0d9488", name: "Stackpay", sector: "Fintech", position: 3, active: false, status: "Estimated: ~6 days", statusLabel: "" },
+    { initials: "LA", color: "#4A6CF7", name: "Luminary AI", sector: "AI/ML", position: 1, active: true, needsAction: false, status: "Times proposed — waiting for response", statusLabel: "ACTIVE" },
+    { initials: "TH", color: "#7C5CFC", name: "Terraform Health", sector: "Health Tech", position: 2, active: false, needsAction: true, status: "Counter-proposal received — respond now", statusLabel: "" },
+    { initials: "SP", color: "#0d9488", name: "Stackpay", sector: "Fintech", position: 3, active: false, needsAction: false, status: "Estimated ~6 days", statusLabel: "" },
   ];
 
   return (
@@ -412,6 +412,8 @@ function MeetingQueue() {
                     <span className="text-[12px] font-semibold px-2.5 py-1 rounded-full" style={{ background: "rgba(5,150,105,0.1)", color: "#059669" }}>ACTIVE</span>
                     <span className="text-[15px] font-medium" style={{ color: "#4A6CF7" }}>47h remaining</span>
                   </>
+                ) : q.needsAction ? (
+                  <span className="text-[14px] font-medium" style={{ color: "#D97706" }}>{q.status}</span>
                 ) : (
                   <span className="text-[14px] text-text-muted">{q.status}</span>
                 )}
@@ -462,6 +464,8 @@ function MeetingQueue() {
                       <span className="text-[12px] font-semibold px-2.5 py-1 rounded-full" style={{ background: "rgba(5,150,105,0.1)", color: "#059669" }}>ACTIVE</span>
                       <span className="text-[15px] font-medium" style={{ color: "#4A6CF7" }}>47h remaining</span>
                     </div>
+                  ) : q.needsAction ? (
+                    <span className="text-[14px] font-medium" style={{ color: "#D97706" }}>{q.status}</span>
                   ) : (
                     <span className="text-[14px] text-text-muted">{q.status}</span>
                   )}
@@ -614,9 +618,9 @@ export default function InvestorDashboard() {
                   </div>
                   <p className="text-[12px] text-text-muted italic mb-3">Startups that match your filters, refreshed daily.</p>
                   {[
-                    { initials: "TH", color: "#7C5CFC", name: "Terraform Health", desc: "Predictive diagnostics using wearable biosignals", sector: "Health Tech", stage: "Pre-Seed" },
-                    { initials: "CA", color: "#059669", name: "Canopy Analytics", desc: "Real-time carbon tracking for supply chains", sector: "Climate Tech", stage: "Seed" },
-                    { initials: "Br", color: "#e67e22", name: "Briefly", desc: "AI meeting assistant that writes follow-ups", sector: "AI/SaaS", stage: "Pre-Seed" },
+                    { initials: "NB", color: "#7C5CFC", name: "NovaBridge", desc: "AI tutoring for underserved communities", sector: "EdTech", stage: "Pre-Seed" },
+                    { initials: "PW", color: "#059669", name: "Patchwork", desc: "Connecting local artisans with global buyers", sector: "Marketplace", stage: "Seed" },
+                    { initials: "SF", color: "#e67e22", name: "SignalFi", desc: "Real-time fraud detection for small banks", sector: "Fintech", stage: "Pre-Seed" },
                   ].map((s, i, arr) => (
                     <Link key={s.name} href="/dashboard/investor/drops" className={`block py-3 min-h-[60px] cursor-pointer hover:bg-black/[0.02] -mx-2 px-2 rounded-lg transition-all duration-200 ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
                       <div className="flex items-center gap-3">
@@ -668,13 +672,14 @@ export default function InvestorDashboard() {
 
                   {/* Desktop: 3-column kanban */}
                   <div className="hidden md:grid grid-cols-3 gap-3">
-                    {/* Waiting */}
+                    {/* Scheduling */}
                     <div>
-                      <p className="text-[12px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #4A6CF7", paddingLeft: "8px" }}>Waiting <span className="text-text-primary">(2)</span></p>
+                      <p className="text-[12px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #4A6CF7", paddingLeft: "8px" }}>Scheduling <span className="text-text-primary">(3)</span></p>
                       <div className="space-y-2">
                         {[
-                          { name: "Luminary AI", sub: "47h remaining" },
-                          { name: "Stackpay", sub: "Sent 2 days ago" },
+                          { name: "Luminary AI", sub: "Times proposed — 47h left" },
+                          { name: "Terraform Health", sub: "Counter-proposal received" },
+                          { name: "Briefly", sub: "Finding a time" },
                         ].map((c, i) => (
                           <motion.div
                             key={c.name}
@@ -694,13 +699,12 @@ export default function InvestorDashboard() {
                         ))}
                       </div>
                     </div>
-                    {/* Call Booked */}
+                    {/* Call Confirmed */}
                     <div>
-                      <p className="text-[12px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #7C5CFC", paddingLeft: "8px" }}>Call Booked <span className="text-text-primary">(2)</span></p>
+                      <p className="text-[12px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #7C5CFC", paddingLeft: "8px" }}>Call Confirmed <span className="text-text-primary">(1)</span></p>
                       <div className="space-y-2">
                         {[
-                          { name: "Terraform Health", sub: "Call Mar 15" },
-                          { name: "Canopy Analytics", sub: "Scheduling..." },
+                          { name: "Canopy Analytics", sub: "Wed Mar 15, 3:00 PM" },
                         ].map((c, i) => (
                           <motion.div
                             key={c.name}
@@ -720,9 +724,9 @@ export default function InvestorDashboard() {
                         ))}
                       </div>
                     </div>
-                    {/* In Progress */}
+                    {/* Waiting */}
                     <div>
-                      <p className="text-[12px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #059669", paddingLeft: "8px" }}>In Progress <span className="text-text-primary">(1)</span></p>
+                      <p className="text-[12px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #059669", paddingLeft: "8px" }}>Waiting <span className="text-text-primary">(1)</span></p>
                       <div className="space-y-2">
                         <motion.div
                           custom={0}
@@ -732,10 +736,10 @@ export default function InvestorDashboard() {
                           className="rounded-lg p-3"
                           style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}
                         >
-                          <p className="text-[13px] font-semibold text-text-primary">Briefly</p>
+                          <p className="text-[13px] font-semibold text-text-primary">Stackpay</p>
                           <p className="text-[12px] text-text-muted flex items-center gap-1 mt-0.5">
-                            {chatIcon}
-                            Both continue
+                            {clockIcon}
+                            ~6 days until window
                           </p>
                         </motion.div>
                       </div>
@@ -744,16 +748,16 @@ export default function InvestorDashboard() {
 
                   {/* Mobile: collapsible stages */}
                   <div className="md:hidden">
-                    <PipelineStage title="Waiting" count={2} color="#4A6CF7">
-                      <PipelineItem name="Luminary AI" sub="47h remaining" icon={clockIcon} />
-                      <PipelineItem name="Stackpay" sub="Sent 2 days ago" icon={clockIcon} />
+                    <PipelineStage title="Scheduling" count={3} color="#4A6CF7">
+                      <PipelineItem name="Luminary AI" sub="Times proposed — 47h left" icon={clockIcon} />
+                      <PipelineItem name="Terraform Health" sub="Counter-proposal received" icon={clockIcon} />
+                      <PipelineItem name="Briefly" sub="Finding a time" icon={clockIcon} />
                     </PipelineStage>
-                    <PipelineStage title="Call Booked" count={2} color="#7C5CFC">
-                      <PipelineItem name="Terraform Health" sub="Call Mar 15" icon={calIcon} />
-                      <PipelineItem name="Canopy Analytics" sub="Scheduling..." icon={calIcon} />
+                    <PipelineStage title="Call Confirmed" count={1} color="#7C5CFC">
+                      <PipelineItem name="Canopy Analytics" sub="Wed Mar 15, 3:00 PM" icon={calIcon} />
                     </PipelineStage>
-                    <PipelineStage title="In Progress" count={1} color="#059669">
-                      <PipelineItem name="Briefly" sub="Both continue" icon={chatIcon} />
+                    <PipelineStage title="Waiting" count={1} color="#059669">
+                      <PipelineItem name="Stackpay" sub="~6 days until window" icon={clockIcon} />
                     </PipelineStage>
                   </div>
                 </div>
@@ -767,8 +771,7 @@ export default function InvestorDashboard() {
                     <Link href="/dashboard/investor/matches" className="text-accent-blue text-[14px] hover:underline">View All</Link>
                   </div>
                   {[
-                    { initials: "TH", color: "#7C5CFC", name: "Terraform Health", desc: "Predictive diagnostics", time: "Mar 15, 3:00 PM", relative: "In 6 days" },
-                    { initials: "CA", color: "#059669", name: "Canopy Analytics", desc: "Carbon tracking", time: "Mar 17, 11:00 AM", relative: "In 8 days" },
+                    { initials: "CA", color: "#059669", name: "Canopy Analytics", desc: "Real-time carbon tracking for supply chains", time: "Mar 15, 3:00 PM", relative: "In 6 days" },
                   ].map((c, i, arr) => (
                     <div key={c.name} className={`flex items-center gap-3 py-3 min-h-[44px] hover:bg-black/[0.02] transition-all duration-200 cursor-pointer rounded-lg -mx-2 px-2 hover:-translate-y-px hover:shadow-sm ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
                       <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0" style={{ backgroundColor: c.color }}>{c.initials}</div>

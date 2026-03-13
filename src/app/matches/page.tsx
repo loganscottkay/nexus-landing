@@ -218,15 +218,12 @@ function CompletedCard({ match }: { match: typeof completedMatches[0] }) {
 
 /* ─── Data ─── */
 const upcomingMatches = [
-  { id: 1, initials: "TH", color: "#7C5CFC", name: "Terraform Health", desc: "Predictive diagnostics using wearable biosignals", status: "Confirmed", datetime: "Wednesday, March 15 at 3:00 PM EST", relative: "In 6 days", metrics: [{ value: "$12K", label: "MRR" }, { value: "890", label: "Users" }, { value: "340%", label: "Growth" }, { value: "$800K", label: "Pipeline" }] },
-  { id: 2, initials: "CA", color: "#059669", name: "Canopy Analytics", desc: "Real-time carbon tracking for supply chains", status: "Confirmed", datetime: "Friday, March 17 at 11:00 AM EST", relative: "In 8 days", metrics: [{ value: "$67K", label: "MRR" }, { value: "18", label: "Clients" }, { value: "15%", label: "Growth" }, { value: "$3.2M", label: "Pipeline" }] },
-  { id: 3, initials: "Br", color: "#e67e22", name: "Briefly", desc: "AI meeting assistant that writes follow-ups that actually get read", status: "Scheduling..." as const, datetime: undefined, relative: undefined, metrics: [{ value: "$8K", label: "MRR" }, { value: "4.2K", label: "Users" }, { value: "210%", label: "Growth" }, { value: "$500K", label: "Pipeline" }] },
+  { id: 1, initials: "CA", color: "#059669", name: "Canopy Analytics", desc: "Real-time carbon tracking for supply chains", status: "Confirmed", datetime: "Wednesday, March 15 at 3:00 PM EST", relative: "In 6 days", metrics: [{ value: "$67K", label: "MRR" }, { value: "18", label: "Clients" }, { value: "15%", label: "Growth" }, { value: "$3.2M", label: "Pipeline" }] },
 ];
 
 const completedMatches = [
-  { id: 4, initials: "Br", color: "#e67e22", name: "Briefly", desc: "AI meeting assistant", completedDate: "Mar 5", yourRating: 4, theirRating: 5, mutual: true, contactEmail: "alex@briefly.ai" },
-  { id: 5, initials: "NP", color: "#7C5CFC", name: "NeuralPath", desc: "Developer productivity tools", completedDate: "Mar 2", yourRating: 3, theirRating: 3, mutual: false, contactEmail: undefined },
-  { id: 6, initials: "SP", color: "#0d9488", name: "Stackpay", desc: "Embedded payroll infrastructure", completedDate: "Feb 27", yourRating: 5, theirRating: 4, mutual: true, contactEmail: "jordan@stackpay.com" },
+  { id: 4, initials: "AR", color: "#e67e22", name: "Archetype", desc: "Enterprise workflow automation", completedDate: "Mar 5", yourRating: 4, theirRating: 5, mutual: true, contactEmail: "team@archetype.io" },
+  { id: 5, initials: "SW", color: "#7C5CFC", name: "SignalWave", desc: "Developer tools for API observability", completedDate: "Feb 28", yourRating: 3, theirRating: 3, mutual: false, contactEmail: undefined },
 ];
 
 /* ─── Page ─── */

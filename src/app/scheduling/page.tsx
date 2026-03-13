@@ -299,7 +299,7 @@ export default function SchedulingPage() {
             </div>
           </motion.div>
 
-          {/* Card 3 - Call confirmed */}
+          {/* Card 3 - Finding a time */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -313,11 +313,11 @@ export default function SchedulingPage() {
                 style={{
                   width: 40,
                   height: 40,
-                  backgroundColor: "#059669",
+                  backgroundColor: "#e67e22",
                   fontSize: "14px",
                 }}
               >
-                CA
+                Br
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between flex-wrap gap-2">
@@ -326,92 +326,48 @@ export default function SchedulingPage() {
                       className="text-text-primary font-semibold"
                       style={{ fontSize: "16px" }}
                     >
-                      Canopy Analytics
+                      Briefly
                     </p>
                     <p
                       className="text-text-muted"
                       style={{ fontSize: "13px" }}
                     >
-                      Seed Stage &middot; Climate Tech
+                      Pre-Seed &middot; AI/SaaS
                     </p>
                   </div>
                   <span
                     className="inline-flex items-center gap-1.5 rounded-full px-3 py-1"
                     style={{
                       fontSize: "12px",
-                      backgroundColor: "rgba(5,150,105,0.1)",
-                      color: "#059669",
+                      backgroundColor: "rgba(156,163,175,0.1)",
+                      color: "#9CA3AF",
                       fontWeight: 500,
                     }}
                   >
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M11.5 3.5L5.5 9.5L2.5 6.5"
-                        stroke="#059669"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    Call confirmed
+                    <span
+                      className="inline-flex rounded-full h-2 w-2"
+                      style={{ backgroundColor: "#9CA3AF" }}
+                    />
+                    Finding a time
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 mt-3">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="flex-shrink-0"
-                  >
-                    <rect
-                      x="2"
-                      y="3"
-                      width="14"
-                      height="13"
-                      rx="2"
-                      stroke="#059669"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M2 7H16"
-                      stroke="#059669"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M6 2V4"
-                      stroke="#059669"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M12 2V4"
-                      stroke="#059669"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  <p
-                    className="text-text-primary font-semibold"
-                    style={{ fontSize: "16px" }}
-                  >
-                    Wed Mar 15, 2:00 PM
-                  </p>
-                </div>
+                <p
+                  className="mt-3 text-text-muted"
+                  style={{ fontSize: "14px" }}
+                >
+                  Scheduling just started. Propose your available times.
+                </p>
 
                 <button
-                  className="mt-2 hover:underline font-medium"
-                  style={{ fontSize: "13px", color: "#0891B2" }}
+                  onClick={() => setShowModal(true)}
+                  className="mt-3 w-full rounded-full py-2.5 text-white font-medium transition-opacity hover:opacity-90"
+                  style={{
+                    background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                    fontSize: "14px",
+                  }}
                 >
-                  Add to Calendar
+                  Propose Times
                 </button>
               </div>
             </div>

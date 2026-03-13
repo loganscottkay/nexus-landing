@@ -419,11 +419,10 @@ export default function FounderDashboard() {
                 <GlassCard className="p-4 md:p-6">
                   <div className="flex items-center justify-between mb-4 md:mb-5">
                     <h3 className="text-[18px] font-semibold text-text-primary">Upcoming Calls</h3>
-                    <Link href="/matches/founder" className="text-accent-violet text-[14px] hover:underline">View All</Link>
+                    <Link href="/dashboard/founder/matches" className="text-accent-violet text-[14px] hover:underline">View All</Link>
                   </div>
                   {[
-                    { initials: "PS", color: "#059669", name: "Priya Sharma", firm: "Lightspeed", time: "Mar 12, 2:00 PM", relative: "In 3 days" },
-                    { initials: "DK", color: "#4A6CF7", name: "David Kim", firm: "a16z", time: "Mar 14, 10:30 AM", relative: "In 5 days" },
+                    { initials: "SC", color: "#4A6CF7", name: "Sarah Chen", firm: "Gradient Ventures", time: "Scheduling...", relative: "Times proposed — waiting" },
                   ].map((call, i, arr) => (
                     <div key={call.name} className={`flex items-center gap-3 py-3 min-h-[44px] ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
                       <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0" style={{ backgroundColor: call.color }}>{call.initials}</div>
