@@ -207,7 +207,7 @@ function SavedContent() {
           {bookmarkIcon}
           Saved <span className="text-text-muted font-normal">(7)</span>
         </h3>
-        <Link href="/saved" className="text-accent-blue text-[14px] hover:underline">View All</Link>
+        <Link href="/dashboard/investor/saved" className="text-accent-blue text-[14px] hover:underline">View All</Link>
       </div>
       {[
         { initials: "LA", color: "#4A6CF7", name: "Luminary AI", sector: "AI/ML" },
@@ -223,7 +223,7 @@ function SavedContent() {
           <Link href="/startup/1" className="text-accent-blue text-[13px] hover:underline shrink-0 ml-2">Review</Link>
         </div>
       ))}
-      <Link href="/saved" className="text-accent-blue text-[13px] hover:underline mt-3 inline-block">View all 7 saved</Link>
+      <Link href="/dashboard/investor/saved" className="text-accent-blue text-[13px] hover:underline mt-3 inline-block">View all 7 saved</Link>
     </>
   );
 }
@@ -610,7 +610,7 @@ export default function InvestorDashboard() {
                       <h3 className="text-[18px] font-semibold text-text-primary">New in Your Feed</h3>
                       <span className="text-[12px] px-2.5 py-1 rounded-full font-semibold text-white" style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}>New</span>
                     </div>
-                    <Link href="/drops" className="text-accent-blue text-[14px] hover:underline">Open Feed</Link>
+                    <Link href="/dashboard/investor/drops" className="text-accent-blue text-[14px] hover:underline">Open Feed</Link>
                   </div>
                   <p className="text-[12px] text-text-muted italic mb-3">Startups that match your filters, refreshed daily.</p>
                   {[
@@ -618,7 +618,7 @@ export default function InvestorDashboard() {
                     { initials: "CA", color: "#059669", name: "Canopy Analytics", desc: "Real-time carbon tracking for supply chains", sector: "Climate Tech", stage: "Seed" },
                     { initials: "Br", color: "#e67e22", name: "Briefly", desc: "AI meeting assistant that writes follow-ups", sector: "AI/SaaS", stage: "Pre-Seed" },
                   ].map((s, i, arr) => (
-                    <Link key={s.name} href="/drops" className={`block py-3 min-h-[60px] cursor-pointer hover:bg-black/[0.02] -mx-2 px-2 rounded-lg transition-all duration-200 ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
+                    <Link key={s.name} href="/dashboard/investor/drops" className={`block py-3 min-h-[60px] cursor-pointer hover:bg-black/[0.02] -mx-2 px-2 rounded-lg transition-all duration-200 ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
                       <div className="flex items-center gap-3">
                         <div className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0" style={{ backgroundColor: s.color }}>{s.initials}</div>
                         <div className="flex-1 min-w-0">
@@ -663,7 +663,7 @@ export default function InvestorDashboard() {
                       {funnelIcon}
                       Your Pipeline
                     </h3>
-                    <Link href="/matches" className="text-accent-blue text-[14px] hover:underline">View All</Link>
+                    <Link href="/dashboard/investor/matches" className="text-accent-blue text-[14px] hover:underline">View All</Link>
                   </div>
 
                   {/* Desktop: 3-column kanban */}
@@ -764,7 +764,7 @@ export default function InvestorDashboard() {
                 <div className="glass rounded-2xl p-4 md:p-6">
                   <div className="flex items-center justify-between mb-4 md:mb-5">
                     <h3 className="text-[18px] font-semibold text-text-primary">Scheduled Calls</h3>
-                    <Link href="/matches" className="text-accent-blue text-[14px] hover:underline">View All</Link>
+                    <Link href="/dashboard/investor/matches" className="text-accent-blue text-[14px] hover:underline">View All</Link>
                   </div>
                   {[
                     { initials: "TH", color: "#7C5CFC", name: "Terraform Health", desc: "Predictive diagnostics", time: "Mar 15, 3:00 PM", relative: "In 6 days" },

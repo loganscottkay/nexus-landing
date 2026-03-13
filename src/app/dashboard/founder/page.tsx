@@ -445,7 +445,7 @@ export default function FounderDashboard() {
                 <GlassCard className="p-4 md:p-6">
                   <div className="flex items-center justify-between mb-4 md:mb-5">
                     <h3 className="text-[18px] font-semibold text-text-primary">Deck Activity</h3>
-                    <Link href="/deck-analytics" className="text-accent-violet text-[14px] hover:underline">Full Analytics</Link>
+                    <Link href="/dashboard/founder/analytics" className="text-accent-violet text-[14px] hover:underline">Full Analytics</Link>
                   </div>
                   <DeckChart />
                   <p className="text-[12px] text-text-muted mt-3 mb-5">Last 14 days</p>

@@ -550,7 +550,7 @@ export default function StartupProfilePage() {
         <div className="text-center">
           <h1 className="text-[28px] font-semibold mb-4">Startup not found</h1>
           <p className="text-text-muted mb-6">The startup you are looking for does not exist.</p>
-          <Link href="/drops" className="text-accent-blue font-medium hover:underline">
+          <Link href="/dashboard/investor/drops" className="text-accent-blue font-medium hover:underline">
             Back to Matches
           </Link>
         </div>
@@ -584,7 +584,7 @@ export default function StartupProfilePage() {
             transition={{ duration: 0.3, ease }}
           >
             <Link
-              href="/drops"
+              href="/dashboard/investor/drops"
               className="inline-flex items-center gap-1.5 text-accent-blue text-[14px] font-medium mb-6 hover:underline"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

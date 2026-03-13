@@ -546,7 +546,7 @@ function EmptyState() {
         Make sure your profile and deck are up to date to maximize visibility.
       </p>
       <Link
-        href="/settings"
+        href="/settings/founder"
         className="px-6 py-3 rounded-full text-[15px] font-medium text-text-secondary transition-all duration-250 hover:bg-black/[0.03]"
         style={{
           background: "rgba(255, 255, 255, 0.4)",

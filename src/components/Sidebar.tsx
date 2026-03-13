@@ -67,34 +67,34 @@ const icons = {
 
 const investorNav: NavItem[] = [
   { label: "Dashboard", icon: icons.dashboard, href: "/dashboard/investor" },
-  { label: "Daily Drops", icon: icons.drops, href: "/drops" },
-  { label: "Saved", icon: icons.saved, href: "/saved" },
-  { label: "Matches", icon: icons.matches, href: "/matches" },
-  { label: "Scheduling", icon: icons.scheduling, href: "/scheduling" },
-  { label: "Settings", icon: icons.settings, href: "/settings" },
+  { label: "Daily Drops", icon: icons.drops, href: "/dashboard/investor/drops" },
+  { label: "Saved", icon: icons.saved, href: "/dashboard/investor/saved" },
+  { label: "Matches", icon: icons.matches, href: "/dashboard/investor/matches" },
+  { label: "Scheduling", icon: icons.scheduling, href: "/dashboard/investor/scheduling" },
+  { label: "Settings", icon: icons.settings, href: "/settings/investor" },
 ];
 
 const investorMobileNav: NavItem[] = [
   { label: "Dashboard", icon: icons.dashboard, href: "/dashboard/investor" },
-  { label: "Daily Drops", icon: icons.drops, href: "/drops" },
-  { label: "Saved", icon: icons.saved, href: "/saved" },
-  { label: "Scheduling", icon: icons.scheduling, href: "/scheduling" },
+  { label: "Daily Drops", icon: icons.drops, href: "/dashboard/investor/drops" },
+  { label: "Saved", icon: icons.saved, href: "/dashboard/investor/saved" },
+  { label: "Scheduling", icon: icons.scheduling, href: "/dashboard/investor/scheduling" },
 ];
 
 const founderNav: NavItem[] = [
   { label: "Dashboard", icon: icons.dashboard, href: "/dashboard/founder" },
-  { label: "Interests", icon: icons.interests, href: "/interests" },
-  { label: "Matches", icon: icons.matches, href: "/matches/founder" },
-  { label: "Deck Analytics", icon: icons.analytics, href: "/deck-analytics" },
-  { label: "Scheduling", icon: icons.scheduling, href: "/scheduling" },
+  { label: "Interests", icon: icons.interests, href: "/dashboard/founder/interests" },
+  { label: "Matches", icon: icons.matches, href: "/dashboard/founder/matches" },
+  { label: "Deck Analytics", icon: icons.analytics, href: "/dashboard/founder/analytics" },
+  { label: "Scheduling", icon: icons.scheduling, href: "/dashboard/founder/scheduling" },
   { label: "Profile", icon: icons.profile, href: "/settings/founder" },
   { label: "Settings", icon: icons.settings, href: "/settings/founder" },
 ];
 
 const founderMobileNav: NavItem[] = [
   { label: "Dashboard", icon: icons.dashboard, href: "/dashboard/founder" },
-  { label: "Interests", icon: icons.interests, href: "/interests" },
-  { label: "Scheduling", icon: icons.scheduling, href: "/scheduling" },
+  { label: "Interests", icon: icons.interests, href: "/dashboard/founder/interests" },
+  { label: "Scheduling", icon: icons.scheduling, href: "/dashboard/founder/scheduling" },
   { label: "Profile", icon: icons.profile, href: "/settings/founder" },
 ];
 

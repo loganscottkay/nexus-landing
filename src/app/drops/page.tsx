@@ -854,7 +854,7 @@ function AllCaughtUp() {
         {countdown}
       </div>
       <Link
-        href="/drops"
+        href="/dashboard/investor/saved"
         className="text-accent-blue text-[15px] font-medium hover:underline"
       >
         Review Saved Startups

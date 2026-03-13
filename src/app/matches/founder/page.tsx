@@ -397,7 +397,7 @@ export default function FounderMatchesPage() {
                 <div className="text-center py-20">
                   <h2 className="text-[24px] font-normal text-text-primary mb-3" style={{ fontFamily: "'Instrument Serif', serif" }}>No upcoming calls</h2>
                   <p className="text-text-muted text-[16px] mb-6">When investors match with you, your chemistry calls will appear here.</p>
-                  <Link href="/interests" className="inline-block px-6 py-3 rounded-full text-white text-[15px] font-semibold" style={{ background: "linear-gradient(135deg, #7C5CFC, #4A6CF7)", boxShadow: "0 4px 15px rgba(124,92,252,0.3)" }}>View Interests</Link>
+                  <Link href="/dashboard/founder/interests" className="inline-block px-6 py-3 rounded-full text-white text-[15px] font-semibold" style={{ background: "linear-gradient(135deg, #7C5CFC, #4A6CF7)", boxShadow: "0 4px 15px rgba(124,92,252,0.3)" }}>View Interests</Link>
                 </div>
               )}
             </motion.div>

@@ -326,7 +326,7 @@ export default function MatchesPage() {
                 <div className="text-center py-20">
                   <h2 className="text-[24px] font-normal text-text-primary mb-3" style={{ fontFamily: "'Instrument Serif', serif" }}>No upcoming calls</h2>
                   <p className="text-text-muted text-[16px] mb-6">When you match with a startup, your chemistry call will appear here.</p>
-                  <Link href="/drops" className="inline-block px-6 py-3 rounded-full text-white text-[15px] font-semibold" style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", boxShadow: "0 4px 15px rgba(74,108,247,0.3)" }}>Browse Daily Drops</Link>
+                  <Link href="/dashboard/investor/drops" className="inline-block px-6 py-3 rounded-full text-white text-[15px] font-semibold" style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", boxShadow: "0 4px 15px rgba(74,108,247,0.3)" }}>Browse Daily Drops</Link>
                 </div>
               )}
             </motion.div>
