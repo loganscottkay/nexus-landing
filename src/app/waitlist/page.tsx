@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 
+const ease = [0.25, 0.4, 0.25, 1] as const;
+
 export default function WaitlistPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [waitlistNumber, setWaitlistNumber] = useState(0);
-
   // Form state
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -39,7 +39,6 @@ export default function WaitlistPage() {
     e.preventDefault();
     if (!allValid) return;
     setLoading(true);
-    setWaitlistNumber(Math.floor(Math.random() * (412 - 347 + 1)) + 347);
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
@@ -56,13 +55,10 @@ export default function WaitlistPage() {
     "Just joined the @urgenc waitlist. Think Tinder but for startups and investors. Check it out \u2192 urgenc.com"
   );
 
-  const ease = [0.25, 0.4, 0.25, 1] as const;
-
-  const inputClass =
-    "w-full h-[44px] md:h-[48px] rounded-xl px-4 text-[15px] text-[#0F172A] placeholder:text-[#94A3B8] outline-none transition-all duration-200";
-  const inputStyle = (field: string, hasError: boolean) => ({
-    background: "rgba(255, 255, 255, 0.3)",
-    backdropFilter: "blur(8px)",
+  const inputBase =
+    "w-full h-[52px] md:h-[56px] rounded-2xl px-5 text-[16px] text-[#0F172A] placeholder:text-[#94A3B8] outline-none transition-all duration-200";
+  const getInputStyle = (hasError: boolean) => ({
+    background: "rgba(255, 255, 255, 0.8)",
     border: hasError
       ? "1px solid #EF4444"
       : "1px solid rgba(0, 0, 0, 0.08)",
@@ -70,7 +66,17 @@ export default function WaitlistPage() {
     boxShadow: "none",
   });
 
-  const labelClass = "block text-[14px] font-semibold text-[#0F172A] mb-1.5";
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
+    e.target.style.borderColor = "#4A6CF7";
+    e.target.style.boxShadow = "0 0 0 3px rgba(74, 108, 247, 0.1)";
+    e.target.style.background = "#FFFFFF";
+  };
+
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>, hasError: boolean) => {
+    e.target.style.borderColor = hasError ? "#EF4444" : "rgba(0, 0, 0, 0.08)";
+    e.target.style.boxShadow = "none";
+    e.target.style.background = "rgba(255, 255, 255, 0.8)";
+  };
 
   return (
     <>
@@ -82,45 +88,149 @@ export default function WaitlistPage() {
         />
       </head>
 
-      <main className="relative min-h-screen bg-base text-text-primary">
+      <main className="relative min-h-screen bg-[#FAFAF9] text-text-primary">
         {/* Noise overlay */}
         <div className="noise-overlay" />
 
         {/* Background gradient blobs */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-          <div
-            className="absolute top-[-20%] right-[-10%] w-[700px] h-[700px] rounded-full opacity-[0.12]"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(74,108,247,0.4) 0%, rgba(124,92,252,0.2) 40%, transparent 70%)",
-              filter: "blur(80px)",
-            }}
-          />
-          <div
-            className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full opacity-[0.1]"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(124,92,252,0.4) 0%, rgba(74,108,247,0.2) 40%, transparent 70%)",
-              filter: "blur(80px)",
-            }}
-          />
+          <div className="blob blob-blue animate-blob-1" style={{ top: "-5%", right: "10%" }} />
+          <div className="blob blob-lavender animate-blob-2" style={{ top: "40%", left: "-5%" }} />
+          <div className="blob blob-peach animate-blob-3" style={{ bottom: "10%", right: "20%" }} />
         </div>
 
         <Navbar />
 
         {/* Main content */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen pt-28 pb-20 px-4">
+        <div className="relative z-10 flex flex-col items-center min-h-screen pt-32 md:pt-40 pb-20 px-4">
+
+          {/* Floating accent cards - desktop only */}
+          <div className="hidden xl:block">
+            {/* Left: Match notification */}
+            <div
+              className="fixed left-[5%] 2xl:left-[10%] top-1/2 -translate-y-1/2 pointer-events-none"
+              style={{ zIndex: 5 }}
+            >
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 1.2, ease }}
+              >
+                <div className="animate-float">
+                  <div
+                    className="w-[200px] rounded-2xl p-4"
+                    style={{
+                      background: "rgba(224, 228, 248, 0.6)",
+                      backdropFilter: "blur(24px)",
+                      WebkitBackdropFilter: "blur(24px)",
+                      border: "1px solid rgba(200, 208, 240, 0.5)",
+                    }}
+                  >
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] live-dot-pulse" />
+                      <span className="text-[10px] tracking-[2px] uppercase" style={{ color: "#475569" }}>New Match</span>
+                    </div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-7 h-7 rounded-full bg-[#4A6CF7] flex items-center justify-center text-white text-[9px] font-bold">SC</div>
+                      <div className="w-[2px] h-[2px] rounded-full" style={{ background: "rgba(74,108,247,0.3)" }} />
+                      <div className="w-7 h-7 rounded-full bg-[#7C5CFC] flex items-center justify-center text-white text-[9px] font-bold">LA</div>
+                    </div>
+                    <p className="text-[11px] font-medium" style={{ color: "#0F172A" }}>Luminary AI x Sarah C.</p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right: Score card */}
+            <div
+              className="fixed right-[5%] 2xl:right-[10%] top-1/2 -translate-y-1/2 pointer-events-none"
+              style={{ zIndex: 5 }}
+            >
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 1.4, ease }}
+              >
+                <div className="animate-float-delayed">
+                  <div
+                    className="w-[200px] rounded-2xl p-4"
+                    style={{
+                      background: "rgba(224, 228, 248, 0.6)",
+                      backdropFilter: "blur(24px)",
+                      WebkitBackdropFilter: "blur(24px)",
+                      border: "1px solid rgba(200, 208, 240, 0.5)",
+                    }}
+                  >
+                    <p className="text-[10px] tracking-[2px] uppercase mb-3" style={{ color: "#475569" }}>UrgenC Score</p>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex-1 h-1.5 rounded-full overflow-hidden mr-3" style={{ background: "rgba(74, 108, 247, 0.1)" }}>
+                        <div
+                          className="h-full rounded-full"
+                          style={{
+                            width: "87%",
+                            background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)",
+                          }}
+                        />
+                      </div>
+                      <span className="text-[14px] font-semibold tabular-nums" style={{ color: "#0F172A" }}>87/100</span>
+                    </div>
+                    <p className="text-[11px]" style={{ color: "#64748B" }}>Top 15% threshold</p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Eyebrow */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+            className="text-[11px] tracking-[3px] uppercase font-medium mb-5"
+            style={{
+              background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            BE FIRST TO KNOW
+          </motion.p>
+
+          {/* Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5, ease }}
+            className="text-[36px] md:text-[48px] font-normal text-center mb-4"
+            style={{ fontFamily: "'Instrument Serif', serif" }}
+          >
+            Get <span className="gradient-text">Early Access.</span>
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.7, ease }}
+            className="text-[17px] md:text-[18px] text-center mb-10 max-w-[500px] leading-[1.7]"
+            style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
+          >
+            UrgenC is launching soon. Drop your info and be the first to know when we go live.
+          </motion.p>
+
           {/* Form card */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease }}
-            className="w-full max-w-[560px] rounded-2xl md:rounded-3xl p-6 sm:p-10 relative overflow-hidden"
+            transition={{ duration: 0.5, delay: 0.9, ease }}
+            className="w-full max-w-[480px] rounded-3xl p-6 md:p-10 relative overflow-hidden"
             style={{
-              background: "rgba(255, 255, 255, 0.5)",
-              backdropFilter: "blur(40px)",
-              WebkitBackdropFilter: "blur(40px)",
+              background: "rgba(255, 255, 255, 0.6)",
+              backdropFilter: "blur(40px) saturate(1.3)",
+              WebkitBackdropFilter: "blur(40px) saturate(1.3)",
               border: "1px solid rgba(0, 0, 0, 0.06)",
+              boxShadow: "0 20px 60px rgba(0, 0, 0, 0.06)",
             }}
           >
             <AnimatePresence mode="wait">
@@ -130,43 +240,13 @@ export default function WaitlistPage() {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {/* Eyebrow */}
-                  <p
-                    className="text-[11px] tracking-[3px] uppercase font-medium mb-3"
-                    style={{
-                      background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                    }}
-                  >
-                    BE FIRST TO KNOW
-                  </p>
-
-                  {/* Title */}
-                  <h1
-                    className="text-[36px] font-normal text-[#0F172A] mb-3"
-                    style={{ fontFamily: "'Instrument Serif', serif" }}
-                  >
-                    Join the Waitlist
-                  </h1>
-
-                  {/* Subtitle */}
-                  <p
-                    className="text-[16px] leading-[1.7] mb-8 max-w-[460px]"
-                    style={{
-                      color: "#64748B",
-                      fontFamily: "var(--font-dm-sans), sans-serif",
-                    }}
-                  >
-                    Whether you want to build or invest, it starts here. Drop your info and we will let you know when we launch.
-                  </p>
-
-                  {/* Form */}
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                  <form onSubmit={handleSubmit} className="flex flex-col" style={{ gap: "20px" }}>
                     {/* Name */}
                     <div>
-                      <label className={labelClass} style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                      <label
+                        className="block text-[14px] font-semibold text-[#0F172A] mb-2"
+                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                      >
                         Your Name
                       </label>
                       <input
@@ -176,23 +256,10 @@ export default function WaitlistPage() {
                         onChange={(e) => setName(e.target.value)}
                         onBlur={() => handleBlur("name")}
                         placeholder="Full name"
-                        className={inputClass}
-                        style={inputStyle(
-                          "name",
-                          touched.name === true && name.trim() === ""
-                        )}
-                        onFocus={(e) => {
-                          e.target.style.borderColor = "rgba(74, 108, 247, 0.5)";
-                          e.target.style.boxShadow = "0 0 0 3px rgba(74, 108, 247, 0.08)";
-                        }}
-                        onBlurCapture={(e) => {
-                          if (touched.name && name.trim() === "") {
-                            e.target.style.borderColor = "#EF4444";
-                          } else {
-                            e.target.style.borderColor = "rgba(0, 0, 0, 0.08)";
-                          }
-                          e.target.style.boxShadow = "none";
-                        }}
+                        className={inputBase}
+                        style={getInputStyle(touched.name === true && name.trim() === "")}
+                        onFocus={handleFocus}
+                        onBlurCapture={(e) => handleInputBlur(e, !!(touched.name && name.trim() === ""))}
                       />
                       <ValidationMessage
                         show={touched.name === true && name.trim() === ""}
@@ -202,7 +269,10 @@ export default function WaitlistPage() {
 
                     {/* Phone */}
                     <div>
-                      <label className={labelClass} style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                      <label
+                        className="block text-[14px] font-semibold text-[#0F172A] mb-2"
+                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                      >
                         Phone Number
                       </label>
                       <input
@@ -212,23 +282,10 @@ export default function WaitlistPage() {
                         onChange={(e) => setPhone(e.target.value)}
                         onBlur={() => handleBlur("phone")}
                         placeholder="(555) 123-4567"
-                        className={inputClass}
-                        style={inputStyle(
-                          "phone",
-                          touched.phone === true && phone.trim() === ""
-                        )}
-                        onFocus={(e) => {
-                          e.target.style.borderColor = "rgba(74, 108, 247, 0.5)";
-                          e.target.style.boxShadow = "0 0 0 3px rgba(74, 108, 247, 0.08)";
-                        }}
-                        onBlurCapture={(e) => {
-                          if (touched.phone && phone.trim() === "") {
-                            e.target.style.borderColor = "#EF4444";
-                          } else {
-                            e.target.style.borderColor = "rgba(0, 0, 0, 0.08)";
-                          }
-                          e.target.style.boxShadow = "none";
-                        }}
+                        className={inputBase}
+                        style={getInputStyle(touched.phone === true && phone.trim() === "")}
+                        onFocus={handleFocus}
+                        onBlurCapture={(e) => handleInputBlur(e, !!(touched.phone && phone.trim() === ""))}
                       />
                       <ValidationMessage
                         show={touched.phone === true && phone.trim() === ""}
@@ -238,7 +295,10 @@ export default function WaitlistPage() {
 
                     {/* Email */}
                     <div>
-                      <label className={labelClass} style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                      <label
+                        className="block text-[14px] font-semibold text-[#0F172A] mb-2"
+                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                      >
                         Email
                       </label>
                       <input
@@ -248,27 +308,18 @@ export default function WaitlistPage() {
                         onChange={(e) => setEmail(e.target.value)}
                         onBlur={() => handleBlur("email")}
                         placeholder="you@email.com"
-                        className={inputClass}
-                        style={inputStyle(
-                          "email",
+                        className={inputBase}
+                        style={getInputStyle(
                           touched.email === true &&
                             (email.trim() === "" || !isValidEmail(email))
                         )}
-                        onFocus={(e) => {
-                          e.target.style.borderColor = "rgba(74, 108, 247, 0.5)";
-                          e.target.style.boxShadow = "0 0 0 3px rgba(74, 108, 247, 0.08)";
-                        }}
-                        onBlurCapture={(e) => {
-                          if (
-                            touched.email &&
-                            (email.trim() === "" || !isValidEmail(email))
-                          ) {
-                            e.target.style.borderColor = "#EF4444";
-                          } else {
-                            e.target.style.borderColor = "rgba(0, 0, 0, 0.08)";
-                          }
-                          e.target.style.boxShadow = "none";
-                        }}
+                        onFocus={handleFocus}
+                        onBlurCapture={(e) =>
+                          handleInputBlur(
+                            e,
+                            !!(touched.email && (email.trim() === "" || !isValidEmail(email)))
+                          )
+                        }
                       />
                       <ValidationMessage
                         show={touched.email === true && email.trim() === ""}
@@ -286,7 +337,10 @@ export default function WaitlistPage() {
 
                     {/* Interest */}
                     <div>
-                      <label className={labelClass} style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                      <label
+                        className="block text-[14px] font-semibold text-[#0F172A] mb-2"
+                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                      >
                         I am interested in...
                       </label>
                       <div className="relative">
@@ -295,27 +349,14 @@ export default function WaitlistPage() {
                           value={interest}
                           onChange={(e) => setInterest(e.target.value)}
                           onBlur={() => handleBlur("interest")}
-                          className={`${inputClass} appearance-none cursor-pointer`}
+                          className={`${inputBase} appearance-none cursor-pointer`}
                           style={{
-                            ...inputStyle(
-                              "interest",
-                              touched.interest === true && interest === ""
-                            ),
+                            ...getInputStyle(touched.interest === true && interest === ""),
                             color: interest === "" ? "#94A3B8" : "#0F172A",
-                            paddingRight: "40px",
+                            paddingRight: "44px",
                           }}
-                          onFocus={(e) => {
-                            e.target.style.borderColor = "rgba(74, 108, 247, 0.5)";
-                            e.target.style.boxShadow = "0 0 0 3px rgba(74, 108, 247, 0.08)";
-                          }}
-                          onBlurCapture={(e) => {
-                            if (touched.interest && interest === "") {
-                              e.target.style.borderColor = "#EF4444";
-                            } else {
-                              e.target.style.borderColor = "rgba(0, 0, 0, 0.08)";
-                            }
-                            e.target.style.boxShadow = "none";
-                          }}
+                          onFocus={handleFocus}
+                          onBlurCapture={(e) => handleInputBlur(e, !!(touched.interest && interest === ""))}
                         >
                           <option value="" disabled>
                             Select one
@@ -333,7 +374,7 @@ export default function WaitlistPage() {
                           strokeWidth="2"
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"
+                          className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none"
                         >
                           <polyline points="6 9 12 15 18 9" />
                         </svg>
@@ -348,12 +389,9 @@ export default function WaitlistPage() {
                     <button
                       type="submit"
                       disabled={!allValid || loading}
-                      className="relative w-full h-[52px] rounded-full text-[16px] font-semibold text-white overflow-hidden transition-all duration-200"
+                      className="relative w-full h-[52px] md:h-[56px] rounded-2xl text-[16px] font-semibold text-white overflow-hidden transition-all duration-200"
                       style={{
-                        background:
-                          allValid && !loading
-                            ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)"
-                            : "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                        background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                         opacity: allValid ? 1 : 0.5,
                         cursor: allValid ? "pointer" : "not-allowed",
                         fontFamily: "var(--font-dm-sans), sans-serif",
@@ -363,7 +401,7 @@ export default function WaitlistPage() {
                         if (allValid && !loading) {
                           e.currentTarget.style.transform = "scale(1.02)";
                           e.currentTarget.style.boxShadow =
-                            "0 8px 30px rgba(74, 108, 247, 0.35)";
+                            "0 8px 30px rgba(74, 108, 247, 0.3)";
                         }
                       }}
                       onMouseLeave={(e) => {
@@ -412,97 +450,68 @@ export default function WaitlistPage() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.4, delay: 0.1 }}
-                  className="flex flex-col items-center text-center py-4"
+                  className="flex flex-col items-center text-center py-6"
                 >
                   {/* Animated checkmark */}
                   <AnimatedCheckmark />
 
                   <h2
-                    className="text-[28px] font-normal text-[#0F172A] mt-6 mb-3"
+                    className="text-[28px] md:text-[32px] font-normal text-[#0F172A] mt-6 mb-3"
                     style={{ fontFamily: "'Instrument Serif', serif" }}
                   >
                     You are on the list.
                   </h2>
 
                   <p
-                    className="text-[16px] leading-[1.7] mb-6 max-w-[400px]"
+                    className="text-[16px] leading-[1.7] mb-8 max-w-[360px]"
                     style={{
                       color: "#64748B",
                       fontFamily: "var(--font-dm-sans), sans-serif",
                     }}
                   >
-                    We will notify you when UrgenC launches and applications
-                    open.
-                  </p>
-
-                  <p
-                    className="text-[20px] font-semibold mb-8"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                      fontFamily: "var(--font-dm-sans), sans-serif",
-                    }}
-                  >
-                    Your position: #{waitlistNumber}
+                    We will notify you the moment UrgenC goes live.
                   </p>
 
                   {/* Share buttons */}
-                  <p
-                    className="text-[14px] font-semibold text-[#0F172A] mb-3"
-                    style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-                  >
-                    Share UrgenC
-                  </p>
                   <div className="flex items-center gap-3 mb-8">
                     {/* Twitter/X share */}
                     <a
                       href={`https://twitter.com/intent/tweet?text=${tweetText}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105"
+                      className="inline-flex items-center gap-2 h-[40px] px-4 rounded-full text-[13px] font-medium transition-all duration-200 hover:scale-105"
                       style={{
-                        background: "rgba(255, 255, 255, 0.4)",
+                        background: "rgba(255, 255, 255, 0.5)",
                         border: "1px solid rgba(0, 0, 0, 0.08)",
                         backdropFilter: "blur(8px)",
+                        color: "#0F172A",
+                        fontFamily: "var(--font-dm-sans), sans-serif",
                       }}
                     >
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="#0F172A"
-                      >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="#0F172A">
                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                       </svg>
+                      Share on X
                     </a>
 
                     {/* Copy link */}
                     <div className="relative">
                       <button
                         onClick={copyLink}
-                        className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105"
+                        className="inline-flex items-center gap-2 h-[40px] px-4 rounded-full text-[13px] font-medium transition-all duration-200 hover:scale-105"
                         style={{
-                          background: "rgba(255, 255, 255, 0.4)",
+                          background: "rgba(255, 255, 255, 0.5)",
                           border: "1px solid rgba(0, 0, 0, 0.08)",
                           backdropFilter: "blur(8px)",
+                          color: "#0F172A",
+                          fontFamily: "var(--font-dm-sans), sans-serif",
                         }}
                       >
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="#0F172A"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" />
                           <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" />
                         </svg>
+                        Copy Link
                       </button>
                       <AnimatePresence>
                         {copied && (
@@ -512,10 +521,7 @@ export default function WaitlistPage() {
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.2 }}
                             className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[12px] font-medium whitespace-nowrap px-2 py-1 rounded-md"
-                            style={{
-                              background: "#0F172A",
-                              color: "#fff",
-                            }}
+                            style={{ background: "#0F172A", color: "#fff" }}
                           >
                             Copied!
                           </motion.span>
@@ -532,99 +538,31 @@ export default function WaitlistPage() {
                       fontFamily: "var(--font-dm-sans), sans-serif",
                     }}
                   >
-                    Return to Home &rarr;
+                    Back to Home &rarr;
                   </Link>
                 </motion.div>
               )}
             </AnimatePresence>
           </motion.div>
 
-          {/* Trust indicators */}
+          {/* Social proof line */}
           <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: {},
-              visible: { transition: { staggerChildren: 0.08, delayChildren: 0.5 } },
-            }}
-            className="flex flex-wrap items-center justify-center gap-2 mt-8"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 1.1, ease }}
+            className="flex items-center gap-2.5 mt-8"
           >
-            {[
-              {
-                text: "< 15% acceptance rate",
-                icon: (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#4A6CF7"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  </svg>
-                ),
-              },
-              {
-                text: "Reviewed by real humans",
-                icon: (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#4A6CF7"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                ),
-              },
-              {
-                text: "100 startup spots in founding cohort",
-                icon: (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#4A6CF7"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                ),
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                variants={{
-                  hidden: { opacity: 0, y: 10 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                transition={{ duration: 0.4, ease }}
-                className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 rounded-full text-[13px]"
-                style={{
-                  background: "rgba(255, 255, 255, 0.3)",
-                  border: "1px solid rgba(0, 0, 0, 0.04)",
-                  backdropFilter: "blur(8px)",
-                  color: "#64748B",
-                  fontFamily: "var(--font-dm-sans), sans-serif",
-                }}
-              >
-                {item.icon}
-                {item.text}
-              </motion.div>
-            ))}
+            <span
+              className="w-2 h-2 rounded-full shrink-0"
+              style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+            />
+            <p
+              className="text-[14px]"
+              style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
+            >
+              Join 400+ founders and investors on the waitlist
+            </p>
           </motion.div>
-
         </div>
       </main>
     </>
@@ -648,7 +586,7 @@ function ValidationMessage({
       }}
     >
       <p
-        className="text-[13px] mt-1"
+        className="text-[13px] mt-1.5"
         style={{ color: "#EF4444", fontFamily: "var(--font-dm-sans), sans-serif" }}
       >
         {message}
@@ -660,36 +598,36 @@ function ValidationMessage({
 /* ---- Animated Checkmark ---- */
 function AnimatedCheckmark() {
   return (
-    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+    <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
       <circle
-        cx="32"
-        cy="32"
-        r="28"
+        cx="36"
+        cy="36"
+        r="32"
         stroke="url(#checkGrad)"
         strokeWidth="3"
         fill="none"
         strokeLinecap="round"
         style={{
-          strokeDasharray: 176,
-          strokeDashoffset: 176,
+          strokeDasharray: 201,
+          strokeDashoffset: 201,
           animation: "drawCircle 0.5s ease-out forwards",
         }}
       />
       <polyline
-        points="22,33 29,40 42,26"
+        points="24,37 33,46 48,29"
         stroke="url(#checkGrad)"
         strokeWidth="3"
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
         style={{
-          strokeDasharray: 40,
-          strokeDashoffset: 40,
+          strokeDasharray: 45,
+          strokeDashoffset: 45,
           animation: "drawCheck 0.3s ease-out 0.7s forwards",
         }}
       />
       <defs>
-        <linearGradient id="checkGrad" x1="0" y1="0" x2="64" y2="64">
+        <linearGradient id="checkGrad" x1="0" y1="0" x2="72" y2="72">
           <stop stopColor="#4A6CF7" />
           <stop offset="1" stopColor="#7C5CFC" />
         </linearGradient>
