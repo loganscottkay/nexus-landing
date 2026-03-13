@@ -1238,31 +1238,6 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-          {/* For Founders / For Investors details */}
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="w-full mb-10 rounded-2xl p-6 md:p-8 grid md:grid-cols-2 gap-8"
-            style={{
-              background: "rgba(255, 255, 255, 0.3)",
-              backdropFilter: "blur(12px)",
-              border: "1px solid rgba(0, 0, 0, 0.06)",
-            }}
-          >
-            <div>
-              <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Founders:</p>
-              <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                Join the waitlist now. When the founding cohort launches, early signups get priority access to matched investors.
-              </p>
-            </div>
-            <div>
-              <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Investors:</p>
-              <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                Join the waitlist now. When the founding cohort launches, early signups get first access to vetted founders.
-              </p>
-            </div>
-          </motion.div>
-
           {/* CTA */}
           <motion.div
             variants={fadeUp}
@@ -1286,6 +1261,9 @@ export default function Home() {
           </motion.p>
         </motion.div>
       </Section>
+
+      {/* ============ IPHONE MOCKUPS ============ */}
+      <IPhoneMockups />
 
       {/* ============ FINAL CTA ============ */}
       <section className="relative z-10 py-20 pb-[120px] overflow-visible">
@@ -1370,9 +1348,6 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </section>
-
-      {/* ============ IPHONE MOCKUPS ============ */}
-      <IPhoneMockups />
 
       {/* ============ FOOTER ============ */}
       <footer className="relative z-10">
