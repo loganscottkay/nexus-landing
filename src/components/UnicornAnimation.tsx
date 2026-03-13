@@ -9,7 +9,7 @@ export default function UnicornAnimation() {
   return (
     <>
       <div
-        className="wl-unicorn-track pointer-events-none absolute left-0 w-full overflow-hidden"
+        className="wl-unicorn-track pointer-events-none fixed left-0 w-full overflow-hidden"
         style={{ top: "200px", zIndex: 1, height: "120px" }}
       >
         <div className="wl-unicorn-runner" style={{ willChange: "transform" }}>
@@ -49,7 +49,7 @@ export default function UnicornAnimation() {
           position: relative;
           display: inline-block;
           opacity: 0;
-          animation: wlFadeIn 0.2s ease-out 0.3s forwards, wlRun 5s linear 0.3s forwards, wlBounce 0.3s ease-in-out infinite;
+          animation: wlFadeIn 0.2s ease-out 0.3s forwards, wlRun 5s linear 0.3s forwards;
         }
         @keyframes wlFadeIn {
           0% { opacity: 0; }
@@ -58,10 +58,6 @@ export default function UnicornAnimation() {
         @keyframes wlRun {
           0% { transform: translateX(-120px); }
           100% { transform: translateX(calc(100vw + 120px)); }
-        }
-        @keyframes wlBounce {
-          0%, 100% { margin-top: 0; }
-          50% { margin-top: -3px; }
         }
 
         /* Sparkle trail: simple fade out */

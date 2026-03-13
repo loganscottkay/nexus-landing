@@ -291,101 +291,70 @@ function LinkedInIcon() {
   );
 }
 
-/* ─── Startup Card ─── */
-function StartupCard({
+/* ─── Full Profile Overlay (mobile) ─── */
+function FullProfileOverlay({
   startup,
-  onPass,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onSave,
-  onInterested,
+  onClose,
 }: {
   startup: Startup;
-  onPass: () => void;
-  onSave: () => void;
-  onInterested: () => void;
+  onClose: () => void;
 }) {
-  const x = useMotionValue(0);
-  const rotate = useTransform(x, [-300, 0, 300], [-8, 0, 8]);
-  const passOpacity = useTransform(x, [-150, -50, 0], [1, 0.5, 0]);
-  const interestedOpacity = useTransform(x, [0, 50, 150], [0, 0.5, 1]);
-
-  const handleDragEnd = (_: unknown, info: PanInfo) => {
-    if (info.offset.x < -120) {
-      onPass();
-    } else if (info.offset.x > 120) {
-      onInterested();
-    }
-  };
-
   const scoreColor = startup.nexusScore >= 85 ? "#059669" : startup.nexusScore >= 75 ? "#4A6CF7" : "#D97706";
 
   return (
-    <motion.div
-      className="absolute inset-0 flex items-center justify-center cursor-grab active:cursor-grabbing"
-      style={{ x, rotate }}
-      drag="x"
-      dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={0.8}
-      onDragEnd={handleDragEnd}
-    >
-      {/* Swipe indicators */}
+    <>
       <motion.div
-        className="absolute top-8 left-8 z-20 px-4 py-2 rounded-xl border-2 border-red-400 text-red-400 font-bold text-lg rotate-[-12deg]"
-        style={{ opacity: passOpacity }}
-      >
-        PASS
-      </motion.div>
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-black/30 z-[49]"
+        onClick={onClose}
+      />
       <motion.div
-        className="absolute top-8 right-8 z-20 px-4 py-2 rounded-xl border-2 border-accent-blue text-accent-blue font-bold text-lg rotate-[12deg]"
-        style={{ opacity: interestedOpacity }}
+        initial={{ y: "100%" }}
+        animate={{ y: 0 }}
+        exit={{ y: "100%" }}
+        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+        className="fixed inset-x-0 bottom-0 top-0 z-50 bg-white rounded-t-3xl overflow-y-auto"
       >
-        INTERESTED
-      </motion.div>
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/5 flex items-center justify-center"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
 
-      <div
-        className="w-full max-w-[620px] mx-4 rounded-3xl overflow-y-auto max-h-[calc(100vh-220px)]"
-        style={{
-          background: "rgba(255, 255, 255, 0.5)",
-          backdropFilter: "blur(24px) saturate(1.3)",
-          WebkitBackdropFilter: "blur(24px) saturate(1.3)",
-          border: "1px solid rgba(255, 255, 255, 0.65)",
-          boxShadow:
-            "0 8px 40px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 0 0 1px rgba(74, 108, 247, 0.08)",
-        }}
-      >
-        <div className="p-7 md:p-9">
-          {/* ═══ HEADER ═══ */}
-          <div className="flex items-start gap-4 mb-2">
+        <div className="p-6 pt-14">
+          {/* Header */}
+          <div className="flex items-center gap-3 mb-4">
             <div
-              className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0"
+              className="w-11 h-11 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0"
               style={{ backgroundColor: startup.color }}
             >
               {startup.initials}
             </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <h2 className="text-[22px] md:text-[24px] font-semibold text-text-primary">
-                    <Link href={`/startup/${startup.id}`} className="hover:underline">
-                      {startup.name}
-                    </Link>
-                  </h2>
-                  <p className="text-text-muted text-[15px] md:text-[16px]">
-                    {startup.oneLiner}
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-1.5 shrink-0">
-                  <span className="px-2.5 py-1 rounded-full text-[11px] text-accent-blue bg-accent-blue/5 border border-accent-blue/20">
-                    {startup.sector}
-                  </span>
-                  <span className="px-2.5 py-1 rounded-full text-[11px] text-accent-violet bg-accent-violet/5 border border-accent-violet/20">
-                    {startup.stage}
-                  </span>
-                </div>
-              </div>
+            <div>
+              <h2 className="text-[20px] font-semibold text-text-primary">{startup.name}</h2>
+              <p className="text-text-muted text-[14px]">{startup.oneLiner}</p>
             </div>
           </div>
-          <div className="flex items-center gap-3 ml-16 mb-6">
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-1.5 mb-5">
+            <span className="px-2.5 py-1 rounded-full text-[11px] text-accent-blue bg-accent-blue/5 border border-accent-blue/20">
+              {startup.sector}
+            </span>
+            <span className="px-2.5 py-1 rounded-full text-[11px] text-accent-violet bg-accent-violet/5 border border-accent-violet/20">
+              {startup.stage}
+            </span>
+          </div>
+
+          {/* Location */}
+          <div className="flex items-center gap-3 mb-5">
             <span className="flex items-center gap-1 text-[12px] text-text-muted px-2 py-0.5 rounded-full" style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)" }}>
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" />
@@ -395,12 +364,10 @@ function StartupCard({
             <span className="text-[12px] text-text-muted">Founded {startup.founded}</span>
           </div>
 
-          {/* ═══ VIDEO PITCH ═══ */}
+          {/* Full-size video */}
           <div className="mb-6">
             <div className="relative rounded-2xl overflow-hidden bg-[#0F172A] aspect-video flex items-center justify-center cursor-pointer group">
-              {/* 60 sec pill */}
               <span className="absolute top-3 left-3 z-10 text-[11px] text-white/80 bg-black/40 px-2.5 py-1 rounded-full backdrop-blur-sm">60 sec pitch</span>
-              {/* Play button */}
               <div className="w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110" style={{ background: "rgba(255,255,255,0.2)", backdropFilter: "blur(8px)" }}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                   <polygon points="8,5 20,12 8,19" />
@@ -418,20 +385,18 @@ function StartupCard({
             </div>
           </div>
 
-          {/* ═══ KEY METRICS ═══ */}
+          {/* All metrics */}
           <div className="grid grid-cols-2 gap-3 mb-6">
             {startup.metrics.map((m) => (
               <div
                 key={m.label}
                 className="rounded-xl p-4"
                 style={{
-                  background: "rgba(255, 255, 255, 0.35)",
-                  border: "1px solid rgba(255, 255, 255, 0.5)",
+                  background: "rgba(0, 0, 0, 0.02)",
+                  border: "1px solid rgba(0, 0, 0, 0.06)",
                 }}
               >
-                <p className="text-[22px] md:text-[24px] font-semibold text-text-primary">
-                  {m.value}
-                </p>
+                <p className="text-[22px] font-semibold text-text-primary">{m.value}</p>
                 <p className="text-[12px] text-text-muted mb-1">{m.label}</p>
                 <span className={`inline-flex items-center gap-0.5 text-[11px] font-medium ${m.trendDir === "up" ? "text-[#059669]" : "text-[#EF4444]"}`}>
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -443,12 +408,9 @@ function StartupCard({
             ))}
           </div>
 
-          {/* ═══ THE ASK ═══ */}
+          {/* Fundraising */}
           <div className="mb-6">
-            <p className="text-text-primary text-[18px] md:text-[20px] font-semibold mb-3">
-              {startup.askDisplay}
-            </p>
-            {/* Stacked bar */}
+            <p className="text-text-primary text-[18px] font-semibold mb-3">{startup.askDisplay}</p>
             <div className="flex h-2.5 rounded-full overflow-hidden mb-2">
               {startup.fundAllocation.map((f) => (
                 <div key={f.label} className="h-full" style={{ width: `${f.pct}%`, backgroundColor: f.color }} />
@@ -467,53 +429,38 @@ function StartupCard({
               {startup.askBullets.map((b) => (
                 <li key={b} className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-1.5 shrink-0" />
-                  <span className="text-text-secondary text-[14px] leading-[1.5]">
-                    {b}
-                  </span>
+                  <span className="text-text-secondary text-[14px] leading-[1.5]">{b}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* ═══ TEAM ═══ */}
+          {/* Team */}
           <div className="mb-6">
-            <p className="text-text-muted text-[12px] tracking-[2px] uppercase mb-3">
-              Team
-            </p>
+            <p className="text-text-muted text-[12px] tracking-[2px] uppercase mb-3">Team</p>
             <div className="flex gap-5">
               {startup.founders.map((f) => (
                 <div key={f.name} className="flex flex-col items-center">
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold mb-1.5"
-                    style={{ backgroundColor: f.color }}
-                  >
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold mb-1.5" style={{ backgroundColor: f.color }}>
                     {f.initials}
                   </div>
-                  <p className="text-text-primary text-[12px] font-medium text-center">
-                    {f.name}
-                  </p>
+                  <p className="text-text-primary text-[12px] font-medium text-center">{f.name}</p>
                   <p className="text-text-muted text-[11px] text-center">{f.title}</p>
-                  <div className="mt-1">
-                    <LinkedInIcon />
-                  </div>
+                  <div className="mt-1"><LinkedInIcon /></div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* ═══ TRACTION HIGHLIGHTS ═══ */}
+          {/* Traction */}
           <div className="mb-6">
-            <p className="text-text-muted text-[12px] tracking-[2px] uppercase mb-3">
-              Traction
-            </p>
+            <p className="text-text-muted text-[12px] tracking-[2px] uppercase mb-3">Traction</p>
             <div className="space-y-0">
               {startup.milestones.map((m, i) => (
                 <div key={m.date} className="flex gap-3 relative">
                   <div className="flex flex-col items-center">
                     <div className="w-2 h-2 rounded-full bg-accent-blue shrink-0 mt-1.5" />
-                    {i < startup.milestones.length - 1 && (
-                      <div className="w-px flex-1 bg-black/[0.08]" />
-                    )}
+                    {i < startup.milestones.length - 1 && <div className="w-px flex-1 bg-black/[0.08]" />}
                   </div>
                   <div className="pb-3">
                     <p className="text-text-muted text-[11px]">{m.date}</p>
@@ -524,8 +471,8 @@ function StartupCard({
             </div>
           </div>
 
-          {/* ═══ NEXUS SCORE ═══ */}
-          <div className="rounded-xl p-4 mb-4" style={{ background: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.5)" }}>
+          {/* Nexus Score */}
+          <div className="rounded-xl p-4 mb-8" style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.06)" }}>
             <div className="flex items-center justify-between mb-2">
               <span className="text-[14px] font-semibold text-text-primary">UrgenC Score: {startup.nexusScore}/100</span>
               <span className="text-[12px] font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: `${scoreColor}12`, color: scoreColor }}>
@@ -537,20 +484,339 @@ function StartupCard({
             </div>
             <p className="text-[11px] text-text-muted">Scored on vision, team, market, defensibility, and momentum</p>
           </div>
-
-          {/* ═══ VIEW FULL PROFILE ═══ */}
-          <Link
-            href={`/startup/${startup.id}`}
-            className="inline-flex items-center gap-1.5 text-accent-blue text-[14px] font-medium hover:underline"
-          >
-            View Full Profile
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M7 17l9.2-9.2M17 17V7H7" />
-            </svg>
-          </Link>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </>
+  );
+}
+
+/* ─── Startup Card ─── */
+function StartupCard({
+  startup,
+  onPass,
+  onSave,
+  onInterested,
+  isSaved,
+}: {
+  startup: Startup;
+  onPass: () => void;
+  onSave: () => void;
+  onInterested: () => void;
+  isSaved: boolean;
+}) {
+  const [showFullProfile, setShowFullProfile] = useState(false);
+  const x = useMotionValue(0);
+  const rotate = useTransform(x, [-300, 0, 300], [-8, 0, 8]);
+  const passOpacity = useTransform(x, [-150, -50, 0], [1, 0.5, 0]);
+  const interestedOpacity = useTransform(x, [0, 50, 150], [0, 0.5, 1]);
+
+  const handleDragEnd = (_: unknown, info: PanInfo) => {
+    if (info.offset.x < -120) {
+      onPass();
+    } else if (info.offset.x > 120) {
+      onInterested();
+    }
+  };
+
+  const scoreColor = startup.nexusScore >= 85 ? "#059669" : startup.nexusScore >= 75 ? "#4A6CF7" : "#D97706";
+
+  return (
+    <>
+      <motion.div
+        className="absolute inset-0 flex items-center justify-center cursor-grab active:cursor-grabbing"
+        style={{ x, rotate }}
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.8}
+        onDragEnd={handleDragEnd}
+      >
+        {/* Swipe indicators */}
+        <motion.div
+          className="absolute top-8 left-8 z-20 px-4 py-2 rounded-xl border-2 border-red-400 text-red-400 font-bold text-lg rotate-[-12deg]"
+          style={{ opacity: passOpacity }}
+        >
+          PASS
+        </motion.div>
+        <motion.div
+          className="absolute top-8 right-8 z-20 px-4 py-2 rounded-xl border-2 border-accent-blue text-accent-blue font-bold text-lg rotate-[12deg]"
+          style={{ opacity: interestedOpacity }}
+        >
+          INTERESTED
+        </motion.div>
+
+        <div
+          className="w-full max-w-[620px] mx-4 rounded-3xl overflow-y-auto max-h-[calc(100vh-140px)] md:max-h-[calc(100vh-220px)]"
+          style={{
+            background: "rgba(255, 255, 255, 0.5)",
+            backdropFilter: "blur(24px) saturate(1.3)",
+            WebkitBackdropFilter: "blur(24px) saturate(1.3)",
+            border: "1px solid rgba(255, 255, 255, 0.65)",
+            boxShadow:
+              "0 8px 40px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 0 0 1px rgba(74, 108, 247, 0.08)",
+          }}
+        >
+          <div className="p-5 md:p-9">
+            {/* ═══ HEADER ═══ */}
+            <div className="flex items-start gap-3 md:gap-4 mb-2">
+              <div
+                className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0"
+                style={{ backgroundColor: startup.color }}
+              >
+                {startup.initials}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <h2 className="text-[18px] md:text-[24px] font-semibold text-text-primary truncate md:whitespace-normal">
+                      <Link href={`/startup/${startup.id}`} className="hover:underline">
+                        {startup.name}
+                      </Link>
+                    </h2>
+                    <p className="text-text-muted text-[13px] md:text-[16px] line-clamp-1 md:line-clamp-none">
+                      {startup.oneLiner}
+                    </p>
+                  </div>
+                  {/* Sector/stage pills - desktop only in header */}
+                  <div className="hidden md:flex flex-wrap gap-1.5 shrink-0">
+                    <span className="px-2.5 py-1 rounded-full text-[11px] text-accent-blue bg-accent-blue/5 border border-accent-blue/20">
+                      {startup.sector}
+                    </span>
+                    <span className="px-2.5 py-1 rounded-full text-[11px] text-accent-violet bg-accent-violet/5 border border-accent-violet/20">
+                      {startup.stage}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Location - desktop only */}
+            <div className="hidden md:flex items-center gap-3 ml-16 mb-6">
+              <span className="flex items-center gap-1 text-[12px] text-text-muted px-2 py-0.5 rounded-full" style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)" }}>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" />
+                </svg>
+                {startup.location}
+              </span>
+              <span className="text-[12px] text-text-muted">Founded {startup.founded}</span>
+            </div>
+
+            {/* ═══ VIDEO PITCH ═══ */}
+            <div className="mb-3 md:mb-6">
+              <div className="relative rounded-2xl overflow-hidden bg-[#0F172A] h-[160px] md:h-auto md:aspect-video flex items-center justify-center cursor-pointer group">
+                {/* 60 sec pill */}
+                <span className="absolute top-3 left-3 z-10 text-[11px] text-white/80 bg-black/40 px-2.5 py-1 rounded-full backdrop-blur-sm">60 sec pitch</span>
+                {/* Play button */}
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110" style={{ background: "rgba(255,255,255,0.2)", backdropFilter: "blur(8px)" }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+                    <polygon points="8,5 20,12 8,19" />
+                  </svg>
+                </div>
+                <span className="absolute bottom-3 right-3 text-white/50 text-[12px] bg-black/30 px-2 py-0.5 rounded">1:00</span>
+              </div>
+              {/* Founder info */}
+              <div className="flex items-center gap-2 mt-2 md:mt-3">
+                <div className="w-6 h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center text-white text-[9px] md:text-[10px] font-semibold shrink-0" style={{ backgroundColor: startup.pitchFounder.color }}>
+                  {startup.pitchFounder.initials}
+                </div>
+                <p className="text-[13px] text-text-secondary truncate">
+                  <span className="font-semibold md:font-medium text-text-primary text-[15px] md:text-[13px]">{startup.pitchFounder.name}</span>
+                  <span className="text-[13px]">, {startup.pitchFounder.title}</span>
+                </p>
+              </div>
+            </div>
+
+            {/* ═══ KEY METRICS ═══ */}
+            <div className="grid grid-cols-2 gap-2 md:gap-3 mb-3 md:mb-6">
+              {startup.metrics.map((m, i) => (
+                <div
+                  key={m.label}
+                  className={`rounded-xl p-3 md:p-4 ${i >= 2 ? "hidden md:block" : ""}`}
+                  style={{
+                    background: "rgba(255, 255, 255, 0.35)",
+                    border: "1px solid rgba(255, 255, 255, 0.5)",
+                  }}
+                >
+                  <p className="text-[20px] md:text-[24px] font-semibold text-text-primary">
+                    {m.value}
+                  </p>
+                  <p className="text-[11px] md:text-[12px] text-text-muted mb-1">{m.label}</p>
+                  <span className={`inline-flex items-center gap-0.5 text-[11px] font-medium ${m.trendDir === "up" ? "text-[#059669]" : "text-[#EF4444]"}`}>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      {m.trendDir === "up" ? <polyline points="18 15 12 9 6 15" /> : <polyline points="6 9 12 15 18 9" />}
+                    </svg>
+                    {m.trend}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Sector pill - mobile only, below stats */}
+            <div className="md:hidden mb-4">
+              <span className="px-2.5 py-1 rounded-full text-[11px] text-accent-blue bg-accent-blue/5 border border-accent-blue/20">
+                {startup.sector}
+              </span>
+            </div>
+
+            {/* ═══ MOBILE ACTION BUTTONS ═══ */}
+            <div className="md:hidden flex items-center justify-center gap-4 mb-3">
+              {/* Pass - red tint */}
+              <button
+                onClick={(e) => { e.stopPropagation(); onPass(); }}
+                className="w-[56px] h-[56px] rounded-full flex items-center justify-center active:scale-95 transition-transform"
+                style={{ background: "rgba(239,68,68,0.08)", border: "1.5px solid rgba(239,68,68,0.25)" }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+              {/* Save - blue tint */}
+              <button
+                onClick={(e) => { e.stopPropagation(); onSave(); }}
+                className="w-[56px] h-[56px] rounded-full flex items-center justify-center active:scale-95 transition-transform"
+                style={{ background: "rgba(74,108,247,0.08)", border: "1.5px solid rgba(74,108,247,0.25)" }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill={isSaved ? "#4A6CF7" : "none"} stroke="#4A6CF7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
+                </svg>
+              </button>
+              {/* Interested - green tint */}
+              <button
+                onClick={(e) => { e.stopPropagation(); onInterested(); }}
+                className="w-[56px] h-[56px] rounded-full flex items-center justify-center active:scale-95 transition-transform"
+                style={{ background: "rgba(5,150,105,0.08)", border: "1.5px solid rgba(5,150,105,0.25)" }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* See Full Profile - mobile only */}
+            <button
+              onClick={() => setShowFullProfile(true)}
+              className="md:hidden w-full text-center text-[13px] font-medium mb-1"
+              style={{ color: "#4A6CF7" }}
+            >
+              See Full Profile
+            </button>
+
+            {/* ═══ DESKTOP-ONLY SECTIONS ═══ */}
+
+            {/* THE ASK */}
+            <div className="hidden md:block mb-6">
+              <p className="text-text-primary text-[18px] md:text-[20px] font-semibold mb-3">
+                {startup.askDisplay}
+              </p>
+              <div className="flex h-2.5 rounded-full overflow-hidden mb-2">
+                {startup.fundAllocation.map((f) => (
+                  <div key={f.label} className="h-full" style={{ width: `${f.pct}%`, backgroundColor: f.color }} />
+                ))}
+              </div>
+              <div className="flex gap-4 mb-4">
+                {startup.fundAllocation.map((f) => (
+                  <span key={f.label} className="flex items-center gap-1.5 text-[11px] text-text-muted">
+                    <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: f.color }} />
+                    {f.label} {f.pct}%
+                  </span>
+                ))}
+              </div>
+              <p className="text-text-muted text-[12px] tracking-[2px] uppercase mb-2">Looking for</p>
+              <ul className="flex flex-col gap-1.5">
+                {startup.askBullets.map((b) => (
+                  <li key={b} className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-1.5 shrink-0" />
+                    <span className="text-text-secondary text-[14px] leading-[1.5]">
+                      {b}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* TEAM */}
+            <div className="hidden md:block mb-6">
+              <p className="text-text-muted text-[12px] tracking-[2px] uppercase mb-3">
+                Team
+              </p>
+              <div className="flex gap-5">
+                {startup.founders.map((f) => (
+                  <div key={f.name} className="flex flex-col items-center">
+                    <div
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold mb-1.5"
+                      style={{ backgroundColor: f.color }}
+                    >
+                      {f.initials}
+                    </div>
+                    <p className="text-text-primary text-[12px] font-medium text-center">
+                      {f.name}
+                    </p>
+                    <p className="text-text-muted text-[11px] text-center">{f.title}</p>
+                    <div className="mt-1">
+                      <LinkedInIcon />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* TRACTION HIGHLIGHTS */}
+            <div className="hidden md:block mb-6">
+              <p className="text-text-muted text-[12px] tracking-[2px] uppercase mb-3">
+                Traction
+              </p>
+              <div className="space-y-0">
+                {startup.milestones.map((m, i) => (
+                  <div key={m.date} className="flex gap-3 relative">
+                    <div className="flex flex-col items-center">
+                      <div className="w-2 h-2 rounded-full bg-accent-blue shrink-0 mt-1.5" />
+                      {i < startup.milestones.length - 1 && (
+                        <div className="w-px flex-1 bg-black/[0.08]" />
+                      )}
+                    </div>
+                    <div className="pb-3">
+                      <p className="text-text-muted text-[11px]">{m.date}</p>
+                      <p className="text-text-primary text-[13px]">{m.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* NEXUS SCORE */}
+            <div className="hidden md:block rounded-xl p-4 mb-4" style={{ background: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.5)" }}>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[14px] font-semibold text-text-primary">UrgenC Score: {startup.nexusScore}/100</span>
+                <span className="text-[12px] font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: `${scoreColor}12`, color: scoreColor }}>
+                  {startup.nexusScore >= 85 ? "Strong" : startup.nexusScore >= 75 ? "Promising" : "Early"}
+                </span>
+              </div>
+              <div className="h-1.5 rounded-full bg-black/[0.04] overflow-hidden mb-2">
+                <div className="h-full rounded-full" style={{ width: `${startup.nexusScore}%`, background: `linear-gradient(135deg, #4A6CF7, #7C5CFC)` }} />
+              </div>
+              <p className="text-[11px] text-text-muted">Scored on vision, team, market, defensibility, and momentum</p>
+            </div>
+
+            {/* VIEW FULL PROFILE - desktop only */}
+            <Link
+              href={`/startup/${startup.id}`}
+              className="hidden md:inline-flex items-center gap-1.5 text-accent-blue text-[14px] font-medium hover:underline"
+            >
+              View Full Profile
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7 17l9.2-9.2M17 17V7H7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Full Profile Overlay - mobile */}
+      <AnimatePresence>
+        {showFullProfile && (
+          <FullProfileOverlay startup={startup} onClose={() => setShowFullProfile(false)} />
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
@@ -802,16 +1068,16 @@ export default function DropsPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.15, ease }}
-          className="px-6 md:px-10 pt-6 pb-4 flex items-center justify-between shrink-0"
+          className="px-4 md:px-10 pt-4 md:pt-6 pb-3 md:pb-4 flex items-center justify-between shrink-0"
         >
           <div>
             <h1
-              className="text-[24px] md:text-[28px] font-normal text-text-primary"
+              className="text-[20px] md:text-[28px] font-normal text-text-primary"
               style={{ fontFamily: "'Instrument Serif', serif" }}
             >
               Your Daily Matches
             </h1>
-            <p className="text-text-muted text-[14px] mt-0.5">{today}</p>
+            <p className="text-text-muted text-[13px] md:text-[14px] mt-0.5">{today}</p>
           </div>
 
           <div className="flex items-center gap-3">
@@ -829,7 +1095,7 @@ export default function DropsPage() {
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.25 }}
-            className="px-4 py-2 rounded-full text-[14px] font-medium relative overflow-hidden"
+            className="px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[13px] md:text-[14px] font-medium relative overflow-hidden"
             style={{
               background: "rgba(255, 255, 255, 0.45)",
               backdropFilter: "blur(12px)",
@@ -899,17 +1165,18 @@ export default function DropsPage() {
                       onPass={handlePass}
                       onSave={handleSave}
                       onInterested={handleInterested}
+                      isSaved={isSaved}
                     />
                   </motion.div>
                 </AnimatePresence>
               </div>
 
-              {/* Action buttons */}
+              {/* Action buttons - desktop only */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.3, ease }}
-                className="flex items-center gap-5 py-4 shrink-0"
+                className="hidden md:flex items-center gap-5 py-4 shrink-0"
               >
                 {/* Pass */}
                 <button

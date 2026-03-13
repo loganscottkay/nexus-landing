@@ -16,16 +16,13 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 #how-it-works,
 #for-investors,
 #for-startups,
 #preview,
 #faq {
   scroll-margin-top: 80px;
+  scroll-behavior: smooth;
 }
 
 body {
