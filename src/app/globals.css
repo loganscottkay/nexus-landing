@@ -90,20 +90,13 @@ body {
 .glass::before {
   content: '';
   position: absolute;
-  inset: -1px;
-  border-radius: 25px;
-  background: conic-gradient(
-    from var(--border-angle),
-    #4A6CF7,
-    #7C5CFC,
-    #14b8a6,
-    #4A6CF7
-  );
-  z-index: -1;
+  inset: 0;
+  border-radius: 24px;
+  background: rgba(74, 108, 247, 0.04);
+  z-index: 0;
   opacity: 0;
   transition: opacity 0.25s ease;
-  animation: rotate-border 3s linear infinite;
-  will-change: opacity;
+  pointer-events: none;
 }
 
 .glass:hover {
@@ -113,7 +106,7 @@ body {
 }
 
 .glass:hover::before {
-  opacity: 0.3;
+  opacity: 1;
 }
 
 /* Glass cards: smaller border-radius on mobile */
@@ -843,19 +836,12 @@ body {
 .glow-card-wrapper::after {
   content: '';
   position: absolute;
-  inset: -2px;
-  border-radius: 26px;
-  background: conic-gradient(
-    from var(--border-angle),
-    #4A6CF7,
-    #7C5CFC,
-    #14b8a6,
-    #4A6CF7
-  );
+  inset: -1px;
+  border-radius: 25px;
+  background: rgba(74, 108, 247, 0.12);
   z-index: -1;
   opacity: 0;
   transition: opacity 0.3s ease;
-  animation: rotate-border 3s linear infinite;
 }
 
 .glow-card-wrapper:hover::after {
@@ -864,22 +850,14 @@ body {
 
 /* Override glass hover when inside glow wrapper */
 .glow-card-wrapper:hover > .glass {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-color: rgba(255, 255, 255, 0.8);
 }
 
-/* Step number gradient on hover */
+/* Step number gradient on hover - keep subtle */
 .step-number {
   transition: all 0.3s ease;
-}
-
-.glow-card-wrapper:hover .step-number {
-  background: linear-gradient(135deg, #4A6CF7, #7C5CFC);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  opacity: 1 !important;
 }
 
 /* Button pulse on card hover */
@@ -1074,8 +1052,8 @@ body {
 }
 
 .hiw-card-active::after {
-  opacity: 0.3 !important;
-  background: linear-gradient(135deg, #4A6CF7, #7C5CFC) !important;
+  opacity: 1 !important;
+  background: rgba(74, 108, 247, 0.12) !important;
 }
 
 .hiw-card-active > .glass {
