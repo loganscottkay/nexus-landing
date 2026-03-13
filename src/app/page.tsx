@@ -959,7 +959,7 @@ const matchingSteps = [
     title: "Swipe & Match",
     label: "BOTH SIDES",
     labelColor: "#D4AF37",
-    desc: "Investors express interest. Founders see a queue ranked by who liked them first. Each investor gets a dedicated 72-hour window to schedule the call. Investors: swipe early. The longer you wait, the further back in the queue you go.",
+    desc: "Investors express interest. Founders see a queue. First to swipe = first to meet. Swipe early or get stuck in line.",
     color: "#D4AF37",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">

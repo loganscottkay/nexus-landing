@@ -120,22 +120,6 @@ function GlassCard({ children, className = "", style: styleProp }: { children: R
   );
 }
 
-/* ─── Countdown Timer Pill ─── */
-function TimerPill({ hours, urgent }: { hours: number; urgent?: boolean }) {
-  if (urgent) {
-    return (
-      <span className="text-[12px] px-2.5 py-1 rounded-full font-medium shrink-0 bg-[rgba(217,119,6,0.08)] text-[#D97706] animate-pulse-gentle">
-        {hours}h left
-      </span>
-    );
-  }
-  return (
-    <span className="text-[12px] px-2.5 py-1 rounded-full font-medium shrink-0 bg-black/[0.04] text-text-muted">
-      {hours}h left
-    </span>
-  );
-}
-
 export default function FounderDashboard() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -192,23 +176,38 @@ export default function FounderDashboard() {
                     </div>
                     <Link href="/interests" className="text-accent-violet text-[14px] hover:underline">View All</Link>
                   </div>
-                  <p className="text-[12px] text-text-muted italic mb-3">Your meeting queue. One investor at a time. 72 hours per window.</p>
+                  <p className="text-[13px] italic mb-5" style={{ color: "#64748B" }}>Your queue. One meeting at a time. 72-hour windows.</p>
                   {[
-                    { initials: "SC", color: "#4A6CF7", name: "Sarah Chen", firm: "Gradient Ventures", checkSize: "$250K-$1M", hours: 47, urgent: false, queue: "#1", queueLabel: "Active window (47h left)", queueColor: "#4A6CF7" },
-                    { initials: "MW", color: "#7C5CFC", name: "Marcus Webb", firm: "Founder Collective", checkSize: "$100K-$500K", hours: 31, urgent: false, queue: "#2", queueLabel: "Window opens after #1", queueColor: "#64748B" },
-                    { initials: "ER", color: "#D97706", name: "Elena Rodriguez", firm: "Precursor Ventures", checkSize: "$100K-$250K", hours: 8, urgent: true, queue: "#3", queueLabel: "Window opens after #2", queueColor: "#64748B" },
-                    { initials: "JP", color: "#0d9488", name: "James Park", firm: "Lux Capital", checkSize: "$500K-$2M", hours: 62, urgent: false, queue: "#4", queueLabel: "Window opens after #3", queueColor: "#64748B" },
+                    { initials: "SC", color: "#4A6CF7", name: "Sarah Chen", firm: "Gradient Ventures", checkSize: "$250K-$1M", hours: 47, urgent: false, position: 1 },
+                    { initials: "MW", color: "#7C5CFC", name: "Marcus Webb", firm: "Founder Collective", checkSize: "$100K-$500K", hours: 31, urgent: false, position: 2 },
+                    { initials: "ER", color: "#D97706", name: "Elena Rodriguez", firm: "Precursor Ventures", checkSize: "$100K-$250K", hours: 8, urgent: true, position: 3 },
+                    { initials: "JP", color: "#0d9488", name: "James Park", firm: "Lux Capital", checkSize: "$500K-$2M", hours: 62, urgent: false, position: 4 },
                   ].map((inv, i, arr) => (
                     <Link key={inv.name} href="/interests" className={`flex items-center gap-3 py-3 cursor-pointer hover:bg-black/[0.02] -mx-2 px-2 rounded-lg transition-colors ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
+                      <div
+                        className="w-[24px] h-[24px] rounded-full flex items-center justify-center text-[11px] font-bold shrink-0"
+                        style={inv.position === 1
+                          ? { background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", color: "white" }
+                          : { background: "rgba(0,0,0,0.06)", color: "#475569" }
+                        }
+                      >
+                        {inv.position}
+                      </div>
                       <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0" style={{ backgroundColor: inv.color }}>{inv.initials}</div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[15px] font-semibold text-text-primary">{inv.name}</p>
                         <p className="text-[13px] text-text-muted">{inv.firm} &middot; {inv.checkSize}</p>
-                        <p className="text-[13px] font-medium mt-0.5" style={{ color: inv.queueColor }}>{inv.queue} — {inv.queueLabel}</p>
                       </div>
-                      {inv.queue === "#1" && <TimerPill hours={inv.hours} urgent={inv.urgent} />}
+                      {inv.position === 1
+                        ? <span className="text-[12px] px-2.5 py-1 rounded-full font-medium shrink-0 animate-pulse-gentle" style={{ background: "rgba(74,108,247,0.08)", color: "#4A6CF7" }}>{inv.hours}h left</span>
+                        : <span className="text-[12px] text-text-muted shrink-0">Waiting</span>
+                      }
                     </Link>
                   ))}
+                  {/* Info box */}
+                  <div className="mt-4 rounded-xl p-3" style={{ background: "rgba(74,108,247,0.03)" }}>
+                    <p className="text-[13px] leading-[1.6]" style={{ color: "#475569" }}>How it works: Investor #1 has 72 hours to schedule. When their window closes, #2 moves up automatically. No pressure to rush.</p>
+                  </div>
                 </GlassCard>
               </motion.div>
 
