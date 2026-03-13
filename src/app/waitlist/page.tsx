@@ -104,83 +104,6 @@ export default function WaitlistPage() {
         {/* Main content */}
         <div className="relative z-10 flex flex-col items-center min-h-screen pt-32 md:pt-40 pb-20 px-4">
 
-          {/* Floating accent cards - desktop only */}
-          <div className="hidden xl:block">
-            {/* Left: Match notification */}
-            <div
-              className="fixed left-[5%] 2xl:left-[10%] top-1/2 -translate-y-1/2 pointer-events-none"
-              style={{ zIndex: 5 }}
-            >
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 1.2, ease }}
-              >
-                <div className="animate-float">
-                  <div
-                    className="w-[200px] rounded-2xl p-4"
-                    style={{
-                      background: "rgba(224, 228, 248, 0.6)",
-                      backdropFilter: "blur(24px)",
-                      WebkitBackdropFilter: "blur(24px)",
-                      border: "1px solid rgba(200, 208, 240, 0.5)",
-                    }}
-                  >
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] live-dot-pulse" />
-                      <span className="text-[10px] tracking-[2px] uppercase" style={{ color: "#475569" }}>New Match</span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-7 h-7 rounded-full bg-[#4A6CF7] flex items-center justify-center text-white text-[9px] font-bold">SC</div>
-                      <div className="w-[2px] h-[2px] rounded-full" style={{ background: "rgba(74,108,247,0.3)" }} />
-                      <div className="w-7 h-7 rounded-full bg-[#7C5CFC] flex items-center justify-center text-white text-[9px] font-bold">LA</div>
-                    </div>
-                    <p className="text-[11px] font-medium" style={{ color: "#0F172A" }}>Luminary AI x Sarah C.</p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Right: Score card */}
-            <div
-              className="fixed right-[5%] 2xl:right-[10%] top-1/2 -translate-y-1/2 pointer-events-none"
-              style={{ zIndex: 5 }}
-            >
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 1.4, ease }}
-              >
-                <div className="animate-float-delayed">
-                  <div
-                    className="w-[200px] rounded-2xl p-4"
-                    style={{
-                      background: "rgba(224, 228, 248, 0.6)",
-                      backdropFilter: "blur(24px)",
-                      WebkitBackdropFilter: "blur(24px)",
-                      border: "1px solid rgba(200, 208, 240, 0.5)",
-                    }}
-                  >
-                    <p className="text-[10px] tracking-[2px] uppercase mb-3" style={{ color: "#475569" }}>UrgenC Score</p>
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex-1 h-1.5 rounded-full overflow-hidden mr-3" style={{ background: "rgba(74, 108, 247, 0.1)" }}>
-                        <div
-                          className="h-full rounded-full"
-                          style={{
-                            width: "87%",
-                            background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)",
-                          }}
-                        />
-                      </div>
-                      <span className="text-[14px] font-semibold tabular-nums" style={{ color: "#0F172A" }}>87/100</span>
-                    </div>
-                    <p className="text-[11px]" style={{ color: "#64748B" }}>Top 15% threshold</p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-
           {/* Eyebrow */}
           <motion.p
             initial={{ opacity: 0 }}
@@ -564,6 +487,9 @@ export default function WaitlistPage() {
             </p>
           </motion.div>
         </div>
+
+        {/* Unicorn mascot runner */}
+        <UnicornRunner />
       </main>
     </>
   );
@@ -592,6 +518,146 @@ function ValidationMessage({
         {message}
       </p>
     </div>
+  );
+}
+
+/* ---- Unicorn Runner ---- */
+function UnicornRunner() {
+  return (
+    <>
+      <div
+        className="unicorn-container pointer-events-none absolute left-0 w-full overflow-hidden"
+        style={{ top: "70%", zIndex: 1 }}
+      >
+        <div className="unicorn-runner" style={{ willChange: "transform" }}>
+          {/* Sparkle trail */}
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div
+              key={i}
+              className="unicorn-sparkle"
+              style={{
+                animationDelay: `${i * 0.15}s`,
+                left: `${-10 - i * 6}px`,
+                top: `${10 + (i % 3) * 8}px`,
+              }}
+            >
+              {i % 2 === 0 ? (
+                <div
+                  className="w-[5px] h-[5px] rounded-full"
+                  style={{
+                    background: ["#F5D76E", "#4A6CF7", "#7C5CFC", "#D946EF"][i % 4],
+                  }}
+                />
+              ) : (
+                <svg width="6" height="6" viewBox="0 0 6 6">
+                  <path
+                    d="M3 0L3.5 2.5L6 3L3.5 3.5L3 6L2.5 3.5L0 3L2.5 2.5Z"
+                    fill={["#F5D76E", "#4A6CF7", "#7C5CFC", "#D946EF"][i % 4]}
+                  />
+                </svg>
+              )}
+            </div>
+          ))}
+          {/* Unicorn SVG */}
+          <svg
+            width="60"
+            height="60"
+            viewBox="0 0 60 60"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="unicorn-svg md:w-[60px] md:h-[60px] w-[40px] h-[40px]"
+          >
+            <defs>
+              <linearGradient id="unicornBody" x1="10" y1="20" x2="50" y2="50">
+                <stop stopColor="#9B8EC4" />
+                <stop offset="1" stopColor="#7C5CFC" />
+              </linearGradient>
+              <linearGradient id="unicornMane" x1="20" y1="5" x2="35" y2="30">
+                <stop stopColor="#4A6CF7" />
+                <stop offset="0.5" stopColor="#7C5CFC" />
+                <stop offset="1" stopColor="#D946EF" />
+              </linearGradient>
+              <linearGradient id="unicornHorn" x1="38" y1="2" x2="42" y2="18">
+                <stop stopColor="#F5D76E" />
+                <stop offset="1" stopColor="#D4AF37" />
+              </linearGradient>
+            </defs>
+            {/* Body */}
+            <ellipse cx="28" cy="35" rx="16" ry="10" fill="url(#unicornBody)" />
+            {/* Neck */}
+            <path d="M38 30C38 30 42 22 40 18C38 14 36 16 36 20L34 30Z" fill="url(#unicornBody)" />
+            {/* Head */}
+            <ellipse cx="42" cy="17" rx="6" ry="5" fill="url(#unicornBody)" />
+            {/* Horn */}
+            <path d="M44 12L46 3L42 11Z" fill="url(#unicornHorn)" />
+            {/* Eye */}
+            <circle cx="44" cy="16" r="1.2" fill="#1E1B4B" />
+            {/* Mane */}
+            <path
+              className="unicorn-mane"
+              d="M38 12C36 10 34 14 32 12C30 10 28 16 26 14C24 12 24 18 26 20C28 22 30 18 32 20C34 22 36 16 38 18Z"
+              fill="url(#unicornMane)"
+              style={{ transformOrigin: "32px 16px" }}
+            />
+            {/* Tail */}
+            <path
+              className="unicorn-mane"
+              d="M12 30C8 26 4 28 6 32C8 36 10 34 12 36"
+              stroke="url(#unicornMane)"
+              strokeWidth="3"
+              strokeLinecap="round"
+              fill="none"
+              style={{ transformOrigin: "8px 32px" }}
+            />
+            {/* Front legs */}
+            <line x1="32" y1="42" x2="34" y2="52" stroke="url(#unicornBody)" strokeWidth="3" strokeLinecap="round" className="unicorn-leg-front" />
+            <line x1="26" y1="42" x2="24" y2="52" stroke="url(#unicornBody)" strokeWidth="3" strokeLinecap="round" className="unicorn-leg-front-alt" />
+            {/* Back legs */}
+            <line x1="22" y1="42" x2="20" y2="52" stroke="url(#unicornBody)" strokeWidth="3" strokeLinecap="round" className="unicorn-leg-back" />
+            <line x1="16" y1="42" x2="18" y2="52" stroke="url(#unicornBody)" strokeWidth="3" strokeLinecap="round" className="unicorn-leg-back-alt" />
+            {/* Nostril */}
+            <circle cx="47" cy="18" r="0.6" fill="#7C5CFC" />
+          </svg>
+        </div>
+      </div>
+
+      <style>{`
+        .unicorn-runner {
+          position: relative;
+          display: inline-block;
+          animation: unicornRun 8s linear infinite, unicornBounce 0.4s ease-in-out infinite;
+        }
+        @keyframes unicornRun {
+          0% { transform: translateX(-100px); }
+          100% { transform: translateX(calc(100vw + 100px)); }
+        }
+        @keyframes unicornBounce {
+          0%, 100% { margin-top: 0px; }
+          50% { margin-top: -5px; }
+        }
+        .unicorn-mane {
+          animation: maneFlutter 0.3s ease-in-out infinite alternate;
+        }
+        @keyframes maneFlutter {
+          0% { transform: rotate(-5deg) scale(1); }
+          100% { transform: rotate(5deg) scale(1.05); }
+        }
+        .unicorn-sparkle {
+          position: absolute;
+          animation: sparkleFade 1.5s ease-out infinite;
+          opacity: 0;
+        }
+        @keyframes sparkleFade {
+          0% { opacity: 1; transform: translateY(0) scale(1); }
+          100% { opacity: 0; transform: translateY(-20px) scale(0); }
+        }
+        @media (max-width: 767px) {
+          .unicorn-container {
+            top: 80% !important;
+          }
+        }
+      `}</style>
+    </>
   );
 }
 

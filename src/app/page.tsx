@@ -1035,7 +1035,7 @@ export default function Home() {
   /* Blobs are purely decorative, no parallax to avoid dark wash on scroll */
 
   return (
-    <main className="relative min-h-screen bg-base text-text-primary">
+    <main className="relative min-h-screen bg-base text-text-primary overflow-x-clip">
       {/* Noise overlay */}
       <div className="noise-overlay" />
 
@@ -1392,7 +1392,7 @@ export default function Home() {
       </Section>
 
       {/* ============ FINAL CTA ============ */}
-      <section className="relative z-10 py-20 pb-[120px]">
+      <section className="relative z-10 py-20 pb-[120px] overflow-visible">
         {/* Floating decorative cards */}
         <div className="absolute inset-0 overflow-visible hidden lg:block pointer-events-none">
           {/* Left: Match Notification */}
@@ -1477,8 +1477,8 @@ export default function Home() {
 
       {/* ============ FOOTER ============ */}
       <footer className="relative z-10">
-        <div className="border-t border-black/[0.06]">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <div className="max-w-7xl mx-auto px-6 md:px-12 py-8 flex flex-col items-center gap-4">
             <Link
               href="/"
               className="text-[18px] font-normal text-text-primary"
@@ -1486,28 +1486,12 @@ export default function Home() {
             >
               UrgenC
             </Link>
-            <div className="flex flex-col items-center gap-2">
-              <p className="text-[12px] text-center max-w-[600px]" style={{ color: "#94A3B8" }}>
-                UrgenC is a matching and meeting platform. We do not provide investment advice, facilitate financial transactions, or act as a broker-dealer. All investment decisions and transactions occur off-platform between the parties involved.
-              </p>
-              <p className="text-text-muted/60 text-[13px]">
-                &copy; 2026 UrgenC. All rights reserved.
-              </p>
-            </div>
-            <div className="flex items-center gap-6">
-              <a
-                href="#"
-                className="text-text-muted/60 hover:text-text-secondary transition-colors duration-300 text-[13px]"
-              >
-                Twitter
-              </a>
-              <a
-                href="#"
-                className="text-text-muted/60 hover:text-text-secondary transition-colors duration-300 text-[13px]"
-              >
-                LinkedIn
-              </a>
-            </div>
+            <p className="text-[12px] text-center max-w-[600px]" style={{ color: "#94A3B8" }}>
+              UrgenC is a matching and meeting platform. We do not provide investment advice, facilitate financial transactions, or act as a broker-dealer. All investment decisions and transactions occur off-platform between the parties involved.
+            </p>
+            <p className="text-text-muted/60 text-[13px]">
+              &copy; 2026 UrgenC. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
