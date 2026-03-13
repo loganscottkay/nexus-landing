@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
 
@@ -152,9 +152,58 @@ function ProfileStrengthContent() {
   );
 }
 
+/* ─── Time Slot Options ─── */
+const timeSlotOptions = [
+  "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+  "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
+  "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM",
+  "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM",
+];
+
+/* ─── Investor Queue Data ─── */
+const queueInvestors = [
+  { initials: "SC", color: "#4A6CF7", name: "Sarah Chen", firm: "Gradient Ventures", checkSize: "$250K-$1M", position: 1 },
+  { initials: "MW", color: "#7C5CFC", name: "Marcus Webb", firm: "Founder Collective", checkSize: "$100K-$500K", position: 2 },
+  { initials: "ER", color: "#D97706", name: "Elena Rodriguez", firm: "Precursor Ventures", checkSize: "$100K-$250K", position: 3 },
+  { initials: "JP", color: "#0d9488", name: "James Park", firm: "Lux Capital", checkSize: "$500K-$2M", position: 4 },
+];
+
 export default function FounderDashboard() {
   const [mounted, setMounted] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [proposalSent, setProposalSent] = useState(false);
+  const [slots, setSlots] = useState([
+    { date: "", time: "10:00 AM" },
+    { date: "", time: "2:00 PM" },
+    { date: "", time: "11:00 AM" },
+  ]);
+
   useEffect(() => setMounted(true), []);
+
+  const handleSlotChange = (index: number, field: "date" | "time", value: string) => {
+    setSlots((prev) => {
+      const next = [...prev];
+      next[index] = { ...next[index], [field]: value };
+      return next;
+    });
+  };
+
+  const handleSendProposal = () => {
+    setProposalSent(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    // Reset after close animation
+    setTimeout(() => {
+      setProposalSent(false);
+      setSlots([
+        { date: "", time: "10:00 AM" },
+        { date: "", time: "2:00 PM" },
+        { date: "", time: "11:00 AM" },
+      ]);
+    }, 300);
+  };
 
   return (
     <div className="min-h-screen flex bg-base text-text-primary relative">
@@ -211,52 +260,154 @@ export default function FounderDashboard() {
           <div className="flex flex-col md:grid md:grid-cols-[1fr_0.65fr] gap-4 md:gap-5">
             {/* LEFT COLUMN */}
             <div className="flex flex-col gap-4 md:gap-5">
-              {/* Recent Investor Interest */}
+              {/* Investor Queue */}
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.2, ease }}>
                 <GlassCard className="p-4 md:p-6">
-                  <div className="flex items-center justify-between mb-4 md:mb-5">
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-[18px] font-semibold text-text-primary">Recent Investor Interest</h3>
-                      <div className="w-2 h-2 rounded-full animate-pulse-gentle" style={{ background: "linear-gradient(135deg, #7C5CFC, #4A6CF7)" }} />
-                    </div>
-                    <Link href="/interests" className="text-accent-violet text-[14px] hover:underline">View All</Link>
+                  <h3 className="text-[18px] font-semibold text-text-primary mb-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Investor Queue</h3>
+                  <p className="text-[13px] mb-5" style={{ color: "#64748B" }}>One investor at a time. 72 hours per window. No pressure.</p>
+
+                  {/* Desktop Queue */}
+                  <div className="hidden md:block">
+                    {queueInvestors.map((inv, i, arr) => (
+                      <div key={inv.name}>
+                        <div className="flex items-center gap-3 py-3">
+                          {/* Position circle */}
+                          <div
+                            className="w-[32px] h-[32px] rounded-full flex items-center justify-center text-[13px] font-bold shrink-0"
+                            style={inv.position === 1
+                              ? { background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", color: "white" }
+                              : { background: "rgba(0,0,0,0.06)", color: "#475569" }
+                            }
+                          >
+                            {inv.position}
+                          </div>
+
+                          {/* Avatar */}
+                          <div
+                            className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0"
+                            style={{ backgroundColor: inv.color }}
+                          >
+                            {inv.initials}
+                          </div>
+
+                          {/* Name + details */}
+                          <div className="flex-1 min-w-0">
+                            <p className="text-[16px] font-semibold text-text-primary">{inv.name}</p>
+                            <p className="text-[13px] text-text-muted">{inv.firm} &middot; {inv.checkSize}</p>
+                          </div>
+
+                          {/* Status */}
+                          <div className="shrink-0 flex flex-col items-end gap-1.5">
+                            {inv.position === 1 ? (
+                              <>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-[11px] font-semibold uppercase tracking-[0.5px] px-2 py-0.5 rounded-full" style={{ background: "rgba(5,150,105,0.1)", color: "#059669" }}>Active</span>
+                                  <span className="text-[13px] text-text-muted">Schedule Now</span>
+                                </div>
+                                <span className="text-[15px] font-semibold" style={{ color: "#4A6CF7" }}>47h left</span>
+                                <button
+                                  onClick={() => setModalOpen(true)}
+                                  className="px-4 py-2 rounded-full text-[13px] font-semibold text-white cursor-pointer transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5"
+                                  style={{
+                                    background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                                    boxShadow: "0 4px 14px rgba(124,92,252,0.3)",
+                                  }}
+                                >
+                                  Schedule Meeting
+                                </button>
+                              </>
+                            ) : (
+                              <span className="text-[14px] text-text-muted">Window opens after #{inv.position - 1}</span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Connecting line between items */}
+                        {i < arr.length - 1 && (
+                          <div className="flex items-center pl-[15px]">
+                            <div className="w-[2px] h-[20px]" style={{ background: "rgba(0,0,0,0.06)" }} />
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                  <p className="text-[13px] italic mb-5" style={{ color: "#64748B" }}>Your queue. One meeting at a time. 72-hour windows.</p>
-                  {[
-                    { initials: "SC", color: "#4A6CF7", name: "Sarah Chen", firm: "Gradient Ventures", checkSize: "$250K-$1M", hours: 47, urgent: false, position: 1 },
-                    { initials: "MW", color: "#7C5CFC", name: "Marcus Webb", firm: "Founder Collective", checkSize: "$100K-$500K", hours: 31, urgent: false, position: 2 },
-                    { initials: "ER", color: "#D97706", name: "Elena Rodriguez", firm: "Precursor Ventures", checkSize: "$100K-$250K", hours: 8, urgent: true, position: 3 },
-                    { initials: "JP", color: "#0d9488", name: "James Park", firm: "Lux Capital", checkSize: "$500K-$2M", hours: 62, urgent: false, position: 4 },
-                  ].map((inv, i, arr) => (
-                    <Link key={inv.name} href="/interests" className={`flex items-center gap-3 py-3 min-h-[44px] cursor-pointer hover:bg-black/[0.02] -mx-2 px-2 rounded-lg transition-colors ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
-                      <div
-                        className="w-[24px] h-[24px] rounded-full flex items-center justify-center text-[12px] font-bold shrink-0"
-                        style={inv.position === 1
-                          ? { background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", color: "white" }
-                          : { background: "rgba(0,0,0,0.06)", color: "#475569" }
-                        }
-                      >
-                        {inv.position}
+
+                  {/* Mobile Queue */}
+                  <div className="md:hidden">
+                    {queueInvestors.map((inv, i, arr) => (
+                      <div key={inv.name}>
+                        <div className="py-3">
+                          <div className="flex items-center gap-3">
+                            {/* Position circle */}
+                            <div
+                              className="w-[32px] h-[32px] rounded-full flex items-center justify-center text-[13px] font-bold shrink-0"
+                              style={inv.position === 1
+                                ? { background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", color: "white" }
+                                : { background: "rgba(0,0,0,0.06)", color: "#475569" }
+                              }
+                            >
+                              {inv.position}
+                            </div>
+
+                            {/* Avatar */}
+                            <div
+                              className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0"
+                              style={{ backgroundColor: inv.color }}
+                            >
+                              {inv.initials}
+                            </div>
+
+                            {/* Name + details */}
+                            <div className="flex-1 min-w-0">
+                              <p className="text-[16px] font-semibold text-text-primary">{inv.name}</p>
+                              <p className="text-[13px] text-text-muted">{inv.firm} &middot; {inv.checkSize}</p>
+                            </div>
+                          </div>
+
+                          {/* Status on new line below */}
+                          <div className="mt-2 ml-[82px]">
+                            {inv.position === 1 ? (
+                              <div className="flex flex-col gap-2">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-[11px] font-semibold uppercase tracking-[0.5px] px-2 py-0.5 rounded-full" style={{ background: "rgba(5,150,105,0.1)", color: "#059669" }}>Active</span>
+                                  <span className="text-[13px] text-text-muted">Schedule Now</span>
+                                  <span className="text-[15px] font-semibold ml-auto" style={{ color: "#4A6CF7" }}>47h left</span>
+                                </div>
+                                <button
+                                  onClick={() => setModalOpen(true)}
+                                  className="w-full px-4 py-2.5 rounded-full text-[13px] font-semibold text-white cursor-pointer transition-all duration-200 hover:opacity-90"
+                                  style={{
+                                    background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                                    boxShadow: "0 4px 14px rgba(124,92,252,0.3)",
+                                  }}
+                                >
+                                  Schedule Meeting
+                                </button>
+                              </div>
+                            ) : (
+                              <span className="text-[14px] text-text-muted">Window opens after #{inv.position - 1}</span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Connecting line between items */}
+                        {i < arr.length - 1 && (
+                          <div className="flex items-center pl-[15px]">
+                            <div className="w-[2px] h-[16px]" style={{ background: "rgba(0,0,0,0.06)" }} />
+                          </div>
+                        )}
                       </div>
-                      <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0" style={{ backgroundColor: inv.color }}>{inv.initials}</div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[15px] font-semibold text-text-primary">{inv.name}</p>
-                        <p className="text-[13px] text-text-muted truncate">{inv.firm} &middot; {inv.checkSize}</p>
-                      </div>
-                      {inv.position === 1
-                        ? <span className="text-[12px] px-2.5 py-1 rounded-full font-medium shrink-0 animate-pulse-gentle" style={{ background: "rgba(74,108,247,0.08)", color: "#4A6CF7" }}>{inv.hours}h left</span>
-                        : <span className="text-[12px] text-text-muted shrink-0">Waiting</span>
-                      }
-                    </Link>
-                  ))}
+                    ))}
+                  </div>
+
                   {/* Info box */}
                   <div className="mt-4 rounded-xl p-3" style={{ background: "rgba(74,108,247,0.03)" }}>
-                    <p className="text-[13px] leading-[1.6]" style={{ color: "#475569" }}>How it works: Investor #1 has 72 hours to schedule. When their window closes, #2 moves up automatically. No pressure to rush.</p>
+                    <p className="text-[13px] leading-[1.6]" style={{ color: "#475569" }}>You only meet one investor at a time. When each 72-hour window closes, the next investor moves up. Take your time with each conversation.</p>
                   </div>
                 </GlassCard>
               </motion.div>
 
-              {/* Profile Strength - mobile only (appears after investor interest on mobile) */}
+              {/* Profile Strength - mobile only (appears after queue on mobile) */}
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.25, ease }} className="md:hidden">
                 <GlassCard className="p-4">
                   <ProfileStrengthContent />
@@ -319,7 +470,7 @@ export default function FounderDashboard() {
 
             {/* RIGHT COLUMN */}
             <div className="flex flex-col gap-4 md:gap-5">
-              {/* Profile Strength - desktop only (on mobile it renders after investor interest above) */}
+              {/* Profile Strength - desktop only (on mobile it renders after queue above) */}
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.35, ease }} className="hidden md:block">
                 <GlassCard className="p-4 md:p-6">
                   <ProfileStrengthContent />
@@ -376,6 +527,185 @@ export default function FounderDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Scheduling Modal */}
+      <AnimatePresence>
+        {modalOpen && (
+          <>
+            {/* Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-40"
+              style={{ background: "rgba(0,0,0,0.3)" }}
+              onClick={handleCloseModal}
+            />
+
+            {/* Desktop Modal (centered card) */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              transition={{ duration: 0.25, ease }}
+              className="hidden md:block fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px]"
+            >
+              <div
+                className="rounded-2xl p-6"
+                style={{
+                  background: "rgba(255,255,255,0.95)",
+                  backdropFilter: "blur(40px)",
+                  WebkitBackdropFilter: "blur(40px)",
+                  boxShadow: "0 24px 80px rgba(0,0,0,0.12), 0 8px 32px rgba(0,0,0,0.08)",
+                }}
+              >
+                {!proposalSent ? (
+                  <>
+                    <h2 className="text-[20px] font-semibold text-text-primary mb-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Schedule Your Chemistry Call</h2>
+                    <p className="text-[15px] text-text-muted mb-5">With Sarah Chen</p>
+
+                    <p className="text-[14px] font-semibold text-text-primary mb-3">Propose 3 times:</p>
+
+                    <div className="flex flex-col gap-3">
+                      {slots.map((slot, idx) => (
+                        <div key={idx} className="flex gap-3">
+                          <input
+                            type="date"
+                            value={slot.date}
+                            onChange={(e) => handleSlotChange(idx, "date", e.target.value)}
+                            className="flex-1 px-3 py-2.5 rounded-xl text-[14px] text-text-primary outline-none transition-colors"
+                            style={{
+                              background: "rgba(255,255,255,0.6)",
+                              backdropFilter: "blur(10px)",
+                              border: "1px solid rgba(0,0,0,0.08)",
+                            }}
+                          />
+                          <select
+                            value={slot.time}
+                            onChange={(e) => handleSlotChange(idx, "time", e.target.value)}
+                            className="flex-1 px-3 py-2.5 rounded-xl text-[14px] text-text-primary outline-none transition-colors appearance-none cursor-pointer"
+                            style={{
+                              background: "rgba(255,255,255,0.6)",
+                              backdropFilter: "blur(10px)",
+                              border: "1px solid rgba(0,0,0,0.08)",
+                            }}
+                          >
+                            {timeSlotOptions.map((t) => (
+                              <option key={t} value={t}>{t}</option>
+                            ))}
+                          </select>
+                        </div>
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={handleSendProposal}
+                      className="w-full mt-5 px-4 py-3 rounded-full text-[15px] font-semibold text-white cursor-pointer transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5"
+                      style={{
+                        background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                        boxShadow: "0 4px 14px rgba(124,92,252,0.3)",
+                      }}
+                    >
+                      Send Proposal &rarr;
+                    </button>
+                  </>
+                ) : (
+                  <div className="text-center py-6">
+                    <div className="flex items-center justify-center gap-2 mb-4">
+                      <span className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: "#4A6CF7" }} />
+                      <p className="text-[18px] font-semibold text-text-primary">Waiting for Sarah Chen to respond...</p>
+                    </div>
+                    <p className="text-[14px] text-text-muted">Proposed 3 times. Waiting for response.</p>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+
+            {/* Mobile Modal (bottom sheet) */}
+            <motion.div
+              initial={{ opacity: 0, y: "100%" }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: "100%" }}
+              transition={{ duration: 0.3, ease }}
+              className="md:hidden fixed z-50 bottom-0 left-0 right-0"
+            >
+              <div
+                className="rounded-t-3xl p-5 pb-8"
+                style={{
+                  background: "rgba(255,255,255,0.95)",
+                  backdropFilter: "blur(40px)",
+                  WebkitBackdropFilter: "blur(40px)",
+                  boxShadow: "0 -8px 40px rgba(0,0,0,0.1)",
+                }}
+              >
+                {/* Drag handle */}
+                <div className="w-10 h-1 rounded-full bg-black/10 mx-auto mb-5" />
+
+                {!proposalSent ? (
+                  <>
+                    <h2 className="text-[20px] font-semibold text-text-primary mb-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Schedule Your Chemistry Call</h2>
+                    <p className="text-[15px] text-text-muted mb-5">With Sarah Chen</p>
+
+                    <p className="text-[14px] font-semibold text-text-primary mb-3">Propose 3 times:</p>
+
+                    <div className="flex flex-col gap-3">
+                      {slots.map((slot, idx) => (
+                        <div key={idx} className="flex gap-3">
+                          <input
+                            type="date"
+                            value={slot.date}
+                            onChange={(e) => handleSlotChange(idx, "date", e.target.value)}
+                            className="flex-1 px-3 py-2.5 rounded-xl text-[14px] text-text-primary outline-none"
+                            style={{
+                              background: "rgba(255,255,255,0.6)",
+                              backdropFilter: "blur(10px)",
+                              border: "1px solid rgba(0,0,0,0.08)",
+                            }}
+                          />
+                          <select
+                            value={slot.time}
+                            onChange={(e) => handleSlotChange(idx, "time", e.target.value)}
+                            className="flex-1 px-3 py-2.5 rounded-xl text-[14px] text-text-primary outline-none appearance-none cursor-pointer"
+                            style={{
+                              background: "rgba(255,255,255,0.6)",
+                              backdropFilter: "blur(10px)",
+                              border: "1px solid rgba(0,0,0,0.08)",
+                            }}
+                          >
+                            {timeSlotOptions.map((t) => (
+                              <option key={t} value={t}>{t}</option>
+                            ))}
+                          </select>
+                        </div>
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={handleSendProposal}
+                      className="w-full mt-5 px-4 py-3 rounded-full text-[15px] font-semibold text-white cursor-pointer transition-all duration-200 hover:opacity-90"
+                      style={{
+                        background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                        boxShadow: "0 4px 14px rgba(124,92,252,0.3)",
+                      }}
+                    >
+                      Send Proposal &rarr;
+                    </button>
+                  </>
+                ) : (
+                  <div className="text-center py-6">
+                    <div className="flex items-center justify-center gap-2 mb-4">
+                      <span className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: "#4A6CF7" }} />
+                      <p className="text-[18px] font-semibold text-text-primary">Waiting for Sarah Chen to respond...</p>
+                    </div>
+                    <p className="text-[14px] text-text-muted">Proposed 3 times. Waiting for response.</p>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

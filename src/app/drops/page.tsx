@@ -598,6 +598,56 @@ function AllCaughtUp() {
 }
 
 /* ─── Main Page ─── */
+/* ─── Filter Panel (shared between desktop sidebar and mobile sheet) ─── */
+function FilterToggles({ filters, onToggle }: { filters: Record<string, boolean>; onToggle: (key: string) => void }) {
+  const industries = ["AI / Machine Learning", "SaaS", "Fintech", "Health Tech", "Climate Tech", "Consumer", "Marketplace", "Developer Tools"];
+  const stages = ["Pre-Seed", "Seed", "Series A"];
+  return (
+    <div className="space-y-6">
+      <div>
+        <p className="text-[13px] font-semibold text-text-primary mb-3">Industries</p>
+        <div className="space-y-2">
+          {industries.map((ind) => {
+            const on = filters[ind] ?? false;
+            return (
+              <button key={ind} onClick={() => onToggle(ind)} className="flex items-center justify-between w-full px-3 py-2 rounded-lg text-[13px] transition-all duration-200" style={{ background: on ? "rgba(8,145,178,0.1)" : "rgba(0,0,0,0.03)", border: `1px solid ${on ? "rgba(8,145,178,0.3)" : "rgba(0,0,0,0.06)"}`, color: on ? "#0891B2" : "#94A3B8" }}>
+                <span>{ind}</span>
+                <div className="w-8 h-[18px] rounded-full relative transition-all duration-200" style={{ background: on ? "#0891B2" : "rgba(0,0,0,0.1)" }}>
+                  <div className="absolute top-[2px] w-[14px] h-[14px] rounded-full bg-white shadow-sm transition-all duration-200" style={{ left: on ? "16px" : "2px" }} />
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      <div>
+        <p className="text-[13px] font-semibold text-text-primary mb-3">Stage</p>
+        <div className="space-y-2">
+          {stages.map((s) => {
+            const on = filters[s] ?? false;
+            return (
+              <button key={s} onClick={() => onToggle(s)} className="flex items-center justify-between w-full px-3 py-2 rounded-lg text-[13px] transition-all duration-200" style={{ background: on ? "rgba(8,145,178,0.1)" : "rgba(0,0,0,0.03)", border: `1px solid ${on ? "rgba(8,145,178,0.3)" : "rgba(0,0,0,0.06)"}`, color: on ? "#0891B2" : "#94A3B8" }}>
+                <span>{s}</span>
+                <div className="w-8 h-[18px] rounded-full relative transition-all duration-200" style={{ background: on ? "#0891B2" : "rgba(0,0,0,0.1)" }}>
+                  <div className="absolute top-[2px] w-[14px] h-[14px] rounded-full bg-white shadow-sm transition-all duration-200" style={{ left: on ? "16px" : "2px" }} />
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      <div>
+        <p className="text-[13px] font-semibold text-text-primary mb-2">Investment Range</p>
+        <div className="flex items-center justify-between">
+          <span className="text-[15px] font-semibold text-text-primary">$100K - $500K</span>
+          <button className="text-[13px] font-medium" style={{ color: "#0891B2" }}>Edit</button>
+        </div>
+      </div>
+      <p className="text-[11px] text-text-muted">Filters updated 2h ago</p>
+    </div>
+  );
+}
+
 export default function DropsPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [exitDirection, setExitDirection] = useState<"left" | "right" | null>(
@@ -605,6 +655,13 @@ export default function DropsPage() {
   );
   const [savedIds, setSavedIds] = useState<Set<number>>(new Set());
   const [toast, setToast] = useState<string | null>(null);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [filters, setFilters] = useState<Record<string, boolean>>({
+    "AI / Machine Learning": true, SaaS: true, Fintech: true, "Health Tech": false,
+    "Climate Tech": false, Consumer: false, Marketplace: false, "Developer Tools": true,
+    "Pre-Seed": true, Seed: true, "Series A": false,
+  });
+  const toggleFilter = (key: string) => setFilters((prev) => ({ ...prev, [key]: !prev[key] }));
   const total = startups.length;
   const remaining = total - currentIndex;
   const allDone = currentIndex >= total;
@@ -683,8 +740,63 @@ export default function DropsPage() {
 
       <Sidebar role="investor" activeLabel="Daily Drops" />
 
+      {/* ─── Desktop Filter Panel ─── */}
+      <div
+        className="hidden md:flex flex-col w-[280px] shrink-0 h-screen fixed right-0 top-0 z-20 overflow-y-auto p-5"
+        style={{
+          background: "rgba(255,255,255,0.5)",
+          backdropFilter: "blur(24px) saturate(1.2)",
+          WebkitBackdropFilter: "blur(24px) saturate(1.2)",
+          borderLeft: "1px solid rgba(0,0,0,0.06)",
+        }}
+      >
+        <h3 className="text-[16px] font-semibold text-text-primary mb-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Your Feed Filters</h3>
+        <p className="text-[12px] text-text-muted mb-5">Your daily feed only shows startups matching these filters.</p>
+        <FilterToggles filters={filters} onToggle={toggleFilter} />
+      </div>
+
+      {/* ─── Mobile Filter Bottom Sheet ─── */}
+      <AnimatePresence>
+        {showMobileFilters && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="md:hidden fixed inset-0 bg-black/30 z-40"
+              onClick={() => setShowMobileFilters(false)}
+            />
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="md:hidden fixed bottom-0 left-0 right-0 z-50 rounded-t-3xl overflow-y-auto"
+              style={{
+                maxHeight: "70vh",
+                background: "rgba(255,255,255,0.95)",
+                backdropFilter: "blur(24px)",
+                WebkitBackdropFilter: "blur(24px)",
+                boxShadow: "0 -8px 32px rgba(0,0,0,0.1)",
+              }}
+            >
+              <div className="flex justify-center pt-3 pb-2">
+                <div className="w-10 h-1 rounded-full bg-black/20" />
+              </div>
+              <div className="px-5 pb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-[16px] font-semibold text-text-primary">Filters</h3>
+                  <button onClick={() => setShowMobileFilters(false)} className="text-text-muted text-[14px]">Done</button>
+                </div>
+                <FilterToggles filters={filters} onToggle={toggleFilter} />
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       {/* ─── Main Content ─── */}
-      <div className="flex-1 md:ml-[240px] flex flex-col h-screen relative z-10">
+      <div className="flex-1 md:ml-[240px] md:mr-[280px] flex flex-col h-screen relative z-10">
         {/* Top bar */}
         <motion.header
           initial={{ opacity: 0 }}
@@ -700,6 +812,16 @@ export default function DropsPage() {
               Your Daily Matches
             </h1>
             <p className="text-text-muted text-[14px] mt-0.5">{today}</p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setShowMobileFilters(true)}
+              className="md:hidden px-3 py-1.5 rounded-full text-[13px] font-medium"
+              style={{ background: "rgba(8,145,178,0.1)", color: "#0891B2" }}
+            >
+              Filters
+            </button>
           </div>
 
           <motion.div

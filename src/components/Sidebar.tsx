@@ -38,9 +38,9 @@ const icons = {
       <path d="m11 17 2 2a1 1 0 1 0 3-3" /><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" /><path d="m21 3 1 11h-2" /><path d="M3 3 2 14h2" /><path d="m7 4 3.22 3.22" /><path d="M3 14h6c.6 0 1 .4 1 1v2c0 .6.4 1 1 1h4" />
     </svg>
   ),
-  messages: (
+  scheduling: (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+      <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
     </svg>
   ),
   settings: (
@@ -70,8 +70,15 @@ const investorNav: NavItem[] = [
   { label: "Daily Drops", icon: icons.drops, href: "/drops" },
   { label: "Saved", icon: icons.saved, href: "/saved" },
   { label: "Matches", icon: icons.matches, href: "/matches" },
-  { label: "Messages", icon: icons.messages, href: "/messages" },
+  { label: "Scheduling", icon: icons.scheduling, href: "/scheduling" },
   { label: "Settings", icon: icons.settings, href: "/settings" },
+];
+
+const investorMobileNav: NavItem[] = [
+  { label: "Dashboard", icon: icons.dashboard, href: "/dashboard/investor" },
+  { label: "Daily Drops", icon: icons.drops, href: "/drops" },
+  { label: "Saved", icon: icons.saved, href: "/saved" },
+  { label: "Scheduling", icon: icons.scheduling, href: "/scheduling" },
 ];
 
 const founderNav: NavItem[] = [
@@ -79,9 +86,16 @@ const founderNav: NavItem[] = [
   { label: "Interests", icon: icons.interests, href: "/interests" },
   { label: "Matches", icon: icons.matches, href: "/matches/founder" },
   { label: "Deck Analytics", icon: icons.analytics, href: "/deck-analytics" },
-  { label: "Messages", icon: icons.messages, href: "/messages/founder" },
+  { label: "Scheduling", icon: icons.scheduling, href: "/scheduling" },
   { label: "Profile", icon: icons.profile, href: "/settings/founder" },
   { label: "Settings", icon: icons.settings, href: "/settings/founder" },
+];
+
+const founderMobileNav: NavItem[] = [
+  { label: "Dashboard", icon: icons.dashboard, href: "/dashboard/founder" },
+  { label: "Interests", icon: icons.interests, href: "/interests" },
+  { label: "Scheduling", icon: icons.scheduling, href: "/scheduling" },
+  { label: "Profile", icon: icons.profile, href: "/settings/founder" },
 ];
 
 export default function Sidebar({
@@ -92,6 +106,7 @@ export default function Sidebar({
   activeLabel: string;
 }) {
   const navList = role === "investor" ? investorNav : founderNav;
+  const mobileNavList = role === "investor" ? investorMobileNav : founderMobileNav;
   const isHomeActive = activeLabel === "Home";
 
   return (
@@ -118,12 +133,13 @@ export default function Sidebar({
             href="/"
             className={`flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1 text-[15px] transition-all duration-200 relative ${
               isHomeActive
-                ? "text-accent-blue font-medium"
+                ? "font-medium"
                 : "text-text-secondary hover:text-text-primary hover:bg-black/[0.03]"
             }`}
+            style={isHomeActive ? { color: role === "investor" ? "#0891B2" : undefined } : undefined}
           >
             {isHomeActive && (
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-accent-blue rounded-full" />
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full" style={{ backgroundColor: role === "investor" ? "#0891B2" : undefined }} />
             )}
             {icons.home}
             Home
@@ -133,11 +149,21 @@ export default function Sidebar({
 
           {navList.map((item) => {
             const isActive = item.label === activeLabel;
-            const activeColor = role === "founder" ? "text-accent-violet" : "text-accent-blue";
-            const barColor = role === "founder" ? "bg-accent-violet" : "bg-accent-blue";
+            const activeColor = role === "founder" ? "text-accent-violet" : "";
+            const barBg = role === "founder" ? "bg-accent-violet" : "";
             return (
-              <Link key={item.label} href={item.href} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1 text-[15px] transition-all duration-200 relative ${isActive ? `${activeColor} font-medium` : "text-text-secondary hover:text-text-primary hover:bg-black/[0.03]"}`}>
-                {isActive && <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 ${barColor} rounded-full`} />}
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1 text-[15px] transition-all duration-200 relative ${isActive ? `${activeColor} font-medium` : "text-text-secondary hover:text-text-primary hover:bg-black/[0.03]"}`}
+                style={isActive && role === "investor" ? { color: "#0891B2" } : undefined}
+              >
+                {isActive && (
+                  <div
+                    className={`absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 ${barBg} rounded-full`}
+                    style={role === "investor" ? { backgroundColor: "#0891B2" } : undefined}
+                  />
+                )}
                 {item.icon}
                 {item.label}
               </Link>
@@ -153,7 +179,7 @@ export default function Sidebar({
               <p className="text-[14px] font-medium text-text-primary">
                 {role === "investor" ? "Jordan Chen" : "Luminary AI"}
               </p>
-              <span className={`text-[11px] px-2 py-0.5 rounded-full font-medium ${role === "investor" ? "bg-accent-blue/10 text-accent-blue" : "bg-accent-violet/10 text-accent-violet"}`}>
+              <span className={`text-[11px] px-2 py-0.5 rounded-full font-medium ${role === "investor" ? "bg-[#0891B2]/10 text-[#0891B2]" : "bg-accent-violet/10 text-accent-violet"}`}>
                 {role === "investor" ? "Investor" : "Founder"}
               </span>
             </div>
@@ -173,13 +199,13 @@ export default function Sidebar({
         }}
       >
         {/* Home tab on mobile */}
-        <Link href="/" className={`flex flex-col items-center justify-center gap-1 py-1 min-h-[44px] ${isHomeActive ? "text-accent-blue" : "text-text-muted"}`}>
+        <Link href="/" className={`flex flex-col items-center justify-center gap-1 py-1 min-h-[44px] ${isHomeActive ? (role === "investor" ? "text-[#0891B2]" : "text-accent-blue") : "text-text-muted"}`}>
           <span className="w-6 h-6 flex items-center justify-center">{icons.home}</span>
           <span className="text-[12px] leading-none">Home</span>
         </Link>
-        {navList.slice(0, 4).map((item) => {
+        {mobileNavList.map((item) => {
           const isActive = item.label === activeLabel;
-          const activeColor = role === "founder" ? "text-accent-violet" : "text-accent-blue";
+          const activeColor = role === "founder" ? "text-accent-violet" : "text-[#0891B2]";
           return (
             <Link key={item.label} href={item.href} className={`flex flex-col items-center justify-center gap-1 py-1 min-h-[44px] ${isActive ? activeColor : "text-text-muted"}`}>
               <span className="w-6 h-6 flex items-center justify-center">{item.icon}</span>

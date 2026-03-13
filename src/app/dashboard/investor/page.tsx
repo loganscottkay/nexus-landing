@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
 
@@ -203,7 +203,10 @@ function SavedContent() {
   return (
     <>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-[18px] font-semibold text-text-primary">Saved <span className="text-text-muted font-normal">(7)</span></h3>
+        <h3 className="text-[18px] font-semibold text-text-primary flex items-center gap-2">
+          {bookmarkIcon}
+          Saved <span className="text-text-muted font-normal">(7)</span>
+        </h3>
         <Link href="/saved" className="text-accent-blue text-[14px] hover:underline">View All</Link>
       </div>
       {[
@@ -249,8 +252,248 @@ const clockIcon = <svg width="10" height="10" viewBox="0 0 24 24" fill="none" st
 const calIcon = <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /></svg>;
 const chatIcon = <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" /></svg>;
 
+/* ─── Section Title Icons ─── */
+const compassIcon = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" /></svg>;
+const clockSectionIcon = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>;
+const bookmarkIcon = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" /></svg>;
+const funnelIcon = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" /></svg>;
+
+/* ─── Filter Toggle Data ─── */
+interface FilterState {
+  industries: Record<string, boolean>;
+  stages: Record<string, boolean>;
+}
+
+const defaultFilters: FilterState = {
+  industries: {
+    "AI / Machine Learning": true,
+    "SaaS": true,
+    "Fintech": true,
+    "Health Tech": false,
+    "Climate Tech": false,
+    "Consumer": false,
+    "Marketplace": false,
+    "Developer Tools": true,
+  },
+  stages: {
+    "Pre-Seed": true,
+    "Seed": true,
+    "Series A": false,
+  },
+};
+
+/* ─── Filter Toggle Row ─── */
+function FilterToggle({ label, active, onToggle }: { label: string; active: boolean; onToggle: () => void }) {
+  return (
+    <button
+      onClick={onToggle}
+      className="flex items-center justify-between w-full px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-200"
+      style={{
+        background: active ? "rgba(8,145,178,0.1)" : "rgba(0,0,0,0.03)",
+        border: `1px solid ${active ? "rgba(8,145,178,0.3)" : "rgba(0,0,0,0.06)"}`,
+        color: active ? "#0891B2" : "#94A3B8",
+      }}
+    >
+      <span>{label}</span>
+      <div
+        className="w-8 h-[18px] rounded-full relative transition-all duration-200"
+        style={{
+          background: active ? "rgba(8,145,178,0.3)" : "rgba(0,0,0,0.1)",
+        }}
+      >
+        <div
+          className="w-3.5 h-3.5 rounded-full absolute top-[2px] transition-all duration-200"
+          style={{
+            background: active ? "#0891B2" : "#94A3B8",
+            left: active ? "16px" : "2px",
+          }}
+        />
+      </div>
+    </button>
+  );
+}
+
+/* ─── Filter Panel Content (shared between desktop and mobile) ─── */
+function FilterPanelContent({ filters, setFilters }: { filters: FilterState; setFilters: React.Dispatch<React.SetStateAction<FilterState>> }) {
+  return (
+    <>
+      <h3 className="text-[16px] font-semibold text-text-primary mb-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Your Feed Filters</h3>
+      <p className="text-[12px] text-text-muted mb-5">Your daily feed only shows startups matching these filters.</p>
+
+      {/* Industries */}
+      <p className="text-[11px] uppercase tracking-[1.5px] text-text-muted mb-2 font-semibold">Industries</p>
+      <div className="space-y-1.5 mb-5">
+        {Object.entries(filters.industries).map(([name, active]) => (
+          <FilterToggle
+            key={name}
+            label={name}
+            active={active}
+            onToggle={() => setFilters((prev) => ({
+              ...prev,
+              industries: { ...prev.industries, [name]: !prev.industries[name] },
+            }))}
+          />
+        ))}
+      </div>
+
+      {/* Stage */}
+      <p className="text-[11px] uppercase tracking-[1.5px] text-text-muted mb-2 font-semibold">Stage</p>
+      <div className="space-y-1.5 mb-5">
+        {Object.entries(filters.stages).map(([name, active]) => (
+          <FilterToggle
+            key={name}
+            label={name}
+            active={active}
+            onToggle={() => setFilters((prev) => ({
+              ...prev,
+              stages: { ...prev.stages, [name]: !prev.stages[name] },
+            }))}
+          />
+        ))}
+      </div>
+
+      {/* Investment Range */}
+      <p className="text-[11px] uppercase tracking-[1.5px] text-text-muted mb-2 font-semibold">Investment Range</p>
+      <div className="flex items-center justify-between mb-5">
+        <span className="text-[15px] font-semibold text-text-primary">$100K - $500K</span>
+        <button className="text-[13px] font-medium" style={{ color: "#0891B2" }}>Edit</button>
+      </div>
+
+      <p className="text-[11px] text-text-muted">Filters updated 2h ago</p>
+    </>
+  );
+}
+
+/* ─── Meeting Queue Section ─── */
+function MeetingQueue() {
+  const queueItems = [
+    { initials: "LA", color: "#4A6CF7", name: "Luminary AI", sector: "AI/ML", position: 1, active: true, status: "47h remaining", statusLabel: "ACTIVE" },
+    { initials: "TH", color: "#7C5CFC", name: "Terraform Health", sector: "Health Tech", position: 2, active: false, status: "Next up", statusLabel: "" },
+    { initials: "SP", color: "#0d9488", name: "Stackpay", sector: "Fintech", position: 3, active: false, status: "Estimated: ~6 days", statusLabel: "" },
+  ];
+
+  return (
+    <div>
+      <h3 className="text-[18px] font-semibold text-text-primary mb-1 flex items-center gap-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+        {clockSectionIcon}
+        Your Meeting Queue
+      </h3>
+      <p className="text-[13px] mb-5" style={{ color: "#64748B" }}>First to express interest = first to meet. Each window is 72 hours.</p>
+
+      {/* Desktop Queue */}
+      <div className="hidden md:block space-y-0">
+        {queueItems.map((q, i) => (
+          <div key={q.name}>
+            <div className="flex items-center gap-4 py-3">
+              {/* Position circle */}
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[14px] font-bold shrink-0"
+                style={{
+                  background: q.position === 1 ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)" : "rgba(0,0,0,0.06)",
+                  color: q.position === 1 ? "white" : "#475569",
+                }}
+              >
+                {q.position}
+              </div>
+
+              {/* Avatar + name + sector */}
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-[13px] font-semibold shrink-0" style={{ backgroundColor: q.color }}>
+                  {q.initials}
+                </div>
+                <span className="text-[16px] font-semibold text-text-primary">{q.name}</span>
+                <span className="text-[12px] px-2 py-0.5 rounded-full bg-accent-blue/5 text-accent-blue border border-accent-blue/15">{q.sector}</span>
+              </div>
+
+              {/* Status */}
+              <div className="flex items-center gap-3 shrink-0">
+                {q.active ? (
+                  <>
+                    <span className="text-[12px] font-semibold px-2.5 py-1 rounded-full" style={{ background: "rgba(5,150,105,0.1)", color: "#059669" }}>ACTIVE</span>
+                    <span className="text-[15px] font-medium" style={{ color: "#4A6CF7" }}>47h remaining</span>
+                  </>
+                ) : (
+                  <span className="text-[14px] text-text-muted">{q.status}</span>
+                )}
+              </div>
+            </div>
+
+            {/* Connecting line between items */}
+            {i < queueItems.length - 1 && (
+              <div className="flex items-center pl-[15px]">
+                <div className="w-[2px] h-6" style={{ background: "rgba(0,0,0,0.06)" }} />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Mobile Queue */}
+      <div className="md:hidden space-y-0">
+        {queueItems.map((q, i) => (
+          <div key={q.name}>
+            <div className="flex items-start gap-3 py-3">
+              {/* Position circle */}
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[14px] font-bold shrink-0 mt-1"
+                style={{
+                  background: q.position === 1 ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)" : "rgba(0,0,0,0.06)",
+                  color: q.position === 1 ? "white" : "#475569",
+                }}
+              >
+                {q.position}
+              </div>
+
+              {/* Info */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-[13px] font-semibold shrink-0" style={{ backgroundColor: q.color }}>
+                    {q.initials}
+                  </div>
+                  <div>
+                    <span className="text-[16px] font-semibold text-text-primary block">{q.name}</span>
+                    <span className="text-[12px] px-2 py-0.5 rounded-full bg-accent-blue/5 text-accent-blue border border-accent-blue/15 inline-block mt-0.5">{q.sector}</span>
+                  </div>
+                </div>
+                {/* Status below on mobile */}
+                <div className="mt-2">
+                  {q.active ? (
+                    <div className="flex items-center gap-2">
+                      <span className="text-[12px] font-semibold px-2.5 py-1 rounded-full" style={{ background: "rgba(5,150,105,0.1)", color: "#059669" }}>ACTIVE</span>
+                      <span className="text-[15px] font-medium" style={{ color: "#4A6CF7" }}>47h remaining</span>
+                    </div>
+                  ) : (
+                    <span className="text-[14px] text-text-muted">{q.status}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Connecting line between items */}
+            {i < queueItems.length - 1 && (
+              <div className="flex items-center pl-[15px]">
+                <div className="w-[2px] h-4" style={{ background: "rgba(0,0,0,0.06)" }} />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Info box */}
+      <div className="rounded-xl p-3 mt-4" style={{ background: "rgba(74,108,247,0.03)" }}>
+        <p className="text-[13px] text-text-muted leading-[1.5]">
+          When the active window closes, the next startup moves up automatically. If you do not schedule within your window, you lose your spot.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function InvestorDashboard() {
   const [mounted, setMounted] = useState(false);
+  const [filters, setFilters] = useState<FilterState>(defaultFilters);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
   useEffect(() => setMounted(true), []);
   const glassHover = useGlassHover();
 
@@ -265,14 +508,15 @@ export default function InvestorDashboard() {
 
       <Sidebar role="investor" activeLabel="Dashboard" />
 
-      <div className="flex-1 md:ml-[240px] relative z-10 pb-[80px] md:pb-8">
+      {/* Main Content */}
+      <div className="flex-1 md:ml-[240px] md:mr-[280px] relative z-10 pb-[80px] md:pb-8">
         <div className="max-w-[1100px] mx-auto px-4 md:px-8 pt-8">
           {/* Greeting */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3, ease }}
-            className="mb-8"
+            className="mb-4"
           >
             <div className="flex flex-col md:flex-row md:items-center md:justify-between">
               <h1 className="text-[22px] md:text-[28px] font-normal text-text-primary" style={{ fontFamily: "'Instrument Serif', serif" }}>
@@ -282,6 +526,33 @@ export default function InvestorDashboard() {
             </div>
           </motion.div>
 
+          {/* Investor View Banner */}
+          <div style={{ background: "rgba(8,145,178,0.05)" }} className="rounded-xl px-4 py-2.5 mb-4 flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0891B2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" />
+              <path d="M16 7V5a4 4 0 00-8 0v2" />
+            </svg>
+            <span className="text-[12px] font-semibold" style={{ color: "#0891B2" }}>Investor View</span>
+            <span className="text-[12px] text-text-muted mx-1">|</span>
+            <span className="text-[12px] text-text-muted">Sectors: AI/ML, Fintech, SaaS</span>
+          </div>
+
+          {/* Mobile Filters Button */}
+          <div className="md:hidden mb-4">
+            <button
+              onClick={() => setMobileFiltersOpen(true)}
+              className="px-3 py-1.5 rounded-full text-[13px] font-medium"
+              style={{ background: "rgba(8,145,178,0.1)", color: "#0891B2" }}
+            >
+              <span className="flex items-center gap-1.5">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                </svg>
+                Filters
+              </span>
+            </button>
+          </div>
+
           {/* Engagement Scorecard */}
           <motion.div
             custom={0}
@@ -290,7 +561,7 @@ export default function InvestorDashboard() {
             animate="visible"
             {...glassHover}
           >
-            <div className="glass rounded-2xl p-4 md:p-8 mb-4 md:mb-6" style={{ background: "linear-gradient(135deg, rgba(74,108,247,0.08), rgba(124,92,252,0.06), rgba(6,182,212,0.05))", backdropFilter: "blur(20px)", border: "1px solid rgba(0,0,0,0.06)" }}>
+            <div className="glass rounded-2xl p-4 md:p-8 mb-4 md:mb-6" style={{ background: "linear-gradient(135deg, rgba(74,108,247,0.06), rgba(6,182,212,0.04))", backdropFilter: "blur(20px)", border: "1px solid rgba(0,0,0,0.06)" }}>
               {/* Desktop: horizontal row with dividers */}
               <div className="hidden md:flex md:items-center gap-8">
                 <div className="flex flex-wrap justify-between gap-6 flex-1">
@@ -335,6 +606,7 @@ export default function InvestorDashboard() {
                 <div className="glass rounded-2xl p-4 md:p-6">
                   <div className="flex items-center justify-between mb-4 md:mb-5">
                     <div className="flex items-center gap-2">
+                      {compassIcon}
                       <h3 className="text-[18px] font-semibold text-text-primary">New in Your Feed</h3>
                       <span className="text-[12px] px-2.5 py-1 rounded-full font-semibold text-white" style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}>New</span>
                     </div>
@@ -376,11 +648,21 @@ export default function InvestorDashboard() {
                 </div>
               </motion.div>
 
-              {/* Pipeline */}
+              {/* Your Meeting Queue */}
               <motion.div custom={2} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
                 <div className="glass rounded-2xl p-4 md:p-6">
+                  <MeetingQueue />
+                </div>
+              </motion.div>
+
+              {/* Pipeline */}
+              <motion.div custom={2.5} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
+                <div className="glass rounded-2xl p-4 md:p-6">
                   <div className="flex items-center justify-between mb-4 md:mb-5">
-                    <h3 className="text-[18px] font-semibold text-text-primary">Your Pipeline</h3>
+                    <h3 className="text-[18px] font-semibold text-text-primary flex items-center gap-2">
+                      {funnelIcon}
+                      Your Pipeline
+                    </h3>
                     <Link href="/matches" className="text-accent-blue text-[14px] hover:underline">View All</Link>
                   </div>
 
@@ -477,31 +759,6 @@ export default function InvestorDashboard() {
                 </div>
               </motion.div>
 
-              {/* Your Queue Positions */}
-              <motion.div custom={2.5} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
-                <div className="glass rounded-2xl p-4 md:p-6">
-                  <h3 className="text-[18px] font-semibold text-text-primary mb-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Your Queue Positions</h3>
-                  <p className="text-[13px] italic mb-5" style={{ color: "#64748B" }}>You are placed in a queue when you express interest. Earlier interest = earlier meeting window. Each founder meets one investor at a time.</p>
-                  <div className="space-y-1">
-                    {[
-                      { initials: "LA", color: "#4A6CF7", name: "Luminary AI", position: "#1", status: "Your window is open \u2014 47h left", statusColor: "#4A6CF7", pillBg: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", pillText: "white", active: true },
-                      { initials: "TH", color: "#7C5CFC", name: "Terraform Health", position: "#2", status: "Window opens after current", statusColor: "#64748B", pillBg: "rgba(0,0,0,0.04)", pillText: "#64748B", active: false },
-                      { initials: "SP", color: "#0d9488", name: "Stackpay", position: "#3", status: "Window opens in ~6 days", statusColor: "#64748B", pillBg: "rgba(0,0,0,0.04)", pillText: "#64748B", active: false },
-                    ].map((q, i, arr) => (
-                      <div key={q.name} className={`flex items-center gap-3 py-3 min-h-[44px] -mx-2 px-2 rounded-lg hover:bg-black/[0.02] transition-colors ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
-                        <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0" style={{ backgroundColor: q.color }}>{q.initials}</div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-[15px] font-semibold text-text-primary">{q.name}</p>
-                          <p className="text-[13px] md:hidden" style={{ color: q.statusColor }}>{q.status}</p>
-                        </div>
-                        <span className="text-[12px] font-bold px-2.5 py-1 rounded-full shrink-0" style={{ background: q.pillBg, color: q.pillText }}>{q.position}</span>
-                        <p className="text-[13px] shrink-0 hidden md:block" style={{ color: q.statusColor }}>{q.status}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-
               {/* Scheduled Calls */}
               <motion.div custom={3} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
                 <div className="glass rounded-2xl p-4 md:p-6">
@@ -568,6 +825,71 @@ export default function InvestorDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Desktop Filter Panel - fixed right */}
+      <div
+        className="hidden md:flex flex-col w-[280px] shrink-0 h-screen fixed right-0 top-0 z-20 overflow-y-auto p-5"
+        style={{
+          background: "rgba(255,255,255,0.5)",
+          backdropFilter: "blur(24px) saturate(1.2)",
+          borderLeft: "1px solid rgba(0,0,0,0.06)",
+        }}
+      >
+        <FilterPanelContent filters={filters} setFilters={setFilters} />
+      </div>
+
+      {/* Mobile Filter Bottom Sheet */}
+      <AnimatePresence>
+        {mobileFiltersOpen && (
+          <>
+            {/* Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/30 z-40 md:hidden"
+              onClick={() => setMobileFiltersOpen(false)}
+            />
+            {/* Sheet */}
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="fixed bottom-0 left-0 right-0 z-50 rounded-t-3xl overflow-y-auto md:hidden"
+              style={{
+                maxHeight: "70vh",
+                background: "rgba(255,255,255,0.95)",
+                backdropFilter: "blur(24px) saturate(1.2)",
+                boxShadow: "0 -8px 32px rgba(0,0,0,0.1)",
+              }}
+            >
+              <div className="p-5">
+                {/* Drag handle */}
+                <div className="flex justify-center mb-4">
+                  <div className="w-10 h-1 rounded-full bg-black/20" />
+                </div>
+                {/* Close button */}
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-[16px] font-semibold text-text-primary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Filters</h3>
+                  <button
+                    onClick={() => setMobileFiltersOpen(false)}
+                    className="w-8 h-8 rounded-full flex items-center justify-center"
+                    style={{ background: "rgba(0,0,0,0.05)" }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
+                </div>
+                <FilterPanelContent filters={filters} setFilters={setFilters} />
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
