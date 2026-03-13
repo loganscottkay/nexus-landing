@@ -237,18 +237,15 @@ export default function FounderDashboard() {
                 <div className="w-px h-10 self-center bg-black/[0.06]" />
                 <Stat value="8" label="Investors Interested" trend="↑ 33%" trendDir="up" />
                 <div className="w-px h-10 self-center bg-black/[0.06]" />
-                <Stat value="4" label="Mutual Matches" trend="↑ 100%" trendDir="up" />
-                <div className="w-px h-10 self-center bg-black/[0.06]" />
-                <Stat value="3" label="Calls Completed" trend="this month" trendDir="flat" />
+                <Stat value="2" label="Calls Completed" trend="this month" trendDir="flat" />
                 <div className="w-px h-10 self-center bg-black/[0.06]" />
                 <Stat value="12" label="Deck Views" trend="↑ 20%" trendDir="up" />
               </div>
               {/* Mobile: 2-column grid, 5th stat spans full width */}
               <div className="md:hidden grid grid-cols-2 gap-4">
-                <Stat value="47" label="Profile Views" trend="↑ 12%" trendDir="up" />
+                <Stat value="47" label="Investors Saw Your Pitch" trend="↑ 12%" trendDir="up" />
                 <Stat value="8" label="Investors Interested" trend="↑ 33%" trendDir="up" />
-                <Stat value="4" label="Mutual Matches" trend="↑ 100%" trendDir="up" />
-                <Stat value="3" label="Calls Completed" trend="this month" trendDir="flat" />
+                <Stat value="2" label="Calls Completed" trend="this month" trendDir="flat" />
                 <div className="col-span-2">
                   <Stat value="12" label="Deck Views" trend="↑ 20%" trendDir="up" />
                 </div>
@@ -421,21 +418,10 @@ export default function FounderDashboard() {
                     <h3 className="text-[18px] font-semibold text-text-primary">Upcoming Calls</h3>
                     <Link href="/dashboard/founder/matches" className="text-accent-violet text-[14px] hover:underline">View All</Link>
                   </div>
-                  {[
-                    { initials: "SC", color: "#4A6CF7", name: "Sarah Chen", firm: "Gradient Ventures", time: "Scheduling...", relative: "Times proposed — waiting" },
-                  ].map((call, i, arr) => (
-                    <div key={call.name} className={`flex items-center gap-3 py-3 min-h-[44px] ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
-                      <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0" style={{ backgroundColor: call.color }}>{call.initials}</div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[15px] font-semibold text-text-primary">{call.name}</p>
-                        <p className="text-[13px] text-text-muted">{call.firm}</p>
-                      </div>
-                      <div className="text-right shrink-0">
-                        <span className="text-[13px] px-3 py-1 rounded-full text-text-primary" style={{ background: "rgba(255,255,255,0.4)", border: "1px solid rgba(255,255,255,0.5)" }}>{call.time}</span>
-                        <p className="text-[12px] text-text-muted mt-1">{call.relative}</p>
-                      </div>
-                    </div>
-                  ))}
+                  <div className="text-center py-6">
+                    <p className="text-[14px] text-text-muted">No upcoming calls. Schedule your meeting with Sarah Chen to get started.</p>
+                    <Link href="/dashboard/founder/scheduling" className="text-accent-violet text-[13px] hover:underline mt-2 inline-block">Schedule Now</Link>
+                  </div>
                 </GlassCard>
               </motion.div>
 

@@ -2,8 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import UnicornSVG from "./UnicornSVG";
 
 const navLinks = [
   { label: "Startup Qualifications", href: "/qualifications/startup" },
@@ -17,8 +15,6 @@ export default function Navbar() {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [logoHovered, setLogoHovered] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
-  const pathname = usePathname();
-  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -154,20 +150,6 @@ export default function Navbar() {
               >
                 C
               </span>
-            </span>
-            {/* Desktop unicorn (34px) */}
-            <span
-              className={`hidden md:inline-flex items-center ${isHome ? "nav-unicorn-entrance" : "nav-unicorn-resting"}`}
-              style={{ marginLeft: "8px" }}
-            >
-              <UnicornSVG size={34} prefix="nav" maneClass="nav-unicorn-mane-idle" />
-            </span>
-            {/* Mobile unicorn (26px) */}
-            <span
-              className={`md:hidden inline-flex items-center ${isHome ? "nav-unicorn-entrance" : "nav-unicorn-resting"}`}
-              style={{ marginLeft: "8px" }}
-            >
-              <UnicornSVG size={26} prefix="navm" maneClass="nav-unicorn-mane-idle" />
             </span>
           </Link>
 
@@ -454,45 +436,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Navbar unicorn CSS */}
-      <style>{`
-        /* Entrance animation on home page: starts invisible, slides in from left */
-        .nav-unicorn-entrance {
-          opacity: 0;
-          transform: translateX(-40px);
-          animation: navUnicornSlideIn 1.5s ease-out 0.3s forwards;
-        }
-        @keyframes navUnicornSlideIn {
-          0% { opacity: 0; transform: translateX(-40px); }
-          30% { opacity: 1; }
-          100% { opacity: 1; transform: translateX(0); }
-        }
-
-        /* Resting state on non-home pages: visible immediately, no entrance */
-        .nav-unicorn-resting {
-          opacity: 1;
-          transform: translateX(0);
-        }
-
-        /* Idle mane sway (always active once visible) */
-        .nav-unicorn-mane-idle {
-          animation: navManeSway 3s ease-in-out infinite alternate;
-        }
-        @keyframes navManeSway {
-          0% { transform: rotate(-2deg); }
-          100% { transform: rotate(2deg); }
-        }
-
-        /* Horn sparkle pulse */
-        .nav-horn-sparkle,
-        .navm-horn-sparkle {
-          animation: navHornSparkle 2s ease-in-out infinite;
-        }
-        @keyframes navHornSparkle {
-          0%, 100% { opacity: 0.5; transform: scale(0.8); }
-          50% { opacity: 1; transform: scale(1.3); }
-        }
-      `}</style>
     </>
   );
 }

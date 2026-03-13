@@ -217,27 +217,36 @@ function CompletedCard({ match }: { match: typeof completedMatches[0] }) {
 }
 
 /* ─── Data ─── */
-const upcomingMatches = [
+const upcomingMatches: { id: number; initials: string; color: string; name: string; firm: string; desc: string; status: "Confirmed" | "Scheduling..."; datetime: string | undefined; relative: string | undefined; metrics: { value: string; label: string }[] }[] = [];
+
+const completedMatches: { id: number; initials: string; color: string; name: string; firm: string; desc: string; completedDate: string; yourRating: number; theirRating: number | null; mutual: boolean; contactEmail: string | undefined }[] = [
   {
     id: 1,
-    initials: "SC",
+    initials: "PS",
+    color: "#059669",
+    name: "Priya Sharma",
+    firm: "Lightspeed Venture Partners",
+    desc: "Wednesday, March 5 at 2:00 PM EST",
+    completedDate: "March 5",
+    yourRating: 4,
+    theirRating: 4,
+    mutual: true,
+    contactEmail: "priya.sharma@lsvp.com",
+  },
+  {
+    id: 2,
+    initials: "DK",
     color: "#4A6CF7",
-    name: "Sarah Chen",
-    firm: "Gradient Ventures",
-    desc: "Times proposed by investor — choose or counter-propose",
-    status: "Scheduling..." as "Confirmed" | "Scheduling...",
-    datetime: undefined,
-    relative: undefined,
-    metrics: [
-      { value: "$250K-$1M", label: "Check Size" },
-      { value: "Seed", label: "Stage" },
-      { value: "AI/ML", label: "Focus" },
-      { value: "15", label: "Portfolio Cos" },
-    ],
+    name: "David Kim",
+    firm: "a16z",
+    desc: "Saturday, March 8 at 10:30 AM EST",
+    completedDate: "March 8",
+    yourRating: 5,
+    theirRating: null,
+    mutual: false,
+    contactEmail: undefined,
   },
 ];
-
-const completedMatches: { id: number; initials: string; color: string; name: string; firm: string; desc: string; completedDate: string; yourRating: number; theirRating: number | null; mutual: boolean; contactEmail: string | undefined }[] = [];
 
 /* ─── Page ─── */
 export default function FounderMatchesPage() {
@@ -334,9 +343,22 @@ export default function FounderMatchesPage() {
 
               {tab === "upcoming" && upcomingMatches.length === 0 && (
                 <div className="text-center py-20">
-                  <h2 className="text-[24px] font-normal text-text-primary mb-3" style={{ fontFamily: "'Instrument Serif', serif" }}>No upcoming calls</h2>
-                  <p className="text-text-muted text-[16px] mb-6">When investors match with you, your chemistry calls will appear here.</p>
-                  <Link href="/dashboard/founder/interests" className="inline-block px-6 py-3 rounded-full text-white text-[15px] font-semibold" style={{ background: "linear-gradient(135deg, #7C5CFC, #4A6CF7)", boxShadow: "0 4px 15px rgba(124,92,252,0.3)" }}>View Interests</Link>
+                  <h2 className="text-[24px] font-normal text-text-primary mb-3" style={{ fontFamily: "'Instrument Serif', serif" }}>No upcoming calls yet</h2>
+                  <p className="text-text-muted text-[16px] mb-6">Once you schedule and confirm a time with an investor, it will appear here.</p>
+                  <Link href="/dashboard/founder/scheduling" className="inline-block px-6 py-3 rounded-full text-white text-[15px] font-semibold" style={{ background: "linear-gradient(135deg, #7C5CFC, #4A6CF7)", boxShadow: "0 4px 15px rgba(124,92,252,0.3)" }}>Schedule Now</Link>
+                </div>
+              )}
+
+              {tab === "completed" && completedMatches.length === 0 && (
+                <div className="text-center py-20">
+                  <h2 className="text-[24px] font-normal text-text-primary mb-3" style={{ fontFamily: "'Instrument Serif', serif" }}>No completed calls yet</h2>
+                  <p className="text-text-muted text-[16px]">After your chemistry calls, they will appear here with ratings and outcomes.</p>
+                </div>
+              )}
+
+              {tab === "all" && upcomingMatches.length === 0 && completedMatches.length > 0 && (
+                <div className="rounded-2xl p-4 mb-5" style={{ background: "rgba(74,108,247,0.04)", border: "1px solid rgba(74,108,247,0.1)" }}>
+                  <p className="text-[14px] text-text-secondary">Sarah Chen is next in your queue. <Link href="/dashboard/founder/scheduling" className="text-accent-violet hover:underline">Schedule your meeting</Link> to continue.</p>
                 </div>
               )}
             </motion.div>

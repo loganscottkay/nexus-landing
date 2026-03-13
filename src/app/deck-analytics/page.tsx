@@ -175,7 +175,17 @@ function LineChart() {
 }
 
 /* ─── Outcome Pill ─── */
-function OutcomePill({ outcome }: { outcome: "Expressed Interest" | "No Action" | "Viewing" }) {
+function OutcomePill({ outcome }: { outcome: "Expressed Interest" | "No Action" | "Viewing" | "Call Completed" }) {
+  if (outcome === "Call Completed") {
+    return (
+      <span
+        className="text-[12px] px-2.5 py-1 rounded-full font-medium whitespace-nowrap"
+        style={{ background: "rgba(74,108,247,0.08)", color: "#4A6CF7" }}
+      >
+        Call Completed
+      </span>
+    );
+  }
   if (outcome === "Expressed Interest") {
     return (
       <span
@@ -215,15 +225,16 @@ const viewers: {
   checkSize: string;
   date: string;
   timeSpent: string;
-  outcome: "Expressed Interest" | "No Action" | "Viewing";
+  outcome: "Expressed Interest" | "No Action" | "Viewing" | "Call Completed";
 }[] = [
   { initials: "SC", color: "#4A6CF7", name: "Sarah Chen", firm: "Gradient Ventures", checkSize: "$250K-$1M", date: "Today, 9:14 AM", timeSpent: "6 min 23 sec", outcome: "Expressed Interest" },
   { initials: "MW", color: "#7C5CFC", name: "Marcus Webb", firm: "Founder Collective", checkSize: "$100K-$500K", date: "Today, 8:02 AM", timeSpent: "4 min 11 sec", outcome: "Expressed Interest" },
-  { initials: "JP", color: "#0d9488", name: "James Park", firm: "Lux Capital", checkSize: "$500K-$2M", date: "Today, 7:30 AM", timeSpent: "2 min 45 sec", outcome: "Viewing" },
+  { initials: "JP", color: "#0d9488", name: "James Park", firm: "Lux Capital", checkSize: "$500K-$2M", date: "Today, 7:30 AM", timeSpent: "2 min 45 sec", outcome: "Expressed Interest" },
   { initials: "ER", color: "#D97706", name: "Elena Rodriguez", firm: "Precursor Ventures", checkSize: "$100K-$250K", date: "Yesterday", timeSpent: "5 min 08 sec", outcome: "Expressed Interest" },
-  { initials: "PS", color: "#059669", name: "Priya Sharma", firm: "Lightspeed", checkSize: "$250K-$1M", date: "Mar 5", timeSpent: "8 min 12 sec", outcome: "Expressed Interest" },
-  { initials: "DK", color: "#4A6CF7", name: "David Kim", firm: "a16z", checkSize: "$500K-$2M", date: "Mar 4", timeSpent: "3 min 44 sec", outcome: "No Action" },
+  { initials: "PS", color: "#059669", name: "Priya Sharma", firm: "Lightspeed Venture Partners", checkSize: "$250K-$1M", date: "Mar 5", timeSpent: "8 min 12 sec", outcome: "Call Completed" },
+  { initials: "DK", color: "#4A6CF7", name: "David Kim", firm: "a16z", checkSize: "$500K-$2M", date: "Mar 4", timeSpent: "3 min 44 sec", outcome: "Call Completed" },
   { initials: "RG", color: "#e67e22", name: "Rachel Green", firm: "Index Ventures", checkSize: "$1M-$5M", date: "Mar 3", timeSpent: "1 min 02 sec", outcome: "No Action" },
+  { initials: "TL", color: "#6366F1", name: "Tommy Liu", firm: "Sequoia Scout", checkSize: "$100K-$500K", date: "Mar 1", timeSpent: "2 min 00 sec", outcome: "No Action" },
 ];
 
 /* ─── Page ─── */

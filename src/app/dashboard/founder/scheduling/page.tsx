@@ -35,39 +35,6 @@ const investorQueue = [
     timerHours: 47,
     matchScore: 92,
   },
-  {
-    id: 2,
-    initials: "MW",
-    color: "#7C5CFC",
-    name: "Marcus Webb",
-    firm: "Founder Collective",
-    checkSize: "$100K-$500K",
-    status: "queued" as const,
-    timerHours: null,
-    matchScore: 87,
-  },
-  {
-    id: 3,
-    initials: "ER",
-    color: "#D97706",
-    name: "Elena Rodriguez",
-    firm: "Precursor Ventures",
-    checkSize: "$100K-$250K",
-    status: "queued" as const,
-    timerHours: null,
-    matchScore: 84,
-  },
-  {
-    id: 4,
-    initials: "JP",
-    color: "#0d9488",
-    name: "James Park",
-    firm: "Lux Capital",
-    checkSize: "$500K-$2M",
-    status: "queued" as const,
-    timerHours: null,
-    matchScore: 79,
-  },
 ];
 
 export default function FounderSchedulingPage() {
@@ -110,7 +77,7 @@ export default function FounderSchedulingPage() {
               className="text-text-muted mt-1"
               style={{ fontSize: "14px" }}
             >
-              Manage your investor queue and schedule meetings.
+              Propose your available times to Sarah Chen. Once she responds, you will either confirm a time or receive a counter-proposal.
             </p>
           </motion.div>
 
