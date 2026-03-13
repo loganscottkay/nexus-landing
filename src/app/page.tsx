@@ -786,7 +786,7 @@ function MatchNotificationCard() {
       <div className="flex items-center justify-between mb-5">
         {/* Investor */}
         <div className="flex flex-col items-center gap-1.5">
-          <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#4A6CF7] to-[#6C5CE7] flex items-center justify-center text-white text-[11px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple">
+          <div className="w-11 h-11 rounded-full bg-[#4A6CF7] flex items-center justify-center text-white text-[11px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple">
             SC
           </div>
           <p className="text-white text-[11px] font-medium">Sarah C.</p>
@@ -795,25 +795,24 @@ function MatchNotificationCard() {
 
         {/* Animated connection line with traveling dot */}
         <div className="flex-1 mx-3 h-[2px] relative overflow-hidden">
-          <div className="absolute inset-0 rounded-full" style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)", opacity: 0.3 }} />
+          <div className="absolute inset-0 rounded-full" style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)", opacity: 0.15 }} />
           <div
-            className="match-dot-travel absolute top-[-2px] w-2 h-2 rounded-full"
-            style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", boxShadow: "0 0 8px rgba(74,108,247,0.8)" }}
+            className="match-dot-travel absolute top-[-2px] w-2 h-2 rounded-full opacity-30"
+            style={{ background: "#4A6CF7" }}
           />
           {/* Center flash */}
           <div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full transition-all duration-300"
             style={{
-              background: flash ? "rgba(255,255,255,0.9)" : "transparent",
-              boxShadow: flash ? "0 0 20px rgba(124, 92, 252, 0.8), 0 0 40px rgba(74, 108, 247, 0.5)" : "none",
-              transform: `translate(-50%, -50%) scale(${flash ? 2 : 0})`,
+              background: flash ? "rgba(255,255,255,0.5)" : "transparent",
+              transform: `translate(-50%, -50%) scale(${flash ? 1.5 : 0})`,
             }}
           />
         </div>
 
         {/* Startup */}
         <div className="flex flex-col items-center gap-1.5">
-          <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#7C5CFC] to-[#B06CFC] flex items-center justify-center text-white text-[11px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple" style={{ animationDelay: "1.5s" }}>
+          <div className="w-11 h-11 rounded-full bg-[#7C5CFC] flex items-center justify-center text-white text-[11px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple" style={{ animationDelay: "1.5s" }}>
             LA
           </div>
           <p className="text-white text-[11px] font-medium">Luminary AI</p>
@@ -824,14 +823,14 @@ function MatchNotificationCard() {
       {/* Status + CTA */}
       <p
         className="text-white text-[13px] text-center mb-3 transition-all duration-500"
-        style={textGlow ? { textShadow: "0 0 12px rgba(124, 92, 252, 0.8), 0 0 24px rgba(74, 108, 247, 0.4)" } : {}}
+        style={{}}
       >
         Mutual interest confirmed
       </p>
       <div className="flex justify-center">
         <div
-          className="px-4 py-1.5 rounded-full text-[11px] font-medium text-white"
-          style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+          className="px-4 py-1.5 rounded-full text-[11px] font-medium"
+          style={{ background: "rgba(74, 108, 247, 0.2)", color: "#818CF8" }}
         >
           Schedule Call
         </div>
@@ -877,7 +876,7 @@ function ChemistryCallCard() {
 
       {/* Call title */}
       <div className="flex items-center gap-2.5 mb-3">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(124,92,252,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
           <rect x="2" y="3" width="20" height="14" rx="2" />
           <path d="M8 21h8m-4-4v4" />
         </svg>
@@ -903,14 +902,14 @@ function ChemistryCallCard() {
       {/* Participants with ripple */}
       <div className="flex items-center gap-3 mb-2">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#4A6CF7] to-[#6C5CE7] flex items-center justify-center text-white text-[9px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple-sm">
+          <div className="w-8 h-8 rounded-full bg-[#4A6CF7] flex items-center justify-center text-white text-[9px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple-sm">
             SC
           </div>
           <span className="text-white/60 text-[11px]">Sarah C.</span>
         </div>
         <span className="text-white/15 text-[10px]">&amp;</span>
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#7C5CFC] to-[#B06CFC] flex items-center justify-center text-white text-[9px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple-sm" style={{ animationDelay: "1.5s" }}>
+          <div className="w-8 h-8 rounded-full bg-[#7C5CFC] flex items-center justify-center text-white text-[9px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple-sm" style={{ animationDelay: "1.5s" }}>
             LA
           </div>
           <span className="text-white/60 text-[11px]">Luminary AI</span>
@@ -922,10 +921,10 @@ function ChemistryCallCard() {
       {/* Join Call button with periodic pulse */}
       <div className="flex justify-center">
         <div
-          className="px-4 py-1.5 rounded-full text-[11px] font-medium text-white transition-shadow duration-300"
+          className="px-4 py-1.5 rounded-full text-[11px] font-medium"
           style={{
-            background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-            boxShadow: btnPulse ? "0 0 20px rgba(74, 108, 247, 0.6), 0 0 40px rgba(124, 92, 252, 0.3)" : "none",
+            background: "rgba(74, 108, 247, 0.2)",
+            color: "#818CF8",
           }}
         >
           Join Call
