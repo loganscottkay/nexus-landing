@@ -751,17 +751,11 @@ function InvestorMatchCard() {
 
 function MatchNotificationCard() {
   const [flash, setFlash] = useState(false);
-  const [textGlow, setTextGlow] = useState(false);
 
   useEffect(() => {
-    // Flash every 5s when dot reaches middle
     const t = setInterval(() => {
       setFlash(true);
-      setTimeout(() => {
-        setFlash(false);
-        setTextGlow(true);
-      }, 300);
-      setTimeout(() => setTextGlow(false), 1500);
+      setTimeout(() => setFlash(false), 300);
     }, 5000);
     return () => clearInterval(t);
   }, []);
@@ -843,18 +837,9 @@ const callTimes = ["Tomorrow at 3:00 PM", "Today at 4:30 PM", "Wednesday at 11:0
 
 function ChemistryCallCard() {
   const [timeIdx, setTimeIdx] = useState(0);
-  const [btnPulse, setBtnPulse] = useState(false);
 
   useEffect(() => {
     const t = setInterval(() => setTimeIdx((p) => (p + 1) % callTimes.length), 6000);
-    return () => clearInterval(t);
-  }, []);
-
-  useEffect(() => {
-    const t = setInterval(() => {
-      setBtnPulse(true);
-      setTimeout(() => setBtnPulse(false), 800);
-    }, 4000);
     return () => clearInterval(t);
   }, []);
 
