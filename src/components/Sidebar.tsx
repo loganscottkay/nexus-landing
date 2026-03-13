@@ -163,8 +163,9 @@ export default function Sidebar({
 
       {/* Mobile bottom tab */}
       <div
-        className="md:hidden fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around h-[60px] px-2"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-40 grid items-center h-[60px]"
         style={{
+          gridTemplateColumns: "repeat(5, 1fr)",
           background: "rgba(255, 255, 255, 0.8)",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
@@ -172,17 +173,17 @@ export default function Sidebar({
         }}
       >
         {/* Home tab on mobile */}
-        <Link href="/" className={`flex flex-col items-center gap-1 px-3 py-1 ${isHomeActive ? "text-accent-blue" : "text-text-muted"}`}>
-          {icons.home}
-          <span className="text-[10px]">Home</span>
+        <Link href="/" className={`flex flex-col items-center justify-center gap-1 py-1 ${isHomeActive ? "text-accent-blue" : "text-text-muted"}`}>
+          <span className="w-6 h-6 flex items-center justify-center">{icons.home}</span>
+          <span className="text-[10px] leading-none">Home</span>
         </Link>
         {navList.slice(0, 4).map((item) => {
           const isActive = item.label === activeLabel;
           const activeColor = role === "founder" ? "text-accent-violet" : "text-accent-blue";
           return (
-            <Link key={item.label} href={item.href} className={`flex flex-col items-center gap-1 px-3 py-1 ${isActive ? activeColor : "text-text-muted"}`}>
-              {item.icon}
-              <span className="text-[10px]">{item.label}</span>
+            <Link key={item.label} href={item.href} className={`flex flex-col items-center justify-center gap-1 py-1 ${isActive ? activeColor : "text-text-muted"}`}>
+              <span className="w-6 h-6 flex items-center justify-center">{item.icon}</span>
+              <span className="text-[10px] leading-none">{item.label}</span>
             </Link>
           );
         })}

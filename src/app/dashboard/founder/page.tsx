@@ -148,15 +148,24 @@ export default function FounderDashboard() {
           {/* Activity Summary */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1, ease }}>
             <GlassCard className="p-6 md:p-8 mb-6" style={{ background: "linear-gradient(135deg, rgba(74,108,247,0.08), rgba(124,92,252,0.06), rgba(6,182,212,0.05))", border: "1px solid rgba(0,0,0,0.06)" }}>
-              <div className="flex flex-wrap justify-between gap-6">
+              {/* Desktop: horizontal row with dividers */}
+              <div className="hidden md:flex flex-wrap justify-between gap-6">
                 <Stat value="47" label="Investors Saw Your Pitch" trend="↑ 12%" trendDir="up" />
-                <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
+                <div className="w-px h-10 self-center bg-black/[0.06]" />
                 <Stat value="8" label="Investors Interested" trend="↑ 33%" trendDir="up" />
-                <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
+                <div className="w-px h-10 self-center bg-black/[0.06]" />
                 <Stat value="4" label="Mutual Matches" trend="↑ 100%" trendDir="up" />
-                <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
+                <div className="w-px h-10 self-center bg-black/[0.06]" />
                 <Stat value="3" label="Calls Completed" trend="this month" trendDir="flat" />
-                <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
+                <div className="w-px h-10 self-center bg-black/[0.06]" />
+                <Stat value="12" label="Deck Views" trend="↑ 20%" trendDir="up" />
+              </div>
+              {/* Mobile: 2-column grid, 5th stat spans full or sits naturally */}
+              <div className="md:hidden grid grid-cols-2 gap-y-6 gap-x-4">
+                <Stat value="47" label="Investors Saw Your Pitch" trend="↑ 12%" trendDir="up" />
+                <Stat value="8" label="Investors Interested" trend="↑ 33%" trendDir="up" />
+                <Stat value="4" label="Mutual Matches" trend="↑ 100%" trendDir="up" />
+                <Stat value="3" label="Calls Completed" trend="this month" trendDir="flat" />
                 <Stat value="12" label="Deck Views" trend="↑ 20%" trendDir="up" />
               </div>
             </GlassCard>

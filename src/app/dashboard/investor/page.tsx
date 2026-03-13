@@ -214,19 +214,33 @@ export default function InvestorDashboard() {
             {...glassHover}
           >
             <div className="glass p-6 md:p-8 mb-6" style={{ background: "linear-gradient(135deg, rgba(74,108,247,0.08), rgba(124,92,252,0.06), rgba(6,182,212,0.05))", backdropFilter: "blur(20px)", border: "1px solid rgba(0,0,0,0.06)" }}>
-              <div className="flex flex-col md:flex-row md:items-center gap-8">
+              {/* Desktop: horizontal row with dividers */}
+              <div className="hidden md:flex md:items-center gap-8">
                 <div className="flex flex-wrap justify-between gap-6 flex-1">
                   <Stat target={14} label="Startups in Your Feed" trend="this week" trendDir="flat" delay={0} />
-                  <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
+                  <div className="w-px h-10 self-center bg-black/[0.06]" />
                   <Stat target={5} label="Interests Sent" trend="↑ 2 this week" trendDir="up" delay={150} />
-                  <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
+                  <div className="w-px h-10 self-center bg-black/[0.06]" />
                   <Stat target={3} label="Mutual Matches" trend="↑ 1 new" trendDir="up" delay={300} />
-                  <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
+                  <div className="w-px h-10 self-center bg-black/[0.06]" />
                   <Stat target={2} label="Calls Scheduled" trend="next: tomorrow" trendDir="up" delay={450} />
-                  <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
+                  <div className="w-px h-10 self-center bg-black/[0.06]" />
                   <Stat target={4} label="Video Pitches Watched" trend="today" trendDir="flat" delay={600} />
                 </div>
-                <div className="border-t md:border-t-0 md:border-l border-black/[0.06] pt-6 md:pt-0 md:pl-8">
+                <div className="border-l border-black/[0.06] pl-8">
+                  <EngagementRing score={94} />
+                </div>
+              </div>
+              {/* Mobile: 2-column grid + engagement ring below */}
+              <div className="md:hidden">
+                <div className="grid grid-cols-2 gap-y-6 gap-x-4">
+                  <Stat target={14} label="Startups in Your Feed" trend="this week" trendDir="flat" delay={0} />
+                  <Stat target={5} label="Interests Sent" trend="↑ 2 this week" trendDir="up" delay={150} />
+                  <Stat target={3} label="Mutual Matches" trend="↑ 1 new" trendDir="up" delay={300} />
+                  <Stat target={2} label="Calls Scheduled" trend="next: tomorrow" trendDir="up" delay={450} />
+                  <Stat target={4} label="Video Pitches Watched" trend="today" trendDir="flat" delay={600} />
+                </div>
+                <div className="border-t border-black/[0.06] pt-6 mt-6 flex justify-center">
                   <EngagementRing score={94} />
                 </div>
               </div>

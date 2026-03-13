@@ -79,8 +79,8 @@ export default function Navbar() {
             fontFamily: "var(--font-dm-sans), sans-serif",
           }}
         >
-          <span className="lg:hidden">
-            <span className="mr-1">🚀</span> Join the founding cohort &rarr;
+          <span className="lg:hidden text-[12px] sm:text-[13px] px-2 text-center">
+            <span className="mr-1">🚀</span> Founding cohort coming soon. Join the waitlist &rarr;
           </span>
           <span className="hidden lg:inline">
             <span className="mr-1">🚀</span> Founding cohort coming soon. Join the waitlist &rarr;
@@ -338,39 +338,40 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile: Join Waitlist + hamburger */}
-          <div className="lg:hidden flex items-center gap-3 justify-self-end">
+          {/* Mobile: centered Join Waitlist + far-right hamburger */}
+          <div className="lg:hidden flex items-center justify-self-end">
             <Link
               href="/waitlist"
-              className="font-semibold text-white rounded-full"
+              className="font-semibold text-white rounded-full absolute left-1/2 -translate-x-1/2"
               style={{
                 letterSpacing: "0.3px",
-                fontSize: "12px",
-                padding: "7px 16px",
+                fontSize: "13px",
+                padding: "8px 20px",
                 background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                 fontFamily: "var(--font-dm-sans), sans-serif",
+                whiteSpace: "nowrap",
               }}
             >
               Join Waitlist
             </Link>
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="flex flex-col gap-1.5 p-2"
-            aria-label="Toggle menu"
-          >
-            <span
-              className={`block w-6 h-[1.5px] transition-all duration-300`}
-              style={{ backgroundColor: "#0F172A", ...(menuOpen ? { transform: "rotate(45deg) translateY(4.5px)" } : {}) }}
-            />
-            <span
-              className={`block w-6 h-[1.5px] transition-all duration-300`}
-              style={{ backgroundColor: "#0F172A", ...(menuOpen ? { opacity: 0 } : {}) }}
-            />
-            <span
-              className={`block w-6 h-[1.5px] transition-all duration-300`}
-              style={{ backgroundColor: "#0F172A", ...(menuOpen ? { transform: "rotate(-45deg) translateY(-4.5px)" } : {}) }}
-            />
-          </button>
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="flex flex-col gap-1.5 p-2"
+              aria-label="Toggle menu"
+            >
+              <span
+                className={`block w-6 h-[1.5px] transition-all duration-300`}
+                style={{ backgroundColor: "#0F172A", ...(menuOpen ? { transform: "rotate(45deg) translateY(4.5px)" } : {}) }}
+              />
+              <span
+                className={`block w-6 h-[1.5px] transition-all duration-300`}
+                style={{ backgroundColor: "#0F172A", ...(menuOpen ? { opacity: 0 } : {}) }}
+              />
+              <span
+                className={`block w-6 h-[1.5px] transition-all duration-300`}
+                style={{ backgroundColor: "#0F172A", ...(menuOpen ? { transform: "rotate(-45deg) translateY(-4.5px)" } : {}) }}
+              />
+            </button>
           </div>
         </div>
       </nav>
