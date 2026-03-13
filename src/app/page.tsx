@@ -1106,9 +1106,9 @@ export default function Home() {
       <Navbar />
 
       {/* ============ HERO ============ */}
-      <section className="relative z-10 min-h-screen">
+      <section className="relative z-10 min-h-screen pb-10">
         {/* Floating dashboards - hidden below 1100px */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none hero-cards-container">
+        <div className="absolute inset-0 overflow-visible pointer-events-none hero-cards-container">
           {/* Left: Founder Pitch */}
           <div
             className="absolute left-[3%] 2xl:left-[5%] top-1/2 -translate-y-1/2 pointer-events-auto dashboard-entrance"
@@ -1681,9 +1681,9 @@ export default function Home() {
       </Section>
 
       {/* ============ FINAL CTA ============ */}
-      <section className="relative z-10 py-20">
+      <section className="relative z-10 py-20 pb-[120px]">
         {/* Floating decorative cards */}
-        <div className="absolute inset-0 overflow-hidden hidden lg:block pointer-events-none">
+        <div className="absolute inset-0 overflow-visible hidden lg:block pointer-events-none">
           {/* Left: Match Notification */}
           <div
             className="absolute left-[4%] xl:left-[8%] 2xl:left-[12%] top-1/2 -translate-y-1/2 pointer-events-auto dashboard-entrance"
