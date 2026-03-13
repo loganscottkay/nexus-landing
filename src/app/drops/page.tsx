@@ -471,7 +471,7 @@ function FullProfileOverlay({
             </div>
           </div>
 
-          {/* Nexus Score */}
+          {/* UrgenC Score */}
           <div className="rounded-xl p-4 mb-8" style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.06)" }}>
             <div className="flex items-center justify-between mb-2">
               <span className="text-[14px] font-semibold text-text-primary">UrgenC Score: {startup.nexusScore}/100</span>

@@ -108,6 +108,7 @@ export default function Sidebar({
   const navList = role === "investor" ? investorNav : founderNav;
   const mobileNavList = role === "investor" ? investorMobileNav : founderMobileNav;
   const isHomeActive = activeLabel === "Home";
+  const homeHref = role === "investor" ? "/dashboard/investor" : "/dashboard/founder";
 
   return (
     <>
@@ -130,7 +131,7 @@ export default function Sidebar({
         <nav className="flex-1 px-3">
           {/* Home button */}
           <Link
-            href="/"
+            href={homeHref}
             className={`flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1 text-[15px] transition-all duration-200 relative ${
               isHomeActive
                 ? "font-medium"
@@ -199,7 +200,7 @@ export default function Sidebar({
         }}
       >
         {/* Home tab on mobile */}
-        <Link href="/" className={`flex flex-col items-center justify-center gap-1 py-1 min-h-[44px] ${isHomeActive ? (role === "investor" ? "text-[#0891B2]" : "text-accent-blue") : "text-text-muted"}`}>
+        <Link href={homeHref} className={`flex flex-col items-center justify-center gap-1 py-1 min-h-[44px] ${isHomeActive ? (role === "investor" ? "text-[#0891B2]" : "text-accent-blue") : "text-text-muted"}`}>
           <span className="w-6 h-6 flex items-center justify-center">{icons.home}</span>
           <span className="text-[12px] leading-none">Home</span>
         </Link>

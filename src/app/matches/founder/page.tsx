@@ -58,10 +58,10 @@ function UpcomingCard({ match }: { match: typeof upcomingMatches[0] }) {
                 <p className="text-[13px] text-text-muted">{match.relative}</p>
               </div>
             </div>
-            <a href="#" className="text-accent-violet text-[14px] flex items-center gap-1 hover:underline shrink-0">
+            <button onClick={() => alert("Coming soon")} className="text-accent-violet text-[14px] flex items-center gap-1 hover:underline shrink-0">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
               Add to Calendar
-            </a>
+            </button>
           </div>
           <div className="flex gap-6">
             <div className="flex items-center gap-1.5 text-[13px] text-text-muted">
@@ -72,7 +72,7 @@ function UpcomingCard({ match }: { match: typeof upcomingMatches[0] }) {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polygon points="23 7 16 12 23 17" /><rect x="1" y="5" width="15" height="14" rx="2" /></svg>
               Video Call
             </div>
-            <span className="text-[13px] px-3 py-1 rounded-full text-text-muted" style={{ background: "rgba(0,0,0,0.04)" }}>Join Call</span>
+            <button onClick={() => alert("Coming soon")} className="text-[13px] px-3 py-1 rounded-full text-text-muted cursor-pointer" style={{ background: "rgba(0,0,0,0.04)" }}>Join Call</button>
           </div>
         </div>
       )}

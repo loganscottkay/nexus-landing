@@ -280,7 +280,8 @@ export default function SchedulingPage() {
             </div>
 
             <button
-              className="w-full rounded-full py-2.5 text-white font-medium transition-opacity hover:opacity-90"
+              onClick={() => selectedTime !== null ? alert("Time confirmed! You will receive a calendar invite shortly.") : alert("Please select a time first.")}
+              className="w-full rounded-full py-2.5 text-white font-medium transition-opacity hover:opacity-90 cursor-pointer"
               style={{
                 background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                 fontSize: "14px",
