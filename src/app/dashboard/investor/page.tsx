@@ -278,11 +278,12 @@ export default function InvestorDashboard() {
                   <div className="grid grid-cols-3 gap-3">
                     {/* Interested */}
                     <div>
-                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #4A6CF7", paddingLeft: "8px" }}>Waiting <span className="text-text-primary">(2)</span></p>
+                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-1" style={{ borderLeft: "3px solid #4A6CF7", paddingLeft: "8px" }}>Waiting <span className="text-text-primary">(2)</span></p>
+                      <p className="text-[12px] italic mb-3 pl-[11px]" style={{ color: "#64748B" }}>Your position in the founder&apos;s queue determines when your 72hr window opens.</p>
                       <div className="space-y-2">
                         {[
-                          { name: "Luminary AI", sub: "47h remaining" },
-                          { name: "Stackpay", sub: "Sent 2 days ago" },
+                          { name: "Luminary AI", sub: "47h remaining", queue: "Queue #1 — your window is open" },
+                          { name: "Stackpay", sub: "Sent 2 days ago", queue: "Queue #3 — opens in ~6 days" },
                         ].map((c, i) => (
                           <motion.div
                             key={c.name}
@@ -294,6 +295,7 @@ export default function InvestorDashboard() {
                             style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}
                           >
                             <p className="text-[13px] font-semibold text-text-primary">{c.name}</p>
+                            <p className="text-[11px] text-text-muted mt-0.5">{c.queue}</p>
                             <p className="text-[11px] text-text-muted flex items-center gap-1 mt-0.5">
                               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                               {c.sub}

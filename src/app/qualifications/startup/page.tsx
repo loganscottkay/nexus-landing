@@ -120,6 +120,7 @@ const cards = [
       "Respond to investor interest within 72 hours",
       "No traction after 30 days may mean removal",
       "Attend calls or give 24hr cancellation notice",
+      "Meetings are queued one at a time with a 72-hour window each. No pressure to schedule everything at once.",
     ],
     why: "This is what keeps UrgenC elite.",
   },

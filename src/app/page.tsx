@@ -164,7 +164,7 @@ const howItWorksCards = [
     num: "03",
     icon: <PhoneIcon />,
     title: "Move Fast or Move On",
-    desc: "72 hours to take the call. 30 days to show traction. Ghost and you are gone. Every conversation on UrgenC is between two serious people.",
+    desc: "Interested investors enter a queue. Each gets a 72-hour window to schedule. Queue refreshes automatically. No-shows get removed. No one wastes anyone's time.",
   },
 ];
 
@@ -959,7 +959,7 @@ const matchingSteps = [
     title: "Swipe & Match",
     label: "BOTH SIDES",
     labelColor: "#D4AF37",
-    desc: "Investors express interest. Founders accept or pass. When both say yes, it is a match.",
+    desc: "Investors express interest. Founders see a queue ranked by who liked them first. Each investor gets a dedicated 72-hour window to schedule the call. Investors: swipe early. The longer you wait, the further back in the queue you go.",
     color: "#D4AF37",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -972,7 +972,7 @@ const matchingSteps = [
     title: "Chemistry Call",
     label: "BOTH SIDES",
     labelColor: "#059669",
-    desc: "Every match gets a 20-minute video call within 72 hours. No ghosting or you are removed.",
+    desc: "Your queue refreshes every 72 hours. Meet one investor at a time without the pressure of scheduling five calls in a week. Each meeting gets your full attention.",
     color: "#059669",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -1400,7 +1400,7 @@ export default function Home() {
                     "First time investing? Good. UrgenC is built for you.",
                     "Every founder scored on vision, team, market, and momentum.",
                     "Browse. Match. 20-minute call. That is the whole process.",
-                    "No obligations. Express interest, take the call, decide from there. Simple.",
+                    "Swipe early. Investors are queued by when they expressed interest. First in line gets the first meeting window.",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-accent-blue mt-2 shrink-0" />
@@ -1439,6 +1439,7 @@ export default function Home() {
                     "Get matched with investors in days, not 6 months.",
                     "No traction in 30 days? You get cycled out. Stay sharp.",
                     "We guarantee the meeting. We do not guarantee the deal. Your pitch does the rest.",
+                    "Our queue system means you meet one investor at a time. No scrambling to schedule five calls in a week.",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-accent-violet mt-2 shrink-0" />

@@ -192,20 +192,21 @@ export default function FounderDashboard() {
                     </div>
                     <Link href="/interests" className="text-accent-violet text-[14px] hover:underline">View All</Link>
                   </div>
-                  <p className="text-[12px] text-text-muted italic mb-3">Investors who expressed interest in your startup. Accept or decline within 72 hours.</p>
+                  <p className="text-[12px] text-text-muted italic mb-3">Your meeting queue. One investor at a time. 72 hours per window.</p>
                   {[
-                    { initials: "SC", color: "#4A6CF7", name: "Sarah Chen", firm: "Gradient Ventures", checkSize: "$250K-$1M", hours: 47, urgent: false },
-                    { initials: "MW", color: "#7C5CFC", name: "Marcus Webb", firm: "Founder Collective", checkSize: "$100K-$500K", hours: 31, urgent: false },
-                    { initials: "ER", color: "#D97706", name: "Elena Rodriguez", firm: "Precursor Ventures", checkSize: "$100K-$250K", hours: 8, urgent: true },
-                    { initials: "JP", color: "#0d9488", name: "James Park", firm: "Lux Capital", checkSize: "$500K-$2M", hours: 62, urgent: false },
+                    { initials: "SC", color: "#4A6CF7", name: "Sarah Chen", firm: "Gradient Ventures", checkSize: "$250K-$1M", hours: 47, urgent: false, queue: "#1", queueLabel: "Active window (47h left)", queueColor: "#4A6CF7" },
+                    { initials: "MW", color: "#7C5CFC", name: "Marcus Webb", firm: "Founder Collective", checkSize: "$100K-$500K", hours: 31, urgent: false, queue: "#2", queueLabel: "Window opens after #1", queueColor: "#64748B" },
+                    { initials: "ER", color: "#D97706", name: "Elena Rodriguez", firm: "Precursor Ventures", checkSize: "$100K-$250K", hours: 8, urgent: true, queue: "#3", queueLabel: "Window opens after #2", queueColor: "#64748B" },
+                    { initials: "JP", color: "#0d9488", name: "James Park", firm: "Lux Capital", checkSize: "$500K-$2M", hours: 62, urgent: false, queue: "#4", queueLabel: "Window opens after #3", queueColor: "#64748B" },
                   ].map((inv, i, arr) => (
                     <Link key={inv.name} href="/interests" className={`flex items-center gap-3 py-3 cursor-pointer hover:bg-black/[0.02] -mx-2 px-2 rounded-lg transition-colors ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
                       <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0" style={{ backgroundColor: inv.color }}>{inv.initials}</div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[15px] font-semibold text-text-primary">{inv.name}</p>
                         <p className="text-[13px] text-text-muted">{inv.firm} &middot; {inv.checkSize}</p>
+                        <p className="text-[13px] font-medium mt-0.5" style={{ color: inv.queueColor }}>{inv.queue} — {inv.queueLabel}</p>
                       </div>
-                      <TimerPill hours={inv.hours} urgent={inv.urgent} />
+                      {inv.queue === "#1" && <TimerPill hours={inv.hours} urgent={inv.urgent} />}
                     </Link>
                   ))}
                 </GlassCard>

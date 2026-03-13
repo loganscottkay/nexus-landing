@@ -112,6 +112,7 @@ const cards = [
       "Attend calls or cancel with 24hr notice",
       "Ghosting = warning then removal",
       "Honest post-call ratings",
+      "Your queue position is based on when you express interest. Earlier interest = earlier meeting window.",
     ],
     why: "Founders invest months building. Show up.",
   },
