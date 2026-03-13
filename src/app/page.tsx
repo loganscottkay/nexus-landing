@@ -1096,7 +1096,7 @@ export default function Home() {
               transition={{ duration: 0.7, ease }}
               className="gradient-text text-[10px] md:text-[13px] tracking-[2px] md:tracking-[5px] uppercase mb-6 font-medium"
             >
-              Founding Cohort Now Open
+              Founding Cohort Coming Soon
             </motion.p>
 
             {/* Headline - 2 staggered lines */}
@@ -1207,7 +1207,7 @@ export default function Home() {
             className="text-center max-w-[700px] text-[17px] leading-[1.7] mb-12"
             style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
-            Think of it like Y Combinator, but your idea can just be an idea. We are building the founding cohort now. Join the waitlist to be considered. If your idea scores well, we will reach out when we launch.
+            Think of it like Y Combinator, but your idea can just be an idea. When we launch, the founding cohort gets first access. Join the waitlist now to secure your spot.
           </motion.p>
 
           {/* Benefit cards */}
@@ -1269,13 +1269,13 @@ export default function Home() {
             <div>
               <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Founders:</p>
               <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                Join the waitlist. When we launch, founding cohort members get first access to matched investors.
+                Join the waitlist now. When the founding cohort launches, early signups get priority access to matched investors.
               </p>
             </div>
             <div>
               <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Investors:</p>
               <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                Join the waitlist. When we launch, founding cohort members get first access to vetted founders.
+                Join the waitlist now. When the founding cohort launches, early signups get first access to vetted founders.
               </p>
             </div>
           </motion.div>
@@ -1300,7 +1300,6 @@ export default function Home() {
             transition={{ duration: 0.6, ease }}
             className="text-[13px] text-text-muted"
           >
-            100 startup spots. 20 investor spots. First come, first evaluated.
           </motion.p>
         </motion.div>
       </Section>
@@ -1454,7 +1453,7 @@ export default function Home() {
               className="text-[17px] md:text-[18px] mb-10 max-w-xl leading-[1.7]"
               style={{ color: "#475569" }}
             >
-              Founding members get early access, discounted premium, and a direct line to us. Spots are limited.
+              Founding cohort coming soon. Join the waitlist to be first in line when we launch. Early signups get priority.
             </motion.p>
 
             <motion.div
@@ -1471,22 +1470,6 @@ export default function Home() {
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
 
-              {/* Urgency pill */}
-              <div
-                className="mt-6 inline-flex items-center gap-2 px-5 py-2 rounded-full text-[14px] text-center"
-                style={{
-                  background: "rgba(245, 158, 11, 0.05)",
-                  border: "1px solid rgba(245, 158, 11, 0.15)",
-                  color: "#92400E",
-                  fontFamily: "var(--font-dm-sans), sans-serif",
-                }}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
-                </svg>
-                67 of 100 startup spots remaining. 14 of 20 investor spots remaining.
-              </div>
             </motion.div>
           </motion.div>
         </motion.div>

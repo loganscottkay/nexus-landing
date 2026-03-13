@@ -79,7 +79,7 @@ export default function Navbar() {
             <span className="mr-1">🚀</span> Join the founding cohort &rarr;
           </span>
           <span className="hidden lg:inline">
-            <span className="mr-1">🚀</span> Founding cohort is open. 100 startup spots. Join the waitlist &rarr;
+            <span className="mr-1">🚀</span> Founding cohort coming soon. Join the waitlist &rarr;
           </span>
         </Link>
         <button
