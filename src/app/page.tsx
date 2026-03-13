@@ -639,20 +639,21 @@ function InvestorMatchCard() {
 
   return (
     <div
-      className="w-[300px] h-[380px] rounded-2xl p-5 dashboard-card relative overflow-hidden flex flex-col"
+      className="w-[300px] h-[380px] rounded-2xl p-5 relative overflow-hidden flex flex-col"
       style={{
-        background: "rgba(15, 20, 40, 0.75)",
+        background: "rgba(224, 228, 248, 0.6)",
         backdropFilter: "blur(40px)",
-        border: "none",
+        WebkitBackdropFilter: "blur(40px)",
+        border: "1px solid rgba(200, 208, 240, 0.5)",
       }}
     >
       <div className="relative flex flex-col h-full">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <p className="text-white/50 text-[11px] tracking-[3px] uppercase font-medium">Investor Feed</p>
+          <p className="text-[11px] tracking-[3px] uppercase font-medium" style={{ color: "#475569" }}>Investor Feed</p>
           <div className="flex items-center gap-1.5">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#34D399] live-dot-pulse" />
-            <span className="text-[11px] text-[#34D399]/80 font-medium">Live</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-[#059669] live-dot-pulse" />
+            <span className="text-[11px] font-medium" style={{ color: "rgba(5, 150, 105, 0.8)" }}>Live</span>
           </div>
         </div>
 
@@ -661,8 +662,8 @@ function InvestorMatchCard() {
           <div
             className="absolute inset-0 rounded-xl p-4"
             style={{
-              background: "rgba(255, 255, 255, 0.10)",
-              border: "1px solid rgba(255,255,255,0.08)",
+              background: "rgba(74, 108, 247, 0.06)",
+              border: "1px solid rgba(200, 208, 240, 0.4)",
               opacity: cardVisible ? 1 : 0,
               transition: "opacity 0.3s ease",
             }}
@@ -670,26 +671,26 @@ function InvestorMatchCard() {
             <div className="flex items-center gap-2.5 mb-2.5">
               <div
                 className="w-[36px] h-[36px] rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ background: `linear-gradient(135deg, ${s.color}, ${s.color}88)` }}
+                style={{ background: s.color }}
               >
                 <span className="text-white font-semibold text-[14px]">{s.initial}</span>
               </div>
-              <p className="text-white font-semibold text-[15px]">{s.name}</p>
+              <p className="font-semibold text-[15px]" style={{ color: "#0F172A" }}>{s.name}</p>
             </div>
             <div className="mb-2.5">
               <span
                 className="text-[10px] px-2 py-0.5 rounded-full inline-block"
                 style={{
-                  background: "rgba(74, 108, 247, 0.25)",
-                  color: "#818CF8",
+                  background: "rgba(74, 108, 247, 0.12)",
+                  color: "#4A6CF7",
                 }}
               >
                 {s.tag}
               </span>
             </div>
             <div className="flex items-center gap-4">
-              <p className="text-white/60 text-[12px]">{s.mrr}</p>
-              <p className="text-white/60 text-[12px]">Score: {s.score}</p>
+              <p className="text-[12px]" style={{ color: "#64748B" }}>{s.mrr}</p>
+              <p className="text-[12px]" style={{ color: "#64748B" }}>Score: {s.score}</p>
             </div>
           </div>
         </div>
@@ -700,41 +701,40 @@ function InvestorMatchCard() {
           <div
             className="w-[40px] h-[40px] rounded-full flex items-center justify-center cursor-default"
             style={{
-              background: "rgba(239, 68, 68, 0.2)",
-              border: "1px solid rgba(239, 68, 68, 0.4)",
+              background: "rgba(239, 68, 68, 0.1)",
+              border: "1px solid rgba(239, 68, 68, 0.3)",
             }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F87171" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
           </div>
           {/* Save */}
           <div
             className="w-[40px] h-[40px] rounded-full flex items-center justify-center cursor-default"
             style={{
-              background: "rgba(74, 108, 247, 0.2)",
-              border: "1px solid rgba(74, 108, 247, 0.4)",
+              background: "rgba(74, 108, 247, 0.1)",
+              border: "1px solid rgba(74, 108, 247, 0.3)",
             }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818CF8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
           </div>
           {/* Interested */}
           <div
             className="w-[40px] h-[40px] rounded-full flex items-center justify-center cursor-default transition-all duration-300"
             style={{
-              background: "rgba(52, 211, 153, 0.2)",
-              border: `1px solid rgba(52, 211, 153, ${greenPulse ? "0.7" : "0.4"})`,
-              boxShadow: greenPulse ? "0 0 20px rgba(52, 211, 153, 0.5)" : "none",
+              background: "rgba(5, 150, 105, 0.1)",
+              border: `1px solid rgba(5, 150, 105, ${greenPulse ? "0.5" : "0.3"})`,
             }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
           </div>
         </div>
 
         {/* Matched notification */}
         <div className="h-[24px] flex items-center justify-center">
           <p
-            className="text-[13px] text-center font-medium matched-text-glow"
+            className="text-[13px] text-center font-medium"
             style={{
-              color: "#34D399",
+              color: "#059669",
               opacity: showMatched ? 1 : 0,
               transition: "opacity 0.3s ease",
             }}
