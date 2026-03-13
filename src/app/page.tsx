@@ -1179,7 +1179,7 @@ export default function Home() {
                 className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] font-normal leading-[1.1] tracking-tight"
                 style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
               >
-                Where Real Ideas
+                Where <span className="gradient-text">Real Ideas</span>
               </motion.h1>
               <motion.h1
                 initial={{ opacity: 0, y: 15 }}
@@ -1196,10 +1196,13 @@ export default function Home() {
             <motion.p
               variants={fadeUp}
               transition={{ duration: 0.7, ease }}
-              className="text-[15px] md:text-[19px] max-w-full px-2 md:max-w-[600px] md:px-0 mb-12 leading-[1.8]"
-              style={{ color: "#475569" }}
+              className="text-[17px] max-w-full px-2 md:max-w-[600px] md:px-0 mb-12 leading-[1.8] text-center"
+              style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
-              UrgenC is a matching app for startups and investors. Founders pitch. Investors swipe. When interest is mutual, you get a guaranteed meeting. We do not promise deals. We promise that if someone wants to talk to you, they will. What happens after is up to you.
+              UrgenC is the first real fundraising app.<br />
+              Founders pitch. Investors swipe.<br />
+              When interest is mutual, the meeting is guaranteed.<br />
+              Everyone here actually meets. If you don&apos;t, you&apos;re removed.
             </motion.p>
 
             {/* CTAs */}
