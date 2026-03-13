@@ -422,10 +422,10 @@ export default function FounderSettingsPage() {
 
           {/* Tab Bar */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.1, ease }}
-            className="relative rounded-full p-1 mb-8 flex md:overflow-visible overflow-x-auto scrollbar-hide" style={{ background: "rgba(255,255,255,0.3)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.5)", msOverflowStyle: "none" }}>
+            className="relative rounded-full p-1 mb-8 flex md:overflow-visible overflow-x-auto scrollbar-hide gap-1 md:gap-0" style={{ background: "rgba(255,255,255,0.3)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.5)", msOverflowStyle: "none", scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}>
             {tabs.map((t) => (
               <button key={t.key} onClick={() => setActiveTab(t.key)}
-                className={`relative z-10 shrink-0 px-5 py-2.5 rounded-full text-[14px] font-medium transition-colors duration-200 whitespace-nowrap text-center ${activeTab === t.key ? "text-white" : "text-text-muted hover:text-text-primary"}`}
+                className={`relative z-10 inline-flex items-center justify-center shrink-0 px-4 py-2 md:px-5 md:py-2.5 rounded-full text-[14px] font-medium transition-colors duration-200 whitespace-nowrap ${activeTab === t.key ? "text-white" : "text-text-muted hover:text-text-primary"}`}
                 style={activeTab === t.key ? { background: "linear-gradient(135deg, #7C5CFC, #4A6CF7)" } : undefined}>
                 {t.label}
               </button>
