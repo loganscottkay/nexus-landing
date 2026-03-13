@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const navLinks = [
@@ -12,9 +12,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [bannerVisible, setBannerVisible] = useState(true);
-  const [previewOpen, setPreviewOpen] = useState(false);
   const [logoHovered, setLogoHovered] = useState(false);
-  const previewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -42,18 +40,6 @@ export default function Navbar() {
     };
   }, [menuOpen]);
 
-  // Close preview dropdown on click outside
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (previewRef.current && !previewRef.current.contains(e.target as Node)) {
-        setPreviewOpen(false);
-      }
-    }
-    if (previewOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [previewOpen]);
 
   const topOffset = bannerVisible ? 40 : 0;
 
@@ -166,134 +152,6 @@ export default function Navbar() {
               </Link>
             ))}
 
-            {/* Preview dropdown */}
-            <div ref={previewRef} className="relative">
-              <button
-                onClick={() => setPreviewOpen(!previewOpen)}
-                className="nav-link whitespace-nowrap flex items-center gap-1.5"
-                style={{ fontSize: "14px", fontWeight: 500, color: "#475569", letterSpacing: "0.3px" }}
-              >
-                Preview
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="transition-transform duration-200"
-                  style={{ transform: previewOpen ? "rotate(180deg)" : "rotate(0deg)" }}
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </button>
-
-              {/* Dropdown */}
-              <div
-                className="absolute top-full left-1/2 pt-2"
-                style={{
-                  transform: "translateX(-50%)",
-                  pointerEvents: previewOpen ? "auto" : "none",
-                }}
-              >
-                <div
-                  className="rounded-2xl"
-                  style={{
-                    background: "#FFFFFF",
-                    backdropFilter: "blur(24px)",
-                    WebkitBackdropFilter: "blur(24px)",
-                    border: "1px solid rgba(0, 0, 0, 0.1)",
-                    boxShadow: "0 20px 60px rgba(0, 0, 0, 0.12)",
-                    padding: "12px",
-                    minWidth: "280px",
-                    opacity: previewOpen ? 1 : 0,
-                    transform: previewOpen ? "scale(1)" : "scale(0.95)",
-                    transformOrigin: "top center",
-                    transition: previewOpen
-                      ? "opacity 0.15s ease-out, transform 0.15s ease-out"
-                      : "opacity 0.1s ease-in, transform 0.1s ease-in",
-                  }}
-                >
-                  <Link
-                    href="/dashboard/investor"
-                    onClick={() => setPreviewOpen(false)}
-                    className="group flex items-center gap-3 rounded-xl transition-all duration-150"
-                    style={{ padding: "14px 18px" }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "#F0F4FF";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "transparent";
-                    }}
-                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
-                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                      <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
-                    </svg>
-                    <div className="flex-1">
-                      <span
-                        className="block font-semibold"
-                        style={{ fontSize: "15px", color: "#0F172A", fontFamily: "var(--font-dm-sans), sans-serif" }}
-                      >
-                        Investor Dashboard
-                      </span>
-                      <span
-                        className="block"
-                        style={{ fontSize: "12px", color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", marginTop: "2px" }}
-                      >
-                        See what investors see on UrgenC.
-                      </span>
-                    </div>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 transition-transform duration-200 group-hover:translate-x-1">
-                      <polyline points="9 18 15 12 9 6" />
-                    </svg>
-                  </Link>
-
-                  {/* Divider */}
-                  <div className="mx-3" style={{ height: "1px", background: "rgba(0, 0, 0, 0.06)" }} />
-
-                  <Link
-                    href="/dashboard/founder"
-                    onClick={() => setPreviewOpen(false)}
-                    className="group flex items-center gap-3 rounded-xl transition-all duration-150"
-                    style={{ padding: "14px 18px" }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "#F0F4FF";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "transparent";
-                    }}
-                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
-                      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z" />
-                      <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z" />
-                      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
-                      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-                    </svg>
-                    <div className="flex-1">
-                      <span
-                        className="block font-semibold"
-                        style={{ fontSize: "15px", color: "#0F172A", fontFamily: "var(--font-dm-sans), sans-serif" }}
-                      >
-                        Startup Dashboard
-                      </span>
-                      <span
-                        className="block"
-                        style={{ fontSize: "12px", color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", marginTop: "2px" }}
-                      >
-                        See what founders see on UrgenC.
-                      </span>
-                    </div>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 transition-transform duration-200 group-hover:translate-x-1">
-                      <polyline points="9 18 15 12 9 6" />
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
             <Link
               href="/story"
               className="nav-link whitespace-nowrap"
@@ -394,8 +252,6 @@ export default function Navbar() {
             {[
               { label: "Startup Qualifications", href: "/qualifications/startup" },
               { label: "Investor Qualifications", href: "/qualifications/investor" },
-              { label: "Preview: Investor Dashboard", href: "/dashboard/investor" },
-              { label: "Preview: Startup Dashboard", href: "/dashboard/founder" },
               { label: "About", href: "/story" },
             ].map((link) => (
               <Link

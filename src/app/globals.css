@@ -1119,3 +1119,64 @@ body {
     height: 300px;
   }
 }
+
+/* ============================================================
+   iPhone Mockup Section
+   ============================================================ */
+
+/* Gentle floating animation */
+@keyframes iphone-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.iphone-float {
+  animation: iphone-float 4s ease-in-out infinite;
+}
+
+/* Sparkle particles floating upward */
+@keyframes sparkle-float-up {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.35;
+    transform: translateY(-20px) scale(1);
+  }
+  85% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-180px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+.sparkle-particle {
+  animation: sparkle-float-up 6s ease-in-out infinite;
+}
+
+/* Mobile: stack vertically, smaller phones, no sparkles */
+@media (max-width: 767px) {
+  .iphone-section {
+    --phone-width: 200px !important;
+    --phone-height: 408px !important;
+    --phone-gap: 32px !important;
+    --label-size: 14px !important;
+    --sublabel-size: 12px !important;
+  }
+  .iphone-phones-container {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+}
+
+/* Tablet: slightly smaller phones */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .iphone-section {
+    --phone-width: 240px !important;
+    --phone-height: 489px !important;
+    --phone-gap: 36px !important;
+  }
+}

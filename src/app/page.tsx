@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import { ScoringPreview, MatchingPreview, AccountabilityPreview } from "@/components/HowItWorksPreviews";
+import IPhoneMockups from "@/components/IPhoneMockups";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
@@ -1456,6 +1457,9 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </section>
+
+      {/* ============ IPHONE MOCKUPS ============ */}
+      <IPhoneMockups />
 
       {/* ============ FOOTER ============ */}
       <footer className="relative z-10">
