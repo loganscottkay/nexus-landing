@@ -97,7 +97,7 @@ const howItWorksCards = [
     num: "01",
     icon: <ShieldIcon />,
     title: "Join & Get Scored",
-    desc: "Pitch deck. 60-second video. Scored on vision, team, market, and momentum. Less than 15% of waitlist signups get into the founding cohort.",
+    desc: "Pitch deck. 60-second video. Scored on vision, team, market, and momentum. Less than 15% of applicants get into the founding cohort.",
   },
   {
     num: "02",
@@ -1165,7 +1165,7 @@ export default function Home() {
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0110 0v4" />
               </svg>
-              Every waitlist signup scored by a proprietary system built with entrepreneurship faculty from HBS, BU, and Northeastern.
+              Every applicant scored by a proprietary system built with entrepreneurship faculty from HBS, BU, and Northeastern.
             </motion.div>
           </motion.div>
         </div>

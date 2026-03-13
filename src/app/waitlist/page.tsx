@@ -78,7 +78,7 @@ export default function WaitlistPage() {
         <title>Join the Waitlist | UrgenC</title>
         <meta
           name="description"
-          content="Join the UrgenC founding cohort. Tell us your startup idea in 60 seconds. No pitch deck needed."
+          content="Be first to know when UrgenC launches. Drop your info and we will notify you."
         />
       </head>
 
@@ -140,7 +140,7 @@ export default function WaitlistPage() {
                       backgroundClip: "text",
                     }}
                   >
-                    FOUNDING COHORT
+                    BE FIRST TO KNOW
                   </p>
 
                   {/* Title */}
@@ -431,8 +431,8 @@ export default function WaitlistPage() {
                       fontFamily: "var(--font-dm-sans), sans-serif",
                     }}
                   >
-                    We review every submission personally. If your idea has
-                    potential, you will hear from us within 5 business days.
+                    We will notify you when UrgenC launches and applications
+                    open.
                   </p>
 
                   <p
