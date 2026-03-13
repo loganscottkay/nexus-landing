@@ -2,11 +2,94 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   { label: "Startup Qualifications", href: "/qualifications/startup" },
   { label: "Investor Qualifications", href: "/qualifications/investor" },
 ];
+
+function NavUnicornSVG() {
+  return (
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 80 80"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ overflow: "visible" }}
+    >
+      <defs>
+        <linearGradient id="navBody" x1="10" y1="30" x2="65" y2="65">
+          <stop stopColor="#F0E6FF" />
+          <stop offset="1" stopColor="#C4B5E0" />
+        </linearGradient>
+        <linearGradient id="navMane" x1="30" y1="5" x2="50" y2="35">
+          <stop stopColor="#4A6CF7" />
+          <stop offset="0.5" stopColor="#7C5CFC" />
+          <stop offset="1" stopColor="#D946EF" />
+        </linearGradient>
+        <linearGradient id="navHorn" x1="54" y1="0" x2="58" y2="20">
+          <stop stopColor="#D4AF37" />
+          <stop offset="0.85" stopColor="#F5D76E" />
+          <stop offset="1" stopColor="#FFFFFF" />
+        </linearGradient>
+        <linearGradient id="navWing" x1="30" y1="25" x2="45" y2="40">
+          <stop stopColor="rgba(255,255,255,0.4)" />
+          <stop offset="1" stopColor="rgba(196,181,224,0.4)" />
+        </linearGradient>
+      </defs>
+
+      {/* Tail */}
+      <path className="nav-unicorn-mane-idle" d="M8 42C3 36 -2 38 2 44C5 48 4 46 8 50C6 46 1 42 4 38" stroke="url(#navMane)" strokeWidth="3" strokeLinecap="round" fill="none" style={{ transformOrigin: "8px 44px" }} />
+
+      {/* Body */}
+      <ellipse cx="35" cy="44" rx="20" ry="12" fill="url(#navBody)" />
+
+      {/* Wings */}
+      <path d="M30 34C27 26 22 22 20 28C18 34 24 36 30 36Z" fill="url(#navWing)" style={{ transformOrigin: "30px 34px" }} />
+      <path d="M34 32C32 24 28 20 26 26C24 32 29 34 34 34Z" fill="url(#navWing)" style={{ transformOrigin: "34px 32px" }} />
+
+      {/* Neck */}
+      <path d="M48 38C49 32 52 26 50 22C48 18 46 20 46 24L44 38Z" fill="url(#navBody)" />
+
+      {/* Head */}
+      <ellipse cx="53" cy="21" rx="7" ry="6" fill="url(#navBody)" />
+
+      {/* Ear */}
+      <path d="M50 15L48 10L51 14Z" fill="#C4B5E0" />
+
+      {/* Horn */}
+      <path d="M56 15L58 4L54 14Z" fill="url(#navHorn)" />
+      <path d="M55.5 12L57 8" stroke="rgba(255,255,255,0.5)" strokeWidth="0.5" />
+      <path d="M55.8 10L57.2 6" stroke="rgba(255,255,255,0.5)" strokeWidth="0.5" />
+
+      {/* Eye */}
+      <circle cx="55" cy="20" r="1.5" fill="#1E1B4B" />
+      <circle cx="55.5" cy="19.5" r="0.5" fill="white" />
+
+      {/* Nostril */}
+      <circle cx="59" cy="22" r="0.7" fill="#B8A5D4" />
+
+      {/* Mane strands */}
+      <path className="nav-unicorn-mane-idle" d="M50 14C48 11 45 15 43 12C41 9 39 14 37 11" stroke="url(#navMane)" strokeWidth="3" strokeLinecap="round" fill="none" style={{ transformOrigin: "44px 13px" }} />
+      <path className="nav-unicorn-mane-idle" d="M49 17C47 14 44 18 42 15C40 12 38 17 36 14" stroke="url(#navMane)" strokeWidth="2.5" strokeLinecap="round" fill="none" style={{ transformOrigin: "43px 16px" }} />
+      <path className="nav-unicorn-mane-idle" d="M48 20C46 17 44 21 42 18C40 15 38 20 36 17" stroke="url(#navMane)" strokeWidth="2" strokeLinecap="round" fill="none" style={{ transformOrigin: "42px 18px" }} />
+
+      {/* Legs (static in navbar - no gallop) */}
+      <line x1="42" y1="53" x2="44" y2="66" stroke="#B8A5D4" strokeWidth="3.5" strokeLinecap="round" />
+      <line x1="36" y1="53" x2="34" y2="66" stroke="#B8A5D4" strokeWidth="3.5" strokeLinecap="round" />
+      <line x1="30" y1="53" x2="28" y2="66" stroke="#B8A5D4" strokeWidth="3.5" strokeLinecap="round" />
+      <line x1="24" y1="53" x2="26" y2="66" stroke="#B8A5D4" strokeWidth="3.5" strokeLinecap="round" />
+
+      {/* Hooves */}
+      <circle cx="44" cy="66" r="1.5" fill="#9B8EC4" />
+      <circle cx="34" cy="66" r="1.5" fill="#9B8EC4" />
+      <circle cx="28" cy="66" r="1.5" fill="#9B8EC4" />
+      <circle cx="26" cy="66" r="1.5" fill="#9B8EC4" />
+    </svg>
+  );
+}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -15,6 +98,8 @@ export default function Navbar() {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [logoHovered, setLogoHovered] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -121,7 +206,7 @@ export default function Navbar() {
           {/* Far left: Logo */}
           <Link
             href="/"
-            className="shrink-0 justify-self-start"
+            className="shrink-0 justify-self-start flex items-center"
             onMouseEnter={() => setLogoHovered(true)}
             onMouseLeave={() => setLogoHovered(false)}
           >
@@ -150,6 +235,12 @@ export default function Navbar() {
               >
                 C
               </span>
+            </span>
+            <span
+              className={isHome ? "nav-unicorn-entrance" : "nav-unicorn-resting"}
+              style={{ marginLeft: "8px", display: "inline-flex", alignItems: "center" }}
+            >
+              <NavUnicornSVG />
             </span>
           </Link>
 
@@ -430,6 +521,36 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+
+      {/* Navbar unicorn CSS */}
+      <style>{`
+        /* Entrance animation on home page: starts invisible, slides in from left */
+        .nav-unicorn-entrance {
+          opacity: 0;
+          transform: translateX(-40px);
+          animation: navUnicornSlideIn 1.5s ease-out 0.3s forwards;
+        }
+        @keyframes navUnicornSlideIn {
+          0% { opacity: 0; transform: translateX(-40px); }
+          30% { opacity: 1; }
+          100% { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Resting state on non-home pages: visible immediately, no entrance */
+        .nav-unicorn-resting {
+          opacity: 1;
+          transform: translateX(0);
+        }
+
+        /* Idle mane sway (always active once visible) */
+        .nav-unicorn-mane-idle {
+          animation: navManeSway 3s ease-in-out infinite alternate;
+        }
+        @keyframes navManeSway {
+          0% { transform: rotate(-2deg); }
+          100% { transform: rotate(2deg); }
+        }
+      `}</style>
     </>
   );
 }

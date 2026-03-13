@@ -128,7 +128,6 @@ export default function WaitlistPage() {
             transition={{ duration: 0.5, delay: 0.5, ease }}
             className="text-[36px] md:text-[48px] font-normal text-center mb-4"
             style={{ fontFamily: "'Instrument Serif', serif" }}
-            data-unicorn-headline
           >
             Get <span className="gradient-text">Early Access.</span>
           </motion.h1>
