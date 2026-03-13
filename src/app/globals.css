@@ -21,8 +21,6 @@
 }
 
 #how-it-works,
-#for-investors,
-#for-startups,
 #preview,
 #faq {
   scroll-margin-top: 80px;
@@ -1160,9 +1158,9 @@ body {
 /* Mobile: stack vertically, smaller phones, no sparkles */
 @media (max-width: 767px) {
   .iphone-section {
-    --phone-width: 200px !important;
-    --phone-height: 408px !important;
-    --phone-gap: 32px !important;
+    --phone-width: 220px !important;
+    --phone-height: 449px !important;
+    --phone-gap: 28px !important;
     --label-size: 14px !important;
     --sublabel-size: 12px !important;
   }
@@ -1175,8 +1173,8 @@ body {
 /* Tablet: slightly smaller phones */
 @media (min-width: 768px) and (max-width: 1023px) {
   .iphone-section {
-    --phone-width: 240px !important;
-    --phone-height: 489px !important;
-    --phone-gap: 36px !important;
+    --phone-width: 260px !important;
+    --phone-height: 530px !important;
+    --phone-gap: 40px !important;
   }
 }
