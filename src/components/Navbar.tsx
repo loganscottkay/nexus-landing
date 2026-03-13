@@ -338,11 +338,11 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile: centered Join Waitlist + far-right hamburger */}
-          <div className="lg:hidden flex items-center justify-self-end">
+          {/* Mobile: centered Join Waitlist (in center grid column) */}
+          <div className="lg:hidden flex items-center justify-self-center">
             <Link
               href="/waitlist"
-              className="font-semibold text-white rounded-full absolute left-1/2 -translate-x-1/2"
+              className="font-semibold text-white rounded-full"
               style={{
                 letterSpacing: "0.3px",
                 fontSize: "13px",
@@ -354,21 +354,25 @@ export default function Navbar() {
             >
               Join Waitlist
             </Link>
+          </div>
+
+          {/* Mobile: hamburger (in right grid column) */}
+          <div className="lg:hidden flex items-center justify-self-end">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="flex flex-col gap-1.5 p-2"
               aria-label="Toggle menu"
             >
               <span
-                className={`block w-6 h-[1.5px] transition-all duration-300`}
+                className="block w-6 h-[1.5px] transition-all duration-300"
                 style={{ backgroundColor: "#0F172A", ...(menuOpen ? { transform: "rotate(45deg) translateY(4.5px)" } : {}) }}
               />
               <span
-                className={`block w-6 h-[1.5px] transition-all duration-300`}
+                className="block w-6 h-[1.5px] transition-all duration-300"
                 style={{ backgroundColor: "#0F172A", ...(menuOpen ? { opacity: 0 } : {}) }}
               />
               <span
-                className={`block w-6 h-[1.5px] transition-all duration-300`}
+                className="block w-6 h-[1.5px] transition-all duration-300"
                 style={{ backgroundColor: "#0F172A", ...(menuOpen ? { transform: "rotate(-45deg) translateY(-4.5px)" } : {}) }}
               />
             </button>
