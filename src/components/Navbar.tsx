@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 const navLinks = [
-  { label: "About", href: "/story" },
   { label: "Startup Qualifications", href: "/qualifications/startup" },
   { label: "Investor Qualifications", href: "/qualifications/investor" },
 ];
@@ -155,7 +154,7 @@ export default function Navbar() {
           </Link>
 
           {/* Center: Nav links */}
-          <div className="hidden lg:flex items-center justify-self-center" style={{ gap: "32px" }}>
+          <div className="hidden lg:flex items-center justify-self-center" style={{ gap: "28px" }}>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -294,26 +293,18 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
+
+            <Link
+              href="/story"
+              className="nav-link whitespace-nowrap"
+              style={{ fontSize: "14px", fontWeight: 500, color: "#475569", letterSpacing: "0.3px" }}
+            >
+              About
+            </Link>
           </div>
 
-          {/* Far right: Action buttons */}
-          <div className="hidden lg:flex items-center justify-self-end shrink-0" style={{ gap: "16px" }}>
-            <Link
-              href="/login"
-              className="nav-text-btn"
-              style={{ fontSize: "14px", fontWeight: 500, color: "#475569" }}
-            >
-              Sign In
-            </Link>
-
-            <Link
-              href="/status"
-              className="nav-text-btn"
-              style={{ fontSize: "14px", fontWeight: 500, color: "#475569" }}
-            >
-              Check Status
-            </Link>
-
+          {/* Far right: Join Waitlist */}
+          <div className="hidden lg:flex items-center justify-self-end shrink-0">
             <Link
               href="/waitlist"
               className="nav-waitlist-btn font-semibold text-white rounded-full"
@@ -329,10 +320,24 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile hamburger */}
+          {/* Mobile: Join Waitlist + hamburger */}
+          <div className="lg:hidden flex items-center gap-3 justify-self-end">
+            <Link
+              href="/waitlist"
+              className="font-semibold text-white rounded-full"
+              style={{
+                letterSpacing: "0.3px",
+                fontSize: "12px",
+                padding: "7px 16px",
+                background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                fontFamily: "var(--font-dm-sans), sans-serif",
+              }}
+            >
+              Join Waitlist
+            </Link>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="lg:hidden flex flex-col gap-1.5 p-2 justify-self-end"
+            className="flex flex-col gap-1.5 p-2"
             aria-label="Toggle menu"
           >
             <span
@@ -348,6 +353,7 @@ export default function Navbar() {
               style={{ backgroundColor: "#0F172A", ...(menuOpen ? { transform: "rotate(-45deg) translateY(-4.5px)" } : {}) }}
             />
           </button>
+          </div>
         </div>
       </nav>
 
@@ -381,13 +387,11 @@ export default function Navbar() {
         <div className="flex flex-col items-center justify-center h-full px-6">
           <div className="flex flex-col items-center w-full">
             {[
-              { label: "About", href: "/story" },
               { label: "Startup Qualifications", href: "/qualifications/startup" },
               { label: "Investor Qualifications", href: "/qualifications/investor" },
               { label: "Preview: Investor Dashboard", href: "/dashboard/investor" },
               { label: "Preview: Startup Dashboard", href: "/dashboard/founder" },
-              { label: "Sign In", href: "/login" },
-              { label: "Check Status", href: "/status" },
+              { label: "About", href: "/story" },
             ].map((link) => (
               <Link
                 key={link.href}
