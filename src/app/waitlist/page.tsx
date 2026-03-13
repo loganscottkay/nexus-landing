@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import UnicornAnimation from "@/components/UnicornAnimation";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
@@ -127,6 +128,7 @@ export default function WaitlistPage() {
             transition={{ duration: 0.5, delay: 0.5, ease }}
             className="text-[36px] md:text-[48px] font-normal text-center mb-4"
             style={{ fontFamily: "'Instrument Serif', serif" }}
+            data-unicorn-headline
           >
             Get <span className="gradient-text">Early Access.</span>
           </motion.h1>
@@ -488,8 +490,8 @@ export default function WaitlistPage() {
           </motion.div>
         </div>
 
-        {/* Unicorn mascot runner */}
-        <UnicornRunner />
+        {/* Unicorn arc animation */}
+        <UnicornAnimation />
       </main>
     </>
   );
@@ -521,145 +523,6 @@ function ValidationMessage({
   );
 }
 
-/* ---- Unicorn Runner ---- */
-function UnicornRunner() {
-  return (
-    <>
-      <div
-        className="unicorn-container pointer-events-none absolute left-0 w-full overflow-hidden"
-        style={{ top: "70%", zIndex: 1 }}
-      >
-        <div className="unicorn-runner" style={{ willChange: "transform" }}>
-          {/* Sparkle trail */}
-          {Array.from({ length: 10 }).map((_, i) => (
-            <div
-              key={i}
-              className="unicorn-sparkle"
-              style={{
-                animationDelay: `${i * 0.15}s`,
-                left: `${-10 - i * 6}px`,
-                top: `${10 + (i % 3) * 8}px`,
-              }}
-            >
-              {i % 2 === 0 ? (
-                <div
-                  className="w-[5px] h-[5px] rounded-full"
-                  style={{
-                    background: ["#F5D76E", "#4A6CF7", "#7C5CFC", "#D946EF"][i % 4],
-                  }}
-                />
-              ) : (
-                <svg width="6" height="6" viewBox="0 0 6 6">
-                  <path
-                    d="M3 0L3.5 2.5L6 3L3.5 3.5L3 6L2.5 3.5L0 3L2.5 2.5Z"
-                    fill={["#F5D76E", "#4A6CF7", "#7C5CFC", "#D946EF"][i % 4]}
-                  />
-                </svg>
-              )}
-            </div>
-          ))}
-          {/* Unicorn SVG */}
-          <svg
-            width="60"
-            height="60"
-            viewBox="0 0 60 60"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="unicorn-svg md:w-[60px] md:h-[60px] w-[40px] h-[40px]"
-          >
-            <defs>
-              <linearGradient id="unicornBody" x1="10" y1="20" x2="50" y2="50">
-                <stop stopColor="#9B8EC4" />
-                <stop offset="1" stopColor="#7C5CFC" />
-              </linearGradient>
-              <linearGradient id="unicornMane" x1="20" y1="5" x2="35" y2="30">
-                <stop stopColor="#4A6CF7" />
-                <stop offset="0.5" stopColor="#7C5CFC" />
-                <stop offset="1" stopColor="#D946EF" />
-              </linearGradient>
-              <linearGradient id="unicornHorn" x1="38" y1="2" x2="42" y2="18">
-                <stop stopColor="#F5D76E" />
-                <stop offset="1" stopColor="#D4AF37" />
-              </linearGradient>
-            </defs>
-            {/* Body */}
-            <ellipse cx="28" cy="35" rx="16" ry="10" fill="url(#unicornBody)" />
-            {/* Neck */}
-            <path d="M38 30C38 30 42 22 40 18C38 14 36 16 36 20L34 30Z" fill="url(#unicornBody)" />
-            {/* Head */}
-            <ellipse cx="42" cy="17" rx="6" ry="5" fill="url(#unicornBody)" />
-            {/* Horn */}
-            <path d="M44 12L46 3L42 11Z" fill="url(#unicornHorn)" />
-            {/* Eye */}
-            <circle cx="44" cy="16" r="1.2" fill="#1E1B4B" />
-            {/* Mane */}
-            <path
-              className="unicorn-mane"
-              d="M38 12C36 10 34 14 32 12C30 10 28 16 26 14C24 12 24 18 26 20C28 22 30 18 32 20C34 22 36 16 38 18Z"
-              fill="url(#unicornMane)"
-              style={{ transformOrigin: "32px 16px" }}
-            />
-            {/* Tail */}
-            <path
-              className="unicorn-mane"
-              d="M12 30C8 26 4 28 6 32C8 36 10 34 12 36"
-              stroke="url(#unicornMane)"
-              strokeWidth="3"
-              strokeLinecap="round"
-              fill="none"
-              style={{ transformOrigin: "8px 32px" }}
-            />
-            {/* Front legs */}
-            <line x1="32" y1="42" x2="34" y2="52" stroke="url(#unicornBody)" strokeWidth="3" strokeLinecap="round" className="unicorn-leg-front" />
-            <line x1="26" y1="42" x2="24" y2="52" stroke="url(#unicornBody)" strokeWidth="3" strokeLinecap="round" className="unicorn-leg-front-alt" />
-            {/* Back legs */}
-            <line x1="22" y1="42" x2="20" y2="52" stroke="url(#unicornBody)" strokeWidth="3" strokeLinecap="round" className="unicorn-leg-back" />
-            <line x1="16" y1="42" x2="18" y2="52" stroke="url(#unicornBody)" strokeWidth="3" strokeLinecap="round" className="unicorn-leg-back-alt" />
-            {/* Nostril */}
-            <circle cx="47" cy="18" r="0.6" fill="#7C5CFC" />
-          </svg>
-        </div>
-      </div>
-
-      <style>{`
-        .unicorn-runner {
-          position: relative;
-          display: inline-block;
-          animation: unicornRun 8s linear infinite, unicornBounce 0.4s ease-in-out infinite;
-        }
-        @keyframes unicornRun {
-          0% { transform: translateX(-100px); }
-          100% { transform: translateX(calc(100vw + 100px)); }
-        }
-        @keyframes unicornBounce {
-          0%, 100% { margin-top: 0px; }
-          50% { margin-top: -5px; }
-        }
-        .unicorn-mane {
-          animation: maneFlutter 0.3s ease-in-out infinite alternate;
-        }
-        @keyframes maneFlutter {
-          0% { transform: rotate(-5deg) scale(1); }
-          100% { transform: rotate(5deg) scale(1.05); }
-        }
-        .unicorn-sparkle {
-          position: absolute;
-          animation: sparkleFade 1.5s ease-out infinite;
-          opacity: 0;
-        }
-        @keyframes sparkleFade {
-          0% { opacity: 1; transform: translateY(0) scale(1); }
-          100% { opacity: 0; transform: translateY(-20px) scale(0); }
-        }
-        @media (max-width: 767px) {
-          .unicorn-container {
-            top: 80% !important;
-          }
-        }
-      `}</style>
-    </>
-  );
-}
 
 /* ---- Animated Checkmark ---- */
 function AnimatedCheckmark() {
