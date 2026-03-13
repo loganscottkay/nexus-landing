@@ -62,61 +62,6 @@ function Section({
   );
 }
 
-/* ---- Email Capture ---- */
-function EmailCapture() {
-  const [submitted, setSubmitted] = React.useState(false);
-  const [email, setEmail] = React.useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setEmail("");
-  };
-
-  return (
-    <Section className="relative z-10 px-6 py-16 max-w-[500px] mx-auto text-center">
-      <p className="text-[18px] font-semibold text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-        Not ready to apply yet?
-      </p>
-      <p className="text-[15px] mb-6" style={{ color: "#64748B" }}>
-        {submitted ? "Thank you! We will keep you posted." : "Get notified when we launch and hear about early access opportunities."}
-      </p>
-      {!submitted && (
-        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 items-center">
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="your@email.com"
-            className="w-full flex-grow h-[48px] rounded-xl px-4 text-[15px] text-text-primary placeholder:text-text-muted/50 outline-none"
-            style={{
-              background: "rgba(255, 255, 255, 0.3)",
-              backdropFilter: "blur(8px)",
-              border: "1px solid rgba(0, 0, 0, 0.06)",
-            }}
-          />
-          <button
-            type="submit"
-            className="h-[48px] px-6 rounded-xl text-[15px] font-semibold text-white w-full sm:w-auto sm:shrink-0"
-            style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
-          >
-            Subscribe
-          </button>
-        </form>
-      )}
-      {submitted && (
-        <div className="flex items-center justify-center gap-2 h-[48px]">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          <span className="text-[15px] font-semibold" style={{ color: "#22c55e" }}>Subscribed!</span>
-        </div>
-      )}
-    </Section>
-  );
-}
-
 /* ---- SVG Icons ---- */
 function ShieldIcon() {
   return (
@@ -151,8 +96,8 @@ const howItWorksCards = [
   {
     num: "01",
     icon: <ShieldIcon />,
-    title: "Apply & Get Scored",
-    desc: "Pitch deck. 60-second video. Scored on vision, team, market, and momentum. Less than 15% get in.",
+    title: "Join & Get Scored",
+    desc: "Pitch deck. 60-second video. Scored on vision, team, market, and momentum. Less than 15% of waitlist signups get into the founding cohort.",
   },
   {
     num: "02",
@@ -1189,25 +1134,18 @@ export default function Home() {
               Everyone here actually meets. If you don&apos;t, you&apos;re removed.
             </motion.p>
 
-            {/* CTAs */}
+            {/* CTA */}
             <motion.div
               variants={fadeUp}
               transition={{ duration: 0.7, ease }}
-              className="flex flex-col sm:flex-row gap-3"
+              className="flex justify-center"
             >
               <Link
                 href="/waitlist"
-                className="w-full sm:w-auto group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
+                className="group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
                 style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
               >
                 Join the Waitlist
-                <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
-              </Link>
-              <Link
-                href="/apply/investor"
-                className="w-full sm:w-auto group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
-              >
-                I&apos;m an Investor
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             </motion.div>
@@ -1227,7 +1165,7 @@ export default function Home() {
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0110 0v4" />
               </svg>
-              Every application scored by a proprietary system built with entrepreneurship faculty from HBS, BU, and Northeastern.
+              Every waitlist signup scored by a proprietary system built with entrepreneurship faculty from HBS, BU, and Northeastern.
             </motion.div>
           </motion.div>
         </div>
@@ -1269,7 +1207,7 @@ export default function Home() {
             className="text-center max-w-[700px] text-[17px] leading-[1.7] mb-12"
             style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
-            Think of it like Y Combinator, but your idea can just be an idea. We are building the founding cohort now. Join the waitlist to be considered. If your idea scores well, we invite you to complete the full application.
+            Think of it like Y Combinator, but your idea can just be an idea. We are building the founding cohort now. Join the waitlist to be considered. If your idea scores well, we will reach out when we launch.
           </motion.p>
 
           {/* Benefit cards */}
@@ -1331,36 +1269,29 @@ export default function Home() {
             <div>
               <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Founders:</p>
               <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                Step 1: Join the waitlist. Tell us your idea in 60 seconds. Step 2: If we like what we see, we invite you to submit the full application with your pitch deck and video. Step 3: Get accepted and start matching with investors.
+                Join the waitlist. When we launch, founding cohort members get first access to matched investors.
               </p>
             </div>
             <div>
               <p className="text-[12px] uppercase tracking-[3px] text-text-muted mb-3" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>For Investors:</p>
               <p className="text-[15px] leading-[1.7] text-text-secondary" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                Investors apply directly. No waitlist. Tell us your thesis, your investment range, and what kind of founders excite you. If accepted, you start seeing matches immediately.
+                Join the waitlist. When we launch, founding cohort members get first access to vetted founders.
               </p>
             </div>
           </motion.div>
 
-          {/* CTAs */}
+          {/* CTA */}
           <motion.div
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
-            className="flex flex-col sm:flex-row gap-4 mb-4"
+            className="flex justify-center mb-4"
           >
             <Link
               href="/waitlist"
-              className="w-full sm:w-auto group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
+              className="group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
               style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
             >
               Join the Waitlist
-              <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
-            </Link>
-            <Link
-              href="/apply/investor"
-              className="w-full sm:w-auto group btn-shimmer btn-hero-secondary inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-medium"
-            >
-              Apply as Investor
               <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
           </motion.div>
@@ -1396,7 +1327,7 @@ export default function Home() {
                 </h3>
                 <ul className="flex flex-col gap-4 flex-1">
                   {[
-                    "Founding cohort = lifetime free access. Apply before spots close.",
+                    "Join the waitlist. Founding cohort members get early access when we launch.",
                     "First time investing? Good. UrgenC is built for you.",
                     "Every founder scored on vision, team, market, and momentum.",
                     "Browse. Match. 20-minute call. That is the whole process.",
@@ -1411,11 +1342,11 @@ export default function Home() {
                   ))}
                 </ul>
                 <Link
-                  href="/apply/investor"
+                  href="/waitlist"
                   className="inline-flex items-center justify-center w-full px-6 py-3.5 text-[15px] font-semibold text-white rounded-full mt-8"
                   style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
                 >
-                  Apply as Investor
+                  Join the Waitlist
                 </Link>
             </div>
           </motion.div>
@@ -1561,11 +1492,6 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ============ EMAIL CAPTURE ============ */}
-      <div className="relative z-10">
-        <EmailCapture />
-      </div>
-
       {/* ============ FOOTER ============ */}
       <footer className="relative z-10">
         <div className="border-t border-black/[0.06]">
@@ -1586,12 +1512,6 @@ export default function Home() {
               </p>
             </div>
             <div className="flex items-center gap-6">
-              <Link
-                href="/apply/investor"
-                className="text-text-muted/60 hover:text-text-secondary transition-colors duration-300 text-[13px]"
-              >
-                Apply as Investor
-              </Link>
               <a
                 href="#"
                 className="text-text-muted/60 hover:text-text-secondary transition-colors duration-300 text-[13px]"

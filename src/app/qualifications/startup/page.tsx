@@ -273,7 +273,7 @@ export default function StartupQualifications() {
             className="text-[16px] md:text-[18px] text-center mb-12 max-w-lg mx-auto leading-[1.7]"
             style={{ color: "#94A3B8" }}
           >
-            We accept less than 15% of applicants. Here is what we look for.
+            Less than 15% of waitlist signups get into the founding cohort. Here is what we look for.
           </motion.p>
 
           {/* Waitlist note */}
@@ -294,7 +294,7 @@ export default function StartupQualifications() {
                 className="text-[14px] leading-[1.7] mb-4"
                 style={{ color: "#4A6CF7", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
-                These are the qualifications for the founding cohort. Right now, we are accepting waitlist signups. If your idea scores well, you will be invited to submit the full application.
+                These are the qualifications for the founding cohort. Right now, we are accepting waitlist signups. If your idea scores well, we will reach out when we launch.
               </p>
               <Link
                 href="/waitlist"

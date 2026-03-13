@@ -12,11 +12,9 @@ export default function WaitlistPage() {
 
   // Form state
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [oneLiner, setOneLiner] = useState("");
-  const [problem, setProblem] = useState("");
-  const [stage, setStage] = useState("");
-  const [school, setSchool] = useState("");
+  const [interest, setInterest] = useState("");
 
   // Touched state for validation on blur
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -28,11 +26,10 @@ export default function WaitlistPage() {
 
   const allValid =
     name.trim() !== "" &&
+    phone.trim() !== "" &&
     email.trim() !== "" &&
     isValidEmail(email) &&
-    oneLiner.trim() !== "" &&
-    problem.trim() !== "" &&
-    stage !== "";
+    interest !== "";
 
   const handleBlur = (field: string) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
@@ -162,9 +159,7 @@ export default function WaitlistPage() {
                       fontFamily: "var(--font-dm-sans), sans-serif",
                     }}
                   >
-                    Tell us your idea in 60 seconds or less. No pitch deck
-                    needed. No video. Just you and your idea. If it is good, we
-                    will be in touch.
+                    Whether you want to build or invest, it starts here. Drop your info and we will let you know when we launch.
                   </p>
 
                   {/* Form */}
@@ -201,6 +196,42 @@ export default function WaitlistPage() {
                       />
                       <ValidationMessage
                         show={touched.name === true && name.trim() === ""}
+                        message="Required"
+                      />
+                    </div>
+
+                    {/* Phone */}
+                    <div>
+                      <label className={labelClass} style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                        Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        onBlur={() => handleBlur("phone")}
+                        placeholder="(555) 123-4567"
+                        className={inputClass}
+                        style={inputStyle(
+                          "phone",
+                          touched.phone === true && phone.trim() === ""
+                        )}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = "rgba(74, 108, 247, 0.5)";
+                          e.target.style.boxShadow = "0 0 0 3px rgba(74, 108, 247, 0.08)";
+                        }}
+                        onBlurCapture={(e) => {
+                          if (touched.phone && phone.trim() === "") {
+                            e.target.style.borderColor = "#EF4444";
+                          } else {
+                            e.target.style.borderColor = "rgba(0, 0, 0, 0.08)";
+                          }
+                          e.target.style.boxShadow = "none";
+                        }}
+                      />
+                      <ValidationMessage
+                        show={touched.phone === true && phone.trim() === ""}
                         message="Required"
                       />
                     </div>
@@ -253,145 +284,24 @@ export default function WaitlistPage() {
                       />
                     </div>
 
-                    {/* One Liner */}
+                    {/* Interest */}
                     <div>
                       <label className={labelClass} style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                        Your Startup in One Sentence
-                      </label>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          required
-                          value={oneLiner}
-                          onChange={(e) => {
-                            if (e.target.value.length <= 100)
-                              setOneLiner(e.target.value);
-                          }}
-                          onBlur={() => handleBlur("oneLiner")}
-                          placeholder="We help [who] do [what] by [how]"
-                          className={inputClass}
-                          style={{
-                            ...inputStyle(
-                              "oneLiner",
-                              touched.oneLiner === true &&
-                                oneLiner.trim() === ""
-                            ),
-                            paddingRight: "60px",
-                          }}
-                          onFocus={(e) => {
-                            e.target.style.borderColor = "rgba(74, 108, 247, 0.5)";
-                            e.target.style.boxShadow = "0 0 0 3px rgba(74, 108, 247, 0.08)";
-                          }}
-                          onBlurCapture={(e) => {
-                            if (touched.oneLiner && oneLiner.trim() === "") {
-                              e.target.style.borderColor = "#EF4444";
-                            } else {
-                              e.target.style.borderColor = "rgba(0, 0, 0, 0.08)";
-                            }
-                            e.target.style.boxShadow = "none";
-                          }}
-                        />
-                        <span
-                          className="absolute right-4 top-1/2 -translate-y-1/2 text-[12px] tabular-nums font-medium"
-                          style={{
-                            color:
-                              oneLiner.length >= 100
-                                ? "#EF4444"
-                                : oneLiner.length >= 80
-                                ? "#F59E0B"
-                                : "#94A3B8",
-                          }}
-                        >
-                          {oneLiner.length}/100
-                        </span>
-                      </div>
-                      <ValidationMessage
-                        show={
-                          touched.oneLiner === true &&
-                          oneLiner.trim() === ""
-                        }
-                        message="Required"
-                      />
-                    </div>
-
-                    {/* Problem */}
-                    <div>
-                      <label className={labelClass} style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                        What Problem Are You Solving?
-                      </label>
-                      <div className="relative">
-                        <textarea
-                          required
-                          value={problem}
-                          onChange={(e) => {
-                            if (e.target.value.length <= 200)
-                              setProblem(e.target.value);
-                          }}
-                          onBlur={() => handleBlur("problem")}
-                          placeholder="Who has this problem and why does it matter?"
-                          className="w-full h-[100px] rounded-xl px-4 py-3 text-[15px] text-[#0F172A] placeholder:text-[#94A3B8] outline-none transition-all duration-200 resize-none"
-                          style={{
-                            ...inputStyle(
-                              "problem",
-                              touched.problem === true &&
-                                problem.trim() === ""
-                            ),
-                            paddingRight: "60px",
-                          }}
-                          onFocus={(e) => {
-                            e.target.style.borderColor = "rgba(74, 108, 247, 0.5)";
-                            e.target.style.boxShadow = "0 0 0 3px rgba(74, 108, 247, 0.08)";
-                          }}
-                          onBlurCapture={(e) => {
-                            if (touched.problem && problem.trim() === "") {
-                              e.target.style.borderColor = "#EF4444";
-                            } else {
-                              e.target.style.borderColor = "rgba(0, 0, 0, 0.08)";
-                            }
-                            e.target.style.boxShadow = "none";
-                          }}
-                        />
-                        <span
-                          className="absolute right-4 bottom-3 text-[12px] tabular-nums font-medium"
-                          style={{
-                            color:
-                              problem.length >= 200
-                                ? "#EF4444"
-                                : problem.length >= 160
-                                ? "#F59E0B"
-                                : "#94A3B8",
-                          }}
-                        >
-                          {problem.length}/200
-                        </span>
-                      </div>
-                      <ValidationMessage
-                        show={
-                          touched.problem === true &&
-                          problem.trim() === ""
-                        }
-                        message="Required"
-                      />
-                    </div>
-
-                    {/* Stage */}
-                    <div>
-                      <label className={labelClass} style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                        Where Are You At?
+                        I am interested in...
                       </label>
                       <div className="relative">
                         <select
                           required
-                          value={stage}
-                          onChange={(e) => setStage(e.target.value)}
-                          onBlur={() => handleBlur("stage")}
+                          value={interest}
+                          onChange={(e) => setInterest(e.target.value)}
+                          onBlur={() => handleBlur("interest")}
                           className={`${inputClass} appearance-none cursor-pointer`}
                           style={{
                             ...inputStyle(
-                              "stage",
-                              touched.stage === true && stage === ""
+                              "interest",
+                              touched.interest === true && interest === ""
                             ),
-                            color: stage === "" ? "#94A3B8" : "#0F172A",
+                            color: interest === "" ? "#94A3B8" : "#0F172A",
                             paddingRight: "40px",
                           }}
                           onFocus={(e) => {
@@ -399,7 +309,7 @@ export default function WaitlistPage() {
                             e.target.style.boxShadow = "0 0 0 3px rgba(74, 108, 247, 0.08)";
                           }}
                           onBlurCapture={(e) => {
-                            if (touched.stage && stage === "") {
+                            if (touched.interest && interest === "") {
                               e.target.style.borderColor = "#EF4444";
                             } else {
                               e.target.style.borderColor = "rgba(0, 0, 0, 0.08)";
@@ -408,12 +318,11 @@ export default function WaitlistPage() {
                           }}
                         >
                           <option value="" disabled>
-                            Select your stage
+                            Select one
                           </option>
-                          <option value="idea">Just an idea</option>
-                          <option value="prototype">Built a prototype</option>
-                          <option value="early-users">Have early users</option>
-                          <option value="revenue">Generating revenue</option>
+                          <option value="startup">The Startup Side</option>
+                          <option value="investor">The Investor Side</option>
+                          <option value="both">Both</option>
                         </select>
                         <svg
                           width="14"
@@ -430,34 +339,8 @@ export default function WaitlistPage() {
                         </svg>
                       </div>
                       <ValidationMessage
-                        show={touched.stage === true && stage === ""}
+                        show={touched.interest === true && interest === ""}
                         message="Required"
-                      />
-                    </div>
-
-                    {/* School / Company */}
-                    <div>
-                      <label className={labelClass} style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                        School or Company{" "}
-                        <span className="font-normal text-[#94A3B8]">
-                          (optional)
-                        </span>
-                      </label>
-                      <input
-                        type="text"
-                        value={school}
-                        onChange={(e) => setSchool(e.target.value)}
-                        placeholder="BU, Northeastern, MIT, Google, etc."
-                        className={inputClass}
-                        style={inputStyle("school", false)}
-                        onFocus={(e) => {
-                          e.target.style.borderColor = "rgba(74, 108, 247, 0.5)";
-                          e.target.style.boxShadow = "0 0 0 3px rgba(74, 108, 247, 0.08)";
-                        }}
-                        onBlurCapture={(e) => {
-                          e.target.style.borderColor = "rgba(0, 0, 0, 0.08)";
-                          e.target.style.boxShadow = "none";
-                        }}
                       />
                     </div>
 
@@ -742,26 +625,6 @@ export default function WaitlistPage() {
             ))}
           </motion.div>
 
-          {/* Investor link */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.8 }}
-            className="mt-6 text-[14px]"
-            style={{
-              color: "#64748B",
-              fontFamily: "var(--font-dm-sans), sans-serif",
-            }}
-          >
-            Looking to invest instead?{" "}
-            <Link
-              href="/apply/investor"
-              className="font-medium transition-colors duration-200 hover:opacity-80"
-              style={{ color: "#4A6CF7" }}
-            >
-              Apply as Investor
-            </Link>
-          </motion.p>
         </div>
       </main>
     </>

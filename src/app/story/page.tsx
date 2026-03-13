@@ -289,24 +289,14 @@ export default function StoryPage() {
             className="flex flex-col items-center gap-4"
           >
             <Link
-              href="/apply/startup"
+              href="/waitlist"
               className="inline-flex items-center gap-2 px-10 py-4 text-[16px] font-semibold text-white rounded-full transition-all duration-300 hover:-translate-y-0.5"
               style={{
                 background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                 boxShadow: "0 6px 25px rgba(74, 108, 247, 0.35)",
               }}
             >
-              Apply for the Founding Cohort
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </Link>
-            <Link
-              href="/apply/investor"
-              className="text-[15px] font-medium transition-colors duration-200 hover:text-[#4A6CF7]"
-              style={{ color: "#64748B" }}
-            >
-              Or apply as an investor
+              Join the Waitlist &rarr;
             </Link>
           </motion.div>
         </div>

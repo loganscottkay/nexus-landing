@@ -53,10 +53,10 @@ export default function StatusPage() {
                   className="text-[28px] font-normal text-text-primary mb-2 text-center"
                   style={{ fontFamily: "'Instrument Serif', serif" }}
                 >
-                  Check Application Status
+                  Check Waitlist Status
                 </h1>
                 <p className="text-text-muted text-[15px] text-center mb-8">
-                  Enter the email you used to apply.
+                  Enter the email you used to join the waitlist.
                 </p>
 
                 <div className="space-y-4">
@@ -108,7 +108,7 @@ export default function StatusPage() {
                   className="text-[24px] font-normal text-text-primary mb-6 text-center"
                   style={{ fontFamily: "'Instrument Serif', serif" }}
                 >
-                  Application Status
+                  Waitlist Status
                 </h2>
 
                 {/* Status pill */}
@@ -140,8 +140,8 @@ export default function StatusPage() {
                     style={{ background: "rgba(0, 0, 0, 0.06)" }}
                   />
                   <div className="flex justify-between items-center">
-                    <span className="text-[14px] text-text-muted">Application Type</span>
-                    <span className="text-[14px] text-text-primary font-medium">Startup Application</span>
+                    <span className="text-[14px] text-text-muted">Signup Type</span>
+                    <span className="text-[14px] text-text-primary font-medium">Waitlist Signup</span>
                   </div>
                 </div>
 
@@ -229,7 +229,7 @@ export default function StatusPage() {
                 </div>
 
                 <p className="text-text-muted text-[14px] text-center leading-[1.6]">
-                  We review all applications within 5 business days. You will receive an email when a decision is made.
+                  We review all waitlist signups within 5 business days. You will receive an email when a decision is made.
                 </p>
               </div>
 
