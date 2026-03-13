@@ -1149,24 +1149,6 @@ export default function Home() {
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             </motion.div>
-
-            {/* University pill */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.7, ease }}
-              className="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[13px] text-text-muted/70 text-center"
-              style={{
-                background: "rgba(255, 255, 255, 0.3)",
-                border: "1px solid rgba(0, 0, 0, 0.04)",
-                backdropFilter: "blur(8px)",
-              }}
-            >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-50">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                <path d="M7 11V7a5 5 0 0110 0v4" />
-              </svg>
-              Every application scored by a proprietary system built with entrepreneurship faculty from HBS, BU, and Northeastern.
-            </motion.div>
           </motion.div>
         </div>
       </section>
