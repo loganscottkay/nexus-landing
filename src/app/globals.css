@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hide scrollbar for scrollable tabs */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
 /* ---- CSS Custom Property for animated border ---- */
 @property --border-angle {
   syntax: "<angle>";

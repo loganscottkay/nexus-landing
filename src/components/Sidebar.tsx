@@ -77,8 +77,8 @@ const investorNav: NavItem[] = [
 const investorMobileNav: NavItem[] = [
   { label: "Dashboard", icon: icons.dashboard, href: "/dashboard/investor" },
   { label: "Daily Drops", icon: icons.drops, href: "/dashboard/investor/drops" },
-  { label: "Saved", icon: icons.saved, href: "/dashboard/investor/saved" },
   { label: "Scheduling", icon: icons.scheduling, href: "/dashboard/investor/scheduling" },
+  { label: "Settings", icon: icons.settings, href: "/settings/investor" },
 ];
 
 const founderNav: NavItem[] = [
@@ -108,7 +108,7 @@ export default function Sidebar({
   const navList = role === "investor" ? investorNav : founderNav;
   const mobileNavList = role === "investor" ? investorMobileNav : founderMobileNav;
   const isHomeActive = activeLabel === "Home";
-  const homeHref = role === "investor" ? "/dashboard/investor" : "/dashboard/founder";
+  const homeHref = "/";
 
   return (
     <>

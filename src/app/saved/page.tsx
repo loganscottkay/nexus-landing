@@ -52,7 +52,7 @@ export default function SavedPage() {
             Saved Startups
           </motion.h1>
 
-          <div className="space-y-3">
+          <div className="space-y-2 md:space-y-3">
             {startups.map((s, i) => (
               <motion.div
                 key={s.id}
@@ -62,7 +62,7 @@ export default function SavedPage() {
               >
                 <Link
                   href={`/startup/${s.id}`}
-                  className="group relative flex items-center gap-4 rounded-2xl p-5 transition-all duration-300"
+                  className="group relative flex items-center gap-4 md:gap-4 rounded-2xl md:p-5 p-[14px_16px] transition-all duration-300"
                   style={{
                     background: "rgba(255,255,255,0.45)",
                     backdropFilter: "blur(20px) saturate(1.2)",
@@ -91,7 +91,7 @@ export default function SavedPage() {
 
                   {/* Avatar */}
                   <div
-                    className="w-11 h-11 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0"
+                    className="w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold shrink-0"
                     style={{ backgroundColor: s.color }}
                   >
                     {s.initials}
@@ -99,8 +99,8 @@ export default function SavedPage() {
 
                   {/* Info */}
                   <div className="flex-1 min-w-0">
-                    <p className="text-[16px] font-semibold text-text-primary">{s.name}</p>
-                    <p className="text-[14px] text-text-muted truncate">{s.desc}</p>
+                    <p className="text-[15px] md:text-[16px] font-semibold text-text-primary">{s.name}</p>
+                    <p className="text-[13px] md:text-[14px] text-text-muted truncate overflow-hidden whitespace-nowrap text-ellipsis">{s.desc}</p>
                   </div>
 
                   {/* Metrics */}
@@ -110,15 +110,18 @@ export default function SavedPage() {
                     ))}
                   </div>
 
-                  {/* Sector / Stage pills */}
-                  <div className="hidden sm:flex gap-1.5 shrink-0">
+                  {/* Sector pill - visible on mobile as small pill, full pills on sm+ */}
+                  <div className="flex md:hidden shrink-0">
+                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-accent-blue/5 text-accent-blue border border-accent-blue/15">{s.sector}</span>
+                  </div>
+                  <div className="hidden md:flex gap-1.5 shrink-0">
                     <span className="text-[11px] px-2 py-0.5 rounded-full bg-accent-blue/5 text-accent-blue border border-accent-blue/15">{s.sector}</span>
                     <span className="text-[11px] px-2 py-0.5 rounded-full bg-black/[0.03] text-text-muted border border-black/[0.06]">{s.stage}</span>
                   </div>
 
-                  {/* UrgenC Score badge */}
+                  {/* UrgenC Score badge - hidden on mobile */}
                   <div
-                    className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+                    className="hidden md:flex w-8 h-8 rounded-full items-center justify-center shrink-0"
                     style={{
                       background: "white",
                       border: "2px solid transparent",
@@ -135,8 +138,8 @@ export default function SavedPage() {
                     </span>
                   </div>
 
-                  {/* Chevron */}
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                  {/* Chevron - hidden on mobile */}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 hidden md:block">
                     <polyline points="9 18 15 12 9 6" />
                   </svg>
                 </Link>
