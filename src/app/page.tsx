@@ -770,7 +770,7 @@ function MatchNotificationCard() {
     <div
       className="w-[280px] rounded-2xl p-5 dashboard-card relative"
       style={{
-        background: "rgba(10, 10, 15, 0.85)",
+        background: "linear-gradient(135deg, rgba(74,108,247,0.12), rgba(124,92,252,0.10), rgba(6,182,212,0.08)), rgba(15,20,40,0.75)",
         backdropFilter: "blur(24px)",
         border: "1px solid rgba(74, 108, 247, 0.2)",
       }}
@@ -862,7 +862,7 @@ function ChemistryCallCard() {
     <div
       className="w-[280px] rounded-2xl p-5 dashboard-card"
       style={{
-        background: "rgba(10, 10, 15, 0.85)",
+        background: "linear-gradient(135deg, rgba(74,108,247,0.12), rgba(124,92,252,0.10), rgba(6,182,212,0.08)), rgba(15,20,40,0.75)",
         backdropFilter: "blur(24px)",
         border: "1px solid rgba(124, 92, 252, 0.2)",
       }}

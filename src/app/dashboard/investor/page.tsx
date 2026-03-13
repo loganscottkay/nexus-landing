@@ -213,7 +213,7 @@ export default function InvestorDashboard() {
             animate="visible"
             {...glassHover}
           >
-            <div className="glass p-6 md:p-8 mb-6">
+            <div className="glass p-6 md:p-8 mb-6" style={{ background: "linear-gradient(135deg, rgba(74,108,247,0.08), rgba(124,92,252,0.06), rgba(6,182,212,0.05))", backdropFilter: "blur(20px)", border: "1px solid rgba(0,0,0,0.06)" }}>
               <div className="flex flex-col md:flex-row md:items-center gap-8">
                 <div className="flex flex-wrap justify-between gap-6 flex-1">
                   <Stat target={14} label="Startups in Your Feed" trend="this week" trendDir="flat" delay={0} />

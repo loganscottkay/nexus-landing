@@ -105,7 +105,7 @@ function Stat({ value, label, trend, trendDir }: { value: string; label: string;
   );
 }
 
-function GlassCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+function GlassCard({ children, className = "", style: styleProp }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
   return (
     <div className={`rounded-3xl ${className}`} style={{
       background: "rgba(255, 255, 255, 0.45)",
@@ -113,6 +113,7 @@ function GlassCard({ children, className = "" }: { children: React.ReactNode; cl
       WebkitBackdropFilter: "blur(20px) saturate(1.2)",
       border: "1px solid rgba(255, 255, 255, 0.6)",
       boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8)",
+      ...styleProp,
     }}>
       {children}
     </div>
@@ -162,7 +163,7 @@ export default function FounderDashboard() {
 
           {/* Activity Summary */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1, ease }}>
-            <GlassCard className="p-6 md:p-8 mb-6">
+            <GlassCard className="p-6 md:p-8 mb-6" style={{ background: "linear-gradient(135deg, rgba(74,108,247,0.08), rgba(124,92,252,0.06), rgba(6,182,212,0.05))", border: "1px solid rgba(0,0,0,0.06)" }}>
               <div className="flex flex-wrap justify-between gap-6">
                 <Stat value="47" label="Investors Saw Your Pitch" trend="↑ 12%" trendDir="up" />
                 <div className="hidden md:block w-px h-10 self-center bg-black/[0.06]" />
