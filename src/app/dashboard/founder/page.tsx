@@ -51,7 +51,7 @@ function ProfileRing({ pct }: { pct: number }) {
         style={{ transition: "stroke-dashoffset 1.2s ease-out" }}
       />
       <text x="60" y="58" textAnchor="middle" fill="#0F172A" fontSize="28" fontWeight="600" fontFamily="var(--font-dm-sans), sans-serif">{pct}%</text>
-      <text x="60" y="76" textAnchor="middle" fill="#94A3B8" fontSize="11" fontFamily="var(--font-dm-sans), sans-serif">Profile Strength</text>
+      <text x="60" y="76" textAnchor="middle" fill="#94A3B8" fontSize="12" fontFamily="var(--font-dm-sans), sans-serif">Profile Strength</text>
     </svg>
   );
 }
@@ -78,7 +78,7 @@ function DeckChart() {
             }}
           />
           {i % 3 === 0 && (
-            <span className="text-[9px] text-text-muted">{14 - i}d</span>
+            <span className="text-[12px] text-text-muted">{14 - i}d</span>
           )}
         </div>
       ))}
@@ -93,7 +93,7 @@ function Stat({ value, label, trend, trendDir }: { value: string; label: string;
   return (
     <div className="text-center">
       <p className="text-[28px] md:text-[32px] font-semibold text-text-primary leading-none">{value}</p>
-      <p className="text-[11px] md:text-[12px] uppercase tracking-[1px] text-text-muted mt-1.5">{label}</p>
+      <p className="text-[10px] md:text-[12px] uppercase tracking-[1px] text-text-muted mt-1.5">{label}</p>
       <span className="inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded-full text-[11px] font-medium" style={{ background: bgs[trendDir], color: colors[trendDir] }}>
         {trendDir === "up" && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="18 15 12 9 6 15" /></svg>}
         {trendDir === "down" && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="6 9 12 15 18 9" /></svg>}
@@ -107,7 +107,7 @@ function Stat({ value, label, trend, trendDir }: { value: string; label: string;
 
 function GlassCard({ children, className = "", style: styleProp }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
   return (
-    <div className={`rounded-3xl ${className}`} style={{
+    <div className={`rounded-2xl ${className}`} style={{
       background: "rgba(255, 255, 255, 0.45)",
       backdropFilter: "blur(20px) saturate(1.2)",
       WebkitBackdropFilter: "blur(20px) saturate(1.2)",
@@ -117,6 +117,38 @@ function GlassCard({ children, className = "", style: styleProp }: { children: R
     }}>
       {children}
     </div>
+  );
+}
+
+/* ─── Profile Strength Content ─── */
+function ProfileStrengthContent() {
+  return (
+    <>
+      <h3 className="text-[18px] font-semibold text-text-primary mb-5">Profile Strength</h3>
+      <ProfileRing pct={78} />
+      <div className="mt-6 space-y-2.5">
+        {[
+          { label: "Company basics", done: true },
+          { label: "Traction metrics", done: true },
+          { label: "Team profiles", done: true },
+          { label: "Pitch deck", done: true },
+          { label: "Video pitch", done: false },
+          { label: "Investor preferences", done: true },
+        ].map((item) => (
+          <div key={item.label} className={`flex items-center gap-2.5 py-1.5 px-2 rounded-lg min-h-[44px] ${!item.done ? "bg-[rgba(217,119,6,0.06)]" : ""}`}>
+            {item.done ? (
+              <div className="w-5 h-5 rounded-full bg-[#059669] flex items-center justify-center shrink-0">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+              </div>
+            ) : (
+              <div className="w-5 h-5 rounded-full border-2 border-[#D97706]/30 shrink-0" />
+            )}
+            <span className={`text-[14px] flex-1 ${!item.done ? "text-[#D97706] font-medium" : "text-text-primary"}`}>{item.label}</span>
+            {!item.done && <Link href="/settings/founder" className="text-accent-violet text-[13px] hover:underline shrink-0">Add</Link>}
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -135,19 +167,21 @@ export default function FounderDashboard() {
 
       <Sidebar role="founder" activeLabel="Dashboard" />
 
-      <div className="flex-1 md:ml-[240px] relative z-10 pb-20 md:pb-8">
+      <div className="flex-1 md:ml-[240px] relative z-10 pb-[80px] md:pb-8">
         <div className="max-w-[1100px] mx-auto px-4 md:px-8 pt-8">
           {/* Greeting */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, ease }} className="flex items-center justify-between mb-8">
-            <h1 className="text-[24px] md:text-[28px] font-normal text-text-primary" style={{ fontFamily: "'Instrument Serif', serif" }}>
-              {mounted ? getGreeting() : "Good evening"}, Alex
-            </h1>
-            <p className="text-text-muted text-[14px] hidden sm:block">{today}</p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, ease }} className="mb-8">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+              <h1 className="text-[22px] md:text-[28px] font-normal text-text-primary" style={{ fontFamily: "'Instrument Serif', serif" }}>
+                {mounted ? getGreeting() : "Good evening"}, Alex
+              </h1>
+              <p className="text-text-muted text-[13px] md:text-[14px] mt-1 md:mt-0">{today}</p>
+            </div>
           </motion.div>
 
           {/* Activity Summary */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1, ease }}>
-            <GlassCard className="p-6 md:p-8 mb-6" style={{ background: "linear-gradient(135deg, rgba(74,108,247,0.08), rgba(124,92,252,0.06), rgba(6,182,212,0.05))", border: "1px solid rgba(0,0,0,0.06)" }}>
+            <GlassCard className="p-4 md:p-8 mb-4 md:mb-6" style={{ background: "linear-gradient(135deg, rgba(74,108,247,0.08), rgba(124,92,252,0.06), rgba(6,182,212,0.05))", border: "1px solid rgba(0,0,0,0.06)" }}>
               {/* Desktop: horizontal row with dividers */}
               <div className="hidden md:flex flex-wrap justify-between gap-6">
                 <Stat value="47" label="Investors Saw Your Pitch" trend="↑ 12%" trendDir="up" />
@@ -160,25 +194,27 @@ export default function FounderDashboard() {
                 <div className="w-px h-10 self-center bg-black/[0.06]" />
                 <Stat value="12" label="Deck Views" trend="↑ 20%" trendDir="up" />
               </div>
-              {/* Mobile: 2-column grid, 5th stat spans full or sits naturally */}
-              <div className="md:hidden grid grid-cols-2 gap-y-6 gap-x-4">
-                <Stat value="47" label="Investors Saw Your Pitch" trend="↑ 12%" trendDir="up" />
+              {/* Mobile: 2-column grid, 5th stat spans full width */}
+              <div className="md:hidden grid grid-cols-2 gap-4">
+                <Stat value="47" label="Profile Views" trend="↑ 12%" trendDir="up" />
                 <Stat value="8" label="Investors Interested" trend="↑ 33%" trendDir="up" />
                 <Stat value="4" label="Mutual Matches" trend="↑ 100%" trendDir="up" />
                 <Stat value="3" label="Calls Completed" trend="this month" trendDir="flat" />
-                <Stat value="12" label="Deck Views" trend="↑ 20%" trendDir="up" />
+                <div className="col-span-2">
+                  <Stat value="12" label="Deck Views" trend="↑ 20%" trendDir="up" />
+                </div>
               </div>
             </GlassCard>
           </motion.div>
 
-          {/* Grid */}
-          <div className="grid md:grid-cols-[1fr_0.65fr] gap-5">
+          {/* Grid - single column on mobile, 2 columns on desktop */}
+          <div className="flex flex-col md:grid md:grid-cols-[1fr_0.65fr] gap-4 md:gap-5">
             {/* LEFT COLUMN */}
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-4 md:gap-5">
               {/* Recent Investor Interest */}
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.2, ease }}>
-                <GlassCard className="p-6">
-                  <div className="flex items-center justify-between mb-5">
+                <GlassCard className="p-4 md:p-6">
+                  <div className="flex items-center justify-between mb-4 md:mb-5">
                     <div className="flex items-center gap-2">
                       <h3 className="text-[18px] font-semibold text-text-primary">Recent Investor Interest</h3>
                       <div className="w-2 h-2 rounded-full animate-pulse-gentle" style={{ background: "linear-gradient(135deg, #7C5CFC, #4A6CF7)" }} />
@@ -192,9 +228,9 @@ export default function FounderDashboard() {
                     { initials: "ER", color: "#D97706", name: "Elena Rodriguez", firm: "Precursor Ventures", checkSize: "$100K-$250K", hours: 8, urgent: true, position: 3 },
                     { initials: "JP", color: "#0d9488", name: "James Park", firm: "Lux Capital", checkSize: "$500K-$2M", hours: 62, urgent: false, position: 4 },
                   ].map((inv, i, arr) => (
-                    <Link key={inv.name} href="/interests" className={`flex items-center gap-3 py-3 cursor-pointer hover:bg-black/[0.02] -mx-2 px-2 rounded-lg transition-colors ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
+                    <Link key={inv.name} href="/interests" className={`flex items-center gap-3 py-3 min-h-[44px] cursor-pointer hover:bg-black/[0.02] -mx-2 px-2 rounded-lg transition-colors ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
                       <div
-                        className="w-[24px] h-[24px] rounded-full flex items-center justify-center text-[11px] font-bold shrink-0"
+                        className="w-[24px] h-[24px] rounded-full flex items-center justify-center text-[12px] font-bold shrink-0"
                         style={inv.position === 1
                           ? { background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", color: "white" }
                           : { background: "rgba(0,0,0,0.06)", color: "#475569" }
@@ -205,7 +241,7 @@ export default function FounderDashboard() {
                       <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0" style={{ backgroundColor: inv.color }}>{inv.initials}</div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[15px] font-semibold text-text-primary">{inv.name}</p>
-                        <p className="text-[13px] text-text-muted">{inv.firm} &middot; {inv.checkSize}</p>
+                        <p className="text-[13px] text-text-muted truncate">{inv.firm} &middot; {inv.checkSize}</p>
                       </div>
                       {inv.position === 1
                         ? <span className="text-[12px] px-2.5 py-1 rounded-full font-medium shrink-0 animate-pulse-gentle" style={{ background: "rgba(74,108,247,0.08)", color: "#4A6CF7" }}>{inv.hours}h left</span>
@@ -220,10 +256,17 @@ export default function FounderDashboard() {
                 </GlassCard>
               </motion.div>
 
+              {/* Profile Strength - mobile only (appears after investor interest on mobile) */}
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.25, ease }} className="md:hidden">
+                <GlassCard className="p-4">
+                  <ProfileStrengthContent />
+                </GlassCard>
+              </motion.div>
+
               {/* Upcoming Calls */}
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.28, ease }}>
-                <GlassCard className="p-6">
-                  <div className="flex items-center justify-between mb-5">
+                <GlassCard className="p-4 md:p-6">
+                  <div className="flex items-center justify-between mb-4 md:mb-5">
                     <h3 className="text-[18px] font-semibold text-text-primary">Upcoming Calls</h3>
                     <Link href="/matches/founder" className="text-accent-violet text-[14px] hover:underline">View All</Link>
                   </div>
@@ -231,7 +274,7 @@ export default function FounderDashboard() {
                     { initials: "PS", color: "#059669", name: "Priya Sharma", firm: "Lightspeed", time: "Mar 12, 2:00 PM", relative: "In 3 days" },
                     { initials: "DK", color: "#4A6CF7", name: "David Kim", firm: "a16z", time: "Mar 14, 10:30 AM", relative: "In 5 days" },
                   ].map((call, i, arr) => (
-                    <div key={call.name} className={`flex items-center gap-3 py-3 ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
+                    <div key={call.name} className={`flex items-center gap-3 py-3 min-h-[44px] ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
                       <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0" style={{ backgroundColor: call.color }}>{call.initials}</div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[15px] font-semibold text-text-primary">{call.name}</p>
@@ -248,8 +291,8 @@ export default function FounderDashboard() {
 
               {/* Deck Activity */}
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.36, ease }}>
-                <GlassCard className="p-6">
-                  <div className="flex items-center justify-between mb-5">
+                <GlassCard className="p-4 md:p-6">
+                  <div className="flex items-center justify-between mb-4 md:mb-5">
                     <h3 className="text-[18px] font-semibold text-text-primary">Deck Activity</h3>
                     <Link href="/deck-analytics" className="text-accent-violet text-[14px] hover:underline">Full Analytics</Link>
                   </div>
@@ -261,8 +304,8 @@ export default function FounderDashboard() {
                     { initials: "MW", color: "#7C5CFC", name: "Marcus Webb", firm: "Founder Collective", time: "Yesterday" },
                     { initials: "ER", color: "#D97706", name: "Elena Rodriguez", firm: "Precursor", time: "3 days ago" },
                   ].map((v) => (
-                    <div key={v.name} className="flex items-center gap-2.5 py-2">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[10px] font-semibold shrink-0" style={{ backgroundColor: v.color }}>{v.initials}</div>
+                    <div key={v.name} className="flex items-center gap-2.5 py-2 min-h-[44px]">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[12px] font-semibold shrink-0" style={{ backgroundColor: v.color }}>{v.initials}</div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[14px] font-medium text-text-primary">{v.name}</p>
                         <p className="text-[12px] text-text-muted">{v.firm}</p>
@@ -275,40 +318,17 @@ export default function FounderDashboard() {
             </div>
 
             {/* RIGHT COLUMN */}
-            <div className="flex flex-col gap-5">
-              {/* Profile Strength */}
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.35, ease }}>
-                <GlassCard className="p-6">
-                  <h3 className="text-[18px] font-semibold text-text-primary mb-5">Profile Strength</h3>
-                  <ProfileRing pct={78} />
-                  <div className="mt-6 space-y-2.5">
-                    {[
-                      { label: "Company basics", done: true },
-                      { label: "Traction metrics", done: true },
-                      { label: "Team profiles", done: true },
-                      { label: "Pitch deck", done: true },
-                      { label: "Video pitch", done: false },
-                      { label: "Investor preferences", done: true },
-                    ].map((item) => (
-                      <div key={item.label} className={`flex items-center gap-2.5 py-1.5 px-2 rounded-lg ${!item.done ? "bg-[rgba(217,119,6,0.06)]" : ""}`}>
-                        {item.done ? (
-                          <div className="w-5 h-5 rounded-full bg-[#059669] flex items-center justify-center shrink-0">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                          </div>
-                        ) : (
-                          <div className="w-5 h-5 rounded-full border-2 border-[#D97706]/30 shrink-0" />
-                        )}
-                        <span className={`text-[14px] flex-1 ${!item.done ? "text-[#D97706] font-medium" : "text-text-primary"}`}>{item.label}</span>
-                        {!item.done && <Link href="/settings/founder" className="text-accent-violet text-[13px] hover:underline shrink-0">Add</Link>}
-                      </div>
-                    ))}
-                  </div>
+            <div className="flex flex-col gap-4 md:gap-5">
+              {/* Profile Strength - desktop only (on mobile it renders after investor interest above) */}
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.35, ease }} className="hidden md:block">
+                <GlassCard className="p-4 md:p-6">
+                  <ProfileStrengthContent />
                 </GlassCard>
               </motion.div>
 
               {/* Quick Actions */}
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.43, ease }}>
-                <GlassCard className="p-5">
+                <GlassCard className="p-4 md:p-5">
                   <h3 className="text-[16px] font-semibold text-text-primary mb-3">Quick Actions</h3>
                   <div className="space-y-2">
                     {[
@@ -317,7 +337,7 @@ export default function FounderDashboard() {
                       { label: "Record Video Pitch", icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" /></svg>, highlight: true, href: "/settings/founder" },
                       { label: "Preview Your Public Profile", icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>, highlight: false, href: "/startup/1" },
                     ].map((action) => (
-                      <Link key={action.label} href={action.href} className={`flex items-center gap-3 p-4 rounded-xl transition-all duration-200 hover:-translate-y-0.5 ${action.highlight ? "bg-accent-violet/[0.06]" : ""}`} style={{ background: action.highlight ? undefined : "rgba(255,255,255,0.25)", border: `1px solid ${action.highlight ? "rgba(124,92,252,0.15)" : "rgba(255,255,255,0.3)"}` }}>
+                      <Link key={action.label} href={action.href} className={`flex items-center gap-3 p-4 min-h-[48px] rounded-xl transition-all duration-200 hover:-translate-y-0.5 ${action.highlight ? "bg-accent-violet/[0.06]" : ""}`} style={{ background: action.highlight ? undefined : "rgba(255,255,255,0.25)", border: `1px solid ${action.highlight ? "rgba(124,92,252,0.15)" : "rgba(255,255,255,0.3)"}` }}>
                         {action.icon}
                         <span className="text-[15px] font-semibold text-text-primary flex-1">{action.label}</span>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
@@ -329,7 +349,7 @@ export default function FounderDashboard() {
 
               {/* Match Insights */}
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.51, ease }}>
-                <GlassCard className="p-6">
+                <GlassCard className="p-4 md:p-6">
                   <h3 className="text-[16px] font-semibold text-text-primary mb-4">Match Insights</h3>
                   <div className="space-y-4">
                     <div>

@@ -75,7 +75,7 @@ function Stat({ target, decimals = 0, suffix = "", label, trend, trendDir, delay
       <p className="text-[28px] md:text-[32px] font-semibold text-text-primary leading-none">
         {display}{suffix}
       </p>
-      <p className="text-[11px] md:text-[12px] uppercase tracking-[1px] text-text-muted mt-1.5">{label}</p>
+      <p className="text-[10px] md:text-[12px] uppercase tracking-[1px] text-text-muted mt-1.5">{label}</p>
       <span className="inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded-full text-[11px] font-medium" style={{ background: bgs[trendDir], color: colors[trendDir] }}>
         {trendDir === "up" && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="18 15 12 9 6 15" /></svg>}
         {trendDir === "down" && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="6 9 12 15 18 9" /></svg>}
@@ -109,11 +109,11 @@ function EngagementRing({ score }: { score: number }) {
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="text-[28px] font-bold text-text-primary leading-none" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>{score}</span>
-          <span className="text-[11px] text-text-muted leading-none ml-[2px]">/100</span>
+          <span className="text-[12px] text-text-muted leading-none ml-[2px]">/100</span>
         </div>
       </div>
       <p className="text-[13px] text-text-muted text-center mt-2">Engagement Score</p>
-      <span className="text-[11px] px-2.5 py-1 rounded-full font-medium bg-[rgba(5,150,105,0.08)] text-[#059669] mt-1.5">Top 5%</span>
+      <span className="text-[12px] px-2.5 py-1 rounded-full font-medium bg-[rgba(5,150,105,0.08)] text-[#059669] mt-1.5">Top 5%</span>
     </div>
   );
 }
@@ -135,7 +135,7 @@ function SectorBars() {
     <div ref={ref} className="space-y-3">
       {data.map((d, i) => (
         <div key={d.label} className="flex items-center gap-3">
-          <span className="text-[13px] text-text-secondary w-[130px] shrink-0 truncate">{d.label}</span>
+          <span className="text-[13px] text-text-secondary w-[100px] md:w-[130px] shrink-0 truncate">{d.label}</span>
           <div className="flex-1 h-2 rounded-full bg-black/[0.04] overflow-hidden">
             <div
               className="h-full rounded-full"
@@ -151,6 +151,77 @@ function SectorBars() {
         </div>
       ))}
     </div>
+  );
+}
+
+/* ─── Collapsible Pipeline Stage (mobile) ─── */
+function PipelineStage({ title, count, color, children, defaultOpen = true }: {
+  title: string; count: number; color: string; children: React.ReactNode; defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="border-b border-black/[0.04] last:border-b-0">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center w-full py-3 min-h-[44px]"
+      >
+        <div className="w-[3px] h-4 rounded-full mr-2 shrink-0" style={{ backgroundColor: color }} />
+        <span className="text-[12px] uppercase tracking-[1px] text-text-muted flex-1 text-left">
+          {title} <span className="text-text-primary">({count})</span>
+        </span>
+        <svg
+          width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2"
+          strokeLinecap="round" strokeLinejoin="round"
+          className={`shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      {open && <div className="pb-3 space-y-2">{children}</div>}
+    </div>
+  );
+}
+
+/* ─── Pipeline Item Card ─── */
+function PipelineItem({ name, sub, icon }: { name: string; sub: string; icon: React.ReactNode }) {
+  return (
+    <div
+      className="rounded-lg p-3"
+      style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}
+    >
+      <p className="text-[13px] font-semibold text-text-primary">{name}</p>
+      <p className="text-[12px] text-text-muted flex items-center gap-1 mt-0.5">
+        {icon}
+        {sub}
+      </p>
+    </div>
+  );
+}
+
+/* ─── Saved Section Content ─── */
+function SavedContent() {
+  return (
+    <>
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-[18px] font-semibold text-text-primary">Saved <span className="text-text-muted font-normal">(7)</span></h3>
+        <Link href="/saved" className="text-accent-blue text-[14px] hover:underline">View All</Link>
+      </div>
+      {[
+        { initials: "LA", color: "#4A6CF7", name: "Luminary AI", sector: "AI/ML" },
+        { initials: "SP", color: "#0d9488", name: "Stackpay", sector: "Fintech" },
+        { initials: "NP", color: "#7C5CFC", name: "NeuralPath", sector: "Dev Tools" },
+        { initials: "GG", color: "#059669", name: "GreenGrid", sector: "Climate" },
+        { initials: "AR", color: "#e67e22", name: "Archetype", sector: "Enterprise" },
+      ].map((s, i, arr) => (
+        <div key={s.name} className={`flex items-center gap-2.5 py-2.5 min-h-[44px] hover:bg-black/[0.02] transition-all duration-200 cursor-pointer rounded-lg -mx-2 px-2 hover:-translate-y-px hover:shadow-sm ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
+          <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[12px] font-semibold shrink-0" style={{ backgroundColor: s.color }}>{s.initials}</div>
+          <span className="text-[14px] font-semibold text-text-primary flex-1">{s.name}</span>
+          <span className="text-[12px] px-2 py-0.5 rounded-full bg-accent-blue/5 text-accent-blue border border-accent-blue/15">{s.sector}</span>
+          <Link href="/startup/1" className="text-accent-blue text-[13px] hover:underline shrink-0 ml-2">Review</Link>
+        </div>
+      ))}
+      <Link href="/saved" className="text-accent-blue text-[13px] hover:underline mt-3 inline-block">View all 7 saved</Link>
+    </>
   );
 }
 
@@ -174,6 +245,10 @@ const pipelineItemVariants = {
   }),
 };
 
+const clockIcon = <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>;
+const calIcon = <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /></svg>;
+const chatIcon = <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" /></svg>;
+
 export default function InvestorDashboard() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -190,19 +265,21 @@ export default function InvestorDashboard() {
 
       <Sidebar role="investor" activeLabel="Dashboard" />
 
-      <div className="flex-1 md:ml-[240px] relative z-10 pb-20 md:pb-8">
+      <div className="flex-1 md:ml-[240px] relative z-10 pb-[80px] md:pb-8">
         <div className="max-w-[1100px] mx-auto px-4 md:px-8 pt-8">
           {/* Greeting */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3, ease }}
-            className="flex items-center justify-between mb-8"
+            className="mb-8"
           >
-            <h1 className="text-[24px] md:text-[28px] font-normal text-text-primary" style={{ fontFamily: "'Instrument Serif', serif" }}>
-              {mounted ? getGreeting() : "Good morning"}, Jordan
-            </h1>
-            <p className="text-text-muted text-[14px] hidden sm:block">{today}</p>
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+              <h1 className="text-[22px] md:text-[28px] font-normal text-text-primary" style={{ fontFamily: "'Instrument Serif', serif" }}>
+                {mounted ? getGreeting() : "Good morning"}, Jordan
+              </h1>
+              <p className="text-text-muted text-[13px] md:text-[14px] mt-1 md:mt-0">{today}</p>
+            </div>
           </motion.div>
 
           {/* Engagement Scorecard */}
@@ -213,7 +290,7 @@ export default function InvestorDashboard() {
             animate="visible"
             {...glassHover}
           >
-            <div className="glass p-6 md:p-8 mb-6" style={{ background: "linear-gradient(135deg, rgba(74,108,247,0.08), rgba(124,92,252,0.06), rgba(6,182,212,0.05))", backdropFilter: "blur(20px)", border: "1px solid rgba(0,0,0,0.06)" }}>
+            <div className="glass rounded-2xl p-4 md:p-8 mb-4 md:mb-6" style={{ background: "linear-gradient(135deg, rgba(74,108,247,0.08), rgba(124,92,252,0.06), rgba(6,182,212,0.05))", backdropFilter: "blur(20px)", border: "1px solid rgba(0,0,0,0.06)" }}>
               {/* Desktop: horizontal row with dividers */}
               <div className="hidden md:flex md:items-center gap-8">
                 <div className="flex flex-wrap justify-between gap-6 flex-1">
@@ -231,14 +308,16 @@ export default function InvestorDashboard() {
                   <EngagementRing score={94} />
                 </div>
               </div>
-              {/* Mobile: 2-column grid + engagement ring below */}
+              {/* Mobile: 2-column grid, 5th stat spans full width, ring below */}
               <div className="md:hidden">
-                <div className="grid grid-cols-2 gap-y-6 gap-x-4">
-                  <Stat target={14} label="Startups in Your Feed" trend="this week" trendDir="flat" delay={0} />
+                <div className="grid grid-cols-2 gap-4">
+                  <Stat target={14} label="Startups in Feed" trend="this week" trendDir="flat" delay={0} />
                   <Stat target={5} label="Interests Sent" trend="↑ 2 this week" trendDir="up" delay={150} />
                   <Stat target={3} label="Mutual Matches" trend="↑ 1 new" trendDir="up" delay={300} />
                   <Stat target={2} label="Calls Scheduled" trend="next: tomorrow" trendDir="up" delay={450} />
-                  <Stat target={4} label="Video Pitches Watched" trend="today" trendDir="flat" delay={600} />
+                  <div className="col-span-2">
+                    <Stat target={4} label="Video Pitches Watched" trend="today" trendDir="flat" delay={600} />
+                  </div>
                 </div>
                 <div className="border-t border-black/[0.06] pt-6 mt-6 flex justify-center">
                   <EngagementRing score={94} />
@@ -247,17 +326,17 @@ export default function InvestorDashboard() {
             </div>
           </motion.div>
 
-          {/* Grid */}
-          <div className="grid md:grid-cols-[1fr_0.65fr] gap-5">
+          {/* Grid - single column on mobile, 2 columns on desktop */}
+          <div className="flex flex-col md:grid md:grid-cols-[1fr_0.65fr] gap-4 md:gap-5">
             {/* LEFT */}
-            <div className="flex flex-col gap-5">
-              {/* Daily Drops */}
+            <div className="flex flex-col gap-4 md:gap-5">
+              {/* New in Your Feed */}
               <motion.div custom={1} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
-                <div className="glass p-6">
-                  <div className="flex items-center justify-between mb-5">
+                <div className="glass rounded-2xl p-4 md:p-6">
+                  <div className="flex items-center justify-between mb-4 md:mb-5">
                     <div className="flex items-center gap-2">
                       <h3 className="text-[18px] font-semibold text-text-primary">New in Your Feed</h3>
-                      <span className="text-[11px] px-2.5 py-1 rounded-full font-semibold text-white" style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}>New</span>
+                      <span className="text-[12px] px-2.5 py-1 rounded-full font-semibold text-white" style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}>New</span>
                     </div>
                     <Link href="/drops" className="text-accent-blue text-[14px] hover:underline">Open Feed</Link>
                   </div>
@@ -267,32 +346,49 @@ export default function InvestorDashboard() {
                     { initials: "CA", color: "#059669", name: "Canopy Analytics", desc: "Real-time carbon tracking for supply chains", sector: "Climate Tech", stage: "Seed" },
                     { initials: "Br", color: "#e67e22", name: "Briefly", desc: "AI meeting assistant that writes follow-ups", sector: "AI/SaaS", stage: "Pre-Seed" },
                   ].map((s, i, arr) => (
-                    <Link key={s.name} href="/drops" className={`flex items-center gap-3 py-3 cursor-pointer hover:bg-black/[0.02] hover:-translate-y-px hover:shadow-sm -mx-2 px-2 rounded-lg transition-all duration-200 ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
-                      <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0" style={{ backgroundColor: s.color }}>{s.initials}</div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[15px] font-semibold text-text-primary">{s.name}</p>
-                        <p className="text-[13px] text-text-muted truncate">{s.desc}</p>
-                      </div>
-                      <div className="hidden sm:flex gap-1.5 shrink-0">
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-accent-blue/5 text-accent-blue border border-accent-blue/15">{s.sector}</span>
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-black/[0.03] text-text-muted border border-black/[0.06]">{s.stage}</span>
+                    <Link key={s.name} href="/drops" className={`block py-3 min-h-[60px] cursor-pointer hover:bg-black/[0.02] -mx-2 px-2 rounded-lg transition-all duration-200 ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0" style={{ backgroundColor: s.color }}>{s.initials}</div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[15px] font-semibold text-text-primary">{s.name}</p>
+                          <p className="text-[13px] text-text-muted truncate">{s.desc}</p>
+                          {/* Mobile pills */}
+                          <div className="flex gap-1.5 flex-wrap mt-1.5 md:hidden">
+                            <span className="text-[12px] px-2 py-0.5 rounded-full bg-accent-blue/5 text-accent-blue border border-accent-blue/15">{s.sector}</span>
+                            <span className="text-[12px] px-2 py-0.5 rounded-full bg-black/[0.03] text-text-muted border border-black/[0.06]">{s.stage}</span>
+                          </div>
+                        </div>
+                        {/* Desktop pills */}
+                        <div className="hidden md:flex gap-1.5 shrink-0">
+                          <span className="text-[12px] px-2 py-0.5 rounded-full bg-accent-blue/5 text-accent-blue border border-accent-blue/15">{s.sector}</span>
+                          <span className="text-[12px] px-2 py-0.5 rounded-full bg-black/[0.03] text-text-muted border border-black/[0.06]">{s.stage}</span>
+                        </div>
                       </div>
                     </Link>
                   ))}
                 </div>
               </motion.div>
 
+              {/* Saved - mobile only (appears below Feed on mobile) */}
+              <motion.div custom={1.5} variants={cardVariants} initial="hidden" animate="visible" className="md:hidden" {...glassHover}>
+                <div className="glass rounded-2xl p-4">
+                  <SavedContent />
+                </div>
+              </motion.div>
+
               {/* Pipeline */}
               <motion.div custom={2} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
-                <div className="glass p-6">
-                  <div className="flex items-center justify-between mb-5">
+                <div className="glass rounded-2xl p-4 md:p-6">
+                  <div className="flex items-center justify-between mb-4 md:mb-5">
                     <h3 className="text-[18px] font-semibold text-text-primary">Your Pipeline</h3>
                     <Link href="/matches" className="text-accent-blue text-[14px] hover:underline">View All</Link>
                   </div>
-                  <div className="grid grid-cols-3 gap-3">
-                    {/* Interested */}
+
+                  {/* Desktop: 3-column kanban */}
+                  <div className="hidden md:grid grid-cols-3 gap-3">
+                    {/* Waiting */}
                     <div>
-                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #4A6CF7", paddingLeft: "8px" }}>Waiting <span className="text-text-primary">(2)</span></p>
+                      <p className="text-[12px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #4A6CF7", paddingLeft: "8px" }}>Waiting <span className="text-text-primary">(2)</span></p>
                       <div className="space-y-2">
                         {[
                           { name: "Luminary AI", sub: "47h remaining" },
@@ -308,17 +404,17 @@ export default function InvestorDashboard() {
                             style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}
                           >
                             <p className="text-[13px] font-semibold text-text-primary">{c.name}</p>
-                            <p className="text-[11px] text-text-muted flex items-center gap-1 mt-0.5">
-                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                            <p className="text-[12px] text-text-muted flex items-center gap-1 mt-0.5">
+                              {clockIcon}
                               {c.sub}
                             </p>
                           </motion.div>
                         ))}
                       </div>
                     </div>
-                    {/* Matched */}
+                    {/* Call Booked */}
                     <div>
-                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #7C5CFC", paddingLeft: "8px" }}>Call Booked <span className="text-text-primary">(2)</span></p>
+                      <p className="text-[12px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #7C5CFC", paddingLeft: "8px" }}>Call Booked <span className="text-text-primary">(2)</span></p>
                       <div className="space-y-2">
                         {[
                           { name: "Terraform Health", sub: "Call Mar 15" },
@@ -334,17 +430,17 @@ export default function InvestorDashboard() {
                             style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}
                           >
                             <p className="text-[13px] font-semibold text-text-primary">{c.name}</p>
-                            <p className="text-[11px] text-text-muted flex items-center gap-1 mt-0.5">
-                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /></svg>
+                            <p className="text-[12px] text-text-muted flex items-center gap-1 mt-0.5">
+                              {calIcon}
                               {c.sub}
                             </p>
                           </motion.div>
                         ))}
                       </div>
                     </div>
-                    {/* Talking */}
+                    {/* In Progress */}
                     <div>
-                      <p className="text-[11px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #059669", paddingLeft: "8px" }}>In Progress <span className="text-text-primary">(1)</span></p>
+                      <p className="text-[12px] uppercase tracking-[1px] text-text-muted mb-3" style={{ borderLeft: "3px solid #059669", paddingLeft: "8px" }}>In Progress <span className="text-text-primary">(1)</span></p>
                       <div className="space-y-2">
                         <motion.div
                           custom={0}
@@ -355,33 +451,51 @@ export default function InvestorDashboard() {
                           style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}
                         >
                           <p className="text-[13px] font-semibold text-text-primary">Briefly</p>
-                          <p className="text-[11px] text-text-muted flex items-center gap-1 mt-0.5">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" /></svg>
+                          <p className="text-[12px] text-text-muted flex items-center gap-1 mt-0.5">
+                            {chatIcon}
                             Both continue
                           </p>
                         </motion.div>
                       </div>
                     </div>
                   </div>
+
+                  {/* Mobile: collapsible stages */}
+                  <div className="md:hidden">
+                    <PipelineStage title="Waiting" count={2} color="#4A6CF7">
+                      <PipelineItem name="Luminary AI" sub="47h remaining" icon={clockIcon} />
+                      <PipelineItem name="Stackpay" sub="Sent 2 days ago" icon={clockIcon} />
+                    </PipelineStage>
+                    <PipelineStage title="Call Booked" count={2} color="#7C5CFC">
+                      <PipelineItem name="Terraform Health" sub="Call Mar 15" icon={calIcon} />
+                      <PipelineItem name="Canopy Analytics" sub="Scheduling..." icon={calIcon} />
+                    </PipelineStage>
+                    <PipelineStage title="In Progress" count={1} color="#059669">
+                      <PipelineItem name="Briefly" sub="Both continue" icon={chatIcon} />
+                    </PipelineStage>
+                  </div>
                 </div>
               </motion.div>
 
               {/* Your Queue Positions */}
               <motion.div custom={2.5} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
-                <div className="glass p-6">
+                <div className="glass rounded-2xl p-4 md:p-6">
                   <h3 className="text-[18px] font-semibold text-text-primary mb-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Your Queue Positions</h3>
                   <p className="text-[13px] italic mb-5" style={{ color: "#64748B" }}>You are placed in a queue when you express interest. Earlier interest = earlier meeting window. Each founder meets one investor at a time.</p>
                   <div className="space-y-1">
                     {[
-                      { initials: "LA", color: "#4A6CF7", name: "Luminary AI", position: "#1", status: "Your window is open — 47h left", statusColor: "#4A6CF7", pillBg: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", pillText: "white", active: true },
+                      { initials: "LA", color: "#4A6CF7", name: "Luminary AI", position: "#1", status: "Your window is open \u2014 47h left", statusColor: "#4A6CF7", pillBg: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", pillText: "white", active: true },
                       { initials: "TH", color: "#7C5CFC", name: "Terraform Health", position: "#2", status: "Window opens after current", statusColor: "#64748B", pillBg: "rgba(0,0,0,0.04)", pillText: "#64748B", active: false },
                       { initials: "SP", color: "#0d9488", name: "Stackpay", position: "#3", status: "Window opens in ~6 days", statusColor: "#64748B", pillBg: "rgba(0,0,0,0.04)", pillText: "#64748B", active: false },
                     ].map((q, i, arr) => (
-                      <div key={q.name} className={`flex items-center gap-3 py-3 -mx-2 px-2 rounded-lg hover:bg-black/[0.02] transition-colors ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
+                      <div key={q.name} className={`flex items-center gap-3 py-3 min-h-[44px] -mx-2 px-2 rounded-lg hover:bg-black/[0.02] transition-colors ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
                         <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0" style={{ backgroundColor: q.color }}>{q.initials}</div>
-                        <p className="text-[15px] font-semibold text-text-primary flex-1 min-w-0">{q.name}</p>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[15px] font-semibold text-text-primary">{q.name}</p>
+                          <p className="text-[13px] md:hidden" style={{ color: q.statusColor }}>{q.status}</p>
+                        </div>
                         <span className="text-[12px] font-bold px-2.5 py-1 rounded-full shrink-0" style={{ background: q.pillBg, color: q.pillText }}>{q.position}</span>
-                        <p className="text-[13px] shrink-0 hidden sm:block" style={{ color: q.statusColor }}>{q.status}</p>
+                        <p className="text-[13px] shrink-0 hidden md:block" style={{ color: q.statusColor }}>{q.status}</p>
                       </div>
                     ))}
                   </div>
@@ -390,8 +504,8 @@ export default function InvestorDashboard() {
 
               {/* Scheduled Calls */}
               <motion.div custom={3} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
-                <div className="glass p-6">
-                  <div className="flex items-center justify-between mb-5">
+                <div className="glass rounded-2xl p-4 md:p-6">
+                  <div className="flex items-center justify-between mb-4 md:mb-5">
                     <h3 className="text-[18px] font-semibold text-text-primary">Scheduled Calls</h3>
                     <Link href="/matches" className="text-accent-blue text-[14px] hover:underline">View All</Link>
                   </div>
@@ -399,7 +513,7 @@ export default function InvestorDashboard() {
                     { initials: "TH", color: "#7C5CFC", name: "Terraform Health", desc: "Predictive diagnostics", time: "Mar 15, 3:00 PM", relative: "In 6 days" },
                     { initials: "CA", color: "#059669", name: "Canopy Analytics", desc: "Carbon tracking", time: "Mar 17, 11:00 AM", relative: "In 8 days" },
                   ].map((c, i, arr) => (
-                    <div key={c.name} className={`flex items-center gap-3 py-3 hover:bg-black/[0.02] transition-all duration-200 cursor-pointer rounded-lg -mx-2 px-2 hover:-translate-y-px hover:shadow-sm ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
+                    <div key={c.name} className={`flex items-center gap-3 py-3 min-h-[44px] hover:bg-black/[0.02] transition-all duration-200 cursor-pointer rounded-lg -mx-2 px-2 hover:-translate-y-px hover:shadow-sm ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
                       <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0" style={{ backgroundColor: c.color }}>{c.initials}</div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[15px] font-semibold text-text-primary">{c.name}</p>
@@ -416,35 +530,17 @@ export default function InvestorDashboard() {
             </div>
 
             {/* RIGHT */}
-            <div className="flex flex-col gap-5">
-              {/* Saved */}
-              <motion.div custom={4} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
-                <div className="glass p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-[18px] font-semibold text-text-primary">Saved <span className="text-text-muted font-normal">(7)</span></h3>
-                    <Link href="/saved" className="text-accent-blue text-[14px] hover:underline">View All</Link>
-                  </div>
-                  {[
-                    { initials: "LA", color: "#4A6CF7", name: "Luminary AI", sector: "AI/ML" },
-                    { initials: "SP", color: "#0d9488", name: "Stackpay", sector: "Fintech" },
-                    { initials: "NP", color: "#7C5CFC", name: "NeuralPath", sector: "Dev Tools" },
-                    { initials: "GG", color: "#059669", name: "GreenGrid", sector: "Climate" },
-                    { initials: "AR", color: "#e67e22", name: "Archetype", sector: "Enterprise" },
-                  ].map((s, i, arr) => (
-                    <div key={s.name} className={`flex items-center gap-2.5 py-2.5 hover:bg-black/[0.02] transition-all duration-200 cursor-pointer rounded-lg -mx-2 px-2 hover:-translate-y-px hover:shadow-sm ${i < arr.length - 1 ? "border-b border-black/[0.04]" : ""}`}>
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[10px] font-semibold shrink-0" style={{ backgroundColor: s.color }}>{s.initials}</div>
-                      <span className="text-[14px] font-semibold text-text-primary flex-1">{s.name}</span>
-                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-accent-blue/5 text-accent-blue border border-accent-blue/15">{s.sector}</span>
-                      <Link href="/startup/1" className="text-accent-blue text-[13px] hover:underline shrink-0 ml-2">Review</Link>
-                    </div>
-                  ))}
-                  <Link href="/saved" className="text-accent-blue text-[13px] hover:underline mt-3 inline-block">View all 7 saved</Link>
+            <div className="flex flex-col gap-4 md:gap-5">
+              {/* Saved - desktop only (on mobile it renders after Feed above) */}
+              <motion.div custom={4} variants={cardVariants} initial="hidden" animate="visible" className="hidden md:block" {...glassHover}>
+                <div className="glass rounded-2xl p-4 md:p-6">
+                  <SavedContent />
                 </div>
               </motion.div>
 
               {/* Sector Activity */}
               <motion.div custom={5} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
-                <div className="glass p-6">
+                <div className="glass rounded-2xl p-4 md:p-6">
                   <h3 className="text-[16px] font-semibold text-text-primary mb-4">Sector Activity</h3>
                   <SectorBars />
                 </div>
@@ -452,7 +548,7 @@ export default function InvestorDashboard() {
 
               {/* This Week */}
               <motion.div custom={6} variants={cardVariants} initial="hidden" animate="visible" {...glassHover}>
-                <div className="glass p-6">
+                <div className="glass rounded-2xl p-4 md:p-6">
                   <h3 className="text-[16px] font-semibold text-text-primary mb-4">This Week</h3>
                   <div className="space-y-4">
                     {[

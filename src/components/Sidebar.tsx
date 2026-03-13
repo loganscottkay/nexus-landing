@@ -163,27 +163,27 @@ export default function Sidebar({
 
       {/* Mobile bottom tab */}
       <div
-        className="md:hidden fixed bottom-0 left-0 right-0 z-40 grid items-center h-[60px]"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-50 grid items-center"
         style={{
           gridTemplateColumns: "repeat(5, 1fr)",
-          background: "rgba(255, 255, 255, 0.8)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
+          height: "calc(64px + env(safe-area-inset-bottom, 0px))",
+          paddingBottom: "env(safe-area-inset-bottom, 0px)",
+          background: "#FFFFFF",
           borderTop: "1px solid rgba(0, 0, 0, 0.06)",
         }}
       >
         {/* Home tab on mobile */}
-        <Link href="/" className={`flex flex-col items-center justify-center gap-1 py-1 ${isHomeActive ? "text-accent-blue" : "text-text-muted"}`}>
+        <Link href="/" className={`flex flex-col items-center justify-center gap-1 py-1 min-h-[44px] ${isHomeActive ? "text-accent-blue" : "text-text-muted"}`}>
           <span className="w-6 h-6 flex items-center justify-center">{icons.home}</span>
-          <span className="text-[10px] leading-none">Home</span>
+          <span className="text-[12px] leading-none">Home</span>
         </Link>
         {navList.slice(0, 4).map((item) => {
           const isActive = item.label === activeLabel;
           const activeColor = role === "founder" ? "text-accent-violet" : "text-accent-blue";
           return (
-            <Link key={item.label} href={item.href} className={`flex flex-col items-center justify-center gap-1 py-1 ${isActive ? activeColor : "text-text-muted"}`}>
+            <Link key={item.label} href={item.href} className={`flex flex-col items-center justify-center gap-1 py-1 min-h-[44px] ${isActive ? activeColor : "text-text-muted"}`}>
               <span className="w-6 h-6 flex items-center justify-center">{item.icon}</span>
-              <span className="text-[10px] leading-none">{item.label}</span>
+              <span className="text-[12px] leading-none">{item.label}</span>
             </Link>
           );
         })}
