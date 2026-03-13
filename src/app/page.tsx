@@ -505,11 +505,12 @@ function FounderPitchCard() {
 
   return (
     <div
-      className="w-[300px] h-[380px] rounded-2xl p-5 dashboard-card relative overflow-hidden flex flex-col"
+      className="w-[300px] h-[380px] rounded-2xl p-5 relative overflow-hidden flex flex-col"
       style={{
-        background: "rgba(15, 20, 40, 0.75)",
+        background: "rgba(224, 228, 248, 0.6)",
         backdropFilter: "blur(40px)",
-        border: "none",
+        WebkitBackdropFilter: "blur(40px)",
+        border: "1px solid rgba(200, 208, 240, 0.5)",
         opacity: cardVisible ? 1 : 0,
         transition: "opacity 0.5s ease",
       }}
@@ -517,7 +518,7 @@ function FounderPitchCard() {
       <div className="relative flex flex-col justify-between h-full">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <p className="text-white/50 text-[11px] tracking-[3px] uppercase font-medium">Founder Pitch</p>
+          <p className="text-[11px] tracking-[3px] uppercase font-medium" style={{ color: "#475569" }}>Founder Pitch</p>
           <div className="flex items-center gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-[#ef4444] rec-dot-pulse" />
             <span className="text-[11px] text-[#ef4444]/80 font-medium">REC</span>
@@ -529,17 +530,14 @@ function FounderPitchCard() {
           <div
             className="w-[48px] h-[48px] rounded-full flex items-center justify-center flex-shrink-0"
             style={{
-              background: "rgba(15, 20, 40, 0.9)",
-              border: "2px solid transparent",
-              backgroundClip: "padding-box",
-              boxShadow: "0 0 0 2px #4A6CF7, 0 0 0 3px #7C5CFC",
+              background: "#4A6CF7",
             }}
           >
             <span className="text-white font-semibold text-[16px]">AR</span>
           </div>
           <div>
-            <p className="text-white font-semibold text-[16px] leading-tight">Alex Rivera</p>
-            <p className="text-white/50 text-[13px] leading-tight">Luminary AI</p>
+            <p className="font-semibold text-[16px] leading-tight" style={{ color: "#0F172A" }}>Alex Rivera</p>
+            <p className="text-[13px] leading-tight" style={{ color: "#64748B" }}>Luminary AI</p>
           </div>
         </div>
 
@@ -547,27 +545,27 @@ function FounderPitchCard() {
         <div
           className="rounded-xl px-3 py-3 flex items-center gap-3 mb-5"
           style={{
-            background: "rgba(255, 255, 255, 0.08)",
+            background: "rgba(74, 108, 247, 0.08)",
           }}
         >
           <div className="flex-shrink-0">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#4A6CF7" xmlns="http://www.w3.org/2000/svg">
               <polygon points="8,5 20,12 8,19" />
             </svg>
           </div>
-          <p className="text-white text-[13px] flex-1">60-second Video Pitch</p>
-          <p className="text-white/40 text-[12px] tabular-nums">1:00</p>
+          <p className="text-[13px] flex-1" style={{ color: "#0F172A" }}>60-second Video Pitch</p>
+          <p className="text-[12px] tabular-nums" style={{ color: "#64748B" }}>1:00</p>
         </div>
 
         {/* UrgenC Score */}
         <div className="mb-4">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-white/40 text-[10px] tracking-[2px] uppercase">UrgenC Score</p>
-            <p className="text-white font-semibold text-[16px] tabular-nums">
+            <p className="text-[10px] tracking-[2px] uppercase" style={{ color: "#64748B" }}>UrgenC Score</p>
+            <p className="font-semibold text-[16px] tabular-nums" style={{ color: "#0F172A" }}>
               {scoreNum}/100
             </p>
           </div>
-          <div className="h-1.5 rounded-full bg-white/[0.08] overflow-hidden">
+          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(74, 108, 247, 0.1)" }}>
             <div
               className="h-full rounded-full"
               style={{
@@ -582,12 +580,12 @@ function FounderPitchCard() {
         {/* Accepted pill */}
         <div className="flex justify-center">
           <div
-            className="px-4 py-1.5 rounded-full text-[12px] uppercase tracking-[2px] font-semibold transition-opacity duration-500 accepted-pill-glow"
+            className="px-4 py-1.5 rounded-full text-[12px] uppercase tracking-[2px] font-semibold transition-opacity duration-500"
             style={{
               opacity: showAccepted ? 1 : 0,
-              background: "rgba(5, 150, 105, 0.2)",
-              border: "1px solid rgba(5, 150, 105, 0.4)",
-              color: "#34D399",
+              background: "rgba(5, 150, 105, 0.12)",
+              border: "1px solid rgba(5, 150, 105, 0.3)",
+              color: "#059669",
             }}
           >
             Accepted
@@ -762,29 +760,29 @@ function MatchNotificationCard() {
 
   return (
     <div
-      className="w-[280px] rounded-2xl p-5 dashboard-card relative"
+      className="w-[280px] rounded-2xl p-5 relative"
       style={{
-        background: "rgba(15, 20, 40, 0.85)",
+        background: "rgba(224, 228, 248, 0.6)",
         backdropFilter: "blur(24px)",
         WebkitBackdropFilter: "blur(24px)",
-        border: "1px solid rgba(255, 255, 255, 0.1)",
+        border: "1px solid rgba(200, 208, 240, 0.5)",
       }}
     >
       {/* Header */}
       <div className="flex items-center gap-1.5 mb-5">
         <div className="w-1.5 h-1.5 rounded-full bg-[#22c55e] live-dot-pulse" />
-        <span className="text-white/50 text-[11px] tracking-[2px] uppercase">New Match</span>
+        <span className="text-[11px] tracking-[2px] uppercase" style={{ color: "#475569" }}>New Match</span>
       </div>
 
       {/* Connection visual */}
       <div className="flex items-center justify-between mb-5">
         {/* Investor */}
         <div className="flex flex-col items-center gap-1.5">
-          <div className="w-11 h-11 rounded-full bg-[#4A6CF7] flex items-center justify-center text-white text-[11px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple">
+          <div className="w-11 h-11 rounded-full bg-[#4A6CF7] flex items-center justify-center text-white text-[11px] font-bold border-2 border-white/30 avatar-ripple">
             SC
           </div>
-          <p className="text-white text-[11px] font-medium">Sarah C.</p>
-          <p className="text-white/30 text-[10px]">Gradient Ventures</p>
+          <p className="text-[11px] font-medium" style={{ color: "#0F172A" }}>Sarah C.</p>
+          <p className="text-[10px]" style={{ color: "#64748B" }}>Gradient Ventures</p>
         </div>
 
         {/* Animated connection line with traveling dot */}
@@ -798,7 +796,7 @@ function MatchNotificationCard() {
           <div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full transition-all duration-300"
             style={{
-              background: flash ? "rgba(255,255,255,0.5)" : "transparent",
+              background: flash ? "rgba(74,108,247,0.4)" : "transparent",
               transform: `translate(-50%, -50%) scale(${flash ? 1.5 : 0})`,
             }}
           />
@@ -806,25 +804,25 @@ function MatchNotificationCard() {
 
         {/* Startup */}
         <div className="flex flex-col items-center gap-1.5">
-          <div className="w-11 h-11 rounded-full bg-[#7C5CFC] flex items-center justify-center text-white text-[11px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple" style={{ animationDelay: "1.5s" }}>
+          <div className="w-11 h-11 rounded-full bg-[#7C5CFC] flex items-center justify-center text-white text-[11px] font-bold border-2 border-white/30 avatar-ripple" style={{ animationDelay: "1.5s" }}>
             LA
           </div>
-          <p className="text-white text-[11px] font-medium">Luminary AI</p>
-          <p className="text-white/30 text-[10px]">AI/ML Startup</p>
+          <p className="text-[11px] font-medium" style={{ color: "#0F172A" }}>Luminary AI</p>
+          <p className="text-[10px]" style={{ color: "#64748B" }}>AI/ML Startup</p>
         </div>
       </div>
 
       {/* Status + CTA */}
       <p
-        className="text-white text-[13px] text-center mb-3 transition-all duration-500"
-        style={{}}
+        className="text-[13px] text-center mb-3"
+        style={{ color: "#475569" }}
       >
         Mutual interest confirmed
       </p>
       <div className="flex justify-center">
         <div
-          className="px-4 py-1.5 rounded-full text-[11px] font-medium"
-          style={{ background: "rgba(74, 108, 247, 0.2)", color: "#818CF8" }}
+          className="px-4 py-1.5 rounded-full text-[11px] font-medium text-white"
+          style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
         >
           Schedule Call
         </div>
@@ -845,27 +843,27 @@ function ChemistryCallCard() {
 
   return (
     <div
-      className="w-[280px] rounded-2xl p-5 dashboard-card"
+      className="w-[280px] rounded-2xl p-5"
       style={{
-        background: "rgba(15, 20, 40, 0.85)",
+        background: "rgba(224, 228, 248, 0.6)",
         backdropFilter: "blur(24px)",
         WebkitBackdropFilter: "blur(24px)",
-        border: "1px solid rgba(255, 255, 255, 0.1)",
+        border: "1px solid rgba(200, 208, 240, 0.5)",
       }}
     >
       {/* Header */}
       <div className="flex items-center gap-1.5 mb-4">
         <div className="w-1.5 h-1.5 rounded-full bg-[#4A6CF7]" />
-        <span className="text-white/50 text-[11px] tracking-[2px] uppercase">Upcoming Call</span>
+        <span className="text-[11px] tracking-[2px] uppercase" style={{ color: "#475569" }}>Upcoming Call</span>
       </div>
 
       {/* Call title */}
       <div className="flex items-center gap-2.5 mb-3">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(124,92,252,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
           <rect x="2" y="3" width="20" height="14" rx="2" />
           <path d="M8 21h8m-4-4v4" />
         </svg>
-        <p className="text-white text-[15px] font-semibold">Chemistry Call</p>
+        <p className="text-[15px] font-semibold" style={{ color: "#0F172A" }}>Chemistry Call</p>
       </div>
 
       {/* Date/time - crossfade */}
@@ -877,7 +875,8 @@ function ChemistryCallCard() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.4 }}
-            className="text-white/40 text-[14px] absolute"
+            className="text-[14px] absolute"
+            style={{ color: "#64748B" }}
           >
             {callTimes[timeIdx]}
           </motion.p>
@@ -887,29 +886,28 @@ function ChemistryCallCard() {
       {/* Participants with ripple */}
       <div className="flex items-center gap-3 mb-2">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-[#4A6CF7] flex items-center justify-center text-white text-[9px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple-sm">
+          <div className="w-8 h-8 rounded-full bg-[#4A6CF7] flex items-center justify-center text-white text-[9px] font-bold border-2 border-white/30 avatar-ripple-sm">
             SC
           </div>
-          <span className="text-white/60 text-[11px]">Sarah C.</span>
+          <span className="text-[11px]" style={{ color: "#0F172A" }}>Sarah C.</span>
         </div>
-        <span className="text-white/15 text-[10px]">&amp;</span>
+        <span className="text-[10px]" style={{ color: "#94A3B8" }}>&amp;</span>
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-[#7C5CFC] flex items-center justify-center text-white text-[9px] font-bold border-2 border-[rgba(10,10,15,0.85)] avatar-ripple-sm" style={{ animationDelay: "1.5s" }}>
+          <div className="w-8 h-8 rounded-full bg-[#7C5CFC] flex items-center justify-center text-white text-[9px] font-bold border-2 border-white/30 avatar-ripple-sm" style={{ animationDelay: "1.5s" }}>
             LA
           </div>
-          <span className="text-white/60 text-[11px]">Luminary AI</span>
+          <span className="text-[11px]" style={{ color: "#0F172A" }}>Luminary AI</span>
         </div>
       </div>
 
-      <p className="text-white/25 text-[12px] mb-4">Duration: 20 min</p>
+      <p className="text-[12px] mb-4" style={{ color: "#64748B" }}>Duration: 20 min</p>
 
-      {/* Join Call button with periodic pulse */}
+      {/* Join Call button */}
       <div className="flex justify-center">
         <div
-          className="px-4 py-1.5 rounded-full text-[11px] font-medium"
+          className="px-4 py-1.5 rounded-full text-[11px] font-medium text-white"
           style={{
-            background: "rgba(74, 108, 247, 0.2)",
-            color: "#818CF8",
+            background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
           }}
         >
           Join Call
@@ -1783,7 +1781,7 @@ export default function Home() {
       </section>
 
       {/* ============ EMAIL CAPTURE ============ */}
-      <div className="relative z-10 border-t" style={{ borderColor: "rgba(0, 0, 0, 0.06)" }}>
+      <div className="relative z-10">
         <EmailCapture />
       </div>
 
