@@ -591,6 +591,12 @@ const matchingSteps = [
 ];
 
 function MatchingFlowSection() {
+  const labelColors: Record<string, { bg: string; text: string }> = {
+    "FOR FOUNDERS": { bg: "rgba(124, 92, 252, 0.1)", text: "#7C5CFC" },
+    "FOR INVESTORS": { bg: "rgba(74, 108, 247, 0.1)", text: "#4A6CF7" },
+    "BOTH SIDES": { bg: "rgba(212, 175, 55, 0.1)", text: "#D4AF37" },
+  };
+
   return (
     <Section className="relative z-10 px-6 py-20 lg:py-20 max-w-6xl mx-auto">
       <motion.div
@@ -624,18 +630,17 @@ function MatchingFlowSection() {
           Here is how it works for both sides.
         </motion.p>
 
-        {/* Step flow - horizontal on desktop, vertical on mobile */}
+        {/* Desktop: horizontal flow with connecting lines */}
         <motion.div
           variants={cardStagger}
-          className="grid grid-cols-1 md:grid-cols-2 lg:flex gap-4 w-full"
+          className="hidden md:flex gap-0 w-full items-stretch"
         >
           {matchingSteps.map((step, i) => (
             <React.Fragment key={step.num}>
               {/* Connecting line between steps */}
               {i > 0 && (
-                <div className="hidden lg:flex items-center justify-center lg:py-0 py-2">
-                  {/* Desktop: horizontal line */}
-                  <div className="hidden lg:block w-[40px] xl:w-[60px] h-[2px] relative overflow-hidden shrink-0">
+                <div className="flex items-center justify-center shrink-0">
+                  <div className="w-[40px] xl:w-[60px] h-[2px] relative overflow-hidden">
                     <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)", opacity: 0.3 }} />
                     <div
                       className="matching-flow-dot absolute top-[-2px] w-1.5 h-1.5 rounded-full"
@@ -645,10 +650,6 @@ function MatchingFlowSection() {
                       }}
                     />
                   </div>
-                  {/* Mobile: vertical line */}
-                  <div className="lg:hidden w-[2px] h-[32px] relative overflow-hidden">
-                    <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, #4A6CF7, #7C5CFC)", opacity: 0.3 }} />
-                  </div>
                 </div>
               )}
 
@@ -656,11 +657,12 @@ function MatchingFlowSection() {
               <motion.div
                 variants={fadeUp}
                 transition={{ duration: 0.6, delay: i * 0.1, ease }}
-                className="flex-1 max-w-none md:max-w-none lg:max-w-[280px] w-full min-h-[240px]"
+                className="flex-1 max-w-[280px] w-full min-h-[240px]"
               >
-                <div className="glow-card-wrapper h-full">
+                <div className={`glow-card-wrapper h-full matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
                   <div
-                    className="h-full rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-[3px]"
+                    className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300"
+                    data-label={step.label}
                     style={{
                       background: "rgba(255, 255, 255, 0.45)",
                       backdropFilter: "blur(40px)",
@@ -669,9 +671,15 @@ function MatchingFlowSection() {
                     }}
                   >
                     <div className="mb-4">{step.icon}</div>
-                    <p className="text-[10px] tracking-[2px] uppercase mb-1.5 font-medium" style={{ color: step.labelColor, letterSpacing: "2px" }}>
+                    <span
+                      className="inline-block rounded-full px-2.5 py-0.5 text-[10px] tracking-[2px] uppercase font-medium mb-1.5"
+                      style={{
+                        background: labelColors[step.label]?.bg || "rgba(124,92,252,0.1)",
+                        color: labelColors[step.label]?.text || step.labelColor,
+                      }}
+                    >
                       {step.label}
-                    </p>
+                    </span>
                     <p className="text-[11px] tracking-[2px] uppercase mb-2 font-medium" style={{ color: step.color }}>
                       Step {step.num}
                     </p>
@@ -687,6 +695,77 @@ function MatchingFlowSection() {
               </motion.div>
             </React.Fragment>
           ))}
+        </motion.div>
+
+        {/* Mobile: vertical timeline flow */}
+        <motion.div
+          variants={cardStagger}
+          className="md:hidden relative w-full"
+        >
+          {/* Vertical connecting line */}
+          <div
+            className="absolute left-[11px] top-[12px] bottom-[12px] w-[2px]"
+            style={{
+              background: "linear-gradient(180deg, #4A6CF7, #7C5CFC)",
+              opacity: 0.25,
+            }}
+          />
+
+          <div className="flex flex-col gap-5">
+            {matchingSteps.map((step, i) => (
+              <motion.div
+                key={step.num}
+                variants={fadeUp}
+                transition={{ duration: 0.6, delay: i * 0.1, ease }}
+                className="flex items-start gap-0"
+              >
+                {/* Numbered circle on the timeline */}
+                <div
+                  className="shrink-0 w-[24px] h-[24px] rounded-full flex items-center justify-center z-10 mt-5"
+                  style={{
+                    background: `linear-gradient(135deg, ${step.color}, ${step.labelColor})`,
+                    boxShadow: `0 0 8px ${step.color}40`,
+                  }}
+                >
+                  <span className="text-white text-[11px] font-semibold leading-none">{i + 1}</span>
+                </div>
+
+                {/* Card */}
+                <div className={`flex-1 ml-4 matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
+                  <div
+                    className="matching-flow-card rounded-2xl p-5"
+                    data-label={step.label}
+                    style={{
+                      background: "rgba(255, 255, 255, 0.45)",
+                      backdropFilter: "blur(40px)",
+                      WebkitBackdropFilter: "blur(40px)",
+                      border: "1px solid rgba(0, 0, 0, 0.06)",
+                    }}
+                  >
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="shrink-0">{step.icon}</div>
+                      <span
+                        className="inline-block rounded-full px-2.5 py-0.5 text-[10px] tracking-[2px] uppercase font-medium"
+                        style={{
+                          background: labelColors[step.label]?.bg || "rgba(124,92,252,0.1)",
+                          color: labelColors[step.label]?.text || step.labelColor,
+                        }}
+                      >
+                        {step.label}
+                      </span>
+                    </div>
+                    <h3
+                      className="text-[16px] font-semibold text-text-primary mb-1.5"
+                      style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                    >
+                      {step.title}
+                    </h3>
+                    <p className="text-[13px] text-text-muted leading-[1.6]">{step.desc}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </motion.div>
     </Section>

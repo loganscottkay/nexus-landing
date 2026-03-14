@@ -26,13 +26,6 @@ const icons: Record<string, React.ReactNode> = {
       <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
     </svg>
   ),
-  confidentiality: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      <rect x="9" y="9" width="6" height="7" rx="1" />
-      <path d="M10 9V7a2 2 0 114 0v2" />
-    </svg>
-  ),
   value: (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -53,7 +46,7 @@ const icons: Record<string, React.ReactNode> = {
   ),
 };
 
-const cards = [
+const applicationCards = [
   {
     icon: "identity",
     title: "Identity Verification",
@@ -85,16 +78,9 @@ const cards = [
     ],
     why: "Clear thesis = better matches.",
   },
-  {
-    icon: "confidentiality",
-    title: "Confidentiality Agreement",
-    items: [
-      "By joining UrgenC, you agree to keep all startup information confidential",
-      "Pitch decks, financials, and strategies shared with you are for investment evaluation only",
-      "Misuse results in permanent removal and potential legal action",
-    ],
-    why: "Founders trust us with their ideas. We protect that trust.",
-  },
+];
+
+const onAppCards = [
   {
     icon: "value",
     title: "Value Beyond Capital",
@@ -116,21 +102,30 @@ const cards = [
     ],
     why: "Founders invest months building. Show up.",
   },
-  {
-    icon: "rejected",
-    title: "What Gets You Rejected",
-    items: [
-      "Unverifiable identity",
-      "No thesis or stated range",
-      "Fraudulent activity history",
-      "Using platform to harvest decks without intent",
-    ],
-    why: null,
-    isRejection: true,
-  },
 ];
 
-function QualCard({ card, index }: { card: typeof cards[number]; index: number }) {
+const rejectionCard = {
+  icon: "rejected",
+  title: "What Gets You Rejected",
+  items: [
+    "Unverifiable identity",
+    "No thesis or stated range",
+    "Fraudulent activity history",
+    "Using platform to harvest decks without intent",
+  ],
+  why: null as string | null,
+  isRejection: true,
+};
+
+type CardData = {
+  icon: string;
+  title: string;
+  items: string[];
+  why: string | null;
+  isRejection?: boolean;
+};
+
+function QualCard({ card, index }: { card: CardData; index: number }) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -143,17 +138,19 @@ function QualCard({ card, index }: { card: typeof cards[number]; index: number }
       onMouseLeave={() => setHovered(false)}
     >
       <div
-        className="relative rounded-xl md:rounded-2xl p-6 md:p-8"
+        className="qual-card relative rounded-xl md:rounded-2xl p-6 md:p-8"
         style={{
-          background: "rgba(255, 255, 255, 0.5)",
+          background: hovered
+            ? undefined
+            : "rgba(255, 255, 255, 0.5)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
           border: card.isRejection
             ? `1px solid rgba(239, 68, 68, ${hovered ? 0.2 : 0.12})`
             : `1px solid rgba(0, 0, 0, ${hovered ? 0.1 : 0.06})`,
-          transform: hovered ? "translateY(-3px)" : "translateY(0)",
-          boxShadow: hovered ? "0 8px 30px rgba(0, 0, 0, 0.08)" : "0 0 0 rgba(0, 0, 0, 0)",
-          transition: "all 0.25s ease",
+          transform: hovered ? "translateY(-6px)" : "translateY(0)",
+          boxShadow: hovered ? "0 20px 50px rgba(0, 0, 0, 0.08)" : "0 0 0 rgba(0, 0, 0, 0)",
+          transition: "all 0.4s ease",
         }}
       >
         {/* Step counter */}
@@ -262,17 +259,133 @@ export default function InvestorQualifications() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease, delay: 0.06 }}
-            className="text-[16px] md:text-[18px] text-center mb-12 max-w-lg mx-auto leading-[1.7]"
+            className="text-[16px] md:text-[18px] text-center mb-10 max-w-lg mx-auto leading-[1.7]"
             style={{ color: "#94A3B8" }}
           >
             UrgenC welcomes investors of all sizes. Here is how we verify you are serious.
           </motion.p>
 
-          {/* Cards */}
+          {/* Confidentiality Notice Banner */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease, delay: 0.12 }}
+            className="mx-auto mb-12"
+            style={{ maxWidth: "700px" }}
+          >
+            <div
+              className="flex items-start gap-4 rounded-2xl"
+              style={{
+                background: "rgba(74, 108, 247, 0.04)",
+                border: "1px solid rgba(74, 108, 247, 0.12)",
+                padding: "20px 28px",
+              }}
+            >
+              <span className="shrink-0 mt-0.5" style={{ color: "#4A6CF7" }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <rect x="9" y="9" width="6" height="7" rx="1" />
+                  <path d="M10 9V7a2 2 0 114 0v2" />
+                </svg>
+              </span>
+              <div>
+                <p
+                  className="font-semibold mb-1"
+                  style={{
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                    fontSize: "16px",
+                    color: "#4A6CF7",
+                  }}
+                >
+                  Confidentiality Agreement
+                </p>
+                <p
+                  style={{
+                    fontFamily: "var(--font-dm-sans), sans-serif",
+                    fontSize: "14px",
+                    color: "#475569",
+                    lineHeight: 1.6,
+                  }}
+                >
+                  By joining UrgenC, you agree to keep all startup information confidential. Pitch decks, financials, and strategies shared with you are for investment evaluation only. Misuse results in permanent removal and potential legal action.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Section 1: Application Qualifications */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease }}
+            className="text-center mb-10"
+          >
+            <p
+              className="gradient-text font-medium mb-3"
+              style={{
+                fontSize: "12px",
+                textTransform: "uppercase",
+                letterSpacing: "3px",
+              }}
+            >
+              Application Qualifications
+            </p>
+            <p
+              style={{
+                fontFamily: "var(--font-dm-sans), sans-serif",
+                fontSize: "14px",
+                color: "#94A3B8",
+              }}
+            >
+              What you need to apply for the founding cohort.
+            </p>
+          </motion.div>
+
           <div className="flex flex-col" style={{ gap: "20px" }}>
-            {cards.map((card, i) => (
+            {applicationCards.map((card, i) => (
               <QualCard key={card.title} card={card} index={i} />
             ))}
+          </div>
+
+          {/* Section 2: On-App Requirements */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease }}
+            className="text-center mt-10 mb-10"
+          >
+            <p
+              className="gradient-text font-medium mb-3"
+              style={{
+                fontSize: "12px",
+                textTransform: "uppercase",
+                letterSpacing: "3px",
+              }}
+            >
+              On-App Requirements
+            </p>
+            <p
+              style={{
+                fontFamily: "var(--font-dm-sans), sans-serif",
+                fontSize: "14px",
+                color: "#94A3B8",
+              }}
+            >
+              What is expected of you once you are on the platform.
+            </p>
+          </motion.div>
+
+          <div className="flex flex-col" style={{ gap: "20px" }}>
+            {onAppCards.map((card, i) => (
+              <QualCard key={card.title} card={card} index={i} />
+            ))}
+          </div>
+
+          {/* What Gets You Rejected */}
+          <div className="mt-8">
+            <QualCard card={rejectionCard} index={0} />
           </div>
 
           {/* CTA */}

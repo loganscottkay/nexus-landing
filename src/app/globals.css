@@ -87,10 +87,10 @@ body {
   position: absolute;
   inset: 0;
   border-radius: 24px;
-  background: rgba(74, 108, 247, 0.04);
+  background: linear-gradient(135deg, rgba(74,108,247,0.04), rgba(124,92,252,0.03), rgba(6,182,212,0.02));
   z-index: 0;
   opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.4s ease;
   pointer-events: none;
 }
 
@@ -1347,7 +1347,33 @@ html {
   transform: scale(1.04);
 }
 
-/* 9. Prefers reduced motion */
+/* 9. Pastel hover gradients for matching flow cards and qualification cards */
+@media (hover: hover) {
+  /* Founders cards: violet tint */
+  .matching-card-founders:hover .matching-flow-card,
+  .matching-card-founders .matching-flow-card:hover {
+    background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(168,85,247,0.03)) !important;
+  }
+
+  /* Investors cards: blue/teal tint */
+  .matching-card-investors:hover .matching-flow-card,
+  .matching-card-investors .matching-flow-card:hover {
+    background: linear-gradient(135deg, rgba(74,108,247,0.05), rgba(6,182,212,0.03)) !important;
+  }
+
+  /* Both sides cards: gold tint */
+  .matching-card-both:hover .matching-flow-card,
+  .matching-card-both .matching-flow-card:hover {
+    background: linear-gradient(135deg, rgba(212,175,55,0.04), rgba(245,215,110,0.03)) !important;
+  }
+
+  /* Qualification page cards: soft pastel rainbow */
+  .qual-card:hover {
+    background: linear-gradient(135deg, rgba(74,108,247,0.03), rgba(124,92,252,0.03), rgba(236,72,153,0.02)) !important;
+  }
+}
+
+/* 10. Prefers reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
