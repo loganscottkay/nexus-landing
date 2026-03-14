@@ -883,7 +883,7 @@ export default function Home() {
           style={{ background: "linear-gradient(to bottom, transparent, rgba(0,0,0,0.02))" }}
         />
         {/* Centered hero text */}
-        <div className="flex flex-col items-center justify-center text-center px-6 max-w-[700px] lg:max-w-[680px] mx-auto relative z-10">
+        <div className="flex flex-col items-center justify-center text-center px-6 max-w-[700px] lg:max-w-[780px] mx-auto relative z-10">
           <div className="flex flex-col items-center">
             {/* Eyebrow - gradient text, first to appear */}
             <motion.p
@@ -907,7 +907,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30, clipPath: "inset(100% 0 0 0)" }}
                 animate={{ opacity: 1, y: 0, clipPath: "inset(0 0 0 0)" }}
                 transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
-                className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] font-normal leading-[1.1] tracking-tight"
+                className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] xl:text-[72px] font-normal leading-[1.1] tracking-tight"
                 style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
               >
                 Where <span className="gradient-text-animate">Real Ideas</span>
@@ -916,7 +916,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30, clipPath: "inset(100% 0 0 0)" }}
                 animate={{ opacity: 1, y: 0, clipPath: "inset(0 0 0 0)" }}
                 transition={{ duration: 0.8, delay: 0.65, ease: [0.25, 0.4, 0.25, 1] }}
-                className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] font-normal leading-[1.1] tracking-tight"
+                className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] xl:text-[72px] font-normal leading-[1.1] tracking-tight"
                 style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
               >
                 Meet <span className="gradient-text-animate">Real Capital.</span>
@@ -936,10 +936,10 @@ export default function Home() {
                 style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 {[
-                  "UrgenC is the first real fundraising app.",
-                  "Founders pitch. Investors swipe.",
-                  "Mutual interest = guaranteed meeting.",
-                  "No shows get removed.",
+                  <>UrgenC is the first real fundraising app.</>,
+                  <>Founders pitch. Investors swipe.</>,
+                  <>Mutual interest = <em style={{ fontStyle: "italic" }}>guaranteed meeting.</em></>,
+                  <>No shows get <em style={{ fontStyle: "italic" }}>removed.</em></>,
                 ].map((line, i) => (
                   <motion.span
                     key={i}
