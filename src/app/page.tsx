@@ -1276,31 +1276,64 @@ export default function Home() {
 
             {/* Credibility strip */}
             <motion.div
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 2.0, ease }}
+              transition={{ duration: 0.5, delay: 2.3, ease }}
               className="flex flex-col items-center mt-5 mb-4"
             >
-              <div className="flex items-center gap-3">
-                {/* BU Shield */}
-                <svg width="24" height="24" viewBox="0 0 24 28" fill="none" className="h-[20px] w-auto md:h-[24px]">
-                  <path d="M12 0C5.5 0 0 2 0 2v16c0 4 4.5 8 12 10 7.5-2 12-6 12-10V2S18.5 0 12 0z" fill="#CC0000"/>
-                  <text x="12" y="17" textAnchor="middle" fill="white" fontSize="7" fontFamily="var(--font-dm-sans), sans-serif" fontWeight="700">BU</text>
-                </svg>
-                {/* NEU Shield */}
-                <svg width="24" height="24" viewBox="0 0 24 28" fill="none" className="h-[20px] w-auto md:h-[24px]">
-                  <path d="M12 0C5.5 0 0 2 0 2v16c0 4 4.5 8 12 10 7.5-2 12-6 12-10V2S18.5 0 12 0z" fill="#D41B2C"/>
-                  <text x="12" y="17" textAnchor="middle" fill="white" fontSize="6" fontFamily="var(--font-dm-sans), sans-serif" fontWeight="700">NEU</text>
-                </svg>
-                {/* HBS Shield */}
-                <svg width="24" height="24" viewBox="0 0 24 28" fill="none" className="h-[20px] w-auto md:h-[24px]">
-                  <path d="M12 0C5.5 0 0 2 0 2v16c0 4 4.5 8 12 10 7.5-2 12-6 12-10V2S18.5 0 12 0z" fill="#A51C30"/>
-                  <text x="12" y="17" textAnchor="middle" fill="white" fontSize="6" fontFamily="var(--font-dm-sans), sans-serif" fontWeight="700">HBS</text>
-                </svg>
+              <div className="flex items-center gap-6 md:gap-8">
+                {/* BU Logo */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 2.3, ease }}
+                  style={{ animation: "floatLogo1 3.5s ease-in-out infinite" }}
+                >
+                  <img
+                    src="/images/universities/bu-logo.jpg"
+                    alt="Boston University"
+                    className="h-[28px] md:h-[36px] w-auto object-contain transition-all duration-[400ms]"
+                    style={{ filter: "grayscale(100%) opacity(0.5)" }}
+                    onMouseEnter={(e) => { (e.target as HTMLImageElement).style.filter = "grayscale(0%) opacity(0.8)"; }}
+                    onMouseLeave={(e) => { (e.target as HTMLImageElement).style.filter = "grayscale(100%) opacity(0.5)"; }}
+                  />
+                </motion.div>
+                {/* NEU Logo */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 2.4, ease }}
+                  style={{ animation: "floatLogo2 4.0s ease-in-out infinite", animationDelay: "-0.5s" }}
+                >
+                  <img
+                    src="/images/universities/neu-logo.png"
+                    alt="Northeastern University"
+                    className="h-[28px] md:h-[36px] w-auto object-contain rounded-full transition-all duration-[400ms]"
+                    style={{ filter: "grayscale(100%) opacity(0.5)", mixBlendMode: "multiply" }}
+                    onMouseEnter={(e) => { (e.target as HTMLImageElement).style.filter = "grayscale(0%) opacity(0.8)"; }}
+                    onMouseLeave={(e) => { (e.target as HTMLImageElement).style.filter = "grayscale(100%) opacity(0.5)"; }}
+                  />
+                </motion.div>
+                {/* HBS Logo */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 2.5, ease }}
+                  style={{ animation: "floatLogo3 3.8s ease-in-out infinite", animationDelay: "-1.0s" }}
+                >
+                  <img
+                    src="/images/universities/hbs-logo.png"
+                    alt="Harvard Business School"
+                    className="h-[28px] md:h-[36px] w-auto object-contain transition-all duration-[400ms]"
+                    style={{ filter: "grayscale(100%) opacity(0.5)" }}
+                    onMouseEnter={(e) => { (e.target as HTMLImageElement).style.filter = "grayscale(0%) opacity(0.8)"; }}
+                    onMouseLeave={(e) => { (e.target as HTMLImageElement).style.filter = "grayscale(100%) opacity(0.5)"; }}
+                  />
+                </motion.div>
               </div>
               <p
-                className="mt-2 text-[12px] md:text-[13px]"
-                style={{ color: "rgba(0,0,0,0.35)", letterSpacing: "0.5px", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                className="mt-3 text-[12px] md:text-[13px]"
+                style={{ color: "rgba(0,0,0,0.25)", letterSpacing: "0.5px", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 Built in Boston &middot; BU &times; Northeastern &times; HBS
               </p>

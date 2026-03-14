@@ -3,6 +3,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---- University logo floating animations ---- */
+@keyframes floatLogo1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes floatLogo2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes floatLogo3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+@media (max-width: 767px) {
+  @keyframes floatLogo1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+  @keyframes floatLogo2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.5px); } }
+  @keyframes floatLogo3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.5px); } }
+}
+
 /* Hide scrollbar for scrollable tabs */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
