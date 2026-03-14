@@ -56,12 +56,13 @@ function useReducedMotion() {
 export default function StoryPage() {
   const timelineRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [revealedMilestones, setRevealedMilestones] = useState<Set<number>>(new Set());
-  const [filledMilestones, setFilledMilestones] = useState<Set<number>>(new Set());
-  const milestoneRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [activatedMilestones, setActivatedMilestones] = useState<Set<number>>(new Set());
+  const [revealedCards, setRevealedCards] = useState<Set<number>>(new Set());
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const founderRef = useRef<HTMLDivElement>(null);
   const [foundersRevealed, setFoundersRevealed] = useState(false);
   const reducedMotion = useReducedMotion();
+  const [dotPulsing, setDotPulsing] = useState<number | null>(null);
 
   // Scroll-driven progress for the timeline
   const updateScroll = useCallback(() => {
@@ -73,13 +74,29 @@ export default function StoryPage() {
     const viewportMiddle = window.scrollY + window.innerHeight * 0.5;
     const progress = Math.max(0, Math.min(1, (viewportMiddle - timelineTop) / timelineHeight));
     setScrollProgress(progress);
+
+    // Check which milestones the fill has reached
+    const milestonePositions = milestones.map((_, i) => i / (milestones.length - 1));
+    milestonePositions.forEach((pos, i) => {
+      if (progress >= pos - 0.02) {
+        setActivatedMilestones((prev) => {
+          if (prev.has(i)) return prev;
+          const next = new Set(prev);
+          next.add(i);
+          // Trigger dot pulse
+          setDotPulsing(i);
+          setTimeout(() => setDotPulsing(null), 300);
+          return next;
+        });
+      }
+    });
   }, []);
 
   useEffect(() => {
     if (reducedMotion) {
       setScrollProgress(1);
-      setRevealedMilestones(new Set([0, 1, 2, 3, 4]));
-      setFilledMilestones(new Set([0, 1, 2, 3, 4]));
+      setActivatedMilestones(new Set([0, 1, 2, 3, 4]));
+      setRevealedCards(new Set([0, 1, 2, 3, 4]));
       setFoundersRevealed(true);
       return;
     }
@@ -96,31 +113,26 @@ export default function StoryPage() {
     };
   }, [updateScroll, reducedMotion]);
 
-  // Intersection observer for milestone reveals
+  // IntersectionObserver for card reveals
   useEffect(() => {
     if (reducedMotion) return;
 
     const observers: IntersectionObserver[] = [];
 
-    milestoneRefs.current.forEach((ref, i) => {
+    cardRefs.current.forEach((ref, i) => {
       if (!ref) return;
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            setRevealedMilestones((prev) => new Set(prev).add(i));
-            // Fill the circle slightly after reveal
-            setTimeout(() => {
-              setFilledMilestones((prev) => new Set(prev).add(i));
-            }, 200);
+            setRevealedCards((prev) => new Set(prev).add(i));
           }
         },
-        { threshold: 0.3, rootMargin: "-50px 0px" }
+        { threshold: 0.2, rootMargin: "-80px 0px" }
       );
       observer.observe(ref);
       observers.push(observer);
     });
 
-    // Founders section
     if (founderRef.current) {
       const observer = new IntersectionObserver(
         ([entry]) => {
@@ -135,26 +147,35 @@ export default function StoryPage() {
     return () => observers.forEach((o) => o.disconnect());
   }, [reducedMotion]);
 
-  // Dot position in pixels relative to timeline
-  const dotTop = timelineRef.current
-    ? scrollProgress * timelineRef.current.clientHeight
-    : 0;
+  // Calculate dot position as percentage of timeline
+  const dotScale = dotPulsing !== null ? 1.4 : 1;
 
   return (
     <>
       <Navbar />
 
-      {/* Atmospheric background */}
+      {/* Background */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-[#FAFAF9]" />
-        <div className="blob blob-blue animate-blob-1" style={{ top: "10%", left: "15%" }} />
-        <div className="blob blob-lavender animate-blob-2" style={{ top: "40%", right: "10%" }} />
-        <div className="blob blob-peach animate-blob-3" style={{ top: "70%", left: "30%" }} />
+        {/* Subtle gradient orbs */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute rounded-full"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E")`,
-            backgroundRepeat: "repeat",
+            top: "8%",
+            right: "10%",
+            width: "450px",
+            height: "450px",
+            background: "radial-gradient(circle, rgba(74,108,247,0.045) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute rounded-full"
+          style={{
+            bottom: "15%",
+            left: "5%",
+            width: "500px",
+            height: "500px",
+            background: "radial-gradient(circle, rgba(124,92,252,0.04) 0%, transparent 70%)",
           }}
         />
       </div>
@@ -163,29 +184,30 @@ export default function StoryPage() {
         {/* Header */}
         <div className="max-w-[700px] mx-auto px-6 text-center mb-20">
           <motion.h1
-            initial={{ opacity: 0, y: 15, clipPath: "inset(100% 0 0 0)" }}
-            animate={{ opacity: 1, y: 0, clipPath: "inset(0 0 0 0)" }}
-            transition={{ duration: 0.8, ease }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease }}
             className="text-[40px] md:text-[48px] font-normal mb-5"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
             Our Story
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease, delay: 0.2 }}
-            className="text-[17px] leading-[1.7]"
+            className="text-[17px] leading-[1.7] max-w-[500px] mx-auto"
             style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
             How two best friends decided to open the door to startup investing.
           </motion.p>
         </div>
 
-        {/* Timeline container */}
-        <div className="max-w-[900px] mx-auto px-6 relative">
-          <div ref={timelineRef} className="relative" style={{ paddingBottom: "40px" }}>
-            {/* Timeline line (background - gray) */}
+        {/* Timeline section */}
+        <div className="max-w-[960px] mx-auto px-6 relative">
+          <div ref={timelineRef} className="relative" style={{ paddingTop: "40px", paddingBottom: "40px" }}>
+
+            {/* === THE VERTICAL LINE (desktop) === */}
             <div
               className="absolute hidden md:block"
               style={{
@@ -193,116 +215,174 @@ export default function StoryPage() {
                 transform: "translateX(-50%)",
                 top: 0,
                 bottom: 0,
-                width: "2px",
-                background: "rgba(0,0,0,0.06)",
+                width: "1px",
+                background: "linear-gradient(to bottom, rgba(74,108,247,0.15) 0%, rgba(74,108,247,0.15) 92%, transparent 100%)",
               }}
             />
-            {/* Timeline line (mobile) */}
+            {/* === THE VERTICAL LINE (mobile) === */}
             <div
               className="absolute md:hidden"
               style={{
-                left: "24px",
+                left: "20px",
                 top: 0,
                 bottom: 0,
-                width: "2px",
-                background: "rgba(0,0,0,0.06)",
+                width: "1px",
+                background: "linear-gradient(to bottom, rgba(74,108,247,0.15) 0%, rgba(74,108,247,0.15) 92%, transparent 100%)",
               }}
             />
 
-            {/* Timeline line (filled - gradient) */}
+            {/* === SCROLL-FILL LINE (desktop) === */}
             <div
               className="absolute hidden md:block"
               style={{
                 left: "50%",
                 transform: "translateX(-50%)",
                 top: 0,
-                width: "2px",
+                width: "1px",
                 height: reducedMotion ? "100%" : `${scrollProgress * 100}%`,
                 background: "linear-gradient(180deg, #4A6CF7, #7C5CFC)",
-                transition: reducedMotion ? "none" : "height 0.1s linear",
+                boxShadow: "0 0 8px rgba(74,108,247,0.15)",
+                transition: reducedMotion ? "none" : undefined,
               }}
             />
-            {/* Mobile filled line */}
+            {/* === SCROLL-FILL LINE (mobile) === */}
             <div
               className="absolute md:hidden"
               style={{
-                left: "24px",
+                left: "20px",
                 top: 0,
-                width: "2px",
+                width: "1px",
                 height: reducedMotion ? "100%" : `${scrollProgress * 100}%`,
                 background: "linear-gradient(180deg, #4A6CF7, #7C5CFC)",
-                transition: reducedMotion ? "none" : "height 0.1s linear",
+                boxShadow: "0 0 8px rgba(74,108,247,0.15)",
               }}
             />
 
-            {/* Tracing dot (desktop) */}
+            {/* === TRACING DOT (desktop) === */}
             {!reducedMotion && (
               <div
-                className="absolute hidden md:block"
+                className="absolute hidden md:block pointer-events-none"
                 style={{
                   left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  top: `${dotTop}px`,
-                  width: "12px",
-                  height: "12px",
-                  borderRadius: "50%",
-                  background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                  boxShadow: "0 0 20px rgba(74,108,247,0.4)",
-                  zIndex: 10,
-                  willChange: "transform",
-                  animation: "dot-pulse 2s ease-in-out infinite",
-                }}
-              />
-            )}
-            {/* Tracing dot (mobile) */}
-            {!reducedMotion && (
-              <div
-                className="absolute md:hidden"
-                style={{
-                  left: "24px",
-                  transform: "translate(-50%, -50%)",
-                  top: `${dotTop}px`,
+                  top: `${scrollProgress * 100}%`,
+                  transform: `translate(-50%, -50%) scale(${dotScale})`,
                   width: "10px",
                   height: "10px",
                   borderRadius: "50%",
                   background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                  border: "2px solid white",
                   boxShadow: "0 0 12px rgba(74,108,247,0.3)",
                   zIndex: 10,
                   willChange: "transform",
-                  animation: "dot-pulse 2s ease-in-out infinite",
+                  transition: "transform 0.3s ease",
+                }}
+              />
+            )}
+            {/* === TRACING DOT (mobile) === */}
+            {!reducedMotion && (
+              <div
+                className="absolute md:hidden pointer-events-none"
+                style={{
+                  left: "20px",
+                  top: `${scrollProgress * 100}%`,
+                  transform: `translate(-50%, -50%) scale(${dotScale})`,
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "50%",
+                  background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                  border: "2px solid white",
+                  boxShadow: "0 0 12px rgba(74,108,247,0.3)",
+                  zIndex: 10,
+                  willChange: "transform",
+                  transition: "transform 0.3s ease",
                 }}
               />
             )}
 
-            {/* Milestone sections */}
-            <div className="flex flex-col" style={{ gap: "80px" }}>
+            {/* === MILESTONES === */}
+            <div className="flex flex-col" style={{ gap: "140px" }}>
               {milestones.map((milestone, i) => {
-                const isRevealed = revealedMilestones.has(i) || reducedMotion;
-                const isFilled = filledMilestones.has(i) || reducedMotion;
+                const isActivated = activatedMilestones.has(i) || reducedMotion;
+                const isRevealed = revealedCards.has(i) || reducedMotion;
                 const isLeft = milestone.side === "left";
-
+                // Calculate milestone position on the line (evenly spaced)
                 return (
                   <div
                     key={milestone.title}
-                    ref={(el) => { milestoneRefs.current[i] = el; }}
+                    ref={(el) => { cardRefs.current[i] = el; }}
                     className="relative"
                   >
-                    {/* Desktop layout */}
-                    <div className="hidden md:flex items-center" style={{ minHeight: "120px" }}>
-                      {/* Left content */}
-                      <div className="flex-1 flex justify-end pr-[60px]">
+                    {/* === MILESTONE MARKER (desktop) === */}
+                    <div
+                      className="absolute hidden md:block"
+                      style={{
+                        left: "50%",
+                        top: "24px",
+                        transform: "translate(-50%, -50%)",
+                        width: isActivated ? "8px" : "6px",
+                        height: isActivated ? "8px" : "6px",
+                        borderRadius: "50%",
+                        background: isActivated
+                          ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)"
+                          : "rgba(74,108,247,0.2)",
+                        border: isActivated ? "none" : "1px solid rgba(74,108,247,0.15)",
+                        boxShadow: isActivated ? "0 0 10px rgba(74,108,247,0.2)" : "none",
+                        transition: "all 0.4s ease",
+                        zIndex: 5,
+                      }}
+                    />
+                    {/* === MILESTONE MARKER (mobile) === */}
+                    <div
+                      className="absolute md:hidden"
+                      style={{
+                        left: "20px",
+                        top: "8px",
+                        transform: "translate(-50%, 0)",
+                        width: isActivated ? "8px" : "6px",
+                        height: isActivated ? "8px" : "6px",
+                        borderRadius: "50%",
+                        background: isActivated
+                          ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)"
+                          : "rgba(74,108,247,0.2)",
+                        border: isActivated ? "none" : "1px solid rgba(74,108,247,0.15)",
+                        boxShadow: isActivated ? "0 0 10px rgba(74,108,247,0.2)" : "none",
+                        transition: "all 0.4s ease",
+                        zIndex: 5,
+                      }}
+                    />
+
+                    {/* === DESKTOP LAYOUT === */}
+                    <div className="hidden md:flex items-start">
+                      {/* Left side */}
+                      <div className="flex-1 flex justify-end" style={{ paddingRight: "60px" }}>
                         {isLeft && (
                           <div
-                            className="max-w-[400px] w-full"
+                            className="rounded-2xl transition-transform duration-300 hover:-translate-y-1"
                             style={{
+                              maxWidth: "420px",
+                              width: "100%",
+                              padding: "28px",
+                              background: "rgba(255, 255, 255, 0.6)",
+                              backdropFilter: "blur(8px)",
+                              WebkitBackdropFilter: "blur(8px)",
+                              border: "1px solid rgba(0, 0, 0, 0.04)",
+                              boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
+                              textAlign: "right",
                               opacity: isRevealed ? 1 : 0,
-                              transform: isRevealed ? "translateX(0)" : "translateX(-30px)",
-                              transition: "all 0.5s ease",
+                              transform: isRevealed ? "translateY(0)" : "translateY(20px)",
+                              transition: "opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.3s ease",
+                            }}
+                            onMouseEnter={(e) => {
+                              (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 30px rgba(0,0,0,0.08)";
+                            }}
+                            onMouseLeave={(e) => {
+                              (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 16px rgba(0,0,0,0.04)";
                             }}
                           >
                             <span
-                              className="text-[12px] font-medium mb-2 block"
+                              className="text-[13px] font-semibold mb-2 block"
                               style={{
+                                fontFamily: "var(--font-dm-sans), sans-serif",
                                 background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                                 WebkitBackgroundClip: "text",
                                 WebkitTextFillColor: "transparent",
@@ -314,7 +394,7 @@ export default function StoryPage() {
                               className="font-normal mb-3"
                               style={{
                                 fontFamily: "'Instrument Serif', serif",
-                                fontSize: "28px",
+                                fontSize: "22px",
                                 color: "#0F172A",
                               }}
                             >
@@ -334,65 +414,39 @@ export default function StoryPage() {
                         )}
                       </div>
 
-                      {/* Center: milestone circle + connector */}
-                      <div className="relative flex items-center justify-center" style={{ width: "16px" }}>
-                        <div
-                          className="w-4 h-4 rounded-full border-2 shrink-0"
-                          style={{
-                            borderImage: "linear-gradient(135deg, #4A6CF7, #7C5CFC) 1",
-                            borderStyle: "solid",
-                            background: isFilled
-                              ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)"
-                              : "white",
-                            borderRadius: "50%",
-                            border: "2px solid",
-                            borderColor: isFilled ? "transparent" : "#4A6CF7",
-                            transition: "all 0.3s ease",
-                            zIndex: 5,
-                          }}
-                        />
-                        {/* Connector line left */}
-                        {isLeft && (
-                          <div
-                            className="absolute right-full"
-                            style={{
-                              width: "40px",
-                              height: "1px",
-                              background: "linear-gradient(90deg, rgba(74,108,247,0.3), #4A6CF7)",
-                              opacity: isRevealed ? 1 : 0,
-                              transition: "opacity 0.3s ease",
-                            }}
-                          />
-                        )}
-                        {/* Connector line right */}
-                        {!isLeft && (
-                          <div
-                            className="absolute left-full"
-                            style={{
-                              width: "40px",
-                              height: "1px",
-                              background: "linear-gradient(90deg, #4A6CF7, rgba(74,108,247,0.3))",
-                              opacity: isRevealed ? 1 : 0,
-                              transition: "opacity 0.3s ease",
-                            }}
-                          />
-                        )}
-                      </div>
+                      {/* Center spacer for the line */}
+                      <div style={{ width: "1px" }} />
 
-                      {/* Right content */}
-                      <div className="flex-1 pl-[60px]">
+                      {/* Right side */}
+                      <div className="flex-1" style={{ paddingLeft: "60px" }}>
                         {!isLeft && (
                           <div
-                            className="max-w-[400px] w-full"
+                            className="rounded-2xl transition-transform duration-300 hover:-translate-y-1"
                             style={{
+                              maxWidth: "420px",
+                              width: "100%",
+                              padding: "28px",
+                              background: "rgba(255, 255, 255, 0.6)",
+                              backdropFilter: "blur(8px)",
+                              WebkitBackdropFilter: "blur(8px)",
+                              border: "1px solid rgba(0, 0, 0, 0.04)",
+                              boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
+                              textAlign: "left",
                               opacity: isRevealed ? 1 : 0,
-                              transform: isRevealed ? "translateX(0)" : "translateX(30px)",
-                              transition: "all 0.5s ease",
+                              transform: isRevealed ? "translateY(0)" : "translateY(20px)",
+                              transition: "opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.3s ease",
+                            }}
+                            onMouseEnter={(e) => {
+                              (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 30px rgba(0,0,0,0.08)";
+                            }}
+                            onMouseLeave={(e) => {
+                              (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 16px rgba(0,0,0,0.04)";
                             }}
                           >
                             <span
-                              className="text-[12px] font-medium mb-2 block"
+                              className="text-[13px] font-semibold mb-2 block"
                               style={{
+                                fontFamily: "var(--font-dm-sans), sans-serif",
                                 background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                                 WebkitBackgroundClip: "text",
                                 WebkitTextFillColor: "transparent",
@@ -404,7 +458,7 @@ export default function StoryPage() {
                               className="font-normal mb-3"
                               style={{
                                 fontFamily: "'Instrument Serif', serif",
-                                fontSize: "28px",
+                                fontSize: "22px",
                                 color: "#0F172A",
                               }}
                             >
@@ -425,51 +479,28 @@ export default function StoryPage() {
                       </div>
                     </div>
 
-                    {/* Mobile layout: all content on right */}
-                    <div className="flex md:hidden items-start gap-0">
-                      {/* Milestone circle */}
-                      <div className="relative flex items-start justify-center shrink-0" style={{ width: "48px", paddingTop: "4px" }}>
-                        <div
-                          className="w-3 h-3 rounded-full shrink-0"
-                          style={{
-                            background: isFilled
-                              ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)"
-                              : "white",
-                            border: "2px solid",
-                            borderColor: isFilled ? "transparent" : "#4A6CF7",
-                            transition: "all 0.3s ease",
-                            position: "absolute",
-                            left: "18px",
-                            zIndex: 5,
-                          }}
-                        />
-                        {/* Connector */}
-                        <div
-                          className="absolute"
-                          style={{
-                            left: "31px",
-                            top: "8px",
-                            width: "17px",
-                            height: "1px",
-                            background: "linear-gradient(90deg, #4A6CF7, rgba(74,108,247,0.3))",
-                            opacity: isRevealed ? 1 : 0,
-                            transition: "opacity 0.3s ease",
-                          }}
-                        />
-                      </div>
-
-                      {/* Content */}
+                    {/* === MOBILE LAYOUT === */}
+                    <div className="flex md:hidden">
                       <div
-                        className="flex-1"
                         style={{
+                          marginLeft: "44px",
+                          maxWidth: "calc(100% - 60px)",
+                          padding: "20px",
+                          background: "rgba(255, 255, 255, 0.6)",
+                          backdropFilter: "blur(8px)",
+                          WebkitBackdropFilter: "blur(8px)",
+                          border: "1px solid rgba(0, 0, 0, 0.04)",
+                          boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
+                          borderRadius: "16px",
                           opacity: isRevealed ? 1 : 0,
-                          transform: isRevealed ? "translateX(0)" : "translateX(20px)",
-                          transition: "all 0.5s ease",
+                          transform: isRevealed ? "translateY(0)" : "translateY(20px)",
+                          transition: "opacity 0.5s ease-out, transform 0.5s ease-out",
                         }}
                       >
                         <span
-                          className="text-[12px] font-medium mb-1.5 block"
+                          className="text-[13px] font-semibold mb-2 block"
                           style={{
+                            fontFamily: "var(--font-dm-sans), sans-serif",
                             background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                             WebkitBackgroundClip: "text",
                             WebkitTextFillColor: "transparent",
@@ -481,7 +512,7 @@ export default function StoryPage() {
                           className="font-normal mb-2"
                           style={{
                             fontFamily: "'Instrument Serif', serif",
-                            fontSize: "24px",
+                            fontSize: "22px",
                             color: "#0F172A",
                           }}
                         >
@@ -490,7 +521,7 @@ export default function StoryPage() {
                         <p
                           style={{
                             fontFamily: "var(--font-dm-sans), sans-serif",
-                            fontSize: "15px",
+                            fontSize: "14px",
                             color: "#475569",
                             lineHeight: 1.7,
                           }}
@@ -503,239 +534,203 @@ export default function StoryPage() {
                 );
               })}
             </div>
+          </div>
 
-            {/* Milestone 6: Meet the Founders (full width, centered) */}
+          {/* === MEET THE FOUNDERS === */}
+          <div
+            ref={founderRef}
+            style={{ marginTop: "80px" }}
+          >
             <div
-              ref={founderRef}
-              className="relative mt-20 md:mt-[120px]"
+              className="text-center"
+              style={{
+                opacity: foundersRevealed ? 1 : 0,
+                transform: foundersRevealed ? "translateY(0)" : "translateY(20px)",
+                transition: "opacity 0.6s ease, transform 0.6s ease",
+              }}
             >
-              {/* Desktop milestone circle */}
-              <div className="hidden md:flex justify-center mb-10 relative">
-                <div
-                  className="w-4 h-4 rounded-full"
-                  style={{
-                    background: foundersRevealed
-                      ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)"
-                      : "white",
-                    border: "2px solid",
-                    borderColor: foundersRevealed ? "transparent" : "#4A6CF7",
-                    transition: "all 0.3s ease",
-                    zIndex: 5,
-                  }}
-                />
-              </div>
-
-              {/* Mobile milestone circle */}
-              <div className="flex md:hidden mb-6 relative">
-                <div
-                  className="w-3 h-3 rounded-full"
-                  style={{
-                    background: foundersRevealed
-                      ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)"
-                      : "white",
-                    border: "2px solid",
-                    borderColor: foundersRevealed ? "transparent" : "#4A6CF7",
-                    transition: "all 0.3s ease",
-                    position: "absolute",
-                    left: "18px",
-                    zIndex: 5,
-                  }}
-                />
-              </div>
-
-              <div
-                className="text-center"
+              <h2
+                className="font-normal mb-10"
                 style={{
-                  opacity: foundersRevealed ? 1 : 0,
-                  transition: "opacity 0.5s ease",
+                  fontFamily: "'Instrument Serif', serif",
+                  fontSize: "32px",
+                  color: "#0F172A",
                 }}
               >
-                <h2
-                  className="font-normal mb-10"
+                Meet the Founders
+              </h2>
+
+              <div
+                className="grid md:grid-cols-2 items-stretch max-w-[700px] mx-auto"
+                style={{ gap: "20px" }}
+              >
+                {/* Logan */}
+                <div
                   style={{
-                    fontFamily: "'Instrument Serif', serif",
-                    fontSize: "32px",
-                    color: "#0F172A",
+                    opacity: foundersRevealed ? 1 : 0,
+                    transform: foundersRevealed ? "scale(1)" : "scale(0.95)",
+                    transition: "all 0.5s ease 0.1s",
                   }}
                 >
-                  Meet the Founders
-                </h2>
+                  <div
+                    className="rounded-2xl p-6 md:p-8 h-full"
+                    style={{
+                      background: "rgba(255, 255, 255, 0.6)",
+                      backdropFilter: "blur(8px)",
+                      WebkitBackdropFilter: "blur(8px)",
+                      border: "1px solid rgba(0, 0, 0, 0.04)",
+                      boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
+                    }}
+                  >
+                    <div className="flex items-center gap-4 mb-3">
+                      <Image
+                        src="/images/logan.webp"
+                        alt="Logan Kay"
+                        width={80}
+                        height={80}
+                        className="rounded-full object-cover shrink-0"
+                        style={{ width: "80px", height: "80px" }}
+                      />
+                      <div>
+                        <p
+                          className="font-semibold"
+                          style={{
+                            fontFamily: "var(--font-dm-sans), sans-serif",
+                            fontSize: "20px",
+                            color: "#0F172A",
+                          }}
+                        >
+                          Logan Kay
+                        </p>
+                        <p
+                          style={{
+                            fontFamily: "var(--font-dm-sans), sans-serif",
+                            fontSize: "14px",
+                            color: "#94A3B8",
+                          }}
+                        >
+                          Co-Founder
+                        </p>
+                      </div>
+                    </div>
+                    <p
+                      className="mb-4"
+                      style={{
+                        fontFamily: "var(--font-dm-sans), sans-serif",
+                        fontSize: "14px",
+                        color: "#94A3B8",
+                      }}
+                    >
+                      Boston University | AI Implementation @ Harvard Business School
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-dm-sans), sans-serif",
+                        fontSize: "15px",
+                        color: "#475569",
+                        lineHeight: 1.7,
+                        textAlign: "left",
+                      }}
+                    >
+                      Logan brings the technical firepower and operational rigor. He spearheaded AI implementation across admissions and operations at Harvard Business School and obsesses over making complex systems simple and accessible. He is the architect behind the UrgenC scoring engine and platform infrastructure.
+                    </p>
+                  </div>
+                </div>
 
+                {/* Benjamin */}
                 <div
-                  className="grid md:grid-cols-2 items-stretch max-w-[700px] mx-auto"
-                  style={{ gap: "20px" }}
+                  style={{
+                    opacity: foundersRevealed ? 1 : 0,
+                    transform: foundersRevealed ? "scale(1)" : "scale(0.95)",
+                    transition: "all 0.5s ease 0.2s",
+                  }}
                 >
-                  {/* Logan */}
                   <div
+                    className="rounded-2xl p-6 md:p-8 h-full"
                     style={{
-                      opacity: foundersRevealed ? 1 : 0,
-                      transform: foundersRevealed ? "scale(1)" : "scale(0.95)",
-                      transition: "all 0.5s ease 0.1s",
+                      background: "rgba(255, 255, 255, 0.6)",
+                      backdropFilter: "blur(8px)",
+                      WebkitBackdropFilter: "blur(8px)",
+                      border: "1px solid rgba(0, 0, 0, 0.04)",
+                      boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
                     }}
                   >
-                    <div
-                      className="rounded-xl md:rounded-2xl p-6 md:p-8 h-full"
+                    <div className="flex items-center gap-4 mb-3">
+                      <Image
+                        src="/images/ben.jpeg"
+                        alt="Benjamin Matiash"
+                        width={80}
+                        height={80}
+                        className="rounded-full object-cover shrink-0"
+                        style={{ width: "80px", height: "80px" }}
+                      />
+                      <div>
+                        <p
+                          className="font-semibold"
+                          style={{
+                            fontFamily: "var(--font-dm-sans), sans-serif",
+                            fontSize: "20px",
+                            color: "#0F172A",
+                          }}
+                        >
+                          Benjamin Matiash
+                        </p>
+                        <p
+                          style={{
+                            fontFamily: "var(--font-dm-sans), sans-serif",
+                            fontSize: "14px",
+                            color: "#94A3B8",
+                          }}
+                        >
+                          Co-Founder
+                        </p>
+                      </div>
+                    </div>
+                    <p
+                      className="mb-4"
                       style={{
-                        background: "rgba(255, 255, 255, 0.5)",
-                        backdropFilter: "blur(24px)",
-                        WebkitBackdropFilter: "blur(24px)",
-                        border: "1px solid rgba(0, 0, 0, 0.06)",
+                        fontFamily: "var(--font-dm-sans), sans-serif",
+                        fontSize: "14px",
+                        color: "#94A3B8",
                       }}
                     >
-                      <div className="flex items-center gap-4 mb-3">
-                        <Image
-                          src="/images/logan.webp"
-                          alt="Logan Kay"
-                          width={80}
-                          height={80}
-                          className="rounded-full object-cover shrink-0"
-                          style={{ width: "80px", height: "80px" }}
-                        />
-                        <div>
-                          <p
-                            className="font-semibold"
-                            style={{
-                              fontFamily: "var(--font-dm-sans), sans-serif",
-                              fontSize: "20px",
-                              color: "#0F172A",
-                            }}
-                          >
-                            Logan Kay
-                          </p>
-                          <p
-                            style={{
-                              fontFamily: "var(--font-dm-sans), sans-serif",
-                              fontSize: "14px",
-                              color: "#94A3B8",
-                            }}
-                          >
-                            Co-Founder
-                          </p>
-                        </div>
-                      </div>
-                      <p
-                        className="mb-4"
-                        style={{
-                          fontFamily: "var(--font-dm-sans), sans-serif",
-                          fontSize: "14px",
-                          color: "#94A3B8",
-                        }}
-                      >
-                        Boston University | AI Implementation @ Harvard Business School
-                      </p>
-                      <p
-                        style={{
-                          fontFamily: "var(--font-dm-sans), sans-serif",
-                          fontSize: "15px",
-                          color: "#475569",
-                          lineHeight: 1.7,
-                          textAlign: "left",
-                        }}
-                      >
-                        Logan brings the technical firepower and operational rigor. He spearheaded AI implementation across admissions and operations at Harvard Business School and obsesses over making complex systems simple and accessible. He is the architect behind the UrgenC scoring engine and platform infrastructure.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Benjamin */}
-                  <div
-                    style={{
-                      opacity: foundersRevealed ? 1 : 0,
-                      transform: foundersRevealed ? "scale(1)" : "scale(0.95)",
-                      transition: "all 0.5s ease 0.2s",
-                    }}
-                  >
-                    <div
-                      className="rounded-xl md:rounded-2xl p-6 md:p-8 h-full"
+                      Northeastern University | Institutional Equity @ Morgan Stanley
+                    </p>
+                    <p
                       style={{
-                        background: "rgba(255, 255, 255, 0.5)",
-                        backdropFilter: "blur(24px)",
-                        WebkitBackdropFilter: "blur(24px)",
-                        border: "1px solid rgba(0, 0, 0, 0.06)",
+                        fontFamily: "var(--font-dm-sans), sans-serif",
+                        fontSize: "15px",
+                        color: "#475569",
+                        lineHeight: 1.7,
+                        textAlign: "left",
                       }}
                     >
-                      <div className="flex items-center gap-4 mb-3">
-                        <Image
-                          src="/images/ben.jpeg"
-                          alt="Benjamin Matiash"
-                          width={80}
-                          height={80}
-                          className="rounded-full object-cover shrink-0"
-                          style={{ width: "80px", height: "80px" }}
-                        />
-                        <div>
-                          <p
-                            className="font-semibold"
-                            style={{
-                              fontFamily: "var(--font-dm-sans), sans-serif",
-                              fontSize: "20px",
-                              color: "#0F172A",
-                            }}
-                          >
-                            Benjamin Matiash
-                          </p>
-                          <p
-                            style={{
-                              fontFamily: "var(--font-dm-sans), sans-serif",
-                              fontSize: "14px",
-                              color: "#94A3B8",
-                            }}
-                          >
-                            Co-Founder
-                          </p>
-                        </div>
-                      </div>
-                      <p
-                        className="mb-4"
-                        style={{
-                          fontFamily: "var(--font-dm-sans), sans-serif",
-                          fontSize: "14px",
-                          color: "#94A3B8",
-                        }}
-                      >
-                        Northeastern University | Institutional Equity @ Morgan Stanley
-                      </p>
-                      <p
-                        style={{
-                          fontFamily: "var(--font-dm-sans), sans-serif",
-                          fontSize: "15px",
-                          color: "#475569",
-                          lineHeight: 1.7,
-                          textAlign: "left",
-                        }}
-                      >
-                        Benjamin brings the financial acumen and investor perspective. His experience in institutional equity at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became UrgenC and leads investor relations, scoring methodology, and go-to-market strategy.
-                      </p>
-                    </div>
+                      Benjamin brings the financial acumen and investor perspective. His experience in institutional equity at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became UrgenC and leads investor relations, scoring methodology, and go-to-market strategy.
+                    </p>
                   </div>
                 </div>
+              </div>
 
-                {/* CTA */}
-                <div className="mt-12">
-                  <Link
-                    href="/waitlist"
-                    className="inline-flex items-center gap-2 px-8 py-3.5 text-[15px] font-semibold text-white rounded-full transition-all duration-300 hover:-translate-y-0.5"
-                    style={{
-                      background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                      boxShadow: "0 6px 25px rgba(74, 108, 247, 0.35)",
-                    }}
-                  >
-                    Join the Waitlist &rarr;
-                  </Link>
-                </div>
+              {/* CTA */}
+              <div style={{ marginTop: "40px" }}>
+                <Link
+                  href="/waitlist"
+                  className="inline-flex items-center gap-2 px-8 py-3.5 text-[15px] font-semibold text-white rounded-full transition-all duration-300 hover:-translate-y-0.5"
+                  style={{
+                    background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                    boxShadow: "0 6px 25px rgba(74, 108, 247, 0.35)",
+                  }}
+                >
+                  Join the Waitlist &rarr;
+                </Link>
               </div>
             </div>
           </div>
         </div>
-      </main>
 
-      {/* Dot pulse animation */}
-      <style jsx global>{`
-        @keyframes dot-pulse {
-          0%, 100% { transform: translate(-50%, -50%) scale(1); }
-          50% { transform: translate(-50%, -50%) scale(1.2); }
-        }
-      `}</style>
+        {/* Bottom spacing */}
+        <div style={{ height: "60px" }} />
+      </main>
     </>
   );
 }
