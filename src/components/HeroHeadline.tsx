@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 
 interface HeroHeadlineProps {
   lines: { text: string; isGradient: boolean }[][];
@@ -7,42 +8,7 @@ interface HeroHeadlineProps {
   scrollY: number;
 }
 
-function LetterSpan({
-  char,
-  index,
-  isGradient,
-  baseDelay,
-  prefersReduced,
-}: {
-  char: string;
-  index: number;
-  isGradient: boolean;
-  baseDelay: number;
-  prefersReduced: boolean;
-}) {
-  const stagger = isGradient ? 0.05 : 0.02;
-  const delay = baseDelay + index * stagger;
-
-  if (prefersReduced) {
-    return (
-      <span style={{ display: 'inline-block' }}>
-        {char === ' ' ? '\u00A0' : char}
-      </span>
-    );
-  }
-
-  return (
-    <span
-      className="hero-letter"
-      style={{
-        animationDelay: `${delay}s`,
-        display: 'inline-block',
-      }}
-    >
-      {char === ' ' ? '\u00A0' : char}
-    </span>
-  );
-}
+const ease = [0.25, 0.4, 0.25, 1] as const;
 
 export default function HeroHeadline({ lines, prefersReduced, scrollY }: HeroHeadlineProps) {
   const [shimmerActive, setShimmerActive] = useState(false);
@@ -53,8 +19,6 @@ export default function HeroHeadline({ lines, prefersReduced, scrollY }: HeroHea
     const timer = setTimeout(() => setShimmerActive(true), 1800);
     return () => clearTimeout(timer);
   }, [prefersReduced]);
-
-  let globalCharIndex = 0;
 
   return (
     <div
@@ -76,61 +40,34 @@ export default function HeroHeadline({ lines, prefersReduced, scrollY }: HeroHea
           zIndex: -1,
         }}
       />
-      {lines.map((segments, lineIndex) => {
-        const lineEl = (
-          <h1
-            key={lineIndex}
-            className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] xl:text-[76px] font-bold leading-[1.05] tracking-[-0.02em]"
-            style={{
-              fontFamily: 'var(--font-playfair), serif',
-              color: '#0F172A',
-              textShadow: '0 0 40px rgba(74,108,247,0.08)',
-            }}
-          >
-            {segments.map((segment, segIndex) => {
-              const chars = segment.text.split('');
-              const startIndex = globalCharIndex;
-              globalCharIndex += chars.length;
-
-              if (segment.isGradient) {
-                return (
-                  <span
-                    key={segIndex}
-                    className={`gradient-text-animate gradient-shimmer-wrap${shimmerActive ? ' shimmer-active' : ''}`}
-                  >
-                    {chars.map((char, i) => (
-                      <LetterSpan
-                        key={i}
-                        char={char}
-                        index={startIndex + i}
-                        isGradient={true}
-                        baseDelay={0.5}
-                        prefersReduced={prefersReduced}
-                      />
-                    ))}
-                  </span>
-                );
-              }
-
+      {lines.map((segments, lineIndex) => (
+        <motion.h1
+          key={lineIndex}
+          initial={prefersReduced ? false : { opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3 + lineIndex * 0.3, ease }}
+          className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] xl:text-[76px] font-bold leading-[1.05] tracking-[-0.02em]"
+          style={{
+            fontFamily: 'var(--font-playfair), serif',
+            color: '#0F172A',
+            textShadow: '0 0 40px rgba(74,108,247,0.08)',
+          }}
+        >
+          {segments.map((segment, segIndex) => {
+            if (segment.isGradient) {
               return (
-                <React.Fragment key={segIndex}>
-                  {chars.map((char, i) => (
-                    <LetterSpan
-                      key={i}
-                      char={char}
-                      index={startIndex + i}
-                      isGradient={false}
-                      baseDelay={0.5}
-                      prefersReduced={prefersReduced}
-                    />
-                  ))}
-                </React.Fragment>
+                <span
+                  key={segIndex}
+                  className={`gradient-text-animate gradient-shimmer-wrap${shimmerActive ? ' shimmer-active' : ''}`}
+                >
+                  {segment.text}
+                </span>
               );
-            })}
-          </h1>
-        );
-        return lineEl;
-      })}
+            }
+            return <React.Fragment key={segIndex}>{segment.text}</React.Fragment>;
+          })}
+        </motion.h1>
+      ))}
     </div>
   );
 }
