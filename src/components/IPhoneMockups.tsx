@@ -724,63 +724,6 @@ function IPhoneFrame({
   );
 }
 
-/* ---- Floating Badge Pill ---- */
-function FloatingBadge({
-  text,
-  dotColor,
-  className,
-  style,
-  animDuration,
-  animDelay,
-  animDistance,
-}: {
-  text: string;
-  dotColor: string;
-  className?: string;
-  style?: React.CSSProperties;
-  animDuration: number;
-  animDelay: number;
-  animDistance: number;
-}) {
-  return (
-    <div
-      className={className}
-      style={{
-        position: "absolute",
-        display: "flex",
-        alignItems: "center",
-        gap: "6px",
-        background: "rgba(255,255,255,0.7)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
-        border: "1px solid rgba(255,255,255,0.5)",
-        borderRadius: "9999px",
-        padding: "6px 14px",
-        boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
-        fontFamily: "var(--font-dm-sans), sans-serif",
-        fontSize: "12px",
-        color: "#0F172A",
-        fontWeight: 500,
-        whiteSpace: "nowrap",
-        zIndex: 5,
-        animation: `badgeFloat${animDistance} ${animDuration}s ease-in-out ${animDelay}s infinite`,
-        ...style,
-      }}
-    >
-      <span
-        style={{
-          width: "6px",
-          height: "6px",
-          borderRadius: "50%",
-          background: dotColor,
-          flexShrink: 0,
-        }}
-      />
-      {text}
-    </div>
-  );
-}
-
 /* ---- Main Component ---- */
 export default function IPhoneMockups() {
   return (
@@ -845,35 +788,12 @@ export default function IPhoneMockups() {
         Explore what the experience looks like for founders and investors.
       </p>
 
-      {/* Badge float keyframes */}
-      <style>{`
-        @keyframes badgeFloat6 {
-          0%, 100% { transform: translateY(0) rotate(-1deg); }
-          50% { transform: translateY(-6px) rotate(1deg); }
-        }
-        @keyframes badgeFloat5 {
-          0%, 100% { transform: translateY(0) rotate(1deg); }
-          50% { transform: translateY(-5px) rotate(-1deg); }
-        }
-        @keyframes badgeFloat7 {
-          0%, 100% { transform: translateY(0) rotate(-1deg); }
-          50% { transform: translateY(-7px) rotate(1deg); }
-        }
-      `}</style>
-
       {/* Phones container */}
       <div
         className="iphone-phones-container relative flex items-start justify-center"
-        style={{ gap: "var(--phone-gap)", flexWrap: "nowrap", overflow: "visible" }}
+        style={{ gap: "var(--phone-gap)", flexWrap: "nowrap" }}
       >
         <SparkleParticles />
-
-        {/* Floating badges - hidden on mobile, 3 on tablet, all 5 on desktop */}
-        <FloatingBadge text="87/100 Score" dotColor="#4A6CF7" className="hidden lg:flex" style={{ top: "-10px", left: "2%" }} animDuration={3.5} animDelay={0} animDistance={6} />
-        <FloatingBadge text="Matched!" dotColor="#22C55E" className="hidden md:flex" style={{ top: "30%", left: "50%", transform: "translateX(-50%)" }} animDuration={4} animDelay={1} animDistance={5} />
-        <FloatingBadge text="Queue #1" dotColor="#8B5CF6" className="hidden md:flex" style={{ top: "-10px", right: "2%" }} animDuration={3} animDelay={0.5} animDistance={7} />
-        <FloatingBadge text="72h Window" dotColor="#F59E0B" className="hidden lg:flex" style={{ bottom: "60px", left: "2%" }} animDuration={3.8} animDelay={1.5} animDistance={5} />
-        <FloatingBadge text="20 min Call" dotColor="#14B8A6" className="hidden lg:flex" style={{ bottom: "60px", right: "2%" }} animDuration={4.2} animDelay={2} animDistance={6} />
 
         <IPhoneFrame
           href="/dashboard/investor"
