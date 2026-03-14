@@ -570,18 +570,18 @@ function ArrowRight({ className = "" }: { className?: string }) {
 
 /* Mini illustration for Card 1: video camera with REC dot + score bar */
 const MiniIllustration1 = () => (
-  <div className="flex items-center justify-center gap-3 mt-4 h-[60px] md:h-[60px] max-sm:h-[50px]">
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+  <div className="flex items-center justify-center gap-2.5 h-[36px]">
+    <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
       <rect x="2" y="6" width="16" height="12" rx="2" stroke="rgba(99,102,241,0.3)" strokeWidth="1.5" />
       <polygon points="22 9 18 12 22 15" stroke="rgba(99,102,241,0.3)" strokeWidth="1.5" fill="none" />
       <circle cx="7" cy="10" r="2.5" fill="rgba(239,68,68,0.5)" />
       <text x="6" y="11.5" fontSize="4" fill="rgba(239,68,68,0.7)" fontWeight="bold" textAnchor="middle">R</text>
     </svg>
-    <div className="flex flex-col gap-1.5">
-      <div className="w-[60px] h-[6px] rounded-full" style={{ background: 'rgba(99,102,241,0.12)' }}>
+    <div className="flex flex-col gap-1">
+      <div className="w-[48px] h-[5px] rounded-full" style={{ background: 'rgba(99,102,241,0.12)' }}>
         <div className="h-full rounded-full" style={{ width: '78%', background: 'rgba(99,102,241,0.3)' }} />
       </div>
-      <div className="w-[60px] h-[6px] rounded-full" style={{ background: 'rgba(99,102,241,0.12)' }}>
+      <div className="w-[48px] h-[5px] rounded-full" style={{ background: 'rgba(99,102,241,0.12)' }}>
         <div className="h-full rounded-full" style={{ width: '62%', background: 'rgba(99,102,241,0.25)' }} />
       </div>
     </div>
@@ -590,50 +590,50 @@ const MiniIllustration1 = () => (
 
 /* Mini illustration for Card 2: filter pills + arrow + filtered result */
 const MiniIllustration2 = () => (
-  <div className="flex flex-col items-center justify-center mt-4 h-[48px] gap-1">
-    <div className="flex gap-1.5">
-      <div className="px-2 py-0.5 rounded-full" style={{ background: 'rgba(99,102,241,0.25)' }}>
-        <span className="text-[7px]" style={{ color: 'rgba(99,102,241,0.6)' }}>&nbsp;</span>
+  <div className="flex flex-col items-center justify-center h-[36px] gap-0.5">
+    <div className="flex gap-1">
+      <div className="px-1.5 py-px rounded-full" style={{ background: 'rgba(99,102,241,0.25)' }}>
+        <span className="text-[6px]" style={{ color: 'rgba(99,102,241,0.6)' }}>&nbsp;</span>
       </div>
-      <div className="px-2 py-0.5 rounded-full" style={{ background: 'rgba(99,102,241,0.25)' }}>
-        <span className="text-[7px]" style={{ color: 'rgba(99,102,241,0.6)' }}>&nbsp;</span>
+      <div className="px-1.5 py-px rounded-full" style={{ background: 'rgba(99,102,241,0.25)' }}>
+        <span className="text-[6px]" style={{ color: 'rgba(99,102,241,0.6)' }}>&nbsp;</span>
       </div>
-      <div className="px-2 py-0.5 rounded-full" style={{ border: '1px solid rgba(99,102,241,0.12)' }}>
-        <span className="text-[7px]" style={{ color: 'transparent' }}>&nbsp;</span>
+      <div className="px-1.5 py-px rounded-full" style={{ border: '1px solid rgba(99,102,241,0.12)' }}>
+        <span className="text-[6px]" style={{ color: 'transparent' }}>&nbsp;</span>
       </div>
     </div>
-    <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+    <svg width="6" height="6" viewBox="0 0 8 8" fill="none">
       <path d="M4 1 L4 6 M2.5 4.5 L4 6 L5.5 4.5" stroke="rgba(99,102,241,0.2)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
-    <div className="w-[32px] h-[10px] rounded" style={{ background: 'rgba(99,102,241,0.1)' }} />
+    <div className="w-[26px] h-[8px] rounded" style={{ background: 'rgba(99,102,241,0.1)' }} />
   </div>
 );
 
 /* Mini illustration for Card 3: two circles with connecting line and match dot */
 const MiniIllustration3 = () => (
-  <div className="flex items-center justify-center mt-4 h-[48px]">
+  <div className="flex items-center justify-center h-[36px]">
     <div className="flex items-center">
-      <div className="w-[20px] h-[20px] rounded-full" style={{ background: 'rgba(139,92,246,0.2)' }} />
-      <div className="relative w-[28px] h-[2px] flex items-center justify-center">
+      <div className="w-[16px] h-[16px] rounded-full" style={{ background: 'rgba(139,92,246,0.2)' }} />
+      <div className="relative w-[22px] h-[2px] flex items-center justify-center">
         <div className="absolute inset-0 top-1/2 -translate-y-1/2 h-[1px]" style={{ background: 'rgba(212,175,55,0.3)' }} />
-        <div className="relative w-[6px] h-[6px] rounded-full" style={{ background: 'rgba(212,175,55,0.4)' }} />
+        <div className="relative w-[5px] h-[5px] rounded-full" style={{ background: 'rgba(212,175,55,0.4)' }} />
       </div>
-      <div className="w-[20px] h-[20px] rounded-full" style={{ background: 'rgba(99,102,241,0.2)' }} />
+      <div className="w-[16px] h-[16px] rounded-full" style={{ background: 'rgba(99,102,241,0.2)' }} />
     </div>
   </div>
 );
 
 /* Mini illustration for Card 4: calendar with checkmark + 72h */
 const MiniIllustration4 = () => (
-  <div className="flex items-center justify-center mt-4 h-[48px] gap-2">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <div className="flex items-center justify-center h-[36px] gap-1.5">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
       <rect x="2" y="4" width="20" height="18" rx="2.5" stroke="rgba(5,150,105,0.25)" strokeWidth="1.2" />
       <line x1="2" y1="9" x2="22" y2="9" stroke="rgba(5,150,105,0.15)" strokeWidth="1" />
       <line x1="7" y1="2" x2="7" y2="6" stroke="rgba(5,150,105,0.2)" strokeWidth="1.2" strokeLinecap="round" />
       <line x1="17" y1="2" x2="17" y2="6" stroke="rgba(5,150,105,0.2)" strokeWidth="1.2" strokeLinecap="round" />
       <polyline points="8 15 10.5 17.5 16 12" stroke="rgba(5,150,105,0.3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </svg>
-    <span className="text-[12px] font-medium" style={{ color: 'rgba(5,150,105,0.3)', fontFamily: 'DM Sans, sans-serif' }}>72h</span>
+    <span className="text-[10px] font-medium" style={{ color: 'rgba(5,150,105,0.3)', fontFamily: 'DM Sans, sans-serif' }}>72h</span>
   </div>
 );
 
@@ -786,7 +786,7 @@ function MatchingFlowSection() {
               >
                 <div className={`glow-card-wrapper h-full matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
                   <div
-                    className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300"
+                    className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300 flex flex-col"
                     data-label={step.label}
                     style={{
                       background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04))",
@@ -836,8 +836,10 @@ function MatchingFlowSection() {
                         />
                       )}
                     </div>
-                    <p className="text-[14px] text-text-muted leading-[1.6]">{step.desc}</p>
-                    {step.illustration}
+                    <p className="text-[14px] text-text-muted leading-[1.6] flex-1">{step.desc}</p>
+                    <div className="mt-3 pb-1">
+                      {step.illustration}
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -863,7 +865,7 @@ function MatchingFlowSection() {
               >
                 <div className={`glow-card-wrapper h-full matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
                   <div
-                    className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300"
+                    className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300 flex flex-col"
                     data-label={step.label}
                     style={{
                       background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04))",
@@ -913,8 +915,10 @@ function MatchingFlowSection() {
                         />
                       )}
                     </div>
-                    <p className="text-[14px] text-text-muted leading-[1.6]">{step.desc}</p>
-                    {step.illustration}
+                    <p className="text-[14px] text-text-muted leading-[1.6] flex-1">{step.desc}</p>
+                    <div className="mt-3 pb-1">
+                      {step.illustration}
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -1008,7 +1012,9 @@ function MatchingFlowSection() {
                       )}
                     </div>
                     <p className="text-[13px] text-text-muted leading-[1.6]">{step.desc}</p>
-                    {step.illustration}
+                    <div className="mt-3 pb-1">
+                      {step.illustration}
+                    </div>
                   </div>
                 </div>
               </motion.div>
