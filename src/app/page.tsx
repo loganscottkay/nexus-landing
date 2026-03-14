@@ -1288,80 +1288,128 @@ export default function Home() {
             </motion.div>
 
             {/* Credibility strip */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 2.3, ease }}
-              className="flex flex-col items-center mt-8 mb-6"
-            >
-              <div className="flex items-center gap-[24px] md:gap-[36px]">
-                {/* BU Logo */}
+            <div className="flex flex-col items-center mt-[36px] mb-[20px]">
+              <div className="flex items-center gap-[32px] md:gap-[48px]">
+                {/* BU Crest */}
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 2.3, ease }}
-                  style={{ animation: "floatLogo1 3.5s ease-in-out infinite", filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.06))" }}
-                  className="h-[36px] md:h-[48px] flex items-center justify-center"
+                  transition={{ duration: 0.4, delay: 1.8, ease }}
+                  className="flex flex-col items-center"
                 >
-                  <img
-                    src="/images/universities/bu-logo.png"
-                    alt="Boston University"
-                    className="h-full w-auto object-contain transition-all duration-300 hover:scale-[1.08]"
-                    style={{ opacity: 0.8 }}
-                    onMouseEnter={(e) => { (e.target as HTMLImageElement).style.opacity = "1"; }}
-                    onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.8"; }}
-                  />
-                </motion.div>
-                {/* NEU Logo */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 2.4, ease }}
-                  style={{ animation: "floatLogo2 4.0s ease-in-out infinite", animationDelay: "-0.5s", filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.06))" }}
-                  className="flex items-center justify-center"
-                >
-                  <div className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center overflow-hidden">
+                  <div
+                    className="w-[44px] h-[44px] md:w-[56px] md:h-[56px] bg-white rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-110 cursor-pointer"
+                    style={{ animation: "floatCrest1 3.5s ease-in-out infinite", filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 4px 16px rgba(0,0,0,0.12))"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 2px 10px rgba(0,0,0,0.08))"; }}
+                  >
                     <img
-                      src="/images/universities/neu-logo.png"
-                      alt="Northeastern University"
-                      className="h-[36px] w-auto object-contain transition-all duration-300 hover:scale-[1.08]"
-                      style={{ opacity: 0.8 }}
-                      onMouseEnter={(e) => { (e.target as HTMLImageElement).style.opacity = "1"; }}
-                      onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.8"; }}
+                      src="/images/universities/bu-crest.gif"
+                      alt="Boston University"
+                      className="w-full h-full object-cover"
+                      style={{ mixBlendMode: "multiply" }}
                     />
                   </div>
+                  <span
+                    className="mt-[8px] text-[11px] md:text-[12px]"
+                    style={{
+                      fontFamily: "var(--font-dm-sans), sans-serif",
+                      fontWeight: 500,
+                      letterSpacing: "1.5px",
+                      textTransform: "uppercase" as const,
+                      color: "rgba(0,0,0,0.35)",
+                    }}
+                  >
+                    BU
+                  </span>
                 </motion.div>
-                {/* HBS Logo */}
+
+                {/* NEU Crest */}
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 2.5, ease }}
-                  style={{ animation: "floatLogo3 3.8s ease-in-out infinite", animationDelay: "-1.0s", filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.06))" }}
-                  className="h-[36px] md:h-[48px] flex items-center justify-center"
+                  transition={{ duration: 0.4, delay: 1.9, ease }}
+                  className="flex flex-col items-center"
                 >
-                  <img
-                    src="/images/universities/hbs-logo.png"
-                    alt="Harvard Business School"
-                    className="h-full w-auto object-contain transition-all duration-300 hover:scale-[1.08]"
-                    style={{ opacity: 0.8 }}
-                    onMouseEnter={(e) => { (e.target as HTMLImageElement).style.opacity = "1"; }}
-                    onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.8"; }}
-                  />
+                  <div
+                    className="w-[44px] h-[44px] md:w-[56px] md:h-[56px] bg-white rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-110 cursor-pointer"
+                    style={{ animation: "floatCrest2 4.0s ease-in-out infinite", animationDelay: "-0.7s", filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 4px 16px rgba(0,0,0,0.12))"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 2px 10px rgba(0,0,0,0.08))"; }}
+                  >
+                    <img
+                      src="/images/universities/neu-crest.png"
+                      alt="Northeastern University"
+                      className="w-full h-full object-cover"
+                      style={{ mixBlendMode: "multiply" }}
+                    />
+                  </div>
+                  <span
+                    className="mt-[8px] text-[11px] md:text-[12px]"
+                    style={{
+                      fontFamily: "var(--font-dm-sans), sans-serif",
+                      fontWeight: 500,
+                      letterSpacing: "1.5px",
+                      textTransform: "uppercase" as const,
+                      color: "rgba(0,0,0,0.35)",
+                    }}
+                  >
+                    NEU
+                  </span>
+                </motion.div>
+
+                {/* HBS Crest */}
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 2.0, ease }}
+                  className="flex flex-col items-center"
+                >
+                  <div
+                    className="w-[44px] h-[44px] md:w-[56px] md:h-[56px] bg-white rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-110 cursor-pointer"
+                    style={{ animation: "floatCrest3 3.8s ease-in-out infinite", animationDelay: "-1.4s", filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 4px 16px rgba(0,0,0,0.12))"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 2px 10px rgba(0,0,0,0.08))"; }}
+                  >
+                    <img
+                      src="/images/universities/hbs-crest.png"
+                      alt="Harvard Business School"
+                      className="w-full h-full object-cover"
+                      style={{ mixBlendMode: "multiply" }}
+                    />
+                  </div>
+                  <span
+                    className="mt-[8px] text-[11px] md:text-[12px]"
+                    style={{
+                      fontFamily: "var(--font-dm-sans), sans-serif",
+                      fontWeight: 500,
+                      letterSpacing: "1.5px",
+                      textTransform: "uppercase" as const,
+                      color: "rgba(0,0,0,0.35)",
+                    }}
+                  >
+                    HBS
+                  </span>
                 </motion.div>
               </div>
-              <p
+
+              {/* Built in Boston */}
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4, delay: 2.2, ease }}
+                className="text-[16px] md:text-[18px]"
                 style={{
                   fontFamily: "'Instrument Serif', serif",
-                  fontSize: "16px",
                   fontStyle: "italic",
-                  color: "rgba(0,0,0,0.3)",
-                  letterSpacing: "1px",
-                  marginTop: "16px",
+                  color: "rgba(0,0,0,0.28)",
+                  letterSpacing: "0.5px",
+                  marginTop: "20px",
                 }}
               >
                 Built in Boston
-              </p>
-            </motion.div>
+              </motion.p>
+            </div>
 
             {/* Scroll-down indicator */}
             <ScrollDownIndicator />

@@ -3,15 +3,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ---- University logo floating animations ---- */
-@keyframes floatLogo1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-@keyframes floatLogo2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-@keyframes floatLogo3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+/* ---- University crest floating animations ---- */
+@keyframes floatCrest1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes floatCrest2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes floatCrest3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 
 @media (max-width: 767px) {
-  @keyframes floatLogo1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
-  @keyframes floatLogo2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.5px); } }
-  @keyframes floatLogo3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.5px); } }
+  @keyframes floatCrest1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  @keyframes floatCrest2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.4px); } }
+  @keyframes floatCrest3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3.6px); } }
 }
 
 /* Hide scrollbar for scrollable tabs */
