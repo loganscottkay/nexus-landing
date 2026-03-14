@@ -268,6 +268,48 @@ const CYCLE_DURATION = 6000;
 const RESUME_DELAY = 2000;
 const STEPS = ["01", "02", "03"] as const;
 
+function NarrativeLine() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className="py-[40px] lg:py-[60px] flex justify-center px-6"
+    >
+      <p
+        className="text-center max-w-[600px] transition-all duration-[600ms] ease-out"
+        style={{
+          fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
+          fontSize: "17px",
+          lineHeight: 1.7,
+          color: "#475569",
+          opacity: visible ? 1 : 0,
+          transform: visible ? "translateY(0)" : "translateY(20px)",
+        }}
+      >
+        <span className="lg:hidden">
+          The startup world is full of ideas. The problem has never been building — it is getting in front of the right people.
+        </span>
+        <span className="hidden lg:inline" style={{ fontSize: "20px" }}>
+          The startup world is full of ideas. The problem has never been building — it is getting in front of the right people.
+        </span>
+      </p>
+    </div>
+  );
+}
+
 function HowItWorksSection() {
   const [activeCard, setActiveCard] = useState<string>("01");
   const [isHovering, setIsHovering] = useState(false);
@@ -1143,7 +1185,7 @@ export default function Home() {
           style={{ background: "linear-gradient(to bottom, transparent, rgba(0,0,0,0.02))" }}
         />
         {/* Centered hero text */}
-        <div className="flex flex-col items-center justify-center text-center px-6 max-w-[700px] lg:max-w-[780px] mx-auto relative z-10">
+        <div className="flex flex-col items-center justify-center text-center px-6 max-w-[700px] lg:max-w-[900px] mx-auto relative z-10">
           <div className="flex flex-col items-center">
             {/* Eyebrow - DM Sans uppercase, first to appear */}
             <motion.p
@@ -1177,7 +1219,7 @@ export default function Home() {
               className="mb-12"
             >
               <div
-                className="text-[17px] max-w-full px-2 md:max-w-[600px] md:px-0 leading-[2.0] text-center"
+                className="text-[17px] md:text-[16px] max-w-full px-2 md:max-w-[600px] md:px-0 leading-[2.0] text-center"
                 style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 {[
@@ -1253,6 +1295,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ============ NARRATIVE HOOK ============ */}
+      <NarrativeLine />
 
       {/* ============ HOW IT WORKS ============ */}
       <HowItWorksSection />
