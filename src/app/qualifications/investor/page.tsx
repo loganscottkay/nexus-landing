@@ -291,7 +291,7 @@ export default function InvestorQualifications() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease }}
             className="text-[32px] md:text-[40px] font-normal text-center mb-4"
-            style={{ fontFamily: "var(--font-playfair), serif" }}
+            style={{ fontFamily: "'Instrument Serif', serif" }}
           >
             Investor Qualification Standards
           </motion.h1>

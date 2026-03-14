@@ -116,7 +116,7 @@ export default function Navbar() {
             <span
               className="text-[22px] md:text-[26px] font-normal transition-all duration-300"
               style={{
-                fontFamily: "var(--font-playfair), serif",
+                fontFamily: "'Instrument Serif', serif",
                 textShadow: logoHovered ? "0 0 20px rgba(74,108,247,0.15)" : "0 0 20px rgba(74,108,247,0)",
               }}
             >

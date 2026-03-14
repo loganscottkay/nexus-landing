@@ -63,7 +63,7 @@ export default function HeroHeadline({ lines, prefersReduced }: HeroHeadlineProp
           transition={{ duration: 0.7, delay: 0.3 + lineIndex * 0.3, ease }}
           className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] xl:text-[76px] font-bold leading-[1.05] tracking-[-0.02em]"
           style={{
-            fontFamily: 'var(--font-playfair), serif',
+            fontFamily: "'Instrument Serif', serif",
             color: '#0F172A',
             textShadow: '0 0 40px rgba(74,108,247,0.08)',
           }}

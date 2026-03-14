@@ -356,7 +356,7 @@ function HowItWorksSection() {
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
             className="text-[36px] md:text-[44px] font-normal text-center mb-16"
-            style={{ fontFamily: "var(--font-playfair), serif" }}
+            style={{ fontFamily: "'Instrument Serif', serif" }}
           >
             App Overview
           </motion.h2>
@@ -381,7 +381,7 @@ function HowItWorksSection() {
                     <div className="glass card-glow-effect p-5 md:p-6 h-full relative overflow-hidden" onMouseMove={handleCardGlowMove}>
                       <span
                         className="step-number text-[48px] font-normal text-text-primary/[0.06] absolute top-3 right-4 leading-none select-none"
-                        style={{ fontFamily: "var(--font-playfair), serif" }}
+                        style={{ fontFamily: "'Instrument Serif', serif" }}
                       >
                         {card.num}
                       </span>
@@ -629,7 +629,7 @@ function MatchingFlowSection() {
           variants={fadeUp}
           transition={{ duration: 0.6, ease }}
           className="text-[36px] md:text-[44px] font-normal text-center mb-4"
-          style={{ fontFamily: "var(--font-playfair), serif" }}
+          style={{ fontFamily: "'Instrument Serif', serif" }}
         >
           Swipe. Match. Meet.
         </motion.h2>
@@ -1023,7 +1023,7 @@ export default function Home() {
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
             className="text-[40px] font-normal text-center"
-            style={{ fontFamily: "var(--font-playfair), serif", color: "#0F172A" }}
+            style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
           >
             Ready to Join the <span className="gradient-text-animate">Network</span>?
           </motion.h2>
@@ -1060,7 +1060,7 @@ export default function Home() {
             <Link
               href="/"
               className="text-[18px] font-normal text-text-primary"
-              style={{ fontFamily: "var(--font-playfair), serif" }}
+              style={{ fontFamily: "'Instrument Serif', serif" }}
             >
               UrgenC
             </Link>
