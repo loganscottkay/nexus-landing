@@ -1642,8 +1642,7 @@ html {
 /* Gradient shimmer sweep on gradient text */
 .gradient-shimmer-wrap {
   position: relative;
-  display: inline-block;
-  overflow: hidden;
+  display: inline;
 }
 
 .gradient-shimmer-wrap::after {
