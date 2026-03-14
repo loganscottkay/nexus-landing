@@ -1306,7 +1306,7 @@ export default function Home() {
                     <img
                       src="/images/universities/bu-crest.gif"
                       alt="Boston University"
-                      className="w-[48px] h-[48px] object-cover rounded-full"
+                      className="w-full h-full object-cover rounded-full"
                       style={{ mixBlendMode: "multiply" }}
                     />
                   </div>
