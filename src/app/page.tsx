@@ -7,6 +7,8 @@ import Navbar from "@/components/Navbar";
 import { ScoringPreview, MatchingPreview, AccountabilityPreview } from "@/components/HowItWorksPreviews";
 import IPhoneMockups from "@/components/IPhoneMockups";
 import LottieAnimation from "@/components/LottieAnimation";
+import HeroHeadline from "@/components/HeroHeadline";
+import { handleCardGlowMove } from "@/components/useCardGlow";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
@@ -381,7 +383,7 @@ function HowItWorksSection() {
                       activeCard === card.num ? "hiw-card-active" : ""
                     }`}
                   >
-                    <div className="glass p-5 md:p-6 h-full relative overflow-hidden">
+                    <div className="glass card-glow-effect p-5 md:p-6 h-full relative overflow-hidden" onMouseMove={handleCardGlowMove}>
                       <span
                         className="step-number text-[48px] font-normal text-text-primary/[0.06] absolute top-3 right-4 leading-none select-none"
                         style={{ fontFamily: "var(--font-playfair), serif" }}
@@ -836,7 +838,7 @@ function ScrollDownIndicator({ scrollY }: { scrollY: number }) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, delay: 1.8 }}
+      transition={{ duration: 0.5, delay: 3.2 }}
       className="mt-6 flex justify-center"
       style={{ opacity, transition: "opacity 0.3s ease" }}
     >
@@ -898,43 +900,21 @@ export default function Home() {
               Founding Cohort Coming Soon
             </motion.p>
 
-            {/* Headline - clip-path reveal from bottom */}
-            <div
-              className="mb-8 relative"
-              style={{
-                willChange: prefersReduced ? "auto" : "transform",
-                transform: prefersReduced ? "none" : `translateY(${scrollY * -0.15}px)`,
-              }}
-            >
-              {/* Luminous halo behind headline */}
-              <div
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-                style={{
-                  width: "600px",
-                  height: "300px",
-                  background: "radial-gradient(ellipse, rgba(139,92,246,0.06), transparent 70%)",
-                  zIndex: -1,
-                }}
-              />
-              <motion.h1
-                initial={{ opacity: 0, y: 30, clipPath: "inset(100% 0 0 0)" }}
-                animate={{ opacity: 1, y: 0, clipPath: "inset(0 0 0 0)" }}
-                transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
-                className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] xl:text-[76px] font-bold leading-[1.05] tracking-[-0.02em]"
-                style={{ fontFamily: "var(--font-playfair), serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
-              >
-                Where <span className="gradient-text-animate">Real Ideas</span>
-              </motion.h1>
-              <motion.h1
-                initial={{ opacity: 0, y: 30, clipPath: "inset(100% 0 0 0)" }}
-                animate={{ opacity: 1, y: 0, clipPath: "inset(0 0 0 0)" }}
-                transition={{ duration: 0.8, delay: 0.65, ease: [0.25, 0.4, 0.25, 1] }}
-                className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] xl:text-[76px] font-bold leading-[1.05] tracking-[-0.02em]"
-                style={{ fontFamily: "var(--font-playfair), serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
-              >
-                Meet <span className="gradient-text-animate">Real Capital.</span>
-              </motion.h1>
-            </div>
+            {/* Headline - letter-by-letter stagger reveal */}
+            <HeroHeadline
+              lines={[
+                [
+                  { text: "Where ", isGradient: false },
+                  { text: "Real Ideas", isGradient: true },
+                ],
+                [
+                  { text: "Meet ", isGradient: false },
+                  { text: "Real Capital.", isGradient: true },
+                ],
+              ]}
+              prefersReduced={prefersReduced}
+              scrollY={scrollY}
+            />
 
             {/* Subtitle - staggered line reveals with parallax */}
             <div
@@ -958,7 +938,7 @@ export default function Home() {
                     key={i}
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 1.0 + i * 0.15, ease }}
+                    transition={{ duration: 0.5, delay: 2.0 + i * 0.15, ease }}
                     className="block"
                   >
                     {line}
@@ -969,9 +949,9 @@ export default function Home() {
 
             {/* CTA - scale bounce entrance + magnetic effect */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 1.4, ease: [0.34, 1.56, 0.64, 1] }}
+              transition={{ duration: 0.4, delay: 2.8, ease: [0.34, 1.56, 0.64, 1] }}
               className="flex justify-center"
             >
               <MagneticButton

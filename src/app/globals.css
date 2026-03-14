@@ -28,28 +28,12 @@
 }
 
 body {
-  background-color: #FAFAF9;
-  background-image:
-    radial-gradient(ellipse 800px 600px at 20% 10%, rgba(99,102,241,0.04), transparent),
-    radial-gradient(ellipse 600px 800px at 80% 30%, rgba(139,92,246,0.03), transparent),
-    radial-gradient(ellipse 900px 500px at 50% 70%, rgba(168,85,247,0.025), transparent),
-    radial-gradient(ellipse 500px 700px at 10% 90%, rgba(99,102,241,0.02), transparent);
+  background-color: #FAF9F7;
+  position: relative;
+  overflow-x: hidden;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.015;
-  z-index: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 256px 256px;
-}
+/* body::before removed - grain is now in PageAtmosphere component */
 
 /* ---- Noise texture overlay ---- */
 .noise-overlay {
@@ -63,15 +47,30 @@ body::before {
   background-size: 256px 256px;
 }
 
+/* ---- Grain overlay (PageAtmosphere) ---- */
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.018;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
 @media (max-width: 768px) {
-  body::before {
-    opacity: 0.008;
+  .grain-overlay {
+    opacity: 0.01;
   }
-  body {
-    background-image:
-      radial-gradient(ellipse 400px 300px at 20% 10%, rgba(99,102,241,0.02), transparent),
-      radial-gradient(ellipse 300px 400px at 80% 30%, rgba(139,92,246,0.015), transparent),
-      radial-gradient(ellipse 450px 250px at 50% 70%, rgba(168,85,247,0.012), transparent);
+  .atmosphere-zone > div {
+    opacity: 0.7;
+  }
+  .atmosphere-glow-spot {
+    transform: scale(0.6) !important;
+    opacity: 0.7;
   }
 }
 
@@ -1621,4 +1620,178 @@ html {
   background: #06B6D4;
   --sparkle-x: 5px;
   --sparkle-y: -20px;
+}
+
+/* ============================================================
+   PART 3: Hero Letter Animation
+   ============================================================ */
+.hero-letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(40px) perspective(600px) rotateX(-40deg);
+  animation: hero-letter-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes hero-letter-in {
+  to {
+    opacity: 1;
+    transform: translateY(0) perspective(600px) rotateX(0deg);
+  }
+}
+
+/* Gradient shimmer sweep on gradient text */
+.gradient-shimmer-wrap {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.gradient-shimmer-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.gradient-shimmer-wrap.shimmer-active::after {
+  opacity: 1;
+  animation: gradient-shimmer-sweep 0.8s ease-in-out forwards;
+}
+
+@keyframes gradient-shimmer-sweep {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* PART 4: Scroll-triggered section animations */
+.section-eyebrow-reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.section-eyebrow-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-heading-reveal {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.7s ease-out;
+}
+
+.section-heading-reveal.revealed {
+  clip-path: inset(0 0 0 0);
+}
+
+.scroll-card-reveal {
+  opacity: 0;
+  transform: translateY(30px) scale(0.97);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-card-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Phone mockup entrance */
+.phone-entrance-left {
+  opacity: 0;
+  transform: translateX(-40px) perspective(800px) rotateY(6deg);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.phone-entrance-left.revealed {
+  opacity: 1;
+  transform: translateX(0) perspective(800px) rotateY(0deg);
+}
+
+.phone-entrance-right {
+  opacity: 0;
+  transform: translateX(40px) perspective(800px) rotateY(-6deg);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transition-delay: 0.15s;
+}
+.phone-entrance-right.revealed {
+  opacity: 1;
+  transform: translateX(0) perspective(800px) rotateY(0deg);
+}
+
+/* CTA button pulse on reveal */
+@keyframes cta-reveal-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+.cta-reveal-pulse {
+  animation: cta-reveal-pulse 0.4s ease 0.3s 1;
+}
+
+/* PART 5: Interactive card glow on hover */
+@media (hover: hover) {
+  .card-glow-effect {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-glow-effect::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(99,102,241,0.08), transparent 70%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    transform: translate(-50%, -50%);
+    left: var(--mouse-x, 50%);
+    top: var(--mouse-y, 50%);
+    z-index: 1;
+  }
+
+  .card-glow-effect:hover::before {
+    opacity: 1;
+  }
+}
+
+/* Mobile: hero letter animation adjustments */
+@media (max-width: 768px) {
+  .hero-letter {
+    transform: translateY(25px);
+  }
+
+  @keyframes hero-letter-in {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .phone-entrance-left,
+  .phone-entrance-right {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  .phone-entrance-left.revealed,
+  .phone-entrance-right.revealed {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* PART 6: Page transitions */
+.page-transition-wrapper {
+  animation: page-fade-in 0.3s ease forwards;
+}
+
+@keyframes page-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

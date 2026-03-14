@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import PageAtmosphere from "@/components/PageAtmosphere";
+import CursorGlow from "@/components/CursorGlow";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -37,6 +39,8 @@ export default function RootLayout({
         className="font-sans antialiased overflow-x-hidden"
         style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
       >
+        <PageAtmosphere />
+        <CursorGlow />
         {children}
       </body>
     </html>
