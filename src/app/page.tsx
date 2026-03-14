@@ -218,7 +218,7 @@ function HowItWorksSection() {
   const activeIndex = STEPS.indexOf(activeCard as typeof STEPS[number]);
 
   return (
-    <Section id="how-it-works" className="relative z-10 px-6 py-20 lg:pt-[30px] lg:pb-[40px] max-w-6xl mx-auto">
+    <Section id="how-it-works" className="relative z-10 px-6 py-20 lg:py-20 max-w-6xl mx-auto">
       <div ref={sectionRef}>
         <motion.div
           variants={cardStagger}
@@ -289,25 +289,14 @@ function HowItWorksSection() {
               <motion.div
                 variants={fadeUp}
                 transition={{ duration: 0.6, ease }}
-                className="flex-1 min-h-[450px] rounded-3xl p-6 md:p-8 relative overflow-hidden"
+                className="flex-1 min-h-[450px] rounded-2xl p-6 md:p-8 relative overflow-hidden"
                 style={{
-                  background: "rgba(10, 10, 15, 0.9)",
-                  border: "1px solid transparent",
-                  backgroundClip: "padding-box",
+                  background: "rgba(255, 255, 255, 0.5)",
+                  backdropFilter: "blur(40px)",
+                  WebkitBackdropFilter: "blur(40px)",
+                  border: "1px solid rgba(0, 0, 0, 0.06)",
                 }}
               >
-                {/* Gradient border */}
-                <div
-                  className="absolute inset-0 rounded-3xl pointer-events-none"
-                  style={{
-                    padding: "1px",
-                    background: "linear-gradient(135deg, rgba(74, 108, 247, 0.2), rgba(124, 92, 252, 0.2), rgba(74, 108, 247, 0.1))",
-                    mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                    WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                    maskComposite: "xor",
-                    WebkitMaskComposite: "xor",
-                  }}
-                />
 
                 {/* Preview content */}
                 <div className="relative h-full">
@@ -362,7 +351,7 @@ function HowItWorksSection() {
                       style={{
                         background: i === activeIndex
                           ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)"
-                          : "rgba(255, 255, 255, 0.1)",
+                          : "rgba(0, 0, 0, 0.1)",
                       }}
                     />
                     {/* Progress ring around active dot */}
@@ -379,7 +368,7 @@ function HowItWorksSection() {
                           cy="8"
                           r="6"
                           fill="none"
-                          stroke="rgba(255,255,255,0.06)"
+                          stroke="rgba(0,0,0,0.06)"
                           strokeWidth="1.5"
                         />
                         <circle
@@ -487,7 +476,7 @@ const matchingSteps = [
 
 function MatchingFlowSection() {
   return (
-    <Section className="relative z-10 px-6 py-20 lg:pt-[40px] lg:pb-[40px] max-w-6xl mx-auto">
+    <Section className="relative z-10 px-6 py-20 lg:py-20 max-w-6xl mx-auto">
       <motion.div
         variants={cardStagger}
         initial="hidden"
@@ -588,6 +577,18 @@ function MatchingFlowSection() {
   );
 }
 
+/* ---- Section Divider (desktop only) ---- */
+function SectionDivider() {
+  return (
+    <div className="hidden lg:flex justify-center py-10">
+      <div
+        className="w-[200px] h-[1px]"
+        style={{ background: "linear-gradient(90deg, transparent, rgba(74,108,247,0.15), transparent)" }}
+      />
+    </div>
+  );
+}
+
 /* ---- Main Page ---- */
 export default function Home() {
   /* Blobs are purely decorative, no parallax to avoid dark wash on scroll */
@@ -610,8 +611,13 @@ export default function Home() {
 
       {/* ============ HERO ============ */}
       <section className="relative z-10 pt-[120px] pb-[80px] lg:pb-[30px]">
+        {/* Desktop bottom gradient fade */}
+        <div
+          className="hidden lg:block absolute bottom-0 left-0 right-0 h-[60px] pointer-events-none z-20"
+          style={{ background: "linear-gradient(to bottom, transparent, rgba(0,0,0,0.02))" }}
+        />
         {/* Centered hero text */}
-        <div className="flex flex-col items-center justify-center text-center px-6 max-w-[700px] mx-auto relative z-10">
+        <div className="flex flex-col items-center justify-center text-center px-6 max-w-[700px] lg:max-w-[680px] mx-auto relative z-10">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -682,17 +688,29 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ============ DIVIDER ============ */}
+      <SectionDivider />
+
       {/* ============ HOW IT WORKS ============ */}
       <HowItWorksSection />
+
+      {/* ============ DIVIDER ============ */}
+      <SectionDivider />
 
       {/* ============ HOW MATCHING WORKS ============ */}
       <MatchingFlowSection />
 
+      {/* ============ DIVIDER ============ */}
+      <SectionDivider />
+
       {/* ============ IPHONE MOCKUPS ============ */}
       <IPhoneMockups />
 
+      {/* ============ DIVIDER ============ */}
+      <SectionDivider />
+
       {/* ============ FINAL CTA ============ */}
-      <section className="relative z-10 py-[80px] lg:pt-[40px] lg:pb-[20px]">
+      <section className="relative z-10 py-[80px] lg:py-20">
         {/* CTA Content */}
         <motion.div
           variants={sectionFadeUp}
@@ -700,8 +718,13 @@ export default function Home() {
           whileInView="visible"
           viewport={viewportConfig}
           transition={{ duration: 0.6, ease }}
-          className="relative max-w-[700px] mx-auto px-6 text-center"
+          className="relative max-w-[700px] lg:max-w-[1000px] mx-auto px-6 text-center lg:rounded-3xl lg:py-[60px]"
         >
+          {/* Desktop blue tint background */}
+          <div
+            className="hidden lg:block absolute inset-0 rounded-3xl pointer-events-none"
+            style={{ background: "rgba(74, 108, 247, 0.02)" }}
+          />
           <motion.div
             variants={cardStagger}
             initial="hidden"

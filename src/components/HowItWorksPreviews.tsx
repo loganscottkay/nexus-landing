@@ -50,8 +50,8 @@ function StatusDot({ color }: { color: string }) {
 function PreviewLabel({ label, statusText, dotColor }: { label: string; statusText: string; dotColor: string }) {
   return (
     <div className="flex items-center justify-between mb-6">
-      <span className="text-[11px] tracking-[2px] uppercase text-white/40 font-medium">{label}</span>
-      <span className="flex items-center gap-1.5 text-[11px] text-white/50">
+      <span className="text-[11px] tracking-[2px] uppercase font-medium" style={{ color: "#94A3B8" }}>{label}</span>
+      <span className="flex items-center gap-1.5 text-[11px]" style={{ color: "#64748B" }}>
         <StatusDot color={dotColor} />
         {statusText}
       </span>
@@ -86,8 +86,8 @@ function ScoringBar({ label, score, delay, active }: { label: string; score: num
 
   return (
     <div className="flex items-center gap-3">
-      <span className="text-[12px] text-white/60 w-[90px] shrink-0">{label}</span>
-      <div className="flex-1 h-[6px] rounded-full bg-white/[0.06] overflow-hidden">
+      <span className="text-[12px] w-[90px] shrink-0" style={{ color: "#64748B" }}>{label}</span>
+      <div className="flex-1 h-[6px] rounded-full overflow-hidden" style={{ background: "rgba(0,0,0,0.04)" }}>
         <motion.div
           className="h-full rounded-full"
           style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)" }}
@@ -96,7 +96,7 @@ function ScoringBar({ label, score, delay, active }: { label: string; score: num
           transition={{ duration: 0.5, ease: [0.25, 0.4, 0.25, 1], delay: 0 }}
         />
       </div>
-      <span className="text-[13px] font-semibold text-white/80 w-[28px] text-right tabular-nums">
+      <span className="text-[13px] font-semibold w-[28px] text-right tabular-nums" style={{ color: "#334155" }}>
         {started ? value : 0}
       </span>
     </div>
@@ -121,7 +121,7 @@ export function ScoringPreview({ active }: { active: boolean }) {
       <PreviewLabel label="WAITLIST REVIEW" statusText="Processing" dotColor="green" />
 
       {/* Startup card */}
-      <div className="rounded-xl p-4 mb-5" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+      <div className="rounded-xl p-4 mb-5" style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)" }}>
         <div className="flex items-start gap-3">
           {/* Fake company icon */}
           <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}>
@@ -129,18 +129,18 @@ export function ScoringPreview({ active }: { active: boolean }) {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-white text-[14px] font-semibold">Helix Robotics</span>
+              <span className="text-[14px] font-semibold" style={{ color: "#0F172A" }}>Helix Robotics</span>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-accent-blue/20 text-accent-blue">AI/Robotics</span>
             </div>
             <div className="flex items-center gap-3 mt-2">
               {/* Pitch deck thumbnail */}
-              <div className="w-[52px] h-[36px] rounded-md flex items-center justify-center" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"><rect x="2" y="3" width="20" height="18" rx="2" /><path d="M2 8h20" /></svg>
+              <div className="w-[52px] h-[36px] rounded-md flex items-center justify-center" style={{ background: "rgba(0,0,0,0.04)", border: "1px solid rgba(0,0,0,0.06)" }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.3)" strokeWidth="1.5"><rect x="2" y="3" width="20" height="18" rx="2" /><path d="M2 8h20" /></svg>
               </div>
               {/* Video thumbnail */}
-              <div className="w-[52px] h-[36px] rounded-md flex items-center justify-center relative" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="rgba(255,255,255,0.5)"><polygon points="5 3 19 12 5 21 5 3" /></svg>
-                <span className="absolute bottom-0.5 right-1 text-[8px] text-white/40">60s</span>
+              <div className="w-[52px] h-[36px] rounded-md flex items-center justify-center relative" style={{ background: "rgba(0,0,0,0.04)", border: "1px solid rgba(0,0,0,0.06)" }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="rgba(0,0,0,0.35)"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+                <span className="absolute bottom-0.5 right-1 text-[8px]" style={{ color: "#94A3B8" }}>60s</span>
               </div>
             </div>
           </div>
@@ -155,12 +155,12 @@ export function ScoringPreview({ active }: { active: boolean }) {
       </div>
 
       {/* Overall score */}
-      <div className="mt-auto pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+      <div className="mt-auto pt-4" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
         <div className="flex items-center justify-between">
-          <span className="text-[13px] text-white/50">Overall UrgenC Score</span>
+          <span className="text-[13px]" style={{ color: "#64748B" }}>Overall UrgenC Score</span>
           <div className="flex items-center gap-3">
-            <span className="text-[28px] font-bold text-white tabular-nums">
-              {active ? overallScore : 0}<span className="text-[16px] text-white/40">/100</span>
+            <span className="text-[28px] font-bold tabular-nums" style={{ color: "#0F172A" }}>
+              {active ? overallScore : 0}<span className="text-[16px]" style={{ color: "#94A3B8" }}>/100</span>
             </span>
             <AnimatePresence>
               {showAccepted && (
@@ -286,7 +286,7 @@ export function MatchingPreview({ active }: { active: boolean }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <p className="text-[11px] text-white/40 mb-2">Industries</p>
+                <p className="text-[11px] mb-2" style={{ color: "#94A3B8" }}>Industries</p>
                 <div className="flex gap-2">
                   {industries.map((ind, i) => {
                     const isSelected = ind.selected && selectedIndustries > i;
@@ -295,10 +295,10 @@ export function MatchingPreview({ active }: { active: boolean }) {
                         key={ind.label}
                         className="text-[11px] px-3 py-1.5 rounded-full transition-all duration-300"
                         style={{
-                          background: isSelected ? "rgba(74, 108, 247, 0.2)" : "rgba(255,255,255,0.06)",
-                          color: isSelected ? "#4A6CF7" : "rgba(255,255,255,0.35)",
-                          border: `1px solid ${isSelected ? "rgba(74, 108, 247, 0.4)" : "rgba(255,255,255,0.08)"}`,
-                          boxShadow: isSelected ? "0 0 8px rgba(74, 108, 247, 0.2)" : "none",
+                          background: isSelected ? "rgba(74, 108, 247, 0.12)" : "rgba(0,0,0,0.04)",
+                          color: isSelected ? "#4A6CF7" : "rgba(0,0,0,0.3)",
+                          border: `1px solid ${isSelected ? "rgba(74, 108, 247, 0.3)" : "rgba(0,0,0,0.06)"}`,
+                          boxShadow: isSelected ? "0 0 8px rgba(74, 108, 247, 0.15)" : "none",
                         }}
                       >
                         {ind.label}
@@ -318,8 +318,8 @@ export function MatchingPreview({ active }: { active: boolean }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <p className="text-[11px] text-white/40 mb-2">Investment Range</p>
-                <div className="relative h-[6px] rounded-full bg-white/[0.06] overflow-hidden">
+                <p className="text-[11px] mb-2" style={{ color: "#94A3B8" }}>Investment Range</p>
+                <div className="relative h-[6px] rounded-full overflow-hidden" style={{ background: "rgba(0,0,0,0.04)" }}>
                   <motion.div
                     className="absolute inset-y-0 left-0 rounded-full"
                     style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)" }}
@@ -329,14 +329,14 @@ export function MatchingPreview({ active }: { active: boolean }) {
                   />
                 </div>
                 <div className="flex justify-between mt-1.5">
-                  <span className="text-[10px] text-white/30">$1K</span>
+                  <span className="text-[10px]" style={{ color: "#94A3B8" }}>$1K</span>
                   <span
                     className="text-[11px] font-medium transition-opacity duration-300"
                     style={{ color: "#4A6CF7", opacity: sliderPos > 50 ? 1 : 0 }}
                   >
                     $1K - $500K+
                   </span>
-                  <span className="text-[10px] text-white/30">$100K+</span>
+                  <span className="text-[10px]" style={{ color: "#94A3B8" }}>$100K+</span>
                 </div>
               </motion.div>
             )}
@@ -350,7 +350,7 @@ export function MatchingPreview({ active }: { active: boolean }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <p className="text-[11px] text-white/40 mb-2">Stage</p>
+                <p className="text-[11px] mb-2" style={{ color: "#94A3B8" }}>Stage</p>
                 <div className="flex gap-2">
                   {stages.map((stage, i) => {
                     const isSelected = stage.selected && selectedStages > i;
@@ -359,10 +359,10 @@ export function MatchingPreview({ active }: { active: boolean }) {
                         key={stage.label}
                         className="text-[11px] px-3 py-1.5 rounded-full transition-all duration-300"
                         style={{
-                          background: isSelected ? "rgba(124, 92, 252, 0.2)" : "rgba(255,255,255,0.06)",
-                          color: isSelected ? "#7C5CFC" : "rgba(255,255,255,0.35)",
-                          border: `1px solid ${isSelected ? "rgba(124, 92, 252, 0.4)" : "rgba(255,255,255,0.08)"}`,
-                          boxShadow: isSelected ? "0 0 8px rgba(124, 92, 252, 0.2)" : "none",
+                          background: isSelected ? "rgba(124, 92, 252, 0.12)" : "rgba(0,0,0,0.04)",
+                          color: isSelected ? "#7C5CFC" : "rgba(0,0,0,0.3)",
+                          border: `1px solid ${isSelected ? "rgba(124, 92, 252, 0.3)" : "rgba(0,0,0,0.06)"}`,
+                          boxShadow: isSelected ? "0 0 8px rgba(124, 92, 252, 0.15)" : "none",
                         }}
                       >
                         {stage.label}
@@ -385,12 +385,12 @@ export function MatchingPreview({ active }: { active: boolean }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
                   className="rounded-lg px-3 py-2.5 flex items-center gap-3"
-                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
+                  style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)" }}
                 >
-                  <span className="text-white text-[12px] font-semibold flex-1">{s.name}</span>
+                  <span className="text-[12px] font-semibold flex-1" style={{ color: "#0F172A" }}>{s.name}</span>
                   <span
                     className="text-[9px] px-2 py-0.5 rounded-full"
-                    style={{ background: "rgba(74, 108, 247, 0.15)", color: "#4A6CF7" }}
+                    style={{ background: "rgba(74, 108, 247, 0.1)", color: "#4A6CF7" }}
                   >
                     {s.tag}
                   </span>
@@ -407,14 +407,15 @@ export function MatchingPreview({ active }: { active: boolean }) {
         </div>
 
         {/* Ready text */}
-        <div className="mt-auto pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="mt-auto pt-3" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
           <AnimatePresence>
             {showReady && (
               <motion.p
                 initial={{ opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="text-[13px] text-white/50"
+                className="text-[13px]"
+                style={{ color: "#64748B" }}
               >
                 Your personalized feed is ready
               </motion.p>
@@ -465,7 +466,7 @@ function TypewriterText({ text, active }: { text: string; active: boolean }) {
     <span>
       {displayed}
       {active && displayed.length < text.length && (
-        <span className="inline-block w-[2px] h-[13px] bg-white/60 ml-0.5" style={{ animation: "pulse-gentle 0.8s ease-in-out infinite" }} />
+        <span className="inline-block w-[2px] h-[13px] ml-0.5" style={{ backgroundColor: "rgba(15,23,42,0.4)", animation: "pulse-gentle 0.8s ease-in-out infinite" }} />
       )}
     </span>
   );
@@ -476,7 +477,7 @@ const dashboardRows = [
     name: "Luminary AI",
     days: "23 days active",
     traction: "Traction: Strong",
-    arrow: "↑",
+    arrow: "\u2191",
     status: "green" as const,
     trend: "up" as const,
     removed: false,
@@ -523,9 +524,9 @@ export function AccountabilityPreview({ active }: { active: boolean }) {
   }, [active]);
 
   const statusColors = {
-    green: { bg: "rgba(34, 197, 94, 0.1)", border: "rgba(34, 197, 94, 0.2)", text: "#22c55e", icon: "✓" },
-    amber: { bg: "rgba(245, 158, 11, 0.1)", border: "rgba(245, 158, 11, 0.2)", text: "#f59e0b", icon: "⚠" },
-    red: { bg: "rgba(239, 68, 68, 0.1)", border: "rgba(239, 68, 68, 0.2)", text: "#ef4444", icon: "✕" },
+    green: { bg: "rgba(34, 197, 94, 0.1)", border: "rgba(34, 197, 94, 0.2)", text: "#22c55e", icon: "\u2713" },
+    amber: { bg: "rgba(245, 158, 11, 0.1)", border: "rgba(245, 158, 11, 0.2)", text: "#f59e0b", icon: "\u26A0" },
+    red: { bg: "rgba(239, 68, 68, 0.1)", border: "rgba(239, 68, 68, 0.2)", text: "#ef4444", icon: "\u2715" },
   };
 
   return (
@@ -555,16 +556,16 @@ export function AccountabilityPreview({ active }: { active: boolean }) {
                   {/* Info */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className={`text-[13px] font-semibold text-white ${row.removed ? "line-through" : ""}`}>{row.name}</span>
+                      <span className={`text-[13px] font-semibold ${row.removed ? "line-through" : ""}`} style={{ color: "#0F172A" }}>{row.name}</span>
                     </div>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-[11px] text-white/40">{row.days}{row.removed ? " - " : ""}</span>
+                      <span className="text-[11px]" style={{ color: "#94A3B8" }}>{row.days}{row.removed ? " - " : ""}</span>
                       <span className="text-[11px] font-medium" style={{ color: sc.text }}>
                         {row.traction} {row.arrow}
                       </span>
                     </div>
                     {row.removed && row.reason && (
-                      <span className="text-[10px] text-white/30 mt-0.5 block">{row.reason}</span>
+                      <span className="text-[10px] mt-0.5 block" style={{ color: "#94A3B8" }}>{row.reason}</span>
                     )}
                   </div>
 
@@ -585,21 +586,21 @@ export function AccountabilityPreview({ active }: { active: boolean }) {
             animate={{ opacity: 1, y: 0 }}
             className="flex gap-4 mb-4"
           >
-            <div className="flex-1 rounded-lg p-3 text-center" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <p className="text-[10px] text-white/40 mb-0.5">Platform Churn</p>
-              <p className="text-[16px] font-bold text-white">12%<span className="text-[11px] text-white/40 ml-1">monthly</span></p>
+            <div className="flex-1 rounded-lg p-3 text-center" style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)" }}>
+              <p className="text-[10px] mb-0.5" style={{ color: "#94A3B8" }}>Platform Churn</p>
+              <p className="text-[16px] font-bold" style={{ color: "#0F172A" }}>12%<span className="text-[11px] ml-1" style={{ color: "#94A3B8" }}>monthly</span></p>
             </div>
-            <div className="flex-1 rounded-lg p-3 text-center" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <p className="text-[10px] text-white/40 mb-0.5">Active Quality Score</p>
-              <p className="text-[16px] font-bold text-white">94<span className="text-[11px] text-white/40">/100</span></p>
+            <div className="flex-1 rounded-lg p-3 text-center" style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)" }}>
+              <p className="text-[10px] mb-0.5" style={{ color: "#94A3B8" }}>Active Quality Score</p>
+              <p className="text-[16px] font-bold" style={{ color: "#0F172A" }}>94<span className="text-[11px]" style={{ color: "#94A3B8" }}>/100</span></p>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Typewriter */}
-      <div className="mt-auto pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-        <p className="text-[13px] text-white/50 italic h-[20px]">
+      <div className="mt-auto pt-3" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+        <p className="text-[13px] italic h-[20px]" style={{ color: "#64748B" }}>
           <TypewriterText text="Only serious founders remain." active={showTypewriter} />
         </p>
       </div>
@@ -634,7 +635,8 @@ export function DefaultPreview() {
       <motion.p
         animate={{ opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-        className="text-[14px] text-white/30 tracking-wide"
+        className="text-[14px] tracking-wide"
+        style={{ color: "#94A3B8" }}
       >
         Hover to preview
       </motion.p>
