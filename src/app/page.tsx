@@ -228,6 +228,8 @@ const howItWorksCards = [
     icon: <ShieldIcon />,
     title: "Join & Get Scored",
     desc: "Pitch deck. 60-second video. Scored on vision, team, market, and momentum. Less than 15% of applicants get into the founding cohort.",
+    lottie: "/animations/play-button.json",
+    lottieClass: "lottie-brand-violet",
   },
   {
     num: "02",
@@ -392,6 +394,13 @@ function HowItWorksSection() {
                           <h3 className="text-[17px] md:text-[18px] font-semibold text-text-primary">
                             {card.title}
                           </h3>
+                          {(card as { lottie?: string }).lottie && (
+                            <LottieAnimation
+                              src={(card as { lottie: string }).lottie}
+                              loop={true}
+                              className={`w-[48px] h-[48px] shrink-0 ${(card as { lottieClass?: string }).lottieClass || ''}`}
+                            />
+                          )}
                         </div>
                         <p className="text-text-secondary text-[14px] leading-[1.6]">
                           {card.desc}
@@ -590,6 +599,7 @@ const matchingSteps = [
         <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
       </svg>
     ),
+    lottie: "/animations/chat-connect.json",
   },
 ];
 
@@ -698,12 +708,21 @@ function MatchingFlowSection() {
                     <p className="text-[11px] tracking-[2px] uppercase mb-2 font-medium" style={{ color: step.color }}>
                       Step {step.num}
                     </p>
-                    <h3
-                      className="text-[17px] font-semibold text-text-primary mb-2"
-                      style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-                    >
-                      {step.title}
-                    </h3>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3
+                        className="text-[17px] font-semibold text-text-primary"
+                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                      >
+                        {step.title}
+                      </h3>
+                      {(step as { lottie?: string }).lottie && (
+                        <LottieAnimation
+                          src={(step as { lottie: string }).lottie}
+                          loop={true}
+                          className="lottie-brand w-[36px] h-[36px] shrink-0"
+                        />
+                      )}
+                    </div>
                     <p className="text-[14px] text-text-muted leading-[1.6]">{step.desc}</p>
                   </div>
                 </div>
@@ -781,12 +800,21 @@ function MatchingFlowSection() {
                         {step.label}
                       </motion.span>
                     </div>
-                    <h3
-                      className="text-[16px] font-semibold text-text-primary mb-1.5"
-                      style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-                    >
-                      {step.title}
-                    </h3>
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <h3
+                        className="text-[16px] font-semibold text-text-primary"
+                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                      >
+                        {step.title}
+                      </h3>
+                      {(step as { lottie?: string }).lottie && (
+                        <LottieAnimation
+                          src={(step as { lottie: string }).lottie}
+                          loop={true}
+                          className="lottie-brand w-[36px] h-[36px] shrink-0"
+                        />
+                      )}
+                    </div>
                     <p className="text-[13px] text-text-muted leading-[1.6]">{step.desc}</p>
                   </div>
                 </div>
@@ -796,6 +824,26 @@ function MatchingFlowSection() {
         </motion.div>
       </motion.div>
     </Section>
+  );
+}
+
+/* ---- Scroll Down Indicator ---- */
+function ScrollDownIndicator({ scrollY }: { scrollY: number }) {
+  const opacity = scrollY > 200 ? 0 : 1;
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 1.8 }}
+      className="mt-6 flex justify-center"
+      style={{ opacity, transition: "opacity 0.3s ease" }}
+    >
+      <LottieAnimation
+        src="/animations/scroll-down.json"
+        loop={true}
+        className="lottie-brand-subtle w-[30px] h-[45px] md:w-[40px] md:h-[60px]"
+      />
+    </motion.div>
   );
 }
 
@@ -913,15 +961,29 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 1.4, ease: [0.34, 1.56, 0.64, 1] }}
               className="flex justify-center"
             >
-              <MagneticButton
-                href="/waitlist"
-                className="group btn-shimmer btn-auto-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
-                style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
-              >
-                Join the Waitlist
-                <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
-              </MagneticButton>
+              <div className="relative inline-flex items-center justify-center">
+                {/* CTA pulse glow behind button */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ zIndex: -1 }}>
+                  <LottieAnimation
+                    src="/animations/cta-pulse.json"
+                    loop={true}
+                    className="w-[150px] h-[150px] md:w-[200px] md:h-[200px]"
+                    style={{ opacity: 0.08 }}
+                  />
+                </div>
+                <MagneticButton
+                  href="/waitlist"
+                  className="group btn-shimmer btn-auto-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
+                  style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+                >
+                  Join the Waitlist
+                  <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
+                </MagneticButton>
+              </div>
             </motion.div>
+
+            {/* Scroll-down indicator */}
+            <ScrollDownIndicator scrollY={scrollY} />
           </div>
         </div>
       </section>

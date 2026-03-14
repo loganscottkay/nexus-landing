@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import UnicornAnimation from "@/components/UnicornAnimation";
+import LottieAnimation from "@/components/LottieAnimation";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
@@ -377,7 +378,13 @@ export default function WaitlistPage() {
                   className="flex flex-col items-center text-center py-6"
                 >
                   {/* Animated checkmark */}
-                  <AnimatedCheckmark />
+                  <div className="lottie-brand w-[60px] h-[60px] md:w-[80px] md:h-[80px]">
+                    <LottieAnimation
+                      src="/animations/success-check.json"
+                      loop={false}
+                      autoplay={true}
+                    />
+                  </div>
 
                   <h2
                     className="text-[28px] md:text-[32px] font-normal text-[#0F172A] mt-6 mb-3"
@@ -523,51 +530,3 @@ function ValidationMessage({
 }
 
 
-/* ---- Animated Checkmark ---- */
-function AnimatedCheckmark() {
-  return (
-    <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
-      <circle
-        cx="36"
-        cy="36"
-        r="32"
-        stroke="url(#checkGrad)"
-        strokeWidth="3"
-        fill="none"
-        strokeLinecap="round"
-        style={{
-          strokeDasharray: 201,
-          strokeDashoffset: 201,
-          animation: "drawCircle 0.5s ease-out forwards",
-        }}
-      />
-      <polyline
-        points="24,37 33,46 48,29"
-        stroke="url(#checkGrad)"
-        strokeWidth="3"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        style={{
-          strokeDasharray: 45,
-          strokeDashoffset: 45,
-          animation: "drawCheck 0.3s ease-out 0.7s forwards",
-        }}
-      />
-      <defs>
-        <linearGradient id="checkGrad" x1="0" y1="0" x2="72" y2="72">
-          <stop stopColor="#4A6CF7" />
-          <stop offset="1" stopColor="#7C5CFC" />
-        </linearGradient>
-      </defs>
-      <style>{`
-        @keyframes drawCircle {
-          to { stroke-dashoffset: 0; }
-        }
-        @keyframes drawCheck {
-          to { stroke-dashoffset: 0; }
-        }
-      `}</style>
-    </svg>
-  );
-}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import LottieAnimation from "@/components/LottieAnimation";
 
 const navLinks = [
   { label: "Startup Qualifications", href: "/qualifications/startup" },
@@ -62,10 +63,10 @@ export default function Navbar() {
           }}
         >
           <span className="lg:hidden text-[12px] sm:text-[13px] px-2 text-center">
-            <span className="mr-1">🚀</span> Founding cohort coming soon. Join the waitlist &rarr;
+            <span className="inline-flex items-center mr-1" style={{ verticalAlign: 'middle', opacity: 0.8 }}><LottieAnimation src="/animations/attention-pulse.json" loop={true} className="lottie-brand w-[24px] h-[24px]" /></span> Founding cohort coming soon. Join the waitlist &rarr;
           </span>
           <span className="hidden lg:inline">
-            <span className="mr-1">🚀</span> Founding cohort coming soon. Join the waitlist &rarr;
+            <span className="inline-flex items-center mr-1" style={{ verticalAlign: 'middle', opacity: 0.8 }}><LottieAnimation src="/animations/attention-pulse.json" loop={true} className="lottie-brand w-[24px] h-[24px]" /></span> Founding cohort coming soon. Join the waitlist &rarr;
           </span>
         </Link>
         <button
