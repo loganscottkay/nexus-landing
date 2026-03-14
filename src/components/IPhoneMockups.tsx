@@ -366,140 +366,174 @@ function InvestorScreen() {
 /* ---- Mini Dashboard Content (Founder - Dark Mode Violet) ---- */
 function FounderScreen() {
   const font = "var(--font-dm-sans), sans-serif";
+  const [timeToggle, setTimeToggle] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeToggle((prev) => !prev);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="w-full h-full relative" style={{
-      fontSize: "0",
-      background: "linear-gradient(180deg, #0A0E1A 0%, #111827 100%)",
+    <div style={{
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      background: "linear-gradient(180deg, #0A0E1A 0%, #0F172A 100%)",
+      fontSize: 0,
     }}>
       {/* Status bar */}
       <StatusBar />
 
       {/* Greeting */}
-      <div style={{ padding: "8px 10px 4px" }}>
-        <div style={{ fontSize: "9px", fontWeight: 600, color: "#F8FAFC", fontFamily: font }}>
+      <div style={{ padding: "6px 10px 3px" }}>
+        <div style={{ fontSize: "9px", fontWeight: 700, color: "#F8FAFC", fontFamily: font, letterSpacing: "-0.2px" }}>
           Good afternoon, Alex
         </div>
         <div style={{
-          marginTop: "4px",
+          marginTop: "3px",
           display: "inline-flex",
           alignItems: "center",
-          gap: "4px",
-          background: "rgba(139,92,246,0.12)",
+          gap: "3px",
+          background: "rgba(139,92,246,0.15)",
           border: "1px solid rgba(139,92,246,0.2)",
           borderRadius: "9999px",
-          padding: "2px 8px",
+          padding: "2px 7px",
         }}>
           <RocketIcon />
-          <span style={{ fontSize: "6px", color: "#A78BFA", fontWeight: 600, fontFamily: font }}>Founder</span>
-          <span style={{ fontSize: "6px", color: "rgba(255,255,255,0.25)" }}>&#183;</span>
-          <span style={{ fontSize: "6px", color: "rgba(255,255,255,0.4)", fontFamily: font }}>Luminary AI</span>
+          <span style={{ fontSize: "5.5px", color: "#A78BFA", fontWeight: 600, fontFamily: font }}>Founder</span>
+          <span style={{ fontSize: "5.5px", color: "rgba(255,255,255,0.25)" }}>&#183;</span>
+          <span style={{ fontSize: "5.5px", color: "rgba(255,255,255,0.4)", fontFamily: font }}>Luminary AI</span>
         </div>
       </div>
 
       {/* Stats card */}
       <div style={{
-        margin: "6px 10px",
-        padding: "8px",
+        margin: "5px 10px",
+        padding: "7px 8px",
         ...glassCard,
       }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px 4px", textAlign: "center" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "2px", textAlign: "center" }}>
           {[
-            { num: "47", label: "PITCH VIEWS", trend: "+12" },
+            { num: "47", label: "VIEWS", trend: "+12" },
             { num: "8", label: "INTERESTED", trend: "+3" },
-            { num: "2", label: "CALLS DONE", trend: "+1" },
+            { num: "2", label: "CALLS", trend: "+1" },
             { num: "12", label: "DECK VIEWS", trend: "+5" },
           ].map((s) => (
             <div key={s.label} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <div style={{ fontSize: "14px", fontWeight: 600, color: "#F8FAFC", fontFamily: font, lineHeight: 1 }}>{s.num}</div>
-              <div style={{ fontSize: "4px", color: "rgba(255,255,255,0.35)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.3px", marginTop: "2px" }}>{s.label}</div>
+              <div style={{ fontSize: "12px", fontWeight: 700, color: "#F8FAFC", fontFamily: font, lineHeight: 1 }}>{s.num}</div>
+              <div style={{ fontSize: "3.5px", color: "rgba(255,255,255,0.4)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.3px", marginTop: "2px" }}>{s.label}</div>
               <TrendPill value={s.trend} color="#A78BFA" />
             </div>
           ))}
         </div>
 
         {/* Profile strength bar */}
-        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "6px", paddingTop: "6px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-          <span style={{ fontSize: "5px", color: "rgba(255,255,255,0.35)", fontFamily: font }}>Profile Strength</span>
-          <div style={{ flex: 1, height: "4px", borderRadius: "9999px", background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "5px", marginTop: "5px", paddingTop: "5px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          <span style={{ fontSize: "4.5px", color: "rgba(255,255,255,0.4)", fontFamily: font, whiteSpace: "nowrap" }}>Profile Strength</span>
+          <div style={{ flex: 1, height: "3px", borderRadius: "9999px", background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
             <div style={{ width: "78%", height: "100%", borderRadius: "9999px", background: "linear-gradient(90deg, #8B5CF6, #A78BFA)" }} />
           </div>
-          <span style={{ fontSize: "6px", color: "#A78BFA", fontWeight: 600, fontFamily: font }}>78%</span>
+          <span style={{ fontSize: "5.5px", color: "#A78BFA", fontWeight: 700, fontFamily: font }}>78%</span>
         </div>
       </div>
 
-      {/* Queue section */}
-      <div style={{ padding: "4px 10px 2px" }}>
+      {/* Queue section - flex-1 to fill space */}
+      <div style={{ flex: 1, padding: "3px 10px 2px", display: "flex", flexDirection: "column", minHeight: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "3px", marginBottom: "2px" }}>
-          <span style={{ fontSize: "7px", fontWeight: 600, color: "#F8FAFC", fontFamily: font }}>Investor Queue</span>
+          <span style={{ fontSize: "7px", fontWeight: 700, color: "#F8FAFC", fontFamily: font }}>Investor Queue</span>
         </div>
-        <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.35)", fontFamily: font, fontStyle: "italic", marginBottom: "4px" }}>
+        <div style={{ fontSize: "4.5px", color: "rgba(255,255,255,0.35)", fontFamily: font, fontStyle: "italic", marginBottom: "4px" }}>
           One at a time &#183; 72h windows
         </div>
-        {[
-          { pos: "1", initials: "SC", name: "Sarah Chen", firm: "Gradient Ventures", status: "ACTIVE", isActive: true, time: "47h", avatarBg: "linear-gradient(135deg, #F97316, #FB923C)", posBg: "linear-gradient(135deg, #8B5CF6, #A78BFA)" },
-          { pos: "2", initials: "MW", name: "Marcus Webb", firm: "Founder Collective", status: "Next", isActive: false, time: "", avatarBg: "linear-gradient(135deg, #8B5CF6, #A78BFA)", posBg: "rgba(255,255,255,0.1)" },
-          { pos: "3", initials: "ER", name: "Elena Rodriguez", firm: "Precursor", status: "Waiting", isActive: false, time: "", avatarBg: "linear-gradient(135deg, #EF4444, #F87171)", posBg: "rgba(255,255,255,0.1)" },
-          { pos: "4", initials: "JP", name: "James Park", firm: "Lux Capital", status: "Waiting", isActive: false, time: "", avatarBg: "linear-gradient(135deg, #22C55E, #4ADE80)", posBg: "rgba(255,255,255,0.1)" },
-        ].map((q) => (
-          <div key={q.pos} style={{
-            display: "flex", alignItems: "center", gap: "4px", marginBottom: "3px",
-            padding: "4px 6px",
-            background: "rgba(255,255,255,0.04)",
-            borderRadius: "8px",
-          }}>
-            <div style={{
-              width: "10px", height: "10px", borderRadius: "50%",
-              background: q.posBg, flexShrink: 0,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "5px", fontWeight: 700, color: q.isActive ? "#fff" : "rgba(255,255,255,0.5)", fontFamily: font,
-            }}>{q.pos}</div>
-            <div style={{
-              width: "8px", height: "8px", borderRadius: "50%",
-              background: q.avatarBg, flexShrink: 0,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "3px", fontWeight: 700, color: "#fff", fontFamily: font,
-            }}>{q.initials}</div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: "6px", color: "#F8FAFC", fontFamily: font, fontWeight: 600 }}>{q.name}</div>
-              <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font }}>{q.firm}</div>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "3px", overflow: "hidden" }}>
+          {[
+            { pos: "1", initials: "SC", name: "Sarah Chen", firm: "Gradient Ventures", status: "ACTIVE", isActive: true, avatarBg: "linear-gradient(135deg, #F97316, #FB923C)", posBg: "linear-gradient(135deg, #8B5CF6, #A78BFA)" },
+            { pos: "2", initials: "MW", name: "Marcus Webb", firm: "Founder Collective", status: "Next", isActive: false, avatarBg: "linear-gradient(135deg, #8B5CF6, #A78BFA)", posBg: "rgba(255,255,255,0.1)" },
+            { pos: "3", initials: "ER", name: "Elena Rodriguez", firm: "Precursor", status: "Waiting", isActive: false, avatarBg: "linear-gradient(135deg, #EF4444, #F87171)", posBg: "rgba(255,255,255,0.1)" },
+            { pos: "4", initials: "JP", name: "James Park", firm: "Lux Capital", status: "Waiting", isActive: false, avatarBg: "linear-gradient(135deg, #22C55E, #4ADE80)", posBg: "rgba(255,255,255,0.1)" },
+          ].map((q) => (
+            <div
+              key={q.pos}
+              className={`${q.isActive ? "glow-pulse-violet" : ""} ${q.pos === "4" ? "phone-queue-row-4" : ""}`}
+              style={{
+                display: "flex", alignItems: "center", gap: "4px",
+                padding: "5px 7px",
+                background: "rgba(255,255,255,0.04)",
+                borderRadius: "8px",
+                borderLeft: q.isActive ? "2px solid #A78BFA" : "2px solid transparent",
+                flex: 1,
+                minHeight: 0,
+              }}
+            >
+              <div style={{
+                width: "12px", height: "12px", borderRadius: "50%",
+                background: q.posBg, flexShrink: 0,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "5.5px", fontWeight: 700, color: q.isActive ? "#fff" : "rgba(255,255,255,0.5)", fontFamily: font,
+              }}>{q.pos}</div>
+              <div style={{
+                width: "12px", height: "12px", borderRadius: "50%",
+                background: q.avatarBg, flexShrink: 0,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "3.5px", fontWeight: 700, color: "#fff", fontFamily: font,
+              }}>{q.initials}</div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: "6.5px", color: "#F8FAFC", fontFamily: font, fontWeight: 700 }}>{q.name}</div>
+                <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font }}>{q.firm}</div>
+              </div>
+              {q.isActive ? (
+                <>
+                  <span className="active-pulse" style={{
+                    fontSize: "4px", color: "#34D399", background: "rgba(52,211,153,0.15)",
+                    borderRadius: "9999px", padding: "1.5px 5px", fontWeight: 600, fontFamily: font,
+                  }}>ACTIVE</span>
+                  <span style={{ fontSize: "5.5px", color: "#A78BFA", fontFamily: font, fontWeight: 700, transition: "opacity 0.3s" }}>{timeToggle ? "46h" : "47h"}</span>
+                </>
+              ) : (
+                <span style={{ fontSize: "5px", color: "rgba(255,255,255,0.35)", fontFamily: font }}>{q.status}</span>
+              )}
             </div>
-            {q.isActive ? (
-              <>
-                <span style={{
-                  fontSize: "4px", color: "#34D399", background: "rgba(52,211,153,0.15)",
-                  borderRadius: "9999px", padding: "1px 4px", fontWeight: 600, fontFamily: font,
-                }}>ACTIVE</span>
-                <span style={{ fontSize: "5px", color: "#A78BFA", fontFamily: font, fontWeight: 600 }}>{q.time}</span>
-              </>
-            ) : (
-              <span style={{ fontSize: "5px", color: "rgba(255,255,255,0.3)", fontFamily: font }}>{q.status}</span>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Action button */}
-      <div style={{ padding: "6px 10px" }}>
-        <div style={{
-          background: "linear-gradient(135deg, #8B5CF6, #A78BFA)",
-          borderRadius: "12px",
-          padding: "6px",
-          textAlign: "center",
-          boxShadow: "0 4px 15px rgba(139,92,246,0.3)",
-        }}>
-          <span style={{ fontSize: "6px", color: "#fff", fontWeight: 600, fontFamily: font }}>
-            Schedule Meeting &#8594;
-          </span>
+          ))}
         </div>
       </div>
 
-      {/* Bottom tab bar */}
+      {/* Action button with shimmer */}
+      <div style={{ padding: "4px 10px 4px", flexShrink: 0 }}>
+        <div style={{
+          background: "linear-gradient(135deg, #8B5CF6, #A78BFA)",
+          borderRadius: "10px",
+          padding: "7px",
+          textAlign: "center",
+          boxShadow: "0 4px 15px rgba(139,92,246,0.3)",
+          position: "relative",
+          overflow: "hidden",
+        }}>
+          <span style={{ fontSize: "6.5px", color: "#fff", fontWeight: 700, fontFamily: font, position: "relative", zIndex: 1 }}>
+            Schedule Meeting &#8594;
+          </span>
+          {/* Shimmer sweep */}
+          <div style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "40%",
+            height: "100%",
+            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+            animation: "shimmer-sweep 4s ease-in-out infinite",
+          }} />
+        </div>
+      </div>
+
+      {/* Bottom tab bar - pinned to bottom */}
       <div style={{
-        position: "absolute", bottom: "16px", left: 0, right: 0,
         display: "flex", justifyContent: "space-around", alignItems: "center",
-        padding: "5px 12px 2px",
+        padding: "5px 12px 8px",
         borderTop: "1px solid rgba(255,255,255,0.06)",
-        background: "rgba(255,255,255,0.05)",
+        background: "rgba(255,255,255,0.03)",
+        flexShrink: 0,
       }}>
         {[
           { icon: <HomeTabIcon color="#A78BFA" />, label: "Home" },
