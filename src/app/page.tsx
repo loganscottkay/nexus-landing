@@ -286,26 +286,95 @@ function NarrativeLine() {
   return (
     <div
       ref={ref}
-      className="py-[40px] lg:py-[60px] flex justify-center px-6"
+      className="flex justify-center px-6"
+      style={{
+        paddingTop: "32px",
+        paddingBottom: "32px",
+        background:
+          "radial-gradient(ellipse 600px 300px at 50% 50%, rgba(99,102,241,0.03), transparent)",
+      }}
     >
-      <p
-        className="text-center max-w-[600px] transition-all duration-[600ms] ease-out"
-        style={{
-          fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
-          fontSize: "17px",
-          lineHeight: 1.7,
-          color: "#475569",
-          opacity: visible ? 1 : 0,
-          transform: visible ? "translateY(0)" : "translateY(20px)",
-        }}
+      <style>{`
+        @media (min-width: 1024px) {
+          .narrative-container { padding-top: 48px !important; padding-bottom: 48px !important; }
+        }
+      `}</style>
+      <div
+        className="narrative-container"
+        style={{ position: "relative", maxWidth: "650px", textAlign: "center" }}
       >
-        <span className="lg:hidden">
-          The startup world is full of ideas. The problem has never been building — it is getting in front of the right people.
+        {/* Decorative opening quote mark */}
+        <span
+          aria-hidden="true"
+          style={{
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: "80px",
+            color: "rgba(99,102,241,0.08)",
+            position: "absolute",
+            top: "-20px",
+            left: "-10px",
+            lineHeight: 1,
+            opacity: visible ? 1 : 0,
+            transition: "opacity 0.4s ease-out",
+            userSelect: "none",
+          }}
+          className="lg:!text-[120px] lg:!top-[-30px] lg:!left-[-20px]"
+        >
+          &ldquo;
         </span>
-        <span className="hidden lg:inline" style={{ fontSize: "20px" }}>
-          The startup world is full of ideas. The problem has never been building — it is getting in front of the right people.
+
+        {/* Decorative closing quote mark */}
+        <span
+          aria-hidden="true"
+          style={{
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: "80px",
+            color: "rgba(99,102,241,0.08)",
+            position: "absolute",
+            bottom: "-20px",
+            right: "-10px",
+            lineHeight: 1,
+            opacity: visible ? 1 : 0,
+            transition: "opacity 0.4s ease-out",
+            userSelect: "none",
+          }}
+          className="lg:!text-[120px] lg:!bottom-[-30px] lg:!right-[-20px]"
+        >
+          &rdquo;
         </span>
-      </p>
+
+        {/* Quote text */}
+        <p
+          style={{
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: "22px",
+            fontStyle: "italic",
+            color: "#0F172A",
+            lineHeight: 1.5,
+            letterSpacing: "-0.01em",
+            textAlign: "center",
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(20px)",
+            transition: "opacity 0.7s ease-out 0.2s, transform 0.7s ease-out 0.2s",
+          }}
+          className="lg:!text-[28px]"
+        >
+          The startup world is full of ideas. The problem has never been building — it is getting in front of the right people.
+        </p>
+
+        {/* Animated gradient underline */}
+        <div
+          style={{
+            width: "80px",
+            height: "2px",
+            margin: "16px auto 0",
+            background: "linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)",
+            transform: visible ? "scaleX(1)" : "scaleX(0)",
+            transformOrigin: "center",
+            transition: "transform 0.6s ease-out 0.5s",
+          }}
+        />
+      </div>
     </div>
   );
 }
