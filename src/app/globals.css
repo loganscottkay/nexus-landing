@@ -1197,7 +1197,7 @@ html {
   height: 2px;
   background: linear-gradient(90deg, #4A6CF7, #7C5CFC);
   transform-origin: left;
-  z-index: 200;
+  z-index: 9999;
   pointer-events: none;
   will-change: transform;
 }
@@ -1238,27 +1238,28 @@ html {
 }
 
 .parallax-orb-1 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(74,108,247,0.06), transparent 70%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(74,108,247,0.05), transparent 70%);
   top: 100px;
   right: 10%;
 }
 
 .parallax-orb-2 {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(124,92,252,0.05), transparent 70%);
-  top: 1500px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(124,92,252,0.04), transparent 70%);
+  top: 40%;
   left: -5%;
 }
 
 .parallax-orb-3 {
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(6,182,212,0.04), transparent 70%);
-  top: 3000px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(6,182,212,0.03), transparent 70%);
+  bottom: 15%;
   right: 5%;
+  top: auto;
 }
 
 @media (max-width: 768px) {
