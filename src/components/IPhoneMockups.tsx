@@ -184,7 +184,8 @@ const glassCard = {
 function InvestorScreen({ isVisible }: { isVisible: boolean }) {
   const font = "var(--font-dm-sans), sans-serif";
   const [feedIndex, setFeedIndex] = useState(0);
-  const [feedPhase, setFeedPhase] = useState<"visible" | "exiting" | "entering">("visible");
+  const [showCurrent, setShowCurrent] = useState(true);
+  const [statsPulsed, setStatsPulsed] = useState(false);
 
   const allStartups = [
     { initial: "N", name: "NovaBridge", desc: "AI-powered tutoring platform", sector: "EdTech", gradient: "linear-gradient(135deg, #164E63, #0E7490)" },
@@ -194,22 +195,26 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
     { initial: "V", name: "VaultSync", desc: "Decentralized data mesh", sector: "Infra", gradient: "linear-gradient(135deg, #1E3A5F, #3B82F6)" },
   ];
 
+  // Crossfade: toggle showCurrent, then advance index
   useEffect(() => {
     const interval = setInterval(() => {
-      // Start exit animation
-      setFeedPhase("exiting");
+      setShowCurrent(false); // fade out current
       setTimeout(() => {
         setFeedIndex((prev) => (prev + 1) % allStartups.length);
-        setFeedPhase("entering");
-        setTimeout(() => {
-          setFeedPhase("visible");
-        }, 400);
-      }, 550); // 400ms exit + 150ms pause
-    }, 3000);
+        setShowCurrent(true); // fade in next
+      }, 400);
+    }, 4000);
     return () => clearInterval(interval);
   }, [allStartups.length]);
 
-  const visibleStartups = [
+  // Trigger stat pulse once on first visibility
+  useEffect(() => {
+    if (isVisible && !statsPulsed) {
+      setStatsPulsed(true);
+    }
+  }, [isVisible, statsPulsed]);
+
+  const currentSet = [
     allStartups[feedIndex % allStartups.length],
     allStartups[(feedIndex + 1) % allStartups.length],
     allStartups[(feedIndex + 2) % allStartups.length],
@@ -222,37 +227,15 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
   const stat2 = useCountUp(2, 1500, isVisible);
   const statNums = [stat14, stat5, stat3, stat2];
 
-  const getFeedItemStyle = (idx: number): React.CSSProperties => {
-    const baseDelay = idx * 0.08;
-    if (feedPhase === "exiting") {
-      return {
-        transform: "translateY(-8px)",
-        opacity: 0,
-        transition: `transform 0.4s ease-out ${baseDelay}s, opacity 0.4s ease-out ${baseDelay}s`,
-      };
-    }
-    if (feedPhase === "entering") {
-      return {
-        transform: "translateY(0)",
-        opacity: 1,
-        transition: `transform 0.4s ease-out ${baseDelay}s, opacity 0.4s ease-out ${baseDelay}s`,
-      };
-    }
-    return {
-      transform: "translateY(0)",
-      opacity: 1,
-      transition: "transform 0.4s ease-out, opacity 0.4s ease-out",
-    };
-  };
-
   return (
-    <div style={{
+    <div className="phone-screen-glow-investor" style={{
       width: "100%",
       height: "100%",
       display: "flex",
       flexDirection: "column",
       background: "linear-gradient(180deg, #0A0E1A 0%, #0F172A 100%)",
       fontSize: 0,
+      position: "relative",
     }}>
       {/* Status bar */}
       <StatusBar />
@@ -280,7 +263,7 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
       </div>
 
       {/* Stats card */}
-      <div style={{
+      <div className="phone-glass-card" style={{
         margin: "5px 10px",
         padding: "7px 8px",
         ...glassCard,
@@ -293,7 +276,13 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
             { label: "SCHEDULED", trend: "New" },
           ].map((s, i) => (
             <div key={s.label} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <div style={{ fontSize: "13px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1 }}>{statNums[i]}</div>
+              <div
+                className={`stat-pulse-investor ${statsPulsed ? "stat-pulse-animate" : ""}`}
+                style={{
+                  fontSize: "13px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1,
+                  animationDelay: statsPulsed ? `${i * 0.1}s` : undefined,
+                }}
+              >{statNums[i]}</div>
               <div style={{ fontSize: "3.5px", color: "rgba(255,255,255,0.25)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>{s.label}</div>
               <TrendPill value={s.trend} />
             </div>
@@ -310,7 +299,7 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
         </div>
       </div>
 
-      {/* Feed section */}
+      {/* Feed section — crossfade */}
       <div style={{ flex: 1, padding: "3px 10px 2px", display: "flex", flexDirection: "column", minHeight: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "4px", marginBottom: "4px" }}>
           <span style={{ fontSize: "7px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Your Feed</span>
@@ -320,10 +309,10 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
           }}>New</span>
         </div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "2%", overflow: "hidden" }}>
-          {visibleStartups.map((c, idx) => (
+          {currentSet.map((c, idx) => (
             <div
-              key={`${feedIndex}-${c.name}`}
-              className={idx === 2 ? "phone-feed-row-3" : ""}
+              key={`feed-${c.name}`}
+              className={`phone-glass-card ${idx === 2 ? "phone-feed-row-3" : ""}`}
               style={{
                 display: "flex", alignItems: "center", gap: "5px",
                 padding: "2.5% 3%",
@@ -332,7 +321,8 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
                 border: "1px solid rgba(255,255,255,0.06)",
                 flex: 1,
                 minHeight: 0,
-                ...getFeedItemStyle(idx),
+                opacity: showCurrent ? 1 : 0,
+                transition: "opacity 0.4s ease-in-out",
               }}
             >
               <div style={{
@@ -363,7 +353,7 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
           { pos: "1", name: "Luminary AI", status: "ACTIVE", isActive: true, time: "47h", avatar: "linear-gradient(135deg, #0E7490, #06B6D4)", posBg: "linear-gradient(135deg, #06B6D4, #22D3EE)" },
           { pos: "2", name: "Terraform Health", status: "Next", isActive: false, time: "", avatar: "linear-gradient(135deg, #1E3A5F, #3B82F6)", posBg: "rgba(255,255,255,0.1)" },
         ].map((q) => (
-          <div key={q.pos} className={q.isActive ? "queue-pulse-teal" : ""} style={{
+          <div key={q.pos} className={`phone-glass-card ${q.isActive ? "queue-pulse-teal" : ""}`} style={{
             display: "flex", alignItems: "center", gap: "4px", marginBottom: "2%",
             padding: "2.5% 3%",
             background: q.isActive ? "rgba(6,182,212,0.06)" : "rgba(255,255,255,0.04)",
@@ -383,6 +373,7 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
             <span style={{ fontSize: "6.5px", color: "#F1F5F9", fontFamily: font, fontWeight: 600, flex: 1 }}>{q.name}</span>
             {q.isActive ? (
               <>
+                <span className="active-dot" />
                 <span className="active-pulse" style={{
                   fontSize: "4px", color: "#22D3EE", background: "rgba(6,182,212,0.12)",
                   borderRadius: "9999px", padding: "1.5px 5px", fontWeight: 600, fontFamily: font,
@@ -443,13 +434,21 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
 function FounderScreen({ isVisible }: { isVisible: boolean }) {
   const font = "var(--font-dm-sans), sans-serif";
   const [timeToggle, setTimeToggle] = useState(false);
+  const [statsPulsed, setStatsPulsed] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setTimeToggle((prev) => !prev);
-    }, 3000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
+
+  // Trigger stat pulse once on first visibility
+  useEffect(() => {
+    if (isVisible && !statsPulsed) {
+      setStatsPulsed(true);
+    }
+  }, [isVisible, statsPulsed]);
 
   // Count-up stats
   const stat47 = useCountUp(47, 1500, isVisible);
@@ -459,13 +458,14 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
   const statNums = [stat47, stat8, stat2, stat12];
 
   return (
-    <div style={{
+    <div className="phone-screen-glow-founder" style={{
       width: "100%",
       height: "100%",
       display: "flex",
       flexDirection: "column",
       background: "linear-gradient(180deg, #0A0E1A 0%, #0F172A 100%)",
       fontSize: 0,
+      position: "relative",
     }}>
       {/* Status bar */}
       <StatusBar />
@@ -493,7 +493,7 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
       </div>
 
       {/* Stats card */}
-      <div style={{
+      <div className="phone-glass-card" style={{
         margin: "5px 10px",
         padding: "7px 8px",
         ...glassCard,
@@ -506,7 +506,13 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
             { label: "DECK VIEWS", trend: "+5" },
           ].map((s, i) => (
             <div key={s.label} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <div style={{ fontSize: "13px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1 }}>{statNums[i]}</div>
+              <div
+                className={`stat-pulse-founder ${statsPulsed ? "stat-pulse-animate" : ""}`}
+                style={{
+                  fontSize: "13px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1,
+                  animationDelay: statsPulsed ? `${i * 0.1}s` : undefined,
+                }}
+              >{statNums[i]}</div>
               <div style={{ fontSize: "3.5px", color: "rgba(255,255,255,0.25)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>{s.label}</div>
               <TrendPill value={s.trend} color="#A78BFA" />
             </div>
@@ -540,7 +546,7 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
           ].map((q) => (
             <div
               key={q.pos}
-              className={`${q.isActive ? "queue-pulse-violet" : ""} ${q.pos === "4" ? "phone-queue-row-4" : ""}`}
+              className={`phone-glass-card ${q.isActive ? "queue-pulse-violet" : ""} ${q.pos === "4" ? "phone-queue-row-4" : ""}`}
               style={{
                 display: "flex", alignItems: "center", gap: "4px",
                 padding: "2.5% 3%",
@@ -569,6 +575,7 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
               </div>
               {q.isActive ? (
                 <>
+                  <span className="active-dot" />
                   <span className="active-pulse" style={{
                     fontSize: "4px", color: "#A78BFA", background: "rgba(139,92,246,0.12)",
                     borderRadius: "9999px", padding: "1.5px 5px", fontWeight: 600, fontFamily: font,
@@ -597,7 +604,7 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
           <span style={{ fontSize: "6.5px", color: "#fff", fontWeight: 700, fontFamily: font, position: "relative", zIndex: 1 }}>
             Schedule Meeting &#8594;
           </span>
-          {/* Shimmer sweep - 5% opacity, 5s cycle */}
+          {/* Shimmer sweep - 5% opacity, 6s cycle */}
           <div className="phone-shimmer-sweep" style={{
             position: "absolute",
             top: 0,
