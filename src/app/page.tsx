@@ -996,11 +996,9 @@ export default function Home() {
           className="flex flex-col items-center text-center px-6"
         >
           <motion.h2
-            initial={{ opacity: 0, y: 20, clipPath: "inset(100% 0 0 0)" }}
-            whileInView={{ opacity: 1, y: 0, clipPath: "inset(0 0 0 0)" }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 1.0, ease: [0.25, 0.4, 0.25, 1] }}
-            className="text-[40px] font-normal"
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[40px] font-normal text-center"
             style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
           >
             Ready to Join the <span className="gradient-text-animate">Network</span>?

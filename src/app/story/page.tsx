@@ -255,6 +255,7 @@ export default function StoryPage() {
                 height: reducedMotion ? "100%" : `${scrollProgress * 100}%`,
                 background: "linear-gradient(180deg, #4A6CF7, #7C5CFC)",
                 boxShadow: "0 0 8px rgba(74,108,247,0.15)",
+                willChange: "height",
               }}
             />
 
@@ -300,7 +301,7 @@ export default function StoryPage() {
             )}
 
             {/* === MILESTONES === */}
-            <div className="flex flex-col" style={{ gap: "140px" }}>
+            <div className="flex flex-col gap-[60px] md:gap-[140px]">
               {milestones.map((milestone, i) => {
                 const isActivated = activatedMilestones.has(i) || reducedMotion;
                 const isRevealed = revealedCards.has(i) || reducedMotion;
@@ -338,13 +339,13 @@ export default function StoryPage() {
                     </div>
                     {/* === MILESTONE MARKER (mobile) === */}
                     <div
-                      className={`absolute md:hidden${isActivated ? " milestone-dot-active" : ""}`}
+                      className={`absolute md:hidden${isActivated ? " milestone-dot-active milestone-dot-mobile" : ""}`}
                       style={{
                         left: "20px",
                         top: "8px",
                         transform: "translate(-50%, 0)",
-                        width: isActivated ? undefined : "6px",
-                        height: isActivated ? undefined : "6px",
+                        width: isActivated ? undefined : "8px",
+                        height: isActivated ? undefined : "8px",
                         borderRadius: "50%",
                         background: isActivated ? undefined : "rgba(74,108,247,0.2)",
                         border: isActivated ? undefined : "1px solid rgba(74,108,247,0.15)",
@@ -471,8 +472,8 @@ export default function StoryPage() {
                     <div className="flex md:hidden">
                       <div
                         style={{
-                          marginLeft: "44px",
-                          maxWidth: "calc(100% - 60px)",
+                          marginLeft: "32px",
+                          maxWidth: "calc(100% - 40px)",
                           padding: "20px",
                           background: "linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.6)",
                           backdropFilter: "blur(8px)",

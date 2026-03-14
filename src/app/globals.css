@@ -1446,6 +1446,38 @@ html {
   animation: milestone-glow-in 0.3s ease forwards, milestone-pulse 2s ease-in-out 0.3s infinite !important;
 }
 
+@media (max-width: 767px) {
+  .milestone-dot-active.milestone-dot-mobile {
+    width: 8px !important;
+    height: 8px !important;
+    animation: milestone-glow-in-mobile 0.3s ease forwards, milestone-pulse-mobile 2s ease-in-out 0.3s infinite !important;
+  }
+}
+
+@keyframes milestone-glow-in-mobile {
+  0% {
+    width: 8px;
+    height: 8px;
+    box-shadow: none;
+    background: rgba(74,108,247,0.2);
+  }
+  100% {
+    width: 8px;
+    height: 8px;
+    box-shadow: 0 0 12px rgba(74,108,247,0.4), 0 0 24px rgba(124,92,252,0.2);
+    background: linear-gradient(135deg, #4A6CF7, #7C5CFC);
+  }
+}
+
+@keyframes milestone-pulse-mobile {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(74,108,247,0.4), 0 0 24px rgba(124,92,252,0.2);
+  }
+  50% {
+    box-shadow: 0 0 8px rgba(74,108,247,0.3), 0 0 16px rgba(124,92,252,0.15);
+  }
+}
+
 .milestone-sparkle-container {
   position: absolute;
   width: 0;
