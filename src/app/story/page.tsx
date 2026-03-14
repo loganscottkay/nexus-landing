@@ -314,42 +314,52 @@ export default function StoryPage() {
                   >
                     {/* === MILESTONE MARKER (desktop) === */}
                     <div
-                      className="absolute hidden md:block"
+                      className={`absolute hidden md:block${isActivated ? " milestone-dot-active" : ""}`}
                       style={{
                         left: "50%",
                         top: "24px",
                         transform: "translate(-50%, -50%)",
-                        width: isActivated ? "8px" : "6px",
-                        height: isActivated ? "8px" : "6px",
+                        width: isActivated ? undefined : "6px",
+                        height: isActivated ? undefined : "6px",
                         borderRadius: "50%",
-                        background: isActivated
-                          ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)"
-                          : "rgba(74,108,247,0.2)",
-                        border: isActivated ? "none" : "1px solid rgba(74,108,247,0.15)",
-                        boxShadow: isActivated ? "0 0 10px rgba(74,108,247,0.2)" : "none",
-                        transition: "all 0.4s ease",
+                        background: isActivated ? undefined : "rgba(74,108,247,0.2)",
+                        border: isActivated ? undefined : "1px solid rgba(74,108,247,0.15)",
+                        boxShadow: isActivated ? undefined : "none",
+                        transition: isActivated ? undefined : "all 0.4s ease",
                         zIndex: 5,
                       }}
                     />
+                    {/* Sparkles (desktop) */}
+                    <div
+                      className={`milestone-sparkle-container hidden md:block${isActivated ? " active" : ""}`}
+                      style={{ left: "50%", top: "24px" }}
+                    >
+                      <span /><span /><span /><span /><span />
+                    </div>
                     {/* === MILESTONE MARKER (mobile) === */}
                     <div
-                      className="absolute md:hidden"
+                      className={`absolute md:hidden${isActivated ? " milestone-dot-active" : ""}`}
                       style={{
                         left: "20px",
                         top: "8px",
                         transform: "translate(-50%, 0)",
-                        width: isActivated ? "8px" : "6px",
-                        height: isActivated ? "8px" : "6px",
+                        width: isActivated ? undefined : "6px",
+                        height: isActivated ? undefined : "6px",
                         borderRadius: "50%",
-                        background: isActivated
-                          ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)"
-                          : "rgba(74,108,247,0.2)",
-                        border: isActivated ? "none" : "1px solid rgba(74,108,247,0.15)",
-                        boxShadow: isActivated ? "0 0 10px rgba(74,108,247,0.2)" : "none",
-                        transition: "all 0.4s ease",
+                        background: isActivated ? undefined : "rgba(74,108,247,0.2)",
+                        border: isActivated ? undefined : "1px solid rgba(74,108,247,0.15)",
+                        boxShadow: isActivated ? undefined : "none",
+                        transition: isActivated ? undefined : "all 0.4s ease",
                         zIndex: 5,
                       }}
                     />
+                    {/* Sparkles (mobile) */}
+                    <div
+                      className={`milestone-sparkle-container md:hidden${isActivated ? " active" : ""}`}
+                      style={{ left: "20px", top: "8px" }}
+                    >
+                      <span /><span /><span /><span /><span />
+                    </div>
 
                     {/* === DESKTOP LAYOUT === */}
                     <div className="hidden md:flex items-start">

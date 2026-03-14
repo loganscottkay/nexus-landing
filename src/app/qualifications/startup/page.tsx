@@ -386,14 +386,6 @@ export default function StartupQualifications() {
             >
               Application Qualifications
             </p>
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: 100 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease }}
-              className="h-[2px] mx-auto mt-2 rounded-full"
-              style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)" }}
-            />
             <p
               style={{
                 fontFamily: "var(--font-dm-sans), sans-serif",
@@ -429,14 +421,6 @@ export default function StartupQualifications() {
             >
               On-App Requirements
             </p>
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: 100 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease }}
-              className="h-[2px] mx-auto mt-2 rounded-full"
-              style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)" }}
-            />
             <p
               style={{
                 fontFamily: "var(--font-dm-sans), sans-serif",

@@ -380,14 +380,6 @@ export default function InvestorQualifications() {
             >
               What you need to apply for the founding cohort.
             </p>
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: 100 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease }}
-              className="h-[2px] mx-auto mt-2 rounded-full"
-              style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)" }}
-            />
           </motion.div>
 
           <div className="flex flex-col" style={{ gap: "20px" }}>
@@ -423,14 +415,6 @@ export default function InvestorQualifications() {
             >
               What is expected of you once you are on the platform.
             </p>
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: 100 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease }}
-              className="h-[2px] mx-auto mt-2 rounded-full"
-              style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)" }}
-            />
           </motion.div>
 
           <div className="flex flex-col" style={{ gap: "20px" }}>

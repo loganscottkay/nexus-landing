@@ -1401,3 +1401,93 @@ html {
     scroll-behavior: auto;
   }
 }
+
+/* === Milestone dot glow === */
+@keyframes milestone-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(74,108,247,0.5), 0 0 40px rgba(124,92,252,0.3), 0 0 60px rgba(74,108,247,0.15);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(74,108,247,0.4), 0 0 32px rgba(124,92,252,0.24), 0 0 48px rgba(74,108,247,0.12);
+  }
+}
+
+@keyframes milestone-glow-in {
+  0% {
+    width: 6px;
+    height: 6px;
+    box-shadow: none;
+    background: rgba(74,108,247,0.2);
+  }
+  100% {
+    width: 14px;
+    height: 14px;
+    box-shadow: 0 0 20px rgba(74,108,247,0.5), 0 0 40px rgba(124,92,252,0.3), 0 0 60px rgba(74,108,247,0.15);
+    background: linear-gradient(135deg, #4A6CF7, #7C5CFC);
+  }
+}
+
+@keyframes sparkle-burst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--sparkle-x), var(--sparkle-y)) scale(0);
+  }
+}
+
+.milestone-dot-active {
+  width: 14px !important;
+  height: 14px !important;
+  background: linear-gradient(135deg, #4A6CF7, #7C5CFC) !important;
+  border: none !important;
+  animation: milestone-glow-in 0.3s ease forwards, milestone-pulse 2s ease-in-out 0.3s infinite !important;
+}
+
+.milestone-sparkle-container {
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.milestone-sparkle-container span {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.milestone-sparkle-container.active span {
+  animation: sparkle-burst 0.5s ease-out forwards;
+}
+
+.milestone-sparkle-container span:nth-child(1) {
+  background: #4A6CF7;
+  --sparkle-x: 15px;
+  --sparkle-y: -18px;
+}
+.milestone-sparkle-container span:nth-child(2) {
+  background: #7C5CFC;
+  --sparkle-x: -17px;
+  --sparkle-y: -10px;
+}
+.milestone-sparkle-container span:nth-child(3) {
+  background: #4A6CF7;
+  --sparkle-x: 20px;
+  --sparkle-y: 8px;
+}
+.milestone-sparkle-container span:nth-child(4) {
+  background: #7C5CFC;
+  --sparkle-x: -12px;
+  --sparkle-y: 16px;
+}
+.milestone-sparkle-container span:nth-child(5) {
+  background: #06B6D4;
+  --sparkle-x: 5px;
+  --sparkle-y: -20px;
+}
