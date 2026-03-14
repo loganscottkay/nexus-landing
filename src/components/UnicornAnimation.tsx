@@ -33,7 +33,7 @@ export default function UnicornAnimation() {
       <div
         ref={trackRef}
         className="wl-unicorn-track pointer-events-none absolute left-0 w-full overflow-hidden"
-        style={{ top: "50%", transform: "translateY(-50%)", zIndex: 1, height: "120px" }}
+        style={{ top: "12px", zIndex: 1, height: "120px" }}
       >
         {visible && (
           <div className="wl-unicorn-runner" style={{ willChange: "transform" }}>
@@ -45,7 +45,7 @@ export default function UnicornAnimation() {
                 style={{
                   animationDelay: `${i * 0.25}s`,
                   left: `${-8 - i * 8}px`,
-                  top: `${25 + (i % 3) * 10}px`,
+                  top: `${30 + (i % 3) * 5}px`,
                 }}
               >
                 <div
@@ -131,6 +131,9 @@ export default function UnicornAnimation() {
         }
 
         @media (max-width: 767px) {
+          .wl-unicorn-track {
+            top: 16px !important;
+          }
           .wl-unicorn-runner svg {
             width: 50px;
             height: 50px;

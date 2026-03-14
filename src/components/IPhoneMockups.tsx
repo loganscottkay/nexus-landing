@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 
 /* ---- Tiny SVG Icons ---- */
@@ -34,7 +34,7 @@ function ClockIcon({ color = "rgba(255,255,255,0.3)" }: { color?: string }) {
 /* ---- Tab Bar Icons ---- */
 function HomeTabIcon({ active, color }: { active?: boolean; color: string }) {
   return (
-    <svg width="8" height="8" viewBox="0 0 24 24" fill={active ? color : "none"} stroke={active ? color : "rgba(255,255,255,0.3)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="8" height="8" viewBox="0 0 24 24" fill={active ? color : "none"} stroke={active ? color : "rgba(255,255,255,0.2)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
     </svg>
   );
@@ -42,7 +42,7 @@ function HomeTabIcon({ active, color }: { active?: boolean; color: string }) {
 
 function DashTabIcon({ active, color }: { active?: boolean; color: string }) {
   return (
-    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke={active ? color : "rgba(255,255,255,0.3)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke={active ? color : "rgba(255,255,255,0.2)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="3" width="7" height="7" rx="1" fill={active ? color : "none"} />
       <rect x="14" y="3" width="7" height="7" rx="1" />
       <rect x="3" y="14" width="7" height="7" rx="1" />
@@ -53,7 +53,7 @@ function DashTabIcon({ active, color }: { active?: boolean; color: string }) {
 
 function DropsTabIcon({ active, color }: { active?: boolean; color: string }) {
   return (
-    <svg width="8" height="8" viewBox="0 0 24 24" fill={active ? color : "none"} stroke={active ? color : "rgba(255,255,255,0.3)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="8" height="8" viewBox="0 0 24 24" fill={active ? color : "none"} stroke={active ? color : "rgba(255,255,255,0.2)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z" />
     </svg>
   );
@@ -61,7 +61,7 @@ function DropsTabIcon({ active, color }: { active?: boolean; color: string }) {
 
 function SavedTabIcon({ active, color }: { active?: boolean; color: string }) {
   return (
-    <svg width="8" height="8" viewBox="0 0 24 24" fill={active ? color : "none"} stroke={active ? color : "rgba(255,255,255,0.3)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="8" height="8" viewBox="0 0 24 24" fill={active ? color : "none"} stroke={active ? color : "rgba(255,255,255,0.2)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
     </svg>
   );
@@ -69,7 +69,7 @@ function SavedTabIcon({ active, color }: { active?: boolean; color: string }) {
 
 function CalendarTabIcon({ active, color }: { active?: boolean; color: string }) {
   return (
-    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke={active ? color : "rgba(255,255,255,0.3)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke={active ? color : "rgba(255,255,255,0.2)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
       <line x1="16" y1="2" x2="16" y2="6" />
       <line x1="8" y1="2" x2="8" y2="6" />
@@ -80,7 +80,7 @@ function CalendarTabIcon({ active, color }: { active?: boolean; color: string })
 
 function UserTabIcon({ active, color }: { active?: boolean; color: string }) {
   return (
-    <svg width="8" height="8" viewBox="0 0 24 24" fill={active ? color : "none"} stroke={active ? color : "rgba(255,255,255,0.3)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="8" height="8" viewBox="0 0 24 24" fill={active ? color : "none"} stroke={active ? color : "rgba(255,255,255,0.2)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
       <circle cx="12" cy="7" r="4" />
     </svg>
@@ -89,7 +89,7 @@ function UserTabIcon({ active, color }: { active?: boolean; color: string }) {
 
 function InterestsTabIcon({ active, color }: { active?: boolean; color: string }) {
   return (
-    <svg width="8" height="8" viewBox="0 0 24 24" fill={active ? color : "none"} stroke={active ? color : "rgba(255,255,255,0.3)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="8" height="8" viewBox="0 0 24 24" fill={active ? color : "none"} stroke={active ? color : "rgba(255,255,255,0.2)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
     </svg>
   );
@@ -149,30 +149,63 @@ function TrendPill({ value, color = "#34D399" }: { value: string; color?: string
   );
 }
 
+/* ---- Animated Counter Hook ---- */
+function useCountUp(target: number, duration: number, shouldStart: boolean) {
+  const [value, setValue] = useState(0);
+  const hasRun = useRef(false);
+
+  useEffect(() => {
+    if (!shouldStart || hasRun.current) return;
+    hasRun.current = true;
+
+    const startTime = performance.now();
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out quad
+      const eased = 1 - (1 - progress) * (1 - progress);
+      setValue(Math.round(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [shouldStart, target, duration]);
+
+  return value;
+}
+
 /* ---- Glassmorphic card style helper ---- */
 const glassCard = {
-  background: "rgba(255,255,255,0.06)",
-  border: "1px solid rgba(255,255,255,0.08)",
-  borderRadius: "12px",
+  background: "rgba(255,255,255,0.04)",
+  border: "1px solid rgba(255,255,255,0.06)",
+  borderRadius: "10px",
 };
 
 /* ---- Mini Dashboard Content (Investor - Dark Mode Teal) ---- */
-function InvestorScreen() {
+function InvestorScreen({ isVisible }: { isVisible: boolean }) {
   const font = "var(--font-dm-sans), sans-serif";
   const [feedIndex, setFeedIndex] = useState(0);
+  const [feedPhase, setFeedPhase] = useState<"visible" | "exiting" | "entering">("visible");
 
   const allStartups = [
-    { initial: "N", name: "NovaBridge", desc: "AI-powered tutoring platform", sector: "EdTech", sectorColor: "#3B82F6", gradient: "linear-gradient(135deg, #06B6D4, #22D3EE)", borderColor: "#3B82F6" },
-    { initial: "P", name: "Patchwork", desc: "Artisan goods marketplace", sector: "Marketplace", sectorColor: "#22C55E", gradient: "linear-gradient(135deg, #22C55E, #4ADE80)", borderColor: "#22C55E" },
-    { initial: "S", name: "SignalFi", desc: "Real-time fraud detection", sector: "Fintech", sectorColor: "#06B6D4", gradient: "linear-gradient(135deg, #8B5CF6, #A78BFA)", borderColor: "#8B5CF6" },
-    { initial: "D", name: "DeepCure", desc: "Drug discovery with ML", sector: "BioTech", sectorColor: "#EC4899", gradient: "linear-gradient(135deg, #EC4899, #F472B6)", borderColor: "#EC4899" },
-    { initial: "V", name: "VaultSync", desc: "Decentralized data mesh", sector: "Infra", sectorColor: "#F59E0B", gradient: "linear-gradient(135deg, #F59E0B, #FBBF24)", borderColor: "#F59E0B" },
+    { initial: "N", name: "NovaBridge", desc: "AI-powered tutoring platform", sector: "EdTech", gradient: "linear-gradient(135deg, #164E63, #0E7490)" },
+    { initial: "P", name: "Patchwork", desc: "Artisan goods marketplace", sector: "Marketplace", gradient: "linear-gradient(135deg, #1E3A5F, #2563EB)" },
+    { initial: "S", name: "SignalFi", desc: "Real-time fraud detection", sector: "Fintech", gradient: "linear-gradient(135deg, #312E81, #4F46E5)" },
+    { initial: "D", name: "DeepCure", desc: "Drug discovery with ML", sector: "BioTech", gradient: "linear-gradient(135deg, #0E7490, #06B6D4)" },
+    { initial: "V", name: "VaultSync", desc: "Decentralized data mesh", sector: "Infra", gradient: "linear-gradient(135deg, #1E3A5F, #3B82F6)" },
   ];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setFeedIndex((prev) => (prev + 1) % allStartups.length);
-    }, 4000);
+      // Start exit animation
+      setFeedPhase("exiting");
+      setTimeout(() => {
+        setFeedIndex((prev) => (prev + 1) % allStartups.length);
+        setFeedPhase("entering");
+        setTimeout(() => {
+          setFeedPhase("visible");
+        }, 400);
+      }, 550); // 400ms exit + 150ms pause
+    }, 3000);
     return () => clearInterval(interval);
   }, [allStartups.length]);
 
@@ -181,6 +214,36 @@ function InvestorScreen() {
     allStartups[(feedIndex + 1) % allStartups.length],
     allStartups[(feedIndex + 2) % allStartups.length],
   ];
+
+  // Count-up stats
+  const stat14 = useCountUp(14, 1500, isVisible);
+  const stat5 = useCountUp(5, 1500, isVisible);
+  const stat3 = useCountUp(3, 1500, isVisible);
+  const stat2 = useCountUp(2, 1500, isVisible);
+  const statNums = [stat14, stat5, stat3, stat2];
+
+  const getFeedItemStyle = (idx: number): React.CSSProperties => {
+    const baseDelay = idx * 0.08;
+    if (feedPhase === "exiting") {
+      return {
+        transform: "translateY(-8px)",
+        opacity: 0,
+        transition: `transform 0.4s ease-out ${baseDelay}s, opacity 0.4s ease-out ${baseDelay}s`,
+      };
+    }
+    if (feedPhase === "entering") {
+      return {
+        transform: "translateY(0)",
+        opacity: 1,
+        transition: `transform 0.4s ease-out ${baseDelay}s, opacity 0.4s ease-out ${baseDelay}s`,
+      };
+    }
+    return {
+      transform: "translateY(0)",
+      opacity: 1,
+      transition: "transform 0.4s ease-out, opacity 0.4s ease-out",
+    };
+  };
 
   return (
     <div style={{
@@ -196,7 +259,7 @@ function InvestorScreen() {
 
       {/* Greeting */}
       <div style={{ padding: "6px 10px 3px" }}>
-        <div style={{ fontSize: "9px", fontWeight: 700, color: "#F8FAFC", fontFamily: font, letterSpacing: "-0.2px" }}>
+        <div style={{ fontSize: "9px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, letterSpacing: "-0.2px" }}>
           Good afternoon, Jordan
         </div>
         <div style={{
@@ -224,14 +287,14 @@ function InvestorScreen() {
       }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "2px", textAlign: "center" }}>
           {[
-            { num: "14", label: "IN FEED", trend: "+3" },
-            { num: "5", label: "INTERESTED", trend: "+2" },
-            { num: "3", label: "MATCHED", trend: "+1" },
-            { num: "2", label: "SCHEDULED", trend: "New" },
-          ].map((s) => (
+            { label: "IN FEED", trend: "+3" },
+            { label: "INTERESTED", trend: "+2" },
+            { label: "MATCHED", trend: "+1" },
+            { label: "SCHEDULED", trend: "New" },
+          ].map((s, i) => (
             <div key={s.label} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <div style={{ fontSize: "12px", fontWeight: 700, color: "#F8FAFC", fontFamily: font, lineHeight: 1 }}>{s.num}</div>
-              <div style={{ fontSize: "3.5px", color: "rgba(255,255,255,0.4)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.3px", marginTop: "2px" }}>{s.label}</div>
+              <div style={{ fontSize: "13px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1 }}>{statNums[i]}</div>
+              <div style={{ fontSize: "3.5px", color: "rgba(255,255,255,0.25)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>{s.label}</div>
               <TrendPill value={s.trend} />
             </div>
           ))}
@@ -247,30 +310,29 @@ function InvestorScreen() {
         </div>
       </div>
 
-      {/* Feed section - flex-1 to fill available space */}
+      {/* Feed section */}
       <div style={{ flex: 1, padding: "3px 10px 2px", display: "flex", flexDirection: "column", minHeight: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "4px", marginBottom: "4px" }}>
-          <span style={{ fontSize: "7px", fontWeight: 700, color: "#F8FAFC", fontFamily: font }}>Your Feed</span>
+          <span style={{ fontSize: "7px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Your Feed</span>
           <span style={{
-            fontSize: "4px", color: "#22D3EE", background: "rgba(6,182,212,0.15)",
+            fontSize: "4px", color: "#22D3EE", background: "rgba(6,182,212,0.12)",
             borderRadius: "9999px", padding: "1px 5px", fontWeight: 600, fontFamily: font,
           }}>New</span>
         </div>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "3px", overflow: "hidden" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "2%", overflow: "hidden" }}>
           {visibleStartups.map((c, idx) => (
             <div
               key={`${feedIndex}-${c.name}`}
               className={idx === 2 ? "phone-feed-row-3" : ""}
               style={{
                 display: "flex", alignItems: "center", gap: "5px",
-                padding: "5px 7px",
+                padding: "2.5% 3%",
                 background: "rgba(255,255,255,0.04)",
-                borderRadius: "8px",
-                borderLeft: `2px solid ${c.borderColor}`,
+                borderRadius: "10px",
+                border: "1px solid rgba(255,255,255,0.06)",
                 flex: 1,
                 minHeight: 0,
-                animation: `feed-slide-in 4s ease-in-out infinite`,
-                animationDelay: `${idx * 0.15}s`,
+                ...getFeedItemStyle(idx),
               }}
             >
               <div style={{
@@ -279,11 +341,11 @@ function InvestorScreen() {
                 fontSize: "5.5px", fontWeight: 700, color: "#fff", fontFamily: font,
               }}>{c.initial}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: "6.5px", color: "#F8FAFC", fontFamily: font, fontWeight: 700 }}>{c.name}</div>
-                <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.45)", fontFamily: font, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.desc}</div>
+                <div style={{ fontSize: "6.5px", color: "#F1F5F9", fontFamily: font, fontWeight: 600 }}>{c.name}</div>
+                <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.desc}</div>
               </div>
               <span style={{
-                fontSize: "4px", color: c.sectorColor, background: `${c.sectorColor}1A`,
+                fontSize: "4px", color: "#22D3EE", background: "rgba(6,182,212,0.12)",
                 borderRadius: "9999px", padding: "1.5px 5px", fontFamily: font, fontWeight: 600, flexShrink: 0,
               }}>{c.sector}</span>
             </div>
@@ -294,19 +356,19 @@ function InvestorScreen() {
       {/* Queue section */}
       <div style={{ padding: "3px 10px 4px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "3px", marginBottom: "4px" }}>
-          <span style={{ fontSize: "7px", fontWeight: 700, color: "#F8FAFC", fontFamily: font }}>Meeting Queue</span>
+          <span style={{ fontSize: "7px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Meeting Queue</span>
           <ClockIcon />
         </div>
         {[
-          { pos: "1", name: "Luminary AI", status: "ACTIVE", isActive: true, time: "47h", avatar: "linear-gradient(135deg, #3B82F6, #60A5FA)", posBg: "linear-gradient(135deg, #06B6D4, #22D3EE)" },
-          { pos: "2", name: "Terraform Health", status: "Next", isActive: false, time: "", avatar: "linear-gradient(135deg, #8B5CF6, #A78BFA)", posBg: "rgba(255,255,255,0.1)" },
+          { pos: "1", name: "Luminary AI", status: "ACTIVE", isActive: true, time: "47h", avatar: "linear-gradient(135deg, #0E7490, #06B6D4)", posBg: "linear-gradient(135deg, #06B6D4, #22D3EE)" },
+          { pos: "2", name: "Terraform Health", status: "Next", isActive: false, time: "", avatar: "linear-gradient(135deg, #1E3A5F, #3B82F6)", posBg: "rgba(255,255,255,0.1)" },
         ].map((q) => (
-          <div key={q.pos} className={q.isActive ? "glow-pulse-teal" : ""} style={{
-            display: "flex", alignItems: "center", gap: "4px", marginBottom: "3px",
-            padding: "5px 7px",
-            background: "rgba(255,255,255,0.04)",
-            borderRadius: "8px",
-            borderLeft: q.isActive ? "2px solid #22D3EE" : "2px solid transparent",
+          <div key={q.pos} className={q.isActive ? "queue-pulse-teal" : ""} style={{
+            display: "flex", alignItems: "center", gap: "4px", marginBottom: "2%",
+            padding: "2.5% 3%",
+            background: q.isActive ? "rgba(6,182,212,0.06)" : "rgba(255,255,255,0.04)",
+            borderRadius: "10px",
+            border: "1px solid rgba(255,255,255,0.06)",
           }}>
             <div style={{
               width: "12px", height: "12px", borderRadius: "50%",
@@ -318,11 +380,11 @@ function InvestorScreen() {
               width: "10px", height: "10px", borderRadius: "50%",
               background: q.avatar, flexShrink: 0,
             }} />
-            <span style={{ fontSize: "6.5px", color: "#F8FAFC", fontFamily: font, fontWeight: 600, flex: 1 }}>{q.name}</span>
+            <span style={{ fontSize: "6.5px", color: "#F1F5F9", fontFamily: font, fontWeight: 600, flex: 1 }}>{q.name}</span>
             {q.isActive ? (
               <>
                 <span className="active-pulse" style={{
-                  fontSize: "4px", color: "#34D399", background: "rgba(52,211,153,0.15)",
+                  fontSize: "4px", color: "#22D3EE", background: "rgba(6,182,212,0.12)",
                   borderRadius: "9999px", padding: "1.5px 5px", fontWeight: 600, fontFamily: font,
                 }}>ACTIVE</span>
                 <span style={{ fontSize: "5.5px", color: "#22D3EE", fontFamily: font, fontWeight: 700 }}>{q.time}</span>
@@ -334,37 +396,51 @@ function InvestorScreen() {
         ))}
       </div>
 
-      {/* Bottom tab bar - pinned to bottom */}
+      {/* Bottom tab bar */}
       <div style={{
         display: "flex", justifyContent: "space-around", alignItems: "center",
         padding: "5px 12px 8px",
-        borderTop: "1px solid rgba(255,255,255,0.06)",
-        background: "rgba(255,255,255,0.03)",
+        borderTop: "1px solid rgba(255,255,255,0.04)",
+        background: "rgba(0,0,0,0.3)",
         flexShrink: 0,
       }}>
         {[
-          { icon: <HomeTabIcon color="#22D3EE" />, label: "Home" },
-          { icon: <DashTabIcon active color="#22D3EE" />, label: "Dashboard" },
-          { icon: <DropsTabIcon color="#22D3EE" />, label: "Drops" },
-          { icon: <SavedTabIcon color="#22D3EE" />, label: "Saved" },
-          { icon: <CalendarTabIcon color="#22D3EE" />, label: "Schedule" },
-        ].map((tab, i) => (
+          { icon: <HomeTabIcon color="#22D3EE" />, label: "Home", active: false },
+          { icon: <DashTabIcon active color="#22D3EE" />, label: "Dashboard", active: true },
+          { icon: <DropsTabIcon color="#22D3EE" />, label: "Drops", active: false },
+          { icon: <SavedTabIcon color="#22D3EE" />, label: "Saved", active: false },
+          { icon: <CalendarTabIcon color="#22D3EE" />, label: "Schedule", active: false },
+        ].map((tab) => (
           <div key={tab.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1px" }}>
             {tab.icon}
-            <span style={{
-              fontSize: "4px", fontFamily: font,
-              color: i === 1 ? "#22D3EE" : "rgba(255,255,255,0.3)",
-              fontWeight: i === 1 ? 600 : 400,
-            }}>{tab.label}</span>
+            {tab.active && (
+              <span style={{
+                fontSize: "4px", fontFamily: font,
+                color: "#22D3EE",
+                fontWeight: 600,
+              }}>{tab.label}</span>
+            )}
           </div>
         ))}
+      </div>
+
+      {/* Home indicator */}
+      <div style={{
+        display: "flex", justifyContent: "center", paddingBottom: "4px",
+        background: "rgba(0,0,0,0.3)",
+        flexShrink: 0,
+      }}>
+        <div style={{
+          width: "80px", height: "2px", borderRadius: "9999px",
+          background: "rgba(255,255,255,0.2)",
+        }} />
       </div>
     </div>
   );
 }
 
 /* ---- Mini Dashboard Content (Founder - Dark Mode Violet) ---- */
-function FounderScreen() {
+function FounderScreen({ isVisible }: { isVisible: boolean }) {
   const font = "var(--font-dm-sans), sans-serif";
   const [timeToggle, setTimeToggle] = useState(false);
 
@@ -374,6 +450,13 @@ function FounderScreen() {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  // Count-up stats
+  const stat47 = useCountUp(47, 1500, isVisible);
+  const stat8 = useCountUp(8, 1500, isVisible);
+  const stat2 = useCountUp(2, 1500, isVisible);
+  const stat12 = useCountUp(12, 1500, isVisible);
+  const statNums = [stat47, stat8, stat2, stat12];
 
   return (
     <div style={{
@@ -389,7 +472,7 @@ function FounderScreen() {
 
       {/* Greeting */}
       <div style={{ padding: "6px 10px 3px" }}>
-        <div style={{ fontSize: "9px", fontWeight: 700, color: "#F8FAFC", fontFamily: font, letterSpacing: "-0.2px" }}>
+        <div style={{ fontSize: "9px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, letterSpacing: "-0.2px" }}>
           Good afternoon, Alex
         </div>
         <div style={{
@@ -417,14 +500,14 @@ function FounderScreen() {
       }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "2px", textAlign: "center" }}>
           {[
-            { num: "47", label: "VIEWS", trend: "+12" },
-            { num: "8", label: "INTERESTED", trend: "+3" },
-            { num: "2", label: "CALLS", trend: "+1" },
-            { num: "12", label: "DECK VIEWS", trend: "+5" },
-          ].map((s) => (
+            { label: "VIEWS", trend: "+12" },
+            { label: "INTERESTED", trend: "+3" },
+            { label: "CALLS", trend: "+1" },
+            { label: "DECK VIEWS", trend: "+5" },
+          ].map((s, i) => (
             <div key={s.label} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <div style={{ fontSize: "12px", fontWeight: 700, color: "#F8FAFC", fontFamily: font, lineHeight: 1 }}>{s.num}</div>
-              <div style={{ fontSize: "3.5px", color: "rgba(255,255,255,0.4)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.3px", marginTop: "2px" }}>{s.label}</div>
+              <div style={{ fontSize: "13px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1 }}>{statNums[i]}</div>
+              <div style={{ fontSize: "3.5px", color: "rgba(255,255,255,0.25)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>{s.label}</div>
               <TrendPill value={s.trend} color="#A78BFA" />
             </div>
           ))}
@@ -440,30 +523,30 @@ function FounderScreen() {
         </div>
       </div>
 
-      {/* Queue section - flex-1 to fill space */}
+      {/* Queue section */}
       <div style={{ flex: 1, padding: "3px 10px 2px", display: "flex", flexDirection: "column", minHeight: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "3px", marginBottom: "2px" }}>
-          <span style={{ fontSize: "7px", fontWeight: 700, color: "#F8FAFC", fontFamily: font }}>Investor Queue</span>
+          <span style={{ fontSize: "7px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Investor Queue</span>
         </div>
         <div style={{ fontSize: "4.5px", color: "rgba(255,255,255,0.35)", fontFamily: font, fontStyle: "italic", marginBottom: "4px" }}>
           One at a time &#183; 72h windows
         </div>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "3px", overflow: "hidden" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "2%", overflow: "hidden" }}>
           {[
-            { pos: "1", initials: "SC", name: "Sarah Chen", firm: "Gradient Ventures", status: "ACTIVE", isActive: true, avatarBg: "linear-gradient(135deg, #F97316, #FB923C)", posBg: "linear-gradient(135deg, #8B5CF6, #A78BFA)" },
-            { pos: "2", initials: "MW", name: "Marcus Webb", firm: "Founder Collective", status: "Next", isActive: false, avatarBg: "linear-gradient(135deg, #8B5CF6, #A78BFA)", posBg: "rgba(255,255,255,0.1)" },
-            { pos: "3", initials: "ER", name: "Elena Rodriguez", firm: "Precursor", status: "Waiting", isActive: false, avatarBg: "linear-gradient(135deg, #EF4444, #F87171)", posBg: "rgba(255,255,255,0.1)" },
-            { pos: "4", initials: "JP", name: "James Park", firm: "Lux Capital", status: "Waiting", isActive: false, avatarBg: "linear-gradient(135deg, #22C55E, #4ADE80)", posBg: "rgba(255,255,255,0.1)" },
+            { pos: "1", initials: "SC", name: "Sarah Chen", firm: "Gradient Ventures", status: "ACTIVE", isActive: true, avatarBg: "linear-gradient(135deg, #4C1D95, #7C3AED)", posBg: "linear-gradient(135deg, #8B5CF6, #A78BFA)" },
+            { pos: "2", initials: "MW", name: "Marcus Webb", firm: "Founder Collective", status: "Next", isActive: false, avatarBg: "linear-gradient(135deg, #312E81, #6366F1)", posBg: "rgba(255,255,255,0.1)" },
+            { pos: "3", initials: "ER", name: "Elena Rodriguez", firm: "Precursor", status: "Waiting", isActive: false, avatarBg: "linear-gradient(135deg, #581C87, #9333EA)", posBg: "rgba(255,255,255,0.1)" },
+            { pos: "4", initials: "JP", name: "James Park", firm: "Lux Capital", status: "Waiting", isActive: false, avatarBg: "linear-gradient(135deg, #1E3A5F, #6366F1)", posBg: "rgba(255,255,255,0.1)" },
           ].map((q) => (
             <div
               key={q.pos}
-              className={`${q.isActive ? "glow-pulse-violet" : ""} ${q.pos === "4" ? "phone-queue-row-4" : ""}`}
+              className={`${q.isActive ? "queue-pulse-violet" : ""} ${q.pos === "4" ? "phone-queue-row-4" : ""}`}
               style={{
                 display: "flex", alignItems: "center", gap: "4px",
-                padding: "5px 7px",
-                background: "rgba(255,255,255,0.04)",
-                borderRadius: "8px",
-                borderLeft: q.isActive ? "2px solid #A78BFA" : "2px solid transparent",
+                padding: "2.5% 3%",
+                background: q.isActive ? "rgba(139,92,246,0.06)" : "rgba(255,255,255,0.04)",
+                borderRadius: "10px",
+                border: "1px solid rgba(255,255,255,0.06)",
                 flex: 1,
                 minHeight: 0,
               }}
@@ -481,13 +564,13 @@ function FounderScreen() {
                 fontSize: "3.5px", fontWeight: 700, color: "#fff", fontFamily: font,
               }}>{q.initials}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: "6.5px", color: "#F8FAFC", fontFamily: font, fontWeight: 700 }}>{q.name}</div>
+                <div style={{ fontSize: "6.5px", color: "#F1F5F9", fontFamily: font, fontWeight: 600 }}>{q.name}</div>
                 <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font }}>{q.firm}</div>
               </div>
               {q.isActive ? (
                 <>
                   <span className="active-pulse" style={{
-                    fontSize: "4px", color: "#34D399", background: "rgba(52,211,153,0.15)",
+                    fontSize: "4px", color: "#A78BFA", background: "rgba(139,92,246,0.12)",
                     borderRadius: "9999px", padding: "1.5px 5px", fontWeight: 600, fontFamily: font,
                   }}>ACTIVE</span>
                   <span style={{ fontSize: "5.5px", color: "#A78BFA", fontFamily: font, fontWeight: 700, transition: "opacity 0.3s" }}>{timeToggle ? "46h" : "47h"}</span>
@@ -514,43 +597,56 @@ function FounderScreen() {
           <span style={{ fontSize: "6.5px", color: "#fff", fontWeight: 700, fontFamily: font, position: "relative", zIndex: 1 }}>
             Schedule Meeting &#8594;
           </span>
-          {/* Shimmer sweep */}
-          <div style={{
+          {/* Shimmer sweep - 5% opacity, 5s cycle */}
+          <div className="phone-shimmer-sweep" style={{
             position: "absolute",
             top: 0,
             left: 0,
             width: "40%",
             height: "100%",
-            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
-            animation: "shimmer-sweep 4s ease-in-out infinite",
+            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent)",
           }} />
         </div>
       </div>
 
-      {/* Bottom tab bar - pinned to bottom */}
+      {/* Bottom tab bar */}
       <div style={{
         display: "flex", justifyContent: "space-around", alignItems: "center",
         padding: "5px 12px 8px",
-        borderTop: "1px solid rgba(255,255,255,0.06)",
-        background: "rgba(255,255,255,0.03)",
+        borderTop: "1px solid rgba(255,255,255,0.04)",
+        background: "rgba(0,0,0,0.3)",
         flexShrink: 0,
       }}>
         {[
-          { icon: <HomeTabIcon color="#A78BFA" />, label: "Home" },
-          { icon: <DashTabIcon active color="#A78BFA" />, label: "Dashboard" },
-          { icon: <InterestsTabIcon color="#A78BFA" />, label: "Interests" },
-          { icon: <CalendarTabIcon color="#A78BFA" />, label: "Scheduling" },
-          { icon: <UserTabIcon color="#A78BFA" />, label: "Profile" },
-        ].map((tab, i) => (
+          { icon: <HomeTabIcon color="#A78BFA" />, label: "Home", active: false },
+          { icon: <DashTabIcon active color="#A78BFA" />, label: "Dashboard", active: true },
+          { icon: <InterestsTabIcon color="#A78BFA" />, label: "Interests", active: false },
+          { icon: <CalendarTabIcon color="#A78BFA" />, label: "Scheduling", active: false },
+          { icon: <UserTabIcon color="#A78BFA" />, label: "Profile", active: false },
+        ].map((tab) => (
           <div key={tab.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1px" }}>
             {tab.icon}
-            <span style={{
-              fontSize: "4px", fontFamily: font,
-              color: i === 1 ? "#A78BFA" : "rgba(255,255,255,0.3)",
-              fontWeight: i === 1 ? 600 : 400,
-            }}>{tab.label}</span>
+            {tab.active && (
+              <span style={{
+                fontSize: "4px", fontFamily: font,
+                color: "#A78BFA",
+                fontWeight: 600,
+              }}>{tab.label}</span>
+            )}
           </div>
         ))}
+      </div>
+
+      {/* Home indicator */}
+      <div style={{
+        display: "flex", justifyContent: "center", paddingBottom: "4px",
+        background: "rgba(0,0,0,0.3)",
+        flexShrink: 0,
+      }}>
+        <div style={{
+          width: "80px", height: "2px", borderRadius: "9999px",
+          background: "rgba(255,255,255,0.2)",
+        }} />
       </div>
     </div>
   );
@@ -597,6 +693,7 @@ function IPhoneFrame({
   subtitle,
   index,
   accentColor,
+  onVisible,
 }: {
   children: React.ReactNode;
   href: string;
@@ -604,6 +701,7 @@ function IPhoneFrame({
   subtitle: string;
   index: number;
   accentColor: string;
+  onVisible?: () => void;
 }) {
   const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -616,6 +714,7 @@ function IPhoneFrame({
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
+          onVisible?.();
           observer.disconnect();
         }
       },
@@ -623,7 +722,7 @@ function IPhoneFrame({
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [onVisible]);
 
   const entranceDelay = index * 0.2;
 
@@ -696,10 +795,22 @@ function IPhoneFrame({
               position: "relative",
               boxShadow: hovered
                 ? "0 35px 90px rgba(0,0,0,0.25), 0 10px 30px rgba(0,0,0,0.1)"
-                : "0 25px 70px rgba(0,0,0,0.2), 0 10px 30px rgba(0,0,0,0.1)",
+                : "0 25px 70px rgba(0,0,0,0.18), 0 10px 25px rgba(0,0,0,0.1)",
             }}
           >
-            {/* Metallic sheen */}
+            {/* Metallic sheen - top edge highlight */}
+            <div style={{
+              position: "absolute",
+              top: 0,
+              left: "20px",
+              right: "20px",
+              height: "1px",
+              background: "rgba(255,255,255,0.05)",
+              borderRadius: "1px",
+              zIndex: 5,
+              pointerEvents: "none",
+            }} />
+            {/* Metallic sheen - diagonal gradient */}
             <div style={{
               position: "absolute",
               inset: 0,
@@ -758,19 +869,6 @@ function IPhoneFrame({
               <div style={{ paddingTop: "38px", height: "100%", overflow: "hidden" }}>
                 {children}
               </div>
-
-              {/* Home indicator */}
-              <div style={{
-                position: "absolute",
-                bottom: "6px",
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "100px",
-                height: "4px",
-                borderRadius: "9999px",
-                background: "rgba(255,255,255,0.2)",
-                zIndex: 10,
-              }} />
             </div>
           </div>
             </div>
@@ -814,6 +912,9 @@ function IPhoneFrame({
 
 /* ---- Main Component ---- */
 export default function IPhoneMockups() {
+  const [phonesVisible, setPhonesVisible] = useState(false);
+  const handleVisible = useCallback(() => setPhonesVisible(true), []);
+
   return (
     <section
       className="relative z-10 iphone-section pt-[80px] pb-[60px] lg:py-20"
@@ -890,8 +991,9 @@ export default function IPhoneMockups() {
           subtitle="Browse startups. Express interest. Get matched."
           index={0}
           accentColor="#22D3EE"
+          onVisible={handleVisible}
         >
-          <InvestorScreen />
+          <InvestorScreen isVisible={phonesVisible} />
         </IPhoneFrame>
 
         <IPhoneFrame
@@ -901,7 +1003,7 @@ export default function IPhoneMockups() {
           index={1}
           accentColor="#A78BFA"
         >
-          <FounderScreen />
+          <FounderScreen isVisible={phonesVisible} />
         </IPhoneFrame>
       </div>
     </section>
