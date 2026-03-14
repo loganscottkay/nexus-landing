@@ -1217,17 +1217,6 @@ html {
   50% { background-position: 100% 50%; }
 }
 
-/* 4. Animated section dividers */
-.section-divider-animated {
-  background: linear-gradient(90deg, transparent, #4A6CF7, #7C5CFC, transparent);
-  background-size: 200% 100%;
-  animation: divider-flow 4s linear infinite;
-}
-
-@keyframes divider-flow {
-  0% { background-position: -100% 0; }
-  100% { background-position: 100% 0; }
-}
 
 /* 5. Parallax background orbs */
 .parallax-orb {

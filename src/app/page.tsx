@@ -693,17 +693,6 @@ function MatchingFlowSection() {
   );
 }
 
-/* ---- Section Divider (desktop only, animated) ---- */
-function SectionDivider() {
-  return (
-    <div className="hidden lg:flex justify-center py-10">
-      <div
-        className="w-[200px] h-[1px] section-divider-animated"
-      />
-    </div>
-  );
-}
-
 /* ---- Main Page ---- */
 export default function Home() {
   const scrollY = useScrollY();
@@ -831,26 +820,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ DIVIDER ============ */}
-      <SectionDivider />
-
       {/* ============ HOW IT WORKS ============ */}
       <HowItWorksSection />
-
-      {/* ============ DIVIDER ============ */}
-      <SectionDivider />
 
       {/* ============ HOW MATCHING WORKS ============ */}
       <MatchingFlowSection />
 
-      {/* ============ DIVIDER ============ */}
-      <SectionDivider />
-
       {/* ============ IPHONE MOCKUPS ============ */}
       <IPhoneMockups />
-
-      {/* ============ DIVIDER ============ */}
-      <SectionDivider />
 
       {/* ============ FINAL CTA ============ */}
       <Section className="relative z-10 py-[80px] lg:py-20">
