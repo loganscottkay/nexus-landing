@@ -190,77 +190,51 @@ export function ScoringPreview({ active }: { active: boolean }) {
    CARD 02 — FEED PREFERENCES PREVIEW
    ================================================================ */
 
-const industries = [
-  { label: "AI/ML", selected: true },
-  { label: "Fintech", selected: true },
-  { label: "HealthTech", selected: false },
-];
+const industryPills = ["AI/ML", "Fintech", "HealthTech"];
+const stagePills = ["Pre-Seed", "Seed"];
 
-const stages = [
-  { label: "Pre-Seed", selected: true },
-  { label: "Seed", selected: true },
-];
-
-const feedStartups = [
-  { name: "Luminary AI", tag: "AI/ML", score: 87 },
-  { name: "Stackpay", tag: "Fintech", score: 91 },
-  { name: "Cortex Labs", tag: "AI/ML", score: 79 },
+const feedCards = [
+  { name: "Luminary AI", sector: "AI/ML" },
+  { name: "Stackpay", sector: "Fintech" },
 ];
 
 export function MatchingPreview({ active }: { active: boolean }) {
-  const [visibleRows, setVisibleRows] = useState(0);
   const [selectedIndustries, setSelectedIndustries] = useState(0);
-  const [sliderPos, setSliderPos] = useState(0);
   const [selectedStages, setSelectedStages] = useState(0);
+  const [checkSize, setCheckSize] = useState(false);
   const [visibleFeed, setVisibleFeed] = useState(0);
   const [showReady, setShowReady] = useState(false);
-  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const runAnimation = React.useCallback(() => {
-    // Reset
-    setVisibleRows(0);
     setSelectedIndustries(0);
-    setSliderPos(0);
     setSelectedStages(0);
+    setCheckSize(false);
     setVisibleFeed(0);
     setShowReady(false);
 
-    // Stagger filter rows in
-    const t1 = setTimeout(() => setVisibleRows(1), 300);
-    const t2 = setTimeout(() => setSelectedIndustries(1), 700);
-    const t3 = setTimeout(() => setSelectedIndustries(2), 1100);
+    const t1 = setTimeout(() => setSelectedIndustries(1), 600);
+    const t2 = setTimeout(() => setSelectedIndustries(2), 1200);
+    const t3 = setTimeout(() => setSelectedStages(1), 2000);
+    const t4 = setTimeout(() => setSelectedStages(2), 2600);
+    const t5 = setTimeout(() => setCheckSize(true), 3200);
+    const t6 = setTimeout(() => setVisibleFeed(1), 4200);
+    const t7 = setTimeout(() => setVisibleFeed(2), 4600);
+    const t8 = setTimeout(() => setShowReady(true), 5400);
 
-    const t4 = setTimeout(() => setVisibleRows(2), 1500);
-    const t5 = setTimeout(() => setSliderPos(100), 1900);
-
-    const t6 = setTimeout(() => setVisibleRows(3), 2500);
-    const t7 = setTimeout(() => setSelectedStages(1), 2900);
-    const t8 = setTimeout(() => setSelectedStages(2), 3200);
-
-    // Feed cards slide in
-    const t9 = setTimeout(() => setVisibleFeed(1), 3800);
-    const t10 = setTimeout(() => setVisibleFeed(2), 4100);
-    const t11 = setTimeout(() => setVisibleFeed(3), 4400);
-    const t12 = setTimeout(() => setShowReady(true), 5000);
-
-    return [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12];
+    return [t1, t2, t3, t4, t5, t6, t7, t8];
   }, []);
 
   useEffect(() => {
     if (!active) {
-      setVisibleRows(0);
       setSelectedIndustries(0);
-      setSliderPos(0);
       setSelectedStages(0);
+      setCheckSize(false);
       setVisibleFeed(0);
       setShowReady(false);
-      if (intervalRef.current) clearTimeout(intervalRef.current);
       return;
     }
 
     let timers = runAnimation();
-
-    // Loop every 8 seconds
     const loop = setInterval(() => {
       timers.forEach(clearTimeout);
       timers = runAnimation();
@@ -274,110 +248,87 @@ export function MatchingPreview({ active }: { active: boolean }) {
 
   return (
     <div className="h-full flex flex-col">
-      <PreviewLabel label="FEED PREFERENCES" statusText="Customizing" dotColor="blue" />
+      <div className="flex items-center gap-2 mb-6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+        </svg>
+        <span className="text-[11px] tracking-[2px] uppercase font-medium" style={{ color: "#94A3B8" }}>FEED PREFERENCES</span>
+      </div>
 
       <div className="flex-1 flex flex-col">
-        <div className="space-y-4 mb-5">
-          {/* Row 1: Industries */}
-          <AnimatePresence>
-            {visibleRows >= 1 && (
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <p className="text-[11px] mb-2" style={{ color: "#94A3B8" }}>Industries</p>
-                <div className="flex gap-2">
-                  {industries.map((ind, i) => {
-                    const isSelected = ind.selected && selectedIndustries > i;
-                    return (
-                      <span
-                        key={ind.label}
-                        className="text-[11px] px-3 py-1.5 rounded-full transition-all duration-300"
-                        style={{
-                          background: isSelected ? "rgba(74, 108, 247, 0.12)" : "rgba(0,0,0,0.04)",
-                          color: isSelected ? "#4A6CF7" : "rgba(0,0,0,0.3)",
-                          border: `1px solid ${isSelected ? "rgba(74, 108, 247, 0.3)" : "rgba(0,0,0,0.06)"}`,
-                          boxShadow: isSelected ? "0 0 8px rgba(74, 108, 247, 0.15)" : "none",
-                        }}
-                      >
-                        {ind.label}
-                      </span>
-                    );
-                  })}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Row 2: Investment Range */}
-          <AnimatePresence>
-            {visibleRows >= 2 && (
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <p className="text-[11px] mb-2" style={{ color: "#94A3B8" }}>Investment Range</p>
-                <div className="relative h-[6px] rounded-full overflow-hidden" style={{ background: "rgba(0,0,0,0.04)" }}>
-                  <motion.div
-                    className="absolute inset-y-0 left-0 rounded-full"
-                    style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)" }}
-                    initial={{ width: "0%" }}
-                    animate={{ width: `${sliderPos}%` }}
-                    transition={{ duration: 1, ease: [0.25, 0.4, 0.25, 1] }}
-                  />
-                </div>
-                <div className="flex justify-between mt-1.5">
-                  <span className="text-[10px]" style={{ color: "#94A3B8" }}>$1K</span>
+        <div className="space-y-5 mb-6">
+          {/* Industries */}
+          <div>
+            <p className="text-[11px] mb-2 font-medium" style={{ color: "#64748B" }}>Industries</p>
+            <div className="flex gap-2">
+              {industryPills.map((pill, i) => {
+                const isSelected = selectedIndustries > i;
+                return (
                   <span
-                    className="text-[11px] font-medium transition-opacity duration-300"
-                    style={{ color: "#4A6CF7", opacity: sliderPos > 50 ? 1 : 0 }}
+                    key={pill}
+                    className="text-[11px] px-3 py-1.5 rounded-full transition-all duration-300"
+                    style={{
+                      background: isSelected ? "rgba(74, 108, 247, 0.12)" : "rgba(0,0,0,0.04)",
+                      color: isSelected ? "#4A6CF7" : "rgba(0,0,0,0.3)",
+                      border: `1px solid ${isSelected ? "rgba(74, 108, 247, 0.3)" : "rgba(0,0,0,0.06)"}`,
+                      boxShadow: isSelected ? "0 0 8px rgba(74, 108, 247, 0.15)" : "none",
+                    }}
                   >
-                    $1K - $500K+
+                    {pill}
                   </span>
-                  <span className="text-[10px]" style={{ color: "#94A3B8" }}>$100K+</span>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                );
+              })}
+            </div>
+          </div>
 
-          {/* Row 3: Stage */}
-          <AnimatePresence>
-            {visibleRows >= 3 && (
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <p className="text-[11px] mb-2" style={{ color: "#94A3B8" }}>Stage</p>
-                <div className="flex gap-2">
-                  {stages.map((stage, i) => {
-                    const isSelected = stage.selected && selectedStages > i;
-                    return (
-                      <span
-                        key={stage.label}
-                        className="text-[11px] px-3 py-1.5 rounded-full transition-all duration-300"
-                        style={{
-                          background: isSelected ? "rgba(124, 92, 252, 0.12)" : "rgba(0,0,0,0.04)",
-                          color: isSelected ? "#7C5CFC" : "rgba(0,0,0,0.3)",
-                          border: `1px solid ${isSelected ? "rgba(124, 92, 252, 0.3)" : "rgba(0,0,0,0.06)"}`,
-                          boxShadow: isSelected ? "0 0 8px rgba(124, 92, 252, 0.15)" : "none",
-                        }}
-                      >
-                        {stage.label}
-                      </span>
-                    );
-                  })}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {/* Stage */}
+          <div>
+            <p className="text-[11px] mb-2 font-medium" style={{ color: "#64748B" }}>Stage</p>
+            <div className="flex gap-2">
+              {stagePills.map((pill, i) => {
+                const isSelected = selectedStages > i;
+                return (
+                  <span
+                    key={pill}
+                    className="text-[11px] px-3 py-1.5 rounded-full transition-all duration-300"
+                    style={{
+                      background: isSelected ? "rgba(124, 92, 252, 0.12)" : "rgba(0,0,0,0.04)",
+                      color: isSelected ? "#7C5CFC" : "rgba(0,0,0,0.3)",
+                      border: `1px solid ${isSelected ? "rgba(124, 92, 252, 0.3)" : "rgba(0,0,0,0.06)"}`,
+                      boxShadow: isSelected ? "0 0 8px rgba(124, 92, 252, 0.15)" : "none",
+                    }}
+                  >
+                    {pill}
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Check Size */}
+          <div>
+            <p className="text-[11px] mb-2 font-medium" style={{ color: "#64748B" }}>Check Size</p>
+            <AnimatePresence>
+              {checkSize ? (
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-[14px] font-semibold"
+                  style={{ color: "#0F172A" }}
+                >
+                  $50K - $250K
+                </motion.span>
+              ) : (
+                <span className="text-[14px]" style={{ color: "rgba(0,0,0,0.15)" }}>---</span>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
-        {/* Mini feed preview */}
+        {/* Mini feed cards */}
         <div className="space-y-2 mb-4">
-          {feedStartups.map((s, i) => (
+          {feedCards.map((s, i) => (
             <AnimatePresence key={s.name}>
               {visibleFeed > i && (
                 <motion.div
@@ -392,13 +343,7 @@ export function MatchingPreview({ active }: { active: boolean }) {
                     className="text-[9px] px-2 py-0.5 rounded-full"
                     style={{ background: "rgba(74, 108, 247, 0.1)", color: "#4A6CF7" }}
                   >
-                    {s.tag}
-                  </span>
-                  <span
-                    className="text-[10px] font-semibold px-1.5 py-0.5 rounded"
-                    style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22c55e" }}
-                  >
-                    {s.score}
+                    {s.sector}
                   </span>
                 </motion.div>
               )}
@@ -428,181 +373,190 @@ export function MatchingPreview({ active }: { active: boolean }) {
 }
 
 /* ================================================================
-   CARD 03 — ACCOUNTABILITY DASHBOARD PREVIEW
+   CARD 03 — YOUR ACCOUNTABILITY (FOUNDER PERSPECTIVE)
    ================================================================ */
 
-function MiniSparkline({ trend }: { trend: "up" | "flat" | "down" }) {
-  const paths = {
-    up: "M0 12 L4 10 L8 11 L12 8 L16 6 L20 3",
-    flat: "M0 8 L4 7 L8 6 L12 7 L16 7 L20 6",
-    down: "M0 4 L4 5 L8 5 L12 7 L16 9 L20 12",
-  };
-  const color = trend === "up" ? "#22c55e" : trend === "flat" ? "#f59e0b" : "#ef4444";
-  return (
-    <svg width="40" height="16" viewBox="0 0 20 14" className="shrink-0">
-      <path d={paths[trend]} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function TypewriterText({ text, active }: { text: string; active: boolean }) {
-  const [displayed, setDisplayed] = useState("");
+function CountdownHours({ active }: { active: boolean }) {
+  const [hours, setHours] = useState(47);
 
   useEffect(() => {
     if (!active) {
-      setDisplayed("");
+      setHours(47);
       return;
     }
-    let i = 0;
     const interval = setInterval(() => {
-      i++;
-      setDisplayed(text.slice(0, i));
-      if (i >= text.length) clearInterval(interval);
-    }, 40);
+      setHours((prev) => {
+        if (prev <= 45) return 47;
+        return prev - 1;
+      });
+    }, 2000);
     return () => clearInterval(interval);
-  }, [active, text]);
+  }, [active]);
 
-  return (
-    <span>
-      {displayed}
-      {active && displayed.length < text.length && (
-        <span className="inline-block w-[2px] h-[13px] ml-0.5" style={{ backgroundColor: "rgba(15,23,42,0.4)", animation: "pulse-gentle 0.8s ease-in-out infinite" }} />
-      )}
-    </span>
-  );
+  return <span className="tabular-nums">{hours}h</span>;
 }
-
-const dashboardRows = [
-  {
-    name: "Luminary AI",
-    days: "23 days active",
-    traction: "Traction: Strong",
-    arrow: "\u2191",
-    status: "green" as const,
-    trend: "up" as const,
-    removed: false,
-  },
-  {
-    name: "CloudNine Health",
-    days: "28 days active",
-    traction: "Traction: Slowing",
-    arrow: "",
-    status: "amber" as const,
-    trend: "flat" as const,
-    removed: false,
-  },
-  {
-    name: "PayGrid",
-    days: "31 days",
-    traction: "REMOVED",
-    arrow: "",
-    status: "red" as const,
-    trend: "down" as const,
-    removed: true,
-    reason: "No investor interest",
-  },
-];
 
 export function AccountabilityPreview({ active }: { active: boolean }) {
   const [visibleRows, setVisibleRows] = useState(0);
-  const [showStats, setShowStats] = useState(false);
-  const [showTypewriter, setShowTypewriter] = useState(false);
+  const [showScore, setShowScore] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+  const tractionScore = useCountUp(72, 1.0, showScore);
 
   useEffect(() => {
     if (!active) {
       setVisibleRows(0);
-      setShowStats(false);
-      setShowTypewriter(false);
+      setShowScore(false);
+      setShowWarning(false);
       return;
     }
     const t1 = setTimeout(() => setVisibleRows(1), 300);
     const t2 = setTimeout(() => setVisibleRows(2), 600);
     const t3 = setTimeout(() => setVisibleRows(3), 900);
-    const t4 = setTimeout(() => setShowStats(true), 1300);
-    const t5 = setTimeout(() => setShowTypewriter(true), 1800);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); };
+    const t4 = setTimeout(() => setVisibleRows(4), 1200);
+    const t5 = setTimeout(() => setShowScore(true), 1600);
+    const t6 = setTimeout(() => setShowWarning(true), 2200);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); clearTimeout(t6); };
   }, [active]);
-
-  const statusColors = {
-    green: { bg: "rgba(34, 197, 94, 0.1)", border: "rgba(34, 197, 94, 0.2)", text: "#22c55e", icon: "\u2713" },
-    amber: { bg: "rgba(245, 158, 11, 0.1)", border: "rgba(245, 158, 11, 0.2)", text: "#f59e0b", icon: "\u26A0" },
-    red: { bg: "rgba(239, 68, 68, 0.1)", border: "rgba(239, 68, 68, 0.2)", text: "#ef4444", icon: "\u2715" },
-  };
 
   return (
     <div className="h-full flex flex-col">
-      <PreviewLabel label="PLATFORM HEALTH" statusText="Monitoring" dotColor="amber" />
-
-      {/* Dashboard rows */}
-      <div className="space-y-2.5 mb-6">
-        {dashboardRows.map((row, i) => {
-          const sc = statusColors[row.status];
-          return (
-            <AnimatePresence key={row.name}>
-              {visibleRows > i && (
-                <motion.div
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: row.removed ? 0.4 : 1, x: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="rounded-xl p-3.5 flex items-center gap-3"
-                  style={{ background: sc.bg, border: `1px solid ${sc.border}` }}
-                >
-                  {/* Status icon */}
-                  <span className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] shrink-0"
-                    style={{ background: `${sc.text}20`, color: sc.text }}>
-                    {sc.icon}
-                  </span>
-
-                  {/* Info */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className={`text-[13px] font-semibold ${row.removed ? "line-through" : ""}`} style={{ color: "#0F172A" }}>{row.name}</span>
-                    </div>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-[11px]" style={{ color: "#94A3B8" }}>{row.days}{row.removed ? " - " : ""}</span>
-                      <span className="text-[11px] font-medium" style={{ color: sc.text }}>
-                        {row.traction} {row.arrow}
-                      </span>
-                    </div>
-                    {row.removed && row.reason && (
-                      <span className="text-[10px] mt-0.5 block" style={{ color: "#94A3B8" }}>{row.reason}</span>
-                    )}
-                  </div>
-
-                  {/* Sparkline */}
-                  <MiniSparkline trend={row.trend} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          );
-        })}
+      {/* Header */}
+      <div className="flex items-center gap-2 mb-6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <polyline points="9 12 11 14 15 10" />
+        </svg>
+        <span className="text-[11px] tracking-[2px] uppercase font-medium" style={{ color: "#94A3B8" }}>YOUR ACCOUNTABILITY</span>
       </div>
 
-      {/* Stats row */}
+      {/* Timeline checklist */}
+      <div className="space-y-3 mb-6">
+        {/* Row 1: Sarah Chen - completed */}
+        <AnimatePresence>
+          {visibleRows >= 1 && (
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center gap-3"
+            >
+              <span className="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(34, 197, 94, 0.15)" }}>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+              </span>
+              <div className="flex-1 min-w-0">
+                <span className="text-[12px]" style={{ color: "#475569" }}>Sarah Chen</span>
+                <span className="text-[11px] ml-2" style={{ color: "#94A3B8" }}>Call completed March 5</span>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Row 2: David Kim - completed */}
+        <AnimatePresence>
+          {visibleRows >= 2 && (
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center gap-3"
+            >
+              <span className="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(34, 197, 94, 0.15)" }}>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+              </span>
+              <div className="flex-1 min-w-0">
+                <span className="text-[12px]" style={{ color: "#475569" }}>David Kim</span>
+                <span className="text-[11px] ml-2" style={{ color: "#94A3B8" }}>Call completed March 8</span>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Row 3: Marcus Webb - countdown */}
+        <AnimatePresence>
+          {visibleRows >= 3 && (
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center gap-3"
+            >
+              <span className="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(74, 108, 247, 0.15)" }}>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+              </span>
+              <div className="flex-1 min-w-0">
+                <span className="text-[12px]" style={{ color: "#475569" }}>Marcus Webb</span>
+                <span className="text-[11px] ml-2 font-medium" style={{ color: "#4A6CF7" }}>
+                  <CountdownHours active={active} /> left to schedule
+                </span>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Row 4: Metrics update due */}
+        <AnimatePresence>
+          {visibleRows >= 4 && (
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center gap-3"
+            >
+              <span className="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(245, 158, 11, 0.15)" }}>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
+              </span>
+              <span className="text-[12px]" style={{ color: "#f59e0b" }}>Metrics update due in 12 days</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Traction Score bar */}
       <AnimatePresence>
-        {showStats && (
+        {showScore && (
           <motion.div
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex gap-4 mb-4"
+            transition={{ duration: 0.4 }}
+            className="mb-4"
           >
-            <div className="flex-1 rounded-lg p-3 text-center" style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)" }}>
-              <p className="text-[10px] mb-0.5" style={{ color: "#94A3B8" }}>Platform Churn</p>
-              <p className="text-[16px] font-bold" style={{ color: "#0F172A" }}>12%<span className="text-[11px] ml-1" style={{ color: "#94A3B8" }}>monthly</span></p>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-[11px] font-medium" style={{ color: "#64748B" }}>Traction Score</span>
+              <span className="text-[13px] font-bold tabular-nums" style={{ color: "#0F172A" }}>
+                {active ? tractionScore : 0}<span className="text-[11px]" style={{ color: "#94A3B8" }}>/100</span>
+              </span>
             </div>
-            <div className="flex-1 rounded-lg p-3 text-center" style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)" }}>
-              <p className="text-[10px] mb-0.5" style={{ color: "#94A3B8" }}>Active Quality Score</p>
-              <p className="text-[16px] font-bold" style={{ color: "#0F172A" }}>94<span className="text-[11px]" style={{ color: "#94A3B8" }}>/100</span></p>
+            <div className="h-[8px] rounded-full overflow-hidden" style={{ background: "rgba(0,0,0,0.04)" }}>
+              <motion.div
+                className="h-full rounded-full"
+                style={{
+                  background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)",
+                  animation: "pulse-gentle 2s ease-in-out infinite",
+                }}
+                initial={{ width: 0 }}
+                animate={{ width: "72%" }}
+                transition={{ duration: 1, ease: [0.25, 0.4, 0.25, 1] }}
+              />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Typewriter */}
+      {/* Warning text */}
       <div className="mt-auto pt-3" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
-        <p className="text-[13px] italic h-[20px]" style={{ color: "#64748B" }}>
-          <TypewriterText text="Only serious founders remain." active={showTypewriter} />
-        </p>
+        <AnimatePresence>
+          {showWarning && (
+            <motion.p
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="text-[12px]"
+              style={{ color: "rgba(239, 68, 68, 0.7)" }}
+            >
+              No traction after 30 days = removal
+            </motion.p>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

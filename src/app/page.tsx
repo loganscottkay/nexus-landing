@@ -232,13 +232,13 @@ const howItWorksCards = [
     num: "02",
     icon: <SparkleIcon />,
     title: "Investors Set Their Feed",
-    desc: "Your investment size determines your match tier. Small checks see early-stage founders. Larger checks see proven traction.",
+    desc: "Investors pick which industries and stages they care about. Their feed only shows startups that match. You show up in the feeds of investors who are actually looking for what you are building.",
   },
   {
     num: "03",
     icon: <PhoneIcon />,
     title: "Move Fast or Move On",
-    desc: "Interested investors enter a queue. Each gets a 72-hour window to schedule. Queue refreshes automatically. No-shows get removed. No one wastes anyone's time.",
+    desc: "Investors enter your queue. You get one 72-hour window per investor to schedule. Show traction or get cycled out. Ghost a call and you are removed. This keeps your spot on UrgenC earned, not given.",
   },
 ];
 

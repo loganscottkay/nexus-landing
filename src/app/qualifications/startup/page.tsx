@@ -276,36 +276,6 @@ export default function StartupQualifications() {
             Less than 15% of applicants will get in. Here is what we will look for when applications open.
           </motion.p>
 
-          {/* Waitlist note */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease, delay: 0.12 }}
-            className="flex flex-col items-center mb-12"
-          >
-            <div
-              className="rounded-xl px-[16px] py-[16px] max-w-[700px] w-full text-center"
-              style={{
-                background: "rgba(74, 108, 247, 0.05)",
-                border: "1px solid rgba(74, 108, 247, 0.15)",
-              }}
-            >
-              <p
-                className="text-[14px] leading-[1.7] mb-4"
-                style={{ color: "#4A6CF7", fontFamily: "var(--font-dm-sans), sans-serif" }}
-              >
-                These are the qualifications for when the app launches. Want to be first to know? Join the waitlist.
-              </p>
-              <Link
-                href="/waitlist"
-                className="inline-flex items-center gap-2 px-6 py-2.5 text-[14px] font-semibold text-white rounded-full"
-                style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
-              >
-                Join the Waitlist &rarr;
-              </Link>
-            </div>
-          </motion.div>
-
           {/* Cards */}
           <div className="flex flex-col" style={{ gap: "20px" }}>
             {cards.map((card, i) => (
