@@ -909,57 +909,48 @@ export default function Home() {
       <IPhoneMockups />
 
       {/* ============ FINAL CTA ============ */}
-      <Section className="relative z-10 py-[80px] lg:py-20">
-        <div className="mx-auto px-6" style={{ maxWidth: "900px" }}>
-          <div
-            className="rounded-3xl py-[40px] px-6 md:py-[60px] md:px-10 text-center"
-            style={{ background: "rgba(74, 108, 247, 0.015)" }}
+      <Section className="relative z-10 pt-[80px] pb-[80px]">
+        <motion.div
+          variants={cardStagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="flex flex-col items-center text-center px-6"
+        >
+          <motion.h2
+            initial={{ opacity: 0, y: 20, clipPath: "inset(100% 0 0 0)" }}
+            whileInView={{ opacity: 1, y: 0, clipPath: "inset(0 0 0 0)" }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 1.0, ease: [0.25, 0.4, 0.25, 1] }}
+            className="text-[40px] font-normal"
+            style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
           >
-            <motion.div
-              variants={cardStagger}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportConfig}
-              className="flex flex-col items-center"
+            Ready to Join the <span className="gradient-text-animate">Network</span>?
+          </motion.h2>
+
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="text-[17px] leading-[1.7] mt-4 max-w-[520px] mx-auto"
+            style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
+          >
+            Founding cohort coming soon. Join the waitlist to be first in line when we launch.
+          </motion.p>
+
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="mt-8"
+          >
+            <Link
+              href="/waitlist"
+              className="group btn-shimmer btn-auto-shimmer inline-flex items-center justify-center gap-2 px-10 py-4 text-[16px] font-semibold text-white rounded-full transition-all duration-200 hover:scale-[1.03] hover:shadow-[0_8px_30px_rgba(74,108,247,0.25)]"
+              style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
-              {/* Heading with slower clip-path reveal */}
-              <motion.h2
-                initial={{ opacity: 0, y: 20, clipPath: "inset(100% 0 0 0)" }}
-                whileInView={{ opacity: 1, y: 0, clipPath: "inset(0 0 0 0)" }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 1.0, ease: [0.25, 0.4, 0.25, 1] }}
-                className="text-[36px] font-normal mb-6"
-                style={{ fontFamily: "'Instrument Serif', serif", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
-              >
-                Ready to Join the <span className="gradient-text-animate">Network</span>?
-              </motion.h2>
-
-              <motion.p
-                variants={fadeUp}
-                transition={{ duration: 0.6, ease }}
-                className="text-[17px] md:text-[18px] mb-10 max-w-xl leading-[1.7]"
-                style={{ color: "#475569" }}
-              >
-                Founding cohort coming soon. Join the waitlist to be first in line when we launch. Early signups get priority.
-              </motion.p>
-
-              <motion.div
-                variants={fadeUp}
-                transition={{ duration: 0.6, ease }}
-                className="flex flex-col items-center"
-              >
-                <MagneticButton
-                  href="/waitlist"
-                  className="group btn-shimmer btn-auto-shimmer final-cta-pulse inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
-                  style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
-                >
-                  Join the Waitlist
-                  <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
-                </MagneticButton>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
+              Join the Waitlist &rarr;
+            </Link>
+          </motion.div>
+        </motion.div>
       </Section>
 
       {/* ============ FOOTER ============ */}

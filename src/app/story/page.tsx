@@ -180,7 +180,7 @@ export default function StoryPage() {
         />
       </div>
 
-      <main className="relative z-10 pt-32 pb-24">
+      <main className="relative z-10 pt-[140px] pb-24">
         {/* Header */}
         <div className="max-w-[700px] mx-auto px-6 text-center mb-20">
           <motion.h1
@@ -379,17 +379,6 @@ export default function StoryPage() {
                               (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 16px rgba(0,0,0,0.04)";
                             }}
                           >
-                            <span
-                              className="text-[13px] font-semibold mb-2 block"
-                              style={{
-                                fontFamily: "var(--font-dm-sans), sans-serif",
-                                background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                                WebkitBackgroundClip: "text",
-                                WebkitTextFillColor: "transparent",
-                              }}
-                            >
-                              {milestone.year}
-                            </span>
                             <h2
                               className="font-normal mb-3"
                               style={{
@@ -443,17 +432,6 @@ export default function StoryPage() {
                               (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 16px rgba(0,0,0,0.04)";
                             }}
                           >
-                            <span
-                              className="text-[13px] font-semibold mb-2 block"
-                              style={{
-                                fontFamily: "var(--font-dm-sans), sans-serif",
-                                background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                                WebkitBackgroundClip: "text",
-                                WebkitTextFillColor: "transparent",
-                              }}
-                            >
-                              {milestone.year}
-                            </span>
                             <h2
                               className="font-normal mb-3"
                               style={{
@@ -497,17 +475,6 @@ export default function StoryPage() {
                           transition: "opacity 0.5s ease-out, transform 0.5s ease-out",
                         }}
                       >
-                        <span
-                          className="text-[13px] font-semibold mb-2 block"
-                          style={{
-                            fontFamily: "var(--font-dm-sans), sans-serif",
-                            background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                          }}
-                        >
-                          {milestone.year}
-                        </span>
                         <h2
                           className="font-normal mb-2"
                           style={{
