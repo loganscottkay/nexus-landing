@@ -286,94 +286,38 @@ function NarrativeLine() {
   return (
     <div
       ref={ref}
-      className="flex justify-center px-6"
-      style={{
-        paddingTop: "32px",
-        paddingBottom: "32px",
-        background:
-          "radial-gradient(ellipse 600px 300px at 50% 50%, rgba(99,102,241,0.03), transparent)",
-      }}
+      className="flex justify-center px-6 py-[36px] md:py-[50px]"
     >
-      <style>{`
-        @media (min-width: 1024px) {
-          .narrative-container { padding-top: 48px !important; padding-bottom: 48px !important; }
-        }
-      `}</style>
       <div
-        className="narrative-container"
-        style={{ position: "relative", maxWidth: "650px", textAlign: "center" }}
+        style={{ maxWidth: "580px", textAlign: "center" }}
       >
-        {/* Decorative opening quote mark */}
-        <span
-          aria-hidden="true"
-          style={{
-            fontFamily: "'Instrument Serif', serif",
-            fontSize: "80px",
-            color: "rgba(99,102,241,0.08)",
-            position: "absolute",
-            top: "-20px",
-            left: "-10px",
-            lineHeight: 1,
-            opacity: visible ? 1 : 0,
-            transition: "opacity 0.4s ease-out",
-            userSelect: "none",
-          }}
-          className="lg:!text-[120px] lg:!top-[-30px] lg:!left-[-20px]"
-        >
-          &ldquo;
-        </span>
-
-        {/* Decorative closing quote mark */}
-        <span
-          aria-hidden="true"
-          style={{
-            fontFamily: "'Instrument Serif', serif",
-            fontSize: "80px",
-            color: "rgba(99,102,241,0.08)",
-            position: "absolute",
-            bottom: "-20px",
-            right: "-10px",
-            lineHeight: 1,
-            opacity: visible ? 1 : 0,
-            transition: "opacity 0.4s ease-out",
-            userSelect: "none",
-          }}
-          className="lg:!text-[120px] lg:!bottom-[-30px] lg:!right-[-20px]"
-        >
-          &rdquo;
-        </span>
-
-        {/* Quote text */}
         <p
           style={{
-            fontFamily: "'Instrument Serif', serif",
-            fontSize: "22px",
-            fontStyle: "italic",
-            color: "#0F172A",
-            lineHeight: 1.5,
-            letterSpacing: "-0.01em",
+            fontFamily: "var(--font-dm-sans), sans-serif",
+            fontSize: "18px",
+            fontWeight: 400,
+            fontStyle: "normal",
+            color: "#334155",
+            lineHeight: 1.8,
             textAlign: "center",
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0)" : "translateY(20px)",
             transition: "opacity 0.7s ease-out 0.2s, transform 0.7s ease-out 0.2s",
           }}
-          className="lg:!text-[28px]"
+          className="md:!text-[22px]"
         >
-          The startup world is full of ideas. The problem has never been building — it is getting in front of the right people.
+          The startup world is full of ideas. The problem has never been building — it is getting in front of the right{" "}
+          <span
+            style={{
+              background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            people
+          </span>
+          .
         </p>
-
-        {/* Animated gradient underline */}
-        <div
-          style={{
-            width: "80px",
-            height: "2px",
-            margin: "16px auto 0",
-            background: "linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)",
-            transform: visible ? "scaleX(1)" : "scaleX(0)",
-            transformOrigin: "center",
-            transition: "transform 0.6s ease-out 0.5s",
-          }}
-        />
       </div>
     </div>
   );
@@ -1350,19 +1294,19 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 2.3, ease }}
               className="flex flex-col items-center mt-7 mb-4"
             >
-              <div className="flex items-center gap-5 md:gap-7">
+              <div className="flex items-center gap-[24px]">
                 {/* BU Logo */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 2.3, ease }}
                   style={{ animation: "floatLogo1 3.5s ease-in-out infinite" }}
-                  className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] flex items-center justify-center"
+                  className="h-[32px] md:h-[40px] flex items-center justify-center"
                 >
                   <img
                     src="/images/universities/bu-logo.jpg"
                     alt="Boston University"
-                    className="max-h-full max-w-full object-contain transition-opacity duration-300"
+                    className="h-full w-auto object-contain transition-opacity duration-300"
                     style={{ opacity: 0.7 }}
                     onMouseEnter={(e) => { (e.target as HTMLImageElement).style.opacity = "1"; }}
                     onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.7"; }}
@@ -1374,14 +1318,14 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 2.4, ease }}
                   style={{ animation: "floatLogo2 4.0s ease-in-out infinite", animationDelay: "-0.5s" }}
-                  className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] flex items-center justify-center"
+                  className="flex items-center justify-center"
                 >
-                  <div className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-white rounded-full flex items-center justify-center overflow-hidden">
+                  <div className="w-[36px] h-[36px] md:w-[44px] md:h-[44px] bg-white rounded-full flex items-center justify-center overflow-hidden">
                     <img
                       src="/images/universities/neu-logo.png"
                       alt="Northeastern University"
-                      className="max-h-full max-w-full object-contain transition-opacity duration-300"
-                      style={{ opacity: 0.7, mixBlendMode: "multiply" }}
+                      className="h-[24px] md:h-[30px] w-auto object-contain transition-opacity duration-300"
+                      style={{ opacity: 0.7 }}
                       onMouseEnter={(e) => { (e.target as HTMLImageElement).style.opacity = "1"; }}
                       onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.7"; }}
                     />
@@ -1393,24 +1337,18 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 2.5, ease }}
                   style={{ animation: "floatLogo3 3.8s ease-in-out infinite", animationDelay: "-1.0s" }}
-                  className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] flex items-center justify-center"
+                  className="h-[32px] md:h-[40px] flex items-center justify-center"
                 >
                   <img
                     src="/images/universities/hbs-logo.png"
                     alt="Harvard Business School"
-                    className="max-h-full max-w-full object-contain transition-opacity duration-300"
+                    className="h-full w-auto object-contain transition-opacity duration-300"
                     style={{ opacity: 0.7 }}
                     onMouseEnter={(e) => { (e.target as HTMLImageElement).style.opacity = "1"; }}
                     onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.7"; }}
                   />
                 </motion.div>
               </div>
-              <p
-                className="mt-3.5 text-[14px]"
-                style={{ color: "rgba(0,0,0,0.35)", letterSpacing: "1px", fontWeight: 500, fontFamily: "var(--font-dm-sans), sans-serif" }}
-              >
-                Built in Boston
-              </p>
             </motion.div>
 
             {/* Scroll-down indicator */}
