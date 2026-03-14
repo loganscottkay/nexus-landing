@@ -1022,8 +1022,8 @@ export default function Home() {
                 {[
                   <>UrgenC is the first real fundraising app.</>,
                   <>Founders pitch. Investors swipe.</>,
-                  <>Mutual interest means a <em style={{ fontStyle: "italic" }}>guaranteed meeting.</em></>,
-                  <>If you don&apos;t show up, you <em style={{ fontStyle: "italic" }}>don&apos;t stay.</em></>,
+                  <>Mutual interest means a guaranteed meeting.</>,
+                  <>If you don&apos;t show up, you don&apos;t stay.</>,
                 ].map((line, i) => (
                   <motion.span
                     key={i}
