@@ -429,11 +429,27 @@ function HowItWorksSection() {
           <motion.h2
             variants={tierTitle}
             transition={{ duration: 0.8, delay: 0.2, ease: smoothDecel }}
-            className="text-[36px] md:text-[44px] font-normal text-center mb-16"
+            className="text-[36px] md:text-[44px] font-normal text-center mb-4"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
             App Overview
           </motion.h2>
+          <motion.p
+            variants={tierSubtitle}
+            transition={{ duration: 0.5, delay: 0.3, ease }}
+            className="text-center max-w-[500px] text-[17px] leading-[1.7] mb-3"
+            style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
+          >
+            Three pillars that make UrgenC different from anything else.
+          </motion.p>
+          <motion.p
+            variants={tierSubtitle}
+            transition={{ duration: 0.5, delay: 0.4, ease }}
+            className="text-center max-w-[500px] text-[13px] leading-[1.6] mb-16"
+            style={{ color: "rgba(0,0,0,0.3)", fontFamily: "var(--font-dm-sans), sans-serif" }}
+          >
+            Scoring methodology developed with input from entrepreneurship programs at HBS, BU, and Northeastern.
+          </motion.p>
 
           {/* Two-column layout: cards left, preview right */}
           <motion.div variants={cardStagger} className="flex flex-col lg:flex-row gap-8 w-full">
@@ -831,7 +847,7 @@ function MatchingFlowSection() {
                     className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300 flex flex-col"
                     data-label={step.label}
                     style={{
-                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04))",
+                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(212,175,55,0.04), rgba(167,139,250,0.05), rgba(196,148,233,0.03))",
                       backdropFilter: "blur(20px) saturate(1.8)",
                       WebkitBackdropFilter: "blur(20px) saturate(1.8)",
                       border: "1px solid rgba(255, 255, 255, 0.5)",
@@ -910,7 +926,7 @@ function MatchingFlowSection() {
                     className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300 flex flex-col"
                     data-label={step.label}
                     style={{
-                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04))",
+                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(212,175,55,0.04), rgba(167,139,250,0.05), rgba(196,148,233,0.03))",
                       backdropFilter: "blur(20px) saturate(1.8)",
                       WebkitBackdropFilter: "blur(20px) saturate(1.8)",
                       border: "1px solid rgba(255, 255, 255, 0.5)",
@@ -1007,7 +1023,7 @@ function MatchingFlowSection() {
                     className="matching-flow-card rounded-2xl p-5"
                     data-label={step.label}
                     style={{
-                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04))",
+                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(212,175,55,0.04), rgba(167,139,250,0.05), rgba(196,148,233,0.03))",
                       backdropFilter: "blur(20px) saturate(1.8)",
                       WebkitBackdropFilter: "blur(20px) saturate(1.8)",
                       border: "1px solid rgba(255, 255, 255, 0.5)",

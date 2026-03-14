@@ -1173,6 +1173,13 @@ body {
   animation: iphone-float 4s ease-in-out infinite;
 }
 
+/* Remove 3D tilt on mobile (stacked phones look better flat) */
+@media (max-width: 767px) {
+  .iphone-float {
+    transform: translateY(0) scale(1) rotateY(0deg) !important;
+  }
+}
+
 /* Sparkle particles floating upward */
 @keyframes sparkle-float-up {
   0% {
@@ -1582,12 +1589,12 @@ html {
   .matching-card-investors .matching-flow-card:hover,
   .matching-card-both:hover .matching-flow-card,
   .matching-card-both .matching-flow-card:hover {
-    background: linear-gradient(135deg, rgba(255,255,255,0.75), rgba(255,255,255,0.35)), linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06)) !important;
+    background: linear-gradient(135deg, rgba(255,255,255,0.75), rgba(255,255,255,0.35)), linear-gradient(135deg, rgba(212,175,55,0.08), rgba(167,139,250,0.10), rgba(196,148,233,0.06)) !important;
   }
 
   /* Qualification page cards: intensified pastel on hover */
   .qual-card:hover {
-    background: linear-gradient(135deg, rgba(255,255,255,0.75), rgba(255,255,255,0.35)), linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06)) !important;
+    background: linear-gradient(135deg, rgba(255,255,255,0.75), rgba(255,255,255,0.35)), linear-gradient(135deg, rgba(212,175,55,0.08), rgba(167,139,250,0.10), rgba(196,148,233,0.06)) !important;
   }
 }
 

@@ -713,8 +713,8 @@ function PhoneBody({
         padding: enlarged ? "13px" : "10px",
         position: "relative",
         boxShadow: hovered
-          ? "0 35px 90px rgba(0,0,0,0.25), 0 10px 30px rgba(0,0,0,0.1)"
-          : "0 25px 70px rgba(0,0,0,0.18), 0 10px 25px rgba(0,0,0,0.1)",
+          ? "0 35px 90px rgba(0,0,0,0.25), 0 12px 24px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.06)"
+          : "0 25px 50px rgba(0,0,0,0.12), 0 12px 24px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04)",
       }}
     >
       {/* Metallic sheen - top edge highlight */}
@@ -940,7 +940,7 @@ function IPhoneFrame({
             ? "translateY(0) translateX(0) rotateY(0deg)"
             : `translateY(80px) translateX(${index === 0 ? "-20px" : "20px"}) rotateY(${index === 0 ? "5deg" : "-5deg"})`,
           transition: `opacity 0.9s ease-out ${entranceDelay}s, transform 0.9s ease-out ${entranceDelay}s`,
-          perspective: "1000px",
+          perspective: "1200px",
         }}
       >
         {/* Glow behind phone on hover */}
@@ -959,15 +959,15 @@ function IPhoneFrame({
           zIndex: 0,
         }} />
 
-        {/* Phone container with float + hover */}
+        {/* Phone container with float + hover + 3D tilt */}
         <div
           className="iphone-float"
           style={{
             animationDelay: index === 1 ? "2s" : "0s",
             transform: hovered
-              ? `translateY(-10px) scale(1.02) rotateY(${index === 0 ? "3deg" : "-3deg"})`
-              : "translateY(0) scale(1) rotateY(0deg)",
-            transition: "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease",
+              ? `translateY(-10px) scale(1.02) rotateY(0deg)`
+              : `translateY(0) scale(1) rotateY(${index === 0 ? "3deg" : "-3deg"})`,
+            transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease",
             position: "relative",
             zIndex: 1,
           }}
@@ -989,6 +989,34 @@ function IPhoneFrame({
               </PhoneBody>
             </div>
           </div>
+
+          {/* Diagonal shine/reflection effect */}
+          <div style={{
+            position: "absolute",
+            inset: 0,
+            borderRadius: "48px",
+            background: "linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 55%, transparent 60%)",
+            pointerEvents: "none",
+            zIndex: 10,
+            transform: "scale(var(--phone-scale))",
+            transformOrigin: "top left",
+            width: "260px",
+            height: "530px",
+          }} />
+
+          {/* Surface reflection below phone */}
+          <div style={{
+            position: "absolute",
+            top: "var(--phone-height)",
+            left: "5%",
+            width: "90%",
+            height: "40px",
+            background: "linear-gradient(180deg, rgba(0,0,0,0.03), transparent)",
+            filter: "blur(8px)",
+            borderRadius: "50%",
+            pointerEvents: "none",
+            zIndex: 0,
+          }} />
         </div>
       </div>
 
