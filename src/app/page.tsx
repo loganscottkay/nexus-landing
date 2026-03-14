@@ -665,8 +665,8 @@ export default function Home() {
             >
               UrgenC is the first real fundraising app.<br />
               Founders pitch. Investors swipe.<br />
-              When interest is mutual, the meeting is guaranteed.<br />
-              Everyone here actually meets. If you don&apos;t, you&apos;re removed.
+              Mutual interest = guaranteed meeting.<br />
+              No shows get removed.
             </motion.p>
 
             {/* CTA */}
