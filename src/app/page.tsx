@@ -1314,10 +1314,10 @@ export default function Home() {
                     className="mt-[8px] text-[11px] md:text-[12px]"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontWeight: 500,
+                      fontWeight: 600,
                       letterSpacing: "1.5px",
                       textTransform: "uppercase" as const,
-                      color: "rgba(0,0,0,0.35)",
+                      color: "#475569",
                     }}
                   >
                     BU
@@ -1348,10 +1348,10 @@ export default function Home() {
                     className="mt-[8px] text-[11px] md:text-[12px]"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontWeight: 500,
+                      fontWeight: 600,
                       letterSpacing: "1.5px",
                       textTransform: "uppercase" as const,
-                      color: "rgba(0,0,0,0.35)",
+                      color: "#475569",
                     }}
                   >
                     NEU
@@ -1366,26 +1366,26 @@ export default function Home() {
                   className="flex flex-col items-center"
                 >
                   <div
-                    className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-110 cursor-pointer"
-                    style={{ animation: "floatCrest3 3.8s ease-in-out infinite", animationDelay: "-1.4s", filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))", border: "1px solid rgba(0,0,0,0.06)" }}
+                    className="w-[52px] h-[52px] flex items-center justify-center overflow-visible transition-all duration-300 hover:scale-110 cursor-pointer"
+                    style={{ animation: "floatCrest3 3.8s ease-in-out infinite", animationDelay: "-1.4s", filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))" }}
                     onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 4px 16px rgba(0,0,0,0.12))"; }}
                     onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 2px 10px rgba(0,0,0,0.08))"; }}
                   >
                     <img
                       src="/images/universities/hbs-crest.png"
                       alt="Harvard Business School"
-                      className="w-[48px] h-[48px] object-cover rounded-full"
-                      style={{ mixBlendMode: "multiply", objectPosition: "left center" }}
+                      className="h-[48px] w-auto object-contain"
+                      style={{ mixBlendMode: "multiply" }}
                     />
                   </div>
                   <span
                     className="mt-[8px] text-[11px] md:text-[12px]"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontWeight: 500,
+                      fontWeight: 600,
                       letterSpacing: "1.5px",
                       textTransform: "uppercase" as const,
-                      color: "rgba(0,0,0,0.35)",
+                      color: "#475569",
                     }}
                   >
                     HBS
@@ -1398,11 +1398,11 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.4, delay: 2.2, ease }}
-                className="text-[16px] md:text-[18px]"
+                className="text-[16px] md:text-[17px]"
                 style={{
                   fontFamily: "'Instrument Serif', serif",
                   fontStyle: "italic",
-                  color: "rgba(0,0,0,0.28)",
+                  color: "#64748B",
                   letterSpacing: "0.5px",
                   marginTop: "20px",
                 }}
