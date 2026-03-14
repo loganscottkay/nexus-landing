@@ -83,7 +83,7 @@ export default function HeroHeadline({ lines, prefersReduced }: HeroHeadlineProp
                     style={{
                       fontFamily: "'Instrument Serif', serif",
                       fontWeight: 400,
-                      fontStyle: 'italic',
+                      fontStyle: 'normal',
                     }}
                   >
                     {segment.text}
