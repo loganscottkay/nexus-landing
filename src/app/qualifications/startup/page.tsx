@@ -103,7 +103,7 @@ const onAppCards = [
     items: [
       "Update metrics monthly",
       "Respond to investor interest within 72 hours",
-      "No traction after 30 days may mean removal",
+      "Startups that don't show progress within 30 days may be moved to inactive status",
     ],
     why: "This is what keeps UrgenC elite.",
   },
@@ -116,7 +116,7 @@ const rejectionCard = {
     "No deck or video submitted",
     "Unverifiable identity",
     "No clear problem or customer",
-    "Fraudulent claims",
+    "Misrepresentation of any kind",
   ],
   why: null as string | null,
   isRejection: true,

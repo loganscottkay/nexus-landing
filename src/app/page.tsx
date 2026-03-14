@@ -241,7 +241,7 @@ const howItWorksCards = [
     num: "03",
     icon: <PhoneIcon />,
     title: "Move Fast or Move On",
-    desc: "Investors enter your queue. You get one 72-hour window per investor to schedule. Show traction or get cycled out. Ghost a call and you are removed. This keeps your spot on UrgenC earned, not given.",
+    desc: "Investors enter your queue. You get one 72-hour window per investor to schedule. Show traction or get cycled out. Ghost a call and you lose your spot. Progress is expected. This keeps your place on UrgenC earned, not given.",
   },
 ];
 
@@ -339,7 +339,7 @@ function HowItWorksSection() {
   const activeIndex = STEPS.indexOf(activeCard as typeof STEPS[number]);
 
   return (
-    <Section id="how-it-works" className="relative z-10 px-6 py-20 lg:py-20 max-w-6xl mx-auto">
+    <Section id="how-it-works" className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] max-w-6xl mx-auto">
       <div ref={sectionRef}>
         <motion.div
           variants={cardStagger}
@@ -579,7 +579,7 @@ const matchingSteps = [
     title: "Swipe & Match",
     label: "BOTH SIDES",
     labelColor: "#D4AF37",
-    desc: "Investors express interest. Founders see a queue. First to swipe = first to meet. Swipe early or get stuck in line.",
+    desc: "Investors express interest. Founders see a queue. First to swipe = first to meet. Express interest early. First in line gets the first meeting window.",
     color: "#D4AF37",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -611,7 +611,7 @@ function MatchingFlowSection() {
   };
 
   return (
-    <Section className="relative z-10 px-6 py-20 lg:py-20 max-w-6xl mx-auto">
+    <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] max-w-6xl mx-auto">
       <motion.div
         variants={cardStagger}
         initial="hidden"
@@ -878,7 +878,7 @@ export default function Home() {
       <Navbar />
 
       {/* ============ HERO ============ */}
-      <section className="relative z-10 pt-[120px] lg:pt-[180px] pb-[80px] lg:pb-[30px]">
+      <section className="relative z-10 pt-[120px] lg:pt-[180px] pb-[80px] lg:pb-[50px]">
         {/* Desktop bottom gradient fade */}
         <div
           className="hidden lg:block absolute bottom-0 left-0 right-0 h-[60px] pointer-events-none z-20"
@@ -951,8 +951,8 @@ export default function Home() {
                 {[
                   <>UrgenC is the first real fundraising app.</>,
                   <>Founders pitch. Investors swipe.</>,
-                  <>Mutual interest = <em style={{ fontStyle: "italic" }}>guaranteed meeting.</em></>,
-                  <>No shows get <em style={{ fontStyle: "italic" }}>removed.</em></>,
+                  <>Mutual interest means a <em style={{ fontStyle: "italic" }}>guaranteed meeting.</em></>,
+                  <>If you don&apos;t show up, you <em style={{ fontStyle: "italic" }}>don&apos;t stay.</em></>,
                 ].map((line, i) => (
                   <motion.span
                     key={i}
@@ -997,10 +997,12 @@ export default function Home() {
       <MatchingFlowSection />
 
       {/* ============ IPHONE MOCKUPS ============ */}
-      <IPhoneMockups />
+      <div className="lg:pb-[100px]">
+        <IPhoneMockups />
+      </div>
 
       {/* ============ FINAL CTA ============ */}
-      <Section className="relative z-10 pt-[80px] pb-[80px]">
+      <Section className="relative z-10 pt-[80px] pb-[80px] lg:pt-[80px] lg:pb-[80px]">
         <motion.div
           variants={cardStagger}
           initial="hidden"
