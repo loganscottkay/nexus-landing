@@ -568,13 +568,106 @@ function ArrowRight({ className = "" }: { className?: string }) {
   );
 }
 
+/* Mini illustration for Card 1: video camera with REC dot + score bar */
+const MiniIllustration1 = () => (
+  <div className="flex items-center justify-center gap-3 mt-4 h-[60px] md:h-[60px] max-sm:h-[50px]">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+      <rect x="2" y="6" width="16" height="12" rx="2" stroke="rgba(99,102,241,0.3)" strokeWidth="1.5" />
+      <polygon points="22 9 18 12 22 15" stroke="rgba(99,102,241,0.3)" strokeWidth="1.5" fill="none" />
+      <circle cx="7" cy="10" r="2.5" fill="rgba(239,68,68,0.5)" />
+      <text x="6" y="11.5" fontSize="4" fill="rgba(239,68,68,0.7)" fontWeight="bold" textAnchor="middle">R</text>
+    </svg>
+    <div className="flex flex-col gap-1.5">
+      <div className="w-[60px] h-[6px] rounded-full" style={{ background: 'rgba(99,102,241,0.12)' }}>
+        <div className="h-full rounded-full" style={{ width: '78%', background: 'rgba(99,102,241,0.3)' }} />
+      </div>
+      <div className="w-[60px] h-[6px] rounded-full" style={{ background: 'rgba(99,102,241,0.12)' }}>
+        <div className="h-full rounded-full" style={{ width: '62%', background: 'rgba(99,102,241,0.25)' }} />
+      </div>
+    </div>
+  </div>
+);
+
+/* Mini illustration for Card 2: filter pills + filtered feed cards */
+const MiniIllustration2 = () => (
+  <div className="flex flex-col items-center justify-center mt-4 h-[60px] md:h-[60px] max-sm:h-[50px] gap-1.5">
+    <div className="flex gap-1.5">
+      <span className="px-2 py-0.5 rounded-full text-[8px]" style={{ background: 'rgba(99,102,241,0.25)', color: 'rgba(99,102,241,0.6)' }}>AI/ML</span>
+      <span className="px-2 py-0.5 rounded-full text-[8px]" style={{ background: 'rgba(99,102,241,0.25)', color: 'rgba(99,102,241,0.6)' }}>Fintech</span>
+      <span className="px-2 py-0.5 rounded-full text-[8px]" style={{ background: 'rgba(99,102,241,0.1)', color: 'rgba(99,102,241,0.3)' }}>SaaS</span>
+    </div>
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+      <path d="M5 2 L5 8 M3 6 L5 8 L7 6" stroke="rgba(99,102,241,0.3)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+    <div className="flex gap-2">
+      <div className="w-[24px] h-[16px] rounded-sm" style={{ background: 'rgba(99,102,241,0.2)', border: '1px solid rgba(99,102,241,0.15)' }} />
+      <div className="w-[24px] h-[16px] rounded-sm" style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.1)' }} />
+    </div>
+  </div>
+);
+
+/* Mini illustration for Card 3: two circles with match heart */
+const MiniIllustration3 = () => (
+  <div className="flex items-center justify-center mt-4 h-[60px] md:h-[60px] max-sm:h-[50px] gap-2">
+    <div className="w-[22px] h-[22px] rounded-full" style={{ background: 'rgba(212,175,55,0.2)', border: '1.5px solid rgba(212,175,55,0.3)' }} />
+    <div className="flex flex-col items-center gap-0.5">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M7 12 C7 12 1.5 8 1.5 4.5 C1.5 2.5 3 1.5 4.5 1.5 C5.5 1.5 6.5 2 7 3 C7.5 2 8.5 1.5 9.5 1.5 C11 1.5 12.5 2.5 12.5 4.5 C12.5 8 7 12 7 12Z" fill="rgba(212,175,55,0.35)" stroke="rgba(212,175,55,0.4)" strokeWidth="0.8" />
+      </svg>
+      <div className="flex items-center gap-0">
+        <div className="w-[10px] h-0 border-t border-dashed" style={{ borderColor: 'rgba(212,175,55,0.3)' }} />
+        <div className="w-[10px] h-0 border-t" style={{ borderColor: 'rgba(212,175,55,0.4)' }} />
+      </div>
+    </div>
+    <div className="w-[22px] h-[22px] rounded-full" style={{ background: 'rgba(212,175,55,0.2)', border: '1.5px solid rgba(212,175,55,0.3)' }} />
+  </div>
+);
+
+/* Mini illustration for Card 4: calendar + 72h + video call avatars */
+const MiniIllustration4 = () => (
+  <div className="flex flex-col items-center justify-center mt-4 h-[60px] md:h-[60px] max-sm:h-[50px] gap-1.5">
+    <div className="flex items-center gap-2">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <rect x="1" y="3" width="16" height="14" rx="2" stroke="rgba(5,150,105,0.3)" strokeWidth="1.2" />
+        <line x1="1" y1="7" x2="17" y2="7" stroke="rgba(5,150,105,0.2)" strokeWidth="1" />
+        <polyline points="6 10.5 8 12.5 12.5 8" stroke="rgba(5,150,105,0.4)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      </svg>
+      <span className="text-[10px] font-semibold" style={{ color: 'rgba(5,150,105,0.4)' }}>72h</span>
+    </div>
+    <div className="flex items-center gap-1.5">
+      <div className="w-[16px] h-[16px] rounded-full" style={{ background: 'rgba(5,150,105,0.2)', border: '1px solid rgba(5,150,105,0.25)' }} />
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <rect x="1" y="3" width="12" height="8" rx="1.5" stroke="rgba(5,150,105,0.3)" strokeWidth="1" />
+        <circle cx="7" cy="7" r="2" fill="rgba(5,150,105,0.25)" />
+      </svg>
+      <div className="w-[16px] h-[16px] rounded-full" style={{ background: 'rgba(5,150,105,0.2)', border: '1px solid rgba(5,150,105,0.25)' }} />
+    </div>
+  </div>
+);
+
+/* Flow arrow SVG between cards (desktop only) */
+const FlowArrow = ({ delay = 0 }: { delay?: number }) => (
+  <div className="flex items-center justify-center shrink-0" style={{ width: 24 }}>
+    <svg
+      width="24"
+      height="16"
+      viewBox="0 0 24 16"
+      fill="none"
+      className="flow-arrow"
+      style={{ animationDelay: `${delay}s` }}
+    >
+      <path d="M2 8 L18 8 M14 4 L18 8 L14 12" stroke="rgba(99,102,241,0.25)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  </div>
+);
+
 const matchingSteps = [
   {
     num: "01",
     title: "Founders Pitch",
     label: "FOR FOUNDERS",
     labelColor: "#7C5CFC",
-    desc: "Record a 60-second video. Upload your deck. Get scored on vision, team, market, and momentum. Top 15% get in.",
+    desc: "Record a 60-second video pitch and upload your deck. The app scores you on five factors. Top 15% get accepted.",
     color: "#4A6CF7",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -582,13 +675,14 @@ const matchingSteps = [
         <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
       </svg>
     ),
+    illustration: <MiniIllustration1 />,
   },
   {
     num: "02",
     title: "Investors Set Filters",
     label: "FOR INVESTORS",
     labelColor: "#4A6CF7",
-    desc: "Pick your industries, stage, and investment range. Your feed only shows startups that fit. No noise.",
+    desc: "Choose your industries, stage preferences, and check size. Your daily feed only shows startups that match your criteria.",
     color: "#7C5CFC",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -603,26 +697,28 @@ const matchingSteps = [
         <line x1="17" y1="16" x2="23" y2="16" />
       </svg>
     ),
+    illustration: <MiniIllustration2 />,
   },
   {
     num: "03",
     title: "Swipe & Match",
     label: "BOTH SIDES",
     labelColor: "#D4AF37",
-    desc: "Investors express interest. Founders see a queue. First to swipe = first to meet. Express interest early. First in line gets the first meeting window.",
+    desc: "Investors browse and express interest. Founders see who is interested and accept or pass. Both say yes? It is a match.",
     color: "#D4AF37",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="20 6 9 17 4 12" />
       </svg>
     ),
+    illustration: <MiniIllustration3 />,
   },
   {
     num: "04",
     title: "Chemistry Call",
     label: "BOTH SIDES",
     labelColor: "#059669",
-    desc: "Your queue refreshes every 72 hours. Meet one investor at a time without the pressure of scheduling five calls in a week. Each meeting gets your full attention.",
+    desc: "Every match gets a 20-minute video call within 72 hours. One investor at a time through the queue system. No scheduling chaos.",
     color: "#059669",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -630,6 +726,7 @@ const matchingSteps = [
       </svg>
     ),
     lottie: "/animations/chat-connect.json",
+    illustration: <MiniIllustration4 />,
   },
 ];
 
@@ -676,31 +773,18 @@ function MatchingFlowSection() {
           className="text-center max-w-[600px] text-[17px] leading-[1.7] mb-16"
           style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
         >
-          Here is how it works for both sides.
+          The complete flow from pitch to meeting.
         </motion.p>
 
-        {/* Desktop: horizontal flow with connecting lines */}
+        {/* Desktop: horizontal flow with animated arrows */}
         <motion.div
           variants={cardStagger}
-          className="hidden md:flex gap-0 w-full items-stretch"
+          className="hidden lg:flex gap-0 w-full items-stretch"
         >
           {matchingSteps.map((step, i) => (
             <React.Fragment key={step.num}>
-              {/* Connecting line between steps */}
-              {i > 0 && (
-                <div className="flex items-center justify-center shrink-0">
-                  <div className="w-[40px] xl:w-[60px] h-[2px] relative overflow-hidden">
-                    <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)", opacity: 0.3 }} />
-                    <div
-                      className="matching-flow-dot absolute top-[-2px] w-1.5 h-1.5 rounded-full"
-                      style={{
-                        background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                        boxShadow: "0 0 6px rgba(74,108,247,0.6)",
-                      }}
-                    />
-                  </div>
-                </div>
-              )}
+              {/* Animated flow arrow between steps */}
+              {i > 0 && <FlowArrow delay={(i - 1) * 0.5} />}
 
               {/* Step card */}
               <motion.div
@@ -761,6 +845,84 @@ function MatchingFlowSection() {
                       )}
                     </div>
                     <p className="text-[14px] text-text-muted leading-[1.6]">{step.desc}</p>
+                    {step.illustration}
+                  </div>
+                </div>
+              </motion.div>
+            </React.Fragment>
+          ))}
+        </motion.div>
+
+        {/* Tablet: 2x2 grid with horizontal arrows */}
+        <motion.div
+          variants={cardStagger}
+          className="hidden md:grid lg:hidden grid-cols-2 gap-4 w-full"
+        >
+          {matchingSteps.map((step, i) => (
+            <React.Fragment key={step.num}>
+              {/* Horizontal arrow between card 1→2 and card 3→4 */}
+              {(i === 1 || i === 3) && (
+                <div className="absolute" style={{ display: 'none' }} />
+              )}
+              <motion.div
+                variants={tierCard}
+                transition={{ duration: 0.5, delay: 0.6 + i * 0.08, ease }}
+                className="w-full min-h-[240px]"
+              >
+                <div className={`glow-card-wrapper h-full matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
+                  <div
+                    className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300"
+                    data-label={step.label}
+                    style={{
+                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04))",
+                      backdropFilter: "blur(20px) saturate(1.8)",
+                      WebkitBackdropFilter: "blur(20px) saturate(1.8)",
+                      border: "1px solid rgba(255, 255, 255, 0.5)",
+                      boxShadow: "0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)",
+                    }}
+                  >
+                    <motion.div
+                      className="mb-4"
+                      initial={{ scale: 0.9 }}
+                      whileInView={{ scale: [0.9, 1.15, 1] }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
+                    >
+                      {step.icon}
+                    </motion.div>
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.2, delay: 0.2 + i * 0.1 }}
+                      className="inline-block rounded-full px-2.5 py-0.5 text-[10px] tracking-[2px] uppercase font-medium mb-1.5"
+                      style={{
+                        background: labelColors[step.label]?.bg || "rgba(124,92,252,0.1)",
+                        color: labelColors[step.label]?.text || step.labelColor,
+                      }}
+                    >
+                      {step.label}
+                    </motion.span>
+                    <p className="text-[11px] tracking-[2px] uppercase mb-2 font-medium" style={{ color: step.color }}>
+                      Step {step.num}
+                    </p>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3
+                        className="text-[17px] font-semibold text-text-primary"
+                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                      >
+                        {step.title}
+                      </h3>
+                      {(step as { lottie?: string }).lottie && (
+                        <LottieAnimation
+                          src={(step as { lottie: string }).lottie}
+                          loop={true}
+                          className="lottie-brand w-[36px] h-[36px] shrink-0"
+                        />
+                      )}
+                    </div>
+                    <p className="text-[14px] text-text-muted leading-[1.6]">{step.desc}</p>
+                    {step.illustration}
                   </div>
                 </div>
               </motion.div>
@@ -854,6 +1016,7 @@ function MatchingFlowSection() {
                       )}
                     </div>
                     <p className="text-[13px] text-text-muted leading-[1.6]">{step.desc}</p>
+                    {step.illustration}
                   </div>
                 </div>
               </motion.div>

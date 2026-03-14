@@ -775,6 +775,14 @@ body {
   100% { left: calc(100% - 2px); }
 }
 
+.flow-arrow {
+  animation: flow-arrow-pulse 2s ease-in-out infinite;
+}
+@keyframes flow-arrow-pulse {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+
 .rec-dot-pulse {
   animation: rec-pulse 1s ease-in-out infinite;
 }
