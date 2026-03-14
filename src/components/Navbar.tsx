@@ -15,7 +15,7 @@ export default function Navbar() {
   const [logoHovered, setLogoHovered] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 80);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -85,20 +85,21 @@ export default function Navbar() {
       </div>
 
       <nav
-        className="fixed left-0 right-0 z-50 transition-all duration-200"
+        className="fixed left-0 right-0 z-50"
         style={{
           top: `${topOffset}px`,
-          background: scrolled ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.8)",
-          backdropFilter: "blur(40px) saturate(1.3)",
-          WebkitBackdropFilter: "blur(40px) saturate(1.3)",
-          borderBottom: "1px solid rgba(0,0,0,0.04)",
-          boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.04)" : "none",
+          background: scrolled ? "rgba(255,255,255,0.85)" : "transparent",
+          backdropFilter: scrolled ? "blur(40px) saturate(1.3)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(40px) saturate(1.3)" : "none",
+          borderBottom: scrolled ? "1px solid rgba(0,0,0,0.04)" : "1px solid transparent",
+          boxShadow: scrolled ? "0 4px 30px rgba(0,0,0,0.04)" : "none",
+          transition: "background 0.4s ease, backdrop-filter 0.4s ease, border-bottom 0.4s ease, box-shadow 0.4s ease, top 0.2s ease",
         }}
       >
         {/* Bottom shimmer line */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-[1px] overflow-hidden transition-opacity duration-300"
-          style={{ opacity: scrolled ? 0.2 : 0.15 }}
+          className="absolute bottom-0 left-0 right-0 h-[1px] overflow-hidden"
+          style={{ opacity: scrolled ? 0.2 : 0, transition: "opacity 0.4s ease" }}
         >
           <div className="nav-shimmer-line absolute inset-0" />
         </div>

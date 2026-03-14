@@ -19,15 +19,6 @@ const sectionFadeUp = {
   visible: { opacity: 1, y: 0 },
 };
 
-const stagger = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.12,
-    },
-  },
-};
-
 const cardStagger = {
   hidden: {},
   visible: {
@@ -39,6 +30,143 @@ const cardStagger = {
 
 const viewportConfig = { once: true, amount: 0.2 as const };
 
+/* ---- Animation Hooks ---- */
+
+function useScrollY() {
+  const [scrollY, setScrollY] = useState(0);
+  useEffect(() => {
+    let rafId: number;
+    const handleScroll = () => {
+      rafId = requestAnimationFrame(() => setScrollY(window.scrollY));
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
+  return scrollY;
+}
+
+function useScrollProgress() {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const handleScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(h > 0 ? Math.min(window.scrollY / h, 1) : 0);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  return progress;
+}
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setReduced(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+  return reduced;
+}
+
+/* ---- Scroll Progress Bar ---- */
+function ScrollProgressBar({ progress }: { progress: number }) {
+  return (
+    <div
+      className="scroll-progress-bar"
+      style={{ transform: `scaleX(${progress})` }}
+    />
+  );
+}
+
+/* ---- Parallax Background Orbs ---- */
+function ParallaxOrbs({ scrollY, reduced }: { scrollY: number; reduced: boolean }) {
+  const factor = reduced ? 0 : 1;
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: -1 }}>
+      <div
+        className="parallax-orb parallax-orb-1"
+        style={{ transform: `translateY(${scrollY * 0.05 * factor}px)`, willChange: "transform" }}
+      />
+      <div
+        className="parallax-orb parallax-orb-2"
+        style={{ transform: `translateY(${scrollY * 0.08 * factor}px)`, willChange: "transform" }}
+      />
+      <div
+        className="parallax-orb parallax-orb-3"
+        style={{ transform: `translateY(${scrollY * 0.03 * factor}px)`, willChange: "transform" }}
+      />
+    </div>
+  );
+}
+
+/* ---- Magnetic CTA Button ---- */
+function MagneticButton({
+  children,
+  href,
+  className = "",
+  style = {},
+}: {
+  children: React.ReactNode;
+  href: string;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const btnRef = useRef<HTMLDivElement>(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(hover: none)").matches) return;
+
+    const el = btnRef.current;
+    if (!el) return;
+
+    let curX = 0, curY = 0;
+    const handleMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      let newX = 0, newY = 0;
+      if (dist < 80) {
+        newX = Math.round(dx * 0.05 * 10) / 10;
+        newY = Math.round(dy * 0.05 * 10) / 10;
+      }
+      if (newX !== curX || newY !== curY) {
+        curX = newX;
+        curY = newY;
+        setOffset({ x: newX, y: newY });
+      }
+    };
+
+    window.addEventListener("mousemove", handleMove, { passive: true });
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, []);
+
+  return (
+    <div
+      ref={btnRef}
+      style={{
+        transform: `translate(${offset.x}px, ${offset.y}px)`,
+        transition: "transform 0.2s ease-out",
+        display: "inline-block",
+      }}
+    >
+      <Link href={href} className={className} style={style}>
+        {children}
+      </Link>
+    </div>
+  );
+}
+
+/* ---- Section wrapper ---- */
 function Section({
   children,
   className = "",
@@ -114,8 +242,8 @@ const howItWorksCards = [
   },
 ];
 
-const CYCLE_DURATION = 6000; // 6 seconds per demo
-const RESUME_DELAY = 2000; // 2 seconds before auto-cycle resumes
+const CYCLE_DURATION = 6000;
+const RESUME_DELAY = 2000;
 const STEPS = ["01", "02", "03"] as const;
 
 function HowItWorksSection() {
@@ -130,7 +258,6 @@ function HowItWorksSection() {
   const progressRafRef = useRef<number>(0);
   const cycleStartRef = useRef<number>(0);
 
-  // Viewport detection - start auto-cycle when section enters view
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
@@ -142,7 +269,6 @@ function HowItWorksSection() {
     return () => observer.disconnect();
   }, []);
 
-  // Advance to next card in cycle
   const advanceToNext = useCallback(() => {
     setActiveCard((prev) => {
       const idx = STEPS.indexOf(prev as typeof STEPS[number]);
@@ -150,7 +276,6 @@ function HowItWorksSection() {
     });
   }, []);
 
-  // Progress animation loop
   const startProgressAnimation = useCallback(() => {
     cycleStartRef.current = performance.now();
     cancelAnimationFrame(progressRafRef.current);
@@ -166,16 +291,13 @@ function HowItWorksSection() {
     progressRafRef.current = requestAnimationFrame(animate);
   }, []);
 
-  // Auto-cycle logic
   useEffect(() => {
-    // Clear any existing timers
     if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current);
     if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
     cancelAnimationFrame(progressRafRef.current);
 
     if (!inViewport || isHovering) return;
 
-    // Start progress bar and schedule next advance
     startProgressAnimation();
     cycleTimerRef.current = setTimeout(() => {
       advanceToNext();
@@ -187,7 +309,6 @@ function HowItWorksSection() {
     };
   }, [activeCard, inViewport, isHovering, advanceToNext, startProgressAnimation]);
 
-  // Hover handlers
   const handleMouseEnter = useCallback((cardNum: string) => {
     setIsHovering(true);
     if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
@@ -199,14 +320,11 @@ function HowItWorksSection() {
 
   const handleMouseLeave = useCallback(() => {
     setIsHovering(false);
-    // Resume auto-cycle after delay, continuing from the currently active card
     resumeTimerRef.current = setTimeout(() => {
-      // Trigger a re-run of the auto-cycle effect by toggling a state
-      setActiveCard((prev) => prev); // force effect re-run via isHovering change
+      setActiveCard((prev) => prev);
     }, RESUME_DELAY);
   }, []);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current);
@@ -345,7 +463,6 @@ function HowItWorksSection() {
               <div className="hidden lg:flex items-center justify-center gap-3">
                 {STEPS.map((step, i) => (
                   <div key={step} className="relative flex items-center justify-center">
-                    {/* Background dot */}
                     <div
                       className="w-2 h-2 rounded-full transition-colors duration-300"
                       style={{
@@ -354,7 +471,6 @@ function HowItWorksSection() {
                           : "rgba(0, 0, 0, 0.1)",
                       }}
                     />
-                    {/* Progress ring around active dot */}
                     {i === activeIndex && !isHovering && (
                       <svg
                         className="absolute"
@@ -577,13 +693,12 @@ function MatchingFlowSection() {
   );
 }
 
-/* ---- Section Divider (desktop only) ---- */
+/* ---- Section Divider (desktop only, animated) ---- */
 function SectionDivider() {
   return (
     <div className="hidden lg:flex justify-center py-10">
       <div
-        className="w-[200px] h-[1px]"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(74,108,247,0.15), transparent)" }}
+        className="w-[200px] h-[1px] section-divider-animated"
       />
     </div>
   );
@@ -591,12 +706,20 @@ function SectionDivider() {
 
 /* ---- Main Page ---- */
 export default function Home() {
-  /* Blobs are purely decorative, no parallax to avoid dark wash on scroll */
+  const scrollY = useScrollY();
+  const scrollProgress = useScrollProgress();
+  const prefersReduced = usePrefersReducedMotion();
 
   return (
     <main className="relative min-h-screen bg-base text-text-primary overflow-x-clip">
+      {/* Scroll progress indicator */}
+      <ScrollProgressBar progress={scrollProgress} />
+
       {/* Noise overlay */}
       <div className="noise-overlay" />
+
+      {/* Parallax background orbs */}
+      <ParallaxOrbs scrollY={scrollY} reduced={prefersReduced} />
 
       {/* Background gradient blobs */}
       <div
@@ -618,73 +741,93 @@ export default function Home() {
         />
         {/* Centered hero text */}
         <div className="flex flex-col items-center justify-center text-center px-6 max-w-[700px] lg:max-w-[680px] mx-auto relative z-10">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={stagger}
-            transition={{ delayChildren: 0.2 }}
-            className="flex flex-col items-center"
-          >
-            {/* Eyebrow - gradient text */}
+          <div className="flex flex-col items-center">
+            {/* Eyebrow - gradient text, first to appear */}
             <motion.p
-              variants={fadeUp}
-              transition={{ duration: 0.7, ease }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease }}
               className="gradient-text text-[10px] md:text-[13px] tracking-[2px] md:tracking-[5px] uppercase mb-6 font-medium"
             >
               Founding Cohort Coming Soon
             </motion.p>
 
-            {/* Headline - 2 staggered lines */}
-            <div className="mb-8">
+            {/* Headline - clip-path reveal from bottom */}
+            <div
+              className="mb-8"
+              style={{
+                willChange: prefersReduced ? "auto" : "transform",
+                transform: prefersReduced ? "none" : `translateY(${scrollY * -0.15}px)`,
+              }}
+            >
               <motion.h1
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3, ease }}
+                initial={{ opacity: 0, y: 30, clipPath: "inset(100% 0 0 0)" }}
+                animate={{ opacity: 1, y: 0, clipPath: "inset(0 0 0 0)" }}
+                transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
                 className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] font-normal leading-[1.1] tracking-tight"
                 style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
               >
-                Where <span className="gradient-text">Real Ideas</span>
+                Where <span className="gradient-text-animate">Real Ideas</span>
               </motion.h1>
               <motion.h1
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.45, ease }}
+                initial={{ opacity: 0, y: 30, clipPath: "inset(100% 0 0 0)" }}
+                animate={{ opacity: 1, y: 0, clipPath: "inset(0 0 0 0)" }}
+                transition={{ duration: 0.8, delay: 0.65, ease: [0.25, 0.4, 0.25, 1] }}
                 className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] font-normal leading-[1.1] tracking-tight"
                 style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
               >
-                Meet <span className="gradient-text">Real Capital.</span>
+                Meet <span className="gradient-text-animate">Real Capital.</span>
               </motion.h1>
             </div>
 
-            {/* Subtitle */}
-            <motion.p
-              variants={fadeUp}
-              transition={{ duration: 0.7, ease }}
-              className="text-[17px] max-w-full px-2 md:max-w-[600px] md:px-0 mb-12 leading-[1.8] text-center"
-              style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
+            {/* Subtitle - staggered line reveals with parallax */}
+            <div
+              className="mb-12"
+              style={{
+                willChange: prefersReduced ? "auto" : "transform",
+                transform: prefersReduced ? "none" : `translateY(${scrollY * -0.1}px)`,
+              }}
             >
-              UrgenC is the first real fundraising app.<br />
-              Founders pitch. Investors swipe.<br />
-              Mutual interest = guaranteed meeting.<br />
-              No shows get removed.
-            </motion.p>
+              <div
+                className="text-[17px] max-w-full px-2 md:max-w-[600px] md:px-0 leading-[1.8] text-center"
+                style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
+              >
+                {[
+                  "UrgenC is the first real fundraising app.",
+                  "Founders pitch. Investors swipe.",
+                  "Mutual interest = guaranteed meeting.",
+                  "No shows get removed.",
+                ].map((line, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 1.0 + i * 0.15, ease }}
+                    className="block"
+                  >
+                    {line}
+                  </motion.span>
+                ))}
+              </div>
+            </div>
 
-            {/* CTA */}
+            {/* CTA - scale bounce entrance + magnetic effect */}
             <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.7, ease }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 1.4, ease: [0.34, 1.56, 0.64, 1] }}
               className="flex justify-center"
             >
-              <Link
+              <MagneticButton
                 href="/waitlist"
-                className="group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
+                className="group btn-shimmer btn-auto-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
                 style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
               >
                 Join the Waitlist
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
-              </Link>
+              </MagneticButton>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -732,13 +875,16 @@ export default function Home() {
             viewport={viewportConfig}
             className="flex flex-col items-center"
           >
+            {/* Heading with slower clip-path reveal */}
             <motion.h2
-              variants={fadeUp}
-              transition={{ duration: 0.6, ease }}
+              initial={{ opacity: 0, y: 20, clipPath: "inset(100% 0 0 0)" }}
+              whileInView={{ opacity: 1, y: 0, clipPath: "inset(0 0 0 0)" }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1.0, ease: [0.25, 0.4, 0.25, 1] }}
               className="text-[28px] md:text-[36px] lg:text-[48px] font-normal mb-6"
               style={{ fontFamily: "'Instrument Serif', serif", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
             >
-              Ready to Join the <span className="gradient-text">Network</span>?
+              Ready to Join the <span className="gradient-text-animate">Network</span>?
             </motion.h2>
 
             <motion.p
@@ -755,14 +901,14 @@ export default function Home() {
               transition={{ duration: 0.6, ease }}
               className="flex flex-col items-center"
             >
-              <Link
+              <MagneticButton
                 href="/waitlist"
-                className="group btn-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
+                className="group btn-shimmer btn-auto-shimmer final-cta-pulse inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
                 style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
               >
                 Join the Waitlist
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
-              </Link>
+              </MagneticButton>
 
             </motion.div>
           </motion.div>
