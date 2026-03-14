@@ -72,7 +72,7 @@ body {
 .glass {
   position: relative;
   isolation: isolate;
-  background: rgba(255, 255, 255, 0.45);
+  background: linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.45);
   backdrop-filter: blur(20px) saturate(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
   border: 1px solid rgba(255, 255, 255, 0.6);
@@ -87,7 +87,7 @@ body {
   position: absolute;
   inset: 0;
   border-radius: 24px;
-  background: linear-gradient(135deg, rgba(74,108,247,0.04), rgba(124,92,252,0.03), rgba(6,182,212,0.02));
+  background: linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03));
   z-index: 0;
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -98,6 +98,7 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
   border-color: rgba(255, 255, 255, 0.8);
+  background: linear-gradient(135deg, rgba(147,130,220,0.12), rgba(191,148,228,0.08), rgba(130,170,227,0.06)), rgba(255, 255, 255, 0.45);
 }
 
 .glass:hover::before {
@@ -114,9 +115,9 @@ body {
   }
 }
 
-/* Disable glass glow when inside glow-card-wrapper (it has its own) */
+/* Allow pastel tint to show through in glow-card-wrapper */
 .glow-card-wrapper .glass::before {
-  display: none;
+  opacity: 0;
 }
 
 /* ---- Glass cards - dark section ---- */
@@ -1086,6 +1087,7 @@ body {
   .glass:hover {
     transform: none;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    background: linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.45);
   }
   .glass:hover::before {
     opacity: 0;
@@ -1262,9 +1264,11 @@ html {
   .glass:hover {
     transform: translateY(-6px);
     box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+    background: linear-gradient(135deg, rgba(147,130,220,0.12), rgba(191,148,228,0.08), rgba(130,170,227,0.06)), rgba(255, 255, 255, 0.45);
     transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
                 box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-                border-color 0.35s ease;
+                border-color 0.35s ease,
+                background 0.3s ease;
   }
 
   .glow-card-wrapper:hover > .glass,
@@ -1349,27 +1353,19 @@ html {
 
 /* 9. Pastel hover gradients for matching flow cards and qualification cards */
 @media (hover: hover) {
-  /* Founders cards: violet tint */
+  /* Matching flow cards: intensified pastel on hover */
   .matching-card-founders:hover .matching-flow-card,
-  .matching-card-founders .matching-flow-card:hover {
-    background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(168,85,247,0.03)) !important;
-  }
-
-  /* Investors cards: blue/teal tint */
+  .matching-card-founders .matching-flow-card:hover,
   .matching-card-investors:hover .matching-flow-card,
-  .matching-card-investors .matching-flow-card:hover {
-    background: linear-gradient(135deg, rgba(74,108,247,0.05), rgba(6,182,212,0.03)) !important;
-  }
-
-  /* Both sides cards: gold tint */
+  .matching-card-investors .matching-flow-card:hover,
   .matching-card-both:hover .matching-flow-card,
   .matching-card-both .matching-flow-card:hover {
-    background: linear-gradient(135deg, rgba(212,175,55,0.04), rgba(245,215,110,0.03)) !important;
+    background: linear-gradient(135deg, rgba(147,130,220,0.12), rgba(191,148,228,0.08), rgba(130,170,227,0.06)), rgba(255, 255, 255, 0.45) !important;
   }
 
-  /* Qualification page cards: soft pastel rainbow */
+  /* Qualification page cards: intensified pastel on hover */
   .qual-card:hover {
-    background: linear-gradient(135deg, rgba(74,108,247,0.03), rgba(124,92,252,0.03), rgba(236,72,153,0.02)) !important;
+    background: linear-gradient(135deg, rgba(147,130,220,0.12), rgba(191,148,228,0.08), rgba(130,170,227,0.06)), rgba(255, 255, 255, 0.5) !important;
   }
 }
 

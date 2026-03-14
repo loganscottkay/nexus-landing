@@ -350,7 +350,7 @@ function HowItWorksSection() {
             transition={{ duration: 0.6, ease }}
             className="text-text-muted text-[13px] tracking-[3px] uppercase mb-4"
           >
-            The Process
+            App Overview
           </motion.p>
           <motion.h2
             variants={fadeUp}
@@ -358,7 +358,7 @@ function HowItWorksSection() {
             className="text-[36px] md:text-[44px] font-normal text-center mb-16"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
-            How It Works
+            App Overview
           </motion.h2>
 
           {/* Two-column layout: cards left, preview right */}
@@ -403,16 +403,14 @@ function HowItWorksSection() {
             </div>
 
             {/* Right: Preview area + progress dots */}
-            <div className="hidden lg:flex flex-1 flex-col gap-4">
+            <div className="flex flex-1 flex-col gap-4">
               <motion.div
                 variants={fadeUp}
                 transition={{ duration: 0.6, ease }}
-                className="flex-1 min-h-[450px] rounded-2xl p-6 md:p-8 relative overflow-hidden"
+                className="flex-1 min-h-[350px] lg:min-h-[450px] rounded-2xl p-6 md:p-8 relative overflow-hidden"
                 style={{
-                  background: "rgba(255, 255, 255, 0.5)",
-                  backdropFilter: "blur(40px)",
-                  WebkitBackdropFilter: "blur(40px)",
-                  border: "1px solid rgba(0, 0, 0, 0.06)",
+                  background: "rgba(15, 20, 35, 0.92)",
+                  border: "1px solid rgba(255, 255, 255, 0.06)",
                 }}
               >
 
@@ -460,15 +458,19 @@ function HowItWorksSection() {
               </motion.div>
 
               {/* Progress dots */}
-              <div className="hidden lg:flex items-center justify-center gap-3">
+              <div className="flex items-center justify-center gap-3">
                 {STEPS.map((step, i) => (
-                  <div key={step} className="relative flex items-center justify-center">
+                  <div
+                    key={step}
+                    className="relative flex items-center justify-center cursor-pointer"
+                    onClick={() => { setActiveCard(step); setIsHovering(false); setProgress(0); }}
+                  >
                     <div
                       className="w-2 h-2 rounded-full transition-colors duration-300"
                       style={{
                         background: i === activeIndex
                           ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)"
-                          : "rgba(0, 0, 0, 0.1)",
+                          : "rgba(255, 255, 255, 0.2)",
                       }}
                     />
                     {i === activeIndex && !isHovering && (
@@ -484,7 +486,7 @@ function HowItWorksSection() {
                           cy="8"
                           r="6"
                           fill="none"
-                          stroke="rgba(0,0,0,0.06)"
+                          stroke="rgba(255,255,255,0.1)"
                           strokeWidth="1.5"
                         />
                         <circle
@@ -664,14 +666,26 @@ function MatchingFlowSection() {
                     className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300"
                     data-label={step.label}
                     style={{
-                      background: "rgba(255, 255, 255, 0.45)",
+                      background: "linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.45)",
                       backdropFilter: "blur(40px)",
                       WebkitBackdropFilter: "blur(40px)",
                       border: "1px solid rgba(0, 0, 0, 0.06)",
                     }}
                   >
-                    <div className="mb-4">{step.icon}</div>
-                    <span
+                    <motion.div
+                      className="mb-4"
+                      initial={{ scale: 0.9 }}
+                      whileInView={{ scale: [0.9, 1.15, 1] }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
+                    >
+                      {step.icon}
+                    </motion.div>
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.2, delay: 0.2 + i * 0.1 }}
                       className="inline-block rounded-full px-2.5 py-0.5 text-[10px] tracking-[2px] uppercase font-medium mb-1.5"
                       style={{
                         background: labelColors[step.label]?.bg || "rgba(124,92,252,0.1)",
@@ -679,7 +693,7 @@ function MatchingFlowSection() {
                       }}
                     >
                       {step.label}
-                    </span>
+                    </motion.span>
                     <p className="text-[11px] tracking-[2px] uppercase mb-2 font-medium" style={{ color: step.color }}>
                       Step {step.num}
                     </p>
@@ -736,15 +750,27 @@ function MatchingFlowSection() {
                     className="matching-flow-card rounded-2xl p-5"
                     data-label={step.label}
                     style={{
-                      background: "rgba(255, 255, 255, 0.45)",
+                      background: "linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.45)",
                       backdropFilter: "blur(40px)",
                       WebkitBackdropFilter: "blur(40px)",
                       border: "1px solid rgba(0, 0, 0, 0.06)",
                     }}
                   >
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="shrink-0">{step.icon}</div>
-                      <span
+                      <motion.div
+                        className="shrink-0"
+                        initial={{ scale: 0.9 }}
+                        whileInView={{ scale: [0.9, 1.15, 1] }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
+                      >
+                        {step.icon}
+                      </motion.div>
+                      <motion.span
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.2, delay: 0.2 + i * 0.1 }}
                         className="inline-block rounded-full px-2.5 py-0.5 text-[10px] tracking-[2px] uppercase font-medium"
                         style={{
                           background: labelColors[step.label]?.bg || "rgba(124,92,252,0.1)",
@@ -752,7 +778,7 @@ function MatchingFlowSection() {
                         }}
                       >
                         {step.label}
-                      </span>
+                      </motion.span>
                     </div>
                     <h3
                       className="text-[16px] font-semibold text-text-primary mb-1.5"

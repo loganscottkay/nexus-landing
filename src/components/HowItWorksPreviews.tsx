@@ -50,8 +50,8 @@ function StatusDot({ color }: { color: string }) {
 function PreviewLabel({ label, statusText, dotColor }: { label: string; statusText: string; dotColor: string }) {
   return (
     <div className="flex items-center justify-between mb-6">
-      <span className="text-[11px] tracking-[2px] uppercase font-medium" style={{ color: "#94A3B8" }}>{label}</span>
-      <span className="flex items-center gap-1.5 text-[11px]" style={{ color: "#64748B" }}>
+      <span className="text-[11px] tracking-[2px] uppercase font-medium" style={{ color: "rgba(255,255,255,0.4)" }}>{label}</span>
+      <span className="flex items-center gap-1.5 text-[11px]" style={{ color: "rgba(255,255,255,0.5)" }}>
         <StatusDot color={dotColor} />
         {statusText}
       </span>
@@ -86,8 +86,8 @@ function ScoringBar({ label, score, delay, active }: { label: string; score: num
 
   return (
     <div className="flex items-center gap-3">
-      <span className="text-[12px] w-[90px] shrink-0" style={{ color: "#64748B" }}>{label}</span>
-      <div className="flex-1 h-[6px] rounded-full overflow-hidden" style={{ background: "rgba(0,0,0,0.04)" }}>
+      <span className="text-[12px] w-[90px] shrink-0" style={{ color: "rgba(255,255,255,0.5)" }}>{label}</span>
+      <div className="flex-1 h-[6px] rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
         <motion.div
           className="h-full rounded-full"
           style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)" }}
@@ -96,7 +96,7 @@ function ScoringBar({ label, score, delay, active }: { label: string; score: num
           transition={{ duration: 0.5, ease: [0.25, 0.4, 0.25, 1], delay: 0 }}
         />
       </div>
-      <span className="text-[13px] font-semibold w-[28px] text-right tabular-nums" style={{ color: "#334155" }}>
+      <span className="text-[13px] font-semibold w-[28px] text-right tabular-nums" style={{ color: "rgba(255,255,255,0.9)" }}>
         {started ? value : 0}
       </span>
     </div>
@@ -104,24 +104,40 @@ function ScoringBar({ label, score, delay, active }: { label: string; score: num
 }
 
 export function ScoringPreview({ active }: { active: boolean }) {
-  const overallScore = useCountUp(83, 1.2, active);
+  const [cycle, setCycle] = useState(0);
   const [showAccepted, setShowAccepted] = useState(false);
+
+  // cycle drives re-mount of scoring bars and resets overallScore
+  const overallScore = useCountUp(83, 1.2, active);
 
   useEffect(() => {
     if (!active) {
+      setCycle(0);
       setShowAccepted(false);
       return;
     }
+
     const t = setTimeout(() => setShowAccepted(true), 2200);
-    return () => clearTimeout(t);
+
+    const loop = setInterval(() => {
+      setShowAccepted(false);
+      setCycle((prev) => prev + 1);
+      // re-show accepted after animation plays again
+      setTimeout(() => setShowAccepted(true), 2200);
+    }, 6000);
+
+    return () => {
+      clearTimeout(t);
+      clearInterval(loop);
+    };
   }, [active]);
 
   return (
     <div className="h-full flex flex-col">
-      <PreviewLabel label="WAITLIST REVIEW" statusText="Processing" dotColor="green" />
+      <PreviewLabel label="APPLICATION REVIEW" statusText="Processing" dotColor="green" />
 
       {/* Startup card */}
-      <div className="rounded-xl p-4 mb-5" style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)" }}>
+      <div className="rounded-xl p-4 mb-5" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
         <div className="flex items-start gap-3">
           {/* Fake company icon */}
           <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}>
@@ -129,18 +145,18 @@ export function ScoringPreview({ active }: { active: boolean }) {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-[14px] font-semibold" style={{ color: "#0F172A" }}>Helix Robotics</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-accent-blue/20 text-accent-blue">AI/Robotics</span>
+              <span className="text-[14px] font-semibold" style={{ color: "rgba(255,255,255,0.95)" }}>Helix Robotics</span>
+              <span className="text-[10px] px-2 py-0.5 rounded-full" style={{ background: "rgba(74,108,247,0.2)", color: "#60a5fa" }}>AI/Robotics</span>
             </div>
             <div className="flex items-center gap-3 mt-2">
               {/* Pitch deck thumbnail */}
-              <div className="w-[52px] h-[36px] rounded-md flex items-center justify-center" style={{ background: "rgba(0,0,0,0.04)", border: "1px solid rgba(0,0,0,0.06)" }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.3)" strokeWidth="1.5"><rect x="2" y="3" width="20" height="18" rx="2" /><path d="M2 8h20" /></svg>
+              <div className="w-[52px] h-[36px] rounded-md flex items-center justify-center" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5"><rect x="2" y="3" width="20" height="18" rx="2" /><path d="M2 8h20" /></svg>
               </div>
               {/* Video thumbnail */}
-              <div className="w-[52px] h-[36px] rounded-md flex items-center justify-center relative" style={{ background: "rgba(0,0,0,0.04)", border: "1px solid rgba(0,0,0,0.06)" }}>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="rgba(0,0,0,0.35)"><polygon points="5 3 19 12 5 21 5 3" /></svg>
-                <span className="absolute bottom-0.5 right-1 text-[8px]" style={{ color: "#94A3B8" }}>60s</span>
+              <div className="w-[52px] h-[36px] rounded-md flex items-center justify-center relative" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="rgba(255,255,255,0.35)"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+                <span className="absolute bottom-0.5 right-1 text-[8px]" style={{ color: "rgba(255,255,255,0.4)" }}>60s</span>
               </div>
             </div>
           </div>
@@ -148,19 +164,19 @@ export function ScoringPreview({ active }: { active: boolean }) {
       </div>
 
       {/* Scoring bars */}
-      <div className="space-y-2.5 mb-6">
+      <div className="space-y-2.5 mb-6" key={cycle}>
         {scoringCategories.map((cat, i) => (
           <ScoringBar key={cat.label} label={cat.label} score={cat.score} delay={0.3 + i * 0.2} active={active} />
         ))}
       </div>
 
       {/* Overall score */}
-      <div className="mt-auto pt-4" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+      <div className="mt-auto pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
         <div className="flex items-center justify-between">
-          <span className="text-[13px]" style={{ color: "#64748B" }}>Overall UrgenC Score</span>
+          <span className="text-[13px]" style={{ color: "rgba(255,255,255,0.5)" }}>Overall UrgenC Score</span>
           <div className="flex items-center gap-3">
-            <span className="text-[28px] font-bold tabular-nums" style={{ color: "#0F172A" }}>
-              {active ? overallScore : 0}<span className="text-[16px]" style={{ color: "#94A3B8" }}>/100</span>
+            <span className="text-[28px] font-bold tabular-nums" style={{ color: "rgba(255,255,255,0.95)" }}>
+              {active ? overallScore : 0}<span className="text-[16px]" style={{ color: "rgba(255,255,255,0.4)" }}>/100</span>
             </span>
             <AnimatePresence>
               {showAccepted && (
@@ -249,17 +265,17 @@ export function MatchingPreview({ active }: { active: boolean }) {
   return (
     <div className="h-full flex flex-col">
       <div className="flex items-center gap-2 mb-6">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
           <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
         </svg>
-        <span className="text-[11px] tracking-[2px] uppercase font-medium" style={{ color: "#94A3B8" }}>FEED PREFERENCES</span>
+        <span className="text-[11px] tracking-[2px] uppercase font-medium" style={{ color: "rgba(255,255,255,0.4)" }}>FEED PREFERENCES</span>
       </div>
 
       <div className="flex-1 flex flex-col">
         <div className="space-y-5 mb-6">
           {/* Industries */}
           <div>
-            <p className="text-[11px] mb-2 font-medium" style={{ color: "#64748B" }}>Industries</p>
+            <p className="text-[11px] mb-2 font-medium" style={{ color: "rgba(255,255,255,0.5)" }}>Industries</p>
             <div className="flex gap-2">
               {industryPills.map((pill, i) => {
                 const isSelected = selectedIndustries > i;
@@ -268,9 +284,9 @@ export function MatchingPreview({ active }: { active: boolean }) {
                     key={pill}
                     className="text-[11px] px-3 py-1.5 rounded-full transition-all duration-300"
                     style={{
-                      background: isSelected ? "rgba(74, 108, 247, 0.12)" : "rgba(0,0,0,0.04)",
-                      color: isSelected ? "#4A6CF7" : "rgba(0,0,0,0.3)",
-                      border: `1px solid ${isSelected ? "rgba(74, 108, 247, 0.3)" : "rgba(0,0,0,0.06)"}`,
+                      background: isSelected ? "rgba(74, 108, 247, 0.12)" : "rgba(255,255,255,0.06)",
+                      color: isSelected ? "#4A6CF7" : "rgba(255,255,255,0.3)",
+                      border: `1px solid ${isSelected ? "rgba(74, 108, 247, 0.3)" : "rgba(255,255,255,0.08)"}`,
                       boxShadow: isSelected ? "0 0 8px rgba(74, 108, 247, 0.15)" : "none",
                     }}
                   >
@@ -283,7 +299,7 @@ export function MatchingPreview({ active }: { active: boolean }) {
 
           {/* Stage */}
           <div>
-            <p className="text-[11px] mb-2 font-medium" style={{ color: "#64748B" }}>Stage</p>
+            <p className="text-[11px] mb-2 font-medium" style={{ color: "rgba(255,255,255,0.5)" }}>Stage</p>
             <div className="flex gap-2">
               {stagePills.map((pill, i) => {
                 const isSelected = selectedStages > i;
@@ -292,9 +308,9 @@ export function MatchingPreview({ active }: { active: boolean }) {
                     key={pill}
                     className="text-[11px] px-3 py-1.5 rounded-full transition-all duration-300"
                     style={{
-                      background: isSelected ? "rgba(124, 92, 252, 0.12)" : "rgba(0,0,0,0.04)",
-                      color: isSelected ? "#7C5CFC" : "rgba(0,0,0,0.3)",
-                      border: `1px solid ${isSelected ? "rgba(124, 92, 252, 0.3)" : "rgba(0,0,0,0.06)"}`,
+                      background: isSelected ? "rgba(124, 92, 252, 0.12)" : "rgba(255,255,255,0.06)",
+                      color: isSelected ? "#7C5CFC" : "rgba(255,255,255,0.3)",
+                      border: `1px solid ${isSelected ? "rgba(124, 92, 252, 0.3)" : "rgba(255,255,255,0.08)"}`,
                       boxShadow: isSelected ? "0 0 8px rgba(124, 92, 252, 0.15)" : "none",
                     }}
                   >
@@ -307,7 +323,7 @@ export function MatchingPreview({ active }: { active: boolean }) {
 
           {/* Check Size */}
           <div>
-            <p className="text-[11px] mb-2 font-medium" style={{ color: "#64748B" }}>Check Size</p>
+            <p className="text-[11px] mb-2 font-medium" style={{ color: "rgba(255,255,255,0.5)" }}>Check Size</p>
             <AnimatePresence>
               {checkSize ? (
                 <motion.span
@@ -315,12 +331,12 @@ export function MatchingPreview({ active }: { active: boolean }) {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5 }}
                   className="text-[14px] font-semibold"
-                  style={{ color: "#0F172A" }}
+                  style={{ color: "rgba(255,255,255,0.95)" }}
                 >
                   $50K - $250K
                 </motion.span>
               ) : (
-                <span className="text-[14px]" style={{ color: "rgba(0,0,0,0.15)" }}>---</span>
+                <span className="text-[14px]" style={{ color: "rgba(255,255,255,0.15)" }}>---</span>
               )}
             </AnimatePresence>
           </div>
@@ -336,9 +352,9 @@ export function MatchingPreview({ active }: { active: boolean }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
                   className="rounded-lg px-3 py-2.5 flex items-center gap-3"
-                  style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.06)" }}
+                  style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}
                 >
-                  <span className="text-[12px] font-semibold flex-1" style={{ color: "#0F172A" }}>{s.name}</span>
+                  <span className="text-[12px] font-semibold flex-1" style={{ color: "rgba(255,255,255,0.95)" }}>{s.name}</span>
                   <span
                     className="text-[9px] px-2 py-0.5 rounded-full"
                     style={{ background: "rgba(74, 108, 247, 0.1)", color: "#4A6CF7" }}
@@ -352,7 +368,7 @@ export function MatchingPreview({ active }: { active: boolean }) {
         </div>
 
         {/* Ready text */}
-        <div className="mt-auto pt-3" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+        <div className="mt-auto pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
           <AnimatePresence>
             {showReady && (
               <motion.p
@@ -360,7 +376,7 @@ export function MatchingPreview({ active }: { active: boolean }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
                 className="text-[13px]"
-                style={{ color: "#64748B" }}
+                style={{ color: "rgba(255,255,255,0.5)" }}
               >
                 Your personalized feed is ready
               </motion.p>
@@ -422,11 +438,11 @@ export function AccountabilityPreview({ active }: { active: boolean }) {
     <div className="h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center gap-2 mb-6">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
           <polyline points="9 12 11 14 15 10" />
         </svg>
-        <span className="text-[11px] tracking-[2px] uppercase font-medium" style={{ color: "#94A3B8" }}>YOUR ACCOUNTABILITY</span>
+        <span className="text-[11px] tracking-[2px] uppercase font-medium" style={{ color: "rgba(255,255,255,0.4)" }}>YOUR ACCOUNTABILITY</span>
       </div>
 
       {/* Timeline checklist */}
@@ -444,8 +460,8 @@ export function AccountabilityPreview({ active }: { active: boolean }) {
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
               </span>
               <div className="flex-1 min-w-0">
-                <span className="text-[12px]" style={{ color: "#475569" }}>Sarah Chen</span>
-                <span className="text-[11px] ml-2" style={{ color: "#94A3B8" }}>Call completed March 5</span>
+                <span className="text-[12px]" style={{ color: "rgba(255,255,255,0.7)" }}>Sarah Chen</span>
+                <span className="text-[11px] ml-2" style={{ color: "rgba(255,255,255,0.4)" }}>Call completed March 5</span>
               </div>
             </motion.div>
           )}
@@ -464,8 +480,8 @@ export function AccountabilityPreview({ active }: { active: boolean }) {
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
               </span>
               <div className="flex-1 min-w-0">
-                <span className="text-[12px]" style={{ color: "#475569" }}>David Kim</span>
-                <span className="text-[11px] ml-2" style={{ color: "#94A3B8" }}>Call completed March 8</span>
+                <span className="text-[12px]" style={{ color: "rgba(255,255,255,0.7)" }}>David Kim</span>
+                <span className="text-[11px] ml-2" style={{ color: "rgba(255,255,255,0.4)" }}>Call completed March 8</span>
               </div>
             </motion.div>
           )}
@@ -484,7 +500,7 @@ export function AccountabilityPreview({ active }: { active: boolean }) {
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
               </span>
               <div className="flex-1 min-w-0">
-                <span className="text-[12px]" style={{ color: "#475569" }}>Marcus Webb</span>
+                <span className="text-[12px]" style={{ color: "rgba(255,255,255,0.7)" }}>Marcus Webb</span>
                 <span className="text-[11px] ml-2 font-medium" style={{ color: "#4A6CF7" }}>
                   <CountdownHours active={active} /> left to schedule
                 </span>
@@ -521,12 +537,12 @@ export function AccountabilityPreview({ active }: { active: boolean }) {
             className="mb-4"
           >
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[11px] font-medium" style={{ color: "#64748B" }}>Traction Score</span>
-              <span className="text-[13px] font-bold tabular-nums" style={{ color: "#0F172A" }}>
-                {active ? tractionScore : 0}<span className="text-[11px]" style={{ color: "#94A3B8" }}>/100</span>
+              <span className="text-[11px] font-medium" style={{ color: "rgba(255,255,255,0.5)" }}>Traction Score</span>
+              <span className="text-[13px] font-bold tabular-nums" style={{ color: "rgba(255,255,255,0.95)" }}>
+                {active ? tractionScore : 0}<span className="text-[11px]" style={{ color: "rgba(255,255,255,0.4)" }}>/100</span>
               </span>
             </div>
-            <div className="h-[8px] rounded-full overflow-hidden" style={{ background: "rgba(0,0,0,0.04)" }}>
+            <div className="h-[8px] rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
               <motion.div
                 className="h-full rounded-full"
                 style={{
@@ -543,7 +559,7 @@ export function AccountabilityPreview({ active }: { active: boolean }) {
       </AnimatePresence>
 
       {/* Warning text */}
-      <div className="mt-auto pt-3" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+      <div className="mt-auto pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
         <AnimatePresence>
           {showWarning && (
             <motion.p
@@ -590,7 +606,7 @@ export function DefaultPreview() {
         animate={{ opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
         className="text-[14px] tracking-wide"
-        style={{ color: "#94A3B8" }}
+        style={{ color: "rgba(255,255,255,0.4)" }}
       >
         Hover to preview
       </motion.p>

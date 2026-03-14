@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -127,13 +127,49 @@ type CardData = {
 
 function QualCard({ card, index }: { card: CardData; index: number }) {
   const [hovered, setHovered] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const iconAnimationType =
+    card.icon === "rejected"
+      ? "shake"
+      : card.icon === "value"
+        ? "glow"
+        : "pulse";
+
+  const iconAnimationStyle: React.CSSProperties | undefined = inView
+    ? {
+        animation:
+          iconAnimationType === "pulse"
+            ? "icon-pulse 0.4s ease"
+            : iconAnimationType === "shake"
+              ? "icon-shake 0.3s ease"
+              : "icon-glow 0.5s ease",
+      }
+    : undefined;
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15 }}
+      ref={cardRef}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.4, ease, delay: index * 0.06 }}
+      transition={{ duration: 0.5, ease, delay: index * 0.1 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -141,8 +177,8 @@ function QualCard({ card, index }: { card: CardData; index: number }) {
         className="qual-card relative rounded-xl md:rounded-2xl p-6 md:p-8"
         style={{
           background: hovered
-            ? undefined
-            : "rgba(255, 255, 255, 0.5)",
+            ? "linear-gradient(135deg, rgba(147,130,220,0.12), rgba(191,148,228,0.08), rgba(130,170,227,0.06)), rgba(255, 255, 255, 0.5)"
+            : "linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.5)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
           border: card.isRejection
@@ -153,9 +189,30 @@ function QualCard({ card, index }: { card: CardData; index: number }) {
           transition: "all 0.4s ease",
         }}
       >
+        {/* Step Counter */}
+        {!card.isRejection && (
+          <span
+            className="absolute top-6 right-6 select-none"
+            style={{
+              fontFamily: "var(--font-dm-sans), sans-serif",
+              fontSize: "36px",
+              fontWeight: 600,
+              color: "rgba(0, 0, 0, 0.08)",
+              lineHeight: 1,
+            }}
+          >
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        )}
+
         {/* Icon + Title */}
         <div className="flex items-center gap-3 mb-2">
-          <span style={{ color: card.isRejection ? "rgba(239, 68, 68, 0.7)" : "#4A6CF7" }}>
+          <span
+            style={{
+              color: card.isRejection ? "rgba(239, 68, 68, 0.7)" : "#4A6CF7",
+              ...iconAnimationStyle,
+            }}
+          >
             {icons[card.icon]}
           </span>
           <h3
@@ -186,8 +243,16 @@ function QualCard({ card, index }: { card: CardData; index: number }) {
 
         {/* Requirements */}
         <div className="flex flex-col" style={{ gap: "12px" }}>
-          {card.items.map((item) => (
-            <div key={item} className="flex items-start gap-3">
+          {card.items.map((item, bulletIdx) => (
+            <div
+              key={item}
+              className="flex items-start gap-3"
+              style={{
+                opacity: inView ? 1 : 0,
+                transform: inView ? "translateX(0)" : "translateX(-10px)",
+                transition: `opacity 0.3s ease ${0.3 + bulletIdx * 0.1}s, transform 0.3s ease ${0.3 + bulletIdx * 0.1}s`,
+              }}
+            >
               <span
                 className="shrink-0 rounded-full mt-[7px]"
                 style={{
@@ -219,6 +284,11 @@ function QualCard({ card, index }: { card: CardData; index: number }) {
 export default function InvestorQualifications() {
   return (
     <main className="relative min-h-screen text-[#0F172A]">
+      <style>{`
+        @keyframes icon-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        @keyframes icon-shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-3px); } 40% { transform: translateX(3px); } 60% { transform: translateX(-2px); } 80% { transform: translateX(2px); } }
+        @keyframes icon-glow { 0%, 100% { filter: drop-shadow(0 0 0px transparent); } 50% { filter: drop-shadow(0 0 8px rgba(74,108,247,0.5)); } }
+      `}</style>
       <div className="noise-overlay" />
       <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
         <div className="absolute inset-0 bg-[#FAFAF9]" />
@@ -326,6 +396,14 @@ export default function InvestorQualifications() {
             >
               What you need to apply for the founding cohort.
             </p>
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: 100 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease }}
+              className="h-[2px] mx-auto mt-2 rounded-full"
+              style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)" }}
+            />
           </motion.div>
 
           <div className="flex flex-col" style={{ gap: "20px" }}>
@@ -361,6 +439,14 @@ export default function InvestorQualifications() {
             >
               What is expected of you once you are on the platform.
             </p>
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: 100 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease }}
+              className="h-[2px] mx-auto mt-2 rounded-full"
+              style={{ background: "linear-gradient(90deg, #4A6CF7, #7C5CFC)" }}
+            />
           </motion.div>
 
           <div className="flex flex-col" style={{ gap: "20px" }}>
