@@ -610,7 +610,7 @@ export default function Home() {
       <Navbar />
 
       {/* ============ HERO ============ */}
-      <section className="relative z-10 pt-[120px] pb-[80px] lg:pb-[30px]">
+      <section className="relative z-10 pt-[120px] lg:pt-[160px] pb-[80px] lg:pb-[30px]">
         {/* Desktop bottom gradient fade */}
         <div
           className="hidden lg:block absolute bottom-0 left-0 right-0 h-[60px] pointer-events-none z-20"
