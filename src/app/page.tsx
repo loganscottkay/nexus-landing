@@ -677,7 +677,7 @@ function MatchingFlowSection() {
                     className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300"
                     data-label={step.label}
                     style={{
-                      background: "linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.45)",
+                      background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.45)",
                       backdropFilter: "blur(40px)",
                       WebkitBackdropFilter: "blur(40px)",
                       border: "1px solid rgba(0, 0, 0, 0.06)",
@@ -770,7 +770,7 @@ function MatchingFlowSection() {
                     className="matching-flow-card rounded-2xl p-5"
                     data-label={step.label}
                     style={{
-                      background: "linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.45)",
+                      background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.45)",
                       backdropFilter: "blur(40px)",
                       WebkitBackdropFilter: "blur(40px)",
                       border: "1px solid rgba(0, 0, 0, 0.06)",

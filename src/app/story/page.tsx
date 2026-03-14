@@ -373,7 +373,7 @@ export default function StoryPage() {
                               maxWidth: "420px",
                               width: "100%",
                               padding: "28px",
-                              background: "linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.6)",
+                              background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.6)",
                               backdropFilter: "blur(8px)",
                               WebkitBackdropFilter: "blur(8px)",
                               border: "1px solid rgba(0, 0, 0, 0.04)",
@@ -426,7 +426,7 @@ export default function StoryPage() {
                               maxWidth: "420px",
                               width: "100%",
                               padding: "28px",
-                              background: "linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.6)",
+                              background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.6)",
                               backdropFilter: "blur(8px)",
                               WebkitBackdropFilter: "blur(8px)",
                               border: "1px solid rgba(0, 0, 0, 0.04)",
@@ -475,7 +475,7 @@ export default function StoryPage() {
                           marginLeft: "32px",
                           maxWidth: "calc(100% - 40px)",
                           padding: "20px",
-                          background: "linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.6)",
+                          background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.6)",
                           backdropFilter: "blur(8px)",
                           WebkitBackdropFilter: "blur(8px)",
                           border: "1px solid rgba(0, 0, 0, 0.04)",
@@ -553,7 +553,7 @@ export default function StoryPage() {
                   <div
                     className="rounded-2xl p-6 md:p-8 h-full"
                     style={{
-                      background: "linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.6)",
+                      background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.6)",
                       backdropFilter: "blur(8px)",
                       WebkitBackdropFilter: "blur(8px)",
                       border: "1px solid rgba(0, 0, 0, 0.04)",
@@ -626,7 +626,7 @@ export default function StoryPage() {
                   <div
                     className="rounded-2xl p-6 md:p-8 h-full"
                     style={{
-                      background: "linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.6)",
+                      background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.6)",
                       backdropFilter: "blur(8px)",
                       WebkitBackdropFilter: "blur(8px)",
                       border: "1px solid rgba(0, 0, 0, 0.04)",

@@ -72,7 +72,7 @@ body {
 .glass {
   position: relative;
   isolation: isolate;
-  background: linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.45);
+  background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.45);
   backdrop-filter: blur(20px) saturate(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
   border: 1px solid rgba(255, 255, 255, 0.6);
@@ -87,7 +87,7 @@ body {
   position: absolute;
   inset: 0;
   border-radius: 24px;
-  background: linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03));
+  background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04));
   z-index: 0;
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -98,7 +98,7 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
   border-color: rgba(255, 255, 255, 0.8);
-  background: linear-gradient(135deg, rgba(147,130,220,0.12), rgba(191,148,228,0.08), rgba(130,170,227,0.06)), rgba(255, 255, 255, 0.45);
+  background: linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06)), rgba(255, 255, 255, 0.45);
 }
 
 .glass:hover::before {
@@ -1087,7 +1087,7 @@ body {
   .glass:hover {
     transform: none;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    background: linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.45);
+    background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.45);
   }
   .glass:hover::before {
     opacity: 0;
@@ -1175,9 +1175,18 @@ body {
 /* Tablet: slightly smaller phones */
 @media (min-width: 768px) and (max-width: 1023px) {
   .iphone-section {
-    --phone-width: 260px !important;
-    --phone-height: 530px !important;
-    --phone-gap: 40px !important;
+    --phone-width: 240px !important;
+    --phone-height: 490px !important;
+    --phone-gap: 36px !important;
+  }
+}
+
+/* Large desktop: slightly bigger phones */
+@media (min-width: 1440px) {
+  .iphone-section {
+    --phone-width: 280px !important;
+    --phone-height: 571px !important;
+    --phone-gap: 48px !important;
   }
 }
 
@@ -1264,7 +1273,7 @@ html {
   .glass:hover {
     transform: translateY(-6px);
     box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-    background: linear-gradient(135deg, rgba(147,130,220,0.12), rgba(191,148,228,0.08), rgba(130,170,227,0.06)), rgba(255, 255, 255, 0.45);
+    background: linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06)), rgba(255, 255, 255, 0.45);
     transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
                 box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
                 border-color 0.35s ease,
@@ -1360,12 +1369,12 @@ html {
   .matching-card-investors .matching-flow-card:hover,
   .matching-card-both:hover .matching-flow-card,
   .matching-card-both .matching-flow-card:hover {
-    background: linear-gradient(135deg, rgba(147,130,220,0.12), rgba(191,148,228,0.08), rgba(130,170,227,0.06)), rgba(255, 255, 255, 0.45) !important;
+    background: linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06)), rgba(255, 255, 255, 0.45) !important;
   }
 
   /* Qualification page cards: intensified pastel on hover */
   .qual-card:hover {
-    background: linear-gradient(135deg, rgba(147,130,220,0.12), rgba(191,148,228,0.08), rgba(130,170,227,0.06)), rgba(255, 255, 255, 0.5) !important;
+    background: linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06)), rgba(255, 255, 255, 0.5) !important;
   }
 }
 

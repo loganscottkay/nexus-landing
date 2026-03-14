@@ -729,9 +729,9 @@ export default function IPhoneMockups() {
       className="relative z-10 iphone-section pt-[80px] pb-[60px] lg:py-20"
       style={{
         /* CSS custom properties for responsive sizing */
-        ["--phone-width" as string]: "300px",
-        ["--phone-height" as string]: "612px",
-        ["--phone-gap" as string]: "52px",
+        ["--phone-width" as string]: "260px",
+        ["--phone-height" as string]: "530px",
+        ["--phone-gap" as string]: "48px",
         ["--label-size" as string]: "16px",
         ["--sublabel-size" as string]: "13px",
       }}

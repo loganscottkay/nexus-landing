@@ -177,8 +177,8 @@ function QualCard({ card, index }: { card: CardData; index: number }) {
         className="qual-card relative rounded-xl md:rounded-2xl p-6 md:p-8"
         style={{
           background: hovered
-            ? "linear-gradient(135deg, rgba(147,130,220,0.12), rgba(191,148,228,0.08), rgba(130,170,227,0.06)), rgba(255, 255, 255, 0.5)"
-            : "linear-gradient(135deg, rgba(147,130,220,0.06), rgba(191,148,228,0.04), rgba(130,170,227,0.03)), rgba(255, 255, 255, 0.5)",
+            ? "linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06)), rgba(255, 255, 255, 0.5)"
+            : "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.5)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
           border: card.isRejection
