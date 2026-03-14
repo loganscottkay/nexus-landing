@@ -753,7 +753,7 @@ export default function IPhoneMockups() {
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
-            fontFamily: "'Syne', sans-serif",
+            fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
           }}
         >
           SEE WHAT IS INSIDE

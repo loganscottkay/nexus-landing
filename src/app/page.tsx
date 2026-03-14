@@ -380,7 +380,7 @@ function HowItWorksSection() {
             variants={tierEyebrow}
             transition={{ duration: 0.5, delay: 0.1, ease }}
             className="text-text-muted text-[13px] tracking-[3px] uppercase mb-4"
-            style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700 }}
+            style={{ fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", fontWeight: 700 }}
           >
             App Overview
           </motion.p>
@@ -658,7 +658,7 @@ function MatchingFlowSection() {
           variants={tierEyebrow}
           transition={{ duration: 0.5, delay: 0.1, ease }}
           className="gradient-text text-[13px] tracking-[3px] uppercase mb-4"
-          style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700 }}
+          style={{ fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", fontWeight: 700 }}
         >
           The Matching Flow
         </motion.p>
@@ -984,13 +984,13 @@ export default function Home() {
         {/* Centered hero text */}
         <div className="flex flex-col items-center justify-center text-center px-6 max-w-[700px] lg:max-w-[780px] mx-auto relative z-10">
           <div className="flex flex-col items-center">
-            {/* Eyebrow - Syne uppercase, first to appear */}
+            {/* Eyebrow - DM Sans uppercase, first to appear */}
             <motion.p
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3, ease }}
               className="text-[10px] md:text-[12px] tracking-[3px] md:tracking-[5px] uppercase mb-6"
-              style={{ color: "rgba(99,102,241,0.6)", fontFamily: "'Syne', sans-serif", fontWeight: 700 }}
+              style={{ color: "rgba(99,102,241,0.6)", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", fontWeight: 700 }}
             >
               Founding Cohort Coming Soon
             </motion.p>
@@ -1020,7 +1020,7 @@ export default function Home() {
                 style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 {[
-                  <>UrgenC is the first real fundraising app <span style={{ color: "rgba(71,85,105,0.7)" }}>(and it works like Tinder for startups).</span></>,
+                  <>UrgenC is the first real fundraising app.</>,
                   <>Founders pitch. Investors swipe.</>,
                   <>Mutual interest means a <em style={{ fontStyle: "italic" }}>guaranteed meeting.</em></>,
                   <>If you don&apos;t show up, you <em style={{ fontStyle: "italic" }}>don&apos;t stay.</em></>,

@@ -68,7 +68,7 @@ export default function HeroHeadline({ lines, prefersReduced }: HeroHeadlineProp
             initial={prefersReduced ? false : { opacity: 0, y: config.y }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: config.duration, delay: config.delay, ease: smoothDecel }}
-            className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] xl:text-[76px] font-bold leading-[1.05] tracking-[-0.02em]"
+            className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[72px] font-normal leading-[1.05] tracking-[-0.01em]"
             style={{
               color: '#0F172A',
               textShadow: '0 0 40px rgba(74,108,247,0.08)',
@@ -82,6 +82,7 @@ export default function HeroHeadline({ lines, prefersReduced }: HeroHeadlineProp
                     className={`gradient-text-animate gradient-shimmer-wrap${shimmerActive ? ' shimmer-active' : ''}`}
                     style={{
                       fontFamily: "'Instrument Serif', serif",
+                      fontWeight: 400,
                       fontStyle: 'italic',
                     }}
                   >
@@ -93,9 +94,8 @@ export default function HeroHeadline({ lines, prefersReduced }: HeroHeadlineProp
                 <span
                   key={segIndex}
                   style={{
-                    fontFamily: "'Syne', sans-serif",
-                    fontWeight: 800,
-                    textTransform: 'uppercase',
+                    fontFamily: "'Instrument Serif', serif",
+                    fontWeight: 400,
                   }}
                 >
                   {segment.text}
