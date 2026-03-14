@@ -218,7 +218,7 @@ function HowItWorksSection() {
   const activeIndex = STEPS.indexOf(activeCard as typeof STEPS[number]);
 
   return (
-    <Section id="how-it-works" className="relative z-10 px-6 py-20 max-w-6xl mx-auto">
+    <Section id="how-it-works" className="relative z-10 px-6 py-20 lg:pt-[30px] lg:pb-[40px] max-w-6xl mx-auto">
       <div ref={sectionRef}>
         <motion.div
           variants={cardStagger}
@@ -487,7 +487,7 @@ const matchingSteps = [
 
 function MatchingFlowSection() {
   return (
-    <Section className="relative z-10 px-6 py-20 max-w-6xl mx-auto">
+    <Section className="relative z-10 px-6 py-20 lg:pt-[40px] lg:pb-[40px] max-w-6xl mx-auto">
       <motion.div
         variants={cardStagger}
         initial="hidden"
@@ -609,7 +609,7 @@ export default function Home() {
       <Navbar />
 
       {/* ============ HERO ============ */}
-      <section className="relative z-10 pt-[120px] pb-[80px]">
+      <section className="relative z-10 pt-[120px] pb-[80px] lg:pb-[30px]">
         {/* Centered hero text */}
         <div className="flex flex-col items-center justify-center text-center px-6 max-w-[700px] mx-auto relative z-10">
           <motion.div
@@ -692,7 +692,7 @@ export default function Home() {
       <IPhoneMockups />
 
       {/* ============ FINAL CTA ============ */}
-      <section className="relative z-10 py-[80px]">
+      <section className="relative z-10 py-[80px] lg:pt-[40px] lg:pb-[20px]">
         {/* CTA Content */}
         <motion.div
           variants={sectionFadeUp}

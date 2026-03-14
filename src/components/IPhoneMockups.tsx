@@ -726,10 +726,8 @@ function IPhoneFrame({
 export default function IPhoneMockups() {
   return (
     <section
-      className="relative z-10 iphone-section"
+      className="relative z-10 iphone-section pt-[80px] pb-[60px] lg:pt-[40px] lg:pb-[40px]"
       style={{
-        paddingTop: "80px",
-        paddingBottom: "60px",
         /* CSS custom properties for responsive sizing */
         ["--phone-width" as string]: "300px",
         ["--phone-height" as string]: "612px",
