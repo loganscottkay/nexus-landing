@@ -306,7 +306,7 @@ function NarrativeLine() {
           }}
           className="md:!text-[22px]"
         >
-          The startup world is full of ideas. The problem has never been building — it is getting in front of the right{" "}
+          The startup world is full of ideas. The problem has never been building. It is getting in front of the right{" "}
           <span
             style={{
               background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
