@@ -246,7 +246,7 @@ const howItWorksCards = [
     num: "01",
     icon: <ShieldIcon />,
     title: "Join & Get Scored",
-    desc: "Pitch deck. 60-second video. Scored on vision, team, market, and momentum. Less than 15% of applicants get into the founding cohort.",
+    desc: "Pitch deck. 60-second video. Scored on five factors. Top 15% get in.",
     lottie: "/animations/play-button.json",
     lottieClass: "lottie-brand-violet",
   },
@@ -254,13 +254,13 @@ const howItWorksCards = [
     num: "02",
     icon: <SparkleIcon />,
     title: "Investors Set Their Feed",
-    desc: "Investors pick which industries and stages they care about. Their feed only shows startups that match. You show up in the feeds of investors who are actually looking for what you are building.",
+    desc: "Pick industries, stage, and check size. Only see startups that fit.",
   },
   {
     num: "03",
     icon: <PhoneIcon />,
     title: "Move Fast or Move On",
-    desc: "Investors enter your queue. You get one 72-hour window per investor to schedule. Show traction or get cycled out. Ghost a call and you lose your spot. Progress is expected. This keeps your place on UrgenC earned, not given.",
+    desc: "72-hour windows. Show traction. Miss a call, lose your spot.",
   },
 ];
 
