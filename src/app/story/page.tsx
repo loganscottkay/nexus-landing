@@ -259,25 +259,27 @@ export default function StoryPage() {
         <div className="max-w-[960px] mx-auto px-6 relative">
           <div ref={timelineRef} className="relative" style={{ paddingTop: "40px", paddingBottom: "40px" }}>
 
-            {/* === DOTTED BASE LINE (desktop) === */}
+            {/* === BASE LINE (desktop) === */}
             <div
-              className="story-timeline-dots absolute hidden md:block"
+              className="absolute hidden md:block"
               style={{
                 left: "50%",
                 transform: "translateX(-50%)",
                 top: 0,
                 bottom: 0,
-                width: "3px",
+                width: "1.5px",
+                background: "rgba(99,102,241,0.1)",
               }}
             />
-            {/* === DOTTED BASE LINE (mobile) === */}
+            {/* === BASE LINE (mobile) === */}
             <div
-              className="story-timeline-dots absolute md:hidden"
+              className="absolute md:hidden"
               style={{
                 left: "20px",
                 top: 0,
                 bottom: 0,
-                width: "3px",
+                width: "1.5px",
+                background: "rgba(99,102,241,0.1)",
               }}
             />
 
@@ -288,10 +290,10 @@ export default function StoryPage() {
                 left: "50%",
                 transform: "translateX(-50%)",
                 top: 0,
-                width: "2px",
+                width: "1.5px",
                 height: reducedMotion ? "100%" : `${scrollProgress * 100}%`,
                 background: "linear-gradient(180deg, #6366F1, #8B5CF6, #A855F7)",
-                boxShadow: "0 0 8px rgba(99,102,241,0.2), 0 0 20px rgba(99,102,241,0.1)",
+                boxShadow: "0 0 6px rgba(99,102,241,0.1)",
                 transition: reducedMotion ? "none" : undefined,
                 zIndex: 2,
               }}
@@ -301,12 +303,12 @@ export default function StoryPage() {
               className="absolute md:hidden"
               style={{
                 left: "20px",
-                transform: "translateX(-0.5px)",
+                transform: "translateX(-0.25px)",
                 top: 0,
-                width: "2px",
+                width: "1.5px",
                 height: reducedMotion ? "100%" : `${scrollProgress * 100}%`,
                 background: "linear-gradient(180deg, #6366F1, #8B5CF6, #A855F7)",
-                boxShadow: "0 0 8px rgba(99,102,241,0.2), 0 0 20px rgba(99,102,241,0.1)",
+                boxShadow: "0 0 6px rgba(99,102,241,0.1)",
                 willChange: "height",
                 zIndex: 2,
               }}
@@ -315,43 +317,38 @@ export default function StoryPage() {
             {/* === TRACING DOT (desktop) === */}
             {!reducedMotion && (
               <div
-                className="story-tracing-dot absolute hidden md:flex pointer-events-none items-center justify-center"
+                className="absolute hidden md:block pointer-events-none"
                 style={{
                   left: "50%",
                   top: `${scrollProgress * 100}%`,
                   transform: "translate(-50%, -50%)",
-                  width: "24px",
-                  height: "24px",
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "50%",
+                  background: "linear-gradient(135deg, #6366F1, #A855F7)",
+                  boxShadow: "0 0 10px rgba(99,102,241,0.3)",
                   zIndex: 10,
-                  willChange: "transform, top",
+                  willChange: "top",
                 }}
-              >
-                {/* Outer orbiting ring */}
-                <div className="story-tracing-ring" />
-                {/* Main dot */}
-                <div className="story-tracing-core" />
-                {/* Trail afterimage */}
-                <div className="story-tracing-trail" />
-              </div>
+              />
             )}
             {/* === TRACING DOT (mobile) === */}
             {!reducedMotion && (
               <div
-                className="story-tracing-dot story-tracing-dot--mobile absolute md:hidden flex pointer-events-none items-center justify-center"
+                className="absolute md:hidden pointer-events-none"
                 style={{
                   left: "20px",
                   top: `${scrollProgress * 100}%`,
                   transform: "translate(-50%, -50%)",
-                  width: "20px",
-                  height: "20px",
+                  width: "8px",
+                  height: "8px",
+                  borderRadius: "50%",
+                  background: "linear-gradient(135deg, #6366F1, #A855F7)",
+                  boxShadow: "0 0 10px rgba(99,102,241,0.3)",
                   zIndex: 10,
-                  willChange: "transform, top",
+                  willChange: "top",
                 }}
-              >
-                <div className="story-tracing-ring story-tracing-ring--mobile" />
-                <div className="story-tracing-core story-tracing-core--mobile" />
-                <div className="story-tracing-trail story-tracing-trail--mobile" />
-              </div>
+              />
             )}
 
             {/* === MILESTONES === */}
@@ -368,47 +365,25 @@ export default function StoryPage() {
                   >
                     {/* === MILESTONE MARKER (desktop) === */}
                     <div
-                      className={`story-milestone-marker absolute hidden md:flex items-center justify-center${isActivated ? " story-milestone-marker--active" : ""}`}
+                      className={`story-milestone-marker absolute hidden md:block${isActivated ? " story-milestone-marker--active" : ""}`}
                       style={{
                         left: "50%",
                         top: "24px",
                         transform: "translate(-50%, -50%)",
                         zIndex: 5,
                       }}
-                    >
-                      {/* Inner shape (diamond when inactive) */}
-                      {!isActivated && <div className="story-milestone-diamond" />}
-                      {/* Orbiting ring when active */}
-                      {isActivated && <div className="story-milestone-ring" />}
-                    </div>
-                    {/* Particles (desktop) */}
-                    <div
-                      className={`story-particle-container hidden md:block${isActivated ? " active" : ""}`}
-                      style={{ left: "50%", top: "24px" }}
-                    >
-                      <span /><span /><span /><span /><span /><span /><span /><span />
-                    </div>
+                    />
 
                     {/* === MILESTONE MARKER (mobile) === */}
                     <div
-                      className={`story-milestone-marker story-milestone-marker--mobile absolute md:hidden flex items-center justify-center${isActivated ? " story-milestone-marker--active" : ""}`}
+                      className={`story-milestone-marker story-milestone-marker--mobile absolute md:hidden${isActivated ? " story-milestone-marker--active" : ""}`}
                       style={{
                         left: "20px",
                         top: "8px",
                         transform: "translate(-50%, 0)",
                         zIndex: 5,
                       }}
-                    >
-                      {!isActivated && <div className="story-milestone-diamond story-milestone-diamond--mobile" />}
-                      {isActivated && <div className="story-milestone-ring story-milestone-ring--mobile" />}
-                    </div>
-                    {/* Particles (mobile) */}
-                    <div
-                      className={`story-particle-container story-particle-container--mobile md:hidden${isActivated ? " active" : ""}`}
-                      style={{ left: "20px", top: "8px" }}
-                    >
-                      <span /><span /><span /><span />
-                    </div>
+                    />
 
                     {/* === DESKTOP LAYOUT === */}
                     <div className="hidden md:flex items-start">

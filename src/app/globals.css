@@ -1565,202 +1565,38 @@ html {
    ============================================================ */
 
 /* --- Dotted base line --- */
-.story-timeline-dots {
-  background-image: radial-gradient(circle, rgba(99,102,241,0.12) 1.5px, transparent 1.5px);
-  background-size: 3px 12px;
-  background-repeat: repeat-y;
-  background-position: center top;
+/* --- Milestone markers --- */
+@keyframes story-milestone-glow {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.15); }
+  100% { transform: translate(-50%, -50%) scale(1); }
 }
 
-/* --- Tracing dot --- */
-@keyframes story-dot-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-@keyframes story-ring-orbit {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-@keyframes story-trail-fade {
-  0% { opacity: 0.3; transform: translateY(20px) scale(0.7); }
-  100% { opacity: 0; transform: translateY(25px) scale(0.4); }
-}
-
-.story-tracing-dot {
-  position: absolute;
-}
-
-.story-tracing-core {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #6366F1, #A855F7);
-  box-shadow: 0 0 15px rgba(99,102,241,0.4), 0 0 30px rgba(99,102,241,0.15);
-  animation: story-dot-pulse 2s ease-in-out infinite;
-  z-index: 2;
-  position: absolute;
-}
-.story-tracing-core--mobile {
-  width: 12px;
-  height: 12px;
-}
-
-.story-tracing-ring {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, #6366F1 0deg, #A855F7 270deg, transparent 270deg, transparent 360deg);
-  mask: radial-gradient(transparent 9px, #000 9px, #000 12px, transparent 12px);
-  -webkit-mask: radial-gradient(transparent 9px, #000 9px, #000 12px, transparent 12px);
-  animation: story-ring-orbit 4s linear infinite;
-  z-index: 1;
-}
-.story-tracing-ring--mobile {
-  width: 20px;
-  height: 20px;
-  mask: radial-gradient(transparent 7px, #000 7px, #000 10px, transparent 10px);
-  -webkit-mask: radial-gradient(transparent 7px, #000 7px, #000 10px, transparent 10px);
-}
-
-.story-tracing-trail {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #6366F1, #A855F7);
-  opacity: 0;
-  animation: story-trail-fade 0.3s ease-out infinite;
-  z-index: 0;
-}
-.story-tracing-trail--mobile {
+.story-milestone-marker {
   width: 8px;
   height: 8px;
-}
-
-/* --- Milestone markers --- */
-.story-milestone-marker {
-  width: 10px;
-  height: 10px;
   border-radius: 50%;
-  background: rgba(99,102,241,0.08);
-  border: 1px solid rgba(99,102,241,0.15);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(99,102,241,0.15);
+  border: none;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, box-shadow 0.4s ease;
 }
 .story-milestone-marker--mobile {
-  width: 8px;
-  height: 8px;
-}
-
-.story-milestone-diamond {
-  width: 5px;
-  height: 5px;
-  background: rgba(99,102,241,0.2);
-  transform: rotate(45deg);
-}
-.story-milestone-diamond--mobile {
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
 }
 
 /* Active milestone */
 .story-milestone-marker--active {
-  width: 16px;
-  height: 16px;
-  background: linear-gradient(135deg, #6366F1, #A855F7);
-  border: none;
-  box-shadow: 0 0 12px rgba(99,102,241,0.3), 0 0 24px rgba(99,102,241,0.12);
-  animation: story-milestone-settle 0.5s ease forwards;
-}
-.story-milestone-marker--mobile.story-milestone-marker--active {
   width: 12px;
   height: 12px;
-  box-shadow: 0 0 8px rgba(99,102,241,0.3), 0 0 16px rgba(99,102,241,0.1);
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  box-shadow: 0 0 10px rgba(99,102,241,0.2);
+  animation: story-milestone-glow 0.6s ease forwards;
 }
-
-@keyframes story-milestone-settle {
-  0% {
-    box-shadow: 0 0 20px rgba(99,102,241,0.5), 0 0 40px rgba(99,102,241,0.2);
-  }
-  100% {
-    box-shadow: 0 0 12px rgba(99,102,241,0.3), 0 0 24px rgba(99,102,241,0.12);
-  }
+.story-milestone-marker--mobile.story-milestone-marker--active {
+  width: 10px;
+  height: 10px;
 }
-
-/* Active milestone orbiting ring */
-@keyframes story-milestone-ring-orbit {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-.story-milestone-ring {
-  position: absolute;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, #6366F1 0deg, #A855F7 270deg, transparent 270deg, transparent 360deg);
-  mask: radial-gradient(transparent 11px, #000 11px, #000 14px, transparent 14px);
-  -webkit-mask: radial-gradient(transparent 11px, #000 11px, #000 14px, transparent 14px);
-  animation: story-milestone-ring-orbit 4s linear infinite;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-.story-milestone-ring--mobile {
-  width: 22px;
-  height: 22px;
-  mask: radial-gradient(transparent 8px, #000 8px, #000 11px, transparent 11px);
-  -webkit-mask: radial-gradient(transparent 8px, #000 8px, #000 11px, transparent 11px);
-}
-
-/* --- Particle burst --- */
-@keyframes story-particle-burst {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(var(--px), var(--py)) scale(0);
-  }
-}
-
-.story-particle-container {
-  position: absolute;
-  width: 0;
-  height: 0;
-  z-index: 6;
-  pointer-events: none;
-}
-.story-particle-container span {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  opacity: 0;
-}
-.story-particle-container.active span {
-  animation: story-particle-burst 0.5s ease-out forwards;
-}
-
-/* 8 particles at different angles */
-.story-particle-container span:nth-child(1) { background: #6366F1; --px: 20px; --py: -22px; }
-.story-particle-container span:nth-child(2) { background: #8B5CF6; --px: -18px; --py: -14px; }
-.story-particle-container span:nth-child(3) { background: #A855F7; --px: 25px; --py: 8px; }
-.story-particle-container span:nth-child(4) { background: #6366F1; --px: -14px; --py: 20px; }
-.story-particle-container span:nth-child(5) { background: #EAB308; --px: 8px; --py: -28px; }
-.story-particle-container span:nth-child(6) { background: #8B5CF6; --px: -24px; --py: 4px; }
-.story-particle-container span:nth-child(7) { background: #EAB308; --px: 16px; --py: 18px; }
-.story-particle-container span:nth-child(8) { background: #A855F7; --px: -8px; --py: -18px; }
-
-/* Mobile: 4 particles */
-.story-particle-container--mobile span:nth-child(n+5) {
-  display: none;
-}
-.story-particle-container--mobile span:nth-child(1) { --px: 15px; --py: -16px; }
-.story-particle-container--mobile span:nth-child(2) { --px: -14px; --py: -10px; }
-.story-particle-container--mobile span:nth-child(3) { --px: 18px; --py: 6px; }
-.story-particle-container--mobile span:nth-child(4) { --px: -10px; --py: 14px; }
 
 /* --- Glassmorphic story cards --- */
 .story-card {
@@ -1859,11 +1695,7 @@ html {
 
 /* --- Reduced motion --- */
 @media (prefers-reduced-motion: reduce) {
-  .story-tracing-dot,
-  .story-tracing-ring,
-  .story-tracing-trail,
-  .story-milestone-ring,
-  .story-particle-container span {
+  .story-milestone-marker {
     animation: none !important;
   }
   .story-card {
