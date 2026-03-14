@@ -6,6 +6,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import { ScoringPreview, MatchingPreview, AccountabilityPreview } from "@/components/HowItWorksPreviews";
 import IPhoneMockups from "@/components/IPhoneMockups";
+import LottieAnimation from "@/components/LottieAnimation";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 

@@ -194,22 +194,6 @@ function QualCard({ card, index }: { card: CardData; index: number }) {
           transition: "all 0.4s ease",
         }}
       >
-        {/* Step counter - hidden for rejection card */}
-        {!card.isRejection && (
-          <span
-            className="absolute top-6 right-6 select-none"
-            style={{
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              fontSize: "36px",
-              fontWeight: 600,
-              color: "rgba(0, 0, 0, 0.08)",
-              lineHeight: 1,
-            }}
-          >
-            {String(index + 1).padStart(2, "0")}
-          </span>
-        )}
-
         {/* Icon + Title */}
         <div className="flex items-center gap-3 mb-2">
           <span

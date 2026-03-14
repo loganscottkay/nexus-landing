@@ -1369,6 +1369,20 @@ html {
   }
 }
 
+/* ============================================================
+   Lottie brand color filters
+   ============================================================ */
+.lottie-brand {
+  filter: invert(30%) sepia(80%) saturate(1500%) hue-rotate(210deg) brightness(95%);
+}
+.lottie-brand-violet {
+  filter: invert(35%) sepia(60%) saturate(2000%) hue-rotate(240deg) brightness(90%);
+}
+.lottie-brand-subtle {
+  filter: invert(30%) sepia(80%) saturate(1500%) hue-rotate(210deg) brightness(95%);
+  opacity: 0.4;
+}
+
 /* 10. Prefers reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
