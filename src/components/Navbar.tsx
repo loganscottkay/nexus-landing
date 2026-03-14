@@ -89,11 +89,11 @@ export default function Navbar() {
         className="fixed left-0 right-0 z-50"
         style={{
           top: `${topOffset}px`,
-          background: scrolled ? "rgba(255,255,255,0.85)" : "transparent",
-          backdropFilter: scrolled ? "blur(40px) saturate(1.3)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(40px) saturate(1.3)" : "none",
+          background: scrolled ? "rgba(255,255,255,0.75)" : "transparent",
+          backdropFilter: scrolled ? "blur(24px) saturate(1.8)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(24px) saturate(1.8)" : "none",
           borderBottom: scrolled ? "1px solid rgba(0,0,0,0.04)" : "1px solid transparent",
-          boxShadow: scrolled ? "0 4px 30px rgba(0,0,0,0.04)" : "none",
+          boxShadow: scrolled ? "inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 30px rgba(0,0,0,0.04)" : "none",
           transition: "background 0.4s ease, backdrop-filter 0.4s ease, border-bottom 0.4s ease, box-shadow 0.4s ease, top 0.2s ease",
         }}
       >
@@ -116,7 +116,7 @@ export default function Navbar() {
             <span
               className="text-[22px] md:text-[26px] font-normal transition-all duration-300"
               style={{
-                fontFamily: "'Instrument Serif', serif",
+                fontFamily: "var(--font-playfair), serif",
                 textShadow: logoHovered ? "0 0 20px rgba(74,108,247,0.15)" : "0 0 20px rgba(74,108,247,0)",
               }}
             >

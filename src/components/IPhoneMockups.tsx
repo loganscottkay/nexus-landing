@@ -590,7 +590,9 @@ function IPhoneFrame({
           className="iphone-float"
           style={{
             animationDelay: index === 1 ? "2s" : "0s",
-            transform: hovered ? "translateY(-10px)" : "translateY(0)",
+            transform: hovered
+              ? `translateY(-10px) rotateY(${index === 0 ? "3deg" : "-3deg"})`
+              : "translateY(0) rotateY(0deg)",
             transition: "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease",
             position: "relative",
             zIndex: 1,

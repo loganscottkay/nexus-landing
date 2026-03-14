@@ -306,7 +306,7 @@ export default function StartupQualifications() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease }}
             className="text-[32px] md:text-[40px] font-normal text-center mb-4"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
+            style={{ fontFamily: "var(--font-playfair), serif" }}
           >
             Startup Qualification Standards
           </motion.h1>

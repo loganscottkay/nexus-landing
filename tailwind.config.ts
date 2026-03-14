@@ -26,6 +26,7 @@ const config: Config = {
       },
       fontFamily: {
         serif: ["var(--font-instrument)", "serif"],
+        display: ["var(--font-playfair)", "serif"],
         sans: ["var(--font-dm-sans)", "sans-serif"],
       },
       keyframes: {

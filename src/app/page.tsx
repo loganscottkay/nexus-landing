@@ -359,7 +359,7 @@ function HowItWorksSection() {
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
             className="text-[36px] md:text-[44px] font-normal text-center mb-16"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
+            style={{ fontFamily: "var(--font-playfair), serif" }}
           >
             App Overview
           </motion.h2>
@@ -384,7 +384,7 @@ function HowItWorksSection() {
                     <div className="glass p-5 md:p-6 h-full relative overflow-hidden">
                       <span
                         className="step-number text-[48px] font-normal text-text-primary/[0.06] absolute top-3 right-4 leading-none select-none"
-                        style={{ fontFamily: "'Instrument Serif', serif" }}
+                        style={{ fontFamily: "var(--font-playfair), serif" }}
                       >
                         {card.num}
                       </span>
@@ -630,7 +630,7 @@ function MatchingFlowSection() {
           variants={fadeUp}
           transition={{ duration: 0.6, ease }}
           className="text-[36px] md:text-[44px] font-normal text-center mb-4"
-          style={{ fontFamily: "'Instrument Serif', serif" }}
+          style={{ fontFamily: "var(--font-playfair), serif" }}
         >
           Swipe. Match. Meet.
         </motion.h2>
@@ -677,10 +677,11 @@ function MatchingFlowSection() {
                     className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300"
                     data-label={step.label}
                     style={{
-                      background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.45)",
-                      backdropFilter: "blur(40px)",
-                      WebkitBackdropFilter: "blur(40px)",
-                      border: "1px solid rgba(0, 0, 0, 0.06)",
+                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04))",
+                      backdropFilter: "blur(20px) saturate(1.8)",
+                      WebkitBackdropFilter: "blur(20px) saturate(1.8)",
+                      border: "1px solid rgba(255, 255, 255, 0.5)",
+                      boxShadow: "0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)",
                     }}
                   >
                     <motion.div
@@ -770,10 +771,11 @@ function MatchingFlowSection() {
                     className="matching-flow-card rounded-2xl p-5"
                     data-label={step.label}
                     style={{
-                      background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.45)",
-                      backdropFilter: "blur(40px)",
-                      WebkitBackdropFilter: "blur(40px)",
-                      border: "1px solid rgba(0, 0, 0, 0.06)",
+                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04))",
+                      backdropFilter: "blur(20px) saturate(1.8)",
+                      WebkitBackdropFilter: "blur(20px) saturate(1.8)",
+                      border: "1px solid rgba(255, 255, 255, 0.5)",
+                      boxShadow: "0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)",
                     }}
                   >
                     <div className="flex items-center gap-3 mb-3">
@@ -876,7 +878,7 @@ export default function Home() {
       <Navbar />
 
       {/* ============ HERO ============ */}
-      <section className="relative z-10 pt-[120px] lg:pt-[160px] pb-[80px] lg:pb-[30px]">
+      <section className="relative z-10 pt-[120px] lg:pt-[180px] pb-[80px] lg:pb-[30px]">
         {/* Desktop bottom gradient fade */}
         <div
           className="hidden lg:block absolute bottom-0 left-0 right-0 h-[60px] pointer-events-none z-20"
@@ -890,25 +892,36 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease }}
-              className="gradient-text text-[10px] md:text-[13px] tracking-[2px] md:tracking-[5px] uppercase mb-6 font-medium"
+              className="text-[10px] md:text-[12px] tracking-[3px] md:tracking-[5px] uppercase mb-6 font-medium"
+              style={{ color: "rgba(99,102,241,0.6)" }}
             >
               Founding Cohort Coming Soon
             </motion.p>
 
             {/* Headline - clip-path reveal from bottom */}
             <div
-              className="mb-8"
+              className="mb-8 relative"
               style={{
                 willChange: prefersReduced ? "auto" : "transform",
                 transform: prefersReduced ? "none" : `translateY(${scrollY * -0.15}px)`,
               }}
             >
+              {/* Luminous halo behind headline */}
+              <div
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                style={{
+                  width: "600px",
+                  height: "300px",
+                  background: "radial-gradient(ellipse, rgba(139,92,246,0.06), transparent 70%)",
+                  zIndex: -1,
+                }}
+              />
               <motion.h1
                 initial={{ opacity: 0, y: 30, clipPath: "inset(100% 0 0 0)" }}
                 animate={{ opacity: 1, y: 0, clipPath: "inset(0 0 0 0)" }}
                 transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
-                className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] xl:text-[72px] font-normal leading-[1.1] tracking-tight"
-                style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
+                className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] xl:text-[76px] font-bold leading-[1.05] tracking-[-0.02em]"
+                style={{ fontFamily: "var(--font-playfair), serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
               >
                 Where <span className="gradient-text-animate">Real Ideas</span>
               </motion.h1>
@@ -916,8 +929,8 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30, clipPath: "inset(100% 0 0 0)" }}
                 animate={{ opacity: 1, y: 0, clipPath: "inset(0 0 0 0)" }}
                 transition={{ duration: 0.8, delay: 0.65, ease: [0.25, 0.4, 0.25, 1] }}
-                className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px] xl:text-[72px] font-normal leading-[1.1] tracking-tight"
-                style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
+                className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] xl:text-[76px] font-bold leading-[1.05] tracking-[-0.02em]"
+                style={{ fontFamily: "var(--font-playfair), serif", color: "#0F172A", textShadow: "0 0 40px rgba(74,108,247,0.08)" }}
               >
                 Meet <span className="gradient-text-animate">Real Capital.</span>
               </motion.h1>
@@ -932,7 +945,7 @@ export default function Home() {
               }}
             >
               <div
-                className="text-[17px] max-w-full px-2 md:max-w-[600px] md:px-0 leading-[1.8] text-center"
+                className="text-[17px] max-w-full px-2 md:max-w-[600px] md:px-0 leading-[2.0] text-center"
                 style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 {[
@@ -963,8 +976,8 @@ export default function Home() {
             >
               <MagneticButton
                 href="/waitlist"
-                className="group btn-shimmer btn-auto-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
-                style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+                className="group btn-shimmer btn-auto-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-11 py-[18px] text-[16px] md:text-[17px] font-semibold text-white rounded-2xl"
+                style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.2), 0 0 20px rgba(74,108,247,0.2)" }}
               >
                 Join the Waitlist
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
@@ -999,7 +1012,7 @@ export default function Home() {
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
             className="text-[40px] font-normal text-center"
-            style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
+            style={{ fontFamily: "var(--font-playfair), serif", color: "#0F172A" }}
           >
             Ready to Join the <span className="gradient-text-animate">Network</span>?
           </motion.h2>
@@ -1036,7 +1049,7 @@ export default function Home() {
             <Link
               href="/"
               className="text-[18px] font-normal text-text-primary"
-              style={{ fontFamily: "'Instrument Serif', serif" }}
+              style={{ fontFamily: "var(--font-playfair), serif" }}
             >
               UrgenC
             </Link>

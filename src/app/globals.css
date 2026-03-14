@@ -28,7 +28,27 @@
 }
 
 body {
-  background: #FAFAF9;
+  background-color: #FAFAF9;
+  background-image:
+    radial-gradient(ellipse 800px 600px at 20% 10%, rgba(99,102,241,0.04), transparent),
+    radial-gradient(ellipse 600px 800px at 80% 30%, rgba(139,92,246,0.03), transparent),
+    radial-gradient(ellipse 900px 500px at 50% 70%, rgba(168,85,247,0.025), transparent),
+    radial-gradient(ellipse 500px 700px at 10% 90%, rgba(99,102,241,0.02), transparent);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.015;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
 }
 
 /* ---- Noise texture overlay ---- */
@@ -41,6 +61,18 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
+}
+
+@media (max-width: 768px) {
+  body::before {
+    opacity: 0.008;
+  }
+  body {
+    background-image:
+      radial-gradient(ellipse 400px 300px at 20% 10%, rgba(99,102,241,0.02), transparent),
+      radial-gradient(ellipse 300px 400px at 80% 30%, rgba(139,92,246,0.015), transparent),
+      radial-gradient(ellipse 450px 250px at 50% 70%, rgba(168,85,247,0.012), transparent);
+  }
 }
 
 /* ---- Gradient blobs ---- */
@@ -72,12 +104,12 @@ body {
 .glass {
   position: relative;
   isolation: isolate;
-  background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(20px) saturate(1.2);
-  -webkit-backdrop-filter: blur(20px) saturate(1.2);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04));
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6);
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   will-change: transform;
 }
@@ -96,9 +128,9 @@ body {
 
 .glass:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  border-color: rgba(255, 255, 255, 0.8);
-  background: linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06)), rgba(255, 255, 255, 0.45);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.7);
+  background: linear-gradient(135deg, rgba(255,255,255,0.75), rgba(255,255,255,0.35)), linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06));
 }
 
 .glass:hover::before {
@@ -424,8 +456,8 @@ body {
 .nav-waitlist-btn {
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 15px rgba(74, 108, 247, 0.2);
-  animation: nav-waitlist-pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 0 rgba(99, 102, 241, 0);
+  animation: nav-waitlist-pulse 3s ease-in-out infinite;
   transition: all 0.3s ease;
 }
 
@@ -437,8 +469,8 @@ body {
 }
 
 @keyframes nav-waitlist-pulse {
-  0%, 100% { box-shadow: 0 0 15px rgba(74, 108, 247, 0.2); }
-  50% { box-shadow: 0 0 25px rgba(74, 108, 247, 0.35); }
+  0%, 100% { box-shadow: 0 0 0 rgba(99, 102, 241, 0); }
+  50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.15); }
 }
 
 .nav-waitlist-btn::after {
@@ -1206,7 +1238,7 @@ html {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, #4A6CF7, #7C5CFC);
+  background: linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7);
   transform-origin: left;
   z-index: 9999;
   pointer-events: none;
@@ -1215,7 +1247,7 @@ html {
 
 /* 3. Animated gradient text */
 .gradient-text-animate {
-  background: linear-gradient(135deg, #4A6CF7, #7C5CFC, #4A6CF7);
+  background: linear-gradient(135deg, #6366F1, #8B5CF6, #A855F7, #6366F1);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1272,8 +1304,8 @@ html {
 @media (hover: hover) {
   .glass:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-    background: linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06)), rgba(255, 255, 255, 0.45);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.7);
+    background: linear-gradient(135deg, rgba(255,255,255,0.75), rgba(255,255,255,0.35)), linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06));
     transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
                 box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
                 border-color 0.35s ease,
@@ -1305,6 +1337,64 @@ html {
 
   .glow-card-wrapper:hover::before {
     opacity: 1;
+  }
+
+  /* -- How It Works step cards: lift 8px, step number goes gradient, icon rotates -- */
+  .glow-card-wrapper:hover .step-number {
+    background: linear-gradient(135deg, #6366F1, #8B5CF6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    opacity: 1;
+  }
+  .glow-card-wrapper:hover .glass .shrink-0 svg {
+    transform: rotate(5deg);
+    transition: transform 0.3s ease;
+  }
+  .glass .shrink-0 svg {
+    transition: transform 0.3s ease;
+  }
+
+  /* -- Matching flow cards: label pill scales up, card lifts 6px -- */
+  .matching-card-founders:hover .matching-flow-card,
+  .matching-card-investors:hover .matching-flow-card,
+  .matching-card-both:hover .matching-flow-card {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.6);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  }
+  .matching-card-founders:hover .matching-flow-card span[class*="rounded-full"],
+  .matching-card-investors:hover .matching-flow-card span[class*="rounded-full"],
+  .matching-card-both:hover .matching-flow-card span[class*="rounded-full"] {
+    transform: scale(1.05);
+    filter: brightness(1.15);
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+
+  /* -- Qualification cards: left gradient line appears on hover -- */
+  .qual-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  }
+  .qual-card::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(180deg, #6366F1, #8B5CF6);
+    transition: height 0.3s ease;
+    border-radius: 1px;
+  }
+  .qual-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+  .qual-card:hover::after {
+    height: 100%;
   }
 }
 
@@ -1369,12 +1459,12 @@ html {
   .matching-card-investors .matching-flow-card:hover,
   .matching-card-both:hover .matching-flow-card,
   .matching-card-both .matching-flow-card:hover {
-    background: linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06)), rgba(255, 255, 255, 0.45) !important;
+    background: linear-gradient(135deg, rgba(255,255,255,0.75), rgba(255,255,255,0.35)), linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06)) !important;
   }
 
   /* Qualification page cards: intensified pastel on hover */
   .qual-card:hover {
-    background: linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06)), rgba(255, 255, 255, 0.5) !important;
+    background: linear-gradient(135deg, rgba(255,255,255,0.75), rgba(255,255,255,0.35)), linear-gradient(135deg, rgba(167,139,250,0.14), rgba(196,148,233,0.10), rgba(130,180,237,0.08), rgba(167,139,250,0.06)) !important;
   }
 }
 

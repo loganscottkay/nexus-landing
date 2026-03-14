@@ -188,7 +188,7 @@ export default function StoryPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease }}
             className="text-[40px] md:text-[48px] font-normal mb-5"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
+            style={{ fontFamily: "var(--font-playfair), serif" }}
           >
             Our Story
           </motion.h1>
@@ -393,7 +393,7 @@ export default function StoryPage() {
                             <h2
                               className="font-normal mb-3"
                               style={{
-                                fontFamily: "'Instrument Serif', serif",
+                                fontFamily: "var(--font-playfair), serif",
                                 fontSize: "22px",
                                 color: "#0F172A",
                               }}
@@ -446,7 +446,7 @@ export default function StoryPage() {
                             <h2
                               className="font-normal mb-3"
                               style={{
-                                fontFamily: "'Instrument Serif', serif",
+                                fontFamily: "var(--font-playfair), serif",
                                 fontSize: "22px",
                                 color: "#0F172A",
                               }}
@@ -489,7 +489,7 @@ export default function StoryPage() {
                         <h2
                           className="font-normal mb-2"
                           style={{
-                            fontFamily: "'Instrument Serif', serif",
+                            fontFamily: "var(--font-playfair), serif",
                             fontSize: "22px",
                             color: "#0F172A",
                           }}
@@ -530,7 +530,7 @@ export default function StoryPage() {
               <h2
                 className="font-normal mb-10"
                 style={{
-                  fontFamily: "'Instrument Serif', serif",
+                  fontFamily: "var(--font-playfair), serif",
                   fontSize: "32px",
                   color: "#0F172A",
                 }}
