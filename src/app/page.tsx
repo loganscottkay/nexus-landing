@@ -961,25 +961,14 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 1.4, ease: [0.34, 1.56, 0.64, 1] }}
               className="flex justify-center"
             >
-              <div className="relative inline-flex items-center justify-center">
-                {/* CTA pulse glow behind button */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ zIndex: -1 }}>
-                  <LottieAnimation
-                    src="/animations/cta-pulse.json"
-                    loop={true}
-                    className="w-[150px] h-[150px] md:w-[200px] md:h-[200px]"
-                    style={{ opacity: 0.08 }}
-                  />
-                </div>
-                <MagneticButton
-                  href="/waitlist"
-                  className="group btn-shimmer btn-auto-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
-                  style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
-                >
-                  Join the Waitlist
-                  <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
-                </MagneticButton>
-              </div>
+              <MagneticButton
+                href="/waitlist"
+                className="group btn-shimmer btn-auto-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-[18px] text-[15px] md:text-[16px] font-semibold text-white rounded-2xl"
+                style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)" }}
+              >
+                Join the Waitlist
+                <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
+              </MagneticButton>
             </motion.div>
 
             {/* Scroll-down indicator */}
