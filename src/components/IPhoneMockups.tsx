@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import Link from "next/link";
+import { createPortal } from "react-dom";
 
 /* ---- Tiny SVG Icons ---- */
 function BriefcaseIcon() {
@@ -692,23 +692,214 @@ function SparkleParticles() {
   );
 }
 
+/* ---- Phone Body (shared between inline + modal) ---- */
+function PhoneBody({
+  children,
+  hovered,
+  enlarged,
+}: {
+  children: React.ReactNode;
+  hovered: boolean;
+  enlarged?: boolean;
+}) {
+  return (
+    <div
+      className="iphone-frame-outer"
+      style={{
+        width: enlarged ? "340px" : "260px",
+        height: enlarged ? "694px" : "530px",
+        borderRadius: "48px",
+        background: "#1C1C1E",
+        padding: enlarged ? "13px" : "10px",
+        position: "relative",
+        boxShadow: hovered
+          ? "0 35px 90px rgba(0,0,0,0.25), 0 10px 30px rgba(0,0,0,0.1)"
+          : "0 25px 70px rgba(0,0,0,0.18), 0 10px 25px rgba(0,0,0,0.1)",
+      }}
+    >
+      {/* Metallic sheen - top edge highlight */}
+      <div style={{
+        position: "absolute",
+        top: 0,
+        left: "20px",
+        right: "20px",
+        height: "1px",
+        background: "rgba(255,255,255,0.05)",
+        borderRadius: "1px",
+        zIndex: 5,
+        pointerEvents: "none",
+      }} />
+      {/* Metallic sheen - diagonal gradient */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        borderRadius: "48px",
+        background: "linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.03) 50%, transparent 70%)",
+        pointerEvents: "none",
+        zIndex: 5,
+      }} />
+
+      {/* Side buttons - left (mute switch) */}
+      <div style={{ position: "absolute", left: "-3px", top: "100px", width: "3px", height: "14px", background: "#2C2C2E", borderRadius: "2px 0 0 2px" }} />
+      {/* Volume up */}
+      <div style={{ position: "absolute", left: "-3px", top: "122px", width: "3px", height: "28px", background: "#2C2C2E", borderRadius: "2px 0 0 2px" }} />
+      {/* Volume down */}
+      <div style={{ position: "absolute", left: "-3px", top: "154px", width: "3px", height: "28px", background: "#2C2C2E", borderRadius: "2px 0 0 2px" }} />
+      {/* Side button - right (power) */}
+      <div style={{ position: "absolute", right: "-3px", top: "145px", width: "3px", height: "36px", background: "#2C2C2E", borderRadius: "0 2px 2px 0" }} />
+
+      {/* Screen area */}
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          borderRadius: "38px",
+          overflow: "hidden",
+          position: "relative",
+          background: "#0A0E1A",
+        }}
+      >
+        {/* Dynamic Island */}
+        <div style={{
+          position: "absolute",
+          top: "10px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "76px",
+          height: "24px",
+          borderRadius: "9999px",
+          background: "#000",
+          zIndex: 10,
+        }}>
+          {/* Camera dot */}
+          <div style={{
+            position: "absolute",
+            top: "50%",
+            left: "20px",
+            transform: "translateY(-50%)",
+            width: "3px",
+            height: "3px",
+            borderRadius: "50%",
+            background: "#1A1A1A",
+          }} />
+        </div>
+
+        {/* Screen content area (below dynamic island) */}
+        <div style={{ paddingTop: "38px", height: "100%", overflow: "hidden" }}>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---- Enlarge Modal ---- */
+function PhoneEnlargeModal({
+  children,
+  onClose,
+}: {
+  children: React.ReactNode;
+  onClose: () => void;
+}) {
+  const [show, setShow] = useState(false);
+
+  const handleClose = useCallback(() => {
+    setShow(false);
+    setTimeout(onClose, 300);
+  }, [onClose]);
+
+  useEffect(() => {
+    // Trigger enter animation
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setShow(true));
+    });
+  }, []);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") handleClose();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [handleClose]);
+
+  return createPortal(
+    <div
+      onClick={handleClose}
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(0,0,0,0.6)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
+        zIndex: 100,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        opacity: show ? 1 : 0,
+        transition: "opacity 0.3s ease",
+      }}
+    >
+      {/* Close button */}
+      <button
+        onClick={handleClose}
+        style={{
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          width: "24px",
+          height: "24px",
+          borderRadius: "50%",
+          background: "rgba(255,255,255,0.1)",
+          border: "none",
+          color: "#fff",
+          fontSize: "14px",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 101,
+        }}
+      >
+        &#x2715;
+      </button>
+
+      {/* Enlarged phone */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          transform: show ? "scale(1)" : "scale(0.7)",
+          opacity: show ? 1 : 0,
+          transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
+          maxWidth: "85vw",
+        }}
+      >
+        <PhoneBody hovered={false} enlarged>
+          {children}
+        </PhoneBody>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
 /* ---- iPhone Frame ---- */
 function IPhoneFrame({
   children,
-  href,
   label,
   subtitle,
   index,
   accentColor,
   onVisible,
+  onEnlarge,
 }: {
   children: React.ReactNode;
-  href: string;
   label: string;
   subtitle: string;
   index: number;
   accentColor: string;
   onVisible?: () => void;
+  onEnlarge: () => void;
 }) {
   const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -735,12 +926,15 @@ function IPhoneFrame({
 
   return (
     <div ref={ref} className="flex flex-col items-center">
-      <Link
-        href={href}
-        className="block cursor-pointer"
+      <div
+        onClick={onEnlarge}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onEnlarge(); }}
         style={{
+          cursor: "pointer",
           opacity: visible ? 1 : 0,
           transform: visible
             ? "translateY(0) translateX(0) rotateY(0deg)"
@@ -771,8 +965,8 @@ function IPhoneFrame({
           style={{
             animationDelay: index === 1 ? "2s" : "0s",
             transform: hovered
-              ? `translateY(-10px) rotateY(${index === 0 ? "3deg" : "-3deg"})`
-              : "translateY(0) rotateY(0deg)",
+              ? `translateY(-10px) scale(1.02) rotateY(${index === 0 ? "3deg" : "-3deg"})`
+              : "translateY(0) scale(1) rotateY(0deg)",
             transition: "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease",
             position: "relative",
             zIndex: 1,
@@ -790,114 +984,28 @@ function IPhoneFrame({
               transform: "scale(var(--phone-scale))",
               transformOrigin: "top left",
             }}>
-              {/* Outer phone frame */}
-              <div
-                className="iphone-frame-outer"
-                style={{
-                  width: "260px",
-                  height: "530px",
-                  borderRadius: "48px",
-                  background: "#1C1C1E",
-                  padding: "10px",
-              position: "relative",
-              boxShadow: hovered
-                ? "0 35px 90px rgba(0,0,0,0.25), 0 10px 30px rgba(0,0,0,0.1)"
-                : "0 25px 70px rgba(0,0,0,0.18), 0 10px 25px rgba(0,0,0,0.1)",
-            }}
-          >
-            {/* Metallic sheen - top edge highlight */}
-            <div style={{
-              position: "absolute",
-              top: 0,
-              left: "20px",
-              right: "20px",
-              height: "1px",
-              background: "rgba(255,255,255,0.05)",
-              borderRadius: "1px",
-              zIndex: 5,
-              pointerEvents: "none",
-            }} />
-            {/* Metallic sheen - diagonal gradient */}
-            <div style={{
-              position: "absolute",
-              inset: 0,
-              borderRadius: "48px",
-              background: "linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.03) 50%, transparent 70%)",
-              pointerEvents: "none",
-              zIndex: 5,
-            }} />
-
-            {/* Side buttons - left (mute switch) */}
-            <div style={{ position: "absolute", left: "-3px", top: "100px", width: "3px", height: "14px", background: "#2C2C2E", borderRadius: "2px 0 0 2px" }} />
-            {/* Volume up */}
-            <div style={{ position: "absolute", left: "-3px", top: "122px", width: "3px", height: "28px", background: "#2C2C2E", borderRadius: "2px 0 0 2px" }} />
-            {/* Volume down */}
-            <div style={{ position: "absolute", left: "-3px", top: "154px", width: "3px", height: "28px", background: "#2C2C2E", borderRadius: "2px 0 0 2px" }} />
-            {/* Side button - right (power) */}
-            <div style={{ position: "absolute", right: "-3px", top: "145px", width: "3px", height: "36px", background: "#2C2C2E", borderRadius: "0 2px 2px 0" }} />
-
-            {/* Screen area */}
-            <div
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: "38px",
-                overflow: "hidden",
-                position: "relative",
-                background: "#0A0E1A",
-              }}
-            >
-              {/* Dynamic Island */}
-              <div style={{
-                position: "absolute",
-                top: "10px",
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "76px",
-                height: "24px",
-                borderRadius: "9999px",
-                background: "#000",
-                zIndex: 10,
-              }}>
-                {/* Camera dot */}
-                <div style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "20px",
-                  transform: "translateY(-50%)",
-                  width: "3px",
-                  height: "3px",
-                  borderRadius: "50%",
-                  background: "#1A1A1A",
-                }} />
-              </div>
-
-              {/* Screen content area (below dynamic island) */}
-              <div style={{ paddingTop: "38px", height: "100%", overflow: "hidden" }}>
+              <PhoneBody hovered={hovered}>
                 {children}
-              </div>
-            </div>
-          </div>
+              </PhoneBody>
             </div>
           </div>
         </div>
-      </Link>
+      </div>
 
       {/* Label below phone */}
       <div
         className="text-center mt-5"
         style={{
           opacity: visible ? 1 : 0,
-          transition: `opacity 0.8s ease-out ${entranceDelay + 0.2}s, color 0.3s ease`,
+          transition: `opacity 0.8s ease-out ${entranceDelay + 0.2}s`,
         }}
       >
         <div
           className="font-semibold"
           style={{
-            fontSize: "var(--label-size)",
-            color: hovered ? accentColor : "#0F172A",
+            fontSize: "16px",
+            color: "#0F172A",
             fontFamily: "var(--font-dm-sans), sans-serif",
-            transition: "color 0.3s ease",
           }}
         >
           {label}
@@ -912,6 +1020,18 @@ function IPhoneFrame({
         >
           {subtitle}
         </div>
+        <div
+          className="phone-enlarge-hint"
+          style={{
+            fontSize: "12px",
+            color: "rgba(0,0,0,0.3)",
+            fontFamily: "var(--font-dm-sans), sans-serif",
+            marginTop: "6px",
+          }}
+        >
+          <span className="hidden md:inline">Click to enlarge</span>
+          <span className="md:hidden">Tap to enlarge</span>
+        </div>
       </div>
     </div>
   );
@@ -920,6 +1040,7 @@ function IPhoneFrame({
 /* ---- Main Component ---- */
 export default function IPhoneMockups() {
   const [phonesVisible, setPhonesVisible] = useState(false);
+  const [enlargedPhone, setEnlargedPhone] = useState<string | null>(null);
   const handleVisible = useCallback(() => setPhonesVisible(true), []);
 
   return (
@@ -993,26 +1114,38 @@ export default function IPhoneMockups() {
         <SparkleParticles />
 
         <IPhoneFrame
-          href="/dashboard/investor"
           label="Investor Dashboard"
           subtitle="Browse startups. Express interest. Get matched."
           index={0}
           accentColor="#22D3EE"
           onVisible={handleVisible}
+          onEnlarge={() => setEnlargedPhone("investor")}
         >
           <InvestorScreen isVisible={phonesVisible} />
         </IPhoneFrame>
 
         <IPhoneFrame
-          href="/dashboard/founder"
           label="Startup Dashboard"
           subtitle="Track interest. Manage your queue. Schedule calls."
           index={1}
           accentColor="#A78BFA"
+          onEnlarge={() => setEnlargedPhone("founder")}
         >
           <FounderScreen isVisible={phonesVisible} />
         </IPhoneFrame>
       </div>
+
+      {/* Enlarge modal */}
+      {enlargedPhone === "investor" && (
+        <PhoneEnlargeModal onClose={() => setEnlargedPhone(null)}>
+          <InvestorScreen isVisible={true} />
+        </PhoneEnlargeModal>
+      )}
+      {enlargedPhone === "founder" && (
+        <PhoneEnlargeModal onClose={() => setEnlargedPhone(null)}>
+          <FounderScreen isVisible={true} />
+        </PhoneEnlargeModal>
+      )}
     </section>
   );
 }
