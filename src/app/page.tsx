@@ -949,7 +949,7 @@ export default function Home() {
       <Navbar />
 
       {/* ============ HERO ============ */}
-      <section className="relative z-10 pt-[120px] lg:pt-[180px] pb-[80px] lg:pb-[50px]">
+      <section className="relative z-10 pt-[150px] lg:pt-[220px] pb-[80px] lg:pb-[50px]">
         {/* Subtle abstract landscape-depth gradient */}
         <div
           className="absolute inset-0 pointer-events-none"
