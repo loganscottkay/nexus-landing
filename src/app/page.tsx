@@ -344,6 +344,7 @@ function HowItWorksSection() {
           viewport={viewportConfig}
           className="flex flex-col items-center"
         >
+          <div style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto' }} />
           <motion.p
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
@@ -616,6 +617,7 @@ function MatchingFlowSection() {
         viewport={viewportConfig}
         className="flex flex-col items-center"
       >
+        <div style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto' }} />
         <motion.p
           variants={fadeUp}
           transition={{ duration: 0.6, ease }}
@@ -1016,6 +1018,7 @@ export default function Home() {
           viewport={viewportConfig}
           className="flex flex-col items-center text-center px-6"
         >
+          <div style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto' }} />
           <motion.h2
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}

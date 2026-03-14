@@ -376,6 +376,7 @@ export default function StartupQualifications() {
             transition={{ duration: 0.5, ease }}
             className="text-center mb-10"
           >
+            <div style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto' }} />
             <p
               className="gradient-text font-medium mb-3"
               style={{
@@ -411,6 +412,7 @@ export default function StartupQualifications() {
             transition={{ duration: 0.5, ease }}
             className="text-center mt-10 mb-10"
           >
+            <div style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto' }} />
             <p
               className="gradient-text font-medium mb-3"
               style={{
