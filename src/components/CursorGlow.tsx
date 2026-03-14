@@ -1,44 +1,43 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function CursorGlow() {
-  const [visible, setVisible] = useState(false);
-  const posRef = useRef({ x: 0, y: 0 });
   const elRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number>(0);
 
   useEffect(() => {
     const hasHover = window.matchMedia('(hover: hover)').matches;
     if (!hasHover) return;
 
-    const updatePosition = () => {
-      if (elRef.current) {
-        elRef.current.style.left = posRef.current.x - 200 + 'px';
-        elRef.current.style.top = posRef.current.y - 200 + 'px';
-      }
-      rafRef.current = requestAnimationFrame(updatePosition);
-    };
-
+    let rafId: number;
     const handleMove = (e: MouseEvent) => {
-      posRef.current = { x: e.clientX, y: e.clientY };
-      if (!visible) setVisible(true);
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        if (elRef.current) {
+          elRef.current.style.left = (e.clientX - 200) + 'px';
+          elRef.current.style.top = (e.clientY - 200) + 'px';
+          elRef.current.style.opacity = '1';
+        }
+      });
     };
 
-    const handleLeave = () => setVisible(false);
-    const handleEnter = () => setVisible(true);
+    const handleLeave = () => {
+      if (elRef.current) elRef.current.style.opacity = '0';
+    };
+    const handleEnter = () => {
+      if (elRef.current) elRef.current.style.opacity = '1';
+    };
 
     window.addEventListener('mousemove', handleMove, { passive: true });
     document.addEventListener('mouseleave', handleLeave);
     document.addEventListener('mouseenter', handleEnter);
-    rafRef.current = requestAnimationFrame(updatePosition);
 
     return () => {
       window.removeEventListener('mousemove', handleMove);
       document.removeEventListener('mouseleave', handleLeave);
       document.removeEventListener('mouseenter', handleEnter);
-      cancelAnimationFrame(rafRef.current);
+      cancelAnimationFrame(rafId);
     };
-  }, [visible]);
+  }, []);
 
   return (
     <div
@@ -51,7 +50,7 @@ export default function CursorGlow() {
         background: 'radial-gradient(circle, rgba(99,102,241,0.06) 0%, rgba(139,92,246,0.03) 40%, transparent 70%)',
         pointerEvents: 'none',
         zIndex: 2,
-        opacity: visible ? 1 : 0,
+        opacity: 0,
         transition: 'opacity 0.3s ease',
         willChange: 'left, top',
       }}

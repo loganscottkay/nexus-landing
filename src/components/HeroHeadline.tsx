@@ -5,12 +5,11 @@ import { motion } from 'framer-motion';
 interface HeroHeadlineProps {
   lines: { text: string; isGradient: boolean }[][];
   prefersReduced: boolean;
-  scrollY: number;
 }
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
-export default function HeroHeadline({ lines, prefersReduced, scrollY }: HeroHeadlineProps) {
+export default function HeroHeadline({ lines, prefersReduced }: HeroHeadlineProps) {
   const [shimmerActive, setShimmerActive] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -20,13 +19,29 @@ export default function HeroHeadline({ lines, prefersReduced, scrollY }: HeroHea
     return () => clearTimeout(timer);
   }, [prefersReduced]);
 
+  // Handle parallax with direct DOM manipulation instead of React state
+  useEffect(() => {
+    if (prefersReduced) return;
+    let rafId: number;
+    const handleScroll = () => {
+      rafId = requestAnimationFrame(() => {
+        if (containerRef.current) {
+          containerRef.current.style.transform = `translateY(${window.scrollY * -0.15}px)`;
+        }
+      });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, [prefersReduced]);
+
   return (
     <div
       ref={containerRef}
       className="mb-8 relative"
       style={{
-        willChange: prefersReduced ? 'auto' : 'transform',
-        transform: prefersReduced ? 'none' : `translateY(${scrollY * -0.15}px)`,
         perspective: '600px',
       }}
     >

@@ -17,6 +17,11 @@ export default function ParticleField() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    // Skip on mobile / reduced motion
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.innerWidth < 768) return;
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
@@ -36,7 +41,8 @@ export default function ParticleField() {
     const init = () => {
       const width = w();
       const height = h();
-      particles = Array.from({ length: 38 }, () => {
+      // Reduced particle count from 38 to 20
+      particles = Array.from({ length: 20 }, () => {
         const isLarge = Math.random() < 0.15;
         return {
           x: Math.random() * width,
@@ -57,7 +63,14 @@ export default function ParticleField() {
     handleResize();
     window.addEventListener("resize", handleResize);
 
+    // Throttle to ~30fps instead of 60fps
+    let lastDraw = 0;
     const draw = (time: number) => {
+      animationId = requestAnimationFrame(draw);
+
+      if (time - lastDraw < 33) return; // ~30fps
+      lastDraw = time;
+
       const width = w();
       const height = h();
       ctx.clearRect(0, 0, width, height);
@@ -71,7 +84,7 @@ export default function ParticleField() {
         if (p.y > height + 10) p.y = -10;
       }
 
-      // Connecting lines
+      // Connecting lines (O(n^2) but with 20 particles it's only 190 checks)
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
@@ -98,8 +111,6 @@ export default function ParticleField() {
         ctx.fillStyle = `rgba(255,255,255,${p.opacity})`;
         ctx.fill();
       }
-
-      animationId = requestAnimationFrame(draw);
     };
 
     animationId = requestAnimationFrame(draw);
@@ -114,7 +125,6 @@ export default function ParticleField() {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full pointer-events-none"
-      style={{ willChange: "transform" }}
     />
   );
 }

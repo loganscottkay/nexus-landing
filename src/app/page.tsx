@@ -35,35 +35,6 @@ const viewportConfig = { once: true, amount: 0.2 as const };
 
 /* ---- Animation Hooks ---- */
 
-function useScrollY() {
-  const [scrollY, setScrollY] = useState(0);
-  useEffect(() => {
-    let rafId: number;
-    const handleScroll = () => {
-      rafId = requestAnimationFrame(() => setScrollY(window.scrollY));
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      cancelAnimationFrame(rafId);
-    };
-  }, []);
-  return scrollY;
-}
-
-function useScrollProgress() {
-  const [progress, setProgress] = useState(0);
-  useEffect(() => {
-    const handleScroll = () => {
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(h > 0 ? Math.min(window.scrollY / h, 1) : 0);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-  return progress;
-}
-
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
@@ -77,32 +48,57 @@ function usePrefersReducedMotion() {
 }
 
 /* ---- Scroll Progress Bar ---- */
-function ScrollProgressBar({ progress }: { progress: number }) {
-  return (
-    <div
-      className="scroll-progress-bar"
-      style={{ transform: `scaleX(${progress})` }}
-    />
-  );
+function ScrollProgressBar() {
+  const barRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    let rafId: number;
+    const handleScroll = () => {
+      rafId = requestAnimationFrame(() => {
+        if (barRef.current) {
+          const h = document.documentElement.scrollHeight - window.innerHeight;
+          const p = h > 0 ? Math.min(window.scrollY / h, 1) : 0;
+          barRef.current.style.transform = `scaleX(${p})`;
+        }
+      });
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
+  return <div ref={barRef} className="scroll-progress-bar" style={{ transform: "scaleX(0)" }} />;
 }
 
 /* ---- Parallax Background Orbs ---- */
-function ParallaxOrbs({ scrollY, reduced }: { scrollY: number; reduced: boolean }) {
-  const factor = reduced ? 0 : 1;
+function ParallaxOrbs({ reduced }: { reduced: boolean }) {
+  const orb1 = useRef<HTMLDivElement>(null);
+  const orb2 = useRef<HTMLDivElement>(null);
+  const orb3 = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (reduced) return;
+    let rafId: number;
+    const handleScroll = () => {
+      rafId = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (orb1.current) orb1.current.style.transform = `translateY(${y * 0.05}px)`;
+        if (orb2.current) orb2.current.style.transform = `translateY(${y * 0.08}px)`;
+        if (orb3.current) orb3.current.style.transform = `translateY(${y * 0.03}px)`;
+      });
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, [reduced]);
+
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: -1 }}>
-      <div
-        className="parallax-orb parallax-orb-1"
-        style={{ transform: `translateY(${scrollY * 0.05 * factor}px)`, willChange: "transform" }}
-      />
-      <div
-        className="parallax-orb parallax-orb-2"
-        style={{ transform: `translateY(${scrollY * 0.08 * factor}px)`, willChange: "transform" }}
-      />
-      <div
-        className="parallax-orb parallax-orb-3"
-        style={{ transform: `translateY(${scrollY * 0.03 * factor}px)`, willChange: "transform" }}
-      />
+      <div ref={orb1} className="parallax-orb parallax-orb-1" />
+      <div ref={orb2} className="parallax-orb parallax-orb-2" />
+      <div ref={orb3} className="parallax-orb parallax-orb-3" />
     </div>
   );
 }
@@ -120,7 +116,6 @@ function MagneticButton({
   style?: React.CSSProperties;
 }) {
   const btnRef = useRef<HTMLDivElement>(null);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -129,7 +124,6 @@ function MagneticButton({
     const el = btnRef.current;
     if (!el) return;
 
-    let curX = 0, curY = 0;
     const handleMove = (e: MouseEvent) => {
       const rect = el.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
@@ -137,15 +131,12 @@ function MagneticButton({
       const dx = e.clientX - cx;
       const dy = e.clientY - cy;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      let newX = 0, newY = 0;
       if (dist < 80) {
-        newX = Math.round(dx * 0.05 * 10) / 10;
-        newY = Math.round(dy * 0.05 * 10) / 10;
-      }
-      if (newX !== curX || newY !== curY) {
-        curX = newX;
-        curY = newY;
-        setOffset({ x: newX, y: newY });
+        const x = Math.round(dx * 0.05 * 10) / 10;
+        const y = Math.round(dy * 0.05 * 10) / 10;
+        el.style.transform = `translate(${x}px, ${y}px)`;
+      } else {
+        el.style.transform = "translate(0, 0)";
       }
     };
 
@@ -157,7 +148,6 @@ function MagneticButton({
     <div
       ref={btnRef}
       style={{
-        transform: `translate(${offset.x}px, ${offset.y}px)`,
         transition: "transform 0.2s ease-out",
         display: "inline-block",
       }}
@@ -255,7 +245,8 @@ function HowItWorksSection() {
   const [activeCard, setActiveCard] = useState<string>("01");
   const [isHovering, setIsHovering] = useState(false);
   const [inViewport, setInViewport] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const progressRef = useRef(0);
+  const progressSvgRef = useRef<SVGCircleElement>(null);
 
   const sectionRef = useRef<HTMLDivElement>(null);
   const cycleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -288,7 +279,10 @@ function HowItWorksSection() {
     const animate = (now: number) => {
       const elapsed = now - cycleStartRef.current;
       const p = Math.min(elapsed / CYCLE_DURATION, 1);
-      setProgress(p);
+      progressRef.current = p;
+      if (progressSvgRef.current) {
+        progressSvgRef.current.setAttribute("stroke-dasharray", `${p * 37.7} 37.7`);
+      }
       if (p < 1) {
         progressRafRef.current = requestAnimationFrame(animate);
       }
@@ -320,7 +314,7 @@ function HowItWorksSection() {
     if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current);
     cancelAnimationFrame(progressRafRef.current);
     setActiveCard(cardNum);
-    setProgress(0);
+    progressRef.current = 0;
   }, []);
 
   const handleMouseLeave = useCallback(() => {
@@ -475,7 +469,7 @@ function HowItWorksSection() {
                   <div
                     key={step}
                     className="relative flex items-center justify-center cursor-pointer"
-                    onClick={() => { setActiveCard(step); setIsHovering(false); setProgress(0); }}
+                    onClick={() => { setActiveCard(step); setIsHovering(false); progressRef.current = 0; }}
                   >
                     <div
                       className="w-2 h-2 rounded-full transition-colors duration-300"
@@ -502,6 +496,7 @@ function HowItWorksSection() {
                           strokeWidth="1.5"
                         />
                         <circle
+                          ref={progressSvgRef}
                           cx="8"
                           cy="8"
                           r="6"
@@ -509,7 +504,7 @@ function HowItWorksSection() {
                           stroke="url(#progressGrad)"
                           strokeWidth="1.5"
                           strokeLinecap="round"
-                          strokeDasharray={`${progress * 37.7} 37.7`}
+                          strokeDasharray="0 37.7"
                         />
                         <defs>
                           <linearGradient id="progressGrad" x1="0" y1="0" x2="16" y2="16">
@@ -832,15 +827,33 @@ function MatchingFlowSection() {
 }
 
 /* ---- Scroll Down Indicator ---- */
-function ScrollDownIndicator({ scrollY }: { scrollY: number }) {
-  const opacity = scrollY > 200 ? 0 : 1;
+function ScrollDownIndicator() {
+  const elRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let rafId: number;
+    const handleScroll = () => {
+      rafId = requestAnimationFrame(() => {
+        if (elRef.current) {
+          elRef.current.style.opacity = window.scrollY > 200 ? "0" : "1";
+        }
+      });
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
+
   return (
     <motion.div
+      ref={elRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 3.2 }}
       className="mt-6 flex justify-center"
-      style={{ opacity, transition: "opacity 0.3s ease" }}
+      style={{ transition: "opacity 0.3s ease" }}
     >
       <LottieAnimation
         src="/animations/scroll-down.json"
@@ -853,20 +866,37 @@ function ScrollDownIndicator({ scrollY }: { scrollY: number }) {
 
 /* ---- Main Page ---- */
 export default function Home() {
-  const scrollY = useScrollY();
-  const scrollProgress = useScrollProgress();
   const prefersReduced = usePrefersReducedMotion();
+  const subtitleRef = useRef<HTMLDivElement>(null);
+
+  // Single scroll listener for subtitle parallax (direct DOM)
+  useEffect(() => {
+    if (prefersReduced) return;
+    let rafId: number;
+    const handleScroll = () => {
+      rafId = requestAnimationFrame(() => {
+        if (subtitleRef.current) {
+          subtitleRef.current.style.transform = `translateY(${window.scrollY * -0.1}px)`;
+        }
+      });
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, [prefersReduced]);
 
   return (
     <main className="relative min-h-screen bg-base text-text-primary overflow-x-clip">
       {/* Scroll progress indicator */}
-      <ScrollProgressBar progress={scrollProgress} />
+      <ScrollProgressBar />
 
       {/* Noise overlay */}
       <div className="noise-overlay" />
 
       {/* Parallax background orbs */}
-      <ParallaxOrbs scrollY={scrollY} reduced={prefersReduced} />
+      <ParallaxOrbs reduced={prefersReduced} />
 
       {/* Background gradient blobs */}
       <div
@@ -913,16 +943,12 @@ export default function Home() {
                 ],
               ]}
               prefersReduced={prefersReduced}
-              scrollY={scrollY}
             />
 
             {/* Subtitle - staggered line reveals with parallax */}
             <div
+              ref={subtitleRef}
               className="mb-12"
-              style={{
-                willChange: prefersReduced ? "auto" : "transform",
-                transform: prefersReduced ? "none" : `translateY(${scrollY * -0.1}px)`,
-              }}
             >
               <div
                 className="text-[17px] max-w-full px-2 md:max-w-[600px] md:px-0 leading-[2.0] text-center"
@@ -965,7 +991,7 @@ export default function Home() {
             </motion.div>
 
             {/* Scroll-down indicator */}
-            <ScrollDownIndicator scrollY={scrollY} />
+            <ScrollDownIndicator />
           </div>
         </div>
       </section>
