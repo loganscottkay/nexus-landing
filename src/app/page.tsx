@@ -1289,13 +1289,13 @@ export default function Home() {
 
             {/* Credibility strip */}
             <div className="flex flex-col items-center mt-[36px] mb-[20px]">
-              <div className="flex items-center gap-[32px] md:gap-[48px]">
+              <div className="flex items-center justify-center gap-[44px]">
                 {/* BU Crest */}
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 1.8, ease }}
-                  className="flex flex-col items-center"
+                  className="flex flex-col items-center w-[70px]"
                 >
                   <div
                     className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-110 cursor-pointer"
@@ -1307,7 +1307,7 @@ export default function Home() {
                       src="/images/universities/bu-crest.gif"
                       alt="Boston University"
                       className="object-cover rounded-full"
-                      style={{ width: "110%", height: "110%", mixBlendMode: "multiply" }}
+                      style={{ width: "130%", height: "130%", mixBlendMode: "multiply" }}
                     />
                   </div>
                   <span
@@ -1329,7 +1329,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 1.9, ease }}
-                  className="flex flex-col items-center"
+                  className="flex flex-col items-center w-[70px]"
                 >
                   <div
                     className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-110 cursor-pointer"
@@ -1363,7 +1363,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 2.0, ease }}
-                  className="flex flex-col items-center"
+                  className="flex flex-col items-center w-[70px]"
                 >
                   <div
                     className="w-[52px] h-[52px] flex items-center justify-center overflow-visible transition-all duration-300 hover:scale-110 cursor-pointer"
@@ -1374,7 +1374,7 @@ export default function Home() {
                     <img
                       src="/images/universities/hbs-crest.png"
                       alt="Harvard Business School"
-                      className="h-[52px] w-auto object-contain"
+                      className="h-[58px] w-auto object-contain"
                       style={{ mixBlendMode: "multiply" }}
                     />
                   </div>
