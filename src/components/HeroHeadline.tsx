@@ -7,7 +7,12 @@ interface HeroHeadlineProps {
   prefersReduced: boolean;
 }
 
-const ease = [0.25, 0.4, 0.25, 1] as const;
+const smoothDecel = [0.16, 1, 0.3, 1] as const;
+
+const lineConfigs = [
+  { delay: 0.6, y: 45, duration: 0.9 },
+  { delay: 0.8, y: 35, duration: 0.8 },
+];
 
 export default function HeroHeadline({ lines, prefersReduced }: HeroHeadlineProps) {
   const [shimmerActive, setShimmerActive] = useState(false);
@@ -55,34 +60,51 @@ export default function HeroHeadline({ lines, prefersReduced }: HeroHeadlineProp
           zIndex: -1,
         }}
       />
-      {lines.map((segments, lineIndex) => (
-        <motion.h1
-          key={lineIndex}
-          initial={prefersReduced ? false : { opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 + lineIndex * 0.3, ease }}
-          className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] xl:text-[76px] font-bold leading-[1.05] tracking-[-0.02em]"
-          style={{
-            fontFamily: "'Instrument Serif', serif",
-            color: '#0F172A',
-            textShadow: '0 0 40px rgba(74,108,247,0.08)',
-          }}
-        >
-          {segments.map((segment, segIndex) => {
-            if (segment.isGradient) {
+      {lines.map((segments, lineIndex) => {
+        const config = lineConfigs[lineIndex] || lineConfigs[0];
+        return (
+          <motion.h1
+            key={lineIndex}
+            initial={prefersReduced ? false : { opacity: 0, y: config.y }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: config.duration, delay: config.delay, ease: smoothDecel }}
+            className="text-[36px] sm:text-[44px] md:text-[56px] lg:text-[68px] xl:text-[76px] font-bold leading-[1.05] tracking-[-0.02em]"
+            style={{
+              color: '#0F172A',
+              textShadow: '0 0 40px rgba(74,108,247,0.08)',
+            }}
+          >
+            {segments.map((segment, segIndex) => {
+              if (segment.isGradient) {
+                return (
+                  <span
+                    key={segIndex}
+                    className={`gradient-text-animate gradient-shimmer-wrap${shimmerActive ? ' shimmer-active' : ''}`}
+                    style={{
+                      fontFamily: "'Instrument Serif', serif",
+                      fontStyle: 'italic',
+                    }}
+                  >
+                    {segment.text}
+                  </span>
+                );
+              }
               return (
                 <span
                   key={segIndex}
-                  className={`gradient-text-animate gradient-shimmer-wrap${shimmerActive ? ' shimmer-active' : ''}`}
+                  style={{
+                    fontFamily: "'Syne', sans-serif",
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                  }}
                 >
                   {segment.text}
                 </span>
               );
-            }
-            return <React.Fragment key={segIndex}>{segment.text}</React.Fragment>;
-          })}
-        </motion.h1>
-      ))}
+            })}
+          </motion.h1>
+        );
+      })}
     </div>
   );
 }

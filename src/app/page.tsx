@@ -11,22 +11,49 @@ import HeroHeadline from "@/components/HeroHeadline";
 import { handleCardGlowMove } from "@/components/useCardGlow";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
+const smoothDecel = [0.16, 1, 0.3, 1] as const;
 
-const fadeUp = {
+const sectionFadeUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 };
 
-const sectionFadeUp = {
+/* Tiered animation variants for choreographed section reveals */
+const tierGradientBar = {
+  hidden: { opacity: 0, scaleX: 0 },
+  visible: { opacity: 1, scaleX: 1 },
+};
+
+const tierEyebrow = {
+  hidden: { opacity: 0, y: 15 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const tierTitle = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0 },
+};
+
+const tierSubtitle = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const tierCard = {
+  hidden: { opacity: 0, y: 25, scale: 0.98 },
+  visible: { opacity: 1, y: 0, scale: 1 },
+};
+
+const tierCta = {
+  hidden: { opacity: 0, y: 10, scale: 0.97 },
+  visible: { opacity: 1, y: 0, scale: 1 },
 };
 
 const cardStagger = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.08,
     },
   },
 };
@@ -176,7 +203,7 @@ function Section({
       initial="hidden"
       whileInView="visible"
       viewport={viewportConfig}
-      transition={{ duration: 0.6, ease }}
+      transition={{ duration: 0.5, ease }}
       className={className}
     >
       {children}
@@ -344,17 +371,22 @@ function HowItWorksSection() {
           viewport={viewportConfig}
           className="flex flex-col items-center"
         >
-          <div style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto' }} />
+          <motion.div
+            variants={tierGradientBar}
+            transition={{ duration: 0.4, delay: 0, ease }}
+            style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto', transformOrigin: 'center' }}
+          />
           <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
+            variants={tierEyebrow}
+            transition={{ duration: 0.5, delay: 0.1, ease }}
             className="text-text-muted text-[13px] tracking-[3px] uppercase mb-4"
+            style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700 }}
           >
             App Overview
           </motion.p>
           <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
+            variants={tierTitle}
+            transition={{ duration: 0.8, delay: 0.2, ease: smoothDecel }}
             className="text-[36px] md:text-[44px] font-normal text-center mb-16"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
@@ -365,11 +397,11 @@ function HowItWorksSection() {
           <motion.div variants={cardStagger} className="flex flex-col lg:flex-row gap-8 w-full">
             {/* Left: Compact cards */}
             <div className="flex flex-col gap-4 lg:w-[360px] shrink-0">
-              {howItWorksCards.map((card) => (
+              {howItWorksCards.map((card, cardIdx) => (
                 <motion.div
                   key={card.num}
-                  variants={fadeUp}
-                  transition={{ duration: 0.6, ease }}
+                  variants={tierCard}
+                  transition={{ duration: 0.5, delay: 0.6 + cardIdx * 0.08, ease }}
                   onMouseEnter={() => handleMouseEnter(card.num)}
                   onMouseLeave={handleMouseLeave}
                 >
@@ -412,8 +444,8 @@ function HowItWorksSection() {
             {/* Right: Preview area + progress dots */}
             <div className="flex flex-1 flex-col gap-4">
               <motion.div
-                variants={fadeUp}
-                transition={{ duration: 0.6, ease }}
+                variants={tierCard}
+                transition={{ duration: 0.5, delay: 0.6, ease }}
                 className="flex-1 min-h-[350px] lg:min-h-[450px] rounded-2xl p-6 md:p-8 relative overflow-hidden"
                 style={{
                   background: "rgba(15, 20, 35, 0.92)",
@@ -617,25 +649,30 @@ function MatchingFlowSection() {
         viewport={viewportConfig}
         className="flex flex-col items-center"
       >
-        <div style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto' }} />
+        <motion.div
+          variants={tierGradientBar}
+          transition={{ duration: 0.4, delay: 0, ease }}
+          style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto', transformOrigin: 'center' }}
+        />
         <motion.p
-          variants={fadeUp}
-          transition={{ duration: 0.6, ease }}
-          className="gradient-text text-[13px] tracking-[3px] uppercase mb-4 font-medium"
+          variants={tierEyebrow}
+          transition={{ duration: 0.5, delay: 0.1, ease }}
+          className="gradient-text text-[13px] tracking-[3px] uppercase mb-4"
+          style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700 }}
         >
           The Matching Flow
         </motion.p>
         <motion.h2
-          variants={fadeUp}
-          transition={{ duration: 0.6, ease }}
+          variants={tierTitle}
+          transition={{ duration: 0.8, delay: 0.2, ease: smoothDecel }}
           className="text-[36px] md:text-[44px] font-normal text-center mb-4"
           style={{ fontFamily: "'Instrument Serif', serif" }}
         >
           Swipe. Match. Meet.
         </motion.h2>
         <motion.p
-          variants={fadeUp}
-          transition={{ duration: 0.6, ease }}
+          variants={tierSubtitle}
+          transition={{ duration: 0.5, delay: 0.4, ease }}
           className="text-center max-w-[600px] text-[17px] leading-[1.7] mb-16"
           style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
         >
@@ -667,8 +704,8 @@ function MatchingFlowSection() {
 
               {/* Step card */}
               <motion.div
-                variants={fadeUp}
-                transition={{ duration: 0.6, delay: i * 0.1, ease }}
+                variants={tierCard}
+                transition={{ duration: 0.5, delay: 0.6 + i * 0.08, ease }}
                 className="flex-1 max-w-[280px] w-full min-h-[240px]"
               >
                 <div className={`glow-card-wrapper h-full matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
@@ -749,8 +786,8 @@ function MatchingFlowSection() {
             {matchingSteps.map((step, i) => (
               <motion.div
                 key={step.num}
-                variants={fadeUp}
-                transition={{ duration: 0.6, delay: i * 0.1, ease }}
+                variants={tierCard}
+                transition={{ duration: 0.5, delay: 0.6 + i * 0.08, ease }}
                 className="flex items-start gap-0"
               >
                 {/* Numbered circle on the timeline */}
@@ -853,7 +890,7 @@ function ScrollDownIndicator() {
       ref={elRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, delay: 3.2 }}
+      transition={{ duration: 0.4, delay: 2.2 }}
       className="mt-6 flex justify-center"
       style={{ transition: "opacity 0.3s ease" }}
     >
@@ -913,6 +950,32 @@ export default function Home() {
 
       {/* ============ HERO ============ */}
       <section className="relative z-10 pt-[120px] lg:pt-[180px] pb-[80px] lg:pb-[50px]">
+        {/* Subtle abstract landscape-depth gradient */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            zIndex: -1,
+            background: `
+              linear-gradient(180deg,
+                rgba(250,249,247,1) 0%,
+                rgba(237,233,254,0.15) 30%,
+                rgba(219,234,254,0.12) 50%,
+                rgba(220,252,231,0.08) 70%,
+                rgba(250,249,247,1) 100%
+              )
+            `,
+          }}
+        />
+        {/* Luminous radial glow behind headline */}
+        <div
+          className="absolute left-1/2 top-[45%] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+          style={{
+            width: '1000px',
+            height: '600px',
+            background: 'radial-gradient(ellipse 500px 300px at 50% 50%, rgba(99,102,241,0.05), transparent)',
+            zIndex: -1,
+          }}
+        />
         {/* Desktop bottom gradient fade */}
         <div
           className="hidden lg:block absolute bottom-0 left-0 right-0 h-[60px] pointer-events-none z-20"
@@ -921,13 +984,13 @@ export default function Home() {
         {/* Centered hero text */}
         <div className="flex flex-col items-center justify-center text-center px-6 max-w-[700px] lg:max-w-[780px] mx-auto relative z-10">
           <div className="flex flex-col items-center">
-            {/* Eyebrow - gradient text, first to appear */}
+            {/* Eyebrow - Syne uppercase, first to appear */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease }}
-              className="text-[10px] md:text-[12px] tracking-[3px] md:tracking-[5px] uppercase mb-6 font-medium"
-              style={{ color: "rgba(99,102,241,0.6)" }}
+              transition={{ duration: 0.4, delay: 0.3, ease }}
+              className="text-[10px] md:text-[12px] tracking-[3px] md:tracking-[5px] uppercase mb-6"
+              style={{ color: "rgba(99,102,241,0.6)", fontFamily: "'Syne', sans-serif", fontWeight: 700 }}
             >
               Founding Cohort Coming Soon
             </motion.p>
@@ -957,7 +1020,7 @@ export default function Home() {
                 style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 {[
-                  <>UrgenC is the first real fundraising app.</>,
+                  <>UrgenC is the first real fundraising app <span style={{ color: "rgba(71,85,105,0.7)" }}>(and it works like Tinder for startups).</span></>,
                   <>Founders pitch. Investors swipe.</>,
                   <>Mutual interest means a <em style={{ fontStyle: "italic" }}>guaranteed meeting.</em></>,
                   <>If you don&apos;t show up, you <em style={{ fontStyle: "italic" }}>don&apos;t stay.</em></>,
@@ -966,7 +1029,7 @@ export default function Home() {
                     key={i}
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 2.0 + i * 0.15, ease }}
+                    transition={{ duration: 0.5, delay: 1.2 + i * 0.12, ease }}
                     className="block"
                   >
                     {line}
@@ -977,9 +1040,9 @@ export default function Home() {
 
             {/* CTA - scale bounce entrance + magnetic effect */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: 2.8, ease: [0.34, 1.56, 0.64, 1] }}
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.5, delay: 1.8, ease: [0.34, 1.56, 0.64, 1] }}
               className="flex justify-center"
             >
               <MagneticButton
@@ -1018,10 +1081,14 @@ export default function Home() {
           viewport={viewportConfig}
           className="flex flex-col items-center text-center px-6"
         >
-          <div style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto' }} />
+          <motion.div
+            variants={tierGradientBar}
+            transition={{ duration: 0.4, delay: 0, ease }}
+            style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto', transformOrigin: 'center' }}
+          />
           <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
+            variants={tierTitle}
+            transition={{ duration: 0.8, delay: 0.2, ease: smoothDecel }}
             className="text-[40px] font-normal text-center"
             style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
           >
@@ -1029,8 +1096,8 @@ export default function Home() {
           </motion.h2>
 
           <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
+            variants={tierSubtitle}
+            transition={{ duration: 0.5, delay: 0.4, ease }}
             className="text-[17px] leading-[1.7] mt-4 max-w-[520px] mx-auto"
             style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
@@ -1038,8 +1105,8 @@ export default function Home() {
           </motion.p>
 
           <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
+            variants={tierCta}
+            transition={{ duration: 0.4, delay: 0.8, ease }}
             className="mt-8"
           >
             <Link

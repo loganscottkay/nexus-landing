@@ -748,12 +748,12 @@ export default function IPhoneMockups() {
             fontSize: "11px",
             textTransform: "uppercase",
             letterSpacing: "3px",
-            fontWeight: 600,
+            fontWeight: 700,
             background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
-            fontFamily: "var(--font-dm-sans), sans-serif",
+            fontFamily: "'Syne', sans-serif",
           }}
         >
           SEE WHAT IS INSIDE
