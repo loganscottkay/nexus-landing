@@ -1,46 +1,71 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import UnicornSVG from "./UnicornSVG";
 
 const SPARKLE_COLORS = ["#F5D76E", "#7C5CFC", "#4A6CF7", "#F5D76E", "#7C5CFC", "#4A6CF7", "#F5D76E", "#7C5CFC"];
 
 export default function UnicornAnimation() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  const hasPlayed = useRef(false);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasPlayed.current) {
+          hasPlayed.current = true;
+          setVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <div
-        className="wl-unicorn-track pointer-events-none fixed left-0 w-full overflow-hidden"
-        style={{ top: "200px", zIndex: 1, height: "120px" }}
+        ref={trackRef}
+        className="wl-unicorn-track pointer-events-none absolute left-0 w-full overflow-hidden"
+        style={{ top: "50%", transform: "translateY(-50%)", zIndex: 1, height: "120px" }}
       >
-        <div className="wl-unicorn-runner" style={{ willChange: "transform" }}>
-          {/* 8 sparkle dots with staggered CSS delays */}
-          {SPARKLE_COLORS.map((color, i) => (
-            <div
-              key={i}
-              className="wl-sparkle"
-              style={{
-                animationDelay: `${i * 0.25}s`,
-                left: `${-8 - i * 8}px`,
-                top: `${25 + (i % 3) * 10}px`,
-              }}
-            >
+        {visible && (
+          <div className="wl-unicorn-runner" style={{ willChange: "transform" }}>
+            {/* 8 sparkle dots with staggered CSS delays */}
+            {SPARKLE_COLORS.map((color, i) => (
               <div
+                key={i}
+                className="wl-sparkle"
                 style={{
-                  width: "4px",
-                  height: "4px",
-                  borderRadius: "50%",
-                  background: color,
+                  animationDelay: `${i * 0.25}s`,
+                  left: `${-8 - i * 8}px`,
+                  top: `${25 + (i % 3) * 10}px`,
                 }}
-              />
-            </div>
-          ))}
-          <UnicornSVG
-            size={70}
-            prefix="wl"
-            maneClass="wl-unicorn-mane"
-            legClasses={{ fl: "wl-leg-fl", fr: "wl-leg-fr", bl: "wl-leg-bl", br: "wl-leg-br" }}
-          />
-        </div>
+              >
+                <div
+                  style={{
+                    width: "4px",
+                    height: "4px",
+                    borderRadius: "50%",
+                    background: color,
+                  }}
+                />
+              </div>
+            ))}
+            <UnicornSVG
+              size={70}
+              prefix="wl"
+              maneClass="wl-unicorn-mane"
+              legClasses={{ fl: "wl-leg-fl", fr: "wl-leg-fr", bl: "wl-leg-bl", br: "wl-leg-br" }}
+            />
+          </div>
+        )}
       </div>
 
       <style>{`
@@ -106,9 +131,6 @@ export default function UnicornAnimation() {
         }
 
         @media (max-width: 767px) {
-          .wl-unicorn-track {
-            top: 160px !important;
-          }
           .wl-unicorn-runner svg {
             width: 50px;
             height: 50px;

@@ -1235,6 +1235,65 @@ body {
 }
 
 /* ============================================================
+   Phone Screen Animations
+   ============================================================ */
+
+/* Active pill pulse */
+@keyframes active-pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+.active-pulse {
+  animation: active-pulse 2s ease-in-out infinite;
+}
+
+/* Left border glow pulse (teal) */
+@keyframes glow-pulse-teal {
+  0%, 100% { box-shadow: -2px 0 6px rgba(6,182,212,0.0); }
+  50% { box-shadow: -2px 0 6px rgba(6,182,212,0.4); }
+}
+.glow-pulse-teal {
+  animation: glow-pulse-teal 2s ease-in-out infinite;
+}
+
+/* Left border glow pulse (violet) */
+@keyframes glow-pulse-violet {
+  0%, 100% { box-shadow: -2px 0 6px rgba(139,92,246,0.0); }
+  50% { box-shadow: -2px 0 6px rgba(139,92,246,0.4); }
+}
+.glow-pulse-violet {
+  animation: glow-pulse-violet 3s ease-in-out infinite;
+}
+
+/* Shimmer sweep for button */
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-100%) rotate(15deg); }
+  100% { transform: translateX(200%) rotate(15deg); }
+}
+
+/* Feed slide in */
+@keyframes feed-slide-in {
+  0% { transform: translateX(20px); opacity: 0; }
+  15% { transform: translateX(0); opacity: 1; }
+  85% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(-20px); opacity: 0; }
+}
+
+/* Animated border for active queue row */
+@keyframes border-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Hide extra phone items on mobile */
+@media (max-width: 767px) {
+  .phone-feed-row-3,
+  .phone-queue-row-4 {
+    display: none !important;
+  }
+}
+
+/* ============================================================
    PREMIUM ANIMATION OVERHAUL
    ============================================================ */
 

@@ -122,28 +122,33 @@ export default function WaitlistPage() {
             BE FIRST TO KNOW
           </motion.p>
 
-          {/* Headline */}
-          <div style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto' }} />
-          <motion.h1
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5, ease }}
-            className="text-[36px] md:text-[48px] font-normal text-center mb-4"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
-          >
-            Get <span className="gradient-text">Early Access.</span>
-          </motion.h1>
+          {/* Headline area — relative container for unicorn animation */}
+          <div className="relative w-full">
+            <div style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto' }} />
+            <motion.h1
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5, ease }}
+              className="text-[36px] md:text-[48px] font-normal text-center mb-4"
+              style={{ fontFamily: "'Instrument Serif', serif" }}
+            >
+              Get <span className="gradient-text">Early Access.</span>
+            </motion.h1>
 
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.7, ease }}
-            className="text-[17px] md:text-[18px] text-center mb-10 max-w-[500px] leading-[1.7]"
-            style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
-          >
-            UrgenC is launching soon. Drop your info and be the first to know when we go live.
-          </motion.p>
+            {/* Subtitle */}
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.7, ease }}
+              className="text-[17px] md:text-[18px] text-center mb-10 max-w-[500px] leading-[1.7] mx-auto"
+              style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
+            >
+              UrgenC is launching soon. Drop your info and be the first to know when we go live.
+            </motion.p>
+
+            {/* Unicorn animation — positioned relative to this container */}
+            <UnicornAnimation />
+          </div>
 
           {/* Form card */}
           <motion.div
@@ -497,8 +502,6 @@ export default function WaitlistPage() {
           </motion.div>
         </div>
 
-        {/* Unicorn arc animation */}
-        <UnicornAnimation />
       </main>
     </>
   );

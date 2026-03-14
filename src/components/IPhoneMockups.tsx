@@ -159,43 +159,70 @@ const glassCard = {
 /* ---- Mini Dashboard Content (Investor - Dark Mode Teal) ---- */
 function InvestorScreen() {
   const font = "var(--font-dm-sans), sans-serif";
+  const [feedIndex, setFeedIndex] = useState(0);
+
+  const allStartups = [
+    { initial: "N", name: "NovaBridge", desc: "AI-powered tutoring platform", sector: "EdTech", sectorColor: "#3B82F6", gradient: "linear-gradient(135deg, #06B6D4, #22D3EE)", borderColor: "#3B82F6" },
+    { initial: "P", name: "Patchwork", desc: "Artisan goods marketplace", sector: "Marketplace", sectorColor: "#22C55E", gradient: "linear-gradient(135deg, #22C55E, #4ADE80)", borderColor: "#22C55E" },
+    { initial: "S", name: "SignalFi", desc: "Real-time fraud detection", sector: "Fintech", sectorColor: "#06B6D4", gradient: "linear-gradient(135deg, #8B5CF6, #A78BFA)", borderColor: "#8B5CF6" },
+    { initial: "D", name: "DeepCure", desc: "Drug discovery with ML", sector: "BioTech", sectorColor: "#EC4899", gradient: "linear-gradient(135deg, #EC4899, #F472B6)", borderColor: "#EC4899" },
+    { initial: "V", name: "VaultSync", desc: "Decentralized data mesh", sector: "Infra", sectorColor: "#F59E0B", gradient: "linear-gradient(135deg, #F59E0B, #FBBF24)", borderColor: "#F59E0B" },
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFeedIndex((prev) => (prev + 1) % allStartups.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [allStartups.length]);
+
+  const visibleStartups = [
+    allStartups[feedIndex % allStartups.length],
+    allStartups[(feedIndex + 1) % allStartups.length],
+    allStartups[(feedIndex + 2) % allStartups.length],
+  ];
+
   return (
-    <div className="w-full h-full relative" style={{
-      fontSize: "0",
-      background: "linear-gradient(180deg, #0A0E1A 0%, #111827 100%)",
+    <div style={{
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      background: "linear-gradient(180deg, #0A0E1A 0%, #0F172A 100%)",
+      fontSize: 0,
     }}>
       {/* Status bar */}
       <StatusBar />
 
       {/* Greeting */}
-      <div style={{ padding: "8px 10px 4px" }}>
-        <div style={{ fontSize: "9px", fontWeight: 600, color: "#F8FAFC", fontFamily: font }}>
+      <div style={{ padding: "6px 10px 3px" }}>
+        <div style={{ fontSize: "9px", fontWeight: 700, color: "#F8FAFC", fontFamily: font, letterSpacing: "-0.2px" }}>
           Good afternoon, Jordan
         </div>
         <div style={{
-          marginTop: "4px",
+          marginTop: "3px",
           display: "inline-flex",
           alignItems: "center",
-          gap: "4px",
-          background: "rgba(6,182,212,0.12)",
+          gap: "3px",
+          background: "rgba(6,182,212,0.15)",
           border: "1px solid rgba(6,182,212,0.2)",
           borderRadius: "9999px",
-          padding: "2px 8px",
+          padding: "2px 7px",
         }}>
           <BriefcaseIcon />
-          <span style={{ fontSize: "6px", color: "#22D3EE", fontWeight: 600, fontFamily: font }}>Investor</span>
-          <span style={{ fontSize: "6px", color: "rgba(255,255,255,0.25)" }}>&#183;</span>
-          <span style={{ fontSize: "6px", color: "rgba(255,255,255,0.4)", fontFamily: font }}>AI/ML, Fintech, SaaS</span>
+          <span style={{ fontSize: "5.5px", color: "#22D3EE", fontWeight: 600, fontFamily: font }}>Investor</span>
+          <span style={{ fontSize: "5.5px", color: "rgba(255,255,255,0.25)" }}>&#183;</span>
+          <span style={{ fontSize: "5.5px", color: "rgba(255,255,255,0.4)", fontFamily: font }}>AI/ML, Fintech</span>
         </div>
       </div>
 
       {/* Stats card */}
       <div style={{
-        margin: "6px 10px",
-        padding: "8px",
+        margin: "5px 10px",
+        padding: "7px 8px",
         ...glassCard,
       }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px 4px", textAlign: "center" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "2px", textAlign: "center" }}>
           {[
             { num: "14", label: "IN FEED", trend: "+3" },
             { num: "5", label: "INTERESTED", trend: "+2" },
@@ -203,104 +230,117 @@ function InvestorScreen() {
             { num: "2", label: "SCHEDULED", trend: "New" },
           ].map((s) => (
             <div key={s.label} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <div style={{ fontSize: "14px", fontWeight: 600, color: "#F8FAFC", fontFamily: font, lineHeight: 1 }}>{s.num}</div>
-              <div style={{ fontSize: "4px", color: "rgba(255,255,255,0.35)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.3px", marginTop: "2px" }}>{s.label}</div>
+              <div style={{ fontSize: "12px", fontWeight: 700, color: "#F8FAFC", fontFamily: font, lineHeight: 1 }}>{s.num}</div>
+              <div style={{ fontSize: "3.5px", color: "rgba(255,255,255,0.4)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.3px", marginTop: "2px" }}>{s.label}</div>
               <TrendPill value={s.trend} />
             </div>
           ))}
         </div>
 
         {/* Engagement bar */}
-        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "6px", paddingTop: "6px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-          <span style={{ fontSize: "5px", color: "rgba(255,255,255,0.35)", fontFamily: font }}>Engagement</span>
-          <div style={{ flex: 1, height: "4px", borderRadius: "9999px", background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "5px", marginTop: "5px", paddingTop: "5px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          <span style={{ fontSize: "4.5px", color: "rgba(255,255,255,0.4)", fontFamily: font, whiteSpace: "nowrap" }}>Engagement</span>
+          <div style={{ flex: 1, height: "3px", borderRadius: "9999px", background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
             <div style={{ width: "94%", height: "100%", borderRadius: "9999px", background: "linear-gradient(90deg, #06B6D4, #22D3EE)" }} />
           </div>
-          <span style={{ fontSize: "6px", color: "#22D3EE", fontWeight: 600, fontFamily: font }}>94/100</span>
+          <span style={{ fontSize: "5.5px", color: "#22D3EE", fontWeight: 700, fontFamily: font }}>94/100</span>
         </div>
       </div>
 
-      {/* Feed section */}
-      <div style={{ padding: "4px 10px 2px" }}>
+      {/* Feed section - flex-1 to fill available space */}
+      <div style={{ flex: 1, padding: "3px 10px 2px", display: "flex", flexDirection: "column", minHeight: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "4px", marginBottom: "4px" }}>
-          <span style={{ fontSize: "7px", fontWeight: 600, color: "#F8FAFC", fontFamily: font }}>Your Feed</span>
+          <span style={{ fontSize: "7px", fontWeight: 700, color: "#F8FAFC", fontFamily: font }}>Your Feed</span>
           <span style={{
             fontSize: "4px", color: "#22D3EE", background: "rgba(6,182,212,0.15)",
-            borderRadius: "9999px", padding: "1px 4px", fontWeight: 600, fontFamily: font,
+            borderRadius: "9999px", padding: "1px 5px", fontWeight: 600, fontFamily: font,
           }}>New</span>
         </div>
-        {[
-          { initial: "N", name: "NovaBridge", desc: "AI tutoring platform", sector: "EdTech", sectorColor: "#3B82F6", gradient: "linear-gradient(135deg, #06B6D4, #22D3EE)" },
-          { initial: "P", name: "Patchwork", desc: "Artisan marketplace", sector: "Marketplace", sectorColor: "#22C55E", gradient: "linear-gradient(135deg, #22C55E, #4ADE80)" },
-          { initial: "S", name: "SignalFi", desc: "Fraud detection", sector: "Fintech", sectorColor: "#06B6D4", gradient: "linear-gradient(135deg, #8B5CF6, #A78BFA)" },
-        ].map((c) => (
-          <div key={c.name} style={{
-            display: "flex", alignItems: "center", gap: "5px", marginBottom: "4px",
-            padding: "5px 8px",
-            background: "rgba(255,255,255,0.04)",
-            borderRadius: "8px",
-          }}>
-            <div style={{
-              width: "8px", height: "8px", borderRadius: "50%", background: c.gradient, flexShrink: 0,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "4px", fontWeight: 700, color: "#fff", fontFamily: font,
-            }}>{c.initial}</div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: "6px", color: "#F8FAFC", fontFamily: font, fontWeight: 600 }}>{c.name}</div>
-              <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.desc}</div>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "3px", overflow: "hidden" }}>
+          {visibleStartups.map((c, idx) => (
+            <div
+              key={`${feedIndex}-${c.name}`}
+              className={idx === 2 ? "phone-feed-row-3" : ""}
+              style={{
+                display: "flex", alignItems: "center", gap: "5px",
+                padding: "5px 7px",
+                background: "rgba(255,255,255,0.04)",
+                borderRadius: "8px",
+                borderLeft: `2px solid ${c.borderColor}`,
+                flex: 1,
+                minHeight: 0,
+                animation: `feed-slide-in 4s ease-in-out infinite`,
+                animationDelay: `${idx * 0.15}s`,
+              }}
+            >
+              <div style={{
+                width: "14px", height: "14px", borderRadius: "50%", background: c.gradient, flexShrink: 0,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "5.5px", fontWeight: 700, color: "#fff", fontFamily: font,
+              }}>{c.initial}</div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: "6.5px", color: "#F8FAFC", fontFamily: font, fontWeight: 700 }}>{c.name}</div>
+                <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.45)", fontFamily: font, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.desc}</div>
+              </div>
+              <span style={{
+                fontSize: "4px", color: c.sectorColor, background: `${c.sectorColor}1A`,
+                borderRadius: "9999px", padding: "1.5px 5px", fontFamily: font, fontWeight: 600, flexShrink: 0,
+              }}>{c.sector}</span>
             </div>
-            <span style={{
-              fontSize: "4px", color: c.sectorColor, background: `${c.sectorColor}1A`,
-              borderRadius: "9999px", padding: "1px 4px", fontFamily: font, fontWeight: 500, flexShrink: 0,
-            }}>{c.sector}</span>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* Queue section */}
-      <div style={{ padding: "4px 10px" }}>
+      <div style={{ padding: "3px 10px 4px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "3px", marginBottom: "4px" }}>
-          <span style={{ fontSize: "7px", fontWeight: 600, color: "#F8FAFC", fontFamily: font }}>Meeting Queue</span>
+          <span style={{ fontSize: "7px", fontWeight: 700, color: "#F8FAFC", fontFamily: font }}>Meeting Queue</span>
           <ClockIcon />
         </div>
         {[
           { pos: "1", name: "Luminary AI", status: "ACTIVE", isActive: true, time: "47h", avatar: "linear-gradient(135deg, #3B82F6, #60A5FA)", posBg: "linear-gradient(135deg, #06B6D4, #22D3EE)" },
           { pos: "2", name: "Terraform Health", status: "Next", isActive: false, time: "", avatar: "linear-gradient(135deg, #8B5CF6, #A78BFA)", posBg: "rgba(255,255,255,0.1)" },
         ].map((q) => (
-          <div key={q.pos} style={{ display: "flex", alignItems: "center", gap: "4px", marginBottom: "3px" }}>
+          <div key={q.pos} className={q.isActive ? "glow-pulse-teal" : ""} style={{
+            display: "flex", alignItems: "center", gap: "4px", marginBottom: "3px",
+            padding: "5px 7px",
+            background: "rgba(255,255,255,0.04)",
+            borderRadius: "8px",
+            borderLeft: q.isActive ? "2px solid #22D3EE" : "2px solid transparent",
+          }}>
             <div style={{
-              width: "10px", height: "10px", borderRadius: "50%",
+              width: "12px", height: "12px", borderRadius: "50%",
               background: q.posBg, flexShrink: 0,
               display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "5px", fontWeight: 700, color: q.isActive ? "#fff" : "rgba(255,255,255,0.5)", fontFamily: font,
+              fontSize: "5.5px", fontWeight: 700, color: q.isActive ? "#fff" : "rgba(255,255,255,0.5)", fontFamily: font,
             }}>{q.pos}</div>
             <div style={{
-              width: "8px", height: "8px", borderRadius: "50%",
+              width: "10px", height: "10px", borderRadius: "50%",
               background: q.avatar, flexShrink: 0,
             }} />
-            <span style={{ fontSize: "6px", color: "#F8FAFC", fontFamily: font, fontWeight: 600, flex: 1 }}>{q.name}</span>
+            <span style={{ fontSize: "6.5px", color: "#F8FAFC", fontFamily: font, fontWeight: 600, flex: 1 }}>{q.name}</span>
             {q.isActive ? (
               <>
-                <span style={{
+                <span className="active-pulse" style={{
                   fontSize: "4px", color: "#34D399", background: "rgba(52,211,153,0.15)",
-                  borderRadius: "9999px", padding: "1px 4px", fontWeight: 600, fontFamily: font,
+                  borderRadius: "9999px", padding: "1.5px 5px", fontWeight: 600, fontFamily: font,
                 }}>ACTIVE</span>
-                <span style={{ fontSize: "5px", color: "#22D3EE", fontFamily: font, fontWeight: 600 }}>{q.time}</span>
+                <span style={{ fontSize: "5.5px", color: "#22D3EE", fontFamily: font, fontWeight: 700 }}>{q.time}</span>
               </>
             ) : (
-              <span style={{ fontSize: "5px", color: "rgba(255,255,255,0.3)", fontFamily: font }}>{q.status}</span>
+              <span style={{ fontSize: "5px", color: "rgba(255,255,255,0.35)", fontFamily: font }}>{q.status}</span>
             )}
           </div>
         ))}
       </div>
 
-      {/* Bottom tab bar */}
+      {/* Bottom tab bar - pinned to bottom */}
       <div style={{
-        position: "absolute", bottom: "16px", left: 0, right: 0,
         display: "flex", justifyContent: "space-around", alignItems: "center",
-        padding: "5px 12px 2px",
+        padding: "5px 12px 8px",
         borderTop: "1px solid rgba(255,255,255,0.06)",
-        background: "rgba(255,255,255,0.05)",
+        background: "rgba(255,255,255,0.03)",
+        flexShrink: 0,
       }}>
         {[
           { icon: <HomeTabIcon color="#22D3EE" />, label: "Home" },
