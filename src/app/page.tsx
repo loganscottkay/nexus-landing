@@ -1216,6 +1216,38 @@ export default function Home() {
               </MagneticButton>
             </motion.div>
 
+            {/* Credibility strip */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 2.0, ease }}
+              className="flex flex-col items-center mt-5 mb-4"
+            >
+              <div className="flex items-center gap-3">
+                {/* BU Shield */}
+                <svg width="24" height="24" viewBox="0 0 24 28" fill="none" className="h-[20px] w-auto md:h-[24px]">
+                  <path d="M12 0C5.5 0 0 2 0 2v16c0 4 4.5 8 12 10 7.5-2 12-6 12-10V2S18.5 0 12 0z" fill="#CC0000"/>
+                  <text x="12" y="17" textAnchor="middle" fill="white" fontSize="7" fontFamily="var(--font-dm-sans), sans-serif" fontWeight="700">BU</text>
+                </svg>
+                {/* NEU Shield */}
+                <svg width="24" height="24" viewBox="0 0 24 28" fill="none" className="h-[20px] w-auto md:h-[24px]">
+                  <path d="M12 0C5.5 0 0 2 0 2v16c0 4 4.5 8 12 10 7.5-2 12-6 12-10V2S18.5 0 12 0z" fill="#D41B2C"/>
+                  <text x="12" y="17" textAnchor="middle" fill="white" fontSize="6" fontFamily="var(--font-dm-sans), sans-serif" fontWeight="700">NEU</text>
+                </svg>
+                {/* HBS Shield */}
+                <svg width="24" height="24" viewBox="0 0 24 28" fill="none" className="h-[20px] w-auto md:h-[24px]">
+                  <path d="M12 0C5.5 0 0 2 0 2v16c0 4 4.5 8 12 10 7.5-2 12-6 12-10V2S18.5 0 12 0z" fill="#A51C30"/>
+                  <text x="12" y="17" textAnchor="middle" fill="white" fontSize="6" fontFamily="var(--font-dm-sans), sans-serif" fontWeight="700">HBS</text>
+                </svg>
+              </div>
+              <p
+                className="mt-2 text-[12px] md:text-[13px]"
+                style={{ color: "rgba(0,0,0,0.35)", letterSpacing: "0.5px", fontFamily: "var(--font-dm-sans), sans-serif" }}
+              >
+                Built in Boston &middot; BU &times; Northeastern &times; HBS
+              </p>
+            </motion.div>
+
             {/* Scroll-down indicator */}
             <ScrollDownIndicator />
           </div>
@@ -1282,20 +1314,91 @@ export default function Home() {
       </Section>
 
       {/* ============ FOOTER ============ */}
-      <footer className="relative z-10">
-        <div>
-          <div className="max-w-7xl mx-auto px-6 md:px-12 py-8 flex flex-col items-center gap-4">
-            <Link
-              href="/"
-              className="text-[18px] font-normal text-text-primary"
-              style={{ fontFamily: "'Instrument Serif', serif" }}
-            >
-              UrgenC
-            </Link>
-            <p className="text-[12px] text-center max-w-[600px]" style={{ color: "#94A3B8" }}>
+      <footer className="relative z-10" style={{ borderTop: "1px solid rgba(0,0,0,0.04)" }}>
+        <div className="max-w-[1100px] mx-auto px-6 md:px-12 pt-[60px] pb-[40px] max-md:pt-[40px] max-md:pb-[30px]">
+          {/* 4-column grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 max-md:text-center">
+            {/* Column 1 — Brand */}
+            <div className="flex flex-col max-md:items-center gap-2">
+              <Link
+                href="/"
+                className="text-[24px] font-normal"
+                style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
+              >
+                UrgenC
+              </Link>
+              <p className="text-[14px]" style={{ color: "rgba(0,0,0,0.4)", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                Where Real Ideas Meet Real Capital.
+              </p>
+              <p className="text-[13px]" style={{ color: "rgba(0,0,0,0.3)", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                Built in Boston
+              </p>
+            </div>
+
+            {/* Column 2 — Product */}
+            <div className="flex flex-col max-md:items-center gap-3">
+              <h4
+                className="text-[13px] font-semibold uppercase"
+                style={{ letterSpacing: "1.5px", color: "rgba(0,0,0,0.3)", fontFamily: "var(--font-dm-sans), sans-serif" }}
+              >
+                Product
+              </h4>
+              <div className="flex flex-col gap-[10px]">
+                <Link href="/waitlist" className="text-[14px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  Join the Waitlist
+                </Link>
+                <Link href="/qualifications/startup" className="text-[14px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  Startup Qualifications
+                </Link>
+                <Link href="/qualifications/investor" className="text-[14px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  Investor Qualifications
+                </Link>
+              </div>
+            </div>
+
+            {/* Column 3 — Company */}
+            <div className="flex flex-col max-md:items-center gap-3">
+              <h4
+                className="text-[13px] font-semibold uppercase"
+                style={{ letterSpacing: "1.5px", color: "rgba(0,0,0,0.3)", fontFamily: "var(--font-dm-sans), sans-serif" }}
+              >
+                Company
+              </h4>
+              <div className="flex flex-col gap-[10px]">
+                <Link href="/story" className="text-[14px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  About
+                </Link>
+                <a href="mailto:hello@urgenc.com" className="text-[14px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  Contact
+                </a>
+              </div>
+            </div>
+
+            {/* Column 4 — Legal */}
+            <div className="flex flex-col max-md:items-center gap-3">
+              <h4
+                className="text-[13px] font-semibold uppercase"
+                style={{ letterSpacing: "1.5px", color: "rgba(0,0,0,0.3)", fontFamily: "var(--font-dm-sans), sans-serif" }}
+              >
+                Legal
+              </h4>
+              <div className="flex flex-col gap-[10px]">
+                <span className="text-[14px]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  Terms of Service
+                </span>
+                <span className="text-[14px]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  Privacy Policy
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Divider + Disclaimer + Copyright */}
+          <div className="mt-12" style={{ borderTop: "1px solid rgba(0,0,0,0.04)" }}>
+            <p className="text-[12px] text-center max-w-[600px] mx-auto mt-8" style={{ color: "#94A3B8" }}>
               UrgenC is a matching and meeting platform. We do not provide investment advice, facilitate financial transactions, or act as a broker-dealer. All investment decisions and transactions occur off-platform between the parties involved.
             </p>
-            <p className="text-text-muted/60 text-[13px]">
+            <p className="text-center text-[13px] mt-4" style={{ color: "rgba(0,0,0,0.25)" }}>
               &copy; 2026 UrgenC. All rights reserved.
             </p>
           </div>
