@@ -588,60 +588,52 @@ const MiniIllustration1 = () => (
   </div>
 );
 
-/* Mini illustration for Card 2: filter pills + filtered feed cards */
+/* Mini illustration for Card 2: filter pills + arrow + filtered result */
 const MiniIllustration2 = () => (
-  <div className="flex flex-col items-center justify-center mt-4 h-[60px] md:h-[60px] max-sm:h-[50px] gap-1.5">
+  <div className="flex flex-col items-center justify-center mt-4 h-[48px] gap-1">
     <div className="flex gap-1.5">
-      <span className="px-2 py-0.5 rounded-full text-[8px]" style={{ background: 'rgba(99,102,241,0.25)', color: 'rgba(99,102,241,0.6)' }}>AI/ML</span>
-      <span className="px-2 py-0.5 rounded-full text-[8px]" style={{ background: 'rgba(99,102,241,0.25)', color: 'rgba(99,102,241,0.6)' }}>Fintech</span>
-      <span className="px-2 py-0.5 rounded-full text-[8px]" style={{ background: 'rgba(99,102,241,0.1)', color: 'rgba(99,102,241,0.3)' }}>SaaS</span>
-    </div>
-    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-      <path d="M5 2 L5 8 M3 6 L5 8 L7 6" stroke="rgba(99,102,241,0.3)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-    <div className="flex gap-2">
-      <div className="w-[24px] h-[16px] rounded-sm" style={{ background: 'rgba(99,102,241,0.2)', border: '1px solid rgba(99,102,241,0.15)' }} />
-      <div className="w-[24px] h-[16px] rounded-sm" style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.1)' }} />
-    </div>
-  </div>
-);
-
-/* Mini illustration for Card 3: two circles with match heart */
-const MiniIllustration3 = () => (
-  <div className="flex items-center justify-center mt-4 h-[60px] md:h-[60px] max-sm:h-[50px] gap-2">
-    <div className="w-[22px] h-[22px] rounded-full" style={{ background: 'rgba(212,175,55,0.2)', border: '1.5px solid rgba(212,175,55,0.3)' }} />
-    <div className="flex flex-col items-center gap-0.5">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M7 12 C7 12 1.5 8 1.5 4.5 C1.5 2.5 3 1.5 4.5 1.5 C5.5 1.5 6.5 2 7 3 C7.5 2 8.5 1.5 9.5 1.5 C11 1.5 12.5 2.5 12.5 4.5 C12.5 8 7 12 7 12Z" fill="rgba(212,175,55,0.35)" stroke="rgba(212,175,55,0.4)" strokeWidth="0.8" />
-      </svg>
-      <div className="flex items-center gap-0">
-        <div className="w-[10px] h-0 border-t border-dashed" style={{ borderColor: 'rgba(212,175,55,0.3)' }} />
-        <div className="w-[10px] h-0 border-t" style={{ borderColor: 'rgba(212,175,55,0.4)' }} />
+      <div className="px-2 py-0.5 rounded-full" style={{ background: 'rgba(99,102,241,0.25)' }}>
+        <span className="text-[7px]" style={{ color: 'rgba(99,102,241,0.6)' }}>&nbsp;</span>
+      </div>
+      <div className="px-2 py-0.5 rounded-full" style={{ background: 'rgba(99,102,241,0.25)' }}>
+        <span className="text-[7px]" style={{ color: 'rgba(99,102,241,0.6)' }}>&nbsp;</span>
+      </div>
+      <div className="px-2 py-0.5 rounded-full" style={{ border: '1px solid rgba(99,102,241,0.12)' }}>
+        <span className="text-[7px]" style={{ color: 'transparent' }}>&nbsp;</span>
       </div>
     </div>
-    <div className="w-[22px] h-[22px] rounded-full" style={{ background: 'rgba(212,175,55,0.2)', border: '1.5px solid rgba(212,175,55,0.3)' }} />
+    <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+      <path d="M4 1 L4 6 M2.5 4.5 L4 6 L5.5 4.5" stroke="rgba(99,102,241,0.2)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+    <div className="w-[32px] h-[10px] rounded" style={{ background: 'rgba(99,102,241,0.1)' }} />
   </div>
 );
 
-/* Mini illustration for Card 4: calendar + 72h + video call avatars */
+/* Mini illustration for Card 3: two circles with connecting line and match dot */
+const MiniIllustration3 = () => (
+  <div className="flex items-center justify-center mt-4 h-[48px]">
+    <div className="flex items-center">
+      <div className="w-[20px] h-[20px] rounded-full" style={{ background: 'rgba(139,92,246,0.2)' }} />
+      <div className="relative w-[28px] h-[2px] flex items-center justify-center">
+        <div className="absolute inset-0 top-1/2 -translate-y-1/2 h-[1px]" style={{ background: 'rgba(212,175,55,0.3)' }} />
+        <div className="relative w-[6px] h-[6px] rounded-full" style={{ background: 'rgba(212,175,55,0.4)' }} />
+      </div>
+      <div className="w-[20px] h-[20px] rounded-full" style={{ background: 'rgba(99,102,241,0.2)' }} />
+    </div>
+  </div>
+);
+
+/* Mini illustration for Card 4: calendar with checkmark + 72h */
 const MiniIllustration4 = () => (
-  <div className="flex flex-col items-center justify-center mt-4 h-[60px] md:h-[60px] max-sm:h-[50px] gap-1.5">
-    <div className="flex items-center gap-2">
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <rect x="1" y="3" width="16" height="14" rx="2" stroke="rgba(5,150,105,0.3)" strokeWidth="1.2" />
-        <line x1="1" y1="7" x2="17" y2="7" stroke="rgba(5,150,105,0.2)" strokeWidth="1" />
-        <polyline points="6 10.5 8 12.5 12.5 8" stroke="rgba(5,150,105,0.4)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      </svg>
-      <span className="text-[10px] font-semibold" style={{ color: 'rgba(5,150,105,0.4)' }}>72h</span>
-    </div>
-    <div className="flex items-center gap-1.5">
-      <div className="w-[16px] h-[16px] rounded-full" style={{ background: 'rgba(5,150,105,0.2)', border: '1px solid rgba(5,150,105,0.25)' }} />
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <rect x="1" y="3" width="12" height="8" rx="1.5" stroke="rgba(5,150,105,0.3)" strokeWidth="1" />
-        <circle cx="7" cy="7" r="2" fill="rgba(5,150,105,0.25)" />
-      </svg>
-      <div className="w-[16px] h-[16px] rounded-full" style={{ background: 'rgba(5,150,105,0.2)', border: '1px solid rgba(5,150,105,0.25)' }} />
-    </div>
+  <div className="flex items-center justify-center mt-4 h-[48px] gap-2">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <rect x="2" y="4" width="20" height="18" rx="2.5" stroke="rgba(5,150,105,0.25)" strokeWidth="1.2" />
+      <line x1="2" y1="9" x2="22" y2="9" stroke="rgba(5,150,105,0.15)" strokeWidth="1" />
+      <line x1="7" y1="2" x2="7" y2="6" stroke="rgba(5,150,105,0.2)" strokeWidth="1.2" strokeLinecap="round" />
+      <line x1="17" y1="2" x2="17" y2="6" stroke="rgba(5,150,105,0.2)" strokeWidth="1.2" strokeLinecap="round" />
+      <polyline points="8 15 10.5 17.5 16 12" stroke="rgba(5,150,105,0.3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    </svg>
+    <span className="text-[12px] font-medium" style={{ color: 'rgba(5,150,105,0.3)', fontFamily: 'DM Sans, sans-serif' }}>72h</span>
   </div>
 );
 
