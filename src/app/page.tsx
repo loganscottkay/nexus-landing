@@ -1292,24 +1292,24 @@ export default function Home() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 2.3, ease }}
-              className="flex flex-col items-center mt-7 mb-4"
+              className="flex flex-col items-center mt-8 mb-6"
             >
-              <div className="flex items-center gap-[24px]">
+              <div className="flex items-center gap-[24px] md:gap-[36px]">
                 {/* BU Logo */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 2.3, ease }}
-                  style={{ animation: "floatLogo1 3.5s ease-in-out infinite" }}
-                  className="h-[32px] md:h-[40px] flex items-center justify-center"
+                  style={{ animation: "floatLogo1 3.5s ease-in-out infinite", filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.06))" }}
+                  className="h-[36px] md:h-[48px] flex items-center justify-center"
                 >
                   <img
-                    src="/images/universities/bu-logo.jpg"
+                    src="/images/universities/bu-logo.png"
                     alt="Boston University"
-                    className="h-full w-auto object-contain transition-opacity duration-300"
-                    style={{ opacity: 0.7 }}
+                    className="h-full w-auto object-contain transition-all duration-300 hover:scale-[1.08]"
+                    style={{ opacity: 0.8 }}
                     onMouseEnter={(e) => { (e.target as HTMLImageElement).style.opacity = "1"; }}
-                    onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.7"; }}
+                    onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.8"; }}
                   />
                 </motion.div>
                 {/* NEU Logo */}
@@ -1317,17 +1317,17 @@ export default function Home() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 2.4, ease }}
-                  style={{ animation: "floatLogo2 4.0s ease-in-out infinite", animationDelay: "-0.5s" }}
+                  style={{ animation: "floatLogo2 4.0s ease-in-out infinite", animationDelay: "-0.5s", filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.06))" }}
                   className="flex items-center justify-center"
                 >
-                  <div className="w-[36px] h-[36px] md:w-[44px] md:h-[44px] bg-white rounded-full flex items-center justify-center overflow-hidden">
+                  <div className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center overflow-hidden">
                     <img
                       src="/images/universities/neu-logo.png"
                       alt="Northeastern University"
-                      className="h-[24px] md:h-[30px] w-auto object-contain transition-opacity duration-300"
-                      style={{ opacity: 0.7 }}
+                      className="h-[36px] w-auto object-contain transition-all duration-300 hover:scale-[1.08]"
+                      style={{ opacity: 0.8 }}
                       onMouseEnter={(e) => { (e.target as HTMLImageElement).style.opacity = "1"; }}
-                      onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.7"; }}
+                      onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.8"; }}
                     />
                   </div>
                 </motion.div>
@@ -1336,19 +1336,31 @@ export default function Home() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 2.5, ease }}
-                  style={{ animation: "floatLogo3 3.8s ease-in-out infinite", animationDelay: "-1.0s" }}
-                  className="h-[32px] md:h-[40px] flex items-center justify-center"
+                  style={{ animation: "floatLogo3 3.8s ease-in-out infinite", animationDelay: "-1.0s", filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.06))" }}
+                  className="h-[36px] md:h-[48px] flex items-center justify-center"
                 >
                   <img
                     src="/images/universities/hbs-logo.png"
                     alt="Harvard Business School"
-                    className="h-full w-auto object-contain transition-opacity duration-300"
-                    style={{ opacity: 0.7 }}
+                    className="h-full w-auto object-contain transition-all duration-300 hover:scale-[1.08]"
+                    style={{ opacity: 0.8 }}
                     onMouseEnter={(e) => { (e.target as HTMLImageElement).style.opacity = "1"; }}
-                    onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.7"; }}
+                    onMouseLeave={(e) => { (e.target as HTMLImageElement).style.opacity = "0.8"; }}
                   />
                 </motion.div>
               </div>
+              <p
+                style={{
+                  fontFamily: "'Instrument Serif', serif",
+                  fontSize: "16px",
+                  fontStyle: "italic",
+                  color: "rgba(0,0,0,0.3)",
+                  letterSpacing: "1px",
+                  marginTop: "16px",
+                }}
+              >
+                Built in Boston
+              </p>
             </motion.div>
 
             {/* Scroll-down indicator */}
