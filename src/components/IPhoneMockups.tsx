@@ -598,15 +598,27 @@ function IPhoneFrame({
             zIndex: 1,
           }}
         >
-          {/* Outer phone frame */}
-          <div
-            className="iphone-frame-outer"
-            style={{
-              width: "var(--phone-width)",
-              height: "var(--phone-height)",
-              borderRadius: "48px",
-              background: "#1C1C1E",
-              padding: "10px",
+          {/* Scale wrapper for proportional sizing */}
+          <div style={{
+            width: "var(--phone-width)",
+            height: "var(--phone-height)",
+            position: "relative",
+          }}>
+            <div style={{
+              width: "260px",
+              height: "530px",
+              transform: "scale(var(--phone-scale))",
+              transformOrigin: "top left",
+            }}>
+              {/* Outer phone frame */}
+              <div
+                className="iphone-frame-outer"
+                style={{
+                  width: "260px",
+                  height: "530px",
+                  borderRadius: "48px",
+                  background: "#1C1C1E",
+                  padding: "10px",
               position: "relative",
               boxShadow: hovered
                 ? "0 35px 90px rgba(0,0,0,0.25), 0 10px 30px rgba(0,0,0,0.1)"
@@ -687,6 +699,8 @@ function IPhoneFrame({
               }} />
             </div>
           </div>
+            </div>
+          </div>
         </div>
       </Link>
 
@@ -731,9 +745,10 @@ export default function IPhoneMockups() {
       className="relative z-10 iphone-section pt-[80px] pb-[60px] lg:py-20"
       style={{
         /* CSS custom properties for responsive sizing */
-        ["--phone-width" as string]: "260px",
-        ["--phone-height" as string]: "530px",
-        ["--phone-gap" as string]: "48px",
+        ["--phone-width" as string]: "230px",
+        ["--phone-height" as string]: "469px",
+        ["--phone-gap" as string]: "44px",
+        ["--phone-scale" as string]: "0.8846",
         ["--label-size" as string]: "16px",
         ["--sublabel-size" as string]: "13px",
       }}

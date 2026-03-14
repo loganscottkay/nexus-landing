@@ -1191,9 +1191,10 @@ body {
 /* Mobile: stack vertically, smaller phones, no sparkles */
 @media (max-width: 767px) {
   .iphone-section {
-    --phone-width: 220px !important;
-    --phone-height: 449px !important;
+    --phone-width: 200px !important;
+    --phone-height: 408px !important;
     --phone-gap: 28px !important;
+    --phone-scale: 0.7692 !important;
     --label-size: 14px !important;
     --sublabel-size: 12px !important;
   }
@@ -1203,21 +1204,33 @@ body {
   }
 }
 
-/* Tablet: slightly smaller phones */
+/* Tablet */
 @media (min-width: 768px) and (max-width: 1023px) {
   .iphone-section {
-    --phone-width: 240px !important;
-    --phone-height: 490px !important;
+    --phone-width: 220px !important;
+    --phone-height: 449px !important;
     --phone-gap: 36px !important;
+    --phone-scale: 0.8462 !important;
   }
 }
 
-/* Large desktop: slightly bigger phones */
+/* Large desktop */
+@media (min-width: 1280px) {
+  .iphone-section {
+    --phone-width: 250px !important;
+    --phone-height: 510px !important;
+    --phone-gap: 48px !important;
+    --phone-scale: 0.9615 !important;
+  }
+}
+
+/* Extra large desktop */
 @media (min-width: 1440px) {
   .iphone-section {
-    --phone-width: 280px !important;
-    --phone-height: 571px !important;
-    --phone-gap: 48px !important;
+    --phone-width: 260px !important;
+    --phone-height: 530px !important;
+    --phone-gap: 52px !important;
+    --phone-scale: 1 !important;
   }
 }
 
