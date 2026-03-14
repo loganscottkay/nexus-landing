@@ -62,7 +62,6 @@ export default function StoryPage() {
   const founderRef = useRef<HTMLDivElement>(null);
   const [foundersRevealed, setFoundersRevealed] = useState(false);
   const reducedMotion = useReducedMotion();
-  const [dotPulsing, setDotPulsing] = useState<number | null>(null);
 
   // Scroll-driven progress for the timeline
   const updateScroll = useCallback(() => {
@@ -83,9 +82,6 @@ export default function StoryPage() {
           if (prev.has(i)) return prev;
           const next = new Set(prev);
           next.add(i);
-          // Trigger dot pulse
-          setDotPulsing(i);
-          setTimeout(() => setDotPulsing(null), 300);
           return next;
         });
       }
@@ -147,8 +143,63 @@ export default function StoryPage() {
     return () => observers.forEach((o) => o.disconnect());
   }, [reducedMotion]);
 
-  // Calculate dot position as percentage of timeline
-  const dotScale = dotPulsing !== null ? 1.4 : 1;
+  // Card mouse-follow glow handler
+  const handleCardMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
+  }, []);
+
+  // Render a glassmorphic story card
+  const renderCard = (milestone: typeof milestones[number], i: number, align: "left" | "right", isMobile?: boolean) => {
+    const isRevealed = revealedCards.has(i) || reducedMotion;
+    const isActivated = activatedMilestones.has(i) || reducedMotion;
+    const isLeft = milestone.side === "left";
+
+    const slideX = isMobile ? 25 : 40;
+    const translateFrom = isLeft && !isMobile ? -slideX : slideX;
+
+    return (
+      <div
+        className={`story-card${isRevealed ? " story-card--revealed" : ""}${isActivated ? " story-card--activated" : ""}`}
+        onMouseMove={handleCardMouseMove}
+        style={{
+          maxWidth: isMobile ? "calc(100% - 40px)" : "420px",
+          width: "100%",
+          padding: isMobile ? "24px" : "32px",
+          borderRadius: isMobile ? "16px" : "20px",
+          textAlign: isMobile ? "left" : align,
+          marginLeft: isMobile ? "32px" : undefined,
+          opacity: isRevealed ? 1 : 0,
+          transform: isRevealed
+            ? "translateX(0) scale(1)"
+            : `translateX(${translateFrom}px) scale(0.97)`,
+          transition: "opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease",
+        }}
+      >
+        <h2
+          className={`story-card__title font-normal ${isMobile ? "mb-2" : "mb-3"}`}
+          style={{
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: isMobile ? "20px" : "24px",
+            color: "#0F172A",
+          }}
+        >
+          {milestone.title}
+        </h2>
+        <p
+          style={{
+            fontFamily: "var(--font-dm-sans), sans-serif",
+            fontSize: isMobile ? "14px" : "15px",
+            color: "#475569",
+            lineHeight: 1.7,
+          }}
+        >
+          {milestone.body}
+        </p>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -163,19 +214,19 @@ export default function StoryPage() {
           style={{
             top: "8%",
             right: "10%",
-            width: "450px",
-            height: "450px",
-            background: "radial-gradient(circle, rgba(74,108,247,0.045) 0%, transparent 70%)",
+            width: "400px",
+            height: "400px",
+            background: "radial-gradient(circle, rgba(99,102,241,0.04) 0%, transparent 70%)",
           }}
         />
         <div
           className="absolute rounded-full"
           style={{
-            bottom: "15%",
+            top: "45%",
             left: "5%",
-            width: "500px",
-            height: "500px",
-            background: "radial-gradient(circle, rgba(124,92,252,0.04) 0%, transparent 70%)",
+            width: "350px",
+            height: "350px",
+            background: "radial-gradient(circle, rgba(168,85,247,0.03) 0%, transparent 70%)",
           }}
         />
       </div>
@@ -185,16 +236,16 @@ export default function StoryPage() {
         <div className="max-w-[700px] mx-auto px-6 text-center mb-20">
           <div style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto' }} />
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease }}
+            transition={{ duration: 0.7, ease }}
             className="text-[40px] md:text-[48px] font-normal mb-5"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
             Our Story
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease, delay: 0.2 }}
             className="text-[17px] leading-[1.7] max-w-[500px] mx-auto"
@@ -208,27 +259,25 @@ export default function StoryPage() {
         <div className="max-w-[960px] mx-auto px-6 relative">
           <div ref={timelineRef} className="relative" style={{ paddingTop: "40px", paddingBottom: "40px" }}>
 
-            {/* === THE VERTICAL LINE (desktop) === */}
+            {/* === DOTTED BASE LINE (desktop) === */}
             <div
-              className="absolute hidden md:block"
+              className="story-timeline-dots absolute hidden md:block"
               style={{
                 left: "50%",
                 transform: "translateX(-50%)",
                 top: 0,
                 bottom: 0,
-                width: "1px",
-                background: "linear-gradient(to bottom, rgba(74,108,247,0.15) 0%, rgba(74,108,247,0.15) 92%, transparent 100%)",
+                width: "3px",
               }}
             />
-            {/* === THE VERTICAL LINE (mobile) === */}
+            {/* === DOTTED BASE LINE (mobile) === */}
             <div
-              className="absolute md:hidden"
+              className="story-timeline-dots absolute md:hidden"
               style={{
                 left: "20px",
                 top: 0,
                 bottom: 0,
-                width: "1px",
-                background: "linear-gradient(to bottom, rgba(74,108,247,0.15) 0%, rgba(74,108,247,0.15) 92%, transparent 100%)",
+                width: "3px",
               }}
             />
 
@@ -239,11 +288,12 @@ export default function StoryPage() {
                 left: "50%",
                 transform: "translateX(-50%)",
                 top: 0,
-                width: "1px",
+                width: "2px",
                 height: reducedMotion ? "100%" : `${scrollProgress * 100}%`,
-                background: "linear-gradient(180deg, #4A6CF7, #7C5CFC)",
-                boxShadow: "0 0 8px rgba(74,108,247,0.15)",
+                background: "linear-gradient(180deg, #6366F1, #8B5CF6, #A855F7)",
+                boxShadow: "0 0 8px rgba(99,102,241,0.2), 0 0 20px rgba(99,102,241,0.1)",
                 transition: reducedMotion ? "none" : undefined,
+                zIndex: 2,
               }}
             />
             {/* === SCROLL-FILL LINE (mobile) === */}
@@ -251,263 +301,129 @@ export default function StoryPage() {
               className="absolute md:hidden"
               style={{
                 left: "20px",
+                transform: "translateX(-0.5px)",
                 top: 0,
-                width: "1px",
+                width: "2px",
                 height: reducedMotion ? "100%" : `${scrollProgress * 100}%`,
-                background: "linear-gradient(180deg, #4A6CF7, #7C5CFC)",
-                boxShadow: "0 0 8px rgba(74,108,247,0.15)",
+                background: "linear-gradient(180deg, #6366F1, #8B5CF6, #A855F7)",
+                boxShadow: "0 0 8px rgba(99,102,241,0.2), 0 0 20px rgba(99,102,241,0.1)",
                 willChange: "height",
+                zIndex: 2,
               }}
             />
 
             {/* === TRACING DOT (desktop) === */}
             {!reducedMotion && (
               <div
-                className="absolute hidden md:block pointer-events-none"
+                className="story-tracing-dot absolute hidden md:flex pointer-events-none items-center justify-center"
                 style={{
                   left: "50%",
                   top: `${scrollProgress * 100}%`,
-                  transform: `translate(-50%, -50%) scale(${dotScale})`,
-                  width: "10px",
-                  height: "10px",
-                  borderRadius: "50%",
-                  background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                  border: "2px solid white",
-                  boxShadow: "0 0 12px rgba(74,108,247,0.3)",
+                  transform: "translate(-50%, -50%)",
+                  width: "24px",
+                  height: "24px",
                   zIndex: 10,
-                  willChange: "transform",
-                  transition: "transform 0.3s ease",
+                  willChange: "transform, top",
                 }}
-              />
+              >
+                {/* Outer orbiting ring */}
+                <div className="story-tracing-ring" />
+                {/* Main dot */}
+                <div className="story-tracing-core" />
+                {/* Trail afterimage */}
+                <div className="story-tracing-trail" />
+              </div>
             )}
             {/* === TRACING DOT (mobile) === */}
             {!reducedMotion && (
               <div
-                className="absolute md:hidden pointer-events-none"
+                className="story-tracing-dot story-tracing-dot--mobile absolute md:hidden flex pointer-events-none items-center justify-center"
                 style={{
                   left: "20px",
                   top: `${scrollProgress * 100}%`,
-                  transform: `translate(-50%, -50%) scale(${dotScale})`,
-                  width: "10px",
-                  height: "10px",
-                  borderRadius: "50%",
-                  background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                  border: "2px solid white",
-                  boxShadow: "0 0 12px rgba(74,108,247,0.3)",
+                  transform: "translate(-50%, -50%)",
+                  width: "20px",
+                  height: "20px",
                   zIndex: 10,
-                  willChange: "transform",
-                  transition: "transform 0.3s ease",
+                  willChange: "transform, top",
                 }}
-              />
+              >
+                <div className="story-tracing-ring story-tracing-ring--mobile" />
+                <div className="story-tracing-core story-tracing-core--mobile" />
+                <div className="story-tracing-trail story-tracing-trail--mobile" />
+              </div>
             )}
 
             {/* === MILESTONES === */}
-            <div className="flex flex-col gap-[60px] md:gap-[140px]">
+            <div className="flex flex-col" style={{ gap: "60px" }} >
+              <style>{`@media (min-width: 768px) { .story-milestones-gap { gap: 100px !important; } }`}</style>
               {milestones.map((milestone, i) => {
                 const isActivated = activatedMilestones.has(i) || reducedMotion;
-                const isRevealed = revealedCards.has(i) || reducedMotion;
                 const isLeft = milestone.side === "left";
-                // Calculate milestone position on the line (evenly spaced)
                 return (
                   <div
                     key={milestone.title}
                     ref={(el) => { cardRefs.current[i] = el; }}
-                    className="relative"
+                    className="relative story-milestones-gap"
                   >
                     {/* === MILESTONE MARKER (desktop) === */}
                     <div
-                      className={`absolute hidden md:block${isActivated ? " milestone-dot-active" : ""}`}
+                      className={`story-milestone-marker absolute hidden md:flex items-center justify-center${isActivated ? " story-milestone-marker--active" : ""}`}
                       style={{
                         left: "50%",
                         top: "24px",
                         transform: "translate(-50%, -50%)",
-                        width: isActivated ? undefined : "6px",
-                        height: isActivated ? undefined : "6px",
-                        borderRadius: "50%",
-                        background: isActivated ? undefined : "rgba(74,108,247,0.2)",
-                        border: isActivated ? undefined : "1px solid rgba(74,108,247,0.15)",
-                        boxShadow: isActivated ? undefined : "none",
-                        transition: isActivated ? undefined : "all 0.4s ease",
                         zIndex: 5,
                       }}
-                    />
-                    {/* Sparkles (desktop) */}
+                    >
+                      {/* Inner shape (diamond when inactive) */}
+                      {!isActivated && <div className="story-milestone-diamond" />}
+                      {/* Orbiting ring when active */}
+                      {isActivated && <div className="story-milestone-ring" />}
+                    </div>
+                    {/* Particles (desktop) */}
                     <div
-                      className={`milestone-sparkle-container hidden md:block${isActivated ? " active" : ""}`}
+                      className={`story-particle-container hidden md:block${isActivated ? " active" : ""}`}
                       style={{ left: "50%", top: "24px" }}
                     >
-                      <span /><span /><span /><span /><span />
+                      <span /><span /><span /><span /><span /><span /><span /><span />
                     </div>
+
                     {/* === MILESTONE MARKER (mobile) === */}
                     <div
-                      className={`absolute md:hidden${isActivated ? " milestone-dot-active milestone-dot-mobile" : ""}`}
+                      className={`story-milestone-marker story-milestone-marker--mobile absolute md:hidden flex items-center justify-center${isActivated ? " story-milestone-marker--active" : ""}`}
                       style={{
                         left: "20px",
                         top: "8px",
                         transform: "translate(-50%, 0)",
-                        width: isActivated ? undefined : "8px",
-                        height: isActivated ? undefined : "8px",
-                        borderRadius: "50%",
-                        background: isActivated ? undefined : "rgba(74,108,247,0.2)",
-                        border: isActivated ? undefined : "1px solid rgba(74,108,247,0.15)",
-                        boxShadow: isActivated ? undefined : "none",
-                        transition: isActivated ? undefined : "all 0.4s ease",
                         zIndex: 5,
                       }}
-                    />
-                    {/* Sparkles (mobile) */}
+                    >
+                      {!isActivated && <div className="story-milestone-diamond story-milestone-diamond--mobile" />}
+                      {isActivated && <div className="story-milestone-ring story-milestone-ring--mobile" />}
+                    </div>
+                    {/* Particles (mobile) */}
                     <div
-                      className={`milestone-sparkle-container md:hidden${isActivated ? " active" : ""}`}
+                      className={`story-particle-container story-particle-container--mobile md:hidden${isActivated ? " active" : ""}`}
                       style={{ left: "20px", top: "8px" }}
                     >
-                      <span /><span /><span /><span /><span />
+                      <span /><span /><span /><span />
                     </div>
 
                     {/* === DESKTOP LAYOUT === */}
                     <div className="hidden md:flex items-start">
-                      {/* Left side */}
                       <div className="flex-1 flex justify-end" style={{ paddingRight: "60px" }}>
-                        {isLeft && (
-                          <div
-                            className="rounded-2xl transition-transform duration-300 hover:-translate-y-1"
-                            style={{
-                              maxWidth: "420px",
-                              width: "100%",
-                              padding: "28px",
-                              background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.6)",
-                              backdropFilter: "blur(8px)",
-                              WebkitBackdropFilter: "blur(8px)",
-                              border: "1px solid rgba(0, 0, 0, 0.04)",
-                              boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
-                              textAlign: "right",
-                              opacity: isRevealed ? 1 : 0,
-                              transform: isRevealed ? "translateY(0)" : "translateY(20px)",
-                              transition: "opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.3s ease",
-                            }}
-                            onMouseEnter={(e) => {
-                              (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 30px rgba(0,0,0,0.08)";
-                            }}
-                            onMouseLeave={(e) => {
-                              (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 16px rgba(0,0,0,0.04)";
-                            }}
-                          >
-                            <h2
-                              className="font-normal mb-3"
-                              style={{
-                                fontFamily: "'Instrument Serif', serif",
-                                fontSize: "22px",
-                                color: "#0F172A",
-                              }}
-                            >
-                              {milestone.title}
-                            </h2>
-                            <p
-                              style={{
-                                fontFamily: "var(--font-dm-sans), sans-serif",
-                                fontSize: "15px",
-                                color: "#475569",
-                                lineHeight: 1.7,
-                              }}
-                            >
-                              {milestone.body}
-                            </p>
-                          </div>
-                        )}
+                        {isLeft && renderCard(milestone, i, "right")}
                       </div>
-
-                      {/* Center spacer for the line */}
                       <div style={{ width: "1px" }} />
-
-                      {/* Right side */}
                       <div className="flex-1" style={{ paddingLeft: "60px" }}>
-                        {!isLeft && (
-                          <div
-                            className="rounded-2xl transition-transform duration-300 hover:-translate-y-1"
-                            style={{
-                              maxWidth: "420px",
-                              width: "100%",
-                              padding: "28px",
-                              background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.6)",
-                              backdropFilter: "blur(8px)",
-                              WebkitBackdropFilter: "blur(8px)",
-                              border: "1px solid rgba(0, 0, 0, 0.04)",
-                              boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
-                              textAlign: "left",
-                              opacity: isRevealed ? 1 : 0,
-                              transform: isRevealed ? "translateY(0)" : "translateY(20px)",
-                              transition: "opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.3s ease",
-                            }}
-                            onMouseEnter={(e) => {
-                              (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 30px rgba(0,0,0,0.08)";
-                            }}
-                            onMouseLeave={(e) => {
-                              (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 16px rgba(0,0,0,0.04)";
-                            }}
-                          >
-                            <h2
-                              className="font-normal mb-3"
-                              style={{
-                                fontFamily: "'Instrument Serif', serif",
-                                fontSize: "22px",
-                                color: "#0F172A",
-                              }}
-                            >
-                              {milestone.title}
-                            </h2>
-                            <p
-                              style={{
-                                fontFamily: "var(--font-dm-sans), sans-serif",
-                                fontSize: "15px",
-                                color: "#475569",
-                                lineHeight: 1.7,
-                              }}
-                            >
-                              {milestone.body}
-                            </p>
-                          </div>
-                        )}
+                        {!isLeft && renderCard(milestone, i, "left")}
                       </div>
                     </div>
 
                     {/* === MOBILE LAYOUT === */}
                     <div className="flex md:hidden">
-                      <div
-                        style={{
-                          marginLeft: "32px",
-                          maxWidth: "calc(100% - 40px)",
-                          padding: "20px",
-                          background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.6)",
-                          backdropFilter: "blur(8px)",
-                          WebkitBackdropFilter: "blur(8px)",
-                          border: "1px solid rgba(0, 0, 0, 0.04)",
-                          boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
-                          borderRadius: "16px",
-                          opacity: isRevealed ? 1 : 0,
-                          transform: isRevealed ? "translateY(0)" : "translateY(20px)",
-                          transition: "opacity 0.5s ease-out, transform 0.5s ease-out",
-                        }}
-                      >
-                        <h2
-                          className="font-normal mb-2"
-                          style={{
-                            fontFamily: "'Instrument Serif', serif",
-                            fontSize: "22px",
-                            color: "#0F172A",
-                          }}
-                        >
-                          {milestone.title}
-                        </h2>
-                        <p
-                          style={{
-                            fontFamily: "var(--font-dm-sans), sans-serif",
-                            fontSize: "14px",
-                            color: "#475569",
-                            lineHeight: 1.7,
-                          }}
-                        >
-                          {milestone.body}
-                        </p>
-                      </div>
+                      {renderCard(milestone, i, "left", true)}
                     </div>
                   </div>
                 );
@@ -552,30 +468,29 @@ export default function StoryPage() {
                   }}
                 >
                   <div
-                    className="rounded-2xl p-6 md:p-8 h-full"
+                    className="story-card h-full"
                     style={{
-                      background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.6)",
-                      backdropFilter: "blur(8px)",
-                      WebkitBackdropFilter: "blur(8px)",
-                      border: "1px solid rgba(0, 0, 0, 0.04)",
-                      boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
+                      padding: "24px",
+                      borderRadius: "20px",
                     }}
+                    onMouseMove={handleCardMouseMove}
                   >
                     <div className="flex items-center gap-4 mb-3">
-                      <Image
-                        src="/images/logan.webp"
-                        alt="Logan Kay"
-                        width={80}
-                        height={80}
-                        className="rounded-full object-cover shrink-0"
-                        style={{ width: "80px", height: "80px" }}
-                      />
+                      <div className="story-founder-photo-ring shrink-0">
+                        <Image
+                          src="/images/logan.webp"
+                          alt="Logan Kay"
+                          width={80}
+                          height={80}
+                          className="rounded-full object-cover"
+                          style={{ width: "80px", height: "80px" }}
+                        />
+                      </div>
                       <div>
                         <p
-                          className="font-semibold"
                           style={{
-                            fontFamily: "var(--font-dm-sans), sans-serif",
-                            fontSize: "20px",
+                            fontFamily: "'Instrument Serif', serif",
+                            fontSize: "22px",
                             color: "#0F172A",
                           }}
                         >
@@ -625,30 +540,29 @@ export default function StoryPage() {
                   }}
                 >
                   <div
-                    className="rounded-2xl p-6 md:p-8 h-full"
+                    className="story-card h-full"
                     style={{
-                      background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.6)",
-                      backdropFilter: "blur(8px)",
-                      WebkitBackdropFilter: "blur(8px)",
-                      border: "1px solid rgba(0, 0, 0, 0.04)",
-                      boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
+                      padding: "24px",
+                      borderRadius: "20px",
                     }}
+                    onMouseMove={handleCardMouseMove}
                   >
                     <div className="flex items-center gap-4 mb-3">
-                      <Image
-                        src="/images/ben.jpeg"
-                        alt="Benjamin Matiash"
-                        width={80}
-                        height={80}
-                        className="rounded-full object-cover shrink-0"
-                        style={{ width: "80px", height: "80px" }}
-                      />
+                      <div className="story-founder-photo-ring shrink-0">
+                        <Image
+                          src="/images/ben.jpeg"
+                          alt="Benjamin Matiash"
+                          width={80}
+                          height={80}
+                          className="rounded-full object-cover"
+                          style={{ width: "80px", height: "80px" }}
+                        />
+                      </div>
                       <div>
                         <p
-                          className="font-semibold"
                           style={{
-                            fontFamily: "var(--font-dm-sans), sans-serif",
-                            fontSize: "20px",
+                            fontFamily: "'Instrument Serif', serif",
+                            fontSize: "22px",
                             color: "#0F172A",
                           }}
                         >

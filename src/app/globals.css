@@ -1571,126 +1571,319 @@ html {
   }
 }
 
-/* === Milestone dot glow === */
-@keyframes milestone-pulse {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(74,108,247,0.5), 0 0 40px rgba(124,92,252,0.3), 0 0 60px rgba(74,108,247,0.15);
-  }
-  50% {
-    box-shadow: 0 0 16px rgba(74,108,247,0.4), 0 0 32px rgba(124,92,252,0.24), 0 0 48px rgba(74,108,247,0.12);
-  }
+/* ============================================================
+   STORY PAGE — Premium Timeline Styles
+   ============================================================ */
+
+/* --- Dotted base line --- */
+.story-timeline-dots {
+  background-image: radial-gradient(circle, rgba(99,102,241,0.12) 1.5px, transparent 1.5px);
+  background-size: 3px 12px;
+  background-repeat: repeat-y;
+  background-position: center top;
 }
 
-@keyframes milestone-glow-in {
+/* --- Tracing dot --- */
+@keyframes story-dot-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+@keyframes story-ring-orbit {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes story-trail-fade {
+  0% { opacity: 0.3; transform: translateY(20px) scale(0.7); }
+  100% { opacity: 0; transform: translateY(25px) scale(0.4); }
+}
+
+.story-tracing-dot {
+  position: absolute;
+}
+
+.story-tracing-core {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366F1, #A855F7);
+  box-shadow: 0 0 15px rgba(99,102,241,0.4), 0 0 30px rgba(99,102,241,0.15);
+  animation: story-dot-pulse 2s ease-in-out infinite;
+  z-index: 2;
+  position: absolute;
+}
+.story-tracing-core--mobile {
+  width: 12px;
+  height: 12px;
+}
+
+.story-tracing-ring {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #6366F1 0deg, #A855F7 270deg, transparent 270deg, transparent 360deg);
+  mask: radial-gradient(transparent 9px, #000 9px, #000 12px, transparent 12px);
+  -webkit-mask: radial-gradient(transparent 9px, #000 9px, #000 12px, transparent 12px);
+  animation: story-ring-orbit 4s linear infinite;
+  z-index: 1;
+}
+.story-tracing-ring--mobile {
+  width: 20px;
+  height: 20px;
+  mask: radial-gradient(transparent 7px, #000 7px, #000 10px, transparent 10px);
+  -webkit-mask: radial-gradient(transparent 7px, #000 7px, #000 10px, transparent 10px);
+}
+
+.story-tracing-trail {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366F1, #A855F7);
+  opacity: 0;
+  animation: story-trail-fade 0.3s ease-out infinite;
+  z-index: 0;
+}
+.story-tracing-trail--mobile {
+  width: 8px;
+  height: 8px;
+}
+
+/* --- Milestone markers --- */
+.story-milestone-marker {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(99,102,241,0.08);
+  border: 1px solid rgba(99,102,241,0.15);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.story-milestone-marker--mobile {
+  width: 8px;
+  height: 8px;
+}
+
+.story-milestone-diamond {
+  width: 5px;
+  height: 5px;
+  background: rgba(99,102,241,0.2);
+  transform: rotate(45deg);
+}
+.story-milestone-diamond--mobile {
+  width: 4px;
+  height: 4px;
+}
+
+/* Active milestone */
+.story-milestone-marker--active {
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, #6366F1, #A855F7);
+  border: none;
+  box-shadow: 0 0 12px rgba(99,102,241,0.3), 0 0 24px rgba(99,102,241,0.12);
+  animation: story-milestone-settle 0.5s ease forwards;
+}
+.story-milestone-marker--mobile.story-milestone-marker--active {
+  width: 12px;
+  height: 12px;
+  box-shadow: 0 0 8px rgba(99,102,241,0.3), 0 0 16px rgba(99,102,241,0.1);
+}
+
+@keyframes story-milestone-settle {
   0% {
-    width: 6px;
-    height: 6px;
-    box-shadow: none;
-    background: rgba(74,108,247,0.2);
+    box-shadow: 0 0 20px rgba(99,102,241,0.5), 0 0 40px rgba(99,102,241,0.2);
   }
   100% {
-    width: 14px;
-    height: 14px;
-    box-shadow: 0 0 20px rgba(74,108,247,0.5), 0 0 40px rgba(124,92,252,0.3), 0 0 60px rgba(74,108,247,0.15);
-    background: linear-gradient(135deg, #4A6CF7, #7C5CFC);
+    box-shadow: 0 0 12px rgba(99,102,241,0.3), 0 0 24px rgba(99,102,241,0.12);
   }
 }
 
-@keyframes sparkle-burst {
+/* Active milestone orbiting ring */
+@keyframes story-milestone-ring-orbit {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.story-milestone-ring {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #6366F1 0deg, #A855F7 270deg, transparent 270deg, transparent 360deg);
+  mask: radial-gradient(transparent 11px, #000 11px, #000 14px, transparent 14px);
+  -webkit-mask: radial-gradient(transparent 11px, #000 11px, #000 14px, transparent 14px);
+  animation: story-milestone-ring-orbit 4s linear infinite;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.story-milestone-ring--mobile {
+  width: 22px;
+  height: 22px;
+  mask: radial-gradient(transparent 8px, #000 8px, #000 11px, transparent 11px);
+  -webkit-mask: radial-gradient(transparent 8px, #000 8px, #000 11px, transparent 11px);
+}
+
+/* --- Particle burst --- */
+@keyframes story-particle-burst {
   0% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translate(var(--sparkle-x), var(--sparkle-y)) scale(0);
+    transform: translate(var(--px), var(--py)) scale(0);
   }
 }
 
-.milestone-dot-active {
-  width: 14px !important;
-  height: 14px !important;
-  background: linear-gradient(135deg, #4A6CF7, #7C5CFC) !important;
-  border: none !important;
-  animation: milestone-glow-in 0.3s ease forwards, milestone-pulse 2s ease-in-out 0.3s infinite !important;
-}
-
-@media (max-width: 767px) {
-  .milestone-dot-active.milestone-dot-mobile {
-    width: 8px !important;
-    height: 8px !important;
-    animation: milestone-glow-in-mobile 0.3s ease forwards, milestone-pulse-mobile 2s ease-in-out 0.3s infinite !important;
-  }
-}
-
-@keyframes milestone-glow-in-mobile {
-  0% {
-    width: 8px;
-    height: 8px;
-    box-shadow: none;
-    background: rgba(74,108,247,0.2);
-  }
-  100% {
-    width: 8px;
-    height: 8px;
-    box-shadow: 0 0 12px rgba(74,108,247,0.4), 0 0 24px rgba(124,92,252,0.2);
-    background: linear-gradient(135deg, #4A6CF7, #7C5CFC);
-  }
-}
-
-@keyframes milestone-pulse-mobile {
-  0%, 100% {
-    box-shadow: 0 0 12px rgba(74,108,247,0.4), 0 0 24px rgba(124,92,252,0.2);
-  }
-  50% {
-    box-shadow: 0 0 8px rgba(74,108,247,0.3), 0 0 16px rgba(124,92,252,0.15);
-  }
-}
-
-.milestone-sparkle-container {
+.story-particle-container {
   position: absolute;
   width: 0;
   height: 0;
   z-index: 6;
   pointer-events: none;
 }
-
-.milestone-sparkle-container span {
+.story-particle-container span {
   position: absolute;
-  width: 3px;
-  height: 3px;
+  width: 2px;
+  height: 2px;
   border-radius: 50%;
   opacity: 0;
 }
-
-.milestone-sparkle-container.active span {
-  animation: sparkle-burst 0.5s ease-out forwards;
+.story-particle-container.active span {
+  animation: story-particle-burst 0.5s ease-out forwards;
 }
 
-.milestone-sparkle-container span:nth-child(1) {
-  background: #4A6CF7;
-  --sparkle-x: 15px;
-  --sparkle-y: -18px;
+/* 8 particles at different angles */
+.story-particle-container span:nth-child(1) { background: #6366F1; --px: 20px; --py: -22px; }
+.story-particle-container span:nth-child(2) { background: #8B5CF6; --px: -18px; --py: -14px; }
+.story-particle-container span:nth-child(3) { background: #A855F7; --px: 25px; --py: 8px; }
+.story-particle-container span:nth-child(4) { background: #6366F1; --px: -14px; --py: 20px; }
+.story-particle-container span:nth-child(5) { background: #EAB308; --px: 8px; --py: -28px; }
+.story-particle-container span:nth-child(6) { background: #8B5CF6; --px: -24px; --py: 4px; }
+.story-particle-container span:nth-child(7) { background: #EAB308; --px: 16px; --py: 18px; }
+.story-particle-container span:nth-child(8) { background: #A855F7; --px: -8px; --py: -18px; }
+
+/* Mobile: 4 particles */
+.story-particle-container--mobile span:nth-child(n+5) {
+  display: none;
 }
-.milestone-sparkle-container span:nth-child(2) {
-  background: #7C5CFC;
-  --sparkle-x: -17px;
-  --sparkle-y: -10px;
+.story-particle-container--mobile span:nth-child(1) { --px: 15px; --py: -16px; }
+.story-particle-container--mobile span:nth-child(2) { --px: -14px; --py: -10px; }
+.story-particle-container--mobile span:nth-child(3) { --px: 18px; --py: 6px; }
+.story-particle-container--mobile span:nth-child(4) { --px: -10px; --py: 14px; }
+
+/* --- Glassmorphic story cards --- */
+.story-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(255,255,255,0.3));
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6);
+  border-radius: 20px;
+  overflow: hidden;
 }
-.milestone-sparkle-container span:nth-child(3) {
-  background: #4A6CF7;
-  --sparkle-x: 20px;
-  --sparkle-y: 8px;
+
+/* Card hover glow that follows cursor — desktop only */
+.story-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  background: radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(99,102,241,0.06), transparent 60%);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 0;
 }
-.milestone-sparkle-container span:nth-child(4) {
-  background: #7C5CFC;
-  --sparkle-x: -12px;
-  --sparkle-y: 16px;
+/* Gradient border on hover */
+.story-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(168,85,247,0.15));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  -webkit-mask-composite: xor;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 0;
 }
-.milestone-sparkle-container span:nth-child(5) {
-  background: #06B6D4;
-  --sparkle-x: 5px;
-  --sparkle-y: -20px;
+
+@media (hover: hover) {
+  .story-card:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+  .story-card:hover::before {
+    opacity: 1;
+  }
+  .story-card:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Card content above pseudo-elements */
+.story-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Title shimmer after card reveal --- */
+@keyframes story-title-shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.story-card--revealed.story-card--activated .story-card__title {
+  position: relative;
+  overflow: hidden;
+}
+.story-card--revealed.story-card--activated .story-card__title::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+  animation: story-title-shimmer 0.4s ease 0.6s forwards;
+  pointer-events: none;
+}
+
+/* --- Founder photo gradient ring --- */
+.story-founder-photo-ring {
+  padding: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #6366F1, #A855F7);
+  display: inline-flex;
+}
+.story-founder-photo-ring img {
+  border: 2px solid #FAFAF9;
+  border-radius: 9999px;
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .story-tracing-dot,
+  .story-tracing-ring,
+  .story-tracing-trail,
+  .story-milestone-ring,
+  .story-particle-container span {
+    animation: none !important;
+  }
+  .story-card {
+    transition: none !important;
+  }
+  .story-card__title::after {
+    animation: none !important;
+    display: none;
+  }
 }
 
 /* ============================================================
