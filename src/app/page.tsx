@@ -1299,15 +1299,15 @@ export default function Home() {
                 >
                   <div
                     className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-110 cursor-pointer"
-                    style={{ animation: "floatCrest1 3.5s ease-in-out infinite", filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))", border: "1px solid rgba(0,0,0,0.06)" }}
+                    style={{ filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))", border: "1px solid rgba(0,0,0,0.06)" }}
                     onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 4px 16px rgba(0,0,0,0.12))"; }}
                     onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 2px 10px rgba(0,0,0,0.08))"; }}
                   >
                     <img
                       src="/images/universities/bu-crest.gif"
                       alt="Boston University"
-                      className="w-full h-full object-cover rounded-full"
-                      style={{ mixBlendMode: "multiply" }}
+                      className="object-cover rounded-full"
+                      style={{ width: "110%", height: "110%", mixBlendMode: "multiply" }}
                     />
                   </div>
                   <span
@@ -1333,7 +1333,7 @@ export default function Home() {
                 >
                   <div
                     className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-110 cursor-pointer"
-                    style={{ animation: "floatCrest2 4.0s ease-in-out infinite", animationDelay: "-0.7s", filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))", border: "1px solid rgba(0,0,0,0.06)" }}
+                    style={{ filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))", border: "1px solid rgba(0,0,0,0.06)" }}
                     onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 4px 16px rgba(0,0,0,0.12))"; }}
                     onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 2px 10px rgba(0,0,0,0.08))"; }}
                   >
@@ -1367,14 +1367,14 @@ export default function Home() {
                 >
                   <div
                     className="w-[52px] h-[52px] flex items-center justify-center overflow-visible transition-all duration-300 hover:scale-110 cursor-pointer"
-                    style={{ animation: "floatCrest3 3.8s ease-in-out infinite", animationDelay: "-1.4s", filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))" }}
+                    style={{ filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))" }}
                     onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 4px 16px rgba(0,0,0,0.12))"; }}
                     onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 2px 10px rgba(0,0,0,0.08))"; }}
                   >
                     <img
                       src="/images/universities/hbs-crest.png"
                       alt="Harvard Business School"
-                      className="h-[54px] w-auto object-contain"
+                      className="h-[52px] w-auto object-contain"
                       style={{ mixBlendMode: "multiply" }}
                     />
                   </div>

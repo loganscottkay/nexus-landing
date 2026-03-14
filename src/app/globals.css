@@ -3,16 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ---- University crest floating animations ---- */
-@keyframes floatCrest1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-@keyframes floatCrest2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-@keyframes floatCrest3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-
-@media (max-width: 767px) {
-  @keyframes floatCrest1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-  @keyframes floatCrest2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.4px); } }
-  @keyframes floatCrest3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3.6px); } }
-}
 
 /* Hide scrollbar for scrollable tabs */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
