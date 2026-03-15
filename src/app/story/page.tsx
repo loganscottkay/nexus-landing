@@ -710,7 +710,7 @@ export default function StoryPage() {
                         textAlign: "left",
                       }}
                     >
-                      Benjamin brings the financial acumen and investor perspective. His experience in institutional equity at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became UrgenC and leads investor relations, scoring methodology, and go-to-market strategy.
+                      Benjamin brings the financial acumen and investor perspective. His experience in institutional equities at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became UrgenC and leads investor relations, scoring methodology, and go-to-market strategy. A marketing mastermind with a visionary&#39;s clarity, Benjamin sees around corners and builds the narrative that makes people pay attention, crafting the brand voice, positioning, and outreach that put UrgenC on the map.
                     </p>
                   </div>
                 </div>
