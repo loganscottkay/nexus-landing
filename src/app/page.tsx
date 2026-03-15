@@ -1206,7 +1206,7 @@ export default function Home() {
                   transition={{ duration: 0.4, delay: 1.8, ease }}
                   style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "80px", margin: 0, padding: 0 }}
                 >
-                  <div className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "55px", height: "55px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "65px", height: "65px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <img
                       src="/images/universities/bu-crest.gif"
                       alt="Boston University"
