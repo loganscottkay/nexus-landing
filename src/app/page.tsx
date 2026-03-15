@@ -1208,9 +1208,9 @@ export default function Home() {
                 >
                   <div className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "55px", height: "55px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <img
-                      src="/images/universities/bu-crest.gif"
+                      src="/images/universities/bu-crest.png"
                       alt="Boston University"
-                      style={{ width: "55px", height: "55px", objectFit: "contain", mixBlendMode: "multiply" }}
+                      style={{ width: "55px", height: "55px", objectFit: "cover", mixBlendMode: "multiply" }}
                     />
                   </div>
                   <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
