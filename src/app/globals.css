@@ -34,11 +34,6 @@ body {
   overflow-x: clip;
 }
 
-.scroll-stack-shadow {
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.04);
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-}
 
 /* body::before removed - grain is now in PageAtmosphere component */
 

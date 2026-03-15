@@ -287,8 +287,8 @@ function NarrativeLine() {
   return (
     <div
       ref={ref}
-      className="flex justify-center px-6 py-[36px] md:py-[50px] scroll-stack-shadow"
-      style={{ position: 'sticky', top: 0, zIndex: 2, backgroundColor: '#FAF9F7' }}
+      className="flex justify-center px-6 py-[36px] md:py-[50px] w-full"
+      style={{ position: 'relative', zIndex: 2, backgroundColor: '#FAF9F7' }}
     >
       <div
         style={{ maxWidth: "580px", textAlign: "center" }}
@@ -419,8 +419,8 @@ function HowItWorksSection() {
   const activeIndex = STEPS.indexOf(activeCard as typeof STEPS[number]);
 
   return (
-    <Section id="how-it-works" className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] max-w-6xl mx-auto scroll-stack-shadow" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7' }}>
-      <div ref={sectionRef}>
+    <Section id="how-it-works" className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 2, backgroundColor: '#FAF9F7' }}>
+      <div ref={sectionRef} className="max-w-6xl mx-auto">
         <motion.div
           variants={cardStagger}
           initial="hidden"
@@ -723,7 +723,8 @@ function MatchingFlowSection() {
   };
 
   return (
-    <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] max-w-6xl mx-auto scroll-stack-shadow" style={{ position: 'sticky', top: 0, zIndex: 4, backgroundColor: '#FAF9F7' }}>
+    <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 2, backgroundColor: '#FAF9F7' }}>
+      <div className="max-w-6xl mx-auto">
       <motion.div
         variants={cardStagger}
         initial="hidden"
@@ -1006,6 +1007,7 @@ function MatchingFlowSection() {
           </div>
         </motion.div>
       </motion.div>
+      </div>
     </Section>
   );
 }
@@ -1252,7 +1254,7 @@ export default function Home() {
                     <img
                       src="/images/universities/hbs-crest.png"
                       alt="Harvard Business School"
-                      style={{ width: "74px", height: "74px", objectFit: "contain", mixBlendMode: "multiply", marginTop: "2px" }}
+                      style={{ width: "74px", height: "74px", objectFit: "contain", mixBlendMode: "multiply", marginTop: "4px" }}
                     />
                   </div>
                   <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
@@ -1298,12 +1300,12 @@ export default function Home() {
       <MatchingFlowSection />
 
       {/* ============ IPHONE MOCKUPS ============ */}
-      <div className="lg:pb-[100px] scroll-stack-shadow" style={{ position: 'sticky', top: 0, zIndex: 5, backgroundColor: '#FAF9F7' }}>
+      <div className="lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 2, backgroundColor: '#FAF9F7' }}>
         <IPhoneMockups />
       </div>
 
       {/* ============ FINAL CTA ============ */}
-      <Section className="relative z-10 pt-[80px] pb-[80px] lg:pt-[80px] lg:pb-[80px] scroll-stack-shadow" style={{ position: 'sticky', top: 0, zIndex: 6, backgroundColor: '#FAF9F7' }}>
+      <Section className="relative z-10 pt-[80px] pb-[80px] lg:pt-[80px] lg:pb-[80px] w-full" style={{ position: 'relative', zIndex: 2, backgroundColor: '#FAF9F7' }}>
         <motion.div
           variants={cardStagger}
           initial="hidden"
@@ -1351,7 +1353,7 @@ export default function Home() {
       </Section>
 
       {/* ============ FOOTER ============ */}
-      <footer className="relative z-10" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+      <footer className="relative w-full" style={{ zIndex: 2, backgroundColor: '#FAF9F7', borderTop: "1px solid rgba(0,0,0,0.06)" }}>
         {/* Subtle gradient accent line */}
         <div
           className="absolute top-0 left-0 right-0 h-[1px]"
