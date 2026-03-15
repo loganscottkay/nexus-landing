@@ -1244,11 +1244,11 @@ export default function Home() {
                   transition={{ duration: 0.4, delay: 2.0, ease }}
                   style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "80px", margin: 0, padding: 0 }}
                 >
-                  <div className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "66px", height: "66px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "6px" }}>
+                  <div className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "71px", height: "71px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "9px" }}>
                     <img
                       src="/images/universities/hbs-crest.png"
                       alt="Harvard Business School"
-                      style={{ width: "66px", height: "66px", objectFit: "contain", mixBlendMode: "multiply" }}
+                      style={{ width: "71px", height: "71px", objectFit: "contain", mixBlendMode: "multiply" }}
                     />
                   </div>
                   <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
