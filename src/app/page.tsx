@@ -269,59 +269,73 @@ const CYCLE_DURATION = 6000;
 const RESUME_DELAY = 2000;
 const STEPS = ["01", "02", "03"] as const;
 
+const narrativePhrases = [
+  { text: "The startup world is full of ideas.", accent: null },
+  { text: "The problem has never been building.", accent: null },
+  { text: "It is getting in front of the right", accent: "people" },
+];
+
 function NarrativeLine() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.3 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <div
-      ref={ref}
-      className="flex justify-center px-6 py-[36px] md:py-[50px] w-full"
-      style={{ position: 'relative', zIndex: 2, backgroundColor: '#FAF9F7' }}
+    <section
+      className="flex items-center justify-center px-6 w-full"
+      style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 2,
+        backgroundColor: '#FAF9F7',
+        minHeight: '100vh',
+        overflow: 'hidden',
+      }}
     >
-      <div
-        style={{ maxWidth: "580px", textAlign: "center" }}
-      >
-        <p
-          style={{
-            fontFamily: "var(--font-dm-sans), sans-serif",
-            fontSize: "18px",
-            fontWeight: 400,
-            fontStyle: "normal",
-            color: "#334155",
-            lineHeight: 1.8,
-            textAlign: "center",
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(20px)",
-            transition: "opacity 0.7s ease-out 0.2s, transform 0.7s ease-out 0.2s",
+      <div style={{ maxWidth: "620px", textAlign: "center" }}>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.35 } },
           }}
-          className="md:!text-[22px]"
+          className="flex flex-col items-center gap-3 md:gap-4"
         >
-          The startup world is full of ideas. The problem has never been building. It is getting in front of the right{" "}
-          <span
-            style={{
-              background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            people
-          </span>
-          .
-        </p>
+          {narrativePhrases.map((phrase, i) => (
+            <motion.p
+              key={i}
+              variants={{
+                hidden: { opacity: 0, y: 30, scale: 0.97 },
+                visible: { opacity: 1, y: 0, scale: 1 },
+              }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="text-[20px] md:text-[26px] lg:text-[30px] leading-[1.6]"
+              style={{
+                fontFamily: "var(--font-dm-sans), sans-serif",
+                fontWeight: 400,
+                color: "#334155",
+              }}
+            >
+              {phrase.text}
+              {phrase.accent && (
+                <>
+                  {" "}
+                  <span
+                    style={{
+                      background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {phrase.accent}
+                  </span>
+                  .
+                </>
+              )}
+            </motion.p>
+          ))}
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -419,7 +433,7 @@ function HowItWorksSection() {
   const activeIndex = STEPS.indexOf(activeCard as typeof STEPS[number]);
 
   return (
-    <Section id="how-it-works" className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 2, backgroundColor: '#FAF9F7' }}>
+    <Section id="how-it-works" className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 3, backgroundColor: '#FAF9F7' }}>
       <div ref={sectionRef} className="max-w-6xl mx-auto">
         <motion.div
           variants={cardStagger}
@@ -723,7 +737,7 @@ function MatchingFlowSection() {
   };
 
   return (
-    <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 2, backgroundColor: '#FAF9F7' }}>
+    <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 3, backgroundColor: '#FAF9F7' }}>
       <div className="max-w-6xl mx-auto">
       <motion.div
         variants={cardStagger}
@@ -1280,12 +1294,12 @@ export default function Home() {
       <MatchingFlowSection />
 
       {/* ============ IPHONE MOCKUPS ============ */}
-      <div className="lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 2, backgroundColor: '#FAF9F7' }}>
+      <div className="lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 3, backgroundColor: '#FAF9F7' }}>
         <IPhoneMockups />
       </div>
 
       {/* ============ FINAL CTA ============ */}
-      <Section className="relative z-10 pt-[80px] pb-[80px] lg:pt-[80px] lg:pb-[80px] w-full" style={{ position: 'relative', zIndex: 2, backgroundColor: '#FAF9F7' }}>
+      <Section className="relative z-10 pt-[80px] pb-[80px] lg:pt-[80px] lg:pb-[80px] w-full" style={{ position: 'relative', zIndex: 3, backgroundColor: '#FAF9F7' }}>
         <motion.div
           variants={cardStagger}
           initial="hidden"
@@ -1333,7 +1347,7 @@ export default function Home() {
       </Section>
 
       {/* ============ FOOTER ============ */}
-      <footer className="relative w-full" style={{ zIndex: 2, backgroundColor: '#FAF9F7', borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+      <footer className="relative w-full" style={{ zIndex: 3, backgroundColor: '#FAF9F7', borderTop: "1px solid rgba(0,0,0,0.06)" }}>
         {/* Subtle gradient accent line */}
         <div
           className="absolute top-0 left-0 right-0 h-[1px]"
