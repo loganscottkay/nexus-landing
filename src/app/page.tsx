@@ -1204,7 +1204,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 1.8, ease }}
-                  className="flex flex-col items-center w-[70px]"
+                  className="flex flex-col items-center"
                 >
                   <div
                     className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-110 cursor-pointer"
@@ -1238,7 +1238,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 1.9, ease }}
-                  className="flex flex-col items-center w-[70px]"
+                  className="flex flex-col items-center"
                 >
                   <div
                     className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-110 cursor-pointer"
@@ -1272,18 +1272,18 @@ export default function Home() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 2.0, ease }}
-                  className="flex flex-col items-center w-[70px]"
+                  className="flex flex-col items-center"
                 >
                   <div
-                    className="w-[52px] h-[52px] flex items-center justify-center overflow-visible transition-all duration-300 hover:scale-110 cursor-pointer mx-auto"
-                    style={{ filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))" }}
+                    className="flex items-center justify-center overflow-visible transition-all duration-300 hover:scale-110 cursor-pointer"
+                    style={{ filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))", marginTop: "2px" }}
                     onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 4px 16px rgba(0,0,0,0.12))"; }}
                     onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 2px 10px rgba(0,0,0,0.08))"; }}
                   >
                     <img
                       src="/images/universities/hbs-crest.png"
                       alt="Harvard Business School"
-                      className="h-[72px] w-auto object-contain"
+                      className="h-[80px] w-auto object-contain"
                       style={{ mixBlendMode: "multiply" }}
                     />
                   </div>
