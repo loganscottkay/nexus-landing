@@ -58,6 +58,11 @@ const cardStagger = {
   },
 };
 
+const mobileSlideFromLeft = {
+  hidden: { opacity: 0, x: -40 },
+  visible: { opacity: 1, x: 0 },
+};
+
 const viewportConfig = { once: true, amount: 0.2 as const };
 
 /* ---- Animation Hooks ---- */
@@ -947,8 +952,8 @@ function MatchingFlowSection() {
             {matchingSteps.map((step, i) => (
               <motion.div
                 key={step.num}
-                variants={tierCard}
-                transition={{ duration: 0.5, delay: 0.6 + i * 0.08, ease }}
+                variants={mobileSlideFromLeft}
+                transition={{ duration: 0.5, delay: 0.6 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
                 className="flex items-start gap-0"
               >
                 {/* Numbered circle on the timeline */}
