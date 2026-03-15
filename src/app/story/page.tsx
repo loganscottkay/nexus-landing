@@ -8,6 +8,133 @@ import Navbar from "@/components/Navbar";
 
 const ease = [0.25, 0.4, 0.25, 1] as [number, number, number, number];
 
+/* ---- Photo Enlarge Modal ---- */
+interface FounderPhoto {
+  src: string;
+  name: string;
+  subtitle: string;
+}
+
+function PhotoModal({ photo, onClose }: { photo: FounderPhoto | null; onClose: () => void }) {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (photo) {
+      requestAnimationFrame(() => setVisible(true));
+      const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+      window.addEventListener("keydown", handler);
+      return () => window.removeEventListener("keydown", handler);
+    } else {
+      setVisible(false);
+    }
+  }, [photo, onClose]);
+
+  const handleClose = useCallback(() => {
+    setVisible(false);
+    setTimeout(onClose, 250);
+  }, [onClose]);
+
+  if (!photo) return null;
+
+  return (
+    <div
+      onClick={handleClose}
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(0,0,0,0.7)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
+        zIndex: 100,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        opacity: visible ? 1 : 0,
+        transition: "opacity 0.3s ease",
+        cursor: "pointer",
+      }}
+    >
+      {/* Close button */}
+      <button
+        onClick={handleClose}
+        style={{
+          position: "fixed",
+          top: 24,
+          right: 24,
+          width: 32,
+          height: 32,
+          borderRadius: "50%",
+          background: "rgba(255,255,255,0.1)",
+          border: "none",
+          color: "#fff",
+          fontSize: 16,
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 101,
+        }}
+        aria-label="Close"
+      >
+        ✕
+      </button>
+
+      {/* Photo */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{ cursor: "default" }}
+      >
+        <Image
+          src={photo.src}
+          alt={photo.name}
+          width={280}
+          height={280}
+          className="rounded-full object-cover"
+          style={{
+            width: "min(280px, 60vw)",
+            height: "min(280px, 60vw)",
+            border: "4px solid rgba(255,255,255,0.8)",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+            transform: visible ? "scale(1)" : "scale(0.5)",
+            opacity: visible ? 1 : 0,
+            transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.4s cubic-bezier(0.16,1,0.3,1)",
+          }}
+        />
+      </div>
+
+      {/* Name + subtitle */}
+      <p
+        style={{
+          marginTop: 16,
+          fontFamily: "var(--font-dm-sans), sans-serif",
+          fontSize: 20,
+          fontWeight: 600,
+          color: "#fff",
+          textAlign: "center",
+          opacity: visible ? 1 : 0,
+          transition: "opacity 0.3s ease 0.1s",
+        }}
+      >
+        {photo.name}
+      </p>
+      <p
+        style={{
+          marginTop: 4,
+          fontFamily: "var(--font-dm-sans), sans-serif",
+          fontSize: 14,
+          color: "rgba(255,255,255,0.7)",
+          textAlign: "center",
+          opacity: visible ? 1 : 0,
+          transition: "opacity 0.3s ease 0.15s",
+        }}
+      >
+        {photo.subtitle}
+      </p>
+    </div>
+  );
+}
+
 const milestones = [
   {
     year: "2018",
@@ -61,6 +188,7 @@ export default function StoryPage() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const founderRef = useRef<HTMLDivElement>(null);
   const [foundersRevealed, setFoundersRevealed] = useState(false);
+  const [enlargedPhoto, setEnlargedPhoto] = useState<FounderPhoto | null>(null);
   const reducedMotion = useReducedMotion();
 
   // Scroll-driven progress for the timeline
@@ -204,6 +332,7 @@ export default function StoryPage() {
   return (
     <>
       <Navbar />
+      <PhotoModal photo={enlargedPhoto} onClose={() => setEnlargedPhoto(null)} />
 
       {/* Background */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
@@ -451,7 +580,11 @@ export default function StoryPage() {
                     onMouseMove={handleCardMouseMove}
                   >
                     <div className="flex items-center gap-4 mb-3">
-                      <div className="story-founder-photo-ring shrink-0">
+                      <div
+                        className="story-founder-photo-ring shrink-0 founder-photo-hover"
+                        onClick={() => setEnlargedPhoto({ src: "/images/logan.webp", name: "Logan Kay", subtitle: "Co-Founder | AI Implementation @ Harvard Business School" })}
+                        style={{ cursor: "pointer" }}
+                      >
                         <Image
                           src="/images/logan.webp"
                           alt="Logan Kay"
@@ -523,7 +656,11 @@ export default function StoryPage() {
                     onMouseMove={handleCardMouseMove}
                   >
                     <div className="flex items-center gap-4 mb-3">
-                      <div className="story-founder-photo-ring shrink-0">
+                      <div
+                        className="story-founder-photo-ring shrink-0 founder-photo-hover"
+                        onClick={() => setEnlargedPhoto({ src: "/images/ben.jpeg", name: "Benjamin Matiash", subtitle: "Co-Founder | Institutional Equities @ Morgan Stanley" })}
+                        style={{ cursor: "pointer" }}
+                      >
                         <Image
                           src="/images/ben.jpeg"
                           alt="Benjamin Matiash"
