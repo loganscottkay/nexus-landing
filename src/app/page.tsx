@@ -1209,7 +1209,7 @@ export default function Home() {
                   <img
                     src="/images/universities/bu-crest.gif"
                     alt="Boston University"
-                    className="h-[40px] md:h-[52px] w-auto object-contain transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
+                    className="h-[43px] md:h-[56px] w-auto object-contain transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
                     style={{ mixBlendMode: "multiply" }}
                   />
                   <span
