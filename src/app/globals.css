@@ -8,6 +8,44 @@
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
+/* ---- Stacked Card Scroll Effect ---- */
+.scroll-stack-section {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  overflow: visible;
+  background-color: #FAF9F7;
+}
+
+/* Card-like appearance for sections after the first */
+.scroll-stack-card {
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  position: relative;
+}
+
+.scroll-stack-card::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.03));
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (max-width: 767px) {
+  .scroll-stack-section {
+    min-height: 100svh;
+  }
+  .scroll-stack-card {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+}
+
 /* ---- CSS Custom Property for animated border ---- */
 @property --border-angle {
   syntax: "<angle>";
