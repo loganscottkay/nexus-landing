@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import { ScoringPreview, MatchingPreview, AccountabilityPreview } from "@/components/HowItWorksPreviews";
@@ -269,13 +269,25 @@ const CYCLE_DURATION = 6000;
 const RESUME_DELAY = 2000;
 const STEPS = ["01", "02", "03"] as const;
 
-const narrativePhrases = [
-  { text: "The startup world is full of ideas.", accent: null },
-  { text: "The problem has never been building.", accent: null },
-  { text: "It is getting in front of the right", accent: "people" },
-];
+const narrativeText = "The startup world is full of ideas. The problem has never been building. It is getting in front of the right people.";
+
+const wordVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.06, duration: 0.3, ease: "easeOut" as const },
+  }),
+};
 
 function NarrativeLine() {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const words = narrativeText.split(" ");
+
+  // "people." is the last word — find its index
+  const accentIndex = words.findIndex((w) => w.startsWith("people"));
+
   return (
     <section
       className="scroll-stack-section flex items-center justify-center px-6 py-20 md:py-0 w-full"
@@ -288,52 +300,41 @@ function NarrativeLine() {
         overflow: 'hidden',
       }}
     >
-      <div style={{ maxWidth: "620px", textAlign: "center" }}>
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.35 } },
+      <div ref={ref} style={{ maxWidth: "620px", textAlign: "center" }}>
+        <p
+          className="text-[20px] md:text-[26px] lg:text-[30px] leading-[1.6]"
+          style={{
+            fontFamily: "var(--font-dm-sans), sans-serif",
+            fontWeight: 400,
+            color: "#334155",
           }}
-          className="flex flex-col items-center gap-3 md:gap-4"
         >
-          {narrativePhrases.map((phrase, i) => (
-            <motion.p
-              key={i}
-              variants={{
-                hidden: { opacity: 0, y: 30, scale: 0.97 },
-                visible: { opacity: 1, y: 0, scale: 1 },
-              }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[20px] md:text-[26px] lg:text-[30px] leading-[1.6]"
-              style={{
-                fontFamily: "var(--font-dm-sans), sans-serif",
-                fontWeight: 400,
-                color: "#334155",
-              }}
-            >
-              {phrase.text}
-              {phrase.accent && (
-                <>
-                  {" "}
-                  <span
-                    style={{
-                      background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {phrase.accent}
-                  </span>
-                  .
-                </>
-              )}
-            </motion.p>
-          ))}
-        </motion.div>
+          {words.map((word, i) => {
+            const isAccent = i === accentIndex;
+            return (
+              <motion.span
+                key={i}
+                custom={i}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                variants={wordVariants}
+                className={`inline-block mr-[0.3em] ${isAccent ? "narrative-accent-word" : ""}`}
+                style={
+                  isAccent
+                    ? {
+                        background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        fontWeight: 500,
+                      }
+                    : undefined
+                }
+              >
+                {word}
+              </motion.span>
+            );
+          })}
+        </p>
       </div>
     </section>
   );
