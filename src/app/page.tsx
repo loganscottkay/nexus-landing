@@ -1198,7 +1198,7 @@ export default function Home() {
 
             {/* Credibility strip */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", maxWidth: "100%", margin: "36px auto 20px", padding: 0 }}>
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-end", gap: "4rem", width: "100%", maxWidth: "100%", margin: "0 auto", padding: 0 }}>
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "4rem", width: "100%", maxWidth: "100%", margin: "0 auto", padding: 0 }}>
                 {/* BU Crest */}
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
@@ -1244,14 +1244,14 @@ export default function Home() {
                   transition={{ duration: 0.4, delay: 2.0, ease }}
                   style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "80px", margin: 0, padding: 0 }}
                 >
-                  <div className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "71px", height: "71px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", }}>
+                  <div className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "71px", height: "71px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "9px" }}>
                     <img
                       src="/images/universities/hbs-crest.png"
                       alt="Harvard Business School"
                       style={{ width: "71px", height: "71px", objectFit: "contain", mixBlendMode: "multiply" }}
                     />
                   </div>
-                  <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
+                  <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "-5px", textAlign: "center" }}>
                     HBS
                   </span>
                 </motion.div>
