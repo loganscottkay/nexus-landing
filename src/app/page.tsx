@@ -1229,7 +1229,7 @@ export default function Home() {
                     <img
                       src="/images/universities/neu-crest.png"
                       alt="Northeastern University"
-                      style={{ width: "55px", height: "55px", objectFit: "contain", mixBlendMode: "multiply" }}
+                      style={{ width: "42px", height: "42px", objectFit: "contain", mixBlendMode: "multiply" }}
                     />
                   </div>
                   <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
