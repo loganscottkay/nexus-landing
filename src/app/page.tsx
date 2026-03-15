@@ -330,7 +330,6 @@ function NarrativeLine() {
                         background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
-                        fontWeight: 500,
                       }
                     : undefined
                 }
