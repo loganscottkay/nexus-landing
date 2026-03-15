@@ -1374,7 +1374,7 @@ export default function Home() {
                     <img
                       src="/images/universities/hbs-crest.png"
                       alt="Harvard Business School"
-                      className="h-[58px] w-auto object-contain"
+                      className="h-[64px] w-auto object-contain"
                       style={{ mixBlendMode: "multiply" }}
                     />
                   </div>
