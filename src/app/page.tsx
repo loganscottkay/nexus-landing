@@ -1248,7 +1248,7 @@ export default function Home() {
               className="mb-12"
             >
               <div
-                className="text-[17px] md:text-[16px] max-w-full px-2 md:max-w-[600px] md:px-0 leading-[2.0] text-center"
+                className="text-[14px] md:text-[16px] max-w-full px-2 md:max-w-[600px] md:px-0 leading-[1.8] md:leading-[2.0] text-center"
                 style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 {[
@@ -1480,12 +1480,18 @@ export default function Home() {
       </Section>
 
       {/* ============ FOOTER ============ */}
-      <footer className="relative z-10" style={{ borderTop: "1px solid rgba(0,0,0,0.04)" }}>
-        <div className="max-w-[1100px] mx-auto px-6 md:px-12 pt-[60px] pb-[40px] max-md:pt-[40px] max-md:pb-[30px]">
-          {/* 4-column grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 max-md:text-center">
-            {/* Column 1 — Brand */}
-            <div className="flex flex-col max-md:items-center gap-2">
+      <footer className="relative z-10" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+        {/* Subtle gradient accent line */}
+        <div
+          className="absolute top-0 left-0 right-0 h-[1px]"
+          style={{ background: "linear-gradient(90deg, transparent 20%, rgba(99,102,241,0.2) 50%, transparent 80%)" }}
+        />
+        <div className="max-w-[1100px] mx-auto px-6 md:px-12 pt-[48px] pb-[40px] md:pt-[80px] md:pb-[60px]">
+
+          {/* MOBILE layout: single column, centered, stacked */}
+          <div className="flex flex-col items-center text-center md:hidden">
+            {/* Brand */}
+            <div className="mb-[28px]">
               <Link
                 href="/"
                 className="text-[24px] font-normal"
@@ -1493,78 +1499,157 @@ export default function Home() {
               >
                 UrgenC
               </Link>
-              <p className="text-[14px]" style={{ color: "rgba(0,0,0,0.4)", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              <p className="text-[13px] mt-1" style={{ color: "#94A3B8", fontFamily: "var(--font-dm-sans), sans-serif" }}>
                 Where Real Ideas Meet Real Capital.
               </p>
-              <p className="text-[13px]" style={{ color: "rgba(0,0,0,0.3)", fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                Built in Boston
+            </div>
+
+            {/* Product */}
+            <div className="mb-[28px]">
+              <h4
+                className="text-[12px] font-semibold uppercase mb-3"
+                style={{ letterSpacing: "2px", color: "#0F172A", fontFamily: "var(--font-dm-sans), sans-serif" }}
+              >
+                Product
+              </h4>
+              <div className="flex flex-col">
+                <Link href="/waitlist" className="text-[15px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", lineHeight: "2.0" }}>
+                  Join the Waitlist
+                </Link>
+                <Link href="/qualifications/startup" className="text-[15px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", lineHeight: "2.0" }}>
+                  Startup Qualifications
+                </Link>
+                <Link href="/qualifications/investor" className="text-[15px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", lineHeight: "2.0" }}>
+                  Investor Qualifications
+                </Link>
+              </div>
+            </div>
+
+            {/* Company */}
+            <div className="mb-[28px]">
+              <h4
+                className="text-[12px] font-semibold uppercase mb-3"
+                style={{ letterSpacing: "2px", color: "#0F172A", fontFamily: "var(--font-dm-sans), sans-serif" }}
+              >
+                Company
+              </h4>
+              <div className="flex flex-col">
+                <Link href="/story" className="text-[15px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", lineHeight: "2.0" }}>
+                  About
+                </Link>
+                <a href="mailto:hello@urgenc.com" className="text-[15px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", lineHeight: "2.0" }}>
+                  Contact
+                </a>
+              </div>
+            </div>
+
+            {/* Legal */}
+            <div className="mb-[28px]">
+              <h4
+                className="text-[12px] font-semibold uppercase mb-3"
+                style={{ letterSpacing: "2px", color: "#0F172A", fontFamily: "var(--font-dm-sans), sans-serif" }}
+              >
+                Legal
+              </h4>
+              <div className="flex flex-col">
+                <span className="text-[15px]" style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", lineHeight: "2.0" }}>
+                  Terms of Service
+                </span>
+                <span className="text-[15px]" style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", lineHeight: "2.0" }}>
+                  Privacy Policy
+                </span>
+              </div>
+            </div>
+
+            {/* Disclaimer + Copyright */}
+            <p className="text-[12px] text-center px-4 leading-[1.6]" style={{ color: "#94A3B8", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              UrgenC is a matching and meeting platform. We do not provide investment advice, facilitate financial transactions, or act as a broker-dealer. All investment decisions and transactions occur off-platform between the parties involved.
+            </p>
+            <p className="text-center text-[12px] mt-4" style={{ color: "#94A3B8", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              &copy; 2026 UrgenC. All rights reserved.
+            </p>
+          </div>
+
+          {/* DESKTOP layout: 4-column grid */}
+          <div className="hidden md:grid grid-cols-4 gap-8">
+            {/* Column 1 — Brand */}
+            <div className="flex flex-col gap-2">
+              <Link
+                href="/"
+                className="text-[28px] font-normal"
+                style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
+              >
+                UrgenC
+              </Link>
+              <p className="text-[14px]" style={{ color: "#94A3B8", fontFamily: "var(--font-dm-sans), sans-serif", maxWidth: "200px" }}>
+                Where Real Ideas Meet Real Capital.
               </p>
             </div>
 
             {/* Column 2 — Product */}
-            <div className="flex flex-col max-md:items-center gap-3">
+            <div className="flex flex-col">
               <h4
-                className="text-[13px] font-semibold uppercase"
-                style={{ letterSpacing: "1.5px", color: "rgba(0,0,0,0.3)", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                className="text-[13px] font-semibold uppercase mb-4"
+                style={{ letterSpacing: "2px", color: "#0F172A", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 Product
               </h4>
-              <div className="flex flex-col gap-[10px]">
-                <Link href="/waitlist" className="text-[14px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              <div className="flex flex-col">
+                <Link href="/waitlist" className="text-[15px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", lineHeight: "2.2" }}>
                   Join the Waitlist
                 </Link>
-                <Link href="/qualifications/startup" className="text-[14px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                <Link href="/qualifications/startup" className="text-[15px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", lineHeight: "2.2" }}>
                   Startup Qualifications
                 </Link>
-                <Link href="/qualifications/investor" className="text-[14px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                <Link href="/qualifications/investor" className="text-[15px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", lineHeight: "2.2" }}>
                   Investor Qualifications
                 </Link>
               </div>
             </div>
 
             {/* Column 3 — Company */}
-            <div className="flex flex-col max-md:items-center gap-3">
+            <div className="flex flex-col">
               <h4
-                className="text-[13px] font-semibold uppercase"
-                style={{ letterSpacing: "1.5px", color: "rgba(0,0,0,0.3)", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                className="text-[13px] font-semibold uppercase mb-4"
+                style={{ letterSpacing: "2px", color: "#0F172A", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 Company
               </h4>
-              <div className="flex flex-col gap-[10px]">
-                <Link href="/story" className="text-[14px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              <div className="flex flex-col">
+                <Link href="/story" className="text-[15px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", lineHeight: "2.2" }}>
                   About
                 </Link>
-                <a href="mailto:hello@urgenc.com" className="text-[14px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                <a href="mailto:hello@urgenc.com" className="text-[15px] transition-colors duration-200 hover:text-[#6366F1]" style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", lineHeight: "2.2" }}>
                   Contact
                 </a>
               </div>
             </div>
 
             {/* Column 4 — Legal */}
-            <div className="flex flex-col max-md:items-center gap-3">
+            <div className="flex flex-col">
               <h4
-                className="text-[13px] font-semibold uppercase"
-                style={{ letterSpacing: "1.5px", color: "rgba(0,0,0,0.3)", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                className="text-[13px] font-semibold uppercase mb-4"
+                style={{ letterSpacing: "2px", color: "#0F172A", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 Legal
               </h4>
-              <div className="flex flex-col gap-[10px]">
-                <span className="text-[14px]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              <div className="flex flex-col">
+                <span className="text-[15px]" style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", lineHeight: "2.2" }}>
                   Terms of Service
                 </span>
-                <span className="text-[14px]" style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                <span className="text-[15px]" style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif", lineHeight: "2.2" }}>
                   Privacy Policy
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Divider + Disclaimer + Copyright */}
-          <div className="mt-12" style={{ borderTop: "1px solid rgba(0,0,0,0.04)" }}>
-            <p className="text-[12px] text-center max-w-[600px] mx-auto mt-8" style={{ color: "#94A3B8" }}>
+          {/* Divider + Disclaimer + Copyright (desktop) */}
+          <div className="hidden md:block mt-12" style={{ borderTop: "1px solid rgba(0,0,0,0.04)" }}>
+            <p className="text-[13px] text-center max-w-[700px] mx-auto mt-8 leading-[1.6]" style={{ color: "#94A3B8", fontFamily: "var(--font-dm-sans), sans-serif" }}>
               UrgenC is a matching and meeting platform. We do not provide investment advice, facilitate financial transactions, or act as a broker-dealer. All investment decisions and transactions occur off-platform between the parties involved.
             </p>
-            <p className="text-center text-[13px] mt-4" style={{ color: "rgba(0,0,0,0.25)" }}>
+            <p className="text-center text-[13px] mt-4" style={{ color: "#94A3B8", fontFamily: "var(--font-dm-sans), sans-serif" }}>
               &copy; 2026 UrgenC. All rights reserved.
             </p>
           </div>
