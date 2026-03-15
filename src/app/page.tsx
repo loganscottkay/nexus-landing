@@ -1263,7 +1263,7 @@ export default function Home() {
                   <img
                     src="/images/universities/hbs-crest.png"
                     alt="Harvard Business School"
-                    className="h-[46px] md:h-[60px] w-auto object-contain transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
+                    className="h-[43px] md:h-[56px] w-auto object-contain transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
                     style={{ mixBlendMode: "multiply" }}
                   />
                   <span
