@@ -1210,7 +1210,7 @@ export default function Home() {
                     <img
                       src="/images/universities/bu-crest.gif"
                       alt="Boston University"
-                      style={{ width: "55px", height: "55px", objectFit: "contain", mixBlendMode: "multiply" }}
+                      style={{ width: "65px", height: "65px", objectFit: "contain", mixBlendMode: "multiply" }}
                     />
                   </div>
                   <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
