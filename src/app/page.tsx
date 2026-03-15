@@ -1244,7 +1244,7 @@ export default function Home() {
                   transition={{ duration: 0.4, delay: 2.0, ease }}
                   style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", width: "80px", height: "95px", margin: 0, padding: 0 }}
                 >
-                  <div className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "74px", height: "74px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "74px", height: "74px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "3px" }}>
                     <img
                       src="/images/universities/hbs-crest.png"
                       alt="Harvard Business School"
