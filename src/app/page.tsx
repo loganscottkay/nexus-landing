@@ -1206,12 +1206,29 @@ export default function Home() {
                   transition={{ duration: 0.4, delay: 1.8, ease }}
                   className="flex flex-col items-center"
                 >
-                  <img
-                    src="/images/universities/bu-crest.gif"
-                    alt="Boston University"
-                    className="h-[43px] md:h-[56px] w-auto object-contain transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
-                    style={{ mixBlendMode: "multiply" }}
-                  />
+                  <div
+                    className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <img
+                      src="/images/universities/bu-crest.gif"
+                      alt="Boston University"
+                      style={{
+                        width: "105%",
+                        height: "105%",
+                        objectFit: "cover",
+                        mixBlendMode: "multiply",
+                      }}
+                    />
+                  </div>
                   <span
                     className="mt-[8px] text-[11px] md:text-[12px]"
                     style={{
@@ -1233,12 +1250,29 @@ export default function Home() {
                   transition={{ duration: 0.4, delay: 1.9, ease }}
                   className="flex flex-col items-center"
                 >
-                  <img
-                    src="/images/universities/neu-crest.png"
-                    alt="Northeastern University"
-                    className="h-[40px] md:h-[52px] w-auto object-contain transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
-                    style={{ mixBlendMode: "multiply" }}
-                  />
+                  <div
+                    className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
+                    style={{
+                      width: "52px",
+                      height: "52px",
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <img
+                      src="/images/universities/neu-crest.png"
+                      alt="Northeastern University"
+                      style={{
+                        width: "105%",
+                        height: "105%",
+                        objectFit: "cover",
+                        mixBlendMode: "multiply",
+                      }}
+                    />
+                  </div>
                   <span
                     className="mt-[8px] text-[11px] md:text-[12px]"
                     style={{
