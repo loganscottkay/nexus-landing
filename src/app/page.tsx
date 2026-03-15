@@ -1090,7 +1090,6 @@ export default function Home() {
       <Navbar />
 
       {/* ============ HERO ============ */}
-      <div className="scroll-stack-section" style={{ zIndex: 1 }}>
       <section className="relative z-10 pt-[150px] lg:pt-[220px] pb-[80px] lg:pb-[50px]">
         {/* Subtle abstract landscape-depth gradient */}
         <div
@@ -1285,32 +1284,21 @@ export default function Home() {
         </div>
       </section>
 
-      </div>{/* end hero scroll-stack */}
-
       {/* ============ NARRATIVE HOOK ============ */}
-      <div className="scroll-stack-section scroll-stack-card flex flex-col justify-center" style={{ zIndex: 2 }}>
       <NarrativeLine />
-      </div>{/* end narrative scroll-stack */}
 
       {/* ============ HOW IT WORKS ============ */}
-      <div className="scroll-stack-section scroll-stack-card" style={{ zIndex: 3 }}>
       <HowItWorksSection />
-      </div>{/* end how-it-works scroll-stack */}
 
       {/* ============ HOW MATCHING WORKS ============ */}
-      <div className="scroll-stack-section scroll-stack-card" style={{ zIndex: 4 }}>
       <MatchingFlowSection />
-      </div>{/* end matching scroll-stack */}
 
       {/* ============ IPHONE MOCKUPS ============ */}
-      <div className="scroll-stack-section scroll-stack-card" style={{ zIndex: 5 }}>
       <div className="lg:pb-[100px]">
         <IPhoneMockups />
       </div>
-      </div>{/* end mockups scroll-stack */}
 
       {/* ============ FINAL CTA ============ */}
-      <div className="scroll-stack-section scroll-stack-card flex flex-col justify-center" style={{ zIndex: 6 }}>
       <Section className="relative z-10 pt-[80px] pb-[80px] lg:pt-[80px] lg:pb-[80px]">
         <motion.div
           variants={cardStagger}
@@ -1357,10 +1345,9 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </Section>
-      </div>{/* end final-cta scroll-stack */}
 
       {/* ============ FOOTER ============ */}
-      <footer className="relative z-10" style={{ borderTop: "1px solid rgba(0,0,0,0.06)", backgroundColor: "#FAF9F7", position: "relative", zIndex: 10 }}>
+      <footer className="relative z-10" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
         {/* Subtle gradient accent line */}
         <div
           className="absolute top-0 left-0 right-0 h-[1px]"
