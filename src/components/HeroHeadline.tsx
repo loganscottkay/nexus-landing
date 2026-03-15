@@ -24,23 +24,6 @@ export default function HeroHeadline({ lines, prefersReduced }: HeroHeadlineProp
     return () => clearTimeout(timer);
   }, [prefersReduced]);
 
-  // Handle parallax with direct DOM manipulation instead of React state
-  useEffect(() => {
-    if (prefersReduced) return;
-    let rafId: number;
-    const handleScroll = () => {
-      rafId = requestAnimationFrame(() => {
-        if (containerRef.current) {
-          containerRef.current.style.transform = `translateY(${window.scrollY * -0.15}px)`;
-        }
-      });
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      cancelAnimationFrame(rafId);
-    };
-  }, [prefersReduced]);
 
   return (
     <div

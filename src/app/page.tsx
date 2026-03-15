@@ -1053,25 +1053,6 @@ function ScrollDownIndicator() {
 /* ---- Main Page ---- */
 export default function Home() {
   const prefersReduced = usePrefersReducedMotion();
-  const subtitleRef = useRef<HTMLDivElement>(null);
-
-  // Single scroll listener for subtitle parallax (direct DOM)
-  useEffect(() => {
-    if (prefersReduced) return;
-    let rafId: number;
-    const handleScroll = () => {
-      rafId = requestAnimationFrame(() => {
-        if (subtitleRef.current) {
-          subtitleRef.current.style.transform = `translateY(${window.scrollY * -0.1}px)`;
-        }
-      });
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      cancelAnimationFrame(rafId);
-    };
-  }, [prefersReduced]);
 
   return (
     <main className="relative min-h-screen bg-base text-text-primary overflow-x-clip">
@@ -1096,7 +1077,7 @@ export default function Home() {
       <Navbar />
 
       {/* ============ HERO ============ */}
-      <section className="relative z-10 pt-[150px] lg:pt-[220px] pb-[80px] lg:pb-[50px]" style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#FAF9F7' }}>
+      <section className="relative z-10 pt-[150px] lg:pt-[220px] pb-[80px] lg:pb-[50px]" style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
         {/* Subtle abstract landscape-depth gradient */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -1159,7 +1140,6 @@ export default function Home() {
 
             {/* Subtitle - staggered line reveals with parallax */}
             <div
-              ref={subtitleRef}
               className="mb-12"
             >
               <div
