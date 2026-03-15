@@ -1198,7 +1198,7 @@ export default function Home() {
 
             {/* Credibility strip */}
             <div className="flex flex-col items-center mt-[36px] mb-[20px]">
-              <div className="flex items-center justify-center gap-[44px]">
+              <div className="flex items-center justify-center gap-[28px] md:gap-[36px]">
                 {/* BU Crest */}
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
@@ -1206,19 +1206,12 @@ export default function Home() {
                   transition={{ duration: 0.4, delay: 1.8, ease }}
                   className="flex flex-col items-center"
                 >
-                  <div
-                    className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-110 cursor-pointer"
-                    style={{ filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))", border: "1px solid rgba(0,0,0,0.06)" }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 4px 16px rgba(0,0,0,0.12))"; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 2px 10px rgba(0,0,0,0.08))"; }}
-                  >
-                    <img
-                      src="/images/universities/bu-crest.gif"
-                      alt="Boston University"
-                      className="object-cover rounded-full"
-                      style={{ width: "130%", height: "130%", mixBlendMode: "multiply" }}
-                    />
-                  </div>
+                  <img
+                    src="/images/universities/bu-crest.gif"
+                    alt="Boston University"
+                    className="h-[40px] md:h-[52px] w-auto object-contain transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
+                    style={{ mixBlendMode: "multiply" }}
+                  />
                   <span
                     className="mt-[8px] text-[11px] md:text-[12px]"
                     style={{
@@ -1240,19 +1233,12 @@ export default function Home() {
                   transition={{ duration: 0.4, delay: 1.9, ease }}
                   className="flex flex-col items-center"
                 >
-                  <div
-                    className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-110 cursor-pointer"
-                    style={{ filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))", border: "1px solid rgba(0,0,0,0.06)" }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 4px 16px rgba(0,0,0,0.12))"; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 2px 10px rgba(0,0,0,0.08))"; }}
-                  >
-                    <img
-                      src="/images/universities/neu-crest.png"
-                      alt="Northeastern University"
-                      className="w-[48px] h-[48px] object-cover rounded-full"
-                      style={{ mixBlendMode: "multiply" }}
-                    />
-                  </div>
+                  <img
+                    src="/images/universities/neu-crest.png"
+                    alt="Northeastern University"
+                    className="h-[40px] md:h-[52px] w-auto object-contain transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
+                    style={{ mixBlendMode: "multiply" }}
+                  />
                   <span
                     className="mt-[8px] text-[11px] md:text-[12px]"
                     style={{
@@ -1274,19 +1260,12 @@ export default function Home() {
                   transition={{ duration: 0.4, delay: 2.0, ease }}
                   className="flex flex-col items-center"
                 >
-                  <div
-                    className="flex items-center justify-center overflow-visible transition-all duration-300 hover:scale-110 cursor-pointer"
-                    style={{ filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.08))", marginTop: "2px" }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 4px 16px rgba(0,0,0,0.12))"; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.filter = "drop-shadow(0 2px 10px rgba(0,0,0,0.08))"; }}
-                  >
-                    <img
-                      src="/images/universities/hbs-crest.png"
-                      alt="Harvard Business School"
-                      className="h-[80px] w-auto object-contain"
-                      style={{ mixBlendMode: "multiply" }}
-                    />
-                  </div>
+                  <img
+                    src="/images/universities/hbs-crest.png"
+                    alt="Harvard Business School"
+                    className="h-[46px] md:h-[60px] w-auto object-contain transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
+                    style={{ mixBlendMode: "multiply" }}
+                  />
                   <span
                     className="mt-[8px] text-[11px] md:text-[12px]"
                     style={{
@@ -1307,7 +1286,7 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.4, delay: 2.2, ease }}
-                className="text-[16px] md:text-[17px]"
+                className="text-[15px] md:text-[17px]"
                 style={{
                   fontFamily: "'Instrument Serif', serif",
                   fontStyle: "italic",
