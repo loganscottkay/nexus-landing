@@ -1197,35 +1197,23 @@ export default function Home() {
             </motion.div>
 
             {/* Credibility strip */}
-            <div className="w-full mt-9 mb-5">
-              <div className="flex items-center justify-center gap-12 w-full" style={{ paddingLeft: "15.5px" }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", maxWidth: "100%", margin: "36px auto 20px", padding: 0 }}>
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "4rem", width: "100%", maxWidth: "100%", margin: "0 auto", padding: 0 }}>
                 {/* BU Crest */}
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 1.8, ease }}
-                  className="flex flex-col items-center w-[80px]"
+                  style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "80px", margin: 0, padding: 0 }}
                 >
-                  <div
-                    className="w-[56px] h-[56px] md:w-[60px] md:h-[60px] rounded-full overflow-hidden flex items-center justify-center transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
-                  >
+                  <div className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "55px", height: "55px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <img
                       src="/images/universities/bu-crest.gif"
                       alt="Boston University"
-                      className="w-[105%] h-[105%] object-cover"
-                      style={{ mixBlendMode: "multiply" }}
+                      style={{ width: "55px", height: "55px", objectFit: "contain", mixBlendMode: "multiply" }}
                     />
                   </div>
-                  <span
-                    className="mt-2 text-[11px] md:text-[12px]"
-                    style={{
-                      fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontWeight: 600,
-                      letterSpacing: "1.5px",
-                      textTransform: "uppercase" as const,
-                      color: "#475569",
-                    }}
-                  >
+                  <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
                     BU
                   </span>
                 </motion.div>
@@ -1235,28 +1223,16 @@ export default function Home() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 1.9, ease }}
-                  className="flex flex-col items-center w-[80px]"
+                  style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "80px", margin: 0, padding: 0 }}
                 >
-                  <div
-                    className="w-[56px] h-[56px] md:w-[60px] md:h-[60px] rounded-full overflow-hidden flex items-center justify-center transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
-                  >
+                  <div className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "55px", height: "55px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <img
                       src="/images/universities/neu-crest.png"
                       alt="Northeastern University"
-                      className="w-[105%] h-[105%] object-cover"
-                      style={{ mixBlendMode: "multiply" }}
+                      style={{ width: "55px", height: "55px", objectFit: "contain", mixBlendMode: "multiply" }}
                     />
                   </div>
-                  <span
-                    className="mt-2 text-[11px] md:text-[12px]"
-                    style={{
-                      fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontWeight: 600,
-                      letterSpacing: "1.5px",
-                      textTransform: "uppercase" as const,
-                      color: "#475569",
-                    }}
-                  >
+                  <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
                     NEU
                   </span>
                 </motion.div>
@@ -1266,28 +1242,16 @@ export default function Home() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 2.0, ease }}
-                  className="flex flex-col items-center w-[80px]"
+                  style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "80px", margin: 0, padding: 0 }}
                 >
-                  <div
-                    className="w-[56px] h-[56px] md:w-[60px] md:h-[60px] rounded-full overflow-hidden flex items-center justify-center transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
-                  >
+                  <div className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "55px", height: "55px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <img
                       src="/images/universities/hbs-crest.png"
                       alt="Harvard Business School"
-                      className="w-[105%] h-[105%] object-cover"
-                      style={{ mixBlendMode: "multiply" }}
+                      style={{ width: "55px", height: "55px", objectFit: "contain", mixBlendMode: "multiply" }}
                     />
                   </div>
-                  <span
-                    className="mt-2 text-[11px] md:text-[12px]"
-                    style={{
-                      fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontWeight: 600,
-                      letterSpacing: "1.5px",
-                      textTransform: "uppercase" as const,
-                      color: "#475569",
-                    }}
-                  >
+                  <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
                     HBS
                   </span>
                 </motion.div>
@@ -1298,13 +1262,16 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.4, delay: 2.2, ease }}
-                className="text-[15px] md:text-[17px] w-full text-center"
                 style={{
                   fontFamily: "'Instrument Serif', serif",
                   fontStyle: "italic",
+                  fontSize: "15px",
                   color: "#64748B",
                   letterSpacing: "0.5px",
                   marginTop: "20px",
+                  width: "100%",
+                  textAlign: "center",
+                  padding: 0,
                 }}
               >
                 Built in Boston
