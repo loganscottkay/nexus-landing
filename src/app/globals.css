@@ -12,38 +12,32 @@
 .scroll-stack-section {
   position: sticky;
   top: 0;
+  min-height: 100vh;
   overflow: visible;
   background-color: #FAF9F7;
-  will-change: auto;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-/* Inner container keeps content at fixed viewport height so sticky parents don't compress it */
-.scroll-stack-section-inner {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: inherit;
-}
-
-/* Prevent ANY content inside from shrinking when covered */
-.scroll-stack-section-inner * {
-  flex-shrink: 0;
 }
 
 /* Card-like appearance for sections after the first */
 .scroll-stack-card {
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.04);
   position: relative;
 }
 
+.scroll-stack-card::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.03));
+  pointer-events: none;
+  z-index: 1;
+}
+
 @media (max-width: 767px) {
-  .scroll-stack-section-inner {
+  .scroll-stack-section {
     min-height: 100svh;
   }
   .scroll-stack-card {

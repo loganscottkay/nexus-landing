@@ -1068,7 +1068,7 @@ export default function Home() {
   }, [prefersReduced]);
 
   return (
-    <main className="relative min-h-screen bg-base text-text-primary" style={{ overflowX: 'clip' }}>
+    <main className="relative min-h-screen bg-base text-text-primary overflow-x-clip">
       {/* Scroll progress indicator */}
       <ScrollProgressBar />
 
@@ -1091,7 +1091,6 @@ export default function Home() {
 
       {/* ============ HERO ============ */}
       <div className="scroll-stack-section" style={{ zIndex: 1 }}>
-      <div className="scroll-stack-section-inner">
       <section className="relative z-10 pt-[150px] lg:pt-[220px] pb-[80px] lg:pb-[50px]">
         {/* Subtle abstract landscape-depth gradient */}
         <div
@@ -1250,7 +1249,7 @@ export default function Home() {
                     <img
                       src="/images/universities/hbs-crest.png"
                       alt="Harvard Business School"
-                      style={{ width: "74px", height: "74px", objectFit: "contain", mixBlendMode: "multiply", marginTop: "3px" }}
+                      style={{ width: "74px", height: "74px", objectFit: "contain", mixBlendMode: "multiply", marginTop: "2px" }}
                     />
                   </div>
                   <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
@@ -1286,42 +1285,32 @@ export default function Home() {
         </div>
       </section>
 
-      </div>{/* end hero inner */}
       </div>{/* end hero scroll-stack */}
 
       {/* ============ NARRATIVE HOOK ============ */}
-      <div className="scroll-stack-section scroll-stack-card" style={{ zIndex: 2 }}>
-      <div className="scroll-stack-section-inner">
+      <div className="scroll-stack-section scroll-stack-card flex flex-col justify-center" style={{ zIndex: 2 }}>
       <NarrativeLine />
-      </div>{/* end narrative inner */}
       </div>{/* end narrative scroll-stack */}
 
       {/* ============ HOW IT WORKS ============ */}
       <div className="scroll-stack-section scroll-stack-card" style={{ zIndex: 3 }}>
-      <div className="scroll-stack-section-inner">
       <HowItWorksSection />
-      </div>{/* end how-it-works inner */}
       </div>{/* end how-it-works scroll-stack */}
 
       {/* ============ HOW MATCHING WORKS ============ */}
       <div className="scroll-stack-section scroll-stack-card" style={{ zIndex: 4 }}>
-      <div className="scroll-stack-section-inner">
       <MatchingFlowSection />
-      </div>{/* end matching inner */}
       </div>{/* end matching scroll-stack */}
 
       {/* ============ IPHONE MOCKUPS ============ */}
       <div className="scroll-stack-section scroll-stack-card" style={{ zIndex: 5 }}>
-      <div className="scroll-stack-section-inner">
       <div className="lg:pb-[100px]">
         <IPhoneMockups />
       </div>
-      </div>{/* end mockups inner */}
       </div>{/* end mockups scroll-stack */}
 
       {/* ============ FINAL CTA ============ */}
-      <div className="scroll-stack-section scroll-stack-card" style={{ zIndex: 6 }}>
-      <div className="scroll-stack-section-inner">
+      <div className="scroll-stack-section scroll-stack-card flex flex-col justify-center" style={{ zIndex: 6 }}>
       <Section className="relative z-10 pt-[80px] pb-[80px] lg:pt-[80px] lg:pb-[80px]">
         <motion.div
           variants={cardStagger}
@@ -1368,11 +1357,10 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </Section>
-      </div>{/* end final-cta inner */}
       </div>{/* end final-cta scroll-stack */}
 
       {/* ============ FOOTER ============ */}
-      <footer className="relative" style={{ borderTop: "1px solid rgba(0,0,0,0.06)", backgroundColor: "#FAF9F7", position: "relative", zIndex: 10 }}>
+      <footer className="relative z-10" style={{ borderTop: "1px solid rgba(0,0,0,0.06)", backgroundColor: "#FAF9F7", position: "relative", zIndex: 10 }}>
         {/* Subtle gradient accent line */}
         <div
           className="absolute top-0 left-0 right-0 h-[1px]"
