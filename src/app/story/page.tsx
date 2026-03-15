@@ -562,7 +562,7 @@ export default function StoryPage() {
                         color: "#94A3B8",
                       }}
                     >
-                      Northeastern University | Institutional Equity @ Morgan Stanley
+                      Northeastern University | Institutional Equities @ Morgan Stanley
                     </p>
                     <p
                       style={{
