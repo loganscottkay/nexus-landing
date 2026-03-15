@@ -56,17 +56,20 @@ export default function Navbar() {
       >
         <Link
           href="/waitlist"
-          className="flex items-center justify-center w-full h-[40px] text-[13px] font-semibold text-white transition-all duration-200 hover:brightness-110 cursor-pointer"
+          className="banner-shimmer banner-text relative flex items-center justify-center w-full h-[40px] text-[13px] font-semibold text-white transition-all duration-200 hover:brightness-110 cursor-pointer"
           style={{
-            background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+            background: "linear-gradient(90deg, #4A6CF7, #7C5CFC, #A855F7, #7C5CFC, #4A6CF7)",
+            backgroundSize: "300% 100%",
+            animation: "bannerGradientShift 8s ease-in-out infinite",
             fontFamily: "var(--font-dm-sans), sans-serif",
+            overflow: "hidden",
           }}
         >
           <span className="lg:hidden text-[12px] sm:text-[13px] px-2 text-center">
-            <span className="inline-flex items-center mr-1" style={{ verticalAlign: 'middle', opacity: 0.8 }}><LottieAnimation src="/animations/attention-pulse.json" loop={true} className="lottie-brand w-[24px] h-[24px]" /></span> Founding cohort coming soon. Join the waitlist &rarr;
+            <span className="inline-flex items-center mr-1 banner-dot" style={{ verticalAlign: 'middle' }}><LottieAnimation src="/animations/attention-pulse.json" loop={true} className="lottie-brand w-[24px] h-[24px]" /></span> Founding cohort coming soon. Join the waitlist <span className="inline-block banner-arrow">&rarr;</span>
           </span>
           <span className="hidden lg:inline">
-            <span className="inline-flex items-center mr-1" style={{ verticalAlign: 'middle', opacity: 0.8 }}><LottieAnimation src="/animations/attention-pulse.json" loop={true} className="lottie-brand w-[24px] h-[24px]" /></span> Founding cohort coming soon. Join the waitlist &rarr;
+            <span className="inline-flex items-center mr-1 banner-dot" style={{ verticalAlign: 'middle' }}><LottieAnimation src="/animations/attention-pulse.json" loop={true} className="lottie-brand w-[24px] h-[24px]" /></span> Founding cohort coming soon. Join the waitlist <span className="inline-block banner-arrow">&rarr;</span>
           </span>
         </Link>
         <button
