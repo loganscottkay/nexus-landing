@@ -1248,7 +1248,7 @@ export default function Home() {
                     <img
                       src="/images/universities/hbs-crest.png"
                       alt="Harvard Business School"
-                      style={{ width: "74px", height: "74px", objectFit: "contain", mixBlendMode: "multiply" }}
+                      style={{ width: "74px", height: "74px", objectFit: "contain", mixBlendMode: "multiply", marginTop: "2px" }}
                     />
                   </div>
                   <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
