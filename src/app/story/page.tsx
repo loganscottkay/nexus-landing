@@ -634,7 +634,7 @@ export default function StoryPage() {
                         textAlign: "left",
                       }}
                     >
-                      Logan brings the technical firepower and operational rigor. He spearheaded AI implementation across admissions and operations at Harvard Business School and obsesses over making complex systems simple and accessible. He is the architect behind the UrgenC scoring engine and platform infrastructure.
+                      Logan brings the technical firepower and operational rigor. He spearheaded AI implementation across admissions and operations at Harvard Business School and obsesses over making complex systems simple and accessible. He is the architect behind the UrgenC scoring engine and platform infrastructure. A natural communicator with a builder&#39;s instinct, Logan thrives at the intersection of product and people, translating founder pain points into features and turning cold conversations into warm relationships. He leads all product development, engineering, and growth strategy.
                     </p>
                   </div>
                 </div>
