@@ -278,7 +278,7 @@ const narrativePhrases = [
 function NarrativeLine() {
   return (
     <section
-      className="flex items-center justify-center px-6 w-full"
+      className="scroll-stack-section flex items-center justify-center px-6 py-20 md:py-0 w-full"
       style={{
         position: 'sticky',
         top: 0,
@@ -433,7 +433,7 @@ function HowItWorksSection() {
   const activeIndex = STEPS.indexOf(activeCard as typeof STEPS[number]);
 
   return (
-    <Section id="how-it-works" className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
+    <Section id="how-it-works" className="scroll-stack-section relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
       <div ref={sectionRef} className="max-w-6xl mx-auto">
         <motion.div
           variants={cardStagger}
@@ -737,7 +737,7 @@ function MatchingFlowSection() {
   };
 
   return (
-    <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'sticky', top: 0, zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
+    <Section className="scroll-stack-section relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'sticky', top: 0, zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
       <div className="max-w-6xl mx-auto">
       <motion.div
         variants={cardStagger}
@@ -1091,7 +1091,7 @@ export default function Home() {
       <Navbar />
 
       {/* ============ HERO ============ */}
-      <section className="relative z-10 pt-[150px] lg:pt-[220px] pb-[80px] lg:pb-[50px]" style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
+      <section className="scroll-stack-section relative z-10 pt-[150px] lg:pt-[220px] pb-[80px] lg:pb-[50px]" style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
         {/* Subtle abstract landscape-depth gradient */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -1294,12 +1294,12 @@ export default function Home() {
       <MatchingFlowSection />
 
       {/* ============ IPHONE MOCKUPS ============ */}
-      <div className="lg:pb-[100px] w-full" style={{ position: 'sticky', top: 0, zIndex: 5, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
+      <div className="scroll-stack-section lg:pb-[100px] w-full" style={{ position: 'sticky', top: 0, zIndex: 5, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
         <IPhoneMockups />
       </div>
 
       {/* ============ FINAL CTA ============ */}
-      <Section className="relative z-10 w-full flex items-center justify-center" style={{ position: 'relative', zIndex: 6, backgroundColor: '#FAF9F7', minHeight: '100vh' }}>
+      <Section className="scroll-stack-section relative z-10 w-full flex items-center justify-center py-20" style={{ position: 'relative', zIndex: 6, backgroundColor: '#FAF9F7', minHeight: '100vh' }}>
         <motion.div
           variants={cardStagger}
           initial="hidden"

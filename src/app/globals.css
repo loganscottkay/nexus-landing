@@ -1953,6 +1953,22 @@ html {
   }
 }
 
+/* ============================================================
+   Mobile: disable scroll-stack sticky positioning
+   On mobile, content is taller than the viewport so sticky
+   pinning prevents users from seeing all content. Sections
+   flow normally on mobile; the stack animation is desktop-only.
+   ============================================================ */
+@media (max-width: 767px) {
+  .scroll-stack-section {
+    position: relative !important;
+    top: auto !important;
+    z-index: 1 !important;
+    overflow: visible !important;
+    min-height: auto !important;
+  }
+}
+
 /* PART 6: Page transitions */
 .page-transition-wrapper {
   animation: page-fade-in 0.3s ease forwards;
