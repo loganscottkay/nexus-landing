@@ -30,7 +30,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="font-sans antialiased overflow-x-hidden"
+        className="font-sans antialiased overflow-x-clip"
         style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
       >
         <PageAtmosphere />

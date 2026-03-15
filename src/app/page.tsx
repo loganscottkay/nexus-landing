@@ -191,10 +191,12 @@ function Section({
   children,
   className = "",
   id,
+  style = {},
 }: {
   children: React.ReactNode;
   className?: string;
   id?: string;
+  style?: React.CSSProperties;
 }) {
   return (
     <motion.section
@@ -205,6 +207,7 @@ function Section({
       viewport={viewportConfig}
       transition={{ duration: 0.5, ease }}
       className={className}
+      style={style}
     >
       {children}
     </motion.section>
@@ -284,7 +287,8 @@ function NarrativeLine() {
   return (
     <div
       ref={ref}
-      className="flex justify-center px-6 py-[36px] md:py-[50px]"
+      className="flex justify-center px-6 py-[36px] md:py-[50px] scroll-stack-shadow"
+      style={{ position: 'sticky', top: 0, zIndex: 2, backgroundColor: '#FAF9F7' }}
     >
       <div
         style={{ maxWidth: "580px", textAlign: "center" }}
@@ -415,7 +419,7 @@ function HowItWorksSection() {
   const activeIndex = STEPS.indexOf(activeCard as typeof STEPS[number]);
 
   return (
-    <Section id="how-it-works" className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] max-w-6xl mx-auto">
+    <Section id="how-it-works" className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] max-w-6xl mx-auto scroll-stack-shadow" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7' }}>
       <div ref={sectionRef}>
         <motion.div
           variants={cardStagger}
@@ -719,7 +723,7 @@ function MatchingFlowSection() {
   };
 
   return (
-    <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] max-w-6xl mx-auto">
+    <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] max-w-6xl mx-auto scroll-stack-shadow" style={{ position: 'sticky', top: 0, zIndex: 4, backgroundColor: '#FAF9F7' }}>
       <motion.div
         variants={cardStagger}
         initial="hidden"
@@ -1090,7 +1094,7 @@ export default function Home() {
       <Navbar />
 
       {/* ============ HERO ============ */}
-      <section className="relative z-10 pt-[150px] lg:pt-[220px] pb-[80px] lg:pb-[50px]">
+      <section className="relative z-10 pt-[150px] lg:pt-[220px] pb-[80px] lg:pb-[50px]" style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#FAF9F7' }}>
         {/* Subtle abstract landscape-depth gradient */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -1294,12 +1298,12 @@ export default function Home() {
       <MatchingFlowSection />
 
       {/* ============ IPHONE MOCKUPS ============ */}
-      <div className="lg:pb-[100px]">
+      <div className="lg:pb-[100px] scroll-stack-shadow" style={{ position: 'sticky', top: 0, zIndex: 5, backgroundColor: '#FAF9F7' }}>
         <IPhoneMockups />
       </div>
 
       {/* ============ FINAL CTA ============ */}
-      <Section className="relative z-10 pt-[80px] pb-[80px] lg:pt-[80px] lg:pb-[80px]">
+      <Section className="relative z-10 pt-[80px] pb-[80px] lg:pt-[80px] lg:pb-[80px] scroll-stack-shadow" style={{ position: 'sticky', top: 0, zIndex: 6, backgroundColor: '#FAF9F7' }}>
         <motion.div
           variants={cardStagger}
           initial="hidden"
