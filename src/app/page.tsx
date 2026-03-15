@@ -1198,13 +1198,14 @@ export default function Home() {
 
             {/* Credibility strip */}
             <div className="flex flex-col items-center mt-[36px] mb-[20px]">
-              <div className="flex items-center justify-center gap-[28px] md:gap-[36px]">
+              <div className="flex items-center justify-center gap-[28px] md:gap-[36px] w-full mx-auto">
                 {/* BU Crest */}
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 1.8, ease }}
                   className="flex flex-col items-center"
+                  style={{ minWidth: "70px" }}
                 >
                   <div
                     className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
@@ -1249,6 +1250,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 1.9, ease }}
                   className="flex flex-col items-center"
+                  style={{ minWidth: "70px" }}
                 >
                   <div
                     className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
@@ -1293,11 +1295,12 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 2.0, ease }}
                   className="flex flex-col items-center"
+                  style={{ minWidth: "70px" }}
                 >
                   <img
                     src="/images/universities/hbs-crest.png"
                     alt="Harvard Business School"
-                    className="h-[43px] md:h-[56px] w-auto object-contain transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
+                    className="h-[43px] md:h-[53px] w-auto object-contain transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
                     style={{ mixBlendMode: "multiply" }}
                   />
                   <span
