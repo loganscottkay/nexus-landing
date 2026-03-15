@@ -433,7 +433,7 @@ function HowItWorksSection() {
   const activeIndex = STEPS.indexOf(activeCard as typeof STEPS[number]);
 
   return (
-    <Section id="how-it-works" className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 3, backgroundColor: '#FAF9F7' }}>
+    <Section id="how-it-works" className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
       <div ref={sectionRef} className="max-w-6xl mx-auto">
         <motion.div
           variants={cardStagger}
@@ -737,7 +737,7 @@ function MatchingFlowSection() {
   };
 
   return (
-    <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 3, backgroundColor: '#FAF9F7' }}>
+    <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'sticky', top: 0, zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
       <div className="max-w-6xl mx-auto">
       <motion.div
         variants={cardStagger}
@@ -1294,12 +1294,12 @@ export default function Home() {
       <MatchingFlowSection />
 
       {/* ============ IPHONE MOCKUPS ============ */}
-      <div className="lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 3, backgroundColor: '#FAF9F7' }}>
+      <div className="lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 5, backgroundColor: '#FAF9F7' }}>
         <IPhoneMockups />
       </div>
 
       {/* ============ FINAL CTA ============ */}
-      <Section className="relative z-10 pt-[80px] pb-[80px] lg:pt-[80px] lg:pb-[80px] w-full" style={{ position: 'relative', zIndex: 3, backgroundColor: '#FAF9F7' }}>
+      <Section className="relative z-10 pt-[80px] pb-[80px] lg:pt-[80px] lg:pb-[80px] w-full" style={{ position: 'relative', zIndex: 5, backgroundColor: '#FAF9F7' }}>
         <motion.div
           variants={cardStagger}
           initial="hidden"
@@ -1347,7 +1347,7 @@ export default function Home() {
       </Section>
 
       {/* ============ FOOTER ============ */}
-      <footer className="relative w-full" style={{ zIndex: 3, backgroundColor: '#FAF9F7', borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+      <footer className="relative w-full" style={{ zIndex: 5, backgroundColor: '#FAF9F7', borderTop: "1px solid rgba(0,0,0,0.06)" }}>
         {/* Subtle gradient accent line */}
         <div
           className="absolute top-0 left-0 right-0 h-[1px]"
