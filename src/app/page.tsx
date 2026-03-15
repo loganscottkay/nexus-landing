@@ -1124,7 +1124,7 @@ export default function Home() {
         />
         {/* Centered hero text */}
         <div className="flex flex-col items-center justify-center text-center px-6 max-w-[700px] lg:max-w-[900px] mx-auto relative z-10">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center w-full">
             {/* Eyebrow - DM Sans uppercase, first to appear */}
             <motion.p
               initial={{ opacity: 0, y: 15 }}
@@ -1197,41 +1197,27 @@ export default function Home() {
             </motion.div>
 
             {/* Credibility strip */}
-            <div className="flex flex-col items-center mt-[36px] mb-[20px]">
-              <div className="flex items-center justify-center gap-[28px] md:gap-[36px] w-full mx-auto">
+            <div className="w-full mt-9 mb-5">
+              <div className="flex items-center justify-center gap-12 w-full" style={{ paddingLeft: "15.5px" }}>
                 {/* BU Crest */}
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 1.8, ease }}
-                  className="flex flex-col items-center"
-                  style={{ minWidth: "70px" }}
+                  className="flex flex-col items-center w-[80px]"
                 >
                   <div
-                    className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      borderRadius: "50%",
-                      overflow: "hidden",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+                    className="w-[56px] h-[56px] md:w-[60px] md:h-[60px] rounded-full overflow-hidden flex items-center justify-center transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
                   >
                     <img
                       src="/images/universities/bu-crest.gif"
                       alt="Boston University"
-                      style={{
-                        width: "105%",
-                        height: "105%",
-                        objectFit: "cover",
-                        mixBlendMode: "multiply",
-                      }}
+                      className="w-[105%] h-[105%] object-cover"
+                      style={{ mixBlendMode: "multiply" }}
                     />
                   </div>
                   <span
-                    className="mt-[8px] text-[11px] md:text-[12px]"
+                    className="mt-2 text-[11px] md:text-[12px]"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
                       fontWeight: 600,
@@ -1249,34 +1235,20 @@ export default function Home() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 1.9, ease }}
-                  className="flex flex-col items-center"
-                  style={{ minWidth: "70px" }}
+                  className="flex flex-col items-center w-[80px]"
                 >
                   <div
-                    className="transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
-                    style={{
-                      width: "52px",
-                      height: "52px",
-                      borderRadius: "50%",
-                      overflow: "hidden",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+                    className="w-[56px] h-[56px] md:w-[60px] md:h-[60px] rounded-full overflow-hidden flex items-center justify-center transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
                   >
                     <img
                       src="/images/universities/neu-crest.png"
                       alt="Northeastern University"
-                      style={{
-                        width: "105%",
-                        height: "105%",
-                        objectFit: "cover",
-                        mixBlendMode: "multiply",
-                      }}
+                      className="w-[105%] h-[105%] object-cover"
+                      style={{ mixBlendMode: "multiply" }}
                     />
                   </div>
                   <span
-                    className="mt-[8px] text-[11px] md:text-[12px]"
+                    className="mt-2 text-[11px] md:text-[12px]"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
                       fontWeight: 600,
@@ -1294,17 +1266,20 @@ export default function Home() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 2.0, ease }}
-                  className="flex flex-col items-center"
-                  style={{ minWidth: "70px" }}
+                  className="flex flex-col items-center w-[80px]"
                 >
-                  <img
-                    src="/images/universities/hbs-crest.png"
-                    alt="Harvard Business School"
-                    className="h-[43px] md:h-[53px] w-auto object-contain transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
-                    style={{ mixBlendMode: "multiply" }}
-                  />
+                  <div
+                    className="w-[56px] h-[56px] md:w-[60px] md:h-[60px] rounded-full overflow-hidden flex items-center justify-center transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer"
+                  >
+                    <img
+                      src="/images/universities/hbs-crest.png"
+                      alt="Harvard Business School"
+                      className="w-[105%] h-[105%] object-cover"
+                      style={{ mixBlendMode: "multiply" }}
+                    />
+                  </div>
                   <span
-                    className="mt-[8px] text-[11px] md:text-[12px]"
+                    className="mt-2 text-[11px] md:text-[12px]"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
                       fontWeight: 600,
@@ -1323,7 +1298,7 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.4, delay: 2.2, ease }}
-                className="text-[15px] md:text-[17px]"
+                className="text-[15px] md:text-[17px] w-full text-center"
                 style={{
                   fontFamily: "'Instrument Serif', serif",
                   fontStyle: "italic",
