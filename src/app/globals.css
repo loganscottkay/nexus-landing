@@ -658,11 +658,11 @@ body {
 
 /* ---- Narrative accent word shimmer ---- */
 .narrative-accent-word {
-  animation: narrative-accent-pop 0.3s ease-out forwards;
-  animation-delay: calc(var(--word-count, 22) * 0.06s);
+  animation: narrative-accent-pop 0.6s cubic-bezier(0.25, 0.1, 0.25, 1.0) forwards;
+  animation-delay: calc(var(--word-count, 22) * 0.045s);
 }
 @keyframes narrative-accent-pop {
-  0% { transform: scale(1.1); }
+  0% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
 

@@ -276,18 +276,32 @@ const STEPS = ["01", "02", "03"] as const;
 
 const narrativeText = "The startup world is full of ideas. The problem has never been building. It is getting in front of the right people.";
 
-const wordVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.06, duration: 0.3, ease: "easeOut" as const },
-  }),
-};
+function getWordVariants(mobile: boolean) {
+  const yOffset = mobile ? 3 : 5;
+  const ease = [0.25, 0.1, 0.25, 1.0] as const;
+  return {
+    hidden: { opacity: 0, y: yOffset, filter: "blur(3px)" },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { delay: i * 0.045, duration: 0.45, ease },
+    }),
+  };
+}
 
 function NarrativeLine() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+  const wordVariants = getWordVariants(isMobile);
   const words = narrativeText.split(" ");
 
   // "people." is the last word — find its index
