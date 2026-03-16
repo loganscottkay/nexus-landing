@@ -302,151 +302,207 @@ function NarrativeLine() {
   );
 }
 
-/* ---- Animated Door Icon ---- */
-function DoorIcon({ animate }: { animate: boolean }) {
+/* ---- Animated Door Visual (large, for pillar row) ---- */
+function DoorAnimation({ animate }: { animate: boolean }) {
   return (
-    <div className="w-[80px] h-[80px] md:w-[80px] md:h-[80px] w-[64px] h-[64px] relative mx-auto" style={{ perspective: "200px" }}>
+    <div className="relative flex items-center justify-center" style={{ width: 200, height: 180 }}>
       {/* Glow behind door */}
       <motion.div
         initial={{ opacity: 0, scale: 0 }}
-        animate={animate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-        transition={{ duration: 0.5, delay: 1.2 }}
-        className="absolute inset-0 rounded-lg"
-        style={{ background: "radial-gradient(circle, rgba(99,102,241,0.15), rgba(139,92,246,0.1), transparent 70%)" }}
+        animate={animate ? { opacity: 0.6, scale: 1 } : { opacity: 0, scale: 0 }}
+        transition={{ duration: 0.6, delay: 0.9 }}
+        className="absolute"
+        style={{ width: 120, height: 120, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%)' }}
       />
-      <svg viewBox="0 0 80 80" className="w-full h-full relative z-10">
-        {/* Door frame */}
-        <rect x="22" y="12" width="36" height="56" rx="2" fill="none" stroke="#64748B" strokeWidth="2" />
-        {/* Door panel - rotates open */}
-        <motion.g
-          style={{ transformOrigin: "22px 40px" }}
-          initial={{ rotateY: 0 }}
-          animate={animate ? { rotateY: -70 } : { rotateY: 0 }}
-          transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <rect x="22" y="12" width="36" height="56" rx="2" fill="#E2E8F0" stroke="#94A3B8" strokeWidth="1.5" />
-          <circle cx="50" cy="42" r="2.5" fill="#94A3B8" />
-        </motion.g>
-        {/* Sparkle */}
-        <motion.circle
-          cx="40" cy="38" r="2"
-          fill="#F59E0B"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={animate ? { opacity: [0, 1, 0], scale: [0, 1.2, 0] } : {}}
-          transition={{ duration: 0.6, delay: 1.5 }}
-        />
-      </svg>
-    </div>
-  );
-}
-
-/* ---- Animated Shield Icon ---- */
-function AnimatedShieldIcon({ animate }: { animate: boolean }) {
-  const shieldPath = "M40 8 L64 20 L64 44 C64 58 40 72 40 72 C40 72 16 58 16 44 L16 20 Z";
-  const checkPath = "M30 40 L37 47 L52 32";
-  return (
-    <div className="w-[80px] h-[80px] md:w-[80px] md:h-[80px] w-[64px] h-[64px] relative mx-auto">
-      <motion.div
-        className="absolute inset-0 rounded-full"
-        initial={{ boxShadow: "0 0 0 0 rgba(34,197,94,0)" }}
-        animate={animate ? { boxShadow: ["0 0 0 0 rgba(34,197,94,0)", "0 0 20px 8px rgba(34,197,94,0.2)", "0 0 0 0 rgba(34,197,94,0)"] } : {}}
-        transition={{ duration: 0.6, delay: 1.5 }}
-      />
-      <svg viewBox="0 0 80 80" className="w-full h-full">
-        <motion.path
-          d={shieldPath}
-          fill="none"
-          stroke="#6366F1"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+      <svg viewBox="0 0 200 180" width="200" height="180" className="relative z-10">
+        {/* Door frame - draws itself */}
+        <motion.rect
+          x="60" y="10" width="80" height="140" rx="4"
+          fill="none" stroke="#6366F1" strokeWidth="1.5"
           initial={{ pathLength: 0 }}
           animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: 0.3 }}
         />
-        <motion.path
-          d={checkPath}
-          fill="none"
-          stroke="#22C55E"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          initial={{ pathLength: 0 }}
-          animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
-          transition={{ duration: 0.4, delay: 1.3 }}
+        {/* Door panel - swings open with 3D perspective */}
+        <motion.rect
+          x="60" y="10" width="80" height="140" rx="4"
+          fill="rgba(99,102,241,0.08)" stroke="none"
+          style={{ transformOrigin: '60px 80px' }}
+          initial={{ scaleX: 1, opacity: 1 }}
+          animate={animate ? { scaleX: 0.25, opacity: 0.4 } : { scaleX: 1, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
         />
-      </svg>
-    </div>
-  );
-}
-
-/* ---- Animated Merge Icon ---- */
-function MergeIcon({ animate }: { animate: boolean }) {
-  const particles = [
-    { x: -15, y: -12, color: "#F59E0B" },
-    { x: 15, y: -10, color: "#6366F1" },
-    { x: -12, y: 14, color: "#8B5CF6" },
-    { x: 14, y: 12, color: "#F59E0B" },
-  ];
-  return (
-    <div className="w-[80px] h-[80px] md:w-[80px] md:h-[80px] w-[64px] h-[64px] relative mx-auto">
-      <svg viewBox="0 0 80 80" className="w-full h-full">
-        {/* Blue circle - starts left */}
-        <motion.circle
-          r="8"
-          cy="34"
-          fill="#6366F1"
-          initial={{ cx: 20 }}
-          animate={animate ? { cx: 40 } : { cx: 20 }}
-          transition={{ duration: 0.6, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        />
-        {/* Violet circle - starts right */}
-        <motion.circle
-          r="8"
-          cy="34"
-          fill="#8B5CF6"
-          initial={{ cx: 60 }}
-          animate={animate ? { cx: 40 } : { cx: 60 }}
-          transition={{ duration: 0.6, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        />
-        {/* Merged circle */}
-        <motion.circle
-          cx="40" cy="34" r="10"
-          fill="url(#mergeGrad)"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={animate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-          transition={{ duration: 0.3, delay: 1.4 }}
-        />
-        {/* Particles */}
-        {particles.map((p, i) => (
+        {/* Floating particles behind door */}
+        {[
+          { cx: 95, cy: 60, r: 3, color: '#6366F1', dx: -8, dy: -15 },
+          { cx: 105, cy: 70, r: 2.5, color: '#8B5CF6', dx: 10, dy: -12 },
+          { cx: 100, cy: 55, r: 2, color: '#F5D76E', dx: 2, dy: -18 },
+        ].map((p, i) => (
           <motion.circle
             key={i}
-            cx={40}
-            cy={34}
-            r="1.5"
+            cx={p.cx} cy={p.cy} r={p.r}
             fill={p.color}
             initial={{ opacity: 0 }}
             animate={animate ? {
-              opacity: [0, 1, 0],
-              cx: [40, 40 + p.x],
-              cy: [34, 34 + p.y],
+              opacity: [0, 0.6, 0],
+              cx: [p.cx, p.cx + p.dx],
+              cy: [p.cy, p.cy + p.dy],
             } : {}}
-            transition={{ duration: 0.4, delay: 1.4 }}
+            transition={{ duration: 0.4, delay: 1.0 + i * 0.1 }}
           />
         ))}
-        {/* Calendar icon below */}
-        <motion.g
+      </svg>
+    </div>
+  );
+}
+
+/* ---- Animated Shield Visual (large, for pillar row) ---- */
+function ShieldAnimation({ animate }: { animate: boolean }) {
+  const shieldPath = "M100 15 L145 40 L145 90 C145 115 100 140 100 140 C100 140 55 115 55 90 L55 40 Z";
+  const checkPath = "M82 85 L95 98 L120 73";
+  return (
+    <div className="relative flex items-center justify-center" style={{ width: 200, height: 180 }}>
+      {/* Green pulse ring */}
+      <motion.div
+        className="absolute"
+        style={{ width: 140, height: 140, borderRadius: '50%', border: '2px solid rgba(5,150,105,0.3)' }}
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={animate ? { opacity: [0, 1, 0], scale: [0.5, 1.5] } : {}}
+        transition={{ duration: 0.4, delay: 1.0 }}
+      />
+      <svg viewBox="0 0 200 160" width="200" height="160">
+        {/* Shield outline draws from top center both directions */}
+        <motion.path
+          d={shieldPath}
+          fill="none" stroke="#6366F1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+          initial={{ pathLength: 0 }}
+          animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
+          transition={{ duration: 0.5 }}
+        />
+        {/* Shield fill */}
+        <motion.path
+          d={shieldPath}
+          fill="url(#shieldFill)" stroke="none"
           initial={{ opacity: 0 }}
           animate={animate ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.3, delay: 1.8 }}
-        >
-          <rect x="34" y="52" width="12" height="10" rx="1.5" fill="none" stroke="#94A3B8" strokeWidth="1.5" />
-          <line x1="34" y1="55" x2="46" y2="55" stroke="#94A3B8" strokeWidth="1" />
-          <line x1="37" y1="50" x2="37" y2="53" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round" />
-          <line x1="43" y1="50" x2="43" y2="53" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round" />
-        </motion.g>
+          transition={{ duration: 0.4, delay: 0.4 }}
+        />
+        {/* Checkmark */}
+        <motion.path
+          d={checkPath}
+          fill="none" stroke="#059669" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"
+          initial={{ pathLength: 0 }}
+          animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
+          transition={{ duration: 0.4, delay: 0.7 }}
+        />
+        {/* Three checklist lines below checkmark */}
+        {[0, 1, 2].map((i) => (
+          <motion.line
+            key={i}
+            x1="90" y1={110 + i * 7} x2="110" y2={110 + i * 7}
+            stroke="rgba(99,102,241,0.3)" strokeWidth="2" strokeLinecap="round"
+            initial={{ pathLength: 0 }}
+            animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
+            transition={{ duration: 0.2, delay: 1.2 + i * 0.1 }}
+          />
+        ))}
         <defs>
-          <linearGradient id="mergeGrad" x1="30" y1="24" x2="50" y2="44">
+          <linearGradient id="shieldFill" x1="55" y1="15" x2="145" y2="140">
+            <stop stopColor="rgba(99,102,241,0.06)" />
+            <stop offset="1" stopColor="rgba(99,102,241,0.02)" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  );
+}
+
+/* ---- Animated Match Visual (large, for pillar row) ---- */
+function MatchAnimation({ animate }: { animate: boolean }) {
+  const burstParticles = [
+    { dx: -20, dy: -15, color: '#F5D76E' },
+    { dx: 18, dy: -12, color: '#6366F1' },
+    { dx: -15, dy: 18, color: '#8B5CF6' },
+    { dx: 22, dy: 10, color: '#F5D76E' },
+    { dx: -8, dy: -22, color: '#6366F1' },
+    { dx: 12, dy: 20, color: '#8B5CF6' },
+  ];
+  return (
+    <div className="relative flex items-center justify-center" style={{ width: 200, height: 180 }}>
+      <svg viewBox="0 0 200 180" width="200" height="180">
+        {/* Labels */}
+        <motion.text x="55" y="100" textAnchor="middle" fill="rgba(0,0,0,0.3)" fontSize="8" fontFamily="var(--font-dm-sans), sans-serif"
+          initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : {}} transition={{ duration: 0.2 }}
+        >Investor</motion.text>
+        <motion.text x="145" y="100" textAnchor="middle" fill="rgba(0,0,0,0.3)" fontSize="8" fontFamily="var(--font-dm-sans), sans-serif"
+          initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : {}} transition={{ duration: 0.2 }}
+        >Founder</motion.text>
+
+        {/* Blue circle (investor) - slides right */}
+        <motion.circle
+          r="12" cy="82" fill="#6366F1"
+          initial={{ cx: 55, opacity: 0 }}
+          animate={animate ? { cx: 96, opacity: 1 } : { cx: 55, opacity: 0 }}
+          transition={{ cx: { duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }, opacity: { duration: 0.2 } }}
+        />
+        {/* Violet circle (founder) - slides left */}
+        <motion.circle
+          r="12" cy="82" fill="#8B5CF6"
+          initial={{ cx: 145, opacity: 0 }}
+          animate={animate ? { cx: 104, opacity: 1 } : { cx: 145, opacity: 0 }}
+          transition={{ cx: { duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }, opacity: { duration: 0.2 } }}
+        />
+        {/* Connecting line */}
+        <motion.line
+          x1="96" y1="82" x2="104" y2="82"
+          stroke="url(#connectGrad)" strokeWidth="2"
+          initial={{ pathLength: 0 }}
+          animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
+          transition={{ duration: 0.3, delay: 0.7 }}
+        />
+        {/* Pulse on connection */}
+        <motion.circle
+          cx="100" cy="82" r="14" fill="none" stroke="rgba(99,102,241,0.2)" strokeWidth="2"
+          initial={{ scale: 1, opacity: 0 }}
+          animate={animate ? { scale: [1, 1.08, 1], opacity: [0, 1, 0] } : {}}
+          transition={{ duration: 0.4, delay: 0.9 }}
+        />
+        {/* Burst particles */}
+        {burstParticles.map((p, i) => (
+          <motion.circle
+            key={i} cx={100} cy={82} r="1.5" fill={p.color}
+            initial={{ opacity: 0 }}
+            animate={animate ? {
+              opacity: [0, 1, 0],
+              cx: [100, 100 + p.dx],
+              cy: [82, 82 + p.dy],
+            } : {}}
+            transition={{ duration: 0.4, delay: 0.9 }}
+          />
+        ))}
+        {/* Calendar icon */}
+        <motion.g initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : {}} transition={{ duration: 0.3, delay: 1.2 }}>
+          <rect x="78" y="120" width="24" height="20" rx="2" fill="none" stroke="#0F172A" strokeWidth="2" />
+          <line x1="78" y1="127" x2="102" y2="127" stroke="#0F172A" strokeWidth="1.5" />
+          <circle cx="84" cy="133" r="1" fill="#0F172A" />
+          <circle cx="90" cy="133" r="1" fill="#0F172A" />
+          <circle cx="96" cy="133" r="1" fill="#0F172A" />
+          <circle cx="84" cy="138" r="1" fill="#0F172A" />
+          <circle cx="90" cy="138" r="1" fill="#0F172A" />
+        </motion.g>
+        {/* 72h label */}
+        <motion.text x="110" y="135" fill="#6366F1" fontSize="14" fontWeight="700" fontFamily="var(--font-dm-sans), sans-serif"
+          initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : {}} transition={{ duration: 0.3, delay: 1.5 }}
+        >72h</motion.text>
+        {/* Checkmark on calendar */}
+        <motion.path
+          d="M86 137 L89 140 L95 134" fill="none" stroke="#059669" strokeWidth="1.5" strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
+          transition={{ duration: 0.3, delay: 1.6 }}
+        />
+        <defs>
+          <linearGradient id="connectGrad" x1="96" y1="82" x2="104" y2="82">
             <stop stopColor="#6366F1" />
             <stop offset="1" stopColor="#8B5CF6" />
           </linearGradient>
@@ -456,91 +512,94 @@ function MergeIcon({ animate }: { animate: boolean }) {
   );
 }
 
-/* ---- Pillar Card ---- */
-const pillarCardStyle: React.CSSProperties = {
-  background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3))",
-  backdropFilter: "blur(20px) saturate(1.8)",
-  WebkitBackdropFilter: "blur(20px) saturate(1.8)",
-  border: "1px solid rgba(255,255,255,0.5)",
-  boxShadow: "0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)",
-  borderRadius: "20px",
-  position: "relative",
-  overflow: "hidden",
-};
+/* ---- Pillar Row (full-width, alternating layout) ---- */
+function PillarRow({ title, desc, Animation, index }: { title: string; desc: string; Animation: React.ComponentType<{ animate: boolean }>; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const rowInView = useInView(ref, { once: true, amount: 0.15 });
+  const [iconAnimate, setIconAnimate] = useState(false);
 
-const pillarTintStyle: React.CSSProperties = {
-  position: "absolute",
-  inset: 0,
-  background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05))",
-  borderRadius: "20px",
-  pointerEvents: "none",
-  transition: "opacity 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)",
-};
+  useEffect(() => {
+    if (!rowInView) return;
+    const t = setTimeout(() => setIconAnimate(true), 300);
+    return () => clearTimeout(t);
+  }, [rowInView]);
 
-const differentiatorCards = [
+  const isReversed = index === 1;
+  const textSlideX = isReversed ? 30 : -30;
+  const animSlideX = isReversed ? -30 : 30;
+
+  return (
+    <div ref={ref} className="max-w-[1000px] mx-auto py-[32px] md:py-[40px]">
+      <div
+        className={`flex flex-col md:flex-row items-center gap-[40px] md:gap-[60px] ${isReversed ? 'md:flex-row-reverse' : ''}`}
+      >
+        {/* Animation side */}
+        <motion.div
+          className="w-full md:w-[45%] flex items-center justify-center"
+          initial={{ opacity: 0, x: animSlideX, y: 0 }}
+          animate={rowInView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: animSlideX }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          style={{ minHeight: 60 }}
+        >
+          <Animation animate={iconAnimate} />
+        </motion.div>
+
+        {/* Text side */}
+        <motion.div
+          className="w-full md:w-[55%] text-center md:text-left"
+          initial={{ opacity: 0, x: textSlideX, y: 0 }}
+          animate={rowInView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: textSlideX }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {/* Vertical bar indicator (desktop) / gradient dot (mobile) */}
+          <div className="hidden md:block mb-3">
+            <div style={{ width: 4, height: 24, borderRadius: 9999, background: 'linear-gradient(180deg, #6366F1, #8B5CF6)' }} />
+          </div>
+          <div className="flex justify-center md:hidden mb-3">
+            <div style={{ width: 8, height: 8, borderRadius: 9999, background: 'linear-gradient(135deg, #6366F1, #8B5CF6)' }} />
+          </div>
+
+          <h3
+            className="text-[22px] md:text-[26px] font-bold"
+            style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#0F172A", letterSpacing: "-0.01em" }}
+          >
+            {title}
+          </h3>
+          <p
+            className="text-[14px] md:text-[16px] mt-3"
+            style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#475569", lineHeight: 1.75 }}
+          >
+            {desc}
+          </p>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+/* ---- Differentiator Rows Data ---- */
+const differentiatorRows = [
   {
     title: "A Door That Didn\u2019t Exist",
     desc: "Fundraising has always been about who you know. UrgenC makes it about what you are building. First-time founders get the same shot as serial entrepreneurs. For the first time, access is earned by your idea.",
-    Icon: DoorIcon,
+    Animation: DoorAnimation,
   },
   {
     title: "Every Startup Is Vetted",
     desc: "This is not an open marketplace. Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. No half-baked pitches. If it is on UrgenC, it passed the bar.",
-    Icon: AnimatedShieldIcon,
+    Animation: ShieldAnimation,
   },
   {
     title: "If You Match, You Meet",
     desc: "On every other platform, interest leads nowhere. On UrgenC, mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot. This is not networking. It is a system built for real conversations.",
-    Icon: MergeIcon,
+    Animation: MatchAnimation,
   },
 ];
 
-function PillarCard({ card, index, sectionInView }: { card: typeof differentiatorCards[number]; index: number; sectionInView: boolean }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const cardInView = useInView(ref, { once: true, amount: 0.3 });
-  const [iconAnimate, setIconAnimate] = useState(false);
-
-  useEffect(() => {
-    if (!cardInView || !sectionInView) return;
-    const t = setTimeout(() => setIconAnimate(true), 600);
-    return () => clearTimeout(t);
-  }, [cardInView, sectionInView]);
-
-  return (
-    <motion.div
-      ref={ref}
-      variants={tierCard}
-      transition={{ duration: 0.5, delay: 0.5 + index * 0.1, ease }}
-      className="pillar-card p-7 md:p-9"
-      style={pillarCardStyle}
-    >
-      <div style={pillarTintStyle} className="pillar-tint" />
-      <div className="relative z-10">
-        <card.Icon animate={iconAnimate} />
-        <h3
-          className="text-[18px] md:text-[20px] font-bold text-center mt-5"
-          style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#0F172A" }}
-        >
-          {card.title}
-        </h3>
-        <p
-          className="text-[14px] md:text-[15px] text-center mt-3"
-          style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#475569", lineHeight: 1.7 }}
-        >
-          {card.desc}
-        </p>
-      </div>
-    </motion.div>
-  );
-}
-
 function WhatMakesDifferentSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const sectionInView = useInView(sectionRef, { once: true, amount: 0.2 });
-
   return (
     <Section className="scroll-stack-section relative z-10 px-5 md:px-6 py-[60px] md:py-[60px] lg:py-20 w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
-      <div ref={sectionRef} className="max-w-[1100px] mx-auto">
+      <div className="max-w-[1100px] mx-auto">
         <motion.div
           variants={cardStagger}
           initial="hidden"
@@ -562,9 +621,7 @@ function WhatMakesDifferentSection() {
             style={{
               fontFamily: "var(--font-dm-sans), sans-serif",
               fontWeight: 600,
-              background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              color: "#6366F1",
             }}
           >
             Why UrgenC
@@ -573,8 +630,8 @@ function WhatMakesDifferentSection() {
           <motion.h2
             variants={tierTitle}
             transition={{ duration: 0.7, delay: 0.2, ease: smoothDecel }}
-            className="text-[28px] md:text-[40px] font-normal text-center mb-4"
-            style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
+            className="text-[30px] md:text-[44px] font-normal text-center mb-4"
+            style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", fontWeight: 400 }}
           >
             What Makes UrgenC Different
           </motion.h2>
@@ -582,22 +639,24 @@ function WhatMakesDifferentSection() {
           <motion.p
             variants={tierSubtitle}
             transition={{ duration: 0.5, delay: 0.35, ease }}
-            className="text-center max-w-[480px] text-[16px] leading-[1.7] mb-12 md:mb-16"
+            className="text-center max-w-[480px] text-[17px] leading-[1.7] italic"
             style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
             Three reasons this has never existed before.
           </motion.p>
-
-          {/* Three pillar cards */}
-          <motion.div
-            variants={cardStagger}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-5 lg:gap-7 w-full"
-          >
-            {differentiatorCards.map((card, i) => (
-              <PillarCard key={card.title} card={card} index={i} sectionInView={sectionInView} />
-            ))}
-          </motion.div>
         </motion.div>
+
+        {/* 60px gap then pillar rows */}
+        <div style={{ marginTop: 60 }}>
+          {differentiatorRows.map((row, i) => (
+            <React.Fragment key={row.title}>
+              <PillarRow title={row.title} desc={row.desc} Animation={row.Animation} index={i} />
+              {i < differentiatorRows.length - 1 && (
+                <div className="max-w-[100px] md:max-w-[200px] mx-auto" style={{ height: 1, background: 'rgba(0,0,0,0.04)', margin: '0 auto' }} />
+              )}
+            </React.Fragment>
+          ))}
+        </div>
       </div>
     </Section>
   );
