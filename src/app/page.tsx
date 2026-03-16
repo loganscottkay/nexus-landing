@@ -302,273 +302,218 @@ function NarrativeLine() {
   );
 }
 
-/* ---- Animated Door Visual ---- */
+/* ---- CSS Door Animation ---- */
 function DoorAnimation({ animate }: { animate: boolean }) {
   return (
-    <div className="relative flex items-center justify-center" style={{ width: 160, height: 150 }}>
-      {/* SVG door frame + threshold */}
-      <svg viewBox="0 0 160 150" className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
-        {/* Threshold line */}
-        <motion.line
-          x1="30" y1="140" x2="130" y2="140"
-          stroke="rgba(99,102,241,0.2)" strokeWidth="1"
-          initial={{ pathLength: 0 }}
-          animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
-          transition={{ duration: 0.4 }}
-        />
-        {/* Door frame outline */}
-        <motion.rect
-          x="30" y="10" width="100" height="130" rx="4"
-          fill="none" stroke="#6366F1" strokeWidth="2"
-          initial={{ pathLength: 0 }}
-          animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
-          transition={{ duration: 0.4 }}
-        />
-      </svg>
-
-      {/* Glow behind open door */}
-      <motion.div
-        className="absolute"
-        style={{
-          width: 80, height: 100, top: 20, left: 50,
-          background: 'radial-gradient(ellipse at center, rgba(99,102,241,0.12), rgba(139,92,246,0.06) 60%, transparent 100%)',
-          zIndex: 2,
-        }}
-        initial={{ opacity: 0, scale: 0.3 }}
-        animate={animate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.3 }}
-        transition={{ duration: 0.5, delay: 0.9 }}
-      />
-
-      {/* Light rays */}
-      <svg viewBox="0 0 160 150" className="absolute inset-0 w-full h-full" style={{ zIndex: 3 }}>
-        <motion.line x1="80" y1="70" x2="55" y2="35" stroke="rgba(255,255,255,0.3)" strokeWidth="1"
-          initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : { opacity: 0 }} transition={{ duration: 0.3, delay: 1.2 }} />
-        <motion.line x1="80" y1="70" x2="80" y2="30" stroke="rgba(255,255,255,0.3)" strokeWidth="1"
-          initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : { opacity: 0 }} transition={{ duration: 0.3, delay: 1.2 }} />
-        <motion.line x1="80" y1="70" x2="105" y2="35" stroke="rgba(255,255,255,0.3)" strokeWidth="1"
-          initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : { opacity: 0 }} transition={{ duration: 0.3, delay: 1.2 }} />
-      </svg>
-
-      {/* Door panel (HTML div for 3D transform) */}
-      <div
-        className="absolute"
-        style={{
-          width: 94, height: 124, top: 13, left: 33,
-          perspective: 600,
-          zIndex: 4,
-        }}
-      >
-        <motion.div
-          style={{
-            width: '100%', height: '100%',
-            transformOrigin: 'left center',
-            background: 'rgba(99,102,241,0.07)',
-            borderRadius: 2,
-            position: 'relative',
-          }}
-          initial={{ rotateY: 0, opacity: 0 }}
-          animate={animate ? { opacity: 1, rotateY: -70 } : { opacity: 0, rotateY: 0 }}
-          transition={{
-            opacity: { duration: 0.3, delay: 0.3 },
-            rotateY: { duration: 0.7, delay: 0.5, ease: [0.4, 0, 0.2, 1] },
-          }}
-        >
+    <div style={{ width: 160, height: 150, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {/* Door frame */}
+      <div style={{
+        width: 80, height: 110, border: '2px solid #6366F1', borderRadius: 6,
+        position: 'relative', overflow: 'visible', background: 'transparent',
+        perspective: 500,
+        opacity: animate ? 1 : 0,
+        transition: 'opacity 0.4s ease',
+      }}>
+        {/* Glow behind door */}
+        <div style={{
+          position: 'absolute', top: '50%', left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 60, height: 80,
+          background: 'radial-gradient(ellipse, rgba(99,102,241,0.15), rgba(139,92,246,0.08), transparent)',
+          borderRadius: '50%',
+          opacity: animate ? 1 : 0,
+          transition: 'opacity 0.5s ease 0.6s',
+          zIndex: 0,
+        }} />
+        {/* Door panel */}
+        <div style={{
+          position: 'absolute', top: 2, left: 2, width: 74, height: 104,
+          background: 'rgba(99,102,241,0.08)', borderRadius: 4,
+          transformOrigin: 'left center',
+          transform: animate ? 'rotateY(-65deg)' : 'rotateY(0deg)',
+          transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s',
+          zIndex: 1,
+        }}>
           {/* Door knob */}
-          <motion.div
-            style={{
-              width: 6, height: 6, borderRadius: '50%',
-              background: '#6366F1',
-              position: 'absolute',
-              right: 8, top: '50%', marginTop: -3,
-            }}
-            initial={{ opacity: 0 }}
-            animate={animate ? { opacity: 0.5 } : { opacity: 0 }}
-            transition={{ duration: 0.3, delay: 0.3 }}
-          />
-        </motion.div>
+          <div style={{
+            position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)',
+            width: 8, height: 8, borderRadius: '50%', background: '#6366F1', opacity: 0.6,
+          }} />
+        </div>
+      </div>
+      {/* Threshold line */}
+      <div style={{
+        position: 'absolute', bottom: 16, left: '50%', transform: 'translateX(-50%)',
+        width: 84, height: 1, background: 'rgba(99,102,241,0.2)',
+        opacity: animate ? 1 : 0,
+        transition: 'opacity 0.3s ease 0.2s',
+      }} />
+    </div>
+  );
+}
+
+/* ---- CSS Shield Animation ---- */
+function ShieldAnimation({ animate }: { animate: boolean }) {
+  const [showPulse, setShowPulse] = useState(false);
+
+  useEffect(() => {
+    if (!animate) return;
+    const t = setTimeout(() => setShowPulse(true), 700);
+    return () => clearTimeout(t);
+  }, [animate]);
+
+  return (
+    <div style={{ width: 160, height: 150, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ position: 'relative', width: 80, height: 95, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {/* Shield outline (behind) */}
+        <div style={{
+          position: 'absolute', top: -2, left: -2, width: 84, height: 99,
+          clipPath: 'polygon(50% 0%, 100% 15%, 100% 60%, 50% 100%, 0% 60%, 0% 15%)',
+          background: '#6366F1',
+          opacity: animate ? 0.15 : 0,
+          transition: 'opacity 0.3s ease',
+          zIndex: 0,
+        }} />
+        {/* Shield shape */}
+        <div style={{
+          width: 80, height: 95,
+          clipPath: 'polygon(50% 0%, 100% 15%, 100% 60%, 50% 100%, 0% 60%, 0% 15%)',
+          background: 'linear-gradient(180deg, rgba(99,102,241,0.1), rgba(99,102,241,0.04))',
+          position: 'relative',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          transform: animate ? 'scale(1)' : 'scale(0)',
+          transition: 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s',
+          zIndex: 1,
+        }}>
+          {/* Shield border effect */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            clipPath: 'polygon(50% 0%, 100% 15%, 100% 60%, 50% 100%, 0% 60%, 0% 15%)',
+            boxShadow: 'inset 0 0 0 2px #6366F1',
+          }} />
+          {/* Checkmark */}
+          <div style={{
+            width: 24, height: 14,
+            borderBottom: '3.5px solid #059669', borderLeft: '3.5px solid #059669',
+            transform: animate ? 'rotate(-45deg) scale(1)' : 'rotate(-45deg) scale(0)',
+            transformOrigin: 'center',
+            transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s',
+            marginTop: -4,
+          }} />
+        </div>
+        {/* Pulse ring */}
+        <div style={{
+          position: 'absolute', top: '50%', left: '50%',
+          transform: showPulse ? 'translate(-50%, -50%) scale(1.5)' : 'translate(-50%, -50%) scale(0.8)',
+          width: 100, height: 110, borderRadius: '50%',
+          border: '2px solid rgba(5,150,105,0.3)',
+          opacity: showPulse ? 0 : 0,
+          transition: 'transform 0.5s ease-out, opacity 0.5s ease-out',
+          zIndex: 2,
+          pointerEvents: 'none',
+        }} />
+        {/* Persistent green glow */}
+        <div style={{
+          position: 'absolute', top: '50%', left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 90, height: 100, borderRadius: '50%',
+          boxShadow: '0 0 15px rgba(5,150,105,0.1)',
+          opacity: animate ? 1 : 0,
+          transition: 'opacity 0.3s ease 0.8s',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }} />
       </div>
     </div>
   );
 }
 
-/* ---- Animated Shield Visual ---- */
-function ShieldAnimation({ animate }: { animate: boolean }) {
-  const shieldPath = "M45 8 C45 8 10 20 10 45 C10 75 45 105 45 105 C45 105 80 75 80 45 C80 20 45 8 45 8 Z";
-  const checkPath = "M30 55 L40 66 L60 44";
-  return (
-    <div className="relative flex items-center justify-center" style={{ width: 150, height: 150 }}>
-      <svg viewBox="0 0 90 113" className="w-[90px] h-[110px]" style={{ overflow: 'visible' }}>
-        <defs>
-          <linearGradient id="shieldFillGrad" x1="45" y1="8" x2="45" y2="105" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="rgba(99,102,241,0.08)" />
-            <stop offset="100%" stopColor="rgba(99,102,241,0.03)" />
-          </linearGradient>
-        </defs>
-        {/* Shield outline */}
-        <motion.path
-          d={shieldPath}
-          fill="none" stroke="#6366F1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-          initial={{ pathLength: 0 }}
-          animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
-          transition={{ duration: 0.5 }}
-        />
-        {/* Shield fill */}
-        <motion.path
-          d={shieldPath}
-          fill="url(#shieldFillGrad)" stroke="none"
-          initial={{ opacity: 0 }}
-          animate={animate ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.3, delay: 0.4 }}
-        />
-        {/* Checkmark - centered inside shield */}
-        <motion.path
-          d={checkPath}
-          fill="none" stroke="#059669" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"
-          initial={{ pathLength: 0 }}
-          animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
-          transition={{ duration: 0.4, delay: 0.6, ease: [0, 0, 0.2, 1] }}
-        />
-        {/* Pulse ring 1 */}
-        <motion.circle
-          cx="45" cy="56" r="45"
-          fill="none" stroke="rgba(5,150,105,0.4)" strokeWidth="3"
-          initial={{ scale: 1, opacity: 0 }}
-          animate={animate ? { scale: [1, 1.8], opacity: [0.4, 0] } : {}}
-          transition={{ duration: 0.5, delay: 1.0, ease: [0, 0, 0.2, 1] }}
-        />
-        {/* Pulse ring 2 */}
-        <motion.circle
-          cx="45" cy="56" r="45"
-          fill="none" stroke="rgba(5,150,105,0.3)" strokeWidth="2"
-          initial={{ scale: 1, opacity: 0 }}
-          animate={animate ? { scale: [1, 1.4], opacity: [0.3, 0] } : {}}
-          transition={{ duration: 0.5, delay: 1.15, ease: [0, 0, 0.2, 1] }}
-        />
-      </svg>
-      {/* Persistent green glow */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{ borderRadius: '50%' }}
-        initial={{ opacity: 0 }}
-        animate={animate ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.3, delay: 1.3 }}
-      >
-        <div style={{ width: '100%', height: '100%', borderRadius: '50%', boxShadow: '0 0 10px rgba(5,150,105,0.08)' }} />
-      </motion.div>
-    </div>
-  );
-}
-
-/* ---- Animated Match Visual ---- */
+/* ---- CSS Match Animation ---- */
 function MatchAnimation({ animate }: { animate: boolean }) {
-  // Particle burst angles (6 directions)
-  const particles = [
-    { angle: 0, color: '#F5D76E' },
-    { angle: 60, color: '#6366F1' },
-    { angle: 120, color: '#8B5CF6' },
-    { angle: 180, color: '#F5D76E' },
-    { angle: 240, color: '#6366F1' },
-    { angle: 300, color: '#8B5CF6' },
-  ];
+  const [showDot, setShowDot] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+
+  useEffect(() => {
+    if (!animate) return;
+    const t1 = setTimeout(() => setShowDot(true), 800);
+    const t2 = setTimeout(() => setShowCalendar(true), 1000);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [animate]);
+
   return (
-    <div className="relative flex items-center justify-center" style={{ width: 150, height: 130 }}>
-      <svg viewBox="0 0 150 130" className="w-full h-full" style={{ overflow: 'visible' }}>
-        <defs>
-          <linearGradient id="matchConnectGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#6366F1" />
-            <stop offset="50%" stopColor="#F5D76E" />
-            <stop offset="100%" stopColor="#8B5CF6" />
-          </linearGradient>
-        </defs>
-        {/* Blue circle (investor) */}
-        <motion.circle
-          r="14" cy="40" fill="#6366F1"
-          initial={{ cx: 20, opacity: 0 }}
-          animate={animate ? { cx: [20, 63, 67, 65], opacity: 1 } : { cx: 20, opacity: 0 }}
-          transition={{ cx: { duration: 0.6, delay: 0.3, times: [0, 0.7, 0.85, 1], ease: [0.16, 1, 0.3, 1] }, opacity: { duration: 0.3 } }}
-        />
-        {/* Label: Investor */}
-        <motion.text x="65" y="62" textAnchor="middle" fill="rgba(0,0,0,0.25)" fontSize="9" fontFamily="var(--font-dm-sans), sans-serif"
-          initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : { opacity: 0 }} transition={{ duration: 0.3 }}
-        >Investor</motion.text>
-        {/* Violet circle (founder) */}
-        <motion.circle
-          r="14" cy="40" fill="#8B5CF6"
-          initial={{ cx: 130, opacity: 0 }}
-          animate={animate ? { cx: [130, 87, 83, 85], opacity: 1 } : { cx: 130, opacity: 0 }}
-          transition={{ cx: { duration: 0.6, delay: 0.3, times: [0, 0.7, 0.85, 1], ease: [0.16, 1, 0.3, 1] }, opacity: { duration: 0.3 } }}
-        />
-        {/* Label: Founder */}
-        <motion.text x="85" y="62" textAnchor="middle" fill="rgba(0,0,0,0.25)" fontSize="9" fontFamily="var(--font-dm-sans), sans-serif"
-          initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : { opacity: 0 }} transition={{ duration: 0.3 }}
-        >Founder</motion.text>
-        {/* Glowing connection line */}
-        <motion.line
-          x1="65" y1="40" x2="85" y2="40"
-          stroke="url(#matchConnectGrad)" strokeWidth="2"
-          initial={{ pathLength: 0 }}
-          animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
-          transition={{ duration: 0.3, delay: 0.8 }}
-        />
-        {/* Gold burst center dot */}
-        <motion.circle
-          cx="75" cy="40" r="5" fill="#F5D76E"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={animate ? { scale: [0, 1.3, 1], opacity: [0, 1, 1] } : { scale: 0, opacity: 0 }}
-          transition={{ duration: 0.3, delay: 1.0, times: [0, 0.6, 1] }}
-        />
-        {/* Particles */}
-        {particles.map((p, i) => {
-          const rad = (p.angle * Math.PI) / 180;
-          const dx = Math.cos(rad) * 25;
-          const dy = Math.sin(rad) * 25;
-          return (
-            <motion.circle
-              key={i}
-              cx="75" cy="40" r="1.5" fill={p.color}
-              initial={{ x: 0, y: 0, opacity: 0 }}
-              animate={animate ? { x: [0, dx], y: [0, dy], opacity: [1, 0] } : {}}
-              transition={{ duration: 0.4, delay: 1.0 }}
-            />
-          );
-        })}
-        {/* Both circles pulse after match */}
-        <motion.circle
-          r="14" cy="40" fill="none" stroke="#6366F1" strokeWidth="1" opacity="0.3"
-          initial={{ cx: 65, scale: 1 }}
-          animate={animate ? { scale: [1, 1.1, 1] } : {}}
-          transition={{ duration: 0.3, delay: 1.0 }}
-        />
-        <motion.circle
-          r="14" cy="40" fill="none" stroke="#8B5CF6" strokeWidth="1" opacity="0.3"
-          initial={{ cx: 85, scale: 1 }}
-          animate={animate ? { scale: [1, 1.1, 1] } : {}}
-          transition={{ duration: 0.3, delay: 1.0 }}
-        />
-        {/* Calendar icon */}
-        <motion.g
-          initial={{ opacity: 0, y: 8 }}
-          animate={animate ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-          transition={{ duration: 0.3, delay: 1.3 }}
-        >
-          <rect x="52" y="80" width="28" height="24" rx="3" fill="rgba(99,102,241,0.05)" stroke="#0F172A" strokeWidth="1.5" />
-          <line x1="58" y1="78" x2="58" y2="82" stroke="#0F172A" strokeWidth="1.5" strokeLinecap="round" />
-          <line x1="72" y1="78" x2="72" y2="82" stroke="#0F172A" strokeWidth="1.5" strokeLinecap="round" />
-          <line x1="52" y1="88" x2="80" y2="88" stroke="#0F172A" strokeWidth="1" />
-          {/* Small checkmark in calendar */}
-          <motion.path
-            d="M60 96 L64 100 L72 92"
-            fill="none" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
-            initial={{ pathLength: 0 }}
-            animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
-            transition={{ duration: 0.2, delay: 1.5 }}
-          />
-          {/* 72h label */}
-          <motion.text x="88" y="98" fill="#6366F1" fontSize="16" fontWeight="700" fontFamily="var(--font-dm-sans), sans-serif"
-            initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : { opacity: 0 }} transition={{ duration: 0.3, delay: 1.5 }}
-          >72h</motion.text>
-        </motion.g>
-      </svg>
+    <div style={{ width: 160, height: 150, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+      {/* Two circles that slide together */}
+      <div style={{ display: 'flex', alignItems: 'center', position: 'relative', height: 40 }}>
+        {/* Left circle (investor) */}
+        <div style={{
+          width: 32, height: 32, borderRadius: '50%',
+          background: 'linear-gradient(135deg, #6366F1, #818CF8)',
+          transform: animate ? 'translateX(0px)' : 'translateX(-20px)',
+          opacity: animate ? 1 : 0,
+          transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s',
+          flexShrink: 0,
+        }} />
+        {/* Connection line */}
+        <div style={{
+          height: 3, borderRadius: 2,
+          background: 'linear-gradient(90deg, #6366F1, #F5D76E, #8B5CF6)',
+          width: animate ? 24 : 0,
+          transition: 'width 0.4s ease 0.5s',
+          flexShrink: 0,
+        }} />
+        {/* Gold match dot */}
+        <div style={{
+          position: 'absolute', left: '50%',
+          transform: showDot ? 'translateX(-50%) scale(1)' : 'translateX(-50%) scale(0)',
+          width: 12, height: 12, borderRadius: '50%',
+          background: '#F5D76E',
+          boxShadow: showDot ? '0 0 12px rgba(245,215,110,0.5)' : 'none',
+          transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          zIndex: 2,
+        }} />
+        {/* Right circle (founder) */}
+        <div style={{
+          width: 32, height: 32, borderRadius: '50%',
+          background: 'linear-gradient(135deg, #7C3AED, #8B5CF6)',
+          transform: animate ? 'translateX(0px)' : 'translateX(20px)',
+          opacity: animate ? 1 : 0,
+          transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s',
+          flexShrink: 0,
+        }} />
+      </div>
+      {/* Labels */}
+      <div style={{
+        display: 'flex', justifyContent: 'space-between', width: 110,
+        opacity: animate ? 1 : 0,
+        transition: 'opacity 0.3s ease 0.3s',
+      }}>
+        <span style={{ fontSize: 9, color: 'rgba(0,0,0,0.25)', fontFamily: 'var(--font-dm-sans), sans-serif' }}>Investor</span>
+        <span style={{ fontSize: 9, color: 'rgba(0,0,0,0.25)', fontFamily: 'var(--font-dm-sans), sans-serif' }}>Founder</span>
+      </div>
+      {/* Calendar + 72h */}
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 8,
+        opacity: showCalendar ? 1 : 0,
+        transform: showCalendar ? 'translateY(0px)' : 'translateY(8px)',
+        transition: 'all 0.4s ease',
+      }}>
+        <div style={{
+          width: 24, height: 24, border: '2px solid #0F172A', borderRadius: 4,
+          position: 'relative', opacity: 0.6,
+        }}>
+          {/* Calendar binding bumps */}
+          <div style={{ position: 'absolute', top: -4, left: 5, width: 3, height: 6, background: '#0F172A', borderRadius: 1 }} />
+          <div style={{ position: 'absolute', top: -4, right: 5, width: 3, height: 6, background: '#0F172A', borderRadius: 1 }} />
+          {/* Small checkmark inside calendar */}
+          <div style={{
+            position: 'absolute', bottom: 3, left: '50%',
+            transform: 'translateX(-50%) rotate(-45deg)',
+            width: 8, height: 5,
+            borderBottom: '2px solid #059669', borderLeft: '2px solid #059669',
+          }} />
+        </div>
+        <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: 16, fontWeight: 700, color: '#6366F1' }}>72h</span>
+      </div>
     </div>
   );
 }
@@ -596,12 +541,12 @@ function PillarRow({ title, desc, Animation, index }: { title: string; desc: str
       >
         {/* Animation side */}
         <motion.div
-          className="flex-shrink-0 flex items-center justify-center w-[120px] h-[120px] md:w-[200px] md:h-[160px]"
+          className="flex-shrink-0 flex items-center justify-center w-[140px] h-[130px] md:w-[200px] md:h-[160px]"
           initial={{ opacity: 0, x: animSlideX }}
           animate={rowInView ? { opacity: 1, x: 0 } : { opacity: 0, x: animSlideX }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="flex items-center justify-center w-full h-full scale-[0.65] md:scale-100">
+          <div className="flex items-center justify-center w-full h-full scale-[0.8] md:scale-100">
             <Animation animate={iconAnimate} />
           </div>
         </motion.div>
