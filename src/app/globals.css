@@ -2035,55 +2035,48 @@ html {
   position: relative;
   border-radius: 20px;
   padding: 32px 36px;
-  background: linear-gradient(135deg, rgba(99,102,241,0.04), rgba(139,92,246,0.03), rgba(99,102,241,0.02));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 4px 20px rgba(99,102,241,0.04);
-  overflow: hidden;
+  background: rgba(250, 249, 247, 0.95);
+  overflow: visible;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .shimmer-card::before {
   content: '';
   position: absolute;
-  top: -1px;
-  left: -1px;
-  right: -1px;
-  bottom: -1px;
-  border-radius: 21px;
+  top: -1.5px;
+  left: -1.5px;
+  right: -1.5px;
+  bottom: -1.5px;
+  border-radius: 22px;
   background: linear-gradient(
     135deg,
-    rgba(99,102,241,0.15),
-    rgba(139,92,246,0.1),
-    rgba(168,85,247,0.15),
-    rgba(99,102,241,0.08),
-    rgba(139,92,246,0.15),
-    rgba(99,102,241,0.1)
+    rgba(99, 102, 241, 0.2),
+    rgba(139, 92, 246, 0.15),
+    rgba(168, 85, 247, 0.2),
+    rgba(99, 102, 241, 0.1),
+    rgba(139, 92, 246, 0.2),
+    rgba(99, 102, 241, 0.15)
   );
   background-size: 300% 300%;
   animation: shimmerBorder 6s ease-in-out infinite;
-  animation-play-state: var(--shimmer-play, paused);
-  z-index: 0;
+  z-index: -1;
 }
 
 .shimmer-card::after {
   content: '';
   position: absolute;
-  top: 1px;
-  left: 1px;
-  right: 1px;
-  bottom: 1px;
-  border-radius: 19px;
-  background: linear-gradient(135deg, rgba(250,249,247,0.97), rgba(250,249,247,0.93));
-  z-index: 0;
-  transition: background 0.3s ease;
+  top: 1.5px;
+  left: 1.5px;
+  right: 1.5px;
+  bottom: 1.5px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(250,249,247,0.98), rgba(245,243,255,0.95));
+  z-index: -1;
 }
 
 .shimmer-card > * {
   position: relative;
   z-index: 1;
-}
-
-.shimmer-card.shimmer-active {
-  --shimmer-play: running;
 }
 
 @keyframes shimmerBorder {
@@ -2097,7 +2090,7 @@ html {
 @media (hover: hover) {
   .shimmer-card:hover {
     transform: translateY(-4px);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 8px 30px rgba(99,102,241,0.08);
+    box-shadow: 0 8px 30px rgba(99,102,241,0.06);
   }
   .shimmer-card:hover::after {
     background: linear-gradient(135deg, rgba(250,249,247,0.97), rgba(245,243,255,0.95));

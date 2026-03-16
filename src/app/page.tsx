@@ -305,12 +305,20 @@ function NarrativeLine() {
 /* ---- Static Icon: Door ---- */
 function DoorIcon() {
   return (
-    <div style={{ width: 120, height: 140, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ width: 64, height: 90, borderRadius: 6, background: 'linear-gradient(135deg, #EEF2FF, #E0E7FF)', border: '2px solid #C7D2FE', position: 'relative', boxShadow: '0 4px 12px rgba(99,102,241,0.1)' }}>
-        <div style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', width: 8, height: 8, borderRadius: '50%', background: '#6366F1' }} />
-        <div style={{ position: 'absolute', right: -20, top: '20%', width: 16, height: 2, background: 'linear-gradient(90deg, rgba(99,102,241,0.3), transparent)', borderRadius: 1 }} />
-        <div style={{ position: 'absolute', right: -24, top: '40%', width: 20, height: 2, background: 'linear-gradient(90deg, rgba(99,102,241,0.2), transparent)', borderRadius: 1 }} />
-        <div style={{ position: 'absolute', right: -18, top: '60%', width: 14, height: 2, background: 'linear-gradient(90deg, rgba(99,102,241,0.25), transparent)', borderRadius: 1 }} />
+    <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ position: 'relative' }}>
+        {/* Door frame */}
+        <div style={{ width: 72, height: 100, border: '2.5px solid #6366F1', borderRadius: 8, position: 'relative', background: 'linear-gradient(180deg, rgba(99,102,241,0.06), rgba(99,102,241,0.02))' }}>
+          {/* Door panel lines */}
+          <div style={{ position: 'absolute', top: 8, left: 8, right: 8, bottom: 8, border: '1.5px solid rgba(99,102,241,0.15)', borderRadius: 4 }} />
+          {/* Knob */}
+          <div style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', width: 10, height: 10, borderRadius: '50%', background: 'linear-gradient(135deg, #6366F1, #818CF8)', boxShadow: '0 1px 4px rgba(99,102,241,0.3)' }} />
+        </div>
+        {/* Light rays */}
+        <div style={{ position: 'absolute', right: -28, top: '15%', width: 22, height: 2.5, background: 'linear-gradient(90deg, rgba(99,102,241,0.25), transparent)', borderRadius: 2, transform: 'rotate(-8deg)' }} />
+        <div style={{ position: 'absolute', right: -32, top: '38%', width: 28, height: 2.5, background: 'linear-gradient(90deg, rgba(139,92,246,0.2), transparent)', borderRadius: 2 }} />
+        <div style={{ position: 'absolute', right: -26, top: '60%', width: 20, height: 2.5, background: 'linear-gradient(90deg, rgba(99,102,241,0.22), transparent)', borderRadius: 2, transform: 'rotate(6deg)' }} />
+        <div style={{ position: 'absolute', right: -22, top: '80%', width: 16, height: 2.5, background: 'linear-gradient(90deg, rgba(139,92,246,0.15), transparent)', borderRadius: 2, transform: 'rotate(12deg)' }} />
       </div>
     </div>
   );
@@ -319,9 +327,17 @@ function DoorIcon() {
 /* ---- Static Icon: Shield with Checkmark ---- */
 function ShieldIcon() {
   return (
-    <div style={{ width: 120, height: 140, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ width: 72, height: 88, background: 'linear-gradient(180deg, #EEF2FF, #E0E7FF)', clipPath: 'polygon(50% 0%, 100% 12%, 100% 55%, 50% 100%, 0% 55%, 0% 12%)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-        <div style={{ width: 28, height: 16, borderBottom: '4px solid #059669', borderLeft: '4px solid #059669', transform: 'rotate(-45deg)', marginTop: -6, borderRadius: 2 }} />
+    <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ position: 'relative' }}>
+        {/* Shield */}
+        <div style={{ width: 80, height: 96, clipPath: 'polygon(50% 0%, 100% 12%, 100% 55%, 50% 100%, 0% 55%, 0% 12%)', background: 'linear-gradient(180deg, rgba(99,102,241,0.1), rgba(99,102,241,0.04))', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {/* Checkmark */}
+          <div style={{ width: 30, height: 18, borderBottom: '4px solid #059669', borderLeft: '4px solid #059669', transform: 'rotate(-45deg)', marginTop: -8, borderRadius: 2 }} />
+        </div>
+        {/* Shield border outline */}
+        <div style={{ position: 'absolute', top: -2, left: -2, width: 84, height: 100, clipPath: 'polygon(50% 0%, 100% 12%, 100% 55%, 50% 100%, 0% 55%, 0% 12%)', background: 'linear-gradient(180deg, rgba(99,102,241,0.2), rgba(99,102,241,0.08))', zIndex: -1 }} />
+        {/* Subtle glow */}
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 100, height: 110, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(5,150,105,0.06), transparent 70%)', zIndex: -2 }} />
       </div>
     </div>
   );
@@ -330,18 +346,21 @@ function ShieldIcon() {
 /* ---- Static Icon: Two Circles Connected ---- */
 function MatchIcon() {
   return (
-    <div style={{ width: 120, height: 140, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-        <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, #6366F1, #818CF8)', boxShadow: '0 2px 8px rgba(99,102,241,0.2)' }} />
-        <div style={{ width: 20, height: 3, background: 'linear-gradient(90deg, #6366F1, #F5D76E, #8B5CF6)', borderRadius: 2 }} />
-        <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, #7C3AED, #8B5CF6)', boxShadow: '0 2px 8px rgba(139,92,246,0.2)' }} />
-      </div>
+    <div style={{ width: 160, height: 160, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-        <div style={{ width: 20, height: 20, border: '2px solid rgba(15,23,42,0.5)', borderRadius: 4, position: 'relative' }}>
-          <div style={{ position: 'absolute', top: -3, left: 4, width: 3, height: 5, background: 'rgba(15,23,42,0.5)', borderRadius: 1 }} />
-          <div style={{ position: 'absolute', top: -3, right: 4, width: 3, height: 5, background: 'rgba(15,23,42,0.5)', borderRadius: 1 }} />
+        <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'linear-gradient(135deg, #6366F1, #818CF8)', boxShadow: '0 3px 12px rgba(99,102,241,0.25)' }} />
+        <div style={{ width: 28, height: 4, background: 'linear-gradient(90deg, #6366F1, #F5D76E, #8B5CF6)', borderRadius: 3 }} />
+        <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'linear-gradient(135deg, #7C3AED, #8B5CF6)', boxShadow: '0 3px 12px rgba(139,92,246,0.25)' }} />
+      </div>
+      {/* Gold match indicator */}
+      <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#F5D76E', boxShadow: '0 0 10px rgba(245,215,110,0.4)', marginTop: -4 }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ width: 24, height: 24, border: '2px solid rgba(15,23,42,0.4)', borderRadius: 5, position: 'relative' }}>
+          <div style={{ position: 'absolute', top: -4, left: 5, width: 3, height: 6, background: 'rgba(15,23,42,0.4)', borderRadius: 1 }} />
+          <div style={{ position: 'absolute', top: -4, right: 5, width: 3, height: 6, background: 'rgba(15,23,42,0.4)', borderRadius: 1 }} />
+          <div style={{ position: 'absolute', bottom: 3, left: '50%', transform: 'translateX(-50%) rotate(-45deg)', width: 10, height: 6, borderBottom: '2px solid #059669', borderLeft: '2px solid #059669' }} />
         </div>
-        <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: 14, fontWeight: 700, color: '#6366F1' }}>72h</span>
+        <span style={{ fontSize: 17, fontWeight: 700, color: '#6366F1', fontFamily: 'DM Sans, sans-serif' }}>72h</span>
       </div>
     </div>
   );
@@ -350,7 +369,7 @@ function MatchIcon() {
 /* ---- Pillar Row (full-width, alternating layout with shimmer card) ---- */
 function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; Icon: React.ComponentType; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const rowInView = useInView(ref, { once: true, amount: 0.15 });
+  const rowInView = useInView(ref, { once: true, amount: 0.3 });
   const [shimmerActive, setShimmerActive] = useState(false);
   const isReversed = index === 1;
 
@@ -361,16 +380,16 @@ function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; 
   }, [rowInView]);
 
   return (
-    <div ref={ref} className="max-w-[960px] mx-auto py-[14px] md:py-[18px] px-[16px] md:px-[24px]">
+    <div ref={ref} className="max-w-[940px] mx-auto py-[24px] md:py-[32px]">
       <div
-        className={`flex flex-col items-center gap-[20px] md:flex-row md:items-center md:gap-[48px] ${isReversed ? 'md:flex-row-reverse' : ''}`}
+        className={`flex flex-col items-center gap-[24px] md:flex-row md:items-center md:gap-[48px] ${isReversed ? 'md:flex-row-reverse' : ''}`}
       >
         {/* Icon side */}
         <motion.div
-          className="flex-shrink-0 flex items-center justify-center w-[90px] h-[100px] md:w-[160px] md:h-[140px]"
+          className="flex-shrink-0 flex items-center justify-center w-[120px] h-[120px] md:w-[160px] md:h-[160px]"
           initial={{ opacity: 0, y: 16 }}
           animate={rowInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
         >
           <Icon />
         </motion.div>
@@ -378,9 +397,9 @@ function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; 
         {/* Shimmer card text side */}
         <motion.div
           className={`shimmer-card flex-1${shimmerActive ? ' shimmer-active' : ''}`}
-          initial={{ opacity: 0, y: 24, scale: 0.97 }}
-          animate={rowInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.97 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, y: 24, scale: 0.98 }}
+          animate={rowInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.98 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
           <h3
             className="text-[22px] md:text-[24px] font-bold mb-3"
@@ -404,42 +423,38 @@ function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; 
 const differentiatorRows = [
   {
     title: "A Door That Didn\u2019t Exist",
-    desc: "Fundraising has always been about who you know. UrgenC makes it about what you are building. First-time founders get the same shot as serial entrepreneurs. For the first time, access is earned by your idea.",
+    desc: "Fundraising has always been about who you know. UrgenC makes it about what you are building. For the first time, access is earned by your idea.",
     Icon: DoorIcon,
   },
   {
     title: "Every Startup Is Vetted",
-    desc: "This is not an open marketplace. Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. No half-baked pitches. If it is on UrgenC, it passed the bar.",
+    desc: "Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. If it is on UrgenC, it passed the bar.",
     Icon: ShieldIcon,
   },
   {
     title: "If You Match, You Meet",
-    desc: "On every other platform, interest leads nowhere. On UrgenC, mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot. This is not networking. It is a system built for real conversations.",
+    desc: "Mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot.",
     Icon: MatchIcon,
   },
 ];
 
 function WhatMakesDifferentSection() {
   return (
-    <Section className="scroll-stack-section relative z-10 px-5 md:px-6 py-[40px] md:py-[48px] w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh' }}>
+    <Section className="scroll-stack-section relative z-10 px-5 md:px-6 py-[56px] md:py-[80px] w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh' }}>
       <div className="max-w-[1100px] mx-auto">
         <motion.div
-          variants={cardStagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col items-center"
         >
           {/* Gradient bar */}
-          <motion.div
-            variants={tierGradientBar}
-            transition={{ duration: 0.4, delay: 0, ease }}
-            style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6)', margin: '0 auto 16px auto', transformOrigin: 'center' }}
+          <div
+            style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6)', margin: '0 auto 16px auto' }}
           />
           {/* Eyebrow */}
-          <motion.p
-            variants={tierEyebrow}
-            transition={{ duration: 0.4, delay: 0.1, ease }}
+          <p
             className="text-[12px] tracking-[3px] uppercase mb-4"
             style={{
               fontFamily: "var(--font-dm-sans), sans-serif",
@@ -448,29 +463,25 @@ function WhatMakesDifferentSection() {
             }}
           >
             Why UrgenC
-          </motion.p>
+          </p>
           {/* Title */}
-          <motion.h2
-            variants={tierTitle}
-            transition={{ duration: 0.7, delay: 0.2, ease: smoothDecel }}
+          <h2
             className="text-[30px] md:text-[44px] font-normal text-center mb-4"
             style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", fontWeight: 400 }}
           >
             What Makes UrgenC Different
-          </motion.h2>
+          </h2>
           {/* Subtitle */}
-          <motion.p
-            variants={tierSubtitle}
-            transition={{ duration: 0.5, delay: 0.35, ease }}
+          <p
             className="text-center max-w-[480px] text-[17px] leading-[1.7] italic"
             style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
             Three reasons this has never existed before.
-          </motion.p>
+          </p>
         </motion.div>
 
         {/* Gap then pillar rows */}
-        <div className="mt-[28px] md:mt-[36px]">
+        <div className="mt-[36px] md:mt-[48px]">
           {differentiatorRows.map((row, i) => (
             <PillarRow key={row.title} title={row.title} desc={row.desc} Icon={row.Icon} index={i} />
           ))}
