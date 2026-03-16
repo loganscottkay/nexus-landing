@@ -956,10 +956,6 @@ body {
   border-color: rgba(255, 255, 255, 0.8);
 }
 
-/* Step number gradient on hover - keep subtle */
-.step-number {
-  transition: all 0.3s ease;
-}
 
 /* Button pulse on card hover */
 .glow-card-wrapper:hover .btn-pulse-target {
@@ -1152,15 +1148,15 @@ body {
   animation: avatar-ripple-sm 3s ease-out infinite;
 }
 
-.hiw-card-active::after {
-  opacity: 1 !important;
-  background: rgba(74, 108, 247, 0.12) !important;
-}
-
-.hiw-card-active > .glass {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  border-color: rgba(74, 108, 247, 0.15);
+@media (hover: hover) {
+  .pillar-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .pillar-card:hover .pillar-tint {
+    background: linear-gradient(135deg, rgba(167,139,250,0.16), rgba(196,148,233,0.12), rgba(130,180,237,0.10)) !important;
+  }
 }
 
 @keyframes pulse-gentle {
@@ -1535,15 +1531,6 @@ html {
     opacity: 1;
   }
 
-  /* -- How It Works step cards: lift 8px, step number goes gradient, icon rotates -- */
-  .glow-card-wrapper:hover .step-number {
-    background: linear-gradient(135deg, #6366F1, #8B5CF6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-    opacity: 1;
-  }
   .glow-card-wrapper:hover .glass .shrink-0 svg {
     transform: rotate(5deg);
     transition: transform 0.3s ease;

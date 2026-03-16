@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useCallback } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import { ScoringPreview, MatchingPreview, AccountabilityPreview } from "@/components/HowItWorksPreviews";
 import IPhoneMockups from "@/components/IPhoneMockups";
 import LottieAnimation from "@/components/LottieAnimation";
 import HeroHeadline from "@/components/HeroHeadline";
-import { handleCardGlowMove } from "@/components/useCardGlow";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 const smoothDecel = [0.16, 1, 0.3, 1] as const;
@@ -219,60 +217,6 @@ function Section({
   );
 }
 
-/* ---- SVG Icons ---- */
-function ShieldIcon() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent-blue">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      <path d="M9 12l2 2 4-4" />
-    </svg>
-  );
-}
-
-function SparkleIcon() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent-violet">
-      <path d="M12 3v1m0 16v1m-7.07-2.93l.71-.71M18.36 5.64l.71-.71M3 12h1m16 0h1M5.64 5.64l-.71-.71m13.43 13.43l-.71-.71" />
-      <circle cx="12" cy="12" r="4" />
-    </svg>
-  );
-}
-
-function PhoneIcon() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent-blue">
-      <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-      <path d="M8 21h8m-4-4v4" />
-      <circle cx="12" cy="10" r="2" />
-    </svg>
-  );
-}
-
-/* ---- How It Works Section with Interactive Preview ---- */
-const howItWorksCards = [
-  {
-    num: "01",
-    icon: <ShieldIcon />,
-    title: "Join & Get Scored",
-    desc: "Pitch deck. 60-second video. Scored on five factors. Top 15% get in.",
-  },
-  {
-    num: "02",
-    icon: <SparkleIcon />,
-    title: "Investors Set Their Feed",
-    desc: "Pick industries, stage, and check size. Only see startups that fit.",
-  },
-  {
-    num: "03",
-    icon: <PhoneIcon />,
-    title: "Move Fast or Move On",
-    desc: "72-hour windows. Show traction. Miss a call, lose your spot.",
-  },
-];
-
-const CYCLE_DURATION = 6000;
-const RESUME_DELAY = 2000;
-const STEPS = ["01", "02", "03"] as const;
 
 const narrativeText = "The startup world is full of ideas. The problem has never been building. It is getting in front of the right people.";
 
@@ -358,102 +302,245 @@ function NarrativeLine() {
   );
 }
 
-function HowItWorksSection() {
-  const [activeCard, setActiveCard] = useState<string>("01");
-  const [isHovering, setIsHovering] = useState(false);
-  const [inViewport, setInViewport] = useState(false);
-  const progressRef = useRef(0);
-  const progressSvgRef = useRef<SVGCircleElement>(null);
+/* ---- Animated Door Icon ---- */
+function DoorIcon({ animate }: { animate: boolean }) {
+  return (
+    <div className="w-[80px] h-[80px] md:w-[80px] md:h-[80px] w-[64px] h-[64px] relative mx-auto" style={{ perspective: "200px" }}>
+      {/* Glow behind door */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={animate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+        transition={{ duration: 0.5, delay: 1.2 }}
+        className="absolute inset-0 rounded-lg"
+        style={{ background: "radial-gradient(circle, rgba(99,102,241,0.15), rgba(139,92,246,0.1), transparent 70%)" }}
+      />
+      <svg viewBox="0 0 80 80" className="w-full h-full relative z-10">
+        {/* Door frame */}
+        <rect x="22" y="12" width="36" height="56" rx="2" fill="none" stroke="#64748B" strokeWidth="2" />
+        {/* Door panel - rotates open */}
+        <motion.g
+          style={{ transformOrigin: "22px 40px" }}
+          initial={{ rotateY: 0 }}
+          animate={animate ? { rotateY: -70 } : { rotateY: 0 }}
+          transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <rect x="22" y="12" width="36" height="56" rx="2" fill="#E2E8F0" stroke="#94A3B8" strokeWidth="1.5" />
+          <circle cx="50" cy="42" r="2.5" fill="#94A3B8" />
+        </motion.g>
+        {/* Sparkle */}
+        <motion.circle
+          cx="40" cy="38" r="2"
+          fill="#F59E0B"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={animate ? { opacity: [0, 1, 0], scale: [0, 1.2, 0] } : {}}
+          transition={{ duration: 0.6, delay: 1.5 }}
+        />
+      </svg>
+    </div>
+  );
+}
 
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const cycleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const progressRafRef = useRef<number>(0);
-  const cycleStartRef = useRef<number>(0);
+/* ---- Animated Shield Icon ---- */
+function AnimatedShieldIcon({ animate }: { animate: boolean }) {
+  const shieldPath = "M40 8 L64 20 L64 44 C64 58 40 72 40 72 C40 72 16 58 16 44 L16 20 Z";
+  const checkPath = "M30 40 L37 47 L52 32";
+  return (
+    <div className="w-[80px] h-[80px] md:w-[80px] md:h-[80px] w-[64px] h-[64px] relative mx-auto">
+      <motion.div
+        className="absolute inset-0 rounded-full"
+        initial={{ boxShadow: "0 0 0 0 rgba(34,197,94,0)" }}
+        animate={animate ? { boxShadow: ["0 0 0 0 rgba(34,197,94,0)", "0 0 20px 8px rgba(34,197,94,0.2)", "0 0 0 0 rgba(34,197,94,0)"] } : {}}
+        transition={{ duration: 0.6, delay: 1.5 }}
+      />
+      <svg viewBox="0 0 80 80" className="w-full h-full">
+        <motion.path
+          d={shieldPath}
+          fill="none"
+          stroke="#6366F1"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          initial={{ pathLength: 0 }}
+          animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        />
+        <motion.path
+          d={checkPath}
+          fill="none"
+          stroke="#22C55E"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          initial={{ pathLength: 0 }}
+          animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
+          transition={{ duration: 0.4, delay: 1.3 }}
+        />
+      </svg>
+    </div>
+  );
+}
+
+/* ---- Animated Merge Icon ---- */
+function MergeIcon({ animate }: { animate: boolean }) {
+  const particles = [
+    { x: -15, y: -12, color: "#F59E0B" },
+    { x: 15, y: -10, color: "#6366F1" },
+    { x: -12, y: 14, color: "#8B5CF6" },
+    { x: 14, y: 12, color: "#F59E0B" },
+  ];
+  return (
+    <div className="w-[80px] h-[80px] md:w-[80px] md:h-[80px] w-[64px] h-[64px] relative mx-auto">
+      <svg viewBox="0 0 80 80" className="w-full h-full">
+        {/* Blue circle - starts left */}
+        <motion.circle
+          r="8"
+          cy="34"
+          fill="#6366F1"
+          initial={{ cx: 20 }}
+          animate={animate ? { cx: 40 } : { cx: 20 }}
+          transition={{ duration: 0.6, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        />
+        {/* Violet circle - starts right */}
+        <motion.circle
+          r="8"
+          cy="34"
+          fill="#8B5CF6"
+          initial={{ cx: 60 }}
+          animate={animate ? { cx: 40 } : { cx: 60 }}
+          transition={{ duration: 0.6, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        />
+        {/* Merged circle */}
+        <motion.circle
+          cx="40" cy="34" r="10"
+          fill="url(#mergeGrad)"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={animate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+          transition={{ duration: 0.3, delay: 1.4 }}
+        />
+        {/* Particles */}
+        {particles.map((p, i) => (
+          <motion.circle
+            key={i}
+            cx={40}
+            cy={34}
+            r="1.5"
+            fill={p.color}
+            initial={{ opacity: 0 }}
+            animate={animate ? {
+              opacity: [0, 1, 0],
+              cx: [40, 40 + p.x],
+              cy: [34, 34 + p.y],
+            } : {}}
+            transition={{ duration: 0.4, delay: 1.4 }}
+          />
+        ))}
+        {/* Calendar icon below */}
+        <motion.g
+          initial={{ opacity: 0 }}
+          animate={animate ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.3, delay: 1.8 }}
+        >
+          <rect x="34" y="52" width="12" height="10" rx="1.5" fill="none" stroke="#94A3B8" strokeWidth="1.5" />
+          <line x1="34" y1="55" x2="46" y2="55" stroke="#94A3B8" strokeWidth="1" />
+          <line x1="37" y1="50" x2="37" y2="53" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round" />
+          <line x1="43" y1="50" x2="43" y2="53" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round" />
+        </motion.g>
+        <defs>
+          <linearGradient id="mergeGrad" x1="30" y1="24" x2="50" y2="44">
+            <stop stopColor="#6366F1" />
+            <stop offset="1" stopColor="#8B5CF6" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  );
+}
+
+/* ---- Pillar Card ---- */
+const pillarCardStyle: React.CSSProperties = {
+  background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3))",
+  backdropFilter: "blur(20px) saturate(1.8)",
+  WebkitBackdropFilter: "blur(20px) saturate(1.8)",
+  border: "1px solid rgba(255,255,255,0.5)",
+  boxShadow: "0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)",
+  borderRadius: "20px",
+  position: "relative",
+  overflow: "hidden",
+};
+
+const pillarTintStyle: React.CSSProperties = {
+  position: "absolute",
+  inset: 0,
+  background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05))",
+  borderRadius: "20px",
+  pointerEvents: "none",
+  transition: "opacity 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)",
+};
+
+const differentiatorCards = [
+  {
+    title: "A Door That Didn\u2019t Exist",
+    desc: "Fundraising has always been about who you know. UrgenC makes it about what you are building. First-time founders get the same shot as serial entrepreneurs. For the first time, access is earned by your idea.",
+    Icon: DoorIcon,
+  },
+  {
+    title: "Every Startup Is Vetted",
+    desc: "This is not an open marketplace. Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. No half-baked pitches. If it is on UrgenC, it passed the bar.",
+    Icon: AnimatedShieldIcon,
+  },
+  {
+    title: "If You Match, You Meet",
+    desc: "On every other platform, interest leads nowhere. On UrgenC, mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot. This is not networking. It is a system built for real conversations.",
+    Icon: MergeIcon,
+  },
+];
+
+function PillarCard({ card, index, sectionInView }: { card: typeof differentiatorCards[number]; index: number; sectionInView: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const cardInView = useInView(ref, { once: true, amount: 0.3 });
+  const [iconAnimate, setIconAnimate] = useState(false);
 
   useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setInViewport(entry.isIntersecting),
-      { threshold: 0.2 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  const advanceToNext = useCallback(() => {
-    setActiveCard((prev) => {
-      const idx = STEPS.indexOf(prev as typeof STEPS[number]);
-      return STEPS[(idx + 1) % STEPS.length];
-    });
-  }, []);
-
-  const startProgressAnimation = useCallback(() => {
-    cycleStartRef.current = performance.now();
-    cancelAnimationFrame(progressRafRef.current);
-
-    const animate = (now: number) => {
-      const elapsed = now - cycleStartRef.current;
-      const p = Math.min(elapsed / CYCLE_DURATION, 1);
-      progressRef.current = p;
-      if (progressSvgRef.current) {
-        progressSvgRef.current.setAttribute("stroke-dasharray", `${p * 37.7} 37.7`);
-      }
-      if (p < 1) {
-        progressRafRef.current = requestAnimationFrame(animate);
-      }
-    };
-    progressRafRef.current = requestAnimationFrame(animate);
-  }, []);
-
-  useEffect(() => {
-    if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current);
-    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-    cancelAnimationFrame(progressRafRef.current);
-
-    if (!inViewport || isHovering) return;
-
-    startProgressAnimation();
-    cycleTimerRef.current = setTimeout(() => {
-      advanceToNext();
-    }, CYCLE_DURATION);
-
-    return () => {
-      if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current);
-      cancelAnimationFrame(progressRafRef.current);
-    };
-  }, [activeCard, inViewport, isHovering, advanceToNext, startProgressAnimation]);
-
-  const handleMouseEnter = useCallback((cardNum: string) => {
-    setIsHovering(true);
-    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-    if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current);
-    cancelAnimationFrame(progressRafRef.current);
-    setActiveCard(cardNum);
-    progressRef.current = 0;
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setIsHovering(false);
-    resumeTimerRef.current = setTimeout(() => {
-      setActiveCard((prev) => prev);
-    }, RESUME_DELAY);
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current);
-      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-      cancelAnimationFrame(progressRafRef.current);
-    };
-  }, []);
-
-  const activeIndex = STEPS.indexOf(activeCard as typeof STEPS[number]);
+    if (!cardInView || !sectionInView) return;
+    const t = setTimeout(() => setIconAnimate(true), 600);
+    return () => clearTimeout(t);
+  }, [cardInView, sectionInView]);
 
   return (
-    <Section id="how-it-works" className="scroll-stack-section relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
-      <div ref={sectionRef} className="max-w-6xl mx-auto">
+    <motion.div
+      ref={ref}
+      variants={tierCard}
+      transition={{ duration: 0.5, delay: 0.5 + index * 0.1, ease }}
+      className="pillar-card p-7 md:p-9"
+      style={pillarCardStyle}
+    >
+      <div style={pillarTintStyle} className="pillar-tint" />
+      <div className="relative z-10">
+        <card.Icon animate={iconAnimate} />
+        <h3
+          className="text-[18px] md:text-[20px] font-bold text-center mt-5"
+          style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#0F172A" }}
+        >
+          {card.title}
+        </h3>
+        <p
+          className="text-[14px] md:text-[15px] text-center mt-3"
+          style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#475569", lineHeight: 1.7 }}
+        >
+          {card.desc}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
+function WhatMakesDifferentSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const sectionInView = useInView(sectionRef, { once: true, amount: 0.2 });
+
+  return (
+    <Section className="scroll-stack-section relative z-10 px-5 md:px-6 py-[60px] md:py-[60px] lg:py-20 w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
+      <div ref={sectionRef} className="max-w-[1100px] mx-auto">
         <motion.div
           variants={cardStagger}
           initial="hidden"
@@ -461,195 +548,54 @@ function HowItWorksSection() {
           viewport={viewportConfig}
           className="flex flex-col items-center"
         >
+          {/* Gradient bar */}
           <motion.div
             variants={tierGradientBar}
             transition={{ duration: 0.4, delay: 0, ease }}
-            style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto', transformOrigin: 'center' }}
+            style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6)', margin: '0 auto 16px auto', transformOrigin: 'center' }}
           />
+          {/* Eyebrow */}
           <motion.p
             variants={tierEyebrow}
-            transition={{ duration: 0.5, delay: 0.1, ease }}
-            className="text-text-muted text-[13px] tracking-[3px] uppercase mb-4"
-            style={{ fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", fontWeight: 700 }}
+            transition={{ duration: 0.4, delay: 0.1, ease }}
+            className="text-[12px] tracking-[3px] uppercase mb-4"
+            style={{
+              fontFamily: "var(--font-dm-sans), sans-serif",
+              fontWeight: 600,
+              background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
           >
-            App Overview
+            Why UrgenC
           </motion.p>
+          {/* Title */}
           <motion.h2
             variants={tierTitle}
-            transition={{ duration: 0.8, delay: 0.2, ease: smoothDecel }}
-            className="text-[36px] md:text-[44px] font-normal text-center mb-4"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
+            transition={{ duration: 0.7, delay: 0.2, ease: smoothDecel }}
+            className="text-[28px] md:text-[40px] font-normal text-center mb-4"
+            style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
           >
-            App Overview
+            What Makes UrgenC Different
           </motion.h2>
+          {/* Subtitle */}
           <motion.p
             variants={tierSubtitle}
-            transition={{ duration: 0.5, delay: 0.3, ease }}
-            className="text-center max-w-[500px] text-[17px] leading-[1.7] mb-3"
+            transition={{ duration: 0.5, delay: 0.35, ease }}
+            className="text-center max-w-[480px] text-[16px] leading-[1.7] mb-12 md:mb-16"
             style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
-            Three pillars that make UrgenC different from anything else.
+            Three reasons this has never existed before.
           </motion.p>
-          <motion.p
-            variants={tierSubtitle}
-            transition={{ duration: 0.5, delay: 0.4, ease }}
-            className="text-center max-w-[500px] text-[13px] leading-[1.6] mb-16"
-            style={{ color: "rgba(0,0,0,0.3)", fontFamily: "var(--font-dm-sans), sans-serif" }}
+
+          {/* Three pillar cards */}
+          <motion.div
+            variants={cardStagger}
+            className="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-5 lg:gap-7 w-full"
           >
-            Scoring methodology developed with input from entrepreneurship programs at HBS, BU, and Northeastern.
-          </motion.p>
-
-          {/* Two-column layout: cards left, preview right */}
-          <motion.div variants={cardStagger} className="flex flex-col lg:flex-row gap-8 w-full">
-            {/* Left: Compact cards */}
-            <div className="flex flex-col gap-4 lg:w-[360px] shrink-0">
-              {howItWorksCards.map((card, cardIdx) => (
-                <motion.div
-                  key={card.num}
-                  variants={tierCard}
-                  transition={{ duration: 0.5, delay: 0.6 + cardIdx * 0.08, ease }}
-                  onMouseEnter={() => handleMouseEnter(card.num)}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <div
-                    className={`glow-card-wrapper h-full transition-all duration-300 ${
-                      activeCard === card.num ? "hiw-card-active" : ""
-                    }`}
-                  >
-                    <div className="glass card-glow-effect p-5 md:p-6 h-full relative overflow-hidden" onMouseMove={handleCardGlowMove}>
-                      <span
-                        className="step-number text-[48px] font-normal text-text-primary/[0.06] absolute top-3 right-4 leading-none select-none"
-                        style={{ fontFamily: "'Instrument Serif', serif" }}
-                      >
-                        {card.num}
-                      </span>
-                      <div className="relative">
-                        <div className="flex items-center gap-3 mb-2">
-                          <div className="shrink-0">{card.icon}</div>
-                          <h3 className="text-[17px] md:text-[18px] font-semibold text-text-primary">
-                            {card.title}
-                          </h3>
-                        </div>
-                        <p className="text-text-secondary text-[14px] leading-[1.6]">
-                          {card.desc}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Right: Preview area + progress dots */}
-            <div className="flex flex-1 flex-col gap-4">
-              <motion.div
-                variants={tierCard}
-                transition={{ duration: 0.5, delay: 0.6, ease }}
-                className="flex-1 min-h-[350px] lg:min-h-[450px] rounded-2xl p-6 md:p-8 relative overflow-hidden"
-                style={{
-                  background: "rgba(15, 20, 35, 0.92)",
-                  border: "1px solid rgba(255, 255, 255, 0.06)",
-                }}
-              >
-
-                {/* Preview content */}
-                <div className="relative h-full">
-                  <AnimatePresence mode="wait">
-                    {activeCard === "01" && (
-                      <motion.div
-                        key="scoring"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.98 }}
-                        transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
-                        className="h-full"
-                      >
-                        <ScoringPreview active={activeCard === "01"} />
-                      </motion.div>
-                    )}
-                    {activeCard === "02" && (
-                      <motion.div
-                        key="matching"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.98 }}
-                        transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
-                        className="h-full"
-                      >
-                        <MatchingPreview active={activeCard === "02"} />
-                      </motion.div>
-                    )}
-                    {activeCard === "03" && (
-                      <motion.div
-                        key="accountability"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.98 }}
-                        transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
-                        className="h-full"
-                      >
-                        <AccountabilityPreview active={activeCard === "03"} />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </motion.div>
-
-              {/* Progress dots */}
-              <div className="flex items-center justify-center gap-3">
-                {STEPS.map((step, i) => (
-                  <div
-                    key={step}
-                    className="relative flex items-center justify-center cursor-pointer"
-                    onClick={() => { setActiveCard(step); setIsHovering(false); progressRef.current = 0; }}
-                  >
-                    <div
-                      className="w-2 h-2 rounded-full transition-colors duration-300"
-                      style={{
-                        background: i === activeIndex
-                          ? "linear-gradient(135deg, #4A6CF7, #7C5CFC)"
-                          : "rgba(255, 255, 255, 0.2)",
-                      }}
-                    />
-                    {i === activeIndex && !isHovering && (
-                      <svg
-                        className="absolute"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                        style={{ transform: "rotate(-90deg)" }}
-                      >
-                        <circle
-                          cx="8"
-                          cy="8"
-                          r="6"
-                          fill="none"
-                          stroke="rgba(255,255,255,0.1)"
-                          strokeWidth="1.5"
-                        />
-                        <circle
-                          ref={progressSvgRef}
-                          cx="8"
-                          cy="8"
-                          r="6"
-                          fill="none"
-                          stroke="url(#progressGrad)"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeDasharray="0 37.7"
-                        />
-                        <defs>
-                          <linearGradient id="progressGrad" x1="0" y1="0" x2="16" y2="16">
-                            <stop stopColor="#4A6CF7" />
-                            <stop offset="1" stopColor="#7C5CFC" />
-                          </linearGradient>
-                        </defs>
-                      </svg>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+            {differentiatorCards.map((card, i) => (
+              <PillarCard key={card.title} card={card} index={i} sectionInView={sectionInView} />
+            ))}
           </motion.div>
         </motion.div>
       </div>
@@ -1306,8 +1252,8 @@ export default function Home() {
       {/* ============ NARRATIVE HOOK ============ */}
       <NarrativeLine />
 
-      {/* ============ HOW IT WORKS ============ */}
-      <HowItWorksSection />
+      {/* ============ WHAT MAKES URGENC DIFFERENT ============ */}
+      <WhatMakesDifferentSection />
 
       {/* ============ HOW MATCHING WORKS ============ */}
       <MatchingFlowSection />
