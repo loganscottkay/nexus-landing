@@ -482,18 +482,19 @@ function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; 
           className="flex-1"
           style={{
             background: hovered
-              ? 'linear-gradient(135deg, rgba(228, 222, 255, 0.97), rgba(220, 226, 255, 0.95), rgba(232, 224, 252, 0.96))'
-              : 'linear-gradient(135deg, rgba(235, 230, 255, 0.95), rgba(228, 232, 255, 0.9), rgba(238, 232, 252, 0.93))',
+              ? 'linear-gradient(135deg, rgba(212, 206, 255, 0.97), rgba(204, 212, 255, 0.95), rgba(218, 206, 252, 0.96))'
+              : 'linear-gradient(135deg, rgba(220, 215, 255, 0.95), rgba(212, 218, 255, 0.9), rgba(225, 215, 252, 0.93))',
             borderRadius: 20,
             padding: '32px 36px',
             position: 'relative',
-            overflow: 'visible',
+            overflow: 'hidden',
+            isolation: 'isolate',
             border: '1.5px solid rgba(99, 102, 241, 0.12)',
             boxShadow: hovered
               ? '0 8px 30px rgba(99, 102, 241, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6)'
               : '0 4px 20px rgba(99, 102, 241, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
             transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
-            transition: 'transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease'
+            transition: 'transform 0.3s ease, box-shadow 0.3s ease'
           }}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
@@ -501,19 +502,6 @@ function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; 
           animate={rowInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.98 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Animated shimmer border */}
-          <div style={{
-            position: 'absolute',
-            top: -1.5,
-            left: -1.5,
-            right: -1.5,
-            bottom: -1.5,
-            borderRadius: 22,
-            background: 'linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.15), rgba(168,85,247,0.2), rgba(99,102,241,0.1), rgba(139,92,246,0.2))',
-            backgroundSize: '300% 300%',
-            animation: 'shimmerBorder 6s ease-in-out infinite',
-            zIndex: -1
-          }} />
           <h3
             className="text-[22px] md:text-[24px] font-bold mb-3"
             style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#0F172A", letterSpacing: "-0.01em" }}
