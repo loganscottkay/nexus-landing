@@ -306,19 +306,49 @@ function NarrativeLine() {
 function DoorIcon() {
   return (
     <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ position: 'relative' }}>
-        {/* Door frame */}
-        <div style={{ width: 72, height: 100, border: '2.5px solid #6366F1', borderRadius: 8, position: 'relative', background: 'linear-gradient(180deg, rgba(99,102,241,0.06), rgba(99,102,241,0.02))' }}>
-          {/* Door panel lines */}
-          <div style={{ position: 'absolute', top: 8, left: 8, right: 8, bottom: 8, border: '1.5px solid rgba(99,102,241,0.15)', borderRadius: 4 }} />
-          {/* Knob */}
-          <div style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', width: 10, height: 10, borderRadius: '50%', background: 'linear-gradient(135deg, #6366F1, #818CF8)', boxShadow: '0 1px 4px rgba(99,102,241,0.3)' }} />
-        </div>
-        {/* Light rays */}
-        <div style={{ position: 'absolute', right: -28, top: '15%', width: 22, height: 2.5, background: 'linear-gradient(90deg, rgba(99,102,241,0.25), transparent)', borderRadius: 2, transform: 'rotate(-8deg)' }} />
-        <div style={{ position: 'absolute', right: -32, top: '38%', width: 28, height: 2.5, background: 'linear-gradient(90deg, rgba(139,92,246,0.2), transparent)', borderRadius: 2 }} />
-        <div style={{ position: 'absolute', right: -26, top: '60%', width: 20, height: 2.5, background: 'linear-gradient(90deg, rgba(99,102,241,0.22), transparent)', borderRadius: 2, transform: 'rotate(6deg)' }} />
-        <div style={{ position: 'absolute', right: -22, top: '80%', width: 16, height: 2.5, background: 'linear-gradient(90deg, rgba(139,92,246,0.15), transparent)', borderRadius: 2, transform: 'rotate(12deg)' }} />
+      <div style={{
+        width: 72,
+        height: 100,
+        borderRadius: 10,
+        background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+        boxShadow: '0 8px 32px rgba(99,102,241,0.3), 0 0 20px rgba(139,92,246,0.15)',
+        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        {/* Inner door panel */}
+        <div style={{
+          width: 56,
+          height: 84,
+          borderRadius: 6,
+          border: '1.5px solid rgba(255,255,255,0.2)',
+          background: 'linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03))'
+        }} />
+        {/* Knob */}
+        <div style={{
+          position: 'absolute',
+          right: 14,
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: 10,
+          height: 10,
+          borderRadius: '50%',
+          background: 'rgba(255,255,255,0.7)',
+          boxShadow: '0 1px 6px rgba(255,255,255,0.3)'
+        }} />
+        {/* Subtle arch/light at the top */}
+        <div style={{
+          position: 'absolute',
+          top: -8,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 50,
+          height: 25,
+          borderRadius: '50%',
+          background: 'radial-gradient(ellipse, rgba(139,92,246,0.2), transparent)',
+          filter: 'blur(6px)'
+        }} />
       </div>
     </div>
   );
@@ -329,38 +359,126 @@ function ShieldIcon() {
   return (
     <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ position: 'relative' }}>
-        {/* Shield */}
-        <div style={{ width: 80, height: 96, clipPath: 'polygon(50% 0%, 100% 12%, 100% 55%, 50% 100%, 0% 55%, 0% 12%)', background: 'linear-gradient(180deg, rgba(99,102,241,0.1), rgba(99,102,241,0.04))', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          {/* Checkmark */}
-          <div style={{ width: 30, height: 18, borderBottom: '4px solid #059669', borderLeft: '4px solid #059669', transform: 'rotate(-45deg)', marginTop: -8, borderRadius: 2 }} />
+        {/* Shield shape with gradient */}
+        <div style={{
+          width: 84,
+          height: 100,
+          clipPath: 'polygon(50% 0%, 100% 12%, 100% 55%, 50% 100%, 0% 55%, 0% 12%)',
+          background: 'linear-gradient(135deg, #6366F1, #8B5CF6, #A78BFA)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          {/* White checkmark */}
+          <div style={{
+            width: 32,
+            height: 18,
+            borderBottom: '4px solid white',
+            borderLeft: '4px solid white',
+            transform: 'rotate(-45deg)',
+            marginTop: -6,
+            borderRadius: 2,
+            filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.15))'
+          }} />
         </div>
-        {/* Shield border outline */}
-        <div style={{ position: 'absolute', top: -2, left: -2, width: 84, height: 100, clipPath: 'polygon(50% 0%, 100% 12%, 100% 55%, 50% 100%, 0% 55%, 0% 12%)', background: 'linear-gradient(180deg, rgba(99,102,241,0.2), rgba(99,102,241,0.08))', zIndex: -1 }} />
-        {/* Subtle glow */}
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 100, height: 110, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(5,150,105,0.06), transparent 70%)', zIndex: -2 }} />
+        {/* Glow behind shield */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 110,
+          height: 120,
+          borderRadius: '50%',
+          background: 'radial-gradient(ellipse, rgba(99,102,241,0.15), rgba(139,92,246,0.08), transparent 70%)',
+          zIndex: -1,
+          filter: 'blur(4px)'
+        }} />
+        {/* Outer glow ring */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 100,
+          height: 115,
+          borderRadius: '50%',
+          boxShadow: '0 0 30px rgba(99,102,241,0.12), 0 0 60px rgba(139,92,246,0.06)',
+          zIndex: -2
+        }} />
       </div>
     </div>
   );
 }
 
-/* ---- Static Icon: Two Circles Connected ---- */
+/* ---- Static Icon: Match / Two Arrows Meeting ---- */
 function MatchIcon() {
   return (
-    <div style={{ width: 160, height: 160, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-        <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'linear-gradient(135deg, #6366F1, #818CF8)', boxShadow: '0 3px 12px rgba(99,102,241,0.25)' }} />
-        <div style={{ width: 28, height: 4, background: 'linear-gradient(90deg, #6366F1, #F5D76E, #8B5CF6)', borderRadius: 3 }} />
-        <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'linear-gradient(135deg, #7C3AED, #8B5CF6)', boxShadow: '0 3px 12px rgba(139,92,246,0.25)' }} />
-      </div>
-      {/* Gold match indicator */}
-      <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#F5D76E', boxShadow: '0 0 10px rgba(245,215,110,0.4)', marginTop: -4 }} />
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <div style={{ width: 24, height: 24, border: '2px solid rgba(15,23,42,0.4)', borderRadius: 5, position: 'relative' }}>
-          <div style={{ position: 'absolute', top: -4, left: 5, width: 3, height: 6, background: 'rgba(15,23,42,0.4)', borderRadius: 1 }} />
-          <div style={{ position: 'absolute', top: -4, right: 5, width: 3, height: 6, background: 'rgba(15,23,42,0.4)', borderRadius: 1 }} />
-          <div style={{ position: 'absolute', bottom: 3, left: '50%', transform: 'translateX(-50%) rotate(-45deg)', width: 10, height: 6, borderBottom: '2px solid #059669', borderLeft: '2px solid #059669' }} />
+    <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+      <div style={{
+        width: 100,
+        height: 100,
+        borderRadius: '50%',
+        background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+        boxShadow: '0 8px 32px rgba(99,102,241,0.3), 0 0 20px rgba(139,92,246,0.15)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative'
+      }}>
+        {/* Two arrows pointing inward */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          {/* Left arrow pointing right */}
+          <div style={{
+            width: 0,
+            height: 0,
+            borderTop: '8px solid transparent',
+            borderBottom: '8px solid transparent',
+            borderLeft: '12px solid rgba(255,255,255,0.9)'
+          }} />
+          {/* Center meeting point — gold dot */}
+          <div style={{
+            width: 10,
+            height: 10,
+            borderRadius: '50%',
+            background: '#F5D76E',
+            boxShadow: '0 0 8px rgba(245,215,110,0.5)'
+          }} />
+          {/* Right arrow pointing left */}
+          <div style={{
+            width: 0,
+            height: 0,
+            borderTop: '8px solid transparent',
+            borderBottom: '8px solid transparent',
+            borderRight: '12px solid rgba(255,255,255,0.9)'
+          }} />
         </div>
-        <span style={{ fontSize: 17, fontWeight: 700, color: '#6366F1', fontFamily: 'DM Sans, sans-serif' }}>72h</span>
+        {/* Subtle inner ring */}
+        <div style={{
+          position: 'absolute',
+          top: 6,
+          left: 6,
+          right: 6,
+          bottom: 6,
+          borderRadius: '50%',
+          border: '1.5px solid rgba(255,255,255,0.15)'
+        }} />
+      </div>
+      {/* 72h label below the circle */}
+      <div style={{
+        position: 'absolute',
+        bottom: 8,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 4,
+        background: 'rgba(255,255,255,0.9)',
+        padding: '4px 10px',
+        borderRadius: 20,
+        boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+      }}>
+        <span style={{ fontSize: 13, fontWeight: 700, color: '#6366F1', fontFamily: 'DM Sans, sans-serif' }}>72h</span>
       </div>
     </div>
   );
@@ -440,7 +558,7 @@ const differentiatorRows = [
 
 function WhatMakesDifferentSection() {
   return (
-    <Section className="scroll-stack-section relative z-10 px-5 md:px-6 py-[56px] md:py-[80px] w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh' }}>
+    <Section className="scroll-stack-section relative z-10 px-5 md:px-6 py-[36px] md:py-[48px] w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh' }}>
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -481,7 +599,7 @@ function WhatMakesDifferentSection() {
         </motion.div>
 
         {/* Gap then pillar rows */}
-        <div className="mt-[36px] md:mt-[48px]">
+        <div className="mt-[24px] md:mt-[32px]">
           {differentiatorRows.map((row, i) => (
             <PillarRow key={row.title} title={row.title} desc={row.desc} Icon={row.Icon} index={i} />
           ))}

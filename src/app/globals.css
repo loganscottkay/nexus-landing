@@ -2070,7 +2070,11 @@ html {
   right: 1.5px;
   bottom: 1.5px;
   border-radius: 18px;
-  background: linear-gradient(135deg, rgba(250,249,247,0.98), rgba(245,243,255,0.95));
+  background: linear-gradient(135deg,
+    rgba(238, 235, 255, 0.95),
+    rgba(230, 235, 255, 0.9),
+    rgba(240, 235, 252, 0.92)
+  );
   z-index: -1;
 }
 
@@ -2093,7 +2097,11 @@ html {
     box-shadow: 0 8px 30px rgba(99,102,241,0.06);
   }
   .shimmer-card:hover::after {
-    background: linear-gradient(135deg, rgba(250,249,247,0.97), rgba(245,243,255,0.95));
+    background: linear-gradient(135deg,
+      rgba(232, 228, 255, 0.97),
+      rgba(224, 230, 255, 0.95),
+      rgba(236, 228, 252, 0.96)
+    );
   }
 }
 
