@@ -347,43 +347,49 @@ function MatchIcon() {
   );
 }
 
-/* ---- Pillar Row (full-width, alternating layout) ---- */
+/* ---- Pillar Row (full-width, alternating layout with shimmer card) ---- */
 function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; Icon: React.ComponentType; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const rowInView = useInView(ref, { once: true, amount: 0.15 });
+  const [shimmerActive, setShimmerActive] = useState(false);
   const isReversed = index === 1;
 
+  useEffect(() => {
+    if (!rowInView) return;
+    const t = setTimeout(() => setShimmerActive(true), 700);
+    return () => clearTimeout(t);
+  }, [rowInView]);
+
   return (
-    <div ref={ref} className="max-w-[960px] mx-auto py-[24px] md:py-[36px]">
+    <div ref={ref} className="max-w-[960px] mx-auto py-[20px] md:py-[28px] px-[16px] md:px-[24px]">
       <div
-        className={`flex flex-col items-center gap-[20px] md:flex-row md:items-center md:gap-[56px] ${isReversed ? 'md:flex-row-reverse' : ''}`}
+        className={`flex flex-col items-center gap-[20px] md:flex-row md:items-center md:gap-[48px] ${isReversed ? 'md:flex-row-reverse' : ''}`}
       >
-        {/* Icon side — simple fade up + hover scale */}
+        {/* Icon side */}
         <motion.div
-          className="flex-shrink-0 flex items-center justify-center w-[100px] h-[110px] md:w-[180px] md:h-[140px]"
-          initial={{ opacity: 0, y: 20 }}
-          animate={rowInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
-          whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+          className="flex-shrink-0 flex items-center justify-center w-[90px] h-[100px] md:w-[160px] md:h-[140px]"
+          initial={{ opacity: 0, y: 16 }}
+          animate={rowInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
           <Icon />
         </motion.div>
 
-        {/* Text side */}
+        {/* Shimmer card text side */}
         <motion.div
-          className="flex-1 text-center md:text-left px-[16px] md:px-0"
-          initial={{ opacity: 0, y: 20 }}
-          animate={rowInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.4, 0.25, 1] }}
+          className={`shimmer-card flex-1${shimmerActive ? ' shimmer-active' : ''}`}
+          initial={{ opacity: 0, y: 24, scale: 0.97 }}
+          animate={rowInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.97 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           <h3
-            className="text-[22px] md:text-[24px] font-bold"
+            className="text-[22px] md:text-[24px] font-bold mb-3"
             style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#0F172A", letterSpacing: "-0.01em" }}
           >
             {title}
           </h3>
           <p
-            className="text-[14px] md:text-[15px] mt-3"
+            className="text-[14px] md:text-[15px]"
             style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#475569", lineHeight: 1.75 }}
           >
             {desc}
@@ -466,12 +472,7 @@ function WhatMakesDifferentSection() {
         {/* Gap then pillar rows */}
         <div className="mt-[40px] md:mt-[56px]">
           {differentiatorRows.map((row, i) => (
-            <React.Fragment key={row.title}>
-              <PillarRow title={row.title} desc={row.desc} Icon={row.Icon} index={i} />
-              {i < differentiatorRows.length - 1 && (
-                <div className="max-w-[80px] md:max-w-[200px] my-[20px] md:my-[32px] mx-auto" style={{ height: 1, background: 'rgba(0,0,0,0.04)' }} />
-              )}
-            </React.Fragment>
+            <PillarRow key={row.title} title={row.title} desc={row.desc} Icon={row.Icon} index={i} />
           ))}
         </div>
       </div>
