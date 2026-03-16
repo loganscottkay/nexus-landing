@@ -302,76 +302,49 @@ function NarrativeLine() {
   );
 }
 
-/* ---- Animated Door Visual (large, for pillar row) ---- */
+/* ---- Animated Door Visual ---- */
 function DoorAnimation({ animate }: { animate: boolean }) {
   return (
-    <div className="relative flex items-center justify-center" style={{ width: 200, height: 180 }}>
+    <div className="relative flex items-center justify-center w-[100px] h-[100px] md:w-[120px] md:h-[120px]">
       {/* Glow behind door */}
       <motion.div
         initial={{ opacity: 0, scale: 0 }}
-        animate={animate ? { opacity: 0.6, scale: 1 } : { opacity: 0, scale: 0 }}
-        transition={{ duration: 0.6, delay: 0.9 }}
+        animate={animate ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+        transition={{ duration: 0.4, delay: 0.8 }}
         className="absolute"
-        style={{ width: 120, height: 120, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%)' }}
+        style={{ width: 80, height: 80, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.1), transparent 70%)' }}
       />
-      <svg viewBox="0 0 200 180" width="200" height="180" className="relative z-10">
-        {/* Door frame - draws itself */}
+      <svg viewBox="0 0 140 120" className="w-full h-full relative z-10">
+        {/* Door frame */}
         <motion.rect
-          x="60" y="10" width="80" height="140" rx="4"
-          fill="none" stroke="#6366F1" strokeWidth="1.5"
+          x="40" y="15" width="60" height="90" rx="3"
+          fill="none" stroke="#6366F1" strokeWidth="2"
           initial={{ pathLength: 0 }}
           animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.5 }}
         />
-        {/* Door panel - swings open with 3D perspective */}
+        {/* Door panel - pivots open */}
         <motion.rect
-          x="60" y="10" width="80" height="140" rx="4"
-          fill="rgba(99,102,241,0.08)" stroke="none"
-          style={{ transformOrigin: '60px 80px' }}
+          x="42" y="17" width="56" height="86" rx="2"
+          fill="rgba(99,102,241,0.06)" stroke="none"
+          style={{ transformOrigin: '42px 60px' }}
           initial={{ scaleX: 1, opacity: 1 }}
-          animate={animate ? { scaleX: 0.25, opacity: 0.4 } : { scaleX: 1, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
+          animate={animate ? { scaleX: 0.25, opacity: 0.3 } : { scaleX: 1, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
         />
-        {/* Floating particles behind door */}
-        {[
-          { cx: 95, cy: 60, r: 3, color: '#6366F1', dx: -8, dy: -15 },
-          { cx: 105, cy: 70, r: 2.5, color: '#8B5CF6', dx: 10, dy: -12 },
-          { cx: 100, cy: 55, r: 2, color: '#F5D76E', dx: 2, dy: -18 },
-        ].map((p, i) => (
-          <motion.circle
-            key={i}
-            cx={p.cx} cy={p.cy} r={p.r}
-            fill={p.color}
-            initial={{ opacity: 0 }}
-            animate={animate ? {
-              opacity: [0, 0.6, 0],
-              cx: [p.cx, p.cx + p.dx],
-              cy: [p.cy, p.cy + p.dy],
-            } : {}}
-            transition={{ duration: 0.4, delay: 1.0 + i * 0.1 }}
-          />
-        ))}
       </svg>
     </div>
   );
 }
 
-/* ---- Animated Shield Visual (large, for pillar row) ---- */
+/* ---- Animated Shield Visual ---- */
 function ShieldAnimation({ animate }: { animate: boolean }) {
-  const shieldPath = "M100 15 L145 40 L145 90 C145 115 100 140 100 140 C100 140 55 115 55 90 L55 40 Z";
-  const checkPath = "M82 85 L95 98 L120 73";
+  const shieldPath = "M50 8 L85 25 L85 55 C85 72 50 88 50 88 C50 88 15 72 15 55 L15 25 Z";
+  const checkPath = "M36 52 L46 62 L66 42";
   return (
-    <div className="relative flex items-center justify-center" style={{ width: 200, height: 180 }}>
-      {/* Green pulse ring */}
-      <motion.div
-        className="absolute"
-        style={{ width: 140, height: 140, borderRadius: '50%', border: '2px solid rgba(5,150,105,0.3)' }}
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={animate ? { opacity: [0, 1, 0], scale: [0.5, 1.5] } : {}}
-        transition={{ duration: 0.4, delay: 1.0 }}
-      />
-      <svg viewBox="0 0 200 160" width="200" height="160">
-        {/* Shield outline draws from top center both directions */}
+    <div className="relative flex items-center justify-center w-[100px] h-[100px] md:w-[120px] md:h-[120px]">
+      <svg viewBox="0 0 100 96" className="w-full h-full">
+        {/* Shield outline */}
         <motion.path
           d={shieldPath}
           fill="none" stroke="#6366F1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -382,10 +355,10 @@ function ShieldAnimation({ animate }: { animate: boolean }) {
         {/* Shield fill */}
         <motion.path
           d={shieldPath}
-          fill="url(#shieldFill)" stroke="none"
+          fill="rgba(99,102,241,0.04)" stroke="none"
           initial={{ opacity: 0 }}
           animate={animate ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.4, delay: 0.4 }}
+          transition={{ duration: 0.3, delay: 0.5 }}
         />
         {/* Checkmark */}
         <motion.path
@@ -393,116 +366,61 @@ function ShieldAnimation({ animate }: { animate: boolean }) {
           fill="none" stroke="#059669" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"
           initial={{ pathLength: 0 }}
           animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
-          transition={{ duration: 0.4, delay: 0.7 }}
+          transition={{ duration: 0.4, delay: 0.8 }}
         />
-        {/* Three checklist lines below checkmark */}
-        {[0, 1, 2].map((i) => (
-          <motion.line
-            key={i}
-            x1="90" y1={110 + i * 7} x2="110" y2={110 + i * 7}
-            stroke="rgba(99,102,241,0.3)" strokeWidth="2" strokeLinecap="round"
-            initial={{ pathLength: 0 }}
-            animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
-            transition={{ duration: 0.2, delay: 1.2 + i * 0.1 }}
-          />
-        ))}
-        <defs>
-          <linearGradient id="shieldFill" x1="55" y1="15" x2="145" y2="140">
-            <stop stopColor="rgba(99,102,241,0.06)" />
-            <stop offset="1" stopColor="rgba(99,102,241,0.02)" />
-          </linearGradient>
-        </defs>
       </svg>
     </div>
   );
 }
 
-/* ---- Animated Match Visual (large, for pillar row) ---- */
+/* ---- Animated Match Visual ---- */
 function MatchAnimation({ animate }: { animate: boolean }) {
-  const burstParticles = [
-    { dx: -20, dy: -15, color: '#F5D76E' },
-    { dx: 18, dy: -12, color: '#6366F1' },
-    { dx: -15, dy: 18, color: '#8B5CF6' },
-    { dx: 22, dy: 10, color: '#F5D76E' },
-    { dx: -8, dy: -22, color: '#6366F1' },
-    { dx: 12, dy: 20, color: '#8B5CF6' },
-  ];
   return (
-    <div className="relative flex items-center justify-center" style={{ width: 200, height: 180 }}>
-      <svg viewBox="0 0 200 180" width="200" height="180">
-        {/* Labels */}
-        <motion.text x="55" y="100" textAnchor="middle" fill="rgba(0,0,0,0.3)" fontSize="8" fontFamily="var(--font-dm-sans), sans-serif"
-          initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : {}} transition={{ duration: 0.2 }}
-        >Investor</motion.text>
-        <motion.text x="145" y="100" textAnchor="middle" fill="rgba(0,0,0,0.3)" fontSize="8" fontFamily="var(--font-dm-sans), sans-serif"
-          initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : {}} transition={{ duration: 0.2 }}
-        >Founder</motion.text>
-
+    <div className="relative flex items-center justify-center w-[100px] h-[100px] md:w-[120px] md:h-[120px]">
+      <svg viewBox="0 0 140 120" className="w-full h-full">
         {/* Blue circle (investor) - slides right */}
         <motion.circle
-          r="12" cy="82" fill="#6366F1"
-          initial={{ cx: 55, opacity: 0 }}
-          animate={animate ? { cx: 96, opacity: 1 } : { cx: 55, opacity: 0 }}
-          transition={{ cx: { duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }, opacity: { duration: 0.2 } }}
+          r="10" cy="45" fill="#6366F1"
+          initial={{ cx: 30, opacity: 0 }}
+          animate={animate ? { cx: 64, opacity: 1 } : { cx: 30, opacity: 0 }}
+          transition={{ cx: { duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }, opacity: { duration: 0.2 } }}
         />
         {/* Violet circle (founder) - slides left */}
         <motion.circle
-          r="12" cy="82" fill="#8B5CF6"
-          initial={{ cx: 145, opacity: 0 }}
-          animate={animate ? { cx: 104, opacity: 1 } : { cx: 145, opacity: 0 }}
-          transition={{ cx: { duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }, opacity: { duration: 0.2 } }}
+          r="10" cy="45" fill="#8B5CF6"
+          initial={{ cx: 110, opacity: 0 }}
+          animate={animate ? { cx: 76, opacity: 1 } : { cx: 110, opacity: 0 }}
+          transition={{ cx: { duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }, opacity: { duration: 0.2 } }}
         />
         {/* Connecting line */}
         <motion.line
-          x1="96" y1="82" x2="104" y2="82"
+          x1="64" y1="45" x2="76" y2="45"
           stroke="url(#connectGrad)" strokeWidth="2"
           initial={{ pathLength: 0 }}
           animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
           transition={{ duration: 0.3, delay: 0.7 }}
         />
-        {/* Pulse on connection */}
+        {/* Pulse */}
         <motion.circle
-          cx="100" cy="82" r="14" fill="none" stroke="rgba(99,102,241,0.2)" strokeWidth="2"
+          cx="70" cy="45" r="12" fill="none" stroke="rgba(99,102,241,0.2)" strokeWidth="2"
           initial={{ scale: 1, opacity: 0 }}
-          animate={animate ? { scale: [1, 1.08, 1], opacity: [0, 1, 0] } : {}}
-          transition={{ duration: 0.4, delay: 0.9 }}
+          animate={animate ? { scale: [1, 1.06, 1], opacity: [0, 1, 0] } : {}}
+          transition={{ duration: 0.3, delay: 0.9 }}
         />
-        {/* Burst particles */}
-        {burstParticles.map((p, i) => (
-          <motion.circle
-            key={i} cx={100} cy={82} r="1.5" fill={p.color}
-            initial={{ opacity: 0 }}
-            animate={animate ? {
-              opacity: [0, 1, 0],
-              cx: [100, 100 + p.dx],
-              cy: [82, 82 + p.dy],
-            } : {}}
-            transition={{ duration: 0.4, delay: 0.9 }}
-          />
-        ))}
         {/* Calendar icon */}
-        <motion.g initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : {}} transition={{ duration: 0.3, delay: 1.2 }}>
-          <rect x="78" y="120" width="24" height="20" rx="2" fill="none" stroke="#0F172A" strokeWidth="2" />
-          <line x1="78" y1="127" x2="102" y2="127" stroke="#0F172A" strokeWidth="1.5" />
-          <circle cx="84" cy="133" r="1" fill="#0F172A" />
-          <circle cx="90" cy="133" r="1" fill="#0F172A" />
-          <circle cx="96" cy="133" r="1" fill="#0F172A" />
-          <circle cx="84" cy="138" r="1" fill="#0F172A" />
-          <circle cx="90" cy="138" r="1" fill="#0F172A" />
+        <motion.g initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : {}} transition={{ duration: 0.3, delay: 1.1 }}>
+          <rect x="58" y="72" width="20" height="16" rx="2" fill="none" stroke="#0F172A" strokeWidth="1.5" />
+          <line x1="58" y1="78" x2="78" y2="78" stroke="#0F172A" strokeWidth="1" />
+          <circle cx="63" cy="83" r="1" fill="#0F172A" />
+          <circle cx="68" cy="83" r="1" fill="#0F172A" />
+          <circle cx="73" cy="83" r="1" fill="#0F172A" />
         </motion.g>
         {/* 72h label */}
-        <motion.text x="110" y="135" fill="#6366F1" fontSize="14" fontWeight="700" fontFamily="var(--font-dm-sans), sans-serif"
-          initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : {}} transition={{ duration: 0.3, delay: 1.5 }}
+        <motion.text x="84" y="84" fill="#6366F1" fontSize="11" fontWeight="700" fontFamily="var(--font-dm-sans), sans-serif"
+          initial={{ opacity: 0 }} animate={animate ? { opacity: 1 } : {}} transition={{ duration: 0.3, delay: 1.3 }}
         >72h</motion.text>
-        {/* Checkmark on calendar */}
-        <motion.path
-          d="M86 137 L89 140 L95 134" fill="none" stroke="#059669" strokeWidth="1.5" strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={animate ? { pathLength: 1 } : { pathLength: 0 }}
-          transition={{ duration: 0.3, delay: 1.6 }}
-        />
         <defs>
-          <linearGradient id="connectGrad" x1="96" y1="82" x2="104" y2="82">
+          <linearGradient id="connectGrad" x1="64" y1="45" x2="76" y2="45">
             <stop stopColor="#6366F1" />
             <stop offset="1" stopColor="#8B5CF6" />
           </linearGradient>
@@ -520,57 +438,97 @@ function PillarRow({ title, desc, Animation, index }: { title: string; desc: str
 
   useEffect(() => {
     if (!rowInView) return;
-    const t = setTimeout(() => setIconAnimate(true), 300);
+    const t = setTimeout(() => setIconAnimate(true), 200);
     return () => clearTimeout(t);
   }, [rowInView]);
 
   const isReversed = index === 1;
-  const textSlideX = isReversed ? 30 : -30;
-  const animSlideX = isReversed ? -30 : 30;
+  const textSlideX = isReversed ? 20 : -20;
+  const animSlideX = isReversed ? -20 : 20;
 
   return (
-    <div ref={ref} className="max-w-[1000px] mx-auto py-[32px] md:py-[40px]">
+    <div ref={ref} className="max-w-[900px] mx-auto py-[20px] md:py-[24px]">
       <div
-        className={`flex flex-col md:flex-row items-center gap-[40px] md:gap-[60px] ${isReversed ? 'md:flex-row-reverse' : ''}`}
+        className={`flex flex-col items-center gap-[16px] md:flex-row md:gap-[40px] ${isReversed ? 'md:flex-row-reverse' : ''}`}
       >
         {/* Animation side */}
         <motion.div
-          className="w-full md:w-[45%] flex items-center justify-center"
-          initial={{ opacity: 0, x: animSlideX, y: 0 }}
-          animate={rowInView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: animSlideX }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          style={{ minHeight: 60 }}
+          className="flex-shrink-0 flex items-center justify-center md:w-[200px]"
+          initial={{ opacity: 0, y: 15, x: 0 }}
+          animate={rowInView ? { opacity: 1, y: 0, x: 0 } : {}}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          // Desktop: use translateX instead of translateY
+          {...(typeof window !== 'undefined' && window.innerWidth >= 768 ? {} : {})}
         >
-          <Animation animate={iconAnimate} />
+          <motion.div
+            initial={{ opacity: 0, x: 0 }}
+            animate={rowInView ? { opacity: 1, x: 0 } : { opacity: 0, x: animSlideX }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden md:flex items-center justify-center"
+          >
+            <Animation animate={iconAnimate} />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={rowInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="flex md:hidden items-center justify-center"
+          >
+            <Animation animate={iconAnimate} />
+          </motion.div>
         </motion.div>
 
         {/* Text side */}
         <motion.div
-          className="w-full md:w-[55%] text-center md:text-left"
-          initial={{ opacity: 0, x: textSlideX, y: 0 }}
-          animate={rowInView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: textSlideX }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="flex-1 text-center md:text-left px-[20px] md:px-0"
+          initial={{ opacity: 0, y: 15 }}
+          animate={rowInView ? { opacity: 1, y: 0, x: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Vertical bar indicator (desktop) / gradient dot (mobile) */}
-          <div className="hidden md:block mb-3">
-            <div style={{ width: 4, height: 24, borderRadius: 9999, background: 'linear-gradient(180deg, #6366F1, #8B5CF6)' }} />
-          </div>
-          <div className="flex justify-center md:hidden mb-3">
-            <div style={{ width: 8, height: 8, borderRadius: 9999, background: 'linear-gradient(135deg, #6366F1, #8B5CF6)' }} />
-          </div>
-
-          <h3
-            className="text-[22px] md:text-[26px] font-bold"
-            style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#0F172A", letterSpacing: "-0.01em" }}
+          <motion.div
+            initial={{ opacity: 0, x: 0 }}
+            animate={rowInView ? { opacity: 1, x: 0 } : { opacity: 0, x: textSlideX }}
+            transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden md:block"
           >
-            {title}
-          </h3>
-          <p
-            className="text-[14px] md:text-[16px] mt-3"
-            style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#475569", lineHeight: 1.75 }}
+            {/* Vertical bar indicator (desktop) */}
+            <div style={{ width: 3, height: 20, borderRadius: 9999, background: 'linear-gradient(180deg, #6366F1, #8B5CF6)', marginBottom: 12 }} />
+            <h3
+              className="text-[24px] font-bold"
+              style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#0F172A", letterSpacing: "-0.01em" }}
+            >
+              {title}
+            </h3>
+            <p
+              className="text-[15px] mt-3"
+              style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#475569", lineHeight: 1.7 }}
+            >
+              {desc}
+            </p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={rowInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+            transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="md:hidden"
           >
-            {desc}
-          </p>
+            {/* Gradient dot (mobile) */}
+            <div className="flex justify-center mb-3">
+              <div style={{ width: 6, height: 6, borderRadius: 9999, background: 'linear-gradient(135deg, #6366F1, #8B5CF6)' }} />
+            </div>
+            <h3
+              className="text-[22px] font-bold"
+              style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#0F172A", letterSpacing: "-0.01em" }}
+            >
+              {title}
+            </h3>
+            <p
+              className="text-[14px] mt-3"
+              style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#475569", lineHeight: 1.7 }}
+            >
+              {desc}
+            </p>
+          </motion.div>
         </motion.div>
       </div>
     </div>
@@ -598,7 +556,7 @@ const differentiatorRows = [
 
 function WhatMakesDifferentSection() {
   return (
-    <Section className="scroll-stack-section relative z-10 px-5 md:px-6 py-[60px] md:py-[60px] lg:py-20 w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
+    <Section className="scroll-stack-section relative z-10 px-5 md:px-6 py-[48px] md:py-[60px] w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           variants={cardStagger}
@@ -646,13 +604,13 @@ function WhatMakesDifferentSection() {
           </motion.p>
         </motion.div>
 
-        {/* 60px gap then pillar rows */}
-        <div style={{ marginTop: 60 }}>
+        {/* 40px gap then pillar rows */}
+        <div style={{ marginTop: 40 }}>
           {differentiatorRows.map((row, i) => (
             <React.Fragment key={row.title}>
               <PillarRow title={row.title} desc={row.desc} Animation={row.Animation} index={i} />
               {i < differentiatorRows.length - 1 && (
-                <div className="max-w-[100px] md:max-w-[200px] mx-auto" style={{ height: 1, background: 'rgba(0,0,0,0.04)', margin: '0 auto' }} />
+                <div className="max-w-[80px] md:max-w-[200px] mx-auto" style={{ height: 1, background: 'rgba(0,0,0,0.04)', margin: '20px auto' }} />
               )}
             </React.Fragment>
           ))}
