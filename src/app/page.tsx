@@ -358,53 +358,24 @@ function DoorIcon() {
 function ShieldIcon() {
   return (
     <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ position: 'relative' }}>
-        {/* Shield shape with gradient */}
+      <div style={{
+        width: 84,
+        height: 100,
+        clipPath: 'polygon(50% 0%, 100% 12%, 100% 55%, 50% 100%, 0% 55%, 0% 12%)',
+        background: 'linear-gradient(135deg, #6366F1, #8B5CF6, #A78BFA)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 8px 32px rgba(99,102,241,0.3), 0 0 20px rgba(139,92,246,0.15)'
+      }}>
         <div style={{
-          width: 84,
-          height: 100,
-          clipPath: 'polygon(50% 0%, 100% 12%, 100% 55%, 50% 100%, 0% 55%, 0% 12%)',
-          background: 'linear-gradient(135deg, #6366F1, #8B5CF6, #A78BFA)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          {/* White checkmark */}
-          <div style={{
-            width: 32,
-            height: 18,
-            borderBottom: '4px solid white',
-            borderLeft: '4px solid white',
-            transform: 'rotate(-45deg)',
-            marginTop: -6,
-            borderRadius: 2,
-            filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.15))'
-          }} />
-        </div>
-        {/* Glow behind shield */}
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 110,
-          height: 120,
-          borderRadius: '50%',
-          background: 'radial-gradient(ellipse, rgba(99,102,241,0.15), rgba(139,92,246,0.08), transparent 70%)',
-          zIndex: -1,
-          filter: 'blur(4px)'
-        }} />
-        {/* Outer glow ring */}
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 100,
-          height: 115,
-          borderRadius: '50%',
-          boxShadow: '0 0 30px rgba(99,102,241,0.12), 0 0 60px rgba(139,92,246,0.06)',
-          zIndex: -2
+          width: 32,
+          height: 18,
+          borderBottom: '4px solid white',
+          borderLeft: '4px solid white',
+          transform: 'rotate(-45deg)',
+          marginTop: -6,
+          borderRadius: 2
         }} />
       </div>
     </div>
@@ -488,14 +459,8 @@ function MatchIcon() {
 function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; Icon: React.ComponentType; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const rowInView = useInView(ref, { once: true, amount: 0.3 });
-  const [shimmerActive, setShimmerActive] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const isReversed = index === 1;
-
-  useEffect(() => {
-    if (!rowInView) return;
-    const t = setTimeout(() => setShimmerActive(true), 700);
-    return () => clearTimeout(t);
-  }, [rowInView]);
 
   return (
     <div ref={ref} className="max-w-[940px] mx-auto py-[24px] md:py-[32px]">
@@ -514,11 +479,41 @@ function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; 
 
         {/* Shimmer card text side */}
         <motion.div
-          className={`shimmer-card flex-1${shimmerActive ? ' shimmer-active' : ''}`}
+          className="flex-1"
+          style={{
+            background: hovered
+              ? 'linear-gradient(135deg, rgba(228, 222, 255, 0.97), rgba(220, 226, 255, 0.95), rgba(232, 224, 252, 0.96))'
+              : 'linear-gradient(135deg, rgba(235, 230, 255, 0.95), rgba(228, 232, 255, 0.9), rgba(238, 232, 252, 0.93))',
+            borderRadius: 20,
+            padding: '32px 36px',
+            position: 'relative',
+            overflow: 'visible',
+            border: '1.5px solid rgba(99, 102, 241, 0.12)',
+            boxShadow: hovered
+              ? '0 8px 30px rgba(99, 102, 241, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6)'
+              : '0 4px 20px rgba(99, 102, 241, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
+            transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
+            transition: 'transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease'
+          }}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
           initial={{ opacity: 0, y: 24, scale: 0.98 }}
           animate={rowInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.98 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
+          {/* Animated shimmer border */}
+          <div style={{
+            position: 'absolute',
+            top: -1.5,
+            left: -1.5,
+            right: -1.5,
+            bottom: -1.5,
+            borderRadius: 22,
+            background: 'linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.15), rgba(168,85,247,0.2), rgba(99,102,241,0.1), rgba(139,92,246,0.2))',
+            backgroundSize: '300% 300%',
+            animation: 'shimmerBorder 6s ease-in-out infinite',
+            zIndex: -1
+          }} />
           <h3
             className="text-[22px] md:text-[24px] font-bold mb-3"
             style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#0F172A", letterSpacing: "-0.01em" }}
