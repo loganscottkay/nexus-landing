@@ -361,7 +361,7 @@ function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; 
   }, [rowInView]);
 
   return (
-    <div ref={ref} className="max-w-[960px] mx-auto py-[20px] md:py-[28px] px-[16px] md:px-[24px]">
+    <div ref={ref} className="max-w-[960px] mx-auto py-[14px] md:py-[18px] px-[16px] md:px-[24px]">
       <div
         className={`flex flex-col items-center gap-[20px] md:flex-row md:items-center md:gap-[48px] ${isReversed ? 'md:flex-row-reverse' : ''}`}
       >
@@ -421,7 +421,7 @@ const differentiatorRows = [
 
 function WhatMakesDifferentSection() {
   return (
-    <Section className="scroll-stack-section relative z-10 px-5 md:px-6 py-[60px] md:py-[80px] w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
+    <Section className="scroll-stack-section relative z-10 px-5 md:px-6 py-[40px] md:py-[48px] w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh' }}>
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           variants={cardStagger}
@@ -470,7 +470,7 @@ function WhatMakesDifferentSection() {
         </motion.div>
 
         {/* Gap then pillar rows */}
-        <div className="mt-[40px] md:mt-[56px]">
+        <div className="mt-[28px] md:mt-[36px]">
           {differentiatorRows.map((row, i) => (
             <PillarRow key={row.title} title={row.title} desc={row.desc} Icon={row.Icon} index={i} />
           ))}
