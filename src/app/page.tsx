@@ -253,13 +253,12 @@ function NarrativeLine() {
 
   return (
     <section
-      className="scroll-stack-section flex items-center justify-center px-6 py-20 md:py-0 w-full"
+      className="scroll-stack-section flex items-center justify-center px-4 py-[32px] md:px-6 md:py-[40px] w-full"
       style={{
         position: 'sticky',
         top: 0,
         zIndex: 2,
         backgroundColor: '#FAF9F7',
-        minHeight: '100vh',
         overflow: 'hidden',
       }}
     >
@@ -302,157 +301,221 @@ function NarrativeLine() {
   );
 }
 
+/* ---- Icon with hover pop wrapper ---- */
+function IconHoverWrap({ children }: { children: React.ReactNode }) {
+  const [h, setH] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setH(true)}
+      onMouseLeave={() => setH(false)}
+      style={{
+        transform: h ? 'scale(1.12)' : 'scale(1)',
+        transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center'
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
 /* ---- Static Icon: Door ---- */
 function DoorIcon() {
+  const [h, setH] = useState(false);
   return (
-    <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{
-        width: 72,
-        height: 100,
-        borderRadius: 10,
-        background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-        boxShadow: '0 8px 32px rgba(99,102,241,0.3), 0 0 20px rgba(139,92,246,0.15)',
-        position: 'relative',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        {/* Inner door panel */}
+    <IconHoverWrap>
+      <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}>
         <div style={{
-          width: 56,
-          height: 84,
-          borderRadius: 6,
-          border: '1.5px solid rgba(255,255,255,0.2)',
-          background: 'linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03))'
-        }} />
-        {/* Knob */}
-        <div style={{
-          position: 'absolute',
-          right: 14,
-          top: '50%',
-          transform: 'translateY(-50%)',
-          width: 10,
-          height: 10,
-          borderRadius: '50%',
-          background: 'rgba(255,255,255,0.7)',
-          boxShadow: '0 1px 6px rgba(255,255,255,0.3)'
-        }} />
-        {/* Subtle arch/light at the top */}
-        <div style={{
-          position: 'absolute',
-          top: -8,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: 50,
-          height: 25,
-          borderRadius: '50%',
-          background: 'radial-gradient(ellipse, rgba(139,92,246,0.2), transparent)',
-          filter: 'blur(6px)'
-        }} />
+          width: 72,
+          height: 100,
+          borderRadius: 10,
+          background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+          boxShadow: h
+            ? '0 12px 40px rgba(99,102,241,0.4), 0 0 30px rgba(139,92,246,0.2)'
+            : '0 8px 32px rgba(99,102,241,0.3), 0 0 20px rgba(139,92,246,0.15)',
+          transition: 'box-shadow 0.3s ease',
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          {/* Inner door panel */}
+          <div style={{
+            width: 56,
+            height: 84,
+            borderRadius: 6,
+            border: '1.5px solid rgba(255,255,255,0.2)',
+            background: 'linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03))'
+          }} />
+          {/* Knob */}
+          <div style={{
+            position: 'absolute',
+            right: 14,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            width: 10,
+            height: 10,
+            borderRadius: '50%',
+            background: 'rgba(255,255,255,0.7)',
+            boxShadow: '0 1px 6px rgba(255,255,255,0.3)'
+          }} />
+          {/* Subtle arch/light at the top */}
+          <div style={{
+            position: 'absolute',
+            top: -8,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: 50,
+            height: 25,
+            borderRadius: '50%',
+            background: 'radial-gradient(ellipse, rgba(139,92,246,0.2), transparent)',
+            filter: 'blur(6px)'
+          }} />
+        </div>
       </div>
-    </div>
+    </IconHoverWrap>
   );
 }
 
 /* ---- Static Icon: Shield with Checkmark ---- */
 function ShieldIcon() {
+  const [h, setH] = useState(false);
   return (
-    <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{
-        width: 84,
-        height: 100,
-        clipPath: 'polygon(50% 0%, 100% 12%, 100% 55%, 50% 100%, 0% 55%, 0% 12%)',
-        background: 'linear-gradient(135deg, #6366F1, #8B5CF6, #A78BFA)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        boxShadow: '0 8px 32px rgba(99,102,241,0.3), 0 0 20px rgba(139,92,246,0.15)'
-      }}>
+    <IconHoverWrap>
+      <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}
+        onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}>
         <div style={{
-          width: 32,
-          height: 18,
-          borderBottom: '4px solid white',
-          borderLeft: '4px solid white',
-          transform: 'rotate(-45deg)',
-          marginTop: -6,
-          borderRadius: 2
+          width: 84,
+          height: 100,
+          clipPath: 'polygon(50% 0%, 100% 12%, 100% 55%, 50% 100%, 0% 55%, 0% 12%)',
+          background: 'linear-gradient(135deg, #6366F1, #8B5CF6, #A78BFA)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <div style={{
+            width: 32,
+            height: 18,
+            borderBottom: '4px solid white',
+            borderLeft: '4px solid white',
+            transform: 'rotate(-45deg)',
+            marginTop: -8,
+            borderRadius: 2
+          }} />
+        </div>
+        {/* Glow behind shield (visible on hover) */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 110,
+          height: 120,
+          borderRadius: '50%',
+          background: h
+            ? 'radial-gradient(ellipse, rgba(99,102,241,0.2), rgba(139,92,246,0.12), transparent 70%)'
+            : 'radial-gradient(ellipse, rgba(99,102,241,0.08), rgba(139,92,246,0.04), transparent 70%)',
+          transition: 'background 0.3s ease',
+          zIndex: -1
         }} />
       </div>
-    </div>
+    </IconHoverWrap>
   );
 }
 
 /* ---- Static Icon: Match / Two Arrows Meeting ---- */
 function MatchIcon() {
+  const [h, setH] = useState(false);
   return (
-    <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-      <div style={{
-        width: 100,
-        height: 100,
-        borderRadius: '50%',
-        background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-        boxShadow: '0 8px 32px rgba(99,102,241,0.3), 0 0 20px rgba(139,92,246,0.15)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative'
-      }}>
-        {/* Two arrows pointing inward */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          {/* Left arrow pointing right */}
+    <IconHoverWrap>
+      <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}
+        onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}>
+        <div style={{
+          width: 100,
+          height: 100,
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+          boxShadow: h
+            ? '0 12px 40px rgba(99,102,241,0.4), 0 0 30px rgba(139,92,246,0.2)'
+            : '0 8px 32px rgba(99,102,241,0.3), 0 0 20px rgba(139,92,246,0.15)',
+          transition: 'box-shadow 0.3s ease',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative'
+        }}>
+          {/* Two arrows pointing inward */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            {/* Left arrow pointing right */}
+            <div style={{
+              width: 0,
+              height: 0,
+              borderTop: '8px solid transparent',
+              borderBottom: '8px solid transparent',
+              borderLeft: '12px solid rgba(255,255,255,0.9)'
+            }} />
+            {/* Center meeting point */}
+            <div style={{
+              width: 10,
+              height: 10,
+              borderRadius: '50%',
+              background: '#F5D76E',
+              boxShadow: '0 0 8px rgba(245,215,110,0.5)'
+            }} />
+            {/* Right arrow pointing left */}
+            <div style={{
+              width: 0,
+              height: 0,
+              borderTop: '8px solid transparent',
+              borderBottom: '8px solid transparent',
+              borderRight: '12px solid rgba(255,255,255,0.9)'
+            }} />
+          </div>
+          {/* Subtle inner ring */}
           <div style={{
-            width: 0,
-            height: 0,
-            borderTop: '8px solid transparent',
-            borderBottom: '8px solid transparent',
-            borderLeft: '12px solid rgba(255,255,255,0.9)'
-          }} />
-          {/* Center meeting point — gold dot */}
-          <div style={{
-            width: 10,
-            height: 10,
+            position: 'absolute',
+            top: 6,
+            left: 6,
+            right: 6,
+            bottom: 6,
             borderRadius: '50%',
-            background: '#F5D76E',
-            boxShadow: '0 0 8px rgba(245,215,110,0.5)'
-          }} />
-          {/* Right arrow pointing left */}
-          <div style={{
-            width: 0,
-            height: 0,
-            borderTop: '8px solid transparent',
-            borderBottom: '8px solid transparent',
-            borderRight: '12px solid rgba(255,255,255,0.9)'
+            border: '1.5px solid rgba(255,255,255,0.15)'
           }} />
         </div>
-        {/* Subtle inner ring */}
+        {/* 72h label below the circle */}
         <div style={{
           position: 'absolute',
-          top: 6,
-          left: 6,
-          right: 6,
-          bottom: 6,
-          borderRadius: '50%',
-          border: '1.5px solid rgba(255,255,255,0.15)'
-        }} />
+          bottom: 8,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 4,
+          background: 'rgba(255,255,255,0.9)',
+          padding: '4px 10px',
+          borderRadius: 20,
+          boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+        }}>
+          <span style={{ fontSize: 13, fontWeight: 700, color: '#6366F1', fontFamily: 'DM Sans, sans-serif' }}>72h</span>
+        </div>
       </div>
-      {/* 72h label below the circle */}
-      <div style={{
-        position: 'absolute',
-        bottom: 8,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 4,
-        background: 'rgba(255,255,255,0.9)',
-        padding: '4px 10px',
-        borderRadius: 20,
-        boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
-      }}>
-        <span style={{ fontSize: 13, fontWeight: 700, color: '#6366F1', fontFamily: 'DM Sans, sans-serif' }}>72h</span>
-      </div>
-    </div>
+    </IconHoverWrap>
   );
+}
+
+/* ---- Word-by-word reveal variants for card descriptions ---- */
+function getCardWordVariants(mobile: boolean) {
+  const yOffset = mobile ? 4 : 6;
+  const ease = [0.25, 0.1, 0.25, 1.0] as const;
+  return {
+    hidden: { opacity: 0, y: yOffset },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: 0.3 + i * 0.03, duration: 0.35, ease },
+    }),
+  };
 }
 
 /* ---- Pillar Row (full-width, alternating layout with shimmer card) ---- */
@@ -460,7 +523,19 @@ function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; 
   const ref = useRef<HTMLDivElement>(null);
   const rowInView = useInView(ref, { once: true, amount: 0.3 });
   const [hovered, setHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const isReversed = index === 1;
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  const wordVariants = getCardWordVariants(isMobile);
+  const words = desc.split(" ");
 
   return (
     <div ref={ref} className="max-w-[940px] mx-auto py-[24px] md:py-[32px]">
@@ -489,12 +564,12 @@ function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; 
             position: 'relative',
             overflow: 'hidden',
             isolation: 'isolate',
-            border: '1.5px solid rgba(99, 102, 241, 0.12)',
+            border: hovered ? '1.5px solid rgba(99, 102, 241, 0.2)' : '1.5px solid rgba(99, 102, 241, 0.12)',
             boxShadow: hovered
-              ? '0 8px 30px rgba(99, 102, 241, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6)'
+              ? '0 12px 40px rgba(99, 102, 241, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.7)'
               : '0 4px 20px rgba(99, 102, 241, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
-            transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
-            transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+            transform: hovered ? 'translateY(-6px) scale(1.01)' : 'translateY(0) scale(1)',
+            transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)'
           }}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
@@ -512,7 +587,18 @@ function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; 
             className="text-[14px] md:text-[15px]"
             style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#475569", lineHeight: 1.75 }}
           >
-            {desc}
+            {words.map((word, i) => (
+              <motion.span
+                key={i}
+                custom={i}
+                initial="hidden"
+                animate={rowInView ? "visible" : "hidden"}
+                variants={wordVariants}
+                className="inline-block mr-[0.3em]"
+              >
+                {word}
+              </motion.span>
+            ))}
           </p>
         </motion.div>
       </div>
