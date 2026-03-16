@@ -302,261 +302,79 @@ function NarrativeLine() {
   );
 }
 
-/* ---- CSS Door Animation ---- */
-function DoorAnimation({ animate }: { animate: boolean }) {
+/* ---- Static Icon: Door ---- */
+function DoorIcon() {
   return (
-    <div style={{ width: 160, height: 150, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      {/* Door frame */}
-      <div style={{
-        width: 80, height: 110, border: '2px solid #6366F1', borderRadius: 6,
-        position: 'relative', overflow: 'visible', background: 'transparent',
-        perspective: 500,
-        opacity: animate ? 1 : 0,
-        transition: 'opacity 0.4s ease',
-      }}>
-        {/* Glow behind door */}
-        <div style={{
-          position: 'absolute', top: '50%', left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 60, height: 80,
-          background: 'radial-gradient(ellipse, rgba(99,102,241,0.15), rgba(139,92,246,0.08), transparent)',
-          borderRadius: '50%',
-          opacity: animate ? 1 : 0,
-          transition: 'opacity 0.5s ease 0.6s',
-          zIndex: 0,
-        }} />
-        {/* Door panel */}
-        <div style={{
-          position: 'absolute', top: 2, left: 2, width: 74, height: 104,
-          background: 'rgba(99,102,241,0.08)', borderRadius: 4,
-          transformOrigin: 'left center',
-          transform: animate ? 'rotateY(-65deg)' : 'rotateY(0deg)',
-          transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s',
-          zIndex: 1,
-        }}>
-          {/* Door knob */}
-          <div style={{
-            position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)',
-            width: 8, height: 8, borderRadius: '50%', background: '#6366F1', opacity: 0.6,
-          }} />
-        </div>
-      </div>
-      {/* Threshold line */}
-      <div style={{
-        position: 'absolute', bottom: 16, left: '50%', transform: 'translateX(-50%)',
-        width: 84, height: 1, background: 'rgba(99,102,241,0.2)',
-        opacity: animate ? 1 : 0,
-        transition: 'opacity 0.3s ease 0.2s',
-      }} />
-    </div>
-  );
-}
-
-/* ---- CSS Shield Animation ---- */
-function ShieldAnimation({ animate }: { animate: boolean }) {
-  const [showPulse, setShowPulse] = useState(false);
-
-  useEffect(() => {
-    if (!animate) return;
-    const t = setTimeout(() => setShowPulse(true), 700);
-    return () => clearTimeout(t);
-  }, [animate]);
-
-  return (
-    <div style={{ width: 160, height: 150, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ position: 'relative', width: 80, height: 95, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        {/* Shield outline (behind) */}
-        <div style={{
-          position: 'absolute', top: -2, left: -2, width: 84, height: 99,
-          clipPath: 'polygon(50% 0%, 100% 15%, 100% 60%, 50% 100%, 0% 60%, 0% 15%)',
-          background: '#6366F1',
-          opacity: animate ? 0.15 : 0,
-          transition: 'opacity 0.3s ease',
-          zIndex: 0,
-        }} />
-        {/* Shield shape */}
-        <div style={{
-          width: 80, height: 95,
-          clipPath: 'polygon(50% 0%, 100% 15%, 100% 60%, 50% 100%, 0% 60%, 0% 15%)',
-          background: 'linear-gradient(180deg, rgba(99,102,241,0.1), rgba(99,102,241,0.04))',
-          position: 'relative',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          transform: animate ? 'scale(1)' : 'scale(0)',
-          transition: 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s',
-          zIndex: 1,
-        }}>
-          {/* Shield border effect */}
-          <div style={{
-            position: 'absolute', inset: 0,
-            clipPath: 'polygon(50% 0%, 100% 15%, 100% 60%, 50% 100%, 0% 60%, 0% 15%)',
-            boxShadow: 'inset 0 0 0 2px #6366F1',
-          }} />
-          {/* Checkmark */}
-          <div style={{
-            width: 24, height: 14,
-            borderBottom: '3.5px solid #059669', borderLeft: '3.5px solid #059669',
-            transform: animate ? 'rotate(-45deg) scale(1)' : 'rotate(-45deg) scale(0)',
-            transformOrigin: 'center',
-            transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s',
-            marginTop: -4,
-          }} />
-        </div>
-        {/* Pulse ring */}
-        <div style={{
-          position: 'absolute', top: '50%', left: '50%',
-          transform: showPulse ? 'translate(-50%, -50%) scale(1.5)' : 'translate(-50%, -50%) scale(0.8)',
-          width: 100, height: 110, borderRadius: '50%',
-          border: '2px solid rgba(5,150,105,0.3)',
-          opacity: showPulse ? 0 : 0,
-          transition: 'transform 0.5s ease-out, opacity 0.5s ease-out',
-          zIndex: 2,
-          pointerEvents: 'none',
-        }} />
-        {/* Persistent green glow */}
-        <div style={{
-          position: 'absolute', top: '50%', left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 90, height: 100, borderRadius: '50%',
-          boxShadow: '0 0 15px rgba(5,150,105,0.1)',
-          opacity: animate ? 1 : 0,
-          transition: 'opacity 0.3s ease 0.8s',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }} />
+    <div style={{ width: 120, height: 140, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width: 64, height: 90, borderRadius: 6, background: 'linear-gradient(135deg, #EEF2FF, #E0E7FF)', border: '2px solid #C7D2FE', position: 'relative', boxShadow: '0 4px 12px rgba(99,102,241,0.1)' }}>
+        <div style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', width: 8, height: 8, borderRadius: '50%', background: '#6366F1' }} />
+        <div style={{ position: 'absolute', right: -20, top: '20%', width: 16, height: 2, background: 'linear-gradient(90deg, rgba(99,102,241,0.3), transparent)', borderRadius: 1 }} />
+        <div style={{ position: 'absolute', right: -24, top: '40%', width: 20, height: 2, background: 'linear-gradient(90deg, rgba(99,102,241,0.2), transparent)', borderRadius: 1 }} />
+        <div style={{ position: 'absolute', right: -18, top: '60%', width: 14, height: 2, background: 'linear-gradient(90deg, rgba(99,102,241,0.25), transparent)', borderRadius: 1 }} />
       </div>
     </div>
   );
 }
 
-/* ---- CSS Match Animation ---- */
-function MatchAnimation({ animate }: { animate: boolean }) {
-  const [showDot, setShowDot] = useState(false);
-  const [showCalendar, setShowCalendar] = useState(false);
-
-  useEffect(() => {
-    if (!animate) return;
-    const t1 = setTimeout(() => setShowDot(true), 800);
-    const t2 = setTimeout(() => setShowCalendar(true), 1000);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, [animate]);
-
+/* ---- Static Icon: Shield with Checkmark ---- */
+function ShieldIcon() {
   return (
-    <div style={{ width: 160, height: 150, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-      {/* Two circles that slide together */}
-      <div style={{ display: 'flex', alignItems: 'center', position: 'relative', height: 40 }}>
-        {/* Left circle (investor) */}
-        <div style={{
-          width: 32, height: 32, borderRadius: '50%',
-          background: 'linear-gradient(135deg, #6366F1, #818CF8)',
-          transform: animate ? 'translateX(0px)' : 'translateX(-20px)',
-          opacity: animate ? 1 : 0,
-          transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s',
-          flexShrink: 0,
-        }} />
-        {/* Connection line */}
-        <div style={{
-          height: 3, borderRadius: 2,
-          background: 'linear-gradient(90deg, #6366F1, #F5D76E, #8B5CF6)',
-          width: animate ? 24 : 0,
-          transition: 'width 0.4s ease 0.5s',
-          flexShrink: 0,
-        }} />
-        {/* Gold match dot */}
-        <div style={{
-          position: 'absolute', left: '50%',
-          transform: showDot ? 'translateX(-50%) scale(1)' : 'translateX(-50%) scale(0)',
-          width: 12, height: 12, borderRadius: '50%',
-          background: '#F5D76E',
-          boxShadow: showDot ? '0 0 12px rgba(245,215,110,0.5)' : 'none',
-          transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
-          zIndex: 2,
-        }} />
-        {/* Right circle (founder) */}
-        <div style={{
-          width: 32, height: 32, borderRadius: '50%',
-          background: 'linear-gradient(135deg, #7C3AED, #8B5CF6)',
-          transform: animate ? 'translateX(0px)' : 'translateX(20px)',
-          opacity: animate ? 1 : 0,
-          transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s',
-          flexShrink: 0,
-        }} />
+    <div style={{ width: 120, height: 140, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width: 72, height: 88, background: 'linear-gradient(180deg, #EEF2FF, #E0E7FF)', clipPath: 'polygon(50% 0%, 100% 12%, 100% 55%, 50% 100%, 0% 55%, 0% 12%)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+        <div style={{ width: 28, height: 16, borderBottom: '4px solid #059669', borderLeft: '4px solid #059669', transform: 'rotate(-45deg)', marginTop: -6, borderRadius: 2 }} />
       </div>
-      {/* Labels */}
-      <div style={{
-        display: 'flex', justifyContent: 'space-between', width: 110,
-        opacity: animate ? 1 : 0,
-        transition: 'opacity 0.3s ease 0.3s',
-      }}>
-        <span style={{ fontSize: 9, color: 'rgba(0,0,0,0.25)', fontFamily: 'var(--font-dm-sans), sans-serif' }}>Investor</span>
-        <span style={{ fontSize: 9, color: 'rgba(0,0,0,0.25)', fontFamily: 'var(--font-dm-sans), sans-serif' }}>Founder</span>
+    </div>
+  );
+}
+
+/* ---- Static Icon: Two Circles Connected ---- */
+function MatchIcon() {
+  return (
+    <div style={{ width: 120, height: 140, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, #6366F1, #818CF8)', boxShadow: '0 2px 8px rgba(99,102,241,0.2)' }} />
+        <div style={{ width: 20, height: 3, background: 'linear-gradient(90deg, #6366F1, #F5D76E, #8B5CF6)', borderRadius: 2 }} />
+        <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, #7C3AED, #8B5CF6)', boxShadow: '0 2px 8px rgba(139,92,246,0.2)' }} />
       </div>
-      {/* Calendar + 72h */}
-      <div style={{
-        display: 'flex', alignItems: 'center', gap: 8,
-        opacity: showCalendar ? 1 : 0,
-        transform: showCalendar ? 'translateY(0px)' : 'translateY(8px)',
-        transition: 'all 0.4s ease',
-      }}>
-        <div style={{
-          width: 24, height: 24, border: '2px solid #0F172A', borderRadius: 4,
-          position: 'relative', opacity: 0.6,
-        }}>
-          {/* Calendar binding bumps */}
-          <div style={{ position: 'absolute', top: -4, left: 5, width: 3, height: 6, background: '#0F172A', borderRadius: 1 }} />
-          <div style={{ position: 'absolute', top: -4, right: 5, width: 3, height: 6, background: '#0F172A', borderRadius: 1 }} />
-          {/* Small checkmark inside calendar */}
-          <div style={{
-            position: 'absolute', bottom: 3, left: '50%',
-            transform: 'translateX(-50%) rotate(-45deg)',
-            width: 8, height: 5,
-            borderBottom: '2px solid #059669', borderLeft: '2px solid #059669',
-          }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <div style={{ width: 20, height: 20, border: '2px solid rgba(15,23,42,0.5)', borderRadius: 4, position: 'relative' }}>
+          <div style={{ position: 'absolute', top: -3, left: 4, width: 3, height: 5, background: 'rgba(15,23,42,0.5)', borderRadius: 1 }} />
+          <div style={{ position: 'absolute', top: -3, right: 4, width: 3, height: 5, background: 'rgba(15,23,42,0.5)', borderRadius: 1 }} />
         </div>
-        <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: 16, fontWeight: 700, color: '#6366F1' }}>72h</span>
+        <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: 14, fontWeight: 700, color: '#6366F1' }}>72h</span>
       </div>
     </div>
   );
 }
 
 /* ---- Pillar Row (full-width, alternating layout) ---- */
-function PillarRow({ title, desc, Animation, index }: { title: string; desc: string; Animation: React.ComponentType<{ animate: boolean }>; index: number }) {
+function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; Icon: React.ComponentType; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const rowInView = useInView(ref, { once: true, amount: 0.15 });
-  const [iconAnimate, setIconAnimate] = useState(false);
-
-  useEffect(() => {
-    if (!rowInView) return;
-    const t = setTimeout(() => setIconAnimate(true), 200);
-    return () => clearTimeout(t);
-  }, [rowInView]);
-
   const isReversed = index === 1;
-  const textSlideX = isReversed ? 20 : -20;
-  const animSlideX = isReversed ? -20 : 20;
 
   return (
     <div ref={ref} className="max-w-[960px] mx-auto py-[24px] md:py-[36px]">
       <div
         className={`flex flex-col items-center gap-[20px] md:flex-row md:items-center md:gap-[56px] ${isReversed ? 'md:flex-row-reverse' : ''}`}
       >
-        {/* Animation side */}
+        {/* Icon side — simple fade up + hover scale */}
         <motion.div
-          className="flex-shrink-0 flex items-center justify-center w-[140px] h-[130px] md:w-[200px] md:h-[160px]"
-          initial={{ opacity: 0, x: animSlideX }}
-          animate={rowInView ? { opacity: 1, x: 0 } : { opacity: 0, x: animSlideX }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="flex-shrink-0 flex items-center justify-center w-[100px] h-[110px] md:w-[180px] md:h-[140px]"
+          initial={{ opacity: 0, y: 20 }}
+          animate={rowInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
+          whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
         >
-          <div className="flex items-center justify-center w-full h-full scale-[0.8] md:scale-100">
-            <Animation animate={iconAnimate} />
-          </div>
+          <Icon />
         </motion.div>
 
         {/* Text side */}
         <motion.div
           className="flex-1 text-center md:text-left px-[16px] md:px-0"
-          initial={{ opacity: 0, x: textSlideX }}
-          animate={rowInView ? { opacity: 1, x: 0 } : { opacity: 0, x: textSlideX }}
-          transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={rowInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.4, 0.25, 1] }}
         >
           <h3
             className="text-[22px] md:text-[24px] font-bold"
@@ -581,17 +399,17 @@ const differentiatorRows = [
   {
     title: "A Door That Didn\u2019t Exist",
     desc: "Fundraising has always been about who you know. UrgenC makes it about what you are building. First-time founders get the same shot as serial entrepreneurs. For the first time, access is earned by your idea.",
-    Animation: DoorAnimation,
+    Icon: DoorIcon,
   },
   {
     title: "Every Startup Is Vetted",
     desc: "This is not an open marketplace. Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. No half-baked pitches. If it is on UrgenC, it passed the bar.",
-    Animation: ShieldAnimation,
+    Icon: ShieldIcon,
   },
   {
     title: "If You Match, You Meet",
     desc: "On every other platform, interest leads nowhere. On UrgenC, mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot. This is not networking. It is a system built for real conversations.",
-    Animation: MatchAnimation,
+    Icon: MatchIcon,
   },
 ];
 
@@ -649,7 +467,7 @@ function WhatMakesDifferentSection() {
         <div className="mt-[40px] md:mt-[56px]">
           {differentiatorRows.map((row, i) => (
             <React.Fragment key={row.title}>
-              <PillarRow title={row.title} desc={row.desc} Animation={row.Animation} index={i} />
+              <PillarRow title={row.title} desc={row.desc} Icon={row.Icon} index={i} />
               {i < differentiatorRows.length - 1 && (
                 <div className="max-w-[80px] md:max-w-[200px] my-[20px] md:my-[32px] mx-auto" style={{ height: 1, background: 'rgba(0,0,0,0.04)' }} />
               )}
