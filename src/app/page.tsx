@@ -578,10 +578,98 @@ function WhatMakesDifferentSection() {
         </motion.div>
 
         {/* Pillar cards */}
-        <div style={{ maxWidth: 960, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: isMobile ? 20 : 24, padding: '0 24px' }}>
-          <DoorCard isMobile={isMobile} />
-          <ShieldCard isMobile={isMobile} />
-          <MatchCard isMobile={isMobile} />
+        <div style={{ maxWidth: 960, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: isMobile ? 20 : 24, padding: '0 24px', position: 'relative' }}>
+          {/* Connecting line with glowing dots — behind cards */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8 }}
+            style={{
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              top: 0,
+              bottom: 0,
+              width: 2,
+              zIndex: 0,
+              pointerEvents: 'none',
+            }}
+          >
+            {/* The line itself */}
+            <div style={{
+              width: 2,
+              height: '100%',
+              background: 'linear-gradient(180deg, transparent 0%, rgba(99,102,241,0.15) 10%, rgba(139,92,246,0.15) 50%, rgba(99,102,241,0.15) 90%, transparent 100%)',
+              borderRadius: 1,
+            }} />
+
+            {/* Glowing dot 1 — top */}
+            <div style={{
+              position: 'absolute',
+              top: '16%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 12,
+              height: 12,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+              boxShadow: '0 0 12px rgba(99,102,241,0.4), 0 0 24px rgba(99,102,241,0.2)',
+              animation: 'dotGlow 3s ease-in-out infinite',
+            }} />
+
+            {/* Glowing dot 2 — middle */}
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 12,
+              height: 12,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #8B5CF6, #A78BFA)',
+              boxShadow: '0 0 12px rgba(139,92,246,0.4), 0 0 24px rgba(139,92,246,0.2)',
+              animation: 'dotGlow 3s ease-in-out infinite 1s',
+            }} />
+
+            {/* Glowing dot 3 — bottom */}
+            <div style={{
+              position: 'absolute',
+              top: '84%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 12,
+              height: 12,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+              boxShadow: '0 0 12px rgba(99,102,241,0.4), 0 0 24px rgba(99,102,241,0.2)',
+              animation: 'dotGlow 3s ease-in-out infinite 2s',
+            }} />
+
+            {/* Traveling dot */}
+            <div style={{
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: 6,
+              height: 6,
+              borderRadius: '50%',
+              background: 'white',
+              boxShadow: '0 0 8px rgba(99,102,241,0.6), 0 0 16px rgba(139,92,246,0.3)',
+              animation: 'travelDown 4s ease-in-out infinite',
+              zIndex: 1,
+            }} />
+          </motion.div>
+
+          <div style={{ position: 'relative', zIndex: 1, width: '100%' }}>
+            <DoorCard isMobile={isMobile} />
+          </div>
+          <div style={{ position: 'relative', zIndex: 1, width: '100%' }}>
+            <ShieldCard isMobile={isMobile} />
+          </div>
+          <div style={{ position: 'relative', zIndex: 1, width: '100%' }}>
+            <MatchCard isMobile={isMobile} />
+          </div>
         </div>
       </div>
     </Section>
