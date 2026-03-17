@@ -383,13 +383,6 @@ function DoorCard({ isMobile }: { isMobile: boolean }) {
               boxShadow: '0 0 6px rgba(255,255,255,0.3)',
             }} />
           </div>
-          {/* Faded watermark outline */}
-          <div style={{
-            position: 'absolute', top: -20, left: -20,
-            width: 180, height: 240, borderRadius: 12,
-            border: '2px solid rgba(99,102,241,0.06)',
-            transform: 'rotate(-8deg)', pointerEvents: 'none',
-          }} />
         </div>
         {/* Text */}
         <div style={{ flex: 1, padding: isMobile ? '24px' : '28px 32px 28px 24px' }}>
@@ -434,7 +427,6 @@ function ShieldCard({ isMobile }: { isMobile: boolean }) {
           borderRadius: 24,
           padding: isMobile ? '24px' : '32px 36px',
           position: 'relative',
-          overflow: 'hidden',
           border: hovered ? '1.5px solid rgba(99,102,241,0.2)' : '1.5px solid rgba(99,102,241,0.12)',
           boxShadow: hovered ? '0 12px 40px rgba(99,102,241,0.12)' : '0 4px 20px rgba(99,102,241,0.06)',
           transform: hovered ? 'translateY(-6px) scale(1.01)' : 'translateY(0) scale(1)',
@@ -442,20 +434,6 @@ function ShieldCard({ isMobile }: { isMobile: boolean }) {
           cursor: 'default',
         }}
       >
-        {/* Large rounded square watermark behind text */}
-        <div style={{
-          position: 'absolute', right: -10, top: '50%', transform: 'translateY(-50%)',
-          width: 130, height: 130, borderRadius: 24,
-          background: 'linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.05))',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none',
-        }}>
-          <div style={{
-            width: 40, height: 24,
-            borderBottom: '5px solid rgba(99,102,241,0.12)',
-            borderLeft: '5px solid rgba(99,102,241,0.12)',
-            transform: 'rotate(-45deg)', marginTop: -8, borderRadius: 3,
-          }} />
-        </div>
         {/* Small solid rounded square accent */}
         <div style={{
           width: 40, height: 40, borderRadius: 10,
@@ -515,7 +493,6 @@ function MatchCard({ isMobile }: { isMobile: boolean }) {
           borderRadius: 24,
           padding: 0,
           position: 'relative',
-          overflow: 'hidden',
           border: hovered ? '1.5px solid rgba(99,102,241,0.2)' : '1.5px solid rgba(99,102,241,0.12)',
           boxShadow: hovered ? '0 12px 40px rgba(99,102,241,0.12)' : '0 4px 20px rgba(99,102,241,0.06)',
           transform: hovered ? 'translateY(-6px) scale(1.01)' : 'translateY(0) scale(1)',
@@ -528,7 +505,7 @@ function MatchCard({ isMobile }: { isMobile: boolean }) {
           background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.08), rgba(99,102,241,0.06))',
           padding: '28px 0',
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
-          position: 'relative',
+          borderRadius: '24px 24px 0 0',
         }}>
           {/* Match circles */}
           <div style={{
@@ -550,12 +527,9 @@ function MatchCard({ isMobile }: { isMobile: boolean }) {
           }}>
             <span style={{ fontSize: 14, fontWeight: 700, color: '#6366F1', fontFamily: 'var(--font-dm-sans), sans-serif' }}>72h guaranteed</span>
           </div>
-          {/* Decorative rings */}
-          <div style={{ position: 'absolute', top: -30, right: -30, width: 100, height: 100, borderRadius: '50%', border: '1.5px solid rgba(99,102,241,0.06)', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', bottom: -20, left: -20, width: 80, height: 80, borderRadius: '50%', border: '1.5px solid rgba(139,92,246,0.05)', pointerEvents: 'none' }} />
         </div>
         {/* Bottom text */}
-        <div style={{ padding: isMobile ? '24px' : '24px 32px 28px' }}>
+        <div style={{ padding: isMobile ? '24px 24px 28px' : '24px 32px 28px' }}>
           <h3 style={{
             fontSize: isMobile ? 20 : 22, fontWeight: 700, color: '#0F172A',
             marginBottom: 10, fontFamily: 'var(--font-dm-sans), sans-serif', letterSpacing: '-0.01em',
