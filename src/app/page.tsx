@@ -528,12 +528,31 @@ function MatchCard({ isMobile }: { isMobile: boolean }) {
 
 function WhatMakesDifferentSection() {
   const [isMobile, setIsMobile] = useState(false);
+  const [activeTrace, setActiveTrace] = useState(-1);
+  const [ballPosition, setBallPosition] = useState(-1);
+
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
     setIsMobile(mq.matches);
     const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    let step = 0;
+    const sequence = () => {
+      if (step === 0) { setActiveTrace(0); setBallPosition(-1); }
+      else if (step === 1) { setActiveTrace(-1); setBallPosition(0); }
+      else if (step === 2) { setActiveTrace(1); setBallPosition(-1); }
+      else if (step === 3) { setActiveTrace(-1); setBallPosition(1); }
+      else if (step === 4) { setActiveTrace(2); setBallPosition(-1); }
+      else if (step === 5) { setActiveTrace(-1); setBallPosition(-1); }
+      step = (step + 1) % 6;
+    };
+    sequence();
+    const interval = setInterval(sequence, 1500);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -578,96 +597,63 @@ function WhatMakesDifferentSection() {
         </motion.div>
 
         {/* Pillar cards */}
-        <div style={{ maxWidth: 960, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: isMobile ? 20 : 24, padding: '0 24px', position: 'relative' }}>
-          {/* Connecting line with glowing dots — behind cards */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8 }}
-            style={{
-              position: 'absolute',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              top: 0,
-              bottom: 0,
-              width: 2,
-              zIndex: 0,
-              pointerEvents: 'none',
-            }}
-          >
-            {/* The line itself */}
-            <div style={{
-              width: 2,
-              height: '100%',
-              background: 'linear-gradient(180deg, transparent 0%, rgba(99,102,241,0.15) 10%, rgba(139,92,246,0.15) 50%, rgba(99,102,241,0.15) 90%, transparent 100%)',
-              borderRadius: 1,
-            }} />
-
-            {/* Glowing dot 1 — top */}
-            <div style={{
-              position: 'absolute',
-              top: '16%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: 12,
-              height: 12,
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-              boxShadow: '0 0 12px rgba(99,102,241,0.4), 0 0 24px rgba(99,102,241,0.2)',
-              animation: 'dotGlow 3s ease-in-out infinite',
-            }} />
-
-            {/* Glowing dot 2 — middle */}
-            <div style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: 12,
-              height: 12,
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, #8B5CF6, #A78BFA)',
-              boxShadow: '0 0 12px rgba(139,92,246,0.4), 0 0 24px rgba(139,92,246,0.2)',
-              animation: 'dotGlow 3s ease-in-out infinite 1s',
-            }} />
-
-            {/* Glowing dot 3 — bottom */}
-            <div style={{
-              position: 'absolute',
-              top: '84%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: 12,
-              height: 12,
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-              boxShadow: '0 0 12px rgba(99,102,241,0.4), 0 0 24px rgba(99,102,241,0.2)',
-              animation: 'dotGlow 3s ease-in-out infinite 2s',
-            }} />
-
-            {/* Traveling dot */}
-            <div style={{
-              position: 'absolute',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: 6,
-              height: 6,
-              borderRadius: '50%',
-              background: 'white',
-              boxShadow: '0 0 8px rgba(99,102,241,0.6), 0 0 16px rgba(139,92,246,0.3)',
-              animation: 'travelDown 4s ease-in-out infinite',
-              zIndex: 1,
-            }} />
-          </motion.div>
-
-          <div style={{ position: 'relative', zIndex: 1, width: '100%' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 24px', position: 'relative' }}>
+          {/* Card 1 */}
+          <div className={`differentiator-card-wrapper${activeTrace === 0 ? ' card-trace-active' : ''}`} style={{ position: 'relative', zIndex: 1, width: '100%' }}>
             <DoorCard isMobile={isMobile} />
           </div>
-          <div style={{ position: 'relative', zIndex: 1, width: '100%' }}>
+
+          {/* Connecting line 1→2 */}
+          <div style={{
+            width: 2,
+            height: 24,
+            margin: '0 auto',
+            background: 'linear-gradient(180deg, rgba(99,102,241,0.08), rgba(139,92,246,0.15), rgba(99,102,241,0.08))',
+            borderRadius: 1,
+            position: 'relative',
+          }}>
+            <div className={ballPosition === 0 ? 'ball-traveling' : ''} style={{
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #6366F1, #A78BFA)',
+              boxShadow: '0 0 12px rgba(99,102,241,0.6), 0 0 24px rgba(139,92,246,0.3)',
+              opacity: 0,
+            }} />
+          </div>
+
+          {/* Card 2 */}
+          <div className={`differentiator-card-wrapper${activeTrace === 1 ? ' card-trace-active' : ''}`} style={{ position: 'relative', zIndex: 1, width: '100%' }}>
             <ShieldCard isMobile={isMobile} />
           </div>
-          <div style={{ position: 'relative', zIndex: 1, width: '100%' }}>
+
+          {/* Connecting line 2→3 */}
+          <div style={{
+            width: 2,
+            height: 24,
+            margin: '0 auto',
+            background: 'linear-gradient(180deg, rgba(99,102,241,0.08), rgba(139,92,246,0.15), rgba(99,102,241,0.08))',
+            borderRadius: 1,
+            position: 'relative',
+          }}>
+            <div className={ballPosition === 1 ? 'ball-traveling' : ''} style={{
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #6366F1, #A78BFA)',
+              boxShadow: '0 0 12px rgba(99,102,241,0.6), 0 0 24px rgba(139,92,246,0.3)',
+              opacity: 0,
+            }} />
+          </div>
+
+          {/* Card 3 */}
+          <div className={`differentiator-card-wrapper${activeTrace === 2 ? ' card-trace-active' : ''}`} style={{ position: 'relative', zIndex: 1, width: '100%' }}>
             <MatchCard isMobile={isMobile} />
           </div>
         </div>
