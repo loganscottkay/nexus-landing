@@ -1415,6 +1415,25 @@ body {
   animation: stat-number-pulse 0.6s ease-in-out forwards;
 }
 
+/* ---- CTA glow pulse for founder Schedule Meeting button ---- */
+@keyframes cta-border-glow {
+  0%, 100% { border-color: rgba(139,92,246,0.5); box-shadow: 0 4px 15px rgba(139,92,246,0.3), 0 0 8px rgba(139,92,246,0.15); }
+  50% { border-color: rgba(167,139,250,0.7); box-shadow: 0 4px 15px rgba(139,92,246,0.3), 0 0 12px rgba(167,139,250,0.25); }
+}
+.cta-glow-pulse {
+  border: 1px solid rgba(139,92,246,0.5);
+  animation: cta-border-glow 3s ease-in-out infinite;
+}
+
+/* ---- Glowing avatar ring for active investor row ---- */
+@keyframes avatar-ring-glow {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(139,92,246,0.4); }
+  50% { box-shadow: 0 0 0 1.5px rgba(167,139,250,0.7), 0 0 4px rgba(139,92,246,0.3); }
+}
+.avatar-glow-ring {
+  animation: avatar-ring-glow 2s ease-in-out infinite;
+}
+
 /* ============================================================
    PREMIUM ANIMATION OVERHAUL
    ============================================================ */

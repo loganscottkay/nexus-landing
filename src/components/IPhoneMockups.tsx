@@ -251,9 +251,9 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
   const [statsPulsed, setStatsPulsed] = useState(false);
 
   const allStartups = [
-    { initial: "V", name: "VaultSync", desc: "Decentralized data infrastructure", status: "Review", statusColor: "#FBBF24", statusBg: "rgba(251,191,36,0.12)", gradient: "linear-gradient(135deg, #1E3A5F, #3B82F6)" },
-    { initial: "N", name: "NovaBridge", desc: "AI-powered lending platform", status: "Matched", statusColor: "#34D399", statusBg: "rgba(52,211,153,0.12)", gradient: "linear-gradient(135deg, #164E63, #0E7490)" },
-    { initial: "P", name: "Patchwork", desc: "Urban goods marketplace", status: "New", statusColor: "#22D3EE", statusBg: "rgba(6,182,212,0.12)", gradient: "linear-gradient(135deg, #312E81, #6366F1)" },
+    { initial: "V", name: "VaultSync", desc: "Decentralized data infrastructure", status: "Review", statusColor: "#FBBF24", statusBg: "rgba(251,191,36,0.12)", gradient: "linear-gradient(135deg, #1E3A5F, #3B82F6)", accent: "#3B82F6", sparkline: "0,7 5,5 10,6 15,3 20,4 25,1 30,0" },
+    { initial: "N", name: "NovaBridge", desc: "AI-powered lending platform", status: "Matched", statusColor: "#34D399", statusBg: "rgba(52,211,153,0.12)", gradient: "linear-gradient(135deg, #164E63, #0E7490)", accent: "#0E7490", sparkline: "0,6 5,7 10,4 15,5 20,2 25,1 30,0" },
+    { initial: "P", name: "Patchwork", desc: "Urban goods marketplace", status: "New", statusColor: "#22D3EE", statusBg: "rgba(6,182,212,0.12)", gradient: "linear-gradient(135deg, #312E81, #6366F1)", accent: "#6366F1", sparkline: "0,7 6,5 12,6 18,3 24,2 30,0" },
   ];
 
   // Crossfade: toggle showCurrent, then advance index
@@ -325,25 +325,41 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
 
       {/* Stats card */}
       <div className="phone-glass-card" style={{
-        margin: "5px 10px",
+        margin: "5px 10px 8px",
         padding: "7px 8px",
         ...glassCard,
       }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "2px", textAlign: "center" }}>
+        {/* Hero stat */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", marginBottom: "5px" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div
+              className={`stat-pulse-investor ${statsPulsed ? "stat-pulse-animate" : ""}`}
+              style={{ fontSize: "18px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1 }}
+            >{statNums[0]}</div>
+            <div style={{ fontSize: "4px", color: "rgba(255,255,255,0.3)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>New Startups</div>
+            <TrendPill value="+3" />
+          </div>
+          <svg width="30" height="14" viewBox="0 0 30 14" fill="none" style={{ marginTop: "-4px" }}>
+            <polyline points="0,12 5,10 10,8 15,9 20,5 25,3 30,1" stroke="#22D3EE" strokeWidth="1.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+            <polyline points="0,12 5,10 10,8 15,9 20,5 25,3 30,1 30,14 0,14" fill="url(#tealFade)" />
+            <defs><linearGradient id="tealFade" x1="0" y1="0" x2="0" y2="14"><stop offset="0%" stopColor="#22D3EE" stopOpacity="0.15" /><stop offset="100%" stopColor="#22D3EE" stopOpacity="0" /></linearGradient></defs>
+          </svg>
+        </div>
+        {/* Secondary stats row */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "2px", textAlign: "center" }}>
           {[
-            { label: "NEW STARTUPS", trend: "+3" },
-            { label: "MATCHES", trend: "+2" },
-            { label: "MEETINGS", trend: "+1" },
-            { label: "SAVED", trend: "New" },
-          ].map((s, i) => (
+            { label: "MATCHES", trend: "+2", idx: 1 },
+            { label: "MEETINGS", trend: "+1", idx: 2 },
+            { label: "SAVED", trend: "New", idx: 3 },
+          ].map((s) => (
             <div key={s.label} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               <div
                 className={`stat-pulse-investor ${statsPulsed ? "stat-pulse-animate" : ""}`}
                 style={{
-                  fontSize: "13px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1,
-                  animationDelay: statsPulsed ? `${i * 0.1}s` : undefined,
+                  fontSize: "11px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1,
+                  animationDelay: statsPulsed ? `${s.idx * 0.1}s` : undefined,
                 }}
-              >{statNums[i]}</div>
+              >{statNums[s.idx]}</div>
               <div style={{ fontSize: "3.5px", color: "rgba(255,255,255,0.25)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>{s.label}</div>
               <TrendPill value={s.trend} />
             </div>
@@ -360,10 +376,13 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
         </div>
       </div>
 
+      {/* Section separator */}
+      <div style={{ height: "0.5px", background: "rgba(255,255,255,0.04)", margin: "0 10px 3px" }} />
+
       {/* Feed section — crossfade */}
       <div style={{ flex: 1, padding: "3px 10px 2px", display: "flex", flexDirection: "column", minHeight: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "4px", marginBottom: "4px" }}>
-          <span style={{ fontSize: "7px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Your Feed</span>
+          <span style={{ fontSize: "8px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Your Feed</span>
           <span style={{
             fontSize: "4px", color: "#22D3EE", background: "rgba(6,182,212,0.12)",
             borderRadius: "9999px", padding: "1px 5px", fontWeight: 600, fontFamily: font,
@@ -380,6 +399,7 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
                 background: "rgba(255,255,255,0.04)",
                 borderRadius: "10px",
                 border: "1px solid rgba(255,255,255,0.06)",
+                borderLeft: `2px solid ${c.accent}`,
                 flex: 1,
                 minHeight: 0,
                 opacity: showCurrent ? 1 : 0,
@@ -387,27 +407,38 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
               }}
             >
               <div style={{
-                width: "14px", height: "14px", borderRadius: "50%", background: c.gradient, flexShrink: 0,
+                width: "16px", height: "16px", borderRadius: "50%", background: c.gradient, flexShrink: 0,
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontSize: "5.5px", fontWeight: 700, color: "#fff", fontFamily: font,
+                boxShadow: `0 0 0 1px ${c.accent}`,
               }}>{c.initial}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: "6.5px", color: "#F1F5F9", fontFamily: font, fontWeight: 700 }}>{c.name}</div>
                 <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.desc}</div>
               </div>
-              <span style={{
-                fontSize: "4px", color: c.statusColor, background: c.statusBg,
-                borderRadius: "9999px", padding: "1.5px 5px", fontFamily: font, fontWeight: 600, flexShrink: 0,
-              }}>{c.status}</span>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "2px", flexShrink: 0 }}>
+                <svg width="30" height="8" viewBox="0 0 30 8" fill="none">
+                  <polyline points={c.sparkline} stroke={c.accent} strokeWidth="0.8" fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.6" />
+                </svg>
+                <span style={{
+                  fontSize: "4px", color: c.statusColor, background: c.statusBg,
+                  borderRadius: "9999px", padding: "1.5px 5px", fontFamily: font, fontWeight: 600,
+                }}>{c.status}</span>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
+      {/* Section separator */}
+      <div style={{ height: "0.5px", background: "rgba(255,255,255,0.04)", margin: "2px 10px 0" }} />
+
       {/* Queue section */}
-      <div style={{ padding: "3px 10px 4px" }}>
+      <div style={{ padding: "5px 10px 4px" }}>
+        {/* Gradient header bar */}
+        <div style={{ height: "2px", borderRadius: "9999px", background: "linear-gradient(90deg, #06B6D4, #22D3EE, transparent)", marginBottom: "5px" }} />
         <div style={{ display: "flex", alignItems: "center", gap: "3px", marginBottom: "4px" }}>
-          <span style={{ fontSize: "7px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Meeting Queue</span>
+          <span style={{ fontSize: "8px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Meeting Queue</span>
           <ClockIcon />
           <div style={{ marginLeft: "auto" }}>
             <TypingIndicator color="#22D3EE" />
@@ -550,25 +581,41 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
 
       {/* Stats card */}
       <div className="phone-glass-card" style={{
-        margin: "5px 10px",
+        margin: "5px 10px 8px",
         padding: "7px 8px",
         ...glassCard,
       }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "2px", textAlign: "center" }}>
+        {/* Hero stat */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", marginBottom: "5px" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div
+              className={`stat-pulse-founder ${statsPulsed ? "stat-pulse-animate" : ""}`}
+              style={{ fontSize: "18px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1 }}
+            >{statNums[0]}</div>
+            <div style={{ fontSize: "4px", color: "rgba(255,255,255,0.3)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>Views</div>
+            <TrendPill value="+12" color="#A78BFA" />
+          </div>
+          <svg width="30" height="14" viewBox="0 0 30 14" fill="none" style={{ marginTop: "-4px" }}>
+            <polyline points="0,13 4,11 8,9 12,10 16,6 20,7 24,3 28,2 30,0" stroke="#A78BFA" strokeWidth="1.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+            <polyline points="0,13 4,11 8,9 12,10 16,6 20,7 24,3 28,2 30,0 30,14 0,14" fill="url(#violetFade)" />
+            <defs><linearGradient id="violetFade" x1="0" y1="0" x2="0" y2="14"><stop offset="0%" stopColor="#A78BFA" stopOpacity="0.15" /><stop offset="100%" stopColor="#A78BFA" stopOpacity="0" /></linearGradient></defs>
+          </svg>
+        </div>
+        {/* Secondary stats row */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "2px", textAlign: "center" }}>
           {[
-            { label: "VIEWS", trend: "+12" },
-            { label: "INTERESTED", trend: "+3" },
-            { label: "MEETINGS", trend: "+1" },
-            { label: "SCORE", trend: "+5" },
-          ].map((s, i) => (
+            { label: "INTERESTED", trend: "+3", idx: 1 },
+            { label: "MEETINGS", trend: "+1", idx: 2 },
+            { label: "SCORE", trend: "+5", idx: 3 },
+          ].map((s) => (
             <div key={s.label} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               <div
                 className={`stat-pulse-founder ${statsPulsed ? "stat-pulse-animate" : ""}`}
                 style={{
-                  fontSize: "13px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1,
-                  animationDelay: statsPulsed ? `${i * 0.1}s` : undefined,
+                  fontSize: "11px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1,
+                  animationDelay: statsPulsed ? `${s.idx * 0.1}s` : undefined,
                 }}
-              >{statNums[i]}</div>
+              >{statNums[s.idx]}</div>
               <div style={{ fontSize: "3.5px", color: "rgba(255,255,255,0.25)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>{s.label}</div>
               <TrendPill value={s.trend} color="#A78BFA" />
             </div>
@@ -585,10 +632,13 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
         </div>
       </div>
 
+      {/* Section separator */}
+      <div style={{ height: "0.5px", background: "rgba(255,255,255,0.04)", margin: "0 10px 3px" }} />
+
       {/* Queue section */}
       <div style={{ flex: 1, padding: "3px 10px 2px", display: "flex", flexDirection: "column", minHeight: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "3px", marginBottom: "2px" }}>
-          <span style={{ fontSize: "7px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Investor Queue</span>
+          <span style={{ fontSize: "8px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Investor Queue</span>
         </div>
         <div style={{ fontSize: "4.5px", color: "rgba(255,255,255,0.35)", fontFamily: font, fontStyle: "italic", marginBottom: "4px" }}>
           One at a time &#183; 72h windows
@@ -609,6 +659,7 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
                 background: q.isActive ? "rgba(139,92,246,0.06)" : "rgba(255,255,255,0.04)",
                 borderRadius: "10px",
                 border: q.isActive ? "1px solid rgba(139,92,246,0.15)" : "1px solid rgba(255,255,255,0.06)",
+                borderLeft: q.isActive ? "2px solid #8B5CF6" : undefined,
                 flex: 1,
                 minHeight: 0,
                 boxShadow: q.isActive ? "0 0 12px rgba(139,92,246,0.08)" : "none",
@@ -620,17 +671,29 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontSize: "5.5px", fontWeight: 700, color: q.isActive ? "#fff" : "rgba(255,255,255,0.5)", fontFamily: font,
               }}>{q.pos}</div>
-              <div style={{
-                width: "12px", height: "12px", borderRadius: "50%",
-                background: q.avatarBg, flexShrink: 0,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "3.5px", fontWeight: 700, color: "#fff", fontFamily: font,
-              }}>{q.initials}</div>
+              <div
+                className={q.isActive ? "avatar-glow-ring" : undefined}
+                style={{
+                  width: "12px", height: "12px", borderRadius: "50%",
+                  background: q.avatarBg, flexShrink: 0,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "3.5px", fontWeight: 700, color: "#fff", fontFamily: font,
+                }}
+              >{q.initials}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: "6.5px", color: "#F1F5F9", fontFamily: font, fontWeight: 600 }}>{q.name}</div>
                 <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font }}>{q.firm}</div>
               </div>
-              {q.isActive && <span className="active-dot" />}
+              {q.isActive && (
+                <>
+                  <span className="active-dot" />
+                  <span style={{
+                    fontSize: "3px", color: "#fff", background: "#22C55E",
+                    borderRadius: "2px", padding: "0.5px 2px", fontWeight: 700, fontFamily: font,
+                    letterSpacing: "0.3px", lineHeight: 1.2,
+                  }}>LIVE</span>
+                </>
+              )}
               <span style={{
                 fontSize: "4px", color: q.statusColor, background: q.statusBg,
                 borderRadius: "9999px", padding: "1.5px 5px", fontWeight: 600, fontFamily: font,
@@ -640,9 +703,12 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
         </div>
       </div>
 
+      {/* Section separator */}
+      <div style={{ height: "0.5px", background: "rgba(255,255,255,0.04)", margin: "2px 10px 0" }} />
+
       {/* Action button with shimmer */}
-      <div style={{ padding: "4px 10px 4px", flexShrink: 0 }}>
-        <div style={{
+      <div style={{ padding: "6px 10px 4px", flexShrink: 0 }}>
+        <div className="cta-glow-pulse" style={{
           background: "linear-gradient(135deg, #8B5CF6, #A78BFA)",
           borderRadius: "10px",
           padding: "7px",
