@@ -237,9 +237,10 @@ function useCountUp(target: number, duration: number, shouldStart: boolean) {
 }
 
 /* ---- Glassmorphic card style helper ---- */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const glassCard = {
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.06)",
+  background: "rgba(255,255,255,0.07)",
+  border: "1px solid rgba(255,255,255,0.10)",
   borderRadius: "10px",
 };
 
@@ -294,17 +295,20 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
       height: "100%",
       display: "flex",
       flexDirection: "column",
-      background: "linear-gradient(180deg, #0A0E1A 0%, #0F172A 100%)",
+      background: "linear-gradient(145deg, #0B1120 0%, #0E1A2E 30%, #122035 50%, #0D1B30 70%, #0A1222 100%)",
       fontSize: 0,
       position: "relative",
     }}>
+      {/* Radial accent glow */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "60%", background: "radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.08) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
+
       {/* Status bar */}
       <StatusBar />
 
       {/* Greeting */}
-      <div style={{ padding: "6px 10px 3px" }}>
-        <div style={{ fontSize: "9px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, letterSpacing: "-0.2px" }}>
-          Good afternoon, Jordan <span style={{ fontSize: "8px" }}>&#128075;</span>
+      <div style={{ padding: "6px 10px 3px", position: "relative", zIndex: 1 }}>
+        <div style={{ fontSize: "10px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, letterSpacing: "-0.2px" }}>
+          Good afternoon, Jordan <span style={{ fontSize: "9px" }}>&#128075;</span>
         </div>
         <div style={{
           marginTop: "3px",
@@ -318,31 +322,38 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
         }}>
           <BriefcaseIcon />
           <span style={{ fontSize: "5.5px", color: "#22D3EE", fontWeight: 600, fontFamily: font }}>Investor</span>
-          <span style={{ fontSize: "5.5px", color: "rgba(255,255,255,0.25)" }}>&#183;</span>
-          <span style={{ fontSize: "5.5px", color: "rgba(255,255,255,0.4)", fontFamily: font }}>AI/ML, Fintech</span>
+          <span style={{ fontSize: "5.5px", color: "rgba(255,255,255,0.4)" }}>&#183;</span>
+          <span style={{ fontSize: "5.5px", color: "rgba(255,255,255,0.55)", fontFamily: font }}>AI/ML, Fintech</span>
         </div>
       </div>
 
       {/* Stats card */}
       <div className="phone-glass-card" style={{
-        margin: "5px 10px 8px",
-        padding: "7px 8px",
-        ...glassCard,
+        margin: "6px 10px 10px",
+        padding: "10px",
+        background: "rgba(255,255,255,0.07)",
+        border: "1px solid rgba(255,255,255,0.10)",
+        borderRadius: "10px",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
+        position: "relative",
+        zIndex: 1,
       }}>
         {/* Hero stat */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", marginBottom: "5px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginBottom: "7px" }}>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div
               className={`stat-pulse-investor ${statsPulsed ? "stat-pulse-animate" : ""}`}
-              style={{ fontSize: "18px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1 }}
+              style={{ fontSize: "20px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1 }}
             >{statNums[0]}</div>
-            <div style={{ fontSize: "4px", color: "rgba(255,255,255,0.3)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>New Startups</div>
+            <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>New Startups</div>
             <TrendPill value="+3" />
           </div>
-          <svg width="30" height="14" viewBox="0 0 30 14" fill="none" style={{ marginTop: "-4px" }}>
-            <polyline points="0,12 5,10 10,8 15,9 20,5 25,3 30,1" stroke="#22D3EE" strokeWidth="1.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-            <polyline points="0,12 5,10 10,8 15,9 20,5 25,3 30,1 30,14 0,14" fill="url(#tealFade)" />
-            <defs><linearGradient id="tealFade" x1="0" y1="0" x2="0" y2="14"><stop offset="0%" stopColor="#22D3EE" stopOpacity="0.15" /><stop offset="100%" stopColor="#22D3EE" stopOpacity="0" /></linearGradient></defs>
+          <svg width="40" height="18" viewBox="0 0 40 18" fill="none" style={{ marginTop: "-4px" }}>
+            <polyline points="0,16 7,13 14,10 20,12 26,7 33,4 40,1" stroke="#22D3EE" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+            <polyline points="0,16 7,13 14,10 20,12 26,7 33,4 40,1 40,18 0,18" fill="url(#tealFade)" />
+            <defs><linearGradient id="tealFade" x1="0" y1="0" x2="0" y2="18"><stop offset="0%" stopColor="#22D3EE" stopOpacity="0.15" /><stop offset="100%" stopColor="#22D3EE" stopOpacity="0" /></linearGradient></defs>
           </svg>
         </div>
         {/* Secondary stats row */}
@@ -356,50 +367,54 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
               <div
                 className={`stat-pulse-investor ${statsPulsed ? "stat-pulse-animate" : ""}`}
                 style={{
-                  fontSize: "11px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1,
+                  fontSize: "13px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1,
                   animationDelay: statsPulsed ? `${s.idx * 0.1}s` : undefined,
                 }}
               >{statNums[s.idx]}</div>
-              <div style={{ fontSize: "3.5px", color: "rgba(255,255,255,0.25)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>{s.label}</div>
+              <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>{s.label}</div>
               <TrendPill value={s.trend} />
             </div>
           ))}
         </div>
 
         {/* Engagement bar */}
-        <div style={{ display: "flex", alignItems: "center", gap: "5px", marginTop: "5px", paddingTop: "5px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-          <span style={{ fontSize: "4.5px", color: "rgba(255,255,255,0.4)", fontFamily: font, whiteSpace: "nowrap" }}>Engagement</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "5px", marginTop: "6px", paddingTop: "6px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          <span style={{ fontSize: "6px", color: "rgba(255,255,255,0.55)", fontFamily: font, whiteSpace: "nowrap" }}>Engagement</span>
           <div style={{ flex: 1, height: "3px", borderRadius: "9999px", background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
             <AnimatedBar targetWidth="84%" color="linear-gradient(90deg, #06B6D4, #22D3EE)" isVisible={isVisible} />
           </div>
-          <span style={{ fontSize: "5.5px", color: "#22D3EE", fontWeight: 700, fontFamily: font }}>84%</span>
+          <span style={{ fontSize: "6.5px", color: "#22D3EE", fontWeight: 700, fontFamily: font }}>84%</span>
         </div>
       </div>
 
       {/* Section separator */}
-      <div style={{ height: "0.5px", background: "rgba(255,255,255,0.04)", margin: "0 10px 3px" }} />
+      <div style={{ height: "0.5px", background: "rgba(255,255,255,0.04)", margin: "0 10px 5px" }} />
 
       {/* Feed section — crossfade */}
-      <div style={{ flex: 1, padding: "3px 10px 2px", display: "flex", flexDirection: "column", minHeight: 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", marginBottom: "4px" }}>
-          <span style={{ fontSize: "8px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Your Feed</span>
+      <div style={{ flex: 1, padding: "3px 10px 2px", display: "flex", flexDirection: "column", minHeight: 0, position: "relative", zIndex: 1 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", marginBottom: "5px" }}>
+          <span style={{ fontSize: "8.5px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Your Feed</span>
           <span style={{
-            fontSize: "4px", color: "#22D3EE", background: "rgba(6,182,212,0.12)",
-            borderRadius: "9999px", padding: "1px 5px", fontWeight: 600, fontFamily: font,
+            fontSize: "5.5px", color: "#22D3EE", background: "rgba(6,182,212,0.18)",
+            borderRadius: "9999px", padding: "2px 7px", fontWeight: 600, fontFamily: font,
+            border: "0.5px solid rgba(34,211,238,0.2)",
           }}>New</span>
         </div>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "2%", overflow: "hidden" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "3%", overflow: "hidden" }}>
           {currentSet.map((c, idx) => (
             <div
               key={`feed-${c.name}`}
               className={`phone-glass-card ${idx === 2 ? "phone-feed-row-3" : ""}`}
               style={{
-                display: "flex", alignItems: "center", gap: "5px",
-                padding: "2.5% 3%",
-                background: "rgba(255,255,255,0.04)",
+                display: "flex", alignItems: "center", gap: "6px",
+                padding: "3% 4%",
+                background: "rgba(255,255,255,0.07)",
                 borderRadius: "10px",
-                border: "1px solid rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.10)",
                 borderLeft: `2px solid ${c.accent}`,
+                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
                 flex: 1,
                 minHeight: 0,
                 opacity: showCurrent ? 1 : 0,
@@ -407,22 +422,23 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
               }}
             >
               <div style={{
-                width: "16px", height: "16px", borderRadius: "50%", background: c.gradient, flexShrink: 0,
+                width: "18px", height: "18px", borderRadius: "50%", background: c.gradient, flexShrink: 0,
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "5.5px", fontWeight: 700, color: "#fff", fontFamily: font,
-                boxShadow: `0 0 0 1px ${c.accent}`,
+                fontSize: "6.5px", fontWeight: 700, color: "#fff", fontFamily: font,
+                border: `1.5px solid ${c.accent}4D`,
               }}>{c.initial}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: "6.5px", color: "#F1F5F9", fontFamily: font, fontWeight: 700 }}>{c.name}</div>
-                <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.desc}</div>
+                <div style={{ fontSize: "8px", color: "#F1F5F9", fontFamily: font, fontWeight: 700 }}>{c.name}</div>
+                <div style={{ fontSize: "6.5px", color: "rgba(255,255,255,0.55)", fontFamily: font, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.desc}</div>
               </div>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "2px", flexShrink: 0 }}>
-                <svg width="30" height="8" viewBox="0 0 30 8" fill="none">
-                  <polyline points={c.sparkline} stroke={c.accent} strokeWidth="0.8" fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.6" />
+                <svg width="34" height="10" viewBox="0 0 34 10" fill="none">
+                  <polyline points={c.sparkline} stroke={c.accent} strokeWidth="1" fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
                 </svg>
                 <span style={{
-                  fontSize: "4px", color: c.statusColor, background: c.statusBg,
-                  borderRadius: "9999px", padding: "1.5px 5px", fontFamily: font, fontWeight: 600,
+                  fontSize: "5.5px", color: c.statusColor, background: c.statusBg.replace("0.12", "0.18"),
+                  borderRadius: "9999px", padding: "2px 7px", fontFamily: font, fontWeight: 600,
+                  border: `0.5px solid ${c.statusColor}33`,
                 }}>{c.status}</span>
               </div>
             </div>
@@ -431,14 +447,14 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
       </div>
 
       {/* Section separator */}
-      <div style={{ height: "0.5px", background: "rgba(255,255,255,0.04)", margin: "2px 10px 0" }} />
+      <div style={{ height: "0.5px", background: "rgba(255,255,255,0.04)", margin: "4px 10px 0" }} />
 
       {/* Queue section */}
-      <div style={{ padding: "5px 10px 4px" }}>
+      <div style={{ padding: "6px 10px 4px", position: "relative", zIndex: 1 }}>
         {/* Gradient header bar */}
         <div style={{ height: "2px", borderRadius: "9999px", background: "linear-gradient(90deg, #06B6D4, #22D3EE, transparent)", marginBottom: "5px" }} />
-        <div style={{ display: "flex", alignItems: "center", gap: "3px", marginBottom: "4px" }}>
-          <span style={{ fontSize: "8px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Meeting Queue</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "3px", marginBottom: "5px" }}>
+          <span style={{ fontSize: "8.5px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Meeting Queue</span>
           <ClockIcon />
           <div style={{ marginLeft: "auto" }}>
             <TypingIndicator color="#22D3EE" />
@@ -449,32 +465,38 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
           { pos: "2", name: "Terraform Health", isActive: false, time: "2h", match: "87%", avatar: "linear-gradient(135deg, #1E3A5F, #3B82F6)", posBg: "rgba(255,255,255,0.1)" },
         ].map((q) => (
           <div key={q.pos} className={`phone-glass-card ${q.isActive ? "queue-pulse-teal" : ""}`} style={{
-            display: "flex", alignItems: "center", gap: "4px", marginBottom: "2%",
-            padding: "2.5% 3%",
-            background: q.isActive ? "rgba(6,182,212,0.06)" : "rgba(255,255,255,0.04)",
+            display: "flex", alignItems: "center", gap: "5px", marginBottom: "3%",
+            padding: "3% 4%",
+            background: q.isActive ? "rgba(6,182,212,0.08)" : "rgba(255,255,255,0.07)",
             borderRadius: "10px",
-            border: "1px solid rgba(255,255,255,0.06)",
+            border: q.isActive ? "1px solid rgba(6,182,212,0.15)" : "1px solid rgba(255,255,255,0.10)",
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
           }}>
             <div style={{
-              width: "12px", height: "12px", borderRadius: "50%",
+              width: "16px", height: "16px", borderRadius: "50%",
               background: q.posBg, flexShrink: 0,
               display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "5.5px", fontWeight: 700, color: q.isActive ? "#fff" : "rgba(255,255,255,0.5)", fontFamily: font,
+              fontSize: "7px", fontWeight: 700, color: q.isActive ? "#fff" : "rgba(255,255,255,0.5)", fontFamily: font,
             }}>{q.pos}</div>
             <div style={{
-              width: "10px", height: "10px", borderRadius: "50%",
+              width: "14px", height: "14px", borderRadius: "50%",
               background: q.avatar, flexShrink: 0,
+              border: "1.5px solid rgba(6,182,212,0.3)",
             }} />
-            <span style={{ fontSize: "6.5px", color: "#F1F5F9", fontFamily: font, fontWeight: 600, flex: 1 }}>{q.name}</span>
+            <span style={{ fontSize: "8px", color: "#F1F5F9", fontFamily: font, fontWeight: 600, flex: 1 }}>{q.name}</span>
             {q.isActive && <span className="active-dot" />}
             <span style={{
-              fontSize: "4px", color: q.isActive ? "#22D3EE" : "rgba(255,255,255,0.4)",
-              background: q.isActive ? "rgba(6,182,212,0.12)" : "rgba(255,255,255,0.06)",
-              borderRadius: "9999px", padding: "1.5px 4px", fontWeight: 600, fontFamily: font,
+              fontSize: "5.5px", color: q.isActive ? "#22D3EE" : "rgba(255,255,255,0.55)",
+              background: q.isActive ? "rgba(6,182,212,0.18)" : "rgba(255,255,255,0.08)",
+              borderRadius: "9999px", padding: "2px 7px", fontWeight: 600, fontFamily: font,
+              border: q.isActive ? "0.5px solid rgba(34,211,238,0.2)" : "0.5px solid rgba(255,255,255,0.08)",
             }}>{q.time}</span>
             <span style={{
-              fontSize: "4px", color: "#34D399", background: "rgba(52,211,153,0.12)",
-              borderRadius: "9999px", padding: "1.5px 4px", fontWeight: 600, fontFamily: font,
+              fontSize: "5.5px", color: "#34D399", background: "rgba(52,211,153,0.18)",
+              borderRadius: "9999px", padding: "2px 7px", fontWeight: 600, fontFamily: font,
+              border: "0.5px solid rgba(52,211,153,0.2)",
             }}>{q.match}</span>
           </div>
         ))}
@@ -495,13 +517,13 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
           { icon: <UserTabIcon color="#22D3EE" />, label: "Profile", active: false },
         ].map((tab) => (
           <div key={tab.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1px", position: "relative" }}>
-            <div style={{ position: "relative" }}>
+            <div style={{ position: "relative", transform: "scale(1.25)", transformOrigin: "center" }}>
               {tab.icon}
               {tab.hasNotif && <NotificationDot color="#22D3EE" />}
             </div>
             {tab.active && (
               <span style={{
-                fontSize: "4px", fontFamily: font,
+                fontSize: "5px", fontFamily: font,
                 color: "#22D3EE",
                 fontWeight: 600,
               }}>{tab.label}</span>
@@ -550,16 +572,19 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
       height: "100%",
       display: "flex",
       flexDirection: "column",
-      background: "linear-gradient(180deg, #0A0E1A 0%, #0F172A 100%)",
+      background: "linear-gradient(145deg, #0E0B1F 0%, #150E2A 30%, #1A1235 50%, #140F2C 70%, #0D0A1E 100%)",
       fontSize: 0,
       position: "relative",
     }}>
+      {/* Radial accent glow */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "60%", background: "radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.08) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
+
       {/* Status bar */}
       <StatusBar />
 
       {/* Greeting */}
-      <div style={{ padding: "6px 10px 3px" }}>
-        <div style={{ fontSize: "9px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, letterSpacing: "-0.2px" }}>
+      <div style={{ padding: "6px 10px 3px", position: "relative", zIndex: 1 }}>
+        <div style={{ fontSize: "10px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, letterSpacing: "-0.2px" }}>
           Good afternoon, Alex
         </div>
         <div style={{
@@ -574,31 +599,38 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
         }}>
           <RocketIcon />
           <span style={{ fontSize: "5.5px", color: "#A78BFA", fontWeight: 600, fontFamily: font }}>Founder</span>
-          <span style={{ fontSize: "5.5px", color: "rgba(255,255,255,0.25)" }}>&#183;</span>
-          <span style={{ fontSize: "5.5px", color: "rgba(255,255,255,0.4)", fontFamily: font }}>Luminary AI</span>
+          <span style={{ fontSize: "5.5px", color: "rgba(255,255,255,0.4)" }}>&#183;</span>
+          <span style={{ fontSize: "5.5px", color: "rgba(255,255,255,0.55)", fontFamily: font }}>Luminary AI</span>
         </div>
       </div>
 
       {/* Stats card */}
       <div className="phone-glass-card" style={{
-        margin: "5px 10px 8px",
-        padding: "7px 8px",
-        ...glassCard,
+        margin: "6px 10px 10px",
+        padding: "10px",
+        background: "rgba(255,255,255,0.07)",
+        border: "1px solid rgba(255,255,255,0.10)",
+        borderRadius: "10px",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
+        position: "relative",
+        zIndex: 1,
       }}>
         {/* Hero stat */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", marginBottom: "5px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginBottom: "7px" }}>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div
               className={`stat-pulse-founder ${statsPulsed ? "stat-pulse-animate" : ""}`}
-              style={{ fontSize: "18px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1 }}
+              style={{ fontSize: "20px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1 }}
             >{statNums[0]}</div>
-            <div style={{ fontSize: "4px", color: "rgba(255,255,255,0.3)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>Views</div>
+            <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>Views</div>
             <TrendPill value="+12" color="#A78BFA" />
           </div>
-          <svg width="30" height="14" viewBox="0 0 30 14" fill="none" style={{ marginTop: "-4px" }}>
-            <polyline points="0,13 4,11 8,9 12,10 16,6 20,7 24,3 28,2 30,0" stroke="#A78BFA" strokeWidth="1.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-            <polyline points="0,13 4,11 8,9 12,10 16,6 20,7 24,3 28,2 30,0 30,14 0,14" fill="url(#violetFade)" />
-            <defs><linearGradient id="violetFade" x1="0" y1="0" x2="0" y2="14"><stop offset="0%" stopColor="#A78BFA" stopOpacity="0.15" /><stop offset="100%" stopColor="#A78BFA" stopOpacity="0" /></linearGradient></defs>
+          <svg width="40" height="18" viewBox="0 0 40 18" fill="none" style={{ marginTop: "-4px" }}>
+            <polyline points="0,17 5,14 10,12 16,13 22,8 28,9 34,4 37,3 40,0" stroke="#A78BFA" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+            <polyline points="0,17 5,14 10,12 16,13 22,8 28,9 34,4 37,3 40,0 40,18 0,18" fill="url(#violetFade)" />
+            <defs><linearGradient id="violetFade" x1="0" y1="0" x2="0" y2="18"><stop offset="0%" stopColor="#A78BFA" stopOpacity="0.15" /><stop offset="100%" stopColor="#A78BFA" stopOpacity="0" /></linearGradient></defs>
           </svg>
         </div>
         {/* Secondary stats row */}
@@ -612,91 +644,95 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
               <div
                 className={`stat-pulse-founder ${statsPulsed ? "stat-pulse-animate" : ""}`}
                 style={{
-                  fontSize: "11px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1,
+                  fontSize: "13px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, lineHeight: 1,
                   animationDelay: statsPulsed ? `${s.idx * 0.1}s` : undefined,
                 }}
               >{statNums[s.idx]}</div>
-              <div style={{ fontSize: "3.5px", color: "rgba(255,255,255,0.25)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>{s.label}</div>
+              <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font, textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "2px" }}>{s.label}</div>
               <TrendPill value={s.trend} color="#A78BFA" />
             </div>
           ))}
         </div>
 
         {/* Profile strength bar */}
-        <div style={{ display: "flex", alignItems: "center", gap: "5px", marginTop: "5px", paddingTop: "5px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-          <span style={{ fontSize: "4.5px", color: "rgba(255,255,255,0.4)", fontFamily: font, whiteSpace: "nowrap" }}>Profile Strength</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "5px", marginTop: "6px", paddingTop: "6px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          <span style={{ fontSize: "6px", color: "rgba(255,255,255,0.55)", fontFamily: font, whiteSpace: "nowrap" }}>Profile Strength</span>
           <div style={{ flex: 1, height: "3px", borderRadius: "9999px", background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
             <AnimatedBar targetWidth="78%" color="linear-gradient(90deg, #8B5CF6, #A78BFA)" isVisible={isVisible} />
           </div>
-          <span style={{ fontSize: "5.5px", color: "#A78BFA", fontWeight: 700, fontFamily: font }}>78%</span>
+          <span style={{ fontSize: "6.5px", color: "#A78BFA", fontWeight: 700, fontFamily: font }}>78%</span>
         </div>
       </div>
 
       {/* Section separator */}
-      <div style={{ height: "0.5px", background: "rgba(255,255,255,0.04)", margin: "0 10px 3px" }} />
+      <div style={{ height: "0.5px", background: "rgba(255,255,255,0.04)", margin: "0 10px 5px" }} />
 
       {/* Queue section */}
-      <div style={{ flex: 1, padding: "3px 10px 2px", display: "flex", flexDirection: "column", minHeight: 0 }}>
+      <div style={{ flex: 1, padding: "3px 10px 2px", display: "flex", flexDirection: "column", minHeight: 0, position: "relative", zIndex: 1 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "3px", marginBottom: "2px" }}>
-          <span style={{ fontSize: "8px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Investor Queue</span>
+          <span style={{ fontSize: "8.5px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Investor Queue</span>
         </div>
-        <div style={{ fontSize: "4.5px", color: "rgba(255,255,255,0.35)", fontFamily: font, fontStyle: "italic", marginBottom: "4px" }}>
+        <div style={{ fontSize: "5.5px", color: "rgba(255,255,255,0.45)", fontFamily: font, fontStyle: "italic", marginBottom: "5px" }}>
           One at a time &#183; 72h windows
         </div>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "2%", overflow: "hidden" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "3%", overflow: "hidden" }}>
           {[
-            { pos: "1", initials: "SC", name: "Sarah Chen", firm: "Stratton Ventures", status: "Active", statusColor: "#34D399", statusBg: "rgba(52,211,153,0.12)", isActive: true, avatarBg: "linear-gradient(135deg, #4C1D95, #7C3AED)", posBg: "linear-gradient(135deg, #8B5CF6, #A78BFA)" },
-            { pos: "2", initials: "MW", name: "Marcus Webb", firm: "Founder Collective", status: "Waiting", statusColor: "#FBBF24", statusBg: "rgba(251,191,36,0.12)", isActive: false, avatarBg: "linear-gradient(135deg, #312E81, #6366F1)", posBg: "rgba(255,255,255,0.1)" },
-            { pos: "3", initials: "ER", name: "Elena Rodriguez", firm: "Elevation", status: "Waiting", statusColor: "#FBBF24", statusBg: "rgba(251,191,36,0.12)", isActive: false, avatarBg: "linear-gradient(135deg, #581C87, #9333EA)", posBg: "rgba(255,255,255,0.1)" },
-            { pos: "4", initials: "JP", name: "James Park", firm: "Root Ventures", status: "New", statusColor: "#A78BFA", statusBg: "rgba(139,92,246,0.12)", isActive: false, avatarBg: "linear-gradient(135deg, #1E3A5F, #6366F1)", posBg: "rgba(255,255,255,0.1)" },
+            { pos: "1", initials: "SC", name: "Sarah Chen", firm: "Stratton Ventures", status: "Active", statusColor: "#34D399", statusBg: "rgba(52,211,153,0.18)", isActive: true, avatarBg: "linear-gradient(135deg, #4C1D95, #7C3AED)", posBg: "linear-gradient(135deg, #8B5CF6, #A78BFA)" },
+            { pos: "2", initials: "MW", name: "Marcus Webb", firm: "Founder Collective", status: "Waiting", statusColor: "#FBBF24", statusBg: "rgba(251,191,36,0.18)", isActive: false, avatarBg: "linear-gradient(135deg, #312E81, #6366F1)", posBg: "rgba(255,255,255,0.1)" },
+            { pos: "3", initials: "ER", name: "Elena Rodriguez", firm: "Elevation", status: "Waiting", statusColor: "#FBBF24", statusBg: "rgba(251,191,36,0.18)", isActive: false, avatarBg: "linear-gradient(135deg, #581C87, #9333EA)", posBg: "rgba(255,255,255,0.1)" },
+            { pos: "4", initials: "JP", name: "James Park", firm: "Root Ventures", status: "New", statusColor: "#A78BFA", statusBg: "rgba(139,92,246,0.18)", isActive: false, avatarBg: "linear-gradient(135deg, #1E3A5F, #6366F1)", posBg: "rgba(255,255,255,0.1)" },
           ].map((q) => (
             <div
               key={q.pos}
               className={`phone-glass-card ${q.isActive ? "queue-pulse-violet" : ""} ${q.pos === "4" ? "phone-queue-row-4" : ""}`}
               style={{
-                display: "flex", alignItems: "center", gap: "4px",
-                padding: "2.5% 3%",
-                background: q.isActive ? "rgba(139,92,246,0.06)" : "rgba(255,255,255,0.04)",
+                display: "flex", alignItems: "center", gap: "5px",
+                padding: "3% 4%",
+                background: q.isActive ? "rgba(139,92,246,0.08)" : "rgba(255,255,255,0.07)",
                 borderRadius: "10px",
-                border: q.isActive ? "1px solid rgba(139,92,246,0.15)" : "1px solid rgba(255,255,255,0.06)",
+                border: q.isActive ? "1px solid rgba(139,92,246,0.15)" : "1px solid rgba(255,255,255,0.10)",
                 borderLeft: q.isActive ? "2px solid #8B5CF6" : undefined,
                 flex: 1,
                 minHeight: 0,
-                boxShadow: q.isActive ? "0 0 12px rgba(139,92,246,0.08)" : "none",
+                boxShadow: q.isActive ? "0 0 12px rgba(139,92,246,0.08), inset 0 1px 0 rgba(255,255,255,0.08)" : "inset 0 1px 0 rgba(255,255,255,0.08)",
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
               }}
             >
               <div style={{
-                width: "12px", height: "12px", borderRadius: "50%",
+                width: "16px", height: "16px", borderRadius: "50%",
                 background: q.posBg, flexShrink: 0,
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "5.5px", fontWeight: 700, color: q.isActive ? "#fff" : "rgba(255,255,255,0.5)", fontFamily: font,
+                fontSize: "7px", fontWeight: 700, color: q.isActive ? "#fff" : "rgba(255,255,255,0.5)", fontFamily: font,
               }}>{q.pos}</div>
               <div
                 className={q.isActive ? "avatar-glow-ring" : undefined}
                 style={{
-                  width: "12px", height: "12px", borderRadius: "50%",
+                  width: "16px", height: "16px", borderRadius: "50%",
                   background: q.avatarBg, flexShrink: 0,
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: "3.5px", fontWeight: 700, color: "#fff", fontFamily: font,
+                  fontSize: "4.5px", fontWeight: 700, color: "#fff", fontFamily: font,
+                  border: "1.5px solid rgba(139,92,246,0.3)",
                 }}
               >{q.initials}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: "6.5px", color: "#F1F5F9", fontFamily: font, fontWeight: 600 }}>{q.name}</div>
-                <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font }}>{q.firm}</div>
+                <div style={{ fontSize: "8px", color: "#F1F5F9", fontFamily: font, fontWeight: 600 }}>{q.name}</div>
+                <div style={{ fontSize: "6.5px", color: "rgba(255,255,255,0.55)", fontFamily: font }}>{q.firm}</div>
               </div>
               {q.isActive && (
                 <>
                   <span className="active-dot" />
                   <span style={{
-                    fontSize: "3px", color: "#fff", background: "#22C55E",
-                    borderRadius: "2px", padding: "0.5px 2px", fontWeight: 700, fontFamily: font,
+                    fontSize: "3.5px", color: "#fff", background: "#22C55E",
+                    borderRadius: "2px", padding: "1px 3px", fontWeight: 700, fontFamily: font,
                     letterSpacing: "0.3px", lineHeight: 1.2,
                   }}>LIVE</span>
                 </>
               )}
               <span style={{
-                fontSize: "4px", color: q.statusColor, background: q.statusBg,
-                borderRadius: "9999px", padding: "1.5px 5px", fontWeight: 600, fontFamily: font,
+                fontSize: "5.5px", color: q.statusColor, background: q.statusBg,
+                borderRadius: "9999px", padding: "2px 7px", fontWeight: 600, fontFamily: font,
+                border: `0.5px solid ${q.statusColor}33`,
               }}>{q.status}</span>
             </div>
           ))}
@@ -704,20 +740,20 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
       </div>
 
       {/* Section separator */}
-      <div style={{ height: "0.5px", background: "rgba(255,255,255,0.04)", margin: "2px 10px 0" }} />
+      <div style={{ height: "0.5px", background: "rgba(255,255,255,0.04)", margin: "4px 10px 0" }} />
 
       {/* Action button with shimmer */}
-      <div style={{ padding: "6px 10px 4px", flexShrink: 0 }}>
+      <div style={{ padding: "6px 10px 4px", flexShrink: 0, position: "relative", zIndex: 1 }}>
         <div className="cta-glow-pulse" style={{
           background: "linear-gradient(135deg, #8B5CF6, #A78BFA)",
           borderRadius: "10px",
-          padding: "7px",
+          padding: "8px",
           textAlign: "center",
           boxShadow: "0 4px 15px rgba(139,92,246,0.3)",
           position: "relative",
           overflow: "hidden",
         }}>
-          <span style={{ fontSize: "6.5px", color: "#fff", fontWeight: 700, fontFamily: font, position: "relative", zIndex: 1 }}>
+          <span style={{ fontSize: "7.5px", color: "#fff", fontWeight: 700, fontFamily: font, position: "relative", zIndex: 1 }}>
             Schedule Meeting &#8594;
           </span>
           {/* Shimmer sweep - 5% opacity, 6s cycle */}
@@ -747,13 +783,13 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
           { icon: <UserTabIcon color="#A78BFA" />, label: "Profile", active: false },
         ].map((tab) => (
           <div key={tab.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1px", position: "relative" }}>
-            <div style={{ position: "relative" }}>
+            <div style={{ position: "relative", transform: "scale(1.25)", transformOrigin: "center" }}>
               {tab.icon}
               {tab.hasNotif && <NotificationDot color="#A78BFA" />}
             </div>
             {tab.active && (
               <span style={{
-                fontSize: "4px", fontFamily: font,
+                fontSize: "5px", fontFamily: font,
                 color: "#A78BFA",
                 fontWeight: 600,
               }}>{tab.label}</span>
