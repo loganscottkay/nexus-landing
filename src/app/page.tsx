@@ -254,7 +254,7 @@ function NarrativeLine() {
 
   return (
     <section
-      className="scroll-stack-section flex items-center justify-center px-4 py-[80px] md:px-6 md:py-[40px] w-full"
+      className="scroll-stack-section flex items-center justify-center px-4 pt-[80px] pb-[140px] md:px-6 md:py-[40px] w-full"
       style={{
         position: 'sticky',
         top: 0,
