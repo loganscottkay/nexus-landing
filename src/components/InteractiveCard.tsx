@@ -6,9 +6,10 @@ interface InteractiveCardProps {
   isHovering?: boolean;
   onHoverChange?: (hovering: boolean) => void;
   style?: React.CSSProperties;
+  className?: string;
 }
 
-export default function InteractiveCard({ children, isHovering: externalHovering, onHoverChange, style }: InteractiveCardProps) {
+export default function InteractiveCard({ children, isHovering: externalHovering, onHoverChange, style, className }: InteractiveCardProps) {
   const [glowPos, setGlowPos] = useState({ x: 50, y: 50 });
   const [isHovering, setIsHovering] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -49,6 +50,7 @@ export default function InteractiveCard({ children, isHovering: externalHovering
 
   return (
     <div
+      className={className}
       onMouseMove={handleMove}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}

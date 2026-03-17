@@ -2132,4 +2132,24 @@ html {
     transform: scale(0.98) !important;
     transition: transform 0.15s ease !important;
   }
+
+  .hide-on-mobile {
+    display: none !important;
+  }
+
+  .differentiator-card {
+    min-height: 280px !important;
+  }
+
+  .differentiator-card .icon-column {
+    height: 100px !important;
+    min-height: 100px !important;
+  }
+
+  .differentiator-card .text-column {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
 }

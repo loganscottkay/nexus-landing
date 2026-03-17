@@ -338,7 +338,7 @@ function DoorCard({ isMobile }: { isMobile: boolean }) {
   }, [doorStarted]);
 
   return (
-    <InteractiveCard onHoverChange={setCardHover} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', minHeight: isMobile ? undefined : 180 }}>
+    <InteractiveCard className="differentiator-card" onHoverChange={setCardHover} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', minHeight: isMobile ? undefined : 180 }}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -348,7 +348,7 @@ function DoorCard({ isMobile }: { isMobile: boolean }) {
         style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', width: '100%', position: 'relative', zIndex: 1 }}
       >
         {/* Left icon column */}
-        <div style={pillarIconCol(isMobile)}>
+        <div className="icon-column" style={pillarIconCol(isMobile)}>
           <div style={{ perspective: 400, width: 48, height: 64 }}>
             <div style={{
               width: 48,
@@ -381,7 +381,7 @@ function DoorCard({ isMobile }: { isMobile: boolean }) {
           </div>
         </div>
         {/* Right text column */}
-        <div style={pillarTextCol(isMobile)}>
+        <div className="text-column" style={pillarTextCol(isMobile)}>
           <h3 style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', marginBottom: 8, fontFamily: 'DM Sans, sans-serif' }}>A Door That Didn&apos;t Exist</h3>
           <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.7, fontFamily: 'DM Sans, sans-serif', margin: 0 }}>
             Fundraising has always been about who you know. UrgenC makes it about what you are building. For the first time, access is earned by your idea.
@@ -398,7 +398,7 @@ function ShieldCard({ isMobile }: { isMobile: boolean }) {
   const [cardHover, setCardHover] = useState(false);
 
   return (
-    <InteractiveCard onHoverChange={setCardHover} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', minHeight: isMobile ? undefined : 180 }}>
+    <InteractiveCard className="differentiator-card" onHoverChange={setCardHover} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', minHeight: isMobile ? undefined : 180 }}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -408,7 +408,7 @@ function ShieldCard({ isMobile }: { isMobile: boolean }) {
         style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', width: '100%', position: 'relative', zIndex: 1 }}
       >
         {/* Left icon column */}
-        <div style={pillarIconCol(isMobile)}>
+        <div className="icon-column" style={pillarIconCol(isMobile)}>
           <motion.div
             initial={{ scale: 0 }}
             animate={checkVisible ? { scale: 1 } : {}}
@@ -438,7 +438,7 @@ function ShieldCard({ isMobile }: { isMobile: boolean }) {
           </motion.div>
         </div>
         {/* Right text column */}
-        <div style={pillarTextCol(isMobile)}>
+        <div className="text-column" style={pillarTextCol(isMobile)}>
           <h3 style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', marginBottom: 8, fontFamily: 'DM Sans, sans-serif' }}>Every Startup Is Vetted</h3>
           <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.7, fontFamily: 'DM Sans, sans-serif', margin: 0 }}>
             Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. If it is on UrgenC, it passed the bar.
@@ -455,7 +455,7 @@ function MatchCard({ isMobile }: { isMobile: boolean }) {
   const [cardHover, setCardHover] = useState(false);
 
   return (
-    <InteractiveCard onHoverChange={setCardHover} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', minHeight: isMobile ? undefined : 180 }}>
+    <InteractiveCard className="differentiator-card" onHoverChange={setCardHover} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', minHeight: isMobile ? undefined : 180 }}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -465,7 +465,7 @@ function MatchCard({ isMobile }: { isMobile: boolean }) {
         style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', width: '100%', position: 'relative', zIndex: 1 }}
       >
         {/* Left icon column */}
-        <div style={pillarIconCol(isMobile)}>
+        <div className="icon-column" style={pillarIconCol(isMobile)}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
             <motion.div
               initial={{ scale: 0 }}
@@ -506,6 +506,7 @@ function MatchCard({ isMobile }: { isMobile: boolean }) {
               </div>
             </motion.div>
             <motion.span
+              className="hide-on-mobile"
               initial={{ opacity: 0, y: 4 }}
               animate={calVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.5, duration: 0.3 }}
@@ -514,7 +515,7 @@ function MatchCard({ isMobile }: { isMobile: boolean }) {
           </div>
         </div>
         {/* Right text column */}
-        <div style={pillarTextCol(isMobile)}>
+        <div className="text-column" style={pillarTextCol(isMobile)}>
           <h3 style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', marginBottom: 8, fontFamily: 'DM Sans, sans-serif' }}>If You Match, You Meet</h3>
           <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.7, fontFamily: 'DM Sans, sans-serif', margin: 0 }}>
             Mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot.
