@@ -634,7 +634,7 @@ export default function StoryPage() {
                         textAlign: "left",
                       }}
                     >
-                      Logan brings the technical firepower and operational rigor. He spearheaded AI implementation across admissions and operations at Harvard Business School and obsesses over making complex systems simple and accessible. He is the architect behind the UrgenC scoring engine and platform infrastructure. A natural communicator with a builder&#39;s instinct, Logan thrives at the intersection of product and people, translating founder pain points into features and turning cold conversations into warm relationships. He leads all product development and engineering.
+                      Logan is a senior at Boston University and leads AI implementation across admissions and operations at Harvard Business School. At UrgenC, he built the scoring engine and runs all product development and engineering.
                     </p>
                   </div>
                 </div>
@@ -710,7 +710,7 @@ export default function StoryPage() {
                         textAlign: "left",
                       }}
                     >
-                      Benjamin brings the financial acumen and investor perspective. His experience in institutional equities at Morgan Stanley gave him a front-row seat to how capital flows and where it gets stuck. He was the first to articulate the core problem that became UrgenC and leads investor relations, scoring methodology, and go-to-market strategy. A marketing mastermind with a visionary&#39;s clarity, Benjamin sees around corners and builds the narrative that makes people pay attention, crafting the brand voice, positioning, and outreach that put UrgenC on the map.
+                      Benjamin studies at Northeastern University and works in institutional equities at Morgan Stanley. He was the first to articulate the core problem behind UrgenC. He leads scoring methodology and go-to-market strategy.
                     </p>
                   </div>
                 </div>
