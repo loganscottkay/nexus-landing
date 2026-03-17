@@ -23,7 +23,6 @@ import {
 const stages = [
   {
     id: "door",
-    number: "01",
     title: "A Door That Didn\u2019t Exist",
     description:
       "Fundraising has always been about who you know. UrgenC makes it about what you are building. For the first time, access is earned by your idea.",
@@ -31,7 +30,6 @@ const stages = [
   },
   {
     id: "vetted",
-    number: "02",
     title: "Every Startup Is Vetted",
     description:
       "Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. If it is on UrgenC, it passed the bar.",
@@ -39,7 +37,6 @@ const stages = [
   },
   {
     id: "match",
-    number: "03",
     title: "If You Match, You Meet",
     description:
       "Mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot.",
@@ -467,23 +464,6 @@ function DesktopStageCard({
           }}
         />
       )}
-
-      {/* Stage number */}
-      <motion.span
-        animate={{ opacity: isActive ? 0.8 : 0.3 }}
-        transition={{ duration: 0.3 }}
-        style={{
-          fontFamily: "var(--font-dm-sans), DM Sans, sans-serif",
-          fontSize: 13,
-          fontWeight: 700,
-          color: stage.accent,
-          letterSpacing: "2px",
-          display: "block",
-          marginBottom: 12,
-        }}
-      >
-        {stage.number}
-      </motion.span>
 
       {/* Icon + Title row */}
       <div
