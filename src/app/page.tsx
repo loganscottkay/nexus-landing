@@ -314,7 +314,7 @@ const pillarIconCol = (isMobile: boolean): React.CSSProperties => ({
   alignItems: 'center',
   justifyContent: 'center',
   alignSelf: isMobile ? 'auto' : 'stretch',
-  background: 'linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.06))',
+  background: 'transparent',
   gap: 6,
 });
 
