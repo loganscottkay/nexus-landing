@@ -259,7 +259,7 @@ function NarrativeLine() {
         top: 0,
         zIndex: 2,
         backgroundColor: '#FAF9F7',
-        overflow: 'hidden',
+        minHeight: '100vh',
       }}
     >
       <div ref={ref} style={{ maxWidth: "620px", textAlign: "center" }}>
@@ -585,7 +585,7 @@ function WhatMakesDifferentSection() {
   }, []);
 
   return (
-    <Section className="scroll-stack-section relative z-10 px-5 md:px-6 w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh', paddingTop: isMobile ? 44 : 60, paddingBottom: isMobile ? 44 : 60 }}>
+    <Section className="scroll-stack-section relative z-10 px-5 md:px-6 w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', paddingTop: isMobile ? 44 : 60, paddingBottom: isMobile ? 44 : 60 }}>
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
