@@ -23,6 +23,7 @@ import {
 const stages = [
   {
     id: "door",
+    number: "01",
     title: "A Door That Didn\u2019t Exist",
     description:
       "Fundraising has always been about who you know. UrgenC makes it about what you are building. For the first time, access is earned by your idea.",
@@ -30,6 +31,7 @@ const stages = [
   },
   {
     id: "vetted",
+    number: "02",
     title: "Every Startup Is Vetted",
     description:
       "Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. If it is on UrgenC, it passed the bar.",
@@ -37,6 +39,7 @@ const stages = [
   },
   {
     id: "match",
+    number: "03",
     title: "If You Match, You Meet",
     description:
       "Mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot.",
@@ -465,6 +468,23 @@ function DesktopStageCard({
         />
       )}
 
+      {/* Stage number */}
+      <motion.span
+        animate={{ opacity: isActive ? 0.8 : 0.3 }}
+        transition={{ duration: 0.3 }}
+        style={{
+          fontFamily: "var(--font-dm-sans), DM Sans, sans-serif",
+          fontSize: 13,
+          fontWeight: 700,
+          color: stage.accent,
+          letterSpacing: "2px",
+          display: "block",
+          marginBottom: 12,
+        }}
+      >
+        {stage.number}
+      </motion.span>
+
       {/* Icon + Title row */}
       <div
         style={{
@@ -510,11 +530,9 @@ function DesktopStageCard({
 function MobileStageCard({
   stage,
   index,
-  onInView,
 }: {
   stage: (typeof stages)[0];
   index: number;
-  onInView?: () => void;
 }) {
   const [hovered] = useState(false);
   const [inView, setInView] = useState(false);
@@ -528,7 +546,6 @@ function MobileStageCard({
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          onInView?.();
           obs.disconnect();
         }
       },
@@ -536,7 +553,6 @@ function MobileStageCard({
     );
     obs.observe(el);
     return () => obs.disconnect();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -611,61 +627,11 @@ function MobileStageCard({
   );
 }
 
-// ── Mobile Spine Dot (lights up via parent state) ──
-function MobileSpineDot({
-  active,
-  index,
-}: {
-  active: boolean;
-  index: number;
-}) {
-  const accent = stages[index].accent;
-
-  return (
-    <motion.div
-      animate={{
-        scale: active ? 1 : 0.5,
-        opacity: active ? 1 : 0.3,
-      }}
-      transition={{ duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
-      style={{
-        width: 10,
-        height: 10,
-        borderRadius: "50%",
-        background: active ? accent : `${accent}60`,
-        boxShadow: active
-          ? `0 0 10px ${accent}80, 0 0 20px ${accent}40`
-          : "none",
-        position: "relative",
-        zIndex: 5,
-        flexShrink: 0,
-      }}
-    >
-      {active && (
-        <motion.div
-          animate={{
-            scale: [1, 1.8, 1],
-            opacity: [0.5, 0, 0.5],
-          }}
-          transition={{ duration: 2, repeat: Infinity }}
-          style={{
-            position: "absolute",
-            inset: -3,
-            borderRadius: "50%",
-            border: `1px solid ${accent}50`,
-          }}
-        />
-      )}
-    </motion.div>
-  );
-}
-
 // ── Main Section ────────────────────────────
 export default function WhatMakesDifferentSection() {
   const [isMobile, setIsMobile] = useState(false);
   const outerRef = useRef<HTMLDivElement>(null);
   const [activeStage, setActiveStage] = useState(-1);
-  const [mobileVisible, setMobileVisible] = useState([false, false, false]);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
@@ -774,81 +740,20 @@ export default function WhatMakesDifferentSection() {
             </p>
           </motion.div>
 
-          {/* Mobile Cards with Spine */}
+          {/* Mobile Cards */}
           <div
             style={{
               maxWidth: 720,
               margin: "0 auto",
               padding: "0 16px",
               display: "flex",
-              gap: 12,
+              flexDirection: "column",
+              gap: 16,
             }}
           >
-            {/* Mobile Spine */}
-            <div
-              style={{
-                width: 10,
-                flexShrink: 0,
-                position: "relative",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              {/* Spine track line */}
-              <div
-                style={{
-                  position: "absolute",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  top: 0,
-                  bottom: 0,
-                  width: 2,
-                  background: "rgba(99,102,241,0.1)",
-                  borderRadius: 1,
-                }}
-              />
-            </div>
-
-            {/* Cards column */}
-            <div
-              style={{
-                flex: 1,
-                minWidth: 0,
-                display: "flex",
-                flexDirection: "column",
-                gap: 16,
-              }}
-            >
-              {stages.map((stage, index) => (
-                <div key={stage.id} style={{ position: "relative" }}>
-                  {/* Dot positioned to left, vertically centered with card */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      left: -17,
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      zIndex: 5,
-                    }}
-                  >
-                    <MobileSpineDot
-                      active={mobileVisible[index]}
-                      index={index}
-                    />
-                  </div>
-                  <MobileStageCard
-                    stage={stage}
-                    index={index}
-                    onInView={() =>
-                      setMobileVisible((prev) => {
-                        const next = [...prev];
-                        next[index] = true;
-                        return next;
-                      })
-                    }
-                  />
-                </div>
-              ))}
+            {stages.map((stage, index) => (
+              <MobileStageCard key={stage.id} stage={stage} index={index} />
+            ))}
 
             {/* Bottom pill */}
             <motion.div
@@ -891,7 +796,6 @@ export default function WhatMakesDifferentSection() {
                 </span>
               </div>
             </motion.div>
-            </div>
           </div>
         </div>
       </section>
