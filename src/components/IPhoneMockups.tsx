@@ -51,32 +51,6 @@ function DashTabIcon({ active, color }: { active?: boolean; color: string }) {
   );
 }
 
-function DropsTabIcon({ active, color }: { active?: boolean; color: string }) {
-  return (
-    <svg width="8" height="8" viewBox="0 0 24 24" fill={active ? color : "none"} stroke={active ? color : "rgba(255,255,255,0.2)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z" />
-    </svg>
-  );
-}
-
-function SavedTabIcon({ active, color }: { active?: boolean; color: string }) {
-  return (
-    <svg width="8" height="8" viewBox="0 0 24 24" fill={active ? color : "none"} stroke={active ? color : "rgba(255,255,255,0.2)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
-    </svg>
-  );
-}
-
-function CalendarTabIcon({ active, color }: { active?: boolean; color: string }) {
-  return (
-    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke={active ? color : "rgba(255,255,255,0.2)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-      <line x1="16" y1="2" x2="16" y2="6" />
-      <line x1="8" y1="2" x2="8" y2="6" />
-      <line x1="3" y1="10" x2="21" y2="10" />
-    </svg>
-  );
-}
 
 function UserTabIcon({ active, color }: { active?: boolean; color: string }) {
   return (
@@ -87,11 +61,100 @@ function UserTabIcon({ active, color }: { active?: boolean; color: string }) {
   );
 }
 
-function InterestsTabIcon({ active, color }: { active?: boolean; color: string }) {
+function SearchTabIcon({ active, color }: { active?: boolean; color: string }) {
   return (
-    <svg width="8" height="8" viewBox="0 0 24 24" fill={active ? color : "none"} stroke={active ? color : "rgba(255,255,255,0.2)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke={active ? color : "rgba(255,255,255,0.2)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="11" cy="11" r="8" />
+      <line x1="21" y1="21" x2="16.65" y2="16.65" />
     </svg>
+  );
+}
+
+function MatchesTabIcon({ active, color }: { active?: boolean; color: string }) {
+  return (
+    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke={active ? color : "rgba(255,255,255,0.2)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 00-3-3.87" />
+      <path d="M16 3.13a4 4 0 010 7.75" />
+    </svg>
+  );
+}
+
+/* ---- Typing Indicator (3 pulsing dots) ---- */
+function TypingIndicator({ color }: { color: string }) {
+  return (
+    <>
+      <style>{`
+        @keyframes typingDotBounce {
+          0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+          30% { opacity: 1; transform: translateY(-1.5px); }
+        }
+      `}</style>
+      <div style={{ display: "flex", gap: "1.5px", alignItems: "center" }}>
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            style={{
+              width: "2px",
+              height: "2px",
+              borderRadius: "50%",
+              background: color,
+              animation: `typingDotBounce 1.4s ease-in-out ${i * 0.2}s infinite`,
+            }}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
+
+/* ---- Notification Dot (pulsing) ---- */
+function NotificationDot({ color }: { color: string }) {
+  return (
+    <>
+      <style>{`
+        @keyframes notifDotPulse {
+          0%, 100% { opacity: 0.7; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.4); }
+        }
+      `}</style>
+      <div style={{
+        position: "absolute",
+        top: "-1px",
+        right: "-1px",
+        width: "3px",
+        height: "3px",
+        borderRadius: "50%",
+        background: color,
+        animation: "notifDotPulse 2s ease-in-out infinite",
+      }} />
+    </>
+  );
+}
+
+/* ---- Animated Progress Bar ---- */
+function AnimatedBar({ targetWidth, color, isVisible }: { targetWidth: string; color: string; isVisible: boolean }) {
+  const [width, setWidth] = useState("0%");
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (isVisible && !hasAnimated.current) {
+      hasAnimated.current = true;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setWidth(targetWidth));
+      });
+    }
+  }, [isVisible, targetWidth]);
+
+  return (
+    <div style={{
+      width,
+      height: "100%",
+      borderRadius: "9999px",
+      background: color,
+      transition: "width 1.2s cubic-bezier(0.16, 1, 0.3, 1)",
+    }} />
   );
 }
 
@@ -188,11 +251,9 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
   const [statsPulsed, setStatsPulsed] = useState(false);
 
   const allStartups = [
-    { initial: "N", name: "NovaBridge", desc: "AI-powered tutoring platform", sector: "EdTech", gradient: "linear-gradient(135deg, #164E63, #0E7490)" },
-    { initial: "P", name: "Patchwork", desc: "Artisan goods marketplace", sector: "Marketplace", gradient: "linear-gradient(135deg, #1E3A5F, #2563EB)" },
-    { initial: "S", name: "SignalFi", desc: "Real-time fraud detection", sector: "Fintech", gradient: "linear-gradient(135deg, #312E81, #4F46E5)" },
-    { initial: "D", name: "DeepCure", desc: "Drug discovery with ML", sector: "BioTech", gradient: "linear-gradient(135deg, #0E7490, #06B6D4)" },
-    { initial: "V", name: "VaultSync", desc: "Decentralized data mesh", sector: "Infra", gradient: "linear-gradient(135deg, #1E3A5F, #3B82F6)" },
+    { initial: "V", name: "VaultSync", desc: "Decentralized data infrastructure", status: "Review", statusColor: "#FBBF24", statusBg: "rgba(251,191,36,0.12)", gradient: "linear-gradient(135deg, #1E3A5F, #3B82F6)" },
+    { initial: "N", name: "NovaBridge", desc: "AI-powered lending platform", status: "Matched", statusColor: "#34D399", statusBg: "rgba(52,211,153,0.12)", gradient: "linear-gradient(135deg, #164E63, #0E7490)" },
+    { initial: "P", name: "Patchwork", desc: "Urban goods marketplace", status: "New", statusColor: "#22D3EE", statusBg: "rgba(6,182,212,0.12)", gradient: "linear-gradient(135deg, #312E81, #6366F1)" },
   ];
 
   // Crossfade: toggle showCurrent, then advance index
@@ -243,7 +304,7 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
       {/* Greeting */}
       <div style={{ padding: "6px 10px 3px" }}>
         <div style={{ fontSize: "9px", fontWeight: 700, color: "#F1F5F9", fontFamily: font, letterSpacing: "-0.2px" }}>
-          Good afternoon, Jordan
+          Good afternoon, Jordan <span style={{ fontSize: "8px" }}>&#128075;</span>
         </div>
         <div style={{
           marginTop: "3px",
@@ -270,10 +331,10 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
       }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "2px", textAlign: "center" }}>
           {[
-            { label: "IN FEED", trend: "+3" },
-            { label: "INTERESTED", trend: "+2" },
-            { label: "MATCHED", trend: "+1" },
-            { label: "SCHEDULED", trend: "New" },
+            { label: "NEW STARTUPS", trend: "+3" },
+            { label: "MATCHES", trend: "+2" },
+            { label: "MEETINGS", trend: "+1" },
+            { label: "SAVED", trend: "New" },
           ].map((s, i) => (
             <div key={s.label} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               <div
@@ -293,9 +354,9 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
         <div style={{ display: "flex", alignItems: "center", gap: "5px", marginTop: "5px", paddingTop: "5px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
           <span style={{ fontSize: "4.5px", color: "rgba(255,255,255,0.4)", fontFamily: font, whiteSpace: "nowrap" }}>Engagement</span>
           <div style={{ flex: 1, height: "3px", borderRadius: "9999px", background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
-            <div style={{ width: "94%", height: "100%", borderRadius: "9999px", background: "linear-gradient(90deg, #06B6D4, #22D3EE)" }} />
+            <AnimatedBar targetWidth="84%" color="linear-gradient(90deg, #06B6D4, #22D3EE)" isVisible={isVisible} />
           </div>
-          <span style={{ fontSize: "5.5px", color: "#22D3EE", fontWeight: 700, fontFamily: font }}>94/100</span>
+          <span style={{ fontSize: "5.5px", color: "#22D3EE", fontWeight: 700, fontFamily: font }}>84%</span>
         </div>
       </div>
 
@@ -331,13 +392,13 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
                 fontSize: "5.5px", fontWeight: 700, color: "#fff", fontFamily: font,
               }}>{c.initial}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: "6.5px", color: "#F1F5F9", fontFamily: font, fontWeight: 600 }}>{c.name}</div>
+                <div style={{ fontSize: "6.5px", color: "#F1F5F9", fontFamily: font, fontWeight: 700 }}>{c.name}</div>
                 <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.desc}</div>
               </div>
               <span style={{
-                fontSize: "4px", color: "#22D3EE", background: "rgba(6,182,212,0.12)",
+                fontSize: "4px", color: c.statusColor, background: c.statusBg,
                 borderRadius: "9999px", padding: "1.5px 5px", fontFamily: font, fontWeight: 600, flexShrink: 0,
-              }}>{c.sector}</span>
+              }}>{c.status}</span>
             </div>
           ))}
         </div>
@@ -348,10 +409,13 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
         <div style={{ display: "flex", alignItems: "center", gap: "3px", marginBottom: "4px" }}>
           <span style={{ fontSize: "7px", fontWeight: 700, color: "#F1F5F9", fontFamily: font }}>Meeting Queue</span>
           <ClockIcon />
+          <div style={{ marginLeft: "auto" }}>
+            <TypingIndicator color="#22D3EE" />
+          </div>
         </div>
         {[
-          { pos: "1", name: "Luminary AI", status: "ACTIVE", isActive: true, time: "47h", avatar: "linear-gradient(135deg, #0E7490, #06B6D4)", posBg: "linear-gradient(135deg, #06B6D4, #22D3EE)" },
-          { pos: "2", name: "Terraform Health", status: "Next", isActive: false, time: "", avatar: "linear-gradient(135deg, #1E3A5F, #3B82F6)", posBg: "rgba(255,255,255,0.1)" },
+          { pos: "1", name: "Luminary AI", isActive: true, time: "47m", match: "92%", avatar: "linear-gradient(135deg, #0E7490, #06B6D4)", posBg: "linear-gradient(135deg, #06B6D4, #22D3EE)" },
+          { pos: "2", name: "Terraform Health", isActive: false, time: "2h", match: "87%", avatar: "linear-gradient(135deg, #1E3A5F, #3B82F6)", posBg: "rgba(255,255,255,0.1)" },
         ].map((q) => (
           <div key={q.pos} className={`phone-glass-card ${q.isActive ? "queue-pulse-teal" : ""}`} style={{
             display: "flex", alignItems: "center", gap: "4px", marginBottom: "2%",
@@ -371,18 +435,16 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
               background: q.avatar, flexShrink: 0,
             }} />
             <span style={{ fontSize: "6.5px", color: "#F1F5F9", fontFamily: font, fontWeight: 600, flex: 1 }}>{q.name}</span>
-            {q.isActive ? (
-              <>
-                <span className="active-dot" />
-                <span className="active-pulse" style={{
-                  fontSize: "4px", color: "#22D3EE", background: "rgba(6,182,212,0.12)",
-                  borderRadius: "9999px", padding: "1.5px 5px", fontWeight: 600, fontFamily: font,
-                }}>ACTIVE</span>
-                <span style={{ fontSize: "5.5px", color: "#22D3EE", fontFamily: font, fontWeight: 700 }}>{q.time}</span>
-              </>
-            ) : (
-              <span style={{ fontSize: "5px", color: "rgba(255,255,255,0.35)", fontFamily: font }}>{q.status}</span>
-            )}
+            {q.isActive && <span className="active-dot" />}
+            <span style={{
+              fontSize: "4px", color: q.isActive ? "#22D3EE" : "rgba(255,255,255,0.4)",
+              background: q.isActive ? "rgba(6,182,212,0.12)" : "rgba(255,255,255,0.06)",
+              borderRadius: "9999px", padding: "1.5px 4px", fontWeight: 600, fontFamily: font,
+            }}>{q.time}</span>
+            <span style={{
+              fontSize: "4px", color: "#34D399", background: "rgba(52,211,153,0.12)",
+              borderRadius: "9999px", padding: "1.5px 4px", fontWeight: 600, fontFamily: font,
+            }}>{q.match}</span>
           </div>
         ))}
       </div>
@@ -396,14 +458,16 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
         flexShrink: 0,
       }}>
         {[
-          { icon: <HomeTabIcon color="#22D3EE" />, label: "Home", active: false },
-          { icon: <DashTabIcon active color="#22D3EE" />, label: "Dashboard", active: true },
-          { icon: <DropsTabIcon color="#22D3EE" />, label: "Drops", active: false },
-          { icon: <SavedTabIcon color="#22D3EE" />, label: "Saved", active: false },
-          { icon: <CalendarTabIcon color="#22D3EE" />, label: "Schedule", active: false },
+          { icon: <HomeTabIcon active color="#22D3EE" />, label: "Home", active: true },
+          { icon: <SearchTabIcon color="#22D3EE" />, label: "Search", active: false },
+          { icon: <MatchesTabIcon color="#22D3EE" />, label: "Matches", active: false, hasNotif: true },
+          { icon: <UserTabIcon color="#22D3EE" />, label: "Profile", active: false },
         ].map((tab) => (
-          <div key={tab.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1px" }}>
-            {tab.icon}
+          <div key={tab.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1px", position: "relative" }}>
+            <div style={{ position: "relative" }}>
+              {tab.icon}
+              {tab.hasNotif && <NotificationDot color="#22D3EE" />}
+            </div>
             {tab.active && (
               <span style={{
                 fontSize: "4px", fontFamily: font,
@@ -433,15 +497,7 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
 /* ---- Mini Dashboard Content (Founder - Dark Mode Violet) ---- */
 function FounderScreen({ isVisible }: { isVisible: boolean }) {
   const font = "var(--font-dm-sans), sans-serif";
-  const [timeToggle, setTimeToggle] = useState(false);
   const [statsPulsed, setStatsPulsed] = useState(false);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimeToggle((prev) => !prev);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
 
   // Trigger stat pulse once on first visibility
   useEffect(() => {
@@ -502,8 +558,8 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
           {[
             { label: "VIEWS", trend: "+12" },
             { label: "INTERESTED", trend: "+3" },
-            { label: "CALLS", trend: "+1" },
-            { label: "DECK VIEWS", trend: "+5" },
+            { label: "MEETINGS", trend: "+1" },
+            { label: "SCORE", trend: "+5" },
           ].map((s, i) => (
             <div key={s.label} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               <div
@@ -523,7 +579,7 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
         <div style={{ display: "flex", alignItems: "center", gap: "5px", marginTop: "5px", paddingTop: "5px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
           <span style={{ fontSize: "4.5px", color: "rgba(255,255,255,0.4)", fontFamily: font, whiteSpace: "nowrap" }}>Profile Strength</span>
           <div style={{ flex: 1, height: "3px", borderRadius: "9999px", background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
-            <div style={{ width: "78%", height: "100%", borderRadius: "9999px", background: "linear-gradient(90deg, #8B5CF6, #A78BFA)" }} />
+            <AnimatedBar targetWidth="78%" color="linear-gradient(90deg, #8B5CF6, #A78BFA)" isVisible={isVisible} />
           </div>
           <span style={{ fontSize: "5.5px", color: "#A78BFA", fontWeight: 700, fontFamily: font }}>78%</span>
         </div>
@@ -539,10 +595,10 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
         </div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "2%", overflow: "hidden" }}>
           {[
-            { pos: "1", initials: "SC", name: "Sarah Chen", firm: "Gradient Ventures", status: "ACTIVE", isActive: true, avatarBg: "linear-gradient(135deg, #4C1D95, #7C3AED)", posBg: "linear-gradient(135deg, #8B5CF6, #A78BFA)" },
-            { pos: "2", initials: "MW", name: "Marcus Webb", firm: "Founder Collective", status: "Next", isActive: false, avatarBg: "linear-gradient(135deg, #312E81, #6366F1)", posBg: "rgba(255,255,255,0.1)" },
-            { pos: "3", initials: "ER", name: "Elena Rodriguez", firm: "Precursor", status: "Waiting", isActive: false, avatarBg: "linear-gradient(135deg, #581C87, #9333EA)", posBg: "rgba(255,255,255,0.1)" },
-            { pos: "4", initials: "JP", name: "James Park", firm: "Lux Capital", status: "Waiting", isActive: false, avatarBg: "linear-gradient(135deg, #1E3A5F, #6366F1)", posBg: "rgba(255,255,255,0.1)" },
+            { pos: "1", initials: "SC", name: "Sarah Chen", firm: "Stratton Ventures", status: "Active", statusColor: "#34D399", statusBg: "rgba(52,211,153,0.12)", isActive: true, avatarBg: "linear-gradient(135deg, #4C1D95, #7C3AED)", posBg: "linear-gradient(135deg, #8B5CF6, #A78BFA)" },
+            { pos: "2", initials: "MW", name: "Marcus Webb", firm: "Founder Collective", status: "Waiting", statusColor: "#FBBF24", statusBg: "rgba(251,191,36,0.12)", isActive: false, avatarBg: "linear-gradient(135deg, #312E81, #6366F1)", posBg: "rgba(255,255,255,0.1)" },
+            { pos: "3", initials: "ER", name: "Elena Rodriguez", firm: "Elevation", status: "Waiting", statusColor: "#FBBF24", statusBg: "rgba(251,191,36,0.12)", isActive: false, avatarBg: "linear-gradient(135deg, #581C87, #9333EA)", posBg: "rgba(255,255,255,0.1)" },
+            { pos: "4", initials: "JP", name: "James Park", firm: "Root Ventures", status: "New", statusColor: "#A78BFA", statusBg: "rgba(139,92,246,0.12)", isActive: false, avatarBg: "linear-gradient(135deg, #1E3A5F, #6366F1)", posBg: "rgba(255,255,255,0.1)" },
           ].map((q) => (
             <div
               key={q.pos}
@@ -552,9 +608,10 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
                 padding: "2.5% 3%",
                 background: q.isActive ? "rgba(139,92,246,0.06)" : "rgba(255,255,255,0.04)",
                 borderRadius: "10px",
-                border: "1px solid rgba(255,255,255,0.06)",
+                border: q.isActive ? "1px solid rgba(139,92,246,0.15)" : "1px solid rgba(255,255,255,0.06)",
                 flex: 1,
                 minHeight: 0,
+                boxShadow: q.isActive ? "0 0 12px rgba(139,92,246,0.08)" : "none",
               }}
             >
               <div style={{
@@ -573,18 +630,11 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
                 <div style={{ fontSize: "6.5px", color: "#F1F5F9", fontFamily: font, fontWeight: 600 }}>{q.name}</div>
                 <div style={{ fontSize: "5px", color: "rgba(255,255,255,0.4)", fontFamily: font }}>{q.firm}</div>
               </div>
-              {q.isActive ? (
-                <>
-                  <span className="active-dot" />
-                  <span className="active-pulse" style={{
-                    fontSize: "4px", color: "#A78BFA", background: "rgba(139,92,246,0.12)",
-                    borderRadius: "9999px", padding: "1.5px 5px", fontWeight: 600, fontFamily: font,
-                  }}>ACTIVE</span>
-                  <span style={{ fontSize: "5.5px", color: "#A78BFA", fontFamily: font, fontWeight: 700, transition: "opacity 0.3s" }}>{timeToggle ? "46h" : "47h"}</span>
-                </>
-              ) : (
-                <span style={{ fontSize: "5px", color: "rgba(255,255,255,0.35)", fontFamily: font }}>{q.status}</span>
-              )}
+              {q.isActive && <span className="active-dot" />}
+              <span style={{
+                fontSize: "4px", color: q.statusColor, background: q.statusBg,
+                borderRadius: "9999px", padding: "1.5px 5px", fontWeight: 600, fontFamily: font,
+              }}>{q.status}</span>
             </div>
           ))}
         </div>
@@ -627,12 +677,14 @@ function FounderScreen({ isVisible }: { isVisible: boolean }) {
         {[
           { icon: <HomeTabIcon color="#A78BFA" />, label: "Home", active: false },
           { icon: <DashTabIcon active color="#A78BFA" />, label: "Dashboard", active: true },
-          { icon: <InterestsTabIcon color="#A78BFA" />, label: "Interests", active: false },
-          { icon: <CalendarTabIcon color="#A78BFA" />, label: "Scheduling", active: false },
+          { icon: <MatchesTabIcon color="#A78BFA" />, label: "Matches", active: false, hasNotif: true },
           { icon: <UserTabIcon color="#A78BFA" />, label: "Profile", active: false },
         ].map((tab) => (
-          <div key={tab.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1px" }}>
-            {tab.icon}
+          <div key={tab.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1px", position: "relative" }}>
+            <div style={{ position: "relative" }}>
+              {tab.icon}
+              {tab.hasNotif && <NotificationDot color="#A78BFA" />}
+            </div>
             {tab.active && (
               <span style={{
                 fontSize: "4px", fontFamily: font,
