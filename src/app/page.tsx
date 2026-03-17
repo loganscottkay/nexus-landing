@@ -302,230 +302,280 @@ function NarrativeLine() {
 }
 
 /* ---- Icon with hover pop wrapper ---- */
-function IconHoverWrap({ children }: { children: React.ReactNode }) {
-  const [h, setH] = useState(false);
-  return (
-    <div
-      onMouseEnter={() => setH(true)}
-      onMouseLeave={() => setH(false)}
-      style={{
-        transform: h ? 'scale(1.12)' : 'scale(1)',
-        transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center'
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-/* ---- Static Icon: Door ---- */
-function DoorIcon() {
-  const [h, setH] = useState(false);
-  return (
-    <IconHoverWrap>
-      <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-        onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}>
-        <div style={{
-          width: 72,
-          height: 100,
-          borderRadius: 10,
-          background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-          boxShadow: h
-            ? '0 12px 40px rgba(99,102,241,0.4), 0 0 30px rgba(139,92,246,0.2)'
-            : '0 8px 32px rgba(99,102,241,0.3), 0 0 20px rgba(139,92,246,0.15)',
-          transition: 'box-shadow 0.3s ease',
-          position: 'relative',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          {/* Inner door panel */}
-          <div style={{
-            width: 56,
-            height: 84,
-            borderRadius: 6,
-            border: '1.5px solid rgba(255,255,255,0.2)',
-            background: 'linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03))'
-          }} />
-          {/* Knob */}
-          <div style={{
-            position: 'absolute',
-            right: 14,
-            top: '50%',
-            transform: 'translateY(-50%)',
-            width: 10,
-            height: 10,
-            borderRadius: '50%',
-            background: 'rgba(255,255,255,0.7)',
-            boxShadow: '0 1px 6px rgba(255,255,255,0.3)'
-          }} />
-          {/* Subtle arch/light at the top */}
-          <div style={{
-            position: 'absolute',
-            top: -8,
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: 50,
-            height: 25,
-            borderRadius: '50%',
-            background: 'radial-gradient(ellipse, rgba(139,92,246,0.2), transparent)',
-            filter: 'blur(6px)'
-          }} />
-        </div>
-      </div>
-    </IconHoverWrap>
-  );
-}
-
-/* ---- Static Icon: Shield with Checkmark ---- */
-function ShieldIcon() {
-  const [h, setH] = useState(false);
-  return (
-    <IconHoverWrap>
-      <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}
-        onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}>
-        <div style={{
-          width: 84,
-          height: 100,
-          clipPath: 'polygon(50% 0%, 100% 12%, 100% 55%, 50% 100%, 0% 55%, 0% 12%)',
-          background: 'linear-gradient(135deg, #6366F1, #8B5CF6, #A78BFA)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <div style={{
-            width: 32,
-            height: 18,
-            borderBottom: '4px solid white',
-            borderLeft: '4px solid white',
-            transform: 'rotate(-45deg)',
-            marginTop: -8,
-            borderRadius: 2
-          }} />
-        </div>
-        {/* Glow behind shield (visible on hover) */}
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 110,
-          height: 120,
-          borderRadius: '50%',
-          background: h
-            ? 'radial-gradient(ellipse, rgba(99,102,241,0.2), rgba(139,92,246,0.12), transparent 70%)'
-            : 'radial-gradient(ellipse, rgba(99,102,241,0.08), rgba(139,92,246,0.04), transparent 70%)',
-          transition: 'background 0.3s ease',
-          zIndex: -1
-        }} />
-      </div>
-    </IconHoverWrap>
-  );
-}
-
-/* ---- Static Icon: Match / Two Arrows Meeting ---- */
-function MatchIcon() {
-  const [h, setH] = useState(false);
-  return (
-    <IconHoverWrap>
-      <div style={{ width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}
-        onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}>
-        <div style={{
-          width: 100,
-          height: 100,
-          borderRadius: '50%',
-          background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-          boxShadow: h
-            ? '0 12px 40px rgba(99,102,241,0.4), 0 0 30px rgba(139,92,246,0.2)'
-            : '0 8px 32px rgba(99,102,241,0.3), 0 0 20px rgba(139,92,246,0.15)',
-          transition: 'box-shadow 0.3s ease',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          position: 'relative'
-        }}>
-          {/* Two arrows pointing inward */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            {/* Left arrow pointing right */}
-            <div style={{
-              width: 0,
-              height: 0,
-              borderTop: '8px solid transparent',
-              borderBottom: '8px solid transparent',
-              borderLeft: '12px solid rgba(255,255,255,0.9)'
-            }} />
-            {/* Center meeting point */}
-            <div style={{
-              width: 10,
-              height: 10,
-              borderRadius: '50%',
-              background: '#F5D76E',
-              boxShadow: '0 0 8px rgba(245,215,110,0.5)'
-            }} />
-            {/* Right arrow pointing left */}
-            <div style={{
-              width: 0,
-              height: 0,
-              borderTop: '8px solid transparent',
-              borderBottom: '8px solid transparent',
-              borderRight: '12px solid rgba(255,255,255,0.9)'
-            }} />
-          </div>
-          {/* Subtle inner ring */}
-          <div style={{
-            position: 'absolute',
-            top: 6,
-            left: 6,
-            right: 6,
-            bottom: 6,
-            borderRadius: '50%',
-            border: '1.5px solid rgba(255,255,255,0.15)'
-          }} />
-        </div>
-        {/* 72h label below the circle */}
-        <div style={{
-          position: 'absolute',
-          bottom: 8,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 4,
-          background: 'rgba(255,255,255,0.9)',
-          padding: '4px 10px',
-          borderRadius: 20,
-          boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
-        }}>
-          <span style={{ fontSize: 13, fontWeight: 700, color: '#6366F1', fontFamily: 'DM Sans, sans-serif' }}>72h</span>
-        </div>
-      </div>
-    </IconHoverWrap>
-  );
-}
-
-/* ---- Word-by-word reveal variants for card descriptions ---- */
-function getCardWordVariants(mobile: boolean) {
-  const yOffset = mobile ? 4 : 6;
-  const ease = [0.25, 0.1, 0.25, 1.0] as const;
+/* ---- Word-by-word reveal for unified pillar card descriptions ---- */
+function pillarWordVariants(mobile: boolean) {
+  const yOff = mobile ? 4 : 5;
+  const e = [0.25, 0.1, 0.25, 1.0] as const;
   return {
-    hidden: { opacity: 0, y: yOffset },
+    hidden: { opacity: 0, y: yOff },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: 0.3 + i * 0.03, duration: 0.35, ease },
+      transition: { delay: 0.3 + i * 0.03, duration: 0.3, ease: e },
     }),
   };
 }
 
-/* ---- Pillar Row (full-width, alternating layout with shimmer card) ---- */
-function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; Icon: React.ComponentType; index: number }) {
+/* ---- Unified Pillar Card: A Door That Didn't Exist ---- */
+function DoorCard({ isMobile }: { isMobile: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
-  const rowInView = useInView(ref, { once: true, amount: 0.3 });
+  const inView = useInView(ref, { once: true, amount: 0.2 });
   const [hovered, setHovered] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const isReversed = index === 1;
+  const wv = pillarWordVariants(isMobile);
+  const words = "Fundraising has always been about who you know. UrgenC makes it about what you are building. For the first time, access is earned by your idea.".split(" ");
 
+  return (
+    <div style={{ maxWidth: 780, marginLeft: 0 }} className="md:max-w-[780px] max-w-full">
+      <motion.div
+        ref={ref}
+        initial={isMobile ? { opacity: 0, y: 30 } : { opacity: 0, x: -40 }}
+        whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          background: 'linear-gradient(135deg, rgba(220,215,255,0.95), rgba(212,218,255,0.9), rgba(225,215,252,0.93))',
+          borderRadius: 24,
+          padding: 0,
+          position: 'relative',
+          overflow: 'hidden',
+          border: hovered ? '1.5px solid rgba(99,102,241,0.2)' : '1.5px solid rgba(99,102,241,0.12)',
+          boxShadow: hovered ? '0 12px 40px rgba(99,102,241,0.12)' : '0 4px 20px rgba(99,102,241,0.06)',
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          minHeight: isMobile ? undefined : 200,
+          transform: hovered ? 'translateY(-6px) scale(1.01)' : 'translateY(0) scale(1)',
+          transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          cursor: 'default',
+        }}
+      >
+        {/* Left/Top visual strip with door icon */}
+        <div style={{
+          flex: isMobile ? 'none' : '0 0 140px',
+          height: isMobile ? 100 : undefined,
+          background: 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(139,92,246,0.08))',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+        }}>
+          <div style={{
+            width: 56,
+            height: 80,
+            borderRadius: 8,
+            background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+            boxShadow: hovered ? '0 8px 30px rgba(99,102,241,0.45)' : '0 6px 24px rgba(99,102,241,0.35)',
+            position: 'relative',
+            transform: hovered ? 'scale(1.05)' : 'scale(1)',
+            transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          }}>
+            <div style={{
+              width: 42, height: 66, borderRadius: 5,
+              border: '1.5px solid rgba(255,255,255,0.2)',
+              background: 'linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02))',
+              position: 'absolute', top: 7, left: 7,
+            }} />
+            <div style={{
+              position: 'absolute', right: 11, top: '50%', transform: 'translateY(-50%)',
+              width: 8, height: 8, borderRadius: '50%',
+              background: 'rgba(255,255,255,0.7)',
+              boxShadow: '0 0 6px rgba(255,255,255,0.3)',
+            }} />
+          </div>
+          {/* Faded watermark outline */}
+          <div style={{
+            position: 'absolute', top: -20, left: -20,
+            width: 180, height: 240, borderRadius: 12,
+            border: '2px solid rgba(99,102,241,0.06)',
+            transform: 'rotate(-8deg)', pointerEvents: 'none',
+          }} />
+        </div>
+        {/* Text */}
+        <div style={{ flex: 1, padding: isMobile ? '24px' : '28px 32px 28px 24px' }}>
+          <h3 style={{
+            fontSize: isMobile ? 20 : 22, fontWeight: 700, color: '#0F172A',
+            marginBottom: 10, fontFamily: 'var(--font-dm-sans), sans-serif', letterSpacing: '-0.01em',
+          }}>A Door That Didn&apos;t Exist</h3>
+          <p style={{
+            fontSize: isMobile ? 14 : 15, color: '#475569', lineHeight: 1.7,
+            fontFamily: 'var(--font-dm-sans), sans-serif', margin: 0,
+          }}>
+            {words.map((w, i) => (
+              <motion.span key={i} custom={i} initial="hidden" animate={inView ? "visible" : "hidden"} variants={wv} className="inline-block mr-[0.3em]">{w}</motion.span>
+            ))}
+          </p>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+/* ---- Unified Pillar Card: Every Startup Is Vetted ---- */
+function ShieldCard({ isMobile }: { isMobile: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.2 });
+  const [hovered, setHovered] = useState(false);
+  const wv = pillarWordVariants(isMobile);
+  const words = "Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. If it is on UrgenC, it passed the bar.".split(" ");
+
+  return (
+    <div style={{ maxWidth: 720, marginLeft: 'auto', marginRight: 0 }} className="md:max-w-[720px] max-w-full md:ml-auto md:mr-0">
+      <motion.div
+        ref={ref}
+        initial={isMobile ? { opacity: 0, y: 30 } : { opacity: 0, x: 40 }}
+        whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: isMobile ? 0.1 : 0 }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          background: 'linear-gradient(135deg, rgba(220,215,255,0.95), rgba(212,218,255,0.9), rgba(225,215,252,0.93))',
+          borderRadius: 24,
+          padding: isMobile ? '24px' : '32px 36px',
+          position: 'relative',
+          overflow: 'hidden',
+          border: hovered ? '1.5px solid rgba(99,102,241,0.2)' : '1.5px solid rgba(99,102,241,0.12)',
+          boxShadow: hovered ? '0 12px 40px rgba(99,102,241,0.12)' : '0 4px 20px rgba(99,102,241,0.06)',
+          transform: hovered ? 'translateY(-6px) scale(1.01)' : 'translateY(0) scale(1)',
+          transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          cursor: 'default',
+        }}
+      >
+        {/* Large rounded square watermark behind text */}
+        <div style={{
+          position: 'absolute', right: -10, top: '50%', transform: 'translateY(-50%)',
+          width: 130, height: 130, borderRadius: 24,
+          background: 'linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.05))',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none',
+        }}>
+          <div style={{
+            width: 40, height: 24,
+            borderBottom: '5px solid rgba(99,102,241,0.12)',
+            borderLeft: '5px solid rgba(99,102,241,0.12)',
+            transform: 'rotate(-45deg)', marginTop: -8, borderRadius: 3,
+          }} />
+        </div>
+        {/* Small solid rounded square accent */}
+        <div style={{
+          width: 40, height: 40, borderRadius: 10,
+          background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          marginBottom: 16,
+          boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
+          transform: hovered ? 'scale(1.1)' : 'scale(1)',
+          transition: 'transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+        }}>
+          <div style={{
+            width: 16, height: 10,
+            borderBottom: '3px solid white', borderLeft: '3px solid white',
+            transform: 'rotate(-45deg)', marginTop: -3, borderRadius: 1,
+          }} />
+        </div>
+        {/* Text over watermark */}
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <h3 style={{
+            fontSize: isMobile ? 20 : 22, fontWeight: 700, color: '#0F172A',
+            marginBottom: 10, fontFamily: 'var(--font-dm-sans), sans-serif', letterSpacing: '-0.01em',
+          }}>Every Startup Is Vetted</h3>
+          <p style={{
+            fontSize: isMobile ? 14 : 15, color: '#475569', lineHeight: 1.7,
+            fontFamily: 'var(--font-dm-sans), sans-serif', margin: 0, maxWidth: '85%',
+          }}>
+            {words.map((w, i) => (
+              <motion.span key={i} custom={i} initial="hidden" animate={inView ? "visible" : "hidden"} variants={wv} className="inline-block mr-[0.3em]">{w}</motion.span>
+            ))}
+          </p>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+/* ---- Unified Pillar Card: If You Match, You Meet ---- */
+function MatchCard({ isMobile }: { isMobile: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.2 });
+  const [hovered, setHovered] = useState(false);
+  const wv = pillarWordVariants(isMobile);
+  const words = "Mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot.".split(" ");
+
+  return (
+    <div style={{ maxWidth: 780, margin: '0 auto' }} className="md:max-w-[780px] max-w-full md:mx-auto">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: isMobile ? 30 : 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: isMobile ? 0.2 : 0 }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          background: 'linear-gradient(135deg, rgba(220,215,255,0.95), rgba(212,218,255,0.9), rgba(225,215,252,0.93))',
+          borderRadius: 24,
+          padding: 0,
+          position: 'relative',
+          overflow: 'hidden',
+          border: hovered ? '1.5px solid rgba(99,102,241,0.2)' : '1.5px solid rgba(99,102,241,0.12)',
+          boxShadow: hovered ? '0 12px 40px rgba(99,102,241,0.12)' : '0 4px 20px rgba(99,102,241,0.06)',
+          transform: hovered ? 'translateY(-6px) scale(1.01)' : 'translateY(0) scale(1)',
+          transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          cursor: 'default',
+        }}
+      >
+        {/* Top visual strip with match icon */}
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.08), rgba(99,102,241,0.06))',
+          padding: '28px 0',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
+          position: 'relative',
+        }}>
+          {/* Match circles */}
+          <div style={{
+            display: 'flex', alignItems: 'center',
+            gap: hovered ? 8 : 6,
+            transition: 'gap 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          }}>
+            <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'linear-gradient(135deg, #6366F1, #818CF8)', boxShadow: '0 4px 16px rgba(99,102,241,0.3)' }} />
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+              <div style={{ width: 24, height: 3, background: 'linear-gradient(90deg, #6366F1, #F5D76E, #8B5CF6)', borderRadius: 2 }} />
+              <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#F5D76E', boxShadow: '0 0 10px rgba(245,215,110,0.4)' }} />
+            </div>
+            <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'linear-gradient(135deg, #7C3AED, #8B5CF6)', boxShadow: '0 4px 16px rgba(139,92,246,0.3)' }} />
+          </div>
+          {/* 72h badge */}
+          <div style={{
+            background: 'rgba(255,255,255,0.8)', padding: '4px 14px', borderRadius: 20,
+            boxShadow: '0 2px 8px rgba(0,0,0,0.04)', display: 'flex', alignItems: 'center', gap: 4,
+          }}>
+            <span style={{ fontSize: 14, fontWeight: 700, color: '#6366F1', fontFamily: 'var(--font-dm-sans), sans-serif' }}>72h guaranteed</span>
+          </div>
+          {/* Decorative rings */}
+          <div style={{ position: 'absolute', top: -30, right: -30, width: 100, height: 100, borderRadius: '50%', border: '1.5px solid rgba(99,102,241,0.06)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', bottom: -20, left: -20, width: 80, height: 80, borderRadius: '50%', border: '1.5px solid rgba(139,92,246,0.05)', pointerEvents: 'none' }} />
+        </div>
+        {/* Bottom text */}
+        <div style={{ padding: isMobile ? '24px' : '24px 32px 28px' }}>
+          <h3 style={{
+            fontSize: isMobile ? 20 : 22, fontWeight: 700, color: '#0F172A',
+            marginBottom: 10, fontFamily: 'var(--font-dm-sans), sans-serif', letterSpacing: '-0.01em',
+          }}>If You Match, You Meet</h3>
+          <p style={{
+            fontSize: isMobile ? 14 : 15, color: '#475569', lineHeight: 1.7,
+            fontFamily: 'var(--font-dm-sans), sans-serif', margin: 0,
+          }}>
+            {words.map((w, i) => (
+              <motion.span key={i} custom={i} initial="hidden" animate={inView ? "visible" : "hidden"} variants={wv} className="inline-block mr-[0.3em]">{w}</motion.span>
+            ))}
+          </p>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+function WhatMakesDifferentSection() {
+  const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
     setIsMobile(mq.matches);
@@ -534,100 +584,8 @@ function PillarRow({ title, desc, Icon, index }: { title: string; desc: string; 
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  const wordVariants = getCardWordVariants(isMobile);
-  const words = desc.split(" ");
-
   return (
-    <div ref={ref} className="max-w-[940px] mx-auto py-[24px] md:py-[32px]">
-      <div
-        className={`flex flex-col items-center gap-[24px] md:flex-row md:items-center md:gap-[48px] ${isReversed ? 'md:flex-row-reverse' : ''}`}
-      >
-        {/* Icon side */}
-        <motion.div
-          className="flex-shrink-0 flex items-center justify-center w-[120px] h-[120px] md:w-[160px] md:h-[160px]"
-          initial={{ opacity: 0, y: 16 }}
-          animate={rowInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <Icon />
-        </motion.div>
-
-        {/* Shimmer card text side */}
-        <motion.div
-          className="flex-1"
-          style={{
-            background: hovered
-              ? 'linear-gradient(135deg, rgba(212, 206, 255, 0.97), rgba(204, 212, 255, 0.95), rgba(218, 206, 252, 0.96))'
-              : 'linear-gradient(135deg, rgba(220, 215, 255, 0.95), rgba(212, 218, 255, 0.9), rgba(225, 215, 252, 0.93))',
-            borderRadius: 20,
-            padding: '32px 36px',
-            position: 'relative',
-            overflow: 'hidden',
-            isolation: 'isolate',
-            border: hovered ? '1.5px solid rgba(99, 102, 241, 0.2)' : '1.5px solid rgba(99, 102, 241, 0.12)',
-            boxShadow: hovered
-              ? '0 12px 40px rgba(99, 102, 241, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.7)'
-              : '0 4px 20px rgba(99, 102, 241, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
-            transform: hovered ? 'translateY(-6px) scale(1.01)' : 'translateY(0) scale(1)',
-            transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)'
-          }}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-          initial={{ opacity: 0, y: 24, scale: 0.98 }}
-          animate={rowInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.98 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <h3
-            className="text-[22px] md:text-[24px] font-bold mb-3"
-            style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#0F172A", letterSpacing: "-0.01em" }}
-          >
-            {title}
-          </h3>
-          <p
-            className="text-[14px] md:text-[15px]"
-            style={{ fontFamily: "var(--font-dm-sans), sans-serif", color: "#475569", lineHeight: 1.75 }}
-          >
-            {words.map((word, i) => (
-              <motion.span
-                key={i}
-                custom={i}
-                initial="hidden"
-                animate={rowInView ? "visible" : "hidden"}
-                variants={wordVariants}
-                className="inline-block mr-[0.3em]"
-              >
-                {word}
-              </motion.span>
-            ))}
-          </p>
-        </motion.div>
-      </div>
-    </div>
-  );
-}
-
-/* ---- Differentiator Rows Data ---- */
-const differentiatorRows = [
-  {
-    title: "A Door That Didn\u2019t Exist",
-    desc: "Fundraising has always been about who you know. UrgenC makes it about what you are building. For the first time, access is earned by your idea.",
-    Icon: DoorIcon,
-  },
-  {
-    title: "Every Startup Is Vetted",
-    desc: "Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. If it is on UrgenC, it passed the bar.",
-    Icon: ShieldIcon,
-  },
-  {
-    title: "If You Match, You Meet",
-    desc: "Mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot.",
-    Icon: MatchIcon,
-  },
-];
-
-function WhatMakesDifferentSection() {
-  return (
-    <Section className="scroll-stack-section relative z-10 px-5 md:px-6 py-[36px] md:py-[48px] w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh' }}>
+    <Section className="scroll-stack-section relative z-10 px-5 md:px-6 w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', minHeight: '100vh', paddingTop: isMobile ? 44 : 60, paddingBottom: isMobile ? 44 : 60 }}>
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -667,11 +625,11 @@ function WhatMakesDifferentSection() {
           </p>
         </motion.div>
 
-        {/* Gap then pillar rows */}
-        <div className="mt-[24px] md:mt-[32px]">
-          {differentiatorRows.map((row, i) => (
-            <PillarRow key={row.title} title={row.title} desc={row.desc} Icon={row.Icon} index={i} />
-          ))}
+        {/* Staggered unified pillar cards */}
+        <div style={{ maxWidth: 960, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: isMobile ? 24 : 32, marginTop: isMobile ? 32 : 40 }}>
+          <DoorCard isMobile={isMobile} />
+          <ShieldCard isMobile={isMobile} />
+          <MatchCard isMobile={isMobile} />
         </div>
       </div>
     </Section>
