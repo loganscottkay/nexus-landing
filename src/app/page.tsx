@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import IPhoneMockups from "@/components/IPhoneMockups";
 import LottieAnimation from "@/components/LottieAnimation";
 import HeroHeadline from "@/components/HeroHeadline";
+import InteractiveCard from "@/components/InteractiveCard";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 const smoothDecel = [0.16, 1, 0.3, 1] as const;
@@ -304,22 +305,6 @@ function NarrativeLine() {
 /* ---- Icon with hover pop wrapper ---- */
 /* ---- Word-by-word reveal for unified pillar card descriptions ---- */
 
-/* ---- Shared card wrapper styles ---- */
-const pillarCardWrapper = (isMobile: boolean): React.CSSProperties => ({
-  width: '100%',
-  maxWidth: 700,
-  margin: '0 auto',
-  borderRadius: 20,
-  border: '1.5px solid rgba(99,102,241,0.12)',
-  boxShadow: '0 4px 20px rgba(99,102,241,0.06)',
-  background: 'linear-gradient(135deg, rgba(220,215,255,0.95), rgba(212,218,255,0.9), rgba(225,215,252,0.93))',
-  overflow: 'hidden',
-  display: 'flex',
-  flexDirection: isMobile ? 'column' : 'row',
-  alignItems: 'center',
-  minHeight: isMobile ? undefined : 180,
-});
-
 const pillarIconCol = (isMobile: boolean): React.CSSProperties => ({
   flex: isMobile ? 'none' : '0 0 100px',
   height: isMobile ? 80 : undefined,
@@ -341,132 +326,104 @@ const pillarTextCol = (isMobile: boolean): React.CSSProperties => ({
 /* ---- Unified Pillar Card: A Door That Didn't Exist ---- */
 function DoorCard({ isMobile }: { isMobile: boolean }) {
   const [doorOpen, setDoorOpen] = useState(false);
+  const [doorStarted, setDoorStarted] = useState(false);
+  const [cardHover, setCardHover] = useState(false);
+
+  useEffect(() => {
+    if (!doorStarted) return;
+    const interval = setInterval(() => {
+      setDoorOpen(prev => !prev);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [doorStarted]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      onViewportEnter={() => setDoorOpen(true)}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      style={pillarCardWrapper(isMobile)}
-    >
-      {/* Left icon column */}
-      <div style={pillarIconCol(isMobile)}>
-        <div style={{ perspective: 400, width: 48, height: 64 }}>
-          <div style={{
-            width: 48,
-            height: 64,
-            borderRadius: 8,
-            background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-            boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
-            transformOrigin: 'left center',
-            transform: doorOpen ? 'rotateY(-50deg)' : 'rotateY(0deg)',
-            transition: 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.3s',
-            position: 'relative',
-          }}>
+    <InteractiveCard onHoverChange={setCardHover} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', minHeight: isMobile ? undefined : 180 }}>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        onViewportEnter={() => { setDoorStarted(true); setDoorOpen(true); }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', width: '100%', position: 'relative', zIndex: 1 }}
+      >
+        {/* Left icon column */}
+        <div style={pillarIconCol(isMobile)}>
+          <div style={{ perspective: 400, width: 48, height: 64 }}>
             <div style={{
-              position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)',
-              width: 8, height: 8, borderRadius: '50%', background: 'rgba(255,255,255,0.7)',
-            }} />
+              width: 48,
+              height: 64,
+              borderRadius: 8,
+              background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+              boxShadow: cardHover
+                ? '0 6px 24px rgba(99,102,241,0.5)'
+                : doorOpen
+                  ? '0 4px 24px rgba(99,102,241,0.4)'
+                  : '0 4px 16px rgba(99,102,241,0.3)',
+              transformOrigin: 'left center',
+              transform: doorOpen ? 'rotateY(-50deg)' : 'rotateY(0deg)',
+              transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.8s ease',
+              position: 'relative',
+            }}>
+              {/* Inner panel */}
+              <div style={{
+                position: 'absolute', top: 4, left: 4, right: 4, bottom: 4,
+                borderRadius: 4, border: '1px solid rgba(255,255,255,0.15)',
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))'
+              }} />
+              {/* Knob */}
+              <div style={{
+                position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)',
+                width: 7, height: 7, borderRadius: '50%',
+                background: 'rgba(255,255,255,0.7)', boxShadow: '0 0 4px rgba(255,255,255,0.3)'
+              }} />
+            </div>
           </div>
         </div>
-      </div>
-      {/* Right text column */}
-      <div style={pillarTextCol(isMobile)}>
-        <h3 style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', marginBottom: 8, fontFamily: 'DM Sans, sans-serif' }}>A Door That Didn&apos;t Exist</h3>
-        <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.7, fontFamily: 'DM Sans, sans-serif', margin: 0 }}>
-          Fundraising has always been about who you know. UrgenC makes it about what you are building. For the first time, access is earned by your idea.
-        </p>
-      </div>
-    </motion.div>
+        {/* Right text column */}
+        <div style={pillarTextCol(isMobile)}>
+          <h3 style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', marginBottom: 8, fontFamily: 'DM Sans, sans-serif' }}>A Door That Didn&apos;t Exist</h3>
+          <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.7, fontFamily: 'DM Sans, sans-serif', margin: 0 }}>
+            Fundraising has always been about who you know. UrgenC makes it about what you are building. For the first time, access is earned by your idea.
+          </p>
+        </div>
+      </motion.div>
+    </InteractiveCard>
   );
 }
 
 /* ---- Unified Pillar Card: Every Startup Is Vetted ---- */
 function ShieldCard({ isMobile }: { isMobile: boolean }) {
   const [checkVisible, setCheckVisible] = useState(false);
+  const [cardHover, setCardHover] = useState(false);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      onViewportEnter={() => setCheckVisible(true)}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-      style={pillarCardWrapper(isMobile)}
-    >
-      {/* Left icon column */}
-      <div style={pillarIconCol(isMobile)}>
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={checkVisible ? { scale: 1 } : {}}
-          transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
-          style={{
-            width: 48, height: 48, borderRadius: 12,
-            background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-            boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <motion.path
-              d="M5 13l4 4L19 7"
-              stroke="white"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              initial={{ pathLength: 0 }}
-              animate={checkVisible ? { pathLength: 1 } : {}}
-              transition={{ duration: 0.4, delay: 0.3, ease: 'easeOut' }}
-            />
-          </svg>
-        </motion.div>
-      </div>
-      {/* Right text column */}
-      <div style={pillarTextCol(isMobile)}>
-        <h3 style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', marginBottom: 8, fontFamily: 'DM Sans, sans-serif' }}>Every Startup Is Vetted</h3>
-        <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.7, fontFamily: 'DM Sans, sans-serif', margin: 0 }}>
-          Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. If it is on UrgenC, it passed the bar.
-        </p>
-      </div>
-    </motion.div>
-  );
-}
-
-/* ---- Unified Pillar Card: If You Match, You Meet ---- */
-function MatchCard({ isMobile }: { isMobile: boolean }) {
-  const [calVisible, setCalVisible] = useState(false);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      onViewportEnter={() => setCalVisible(true)}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-      style={pillarCardWrapper(isMobile)}
-    >
-      {/* Left icon column */}
-      <div style={pillarIconCol(isMobile)}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+    <InteractiveCard onHoverChange={setCardHover} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', minHeight: isMobile ? undefined : 180 }}>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        onViewportEnter={() => setCheckVisible(true)}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+        style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', width: '100%', position: 'relative', zIndex: 1 }}
+      >
+        {/* Left icon column */}
+        <div style={pillarIconCol(isMobile)}>
           <motion.div
             initial={{ scale: 0 }}
-            animate={calVisible ? { scale: 1 } : {}}
+            animate={checkVisible ? { scale: 1 } : {}}
             transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
+            className={isMobile ? 'icon-gentle-pulse' : undefined}
             style={{
               width: 48, height: 48, borderRadius: 12,
               background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
               boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
-              position: 'relative',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
+              transform: cardHover ? 'scale(1.1)' : 'scale(1)',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
             }}
           >
-            {/* Calendar top bumps */}
-            <div style={{ position: 'absolute', top: -3, left: 14, width: 4, height: 8, background: 'rgba(255,255,255,0.6)', borderRadius: 2 }} />
-            <div style={{ position: 'absolute', top: -3, right: 14, width: 4, height: 8, background: 'rgba(255,255,255,0.6)', borderRadius: 2 }} />
-            {/* Checkmark inside */}
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <motion.path
                 d="M5 13l4 4L19 7"
                 stroke="white"
@@ -474,27 +431,97 @@ function MatchCard({ isMobile }: { isMobile: boolean }) {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 initial={{ pathLength: 0 }}
-                animate={calVisible ? { pathLength: 1 } : {}}
+                animate={checkVisible ? { pathLength: 1 } : {}}
                 transition={{ duration: 0.4, delay: 0.3, ease: 'easeOut' }}
               />
             </svg>
           </motion.div>
-          <motion.span
-            initial={{ opacity: 0, y: 4 }}
-            animate={calVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.5, duration: 0.3 }}
-            style={{ fontSize: 13, fontWeight: 700, color: '#6366F1', fontFamily: 'DM Sans, sans-serif' }}
-          >72h</motion.span>
         </div>
-      </div>
-      {/* Right text column */}
-      <div style={pillarTextCol(isMobile)}>
-        <h3 style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', marginBottom: 8, fontFamily: 'DM Sans, sans-serif' }}>If You Match, You Meet</h3>
-        <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.7, fontFamily: 'DM Sans, sans-serif', margin: 0 }}>
-          Mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot.
-        </p>
-      </div>
-    </motion.div>
+        {/* Right text column */}
+        <div style={pillarTextCol(isMobile)}>
+          <h3 style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', marginBottom: 8, fontFamily: 'DM Sans, sans-serif' }}>Every Startup Is Vetted</h3>
+          <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.7, fontFamily: 'DM Sans, sans-serif', margin: 0 }}>
+            Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. If it is on UrgenC, it passed the bar.
+          </p>
+        </div>
+      </motion.div>
+    </InteractiveCard>
+  );
+}
+
+/* ---- Unified Pillar Card: If You Match, You Meet ---- */
+function MatchCard({ isMobile }: { isMobile: boolean }) {
+  const [calVisible, setCalVisible] = useState(false);
+  const [cardHover, setCardHover] = useState(false);
+
+  return (
+    <InteractiveCard onHoverChange={setCardHover} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', minHeight: isMobile ? undefined : 180 }}>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        onViewportEnter={() => setCalVisible(true)}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+        style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', width: '100%', position: 'relative', zIndex: 1 }}
+      >
+        {/* Left icon column */}
+        <div style={pillarIconCol(isMobile)}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={calVisible ? { scale: 1 } : {}}
+              transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
+              className={isMobile ? 'icon-gentle-pulse-delayed' : undefined}
+              style={{
+                width: 48, height: 48, borderRadius: 12,
+                background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+                boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
+                position: 'relative',
+                display: 'flex', flexDirection: 'column', alignItems: 'center',
+                overflow: 'hidden',
+                transform: cardHover ? 'scale(1.1)' : 'scale(1)',
+                transition: 'transform 0.3s ease',
+              }}
+            >
+              {/* Calendar top bar with bumps */}
+              <div style={{
+                width: '100%', height: 14,
+                background: 'rgba(0,0,0,0.15)',
+                display: 'flex', justifyContent: 'center', gap: 8, alignItems: 'flex-start'
+              }}>
+                <div style={{ width: 4, height: 8, background: 'rgba(255,255,255,0.6)', borderRadius: 2, marginTop: -3 }} />
+                <div style={{ width: 4, height: 8, background: 'rgba(255,255,255,0.6)', borderRadius: 2, marginTop: -3 }} />
+              </div>
+              {/* Calendar grid dots */}
+              <div style={{
+                flex: 1, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
+                gap: 3, padding: '5px 8px', width: '100%'
+              }}>
+                <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'rgba(255,255,255,0.3)' }} />
+                <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'rgba(255,255,255,0.3)' }} />
+                <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'rgba(255,255,255,0.3)' }} />
+                <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'rgba(255,255,255,0.3)' }} />
+                <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'rgba(255,255,255,0.9)', boxShadow: '0 0 4px rgba(255,255,255,0.5)' }} />
+                <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'rgba(255,255,255,0.3)' }} />
+              </div>
+            </motion.div>
+            <motion.span
+              initial={{ opacity: 0, y: 4 }}
+              animate={calVisible ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.5, duration: 0.3 }}
+              style={{ fontSize: 13, fontWeight: 700, color: '#6366F1', fontFamily: 'DM Sans, sans-serif' }}
+            >72h</motion.span>
+          </div>
+        </div>
+        {/* Right text column */}
+        <div style={pillarTextCol(isMobile)}>
+          <h3 style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', marginBottom: 8, fontFamily: 'DM Sans, sans-serif' }}>If You Match, You Meet</h3>
+          <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.7, fontFamily: 'DM Sans, sans-serif', margin: 0 }}>
+            Mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot.
+          </p>
+        </div>
+      </motion.div>
+    </InteractiveCard>
   );
 }
 

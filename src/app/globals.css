@@ -2111,3 +2111,25 @@ html {
     text-align: center;
   }
 }
+
+/* ---- Interactive card mobile enhancements ---- */
+@keyframes gentlePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.icon-gentle-pulse {
+  animation: gentlePulse 3s ease-in-out infinite;
+}
+
+.icon-gentle-pulse-delayed {
+  animation: gentlePulse 3s ease-in-out infinite 1.5s;
+}
+
+@media (max-width: 768px) {
+  /* Tap feedback on mobile cards */
+  [style*="borderRadius: 20"] > div:active {
+    transform: scale(0.98) !important;
+    transition: transform 0.15s ease !important;
+  }
+}
