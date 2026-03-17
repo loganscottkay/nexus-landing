@@ -330,20 +330,19 @@ function SpineDot({
   const accent = stages[index].accent;
   const isActive = state === "active";
   const isPast = state === "past";
-  const visible = isActive || isPast;
+  const isFuture = state === "future";
 
   return (
     <motion.div
       animate={{
-        scale: visible ? 1 : 0.5,
-        opacity: visible ? 1 : 0.3,
+        scale: isFuture ? 0.5 : 1,
       }}
       transition={{ duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
       style={{
         width: 14,
         height: 14,
         borderRadius: "50%",
-        background: isPast ? `${accent}99` : accent,
+        background: isFuture ? "#D4D4E8" : accent,
         boxShadow: isActive
           ? `0 0 14px ${accent}90, 0 0 28px ${accent}50`
           : isPast
@@ -612,6 +611,8 @@ export default function WhatMakesDifferentSection() {
   const [isMobile, setIsMobile] = useState(false);
   const outerRef = useRef<HTMLDivElement>(null);
   const [activeStage, setActiveStage] = useState(-1);
+  const cardsColumnRef = useRef<HTMLDivElement>(null);
+  const [dotYPositions, setDotYPositions] = useState<number[]>([0, 100, 200]);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
@@ -620,6 +621,30 @@ export default function WhatMakesDifferentSection() {
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
   }, []);
+
+  // Measure card positions so spine dots align to: top of card 1, center of card 2, bottom of card 3
+  useEffect(() => {
+    if (isMobile) return;
+    const measure = () => {
+      const container = cardsColumnRef.current;
+      if (!container) return;
+      const cardEls = container.querySelectorAll<HTMLElement>(".differentiator-card");
+      if (cardEls.length < 3) return;
+      const containerTop = container.getBoundingClientRect().top;
+      const c0 = cardEls[0].getBoundingClientRect();
+      const c1 = cardEls[1].getBoundingClientRect();
+      const c2 = cardEls[2].getBoundingClientRect();
+      setDotYPositions([
+        c0.top - containerTop,
+        c1.top - containerTop + c1.height / 2,
+        c2.bottom - containerTop,
+      ]);
+    };
+    const timer = setTimeout(measure, 50);
+    const ro = new ResizeObserver(measure);
+    if (cardsColumnRef.current) ro.observe(cardsColumnRef.current);
+    return () => { clearTimeout(timer); ro.disconnect(); };
+  }, [isMobile]);
 
   // Scroll-driven progress for desktop
   const { scrollYProgress } = useScroll({
@@ -877,17 +902,14 @@ export default function WhatMakesDifferentSection() {
                 width: 14,
                 position: "relative",
                 flexShrink: 0,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
               }}
             >
-              {/* Background track — trimmed to dot centers */}
+              {/* Background track — from dot 0 center to dot 2 center */}
               <div
                 style={{
                   position: "absolute",
-                  top: 29,
-                  bottom: 29,
+                  top: dotYPositions[0],
+                  height: Math.max(0, dotYPositions[2] - dotYPositions[0]),
                   left: "50%",
                   transform: "translateX(-50%)",
                   width: 2,
@@ -895,12 +917,12 @@ export default function WhatMakesDifferentSection() {
                   borderRadius: 1,
                 }}
               />
-              {/* Animated fill — trimmed to dot centers */}
+              {/* Animated fill — same span, scales with scroll */}
               <motion.div
                 style={{
                   position: "absolute",
-                  top: 29,
-                  bottom: 29,
+                  top: dotYPositions[0],
+                  height: Math.max(0, dotYPositions[2] - dotYPositions[0]),
                   left: "50%",
                   transform: "translateX(-50%)",
                   width: 2,
@@ -913,32 +935,27 @@ export default function WhatMakesDifferentSection() {
                 }}
               />
 
-              {/* Spine dots positioned at each card */}
-              <div
-                style={{
-                  position: "relative",
-                  height: "100%",
-                  width: 14,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  paddingTop: 22,
-                  paddingBottom: 22,
-                }}
-              >
-                {stages.map((_, index) => (
+              {/* Spine dots — absolutely positioned at card edges/centers */}
+              {stages.map((_, index) => (
+                <div
+                  key={index}
+                  style={{
+                    position: "absolute",
+                    top: dotYPositions[index] - 7,
+                    left: 0,
+                  }}
+                >
                   <SpineDot
-                    key={index}
                     state={getCardState(index)}
                     index={index}
                   />
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
 
             {/* ── Cards Column ── */}
             <div
+              ref={cardsColumnRef}
               style={{
                 flex: 1,
                 display: "flex",
