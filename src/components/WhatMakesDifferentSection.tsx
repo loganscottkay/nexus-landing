@@ -49,7 +49,7 @@ const stages = [
 
 // ── Icon Components ─────────────────────────
 
-function DoorIcon({ active, hovered }: { active: boolean; hovered: boolean }) {
+function DoorIcon({ active, hovered }: { active: boolean; hovered: boolean; hideBadge?: boolean }) {
   return (
     <div style={{ perspective: 500, width: 56, height: 72 }}>
       <motion.div
@@ -132,6 +132,7 @@ function ShieldIcon({
 }: {
   active: boolean;
   hovered: boolean;
+  hideBadge?: boolean;
 }) {
   return (
     <motion.div
@@ -195,9 +196,11 @@ function ShieldIcon({
 function CalendarIcon({
   active,
   hovered,
+  hideBadge = false,
 }: {
   active: boolean;
   hovered: boolean;
+  hideBadge?: boolean;
 }) {
   return (
     <div
@@ -205,7 +208,7 @@ function CalendarIcon({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 6,
+        gap: hideBadge ? 0 : 6,
       }}
     >
       <motion.div
@@ -297,20 +300,22 @@ function CalendarIcon({
           ))}
         </div>
       </motion.div>
-      <motion.span
-        initial={{ opacity: 0, y: 4 }}
-        animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 4 }}
-        transition={{ delay: 0.6, duration: 0.3 }}
-        style={{
-          fontSize: 13,
-          fontWeight: 700,
-          color: "#6366F1",
-          fontFamily: "var(--font-dm-sans), DM Sans, sans-serif",
-          letterSpacing: "0.5px",
-        }}
-      >
-        72h
-      </motion.span>
+      {!hideBadge && (
+        <motion.span
+          initial={{ opacity: 0, y: 4 }}
+          animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 4 }}
+          transition={{ delay: 0.6, duration: 0.3 }}
+          style={{
+            fontSize: 13,
+            fontWeight: 700,
+            color: "#6366F1",
+            fontFamily: "var(--font-dm-sans), DM Sans, sans-serif",
+            letterSpacing: "0.5px",
+          }}
+        >
+          72h
+        </motion.span>
+      )}
     </div>
   );
 }
@@ -586,7 +591,7 @@ function MobileStageCard({
           padding: "20px 0 12px 0",
         }}
       >
-        <IconComponent active={inView} hovered={hovered} />
+        <IconComponent active={inView} hovered={hovered} hideBadge={index === 2} />
       </div>
 
       {/* Text */}
@@ -662,9 +667,8 @@ export default function WhatMakesDifferentSection() {
     setActiveStage(stage);
   });
 
-  // Spine fill progress (mapped to scroll)
-  const spineFill = useTransform(scrollYProgress, [0.12, 0.85], [0, 100]);
-  const spineHeight = useTransform(spineFill, (v) => `${v}%`);
+  // Spine fill progress (mapped to scroll) — scaleY 0→1
+  const spineScale = useTransform(scrollYProgress, [0.12, 0.85], [0, 1]);
 
   const getCardState = (
     index: number
@@ -790,9 +794,6 @@ export default function WhatMakesDifferentSection() {
                 >
                   That&apos;s the UrgenC pipeline
                 </span>
-                <span style={{ color: "#6366F1", fontSize: 14 }}>
-                  &rarr;
-                </span>
               </div>
             </motion.div>
           </div>
@@ -805,10 +806,12 @@ export default function WhatMakesDifferentSection() {
   return (
     <div
       ref={outerRef}
+      className="scroll-stack-section"
       style={{
         height: "250vh",
         position: "relative",
         zIndex: 3,
+        backgroundColor: "#FAF9F7",
       }}
     >
       <section
@@ -899,33 +902,34 @@ export default function WhatMakesDifferentSection() {
                 alignItems: "center",
               }}
             >
-              {/* Background track */}
+              {/* Background track — trimmed to dot centers */}
               <div
                 style={{
                   position: "absolute",
-                  top: 0,
-                  bottom: 0,
+                  top: 29,
+                  bottom: 29,
                   left: "50%",
                   transform: "translateX(-50%)",
                   width: 2,
-                  background:
-                    "linear-gradient(180deg, transparent 0%, rgba(99,102,241,0.1) 10%, rgba(99,102,241,0.1) 90%, transparent 100%)",
+                  background: "rgba(99,102,241,0.1)",
                   borderRadius: 1,
                 }}
               />
-              {/* Animated fill */}
+              {/* Animated fill — trimmed to dot centers */}
               <motion.div
                 style={{
                   position: "absolute",
-                  top: 0,
+                  top: 29,
+                  bottom: 29,
                   left: "50%",
                   transform: "translateX(-50%)",
                   width: 2,
-                  height: spineHeight,
                   background:
                     "linear-gradient(180deg, #6366F1, #7C5CFC, #8B5CF6)",
                   borderRadius: 1,
                   opacity: 0.7,
+                  scaleY: spineScale,
+                  transformOrigin: "top center",
                 }}
               />
 
@@ -1009,7 +1013,7 @@ export default function WhatMakesDifferentSection() {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 8,
+                    justifyContent: "center",
                     padding: "10px 24px",
                     borderRadius: 999,
                     background:
@@ -1028,13 +1032,6 @@ export default function WhatMakesDifferentSection() {
                   >
                     That&apos;s the UrgenC pipeline
                   </span>
-                  <motion.span
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.2, repeat: Infinity }}
-                    style={{ color: "#6366F1", fontSize: 14 }}
-                  >
-                    &rarr;
-                  </motion.span>
                 </motion.div>
               </motion.div>
             </div>
