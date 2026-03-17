@@ -325,82 +325,75 @@ function DoorCard({ isMobile }: { isMobile: boolean }) {
   const words = "Fundraising has always been about who you know. UrgenC makes it about what you are building. For the first time, access is earned by your idea.".split(" ");
 
   return (
-    <div style={{ maxWidth: 780, marginLeft: 0 }} className="md:max-w-[780px] max-w-full">
-      <motion.div
-        ref={ref}
-        initial={isMobile ? { opacity: 0, y: 30 } : { opacity: 0, x: -40 }}
-        whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{
-          background: 'linear-gradient(135deg, rgba(220,215,255,0.95), rgba(212,218,255,0.9), rgba(225,215,252,0.93))',
-          borderRadius: 24,
-          padding: 0,
-          position: 'relative',
-          overflow: 'hidden',
-          border: hovered ? '1.5px solid rgba(99,102,241,0.2)' : '1.5px solid rgba(99,102,241,0.12)',
-          boxShadow: hovered ? '0 12px 40px rgba(99,102,241,0.12)' : '0 4px 20px rgba(99,102,241,0.06)',
-          display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row',
-          minHeight: isMobile ? undefined : 200,
-          transform: hovered ? 'translateY(-6px) scale(1.01)' : 'translateY(0) scale(1)',
-          transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
-          cursor: 'default',
-        }}
-      >
-        {/* Left/Top visual strip with door icon */}
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: 'linear-gradient(135deg, rgba(220,215,255,0.95), rgba(212,218,255,0.9), rgba(225,215,252,0.93))',
+        borderRadius: 24,
+        overflow: 'hidden',
+        border: '1.5px solid rgba(99,102,241,0.12)',
+        boxShadow: hovered ? '0 12px 40px rgba(99,102,241,0.12)' : '0 4px 20px rgba(99,102,241,0.06)',
+        display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
+        gap: isMobile ? 0 : 24,
+        maxWidth: 700,
+        width: '100%',
+        margin: '0 auto',
+        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
+        transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+        cursor: 'default',
+      }}
+    >
+      {/* Door icon area */}
+      <div style={{
+        flex: isMobile ? 'none' : '0 0 80px',
+        height: isMobile ? 80 : undefined,
+        background: 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(139,92,246,0.08))',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
         <div style={{
-          flex: isMobile ? 'none' : '0 0 140px',
-          height: isMobile ? 100 : undefined,
-          background: 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(139,92,246,0.08))',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          width: 40, height: 56, borderRadius: 6,
+          background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+          boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
           position: 'relative',
         }}>
           <div style={{
-            width: 56,
-            height: 80,
-            borderRadius: 8,
-            background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-            boxShadow: hovered ? '0 8px 30px rgba(99,102,241,0.45)' : '0 6px 24px rgba(99,102,241,0.35)',
-            position: 'relative',
-            transform: hovered ? 'scale(1.05)' : 'scale(1)',
-            transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
-          }}>
-            <div style={{
-              width: 42, height: 66, borderRadius: 5,
-              border: '1.5px solid rgba(255,255,255,0.2)',
-              background: 'linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02))',
-              position: 'absolute', top: 7, left: 7,
-            }} />
-            <div style={{
-              position: 'absolute', right: 11, top: '50%', transform: 'translateY(-50%)',
-              width: 8, height: 8, borderRadius: '50%',
-              background: 'rgba(255,255,255,0.7)',
-              boxShadow: '0 0 6px rgba(255,255,255,0.3)',
-            }} />
-          </div>
+            width: 30, height: 44, borderRadius: 4,
+            border: '1.5px solid rgba(255,255,255,0.2)',
+            background: 'linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02))',
+            position: 'absolute', top: 6, left: 5,
+          }} />
+          <div style={{
+            position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)',
+            width: 6, height: 6, borderRadius: '50%',
+            background: 'rgba(255,255,255,0.7)',
+          }} />
         </div>
-        {/* Text */}
-        <div style={{ flex: 1, padding: isMobile ? '24px' : '28px 32px 28px 24px' }}>
-          <h3 style={{
-            fontSize: isMobile ? 20 : 22, fontWeight: 700, color: '#0F172A',
-            marginBottom: 10, fontFamily: 'var(--font-dm-sans), sans-serif', letterSpacing: '-0.01em',
-          }}>A Door That Didn&apos;t Exist</h3>
-          <p style={{
-            fontSize: isMobile ? 14 : 15, color: '#475569', lineHeight: 1.7,
-            fontFamily: 'var(--font-dm-sans), sans-serif', margin: 0,
-          }}>
-            {words.map((w, i) => (
-              <motion.span key={i} custom={i} initial="hidden" animate={inView ? "visible" : "hidden"} variants={wv} className="inline-block mr-[0.3em]">{w}</motion.span>
-            ))}
-          </p>
-        </div>
-      </motion.div>
-    </div>
+      </div>
+      {/* Text */}
+      <div style={{ flex: 1, padding: isMobile ? '20px 24px 24px' : '28px 32px 28px 0' }}>
+        <h3 style={{
+          fontSize: isMobile ? 18 : 20, fontWeight: 700, color: '#0F172A',
+          marginBottom: 8, fontFamily: 'var(--font-dm-sans), sans-serif', letterSpacing: '-0.01em',
+        }}>A Door That Didn&apos;t Exist</h3>
+        <p style={{
+          fontSize: isMobile ? 13 : 14, color: '#475569', lineHeight: 1.7,
+          fontFamily: 'var(--font-dm-sans), sans-serif', margin: 0,
+        }}>
+          {words.map((w, i) => (
+            <motion.span key={i} custom={i} initial="hidden" animate={inView ? "visible" : "hidden"} variants={wv} className="inline-block mr-[0.3em]">{w}</motion.span>
+          ))}
+        </p>
+      </div>
+    </motion.div>
   );
 }
 
@@ -413,60 +406,59 @@ function ShieldCard({ isMobile }: { isMobile: boolean }) {
   const words = "Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. If it is on UrgenC, it passed the bar.".split(" ");
 
   return (
-    <div style={{ maxWidth: 720, marginLeft: 'auto', marginRight: 0 }} className="md:max-w-[720px] max-w-full md:ml-auto md:mr-0">
-      <motion.div
-        ref={ref}
-        initial={isMobile ? { opacity: 0, y: 30 } : { opacity: 0, x: 40 }}
-        whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: isMobile ? 0.1 : 0 }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{
-          background: 'linear-gradient(135deg, rgba(220,215,255,0.95), rgba(212,218,255,0.9), rgba(225,215,252,0.93))',
-          borderRadius: 24,
-          padding: isMobile ? '24px' : '32px 36px',
-          position: 'relative',
-          border: hovered ? '1.5px solid rgba(99,102,241,0.2)' : '1.5px solid rgba(99,102,241,0.12)',
-          boxShadow: hovered ? '0 12px 40px rgba(99,102,241,0.12)' : '0 4px 20px rgba(99,102,241,0.06)',
-          transform: hovered ? 'translateY(-6px) scale(1.01)' : 'translateY(0) scale(1)',
-          transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
-          cursor: 'default',
-        }}
-      >
-        {/* Small solid rounded square accent */}
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: 'linear-gradient(135deg, rgba(220,215,255,0.95), rgba(212,218,255,0.9), rgba(225,215,252,0.93))',
+        borderRadius: 24,
+        padding: isMobile ? '20px 24px 24px' : '28px 32px',
+        overflow: 'hidden',
+        border: '1.5px solid rgba(99,102,241,0.12)',
+        boxShadow: hovered ? '0 12px 40px rgba(99,102,241,0.12)' : '0 4px 20px rgba(99,102,241,0.06)',
+        maxWidth: 700,
+        width: '100%',
+        margin: '0 auto',
+        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
+        transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+        cursor: 'default',
+      }}
+    >
+      {/* Checkmark icon */}
+      <div style={{
+        width: 40, height: 40, borderRadius: 10,
+        background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        marginBottom: 16,
+        boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
+      }}>
         <div style={{
-          width: 40, height: 40, borderRadius: 10,
-          background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          marginBottom: 16,
-          boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
-          transform: hovered ? 'scale(1.1)' : 'scale(1)',
-          transition: 'transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          width: 16, height: 10,
+          borderBottom: '3px solid white', borderLeft: '3px solid white',
+          transform: 'rotate(-45deg)', marginTop: -3, borderRadius: 1,
+        }} />
+      </div>
+      {/* Text */}
+      <div>
+        <h3 style={{
+          fontSize: isMobile ? 18 : 20, fontWeight: 700, color: '#0F172A',
+          marginBottom: 8, fontFamily: 'var(--font-dm-sans), sans-serif', letterSpacing: '-0.01em',
+        }}>Every Startup Is Vetted</h3>
+        <p style={{
+          fontSize: isMobile ? 13 : 14, color: '#475569', lineHeight: 1.7,
+          fontFamily: 'var(--font-dm-sans), sans-serif', margin: 0,
         }}>
-          <div style={{
-            width: 16, height: 10,
-            borderBottom: '3px solid white', borderLeft: '3px solid white',
-            transform: 'rotate(-45deg)', marginTop: -3, borderRadius: 1,
-          }} />
-        </div>
-        {/* Text over watermark */}
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <h3 style={{
-            fontSize: isMobile ? 20 : 22, fontWeight: 700, color: '#0F172A',
-            marginBottom: 10, fontFamily: 'var(--font-dm-sans), sans-serif', letterSpacing: '-0.01em',
-          }}>Every Startup Is Vetted</h3>
-          <p style={{
-            fontSize: isMobile ? 14 : 15, color: '#475569', lineHeight: 1.7,
-            fontFamily: 'var(--font-dm-sans), sans-serif', margin: 0, maxWidth: '85%',
-          }}>
-            {words.map((w, i) => (
-              <motion.span key={i} custom={i} initial="hidden" animate={inView ? "visible" : "hidden"} variants={wv} className="inline-block mr-[0.3em]">{w}</motion.span>
-            ))}
-          </p>
-        </div>
-      </motion.div>
-    </div>
+          {words.map((w, i) => (
+            <motion.span key={i} custom={i} initial="hidden" animate={inView ? "visible" : "hidden"} variants={wv} className="inline-block mr-[0.3em]">{w}</motion.span>
+          ))}
+        </p>
+      </div>
+    </motion.div>
   );
 }
 
@@ -479,72 +471,65 @@ function MatchCard({ isMobile }: { isMobile: boolean }) {
   const words = "Mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot.".split(" ");
 
   return (
-    <div style={{ maxWidth: 780, margin: '0 auto' }} className="md:max-w-[780px] max-w-full md:mx-auto">
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: isMobile ? 30 : 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: isMobile ? 0.2 : 0 }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{
-          background: 'linear-gradient(135deg, rgba(220,215,255,0.95), rgba(212,218,255,0.9), rgba(225,215,252,0.93))',
-          borderRadius: 24,
-          padding: 0,
-          position: 'relative',
-          border: hovered ? '1.5px solid rgba(99,102,241,0.2)' : '1.5px solid rgba(99,102,241,0.12)',
-          boxShadow: hovered ? '0 12px 40px rgba(99,102,241,0.12)' : '0 4px 20px rgba(99,102,241,0.06)',
-          transform: hovered ? 'translateY(-6px) scale(1.01)' : 'translateY(0) scale(1)',
-          transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
-          cursor: 'default',
-        }}
-      >
-        {/* Top visual strip with match icon */}
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: 'linear-gradient(135deg, rgba(220,215,255,0.95), rgba(212,218,255,0.9), rgba(225,215,252,0.93))',
+        borderRadius: 24,
+        overflow: 'hidden',
+        border: '1.5px solid rgba(99,102,241,0.12)',
+        boxShadow: hovered ? '0 12px 40px rgba(99,102,241,0.12)' : '0 4px 20px rgba(99,102,241,0.06)',
+        maxWidth: 700,
+        width: '100%',
+        margin: '0 auto',
+        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
+        transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+        cursor: 'default',
+      }}
+    >
+      {/* Top visual strip */}
+      <div style={{
+        background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.08), rgba(99,102,241,0.06))',
+        padding: '20px 0',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, #6366F1, #818CF8)', boxShadow: '0 4px 16px rgba(99,102,241,0.3)' }} />
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+            <div style={{ width: 24, height: 3, background: 'linear-gradient(90deg, #6366F1, #F5D76E, #8B5CF6)', borderRadius: 2 }} />
+            <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#F5D76E', boxShadow: '0 0 10px rgba(245,215,110,0.4)' }} />
+          </div>
+          <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, #7C3AED, #8B5CF6)', boxShadow: '0 4px 16px rgba(139,92,246,0.3)' }} />
+        </div>
         <div style={{
-          background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.08), rgba(99,102,241,0.06))',
-          padding: '28px 0',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
-          borderRadius: '24px 24px 0 0',
+          background: 'rgba(255,255,255,0.8)', padding: '4px 14px', borderRadius: 20,
+          boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
         }}>
-          {/* Match circles */}
-          <div style={{
-            display: 'flex', alignItems: 'center',
-            gap: hovered ? 8 : 6,
-            transition: 'gap 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
-          }}>
-            <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'linear-gradient(135deg, #6366F1, #818CF8)', boxShadow: '0 4px 16px rgba(99,102,241,0.3)' }} />
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-              <div style={{ width: 24, height: 3, background: 'linear-gradient(90deg, #6366F1, #F5D76E, #8B5CF6)', borderRadius: 2 }} />
-              <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#F5D76E', boxShadow: '0 0 10px rgba(245,215,110,0.4)' }} />
-            </div>
-            <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'linear-gradient(135deg, #7C3AED, #8B5CF6)', boxShadow: '0 4px 16px rgba(139,92,246,0.3)' }} />
-          </div>
-          {/* 72h badge */}
-          <div style={{
-            background: 'rgba(255,255,255,0.8)', padding: '4px 14px', borderRadius: 20,
-            boxShadow: '0 2px 8px rgba(0,0,0,0.04)', display: 'flex', alignItems: 'center', gap: 4,
-          }}>
-            <span style={{ fontSize: 14, fontWeight: 700, color: '#6366F1', fontFamily: 'var(--font-dm-sans), sans-serif' }}>72h guaranteed</span>
-          </div>
+          <span style={{ fontSize: 13, fontWeight: 700, color: '#6366F1', fontFamily: 'var(--font-dm-sans), sans-serif' }}>72h guaranteed</span>
         </div>
-        {/* Bottom text */}
-        <div style={{ padding: isMobile ? '24px 24px 28px' : '24px 32px 28px' }}>
-          <h3 style={{
-            fontSize: isMobile ? 20 : 22, fontWeight: 700, color: '#0F172A',
-            marginBottom: 10, fontFamily: 'var(--font-dm-sans), sans-serif', letterSpacing: '-0.01em',
-          }}>If You Match, You Meet</h3>
-          <p style={{
-            fontSize: isMobile ? 14 : 15, color: '#475569', lineHeight: 1.7,
-            fontFamily: 'var(--font-dm-sans), sans-serif', margin: 0,
-          }}>
-            {words.map((w, i) => (
-              <motion.span key={i} custom={i} initial="hidden" animate={inView ? "visible" : "hidden"} variants={wv} className="inline-block mr-[0.3em]">{w}</motion.span>
-            ))}
-          </p>
-        </div>
-      </motion.div>
-    </div>
+      </div>
+      {/* Text */}
+      <div style={{ padding: isMobile ? '20px 24px 28px' : '20px 32px 28px' }}>
+        <h3 style={{
+          fontSize: isMobile ? 18 : 20, fontWeight: 700, color: '#0F172A',
+          marginBottom: 8, fontFamily: 'var(--font-dm-sans), sans-serif', letterSpacing: '-0.01em',
+        }}>If You Match, You Meet</h3>
+        <p style={{
+          fontSize: isMobile ? 13 : 14, color: '#475569', lineHeight: 1.7,
+          fontFamily: 'var(--font-dm-sans), sans-serif', margin: 0,
+        }}>
+          {words.map((w, i) => (
+            <motion.span key={i} custom={i} initial="hidden" animate={inView ? "visible" : "hidden"} variants={wv} className="inline-block mr-[0.3em]">{w}</motion.span>
+          ))}
+        </p>
+      </div>
+    </motion.div>
   );
 }
 
@@ -559,7 +544,7 @@ function WhatMakesDifferentSection() {
   }, []);
 
   return (
-    <Section className="scroll-stack-section relative z-10 px-5 md:px-6 w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', paddingTop: isMobile ? 44 : 60, paddingBottom: isMobile ? 44 : 60 }}>
+    <Section className="scroll-stack-section relative z-10 w-full" style={{ position: 'relative', backgroundColor: '#FAF9F7', paddingTop: isMobile ? 40 : 48, paddingBottom: isMobile ? 48 : 60 }}>
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -585,22 +570,22 @@ function WhatMakesDifferentSection() {
           </p>
           {/* Title */}
           <h2
-            className="text-[30px] md:text-[44px] font-normal text-center mb-4"
+            className="text-[28px] md:text-[36px] font-normal text-center mb-4"
             style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", fontWeight: 400 }}
           >
             What Makes UrgenC Different
           </h2>
           {/* Subtitle */}
           <p
-            className="text-center max-w-[480px] text-[17px] leading-[1.7] italic"
+            className="text-center max-w-[480px] text-[15px] leading-[1.7] italic mb-8"
             style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
           >
             Three reasons this has never existed before.
           </p>
         </motion.div>
 
-        {/* Staggered unified pillar cards */}
-        <div style={{ maxWidth: 960, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: isMobile ? 24 : 32, marginTop: isMobile ? 32 : 40 }}>
+        {/* Pillar cards */}
+        <div style={{ maxWidth: 960, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: isMobile ? 20 : 24, padding: '0 24px' }}>
           <DoorCard isMobile={isMobile} />
           <ShieldCard isMobile={isMobile} />
           <MatchCard isMobile={isMobile} />
