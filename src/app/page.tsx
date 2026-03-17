@@ -303,94 +303,80 @@ function NarrativeLine() {
 
 /* ---- Icon with hover pop wrapper ---- */
 /* ---- Word-by-word reveal for unified pillar card descriptions ---- */
-function pillarWordVariants(mobile: boolean) {
-  const yOff = mobile ? 4 : 5;
-  const e = [0.25, 0.1, 0.25, 1.0] as const;
-  return {
-    hidden: { opacity: 0, y: yOff },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: 0.3 + i * 0.03, duration: 0.3, ease: e },
-    }),
-  };
-}
+
+/* ---- Shared card wrapper styles ---- */
+const pillarCardWrapper = (isMobile: boolean): React.CSSProperties => ({
+  width: '100%',
+  maxWidth: 700,
+  margin: '0 auto',
+  borderRadius: 20,
+  border: '1.5px solid rgba(99,102,241,0.12)',
+  boxShadow: '0 4px 20px rgba(99,102,241,0.06)',
+  background: 'linear-gradient(135deg, rgba(220,215,255,0.95), rgba(212,218,255,0.9), rgba(225,215,252,0.93))',
+  overflow: 'hidden',
+  display: 'flex',
+  flexDirection: isMobile ? 'column' : 'row',
+  alignItems: 'center',
+  minHeight: isMobile ? undefined : 180,
+});
+
+const pillarIconCol = (isMobile: boolean): React.CSSProperties => ({
+  flex: isMobile ? 'none' : '0 0 100px',
+  height: isMobile ? 80 : undefined,
+  width: isMobile ? '100%' : undefined,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  alignSelf: isMobile ? 'auto' : 'stretch',
+  background: 'linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.06))',
+  gap: 6,
+});
+
+const pillarTextCol = (isMobile: boolean): React.CSSProperties => ({
+  flex: 1,
+  padding: isMobile ? '20px 24px' : '24px 28px',
+});
 
 /* ---- Unified Pillar Card: A Door That Didn't Exist ---- */
 function DoorCard({ isMobile }: { isMobile: boolean }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
-  const [hovered, setHovered] = useState(false);
-  const wv = pillarWordVariants(isMobile);
-  const words = "Fundraising has always been about who you know. UrgenC makes it about what you are building. For the first time, access is earned by your idea.".split(" ");
+  const [doorOpen, setDoorOpen] = useState(false);
 
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
+      onViewportEnter={() => setDoorOpen(true)}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        background: 'linear-gradient(135deg, rgba(220,215,255,0.95), rgba(212,218,255,0.9), rgba(225,215,252,0.93))',
-        borderRadius: 24,
-        overflow: 'hidden',
-        border: '1.5px solid rgba(99,102,241,0.12)',
-        boxShadow: hovered ? '0 12px 40px rgba(99,102,241,0.12)' : '0 4px 20px rgba(99,102,241,0.06)',
-        display: 'flex',
-        flexDirection: isMobile ? 'column' : 'row',
-        gap: isMobile ? 0 : 24,
-        maxWidth: 700,
-        width: '100%',
-        margin: '0 auto',
-        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
-        transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
-        cursor: 'default',
-      }}
+      style={pillarCardWrapper(isMobile)}
     >
-      {/* Door icon area */}
-      <div style={{
-        flex: isMobile ? 'none' : '0 0 80px',
-        height: isMobile ? 80 : undefined,
-        background: 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(139,92,246,0.08))',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-        <div style={{
-          width: 40, height: 56, borderRadius: 6,
-          background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-          boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
-          position: 'relative',
-        }}>
+      {/* Left icon column */}
+      <div style={pillarIconCol(isMobile)}>
+        <div style={{ perspective: 400, width: 48, height: 64 }}>
           <div style={{
-            width: 30, height: 44, borderRadius: 4,
-            border: '1.5px solid rgba(255,255,255,0.2)',
-            background: 'linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02))',
-            position: 'absolute', top: 6, left: 5,
-          }} />
-          <div style={{
-            position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)',
-            width: 6, height: 6, borderRadius: '50%',
-            background: 'rgba(255,255,255,0.7)',
-          }} />
+            width: 48,
+            height: 64,
+            borderRadius: 8,
+            background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+            boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
+            transformOrigin: 'left center',
+            transform: doorOpen ? 'rotateY(-50deg)' : 'rotateY(0deg)',
+            transition: 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.3s',
+            position: 'relative',
+          }}>
+            <div style={{
+              position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)',
+              width: 8, height: 8, borderRadius: '50%', background: 'rgba(255,255,255,0.7)',
+            }} />
+          </div>
         </div>
       </div>
-      {/* Text */}
-      <div style={{ flex: 1, padding: isMobile ? '20px 24px 24px' : '28px 32px 28px 0' }}>
-        <h3 style={{
-          fontSize: isMobile ? 18 : 20, fontWeight: 700, color: '#0F172A',
-          marginBottom: 8, fontFamily: 'var(--font-dm-sans), sans-serif', letterSpacing: '-0.01em',
-        }}>A Door That Didn&apos;t Exist</h3>
-        <p style={{
-          fontSize: isMobile ? 13 : 14, color: '#475569', lineHeight: 1.7,
-          fontFamily: 'var(--font-dm-sans), sans-serif', margin: 0,
-        }}>
-          {words.map((w, i) => (
-            <motion.span key={i} custom={i} initial="hidden" animate={inView ? "visible" : "hidden"} variants={wv} className="inline-block mr-[0.3em]">{w}</motion.span>
-          ))}
+      {/* Right text column */}
+      <div style={pillarTextCol(isMobile)}>
+        <h3 style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', marginBottom: 8, fontFamily: 'DM Sans, sans-serif' }}>A Door That Didn&apos;t Exist</h3>
+        <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.7, fontFamily: 'DM Sans, sans-serif', margin: 0 }}>
+          Fundraising has always been about who you know. UrgenC makes it about what you are building. For the first time, access is earned by your idea.
         </p>
       </div>
     </motion.div>
@@ -399,63 +385,49 @@ function DoorCard({ isMobile }: { isMobile: boolean }) {
 
 /* ---- Unified Pillar Card: Every Startup Is Vetted ---- */
 function ShieldCard({ isMobile }: { isMobile: boolean }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
-  const [hovered, setHovered] = useState(false);
-  const wv = pillarWordVariants(isMobile);
-  const words = "Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. If it is on UrgenC, it passed the bar.".split(" ");
+  const [checkVisible, setCheckVisible] = useState(false);
 
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
+      onViewportEnter={() => setCheckVisible(true)}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        background: 'linear-gradient(135deg, rgba(220,215,255,0.95), rgba(212,218,255,0.9), rgba(225,215,252,0.93))',
-        borderRadius: 24,
-        padding: isMobile ? '20px 24px 24px' : '28px 32px',
-        overflow: 'hidden',
-        border: '1.5px solid rgba(99,102,241,0.12)',
-        boxShadow: hovered ? '0 12px 40px rgba(99,102,241,0.12)' : '0 4px 20px rgba(99,102,241,0.06)',
-        maxWidth: 700,
-        width: '100%',
-        margin: '0 auto',
-        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
-        transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
-        cursor: 'default',
-      }}
+      style={pillarCardWrapper(isMobile)}
     >
-      {/* Checkmark icon */}
-      <div style={{
-        width: 40, height: 40, borderRadius: 10,
-        background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        marginBottom: 16,
-        boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
-      }}>
-        <div style={{
-          width: 16, height: 10,
-          borderBottom: '3px solid white', borderLeft: '3px solid white',
-          transform: 'rotate(-45deg)', marginTop: -3, borderRadius: 1,
-        }} />
+      {/* Left icon column */}
+      <div style={pillarIconCol(isMobile)}>
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={checkVisible ? { scale: 1 } : {}}
+          transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
+          style={{
+            width: 48, height: 48, borderRadius: 12,
+            background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+            boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <motion.path
+              d="M5 13l4 4L19 7"
+              stroke="white"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0 }}
+              animate={checkVisible ? { pathLength: 1 } : {}}
+              transition={{ duration: 0.4, delay: 0.3, ease: 'easeOut' }}
+            />
+          </svg>
+        </motion.div>
       </div>
-      {/* Text */}
-      <div>
-        <h3 style={{
-          fontSize: isMobile ? 18 : 20, fontWeight: 700, color: '#0F172A',
-          marginBottom: 8, fontFamily: 'var(--font-dm-sans), sans-serif', letterSpacing: '-0.01em',
-        }}>Every Startup Is Vetted</h3>
-        <p style={{
-          fontSize: isMobile ? 13 : 14, color: '#475569', lineHeight: 1.7,
-          fontFamily: 'var(--font-dm-sans), sans-serif', margin: 0,
-        }}>
-          {words.map((w, i) => (
-            <motion.span key={i} custom={i} initial="hidden" animate={inView ? "visible" : "hidden"} variants={wv} className="inline-block mr-[0.3em]">{w}</motion.span>
-          ))}
+      {/* Right text column */}
+      <div style={pillarTextCol(isMobile)}>
+        <h3 style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', marginBottom: 8, fontFamily: 'DM Sans, sans-serif' }}>Every Startup Is Vetted</h3>
+        <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.7, fontFamily: 'DM Sans, sans-serif', margin: 0 }}>
+          Every startup goes through a multi-factor review before investors ever see them. No noise. No spam. If it is on UrgenC, it passed the bar.
         </p>
       </div>
     </motion.div>
@@ -464,69 +436,62 @@ function ShieldCard({ isMobile }: { isMobile: boolean }) {
 
 /* ---- Unified Pillar Card: If You Match, You Meet ---- */
 function MatchCard({ isMobile }: { isMobile: boolean }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
-  const [hovered, setHovered] = useState(false);
-  const wv = pillarWordVariants(isMobile);
-  const words = "Mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot.".split(" ");
+  const [calVisible, setCalVisible] = useState(false);
 
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
+      onViewportEnter={() => setCalVisible(true)}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        background: 'linear-gradient(135deg, rgba(220,215,255,0.95), rgba(212,218,255,0.9), rgba(225,215,252,0.93))',
-        borderRadius: 24,
-        overflow: 'hidden',
-        border: '1.5px solid rgba(99,102,241,0.12)',
-        boxShadow: hovered ? '0 12px 40px rgba(99,102,241,0.12)' : '0 4px 20px rgba(99,102,241,0.06)',
-        maxWidth: 700,
-        width: '100%',
-        margin: '0 auto',
-        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
-        transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
-        cursor: 'default',
-      }}
+      style={pillarCardWrapper(isMobile)}
     >
-      {/* Top visual strip */}
-      <div style={{
-        background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.08), rgba(99,102,241,0.06))',
-        padding: '20px 0',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, #6366F1, #818CF8)', boxShadow: '0 4px 16px rgba(99,102,241,0.3)' }} />
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-            <div style={{ width: 24, height: 3, background: 'linear-gradient(90deg, #6366F1, #F5D76E, #8B5CF6)', borderRadius: 2 }} />
-            <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#F5D76E', boxShadow: '0 0 10px rgba(245,215,110,0.4)' }} />
-          </div>
-          <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, #7C3AED, #8B5CF6)', boxShadow: '0 4px 16px rgba(139,92,246,0.3)' }} />
-        </div>
-        <div style={{
-          background: 'rgba(255,255,255,0.8)', padding: '4px 14px', borderRadius: 20,
-          boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-        }}>
-          <span style={{ fontSize: 13, fontWeight: 700, color: '#6366F1', fontFamily: 'var(--font-dm-sans), sans-serif' }}>72h guaranteed</span>
+      {/* Left icon column */}
+      <div style={pillarIconCol(isMobile)}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={calVisible ? { scale: 1 } : {}}
+            transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
+            style={{
+              width: 48, height: 48, borderRadius: 12,
+              background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+              boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
+              position: 'relative',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            {/* Calendar top bumps */}
+            <div style={{ position: 'absolute', top: -3, left: 14, width: 4, height: 8, background: 'rgba(255,255,255,0.6)', borderRadius: 2 }} />
+            <div style={{ position: 'absolute', top: -3, right: 14, width: 4, height: 8, background: 'rgba(255,255,255,0.6)', borderRadius: 2 }} />
+            {/* Checkmark inside */}
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <motion.path
+                d="M5 13l4 4L19 7"
+                stroke="white"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={{ pathLength: 0 }}
+                animate={calVisible ? { pathLength: 1 } : {}}
+                transition={{ duration: 0.4, delay: 0.3, ease: 'easeOut' }}
+              />
+            </svg>
+          </motion.div>
+          <motion.span
+            initial={{ opacity: 0, y: 4 }}
+            animate={calVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.5, duration: 0.3 }}
+            style={{ fontSize: 13, fontWeight: 700, color: '#6366F1', fontFamily: 'DM Sans, sans-serif' }}
+          >72h</motion.span>
         </div>
       </div>
-      {/* Text */}
-      <div style={{ padding: isMobile ? '20px 24px 28px' : '20px 32px 28px' }}>
-        <h3 style={{
-          fontSize: isMobile ? 18 : 20, fontWeight: 700, color: '#0F172A',
-          marginBottom: 8, fontFamily: 'var(--font-dm-sans), sans-serif', letterSpacing: '-0.01em',
-        }}>If You Match, You Meet</h3>
-        <p style={{
-          fontSize: isMobile ? 13 : 14, color: '#475569', lineHeight: 1.7,
-          fontFamily: 'var(--font-dm-sans), sans-serif', margin: 0,
-        }}>
-          {words.map((w, i) => (
-            <motion.span key={i} custom={i} initial="hidden" animate={inView ? "visible" : "hidden"} variants={wv} className="inline-block mr-[0.3em]">{w}</motion.span>
-          ))}
+      {/* Right text column */}
+      <div style={pillarTextCol(isMobile)}>
+        <h3 style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', marginBottom: 8, fontFamily: 'DM Sans, sans-serif' }}>If You Match, You Meet</h3>
+        <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.7, fontFamily: 'DM Sans, sans-serif', margin: 0 }}>
+          Mutual interest is a commitment. Every match gets a 20-minute call within 72 hours. Ghost and you lose your spot.
         </p>
       </div>
     </motion.div>
@@ -544,7 +509,7 @@ function WhatMakesDifferentSection() {
   }, []);
 
   return (
-    <Section className="scroll-stack-section relative z-10 w-full" style={{ position: 'relative', backgroundColor: '#FAF9F7', paddingTop: isMobile ? 40 : 48, paddingBottom: isMobile ? 48 : 60 }}>
+    <Section className="scroll-stack-section relative z-10 w-full" style={{ position: 'sticky', top: 0, zIndex: 3, backgroundColor: '#FAF9F7', paddingTop: isMobile ? 40 : 48, paddingBottom: isMobile ? 48 + 120 : 60 + 120 }}>
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
