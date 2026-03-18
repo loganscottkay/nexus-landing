@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import IPhoneMockups from "@/components/IPhoneMockups";
 import LottieAnimation from "@/components/LottieAnimation";
 import HeroHeadline from "@/components/HeroHeadline";
 import WhatMakesDifferentSection from "@/components/WhatMakesDifferentSection";
+import TypewriterQuote from "@/components/TypewriterQuote";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 const smoothDecel = [0.16, 1, 0.3, 1] as const;
@@ -219,87 +220,6 @@ function Section({
 }
 
 
-const narrativeText = "The startup world is drowning in ideas. The current problem is not creating. It\u2019s how to prove your idea to the right investors.";
-
-function getWordVariants(mobile: boolean) {
-  const yOffset = mobile ? 3 : 5;
-  const ease = [0.25, 0.1, 0.25, 1.0] as const;
-  return {
-    hidden: { opacity: 0, y: yOffset, filter: "blur(3px)" },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { delay: i * 0.045, duration: 0.45, ease },
-    }),
-  };
-}
-
-function NarrativeLine() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    setIsMobile(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-  const wordVariants = getWordVariants(isMobile);
-  const words = narrativeText.split(" ");
-
-  // Accent the phrases "your idea" and "right investors."
-  const accentWords = new Set(["your", "idea", "right", "investors."]);
-
-  return (
-    <section
-      className="scroll-stack-section flex items-center justify-center px-4 pt-[80px] pb-[140px] md:px-6 md:py-[40px] w-full"
-      style={{
-        position: 'relative',
-        zIndex: 2,
-        backgroundColor: '#FAF9F7',
-        minHeight: '100vh',
-      }}
-    >
-      <div ref={ref} style={{ maxWidth: "620px", textAlign: "center" }}>
-        <p
-          className="text-[20px] md:text-[26px] lg:text-[30px] leading-[1.6]"
-          style={{
-            fontFamily: "var(--font-dm-sans), sans-serif",
-            fontWeight: 400,
-            color: "#334155",
-          }}
-        >
-          {words.map((word, i) => {
-            const isAccent = accentWords.has(word);
-            return (
-              <motion.span
-                key={i}
-                custom={i}
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                variants={wordVariants}
-                className={`inline-block mr-[0.3em] ${isAccent ? "narrative-accent-word" : ""}`}
-                style={
-                  isAccent
-                    ? {
-                        background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                      }
-                    : undefined
-                }
-              >
-                {word}
-              </motion.span>
-            );
-          })}
-        </p>
-      </div>
-    </section>
-  );
-}
 
 
 /* ---- Small Arrow Icon ---- */
@@ -956,7 +876,7 @@ export default function Home() {
       </section>
 
       {/* ============ NARRATIVE HOOK ============ */}
-      <NarrativeLine />
+      <TypewriterQuote />
 
       {/* ============ HOW MATCHING WORKS ============ */}
       <MatchingFlowSection />
