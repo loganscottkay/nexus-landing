@@ -3,7 +3,6 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import PageAtmosphere from "@/components/PageAtmosphere";
 import CursorGlow from "@/components/CursorGlow";
-import MouseTrail from "@/components/MouseTrail";
 import PageTransition from "@/components/PageTransition";
 
 const dmSans = DM_Sans({
@@ -37,7 +36,6 @@ export default function RootLayout({
       >
         <PageAtmosphere />
         <CursorGlow />
-        <MouseTrail />
         <PageTransition />
         {children}
       </body>
