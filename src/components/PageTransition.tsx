@@ -79,10 +79,10 @@ export default function PageTransition() {
     overlay.style.pointerEvents = "all";
 
     const totalLength = path.getTotalLength();
-    // Start fully drawn and thick (screen covered)
-    path.style.strokeDasharray = `${totalLength}`;
+    // Start fully drawn and thick (screen covered — no gaps)
+    path.style.strokeDasharray = `${totalLength + 10}`;
     path.style.strokeDashoffset = "0";
-    path.style.strokeWidth = "30%";
+    path.style.strokeWidth = "35%";
     path.style.opacity = "1";
 
     // Fallback timer
@@ -90,13 +90,14 @@ export default function PageTransition() {
       overlay.style.pointerEvents = "none";
       path.style.opacity = "0";
       animatingRef.current = false;
-    }, 2500);
+    }, 3000);
 
     loadGSAP().then((gsap) => {
       gsap.to(path, {
         strokeDashoffset: totalLength,
         strokeWidth: "5%",
         duration: 1.25,
+        delay: 0.4,
         ease: "power2.inOut",
         onComplete: () => {
           clearTimeout(fallback);
