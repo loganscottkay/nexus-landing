@@ -582,7 +582,7 @@ export default function StoryPage() {
                     <div className="flex items-center gap-4 mb-3">
                       <div
                         className="story-founder-photo-ring shrink-0 founder-photo-hover"
-                        onClick={() => setEnlargedPhoto({ src: "/images/logan.webp", name: "Logan Kay", subtitle: "Co-Founder | AI Implementation @ Harvard Business School" })}
+                        onClick={() => setEnlargedPhoto({ src: "/images/logan.webp", name: "Logan Kay", subtitle: "Co-Founder | AI & Ops @ Harvard Business School" })}
                         style={{ cursor: "pointer" }}
                       >
                         <Image
@@ -623,7 +623,7 @@ export default function StoryPage() {
                         color: "#94A3B8",
                       }}
                     >
-                      Boston University | AI Implementation @ Harvard Business School
+                      Boston University | AI & Ops @ Harvard Business School
                     </p>
                     <p
                       style={{
