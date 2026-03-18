@@ -80,6 +80,7 @@ export default function PageTransition() {
 
     const totalLength = path.getTotalLength();
     // Start fully drawn and thick (screen covered — no gaps)
+    path.style.stroke = "#8B5CF6";
     path.style.strokeDasharray = `${totalLength + 10}`;
     path.style.strokeDashoffset = "0";
     path.style.strokeWidth = "35%";
@@ -89,6 +90,8 @@ export default function PageTransition() {
     const fallback = setTimeout(() => {
       overlay.style.pointerEvents = "none";
       path.style.opacity = "0";
+      path.style.stroke = "none";
+      path.style.strokeWidth = "0";
       animatingRef.current = false;
     }, 3000);
 
@@ -103,6 +106,8 @@ export default function PageTransition() {
           clearTimeout(fallback);
           overlay.style.pointerEvents = "none";
           path.style.opacity = "0";
+          path.style.stroke = "none";
+          path.style.strokeWidth = "0";
           animatingRef.current = false;
         },
       });
@@ -142,6 +147,7 @@ export default function PageTransition() {
 
       const totalLength = path.getTotalLength();
       // Start invisible
+      path.style.stroke = "#8B5CF6";
       path.style.strokeDasharray = `${totalLength}`;
       path.style.strokeDashoffset = `${totalLength}`;
       path.style.strokeWidth = "5%";
@@ -195,10 +201,10 @@ export default function PageTransition() {
           ref={pathRef}
           d={SVG_PATH}
           fill="none"
-          stroke="#8B5CF6"
+          stroke="none"
           strokeLinecap="round"
           strokeLinejoin="round"
-          style={{ opacity: 0 }}
+          style={{ opacity: 0, strokeWidth: 0 }}
         />
       </svg>
     </div>,

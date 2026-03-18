@@ -686,14 +686,6 @@ export default function Home() {
       {/* Parallax background orbs */}
       <ParallaxOrbs reduced={prefersReduced} />
 
-      {/* Background gradient blobs */}
-      <div
-        className="fixed inset-0 overflow-hidden pointer-events-none z-0"
-      >
-        <div className="blob blob-blue animate-blob-1 -top-[5%] right-[10%]" />
-        <div className="blob blob-lavender animate-blob-2 top-[40%] -left-[5%]" />
-        <div className="blob blob-peach animate-blob-3 bottom-[10%] right-[20%]" />
-      </div>
 
       <Navbar />
 
