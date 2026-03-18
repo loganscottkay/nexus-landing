@@ -1338,7 +1338,7 @@ body {
     --sublabel-size: 12px !important;
   }
   .iphone-phones-container {
-    flex-direction: column !important;
+    flex-direction: column-reverse !important;
     align-items: center !important;
   }
 }

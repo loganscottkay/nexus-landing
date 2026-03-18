@@ -230,7 +230,52 @@ function AnimatedGradientBg({
   );
 }
 
-// ── Carousel Card ──────────────────────────
+// ── Static Card (mobile) ───────────────────
+
+function StaticCard({ card }: { card: (typeof cards)[0] }) {
+  const IconComp = iconMap[card.icon];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      style={{ width: "100%", maxWidth: 300, margin: "0 auto" }}
+    >
+      <div
+        style={{
+          width: "100%",
+          height: 320,
+          borderRadius: 20,
+          padding: "32px 28px",
+          background: "#0F172A",
+          display: "flex",
+          flexDirection: "column",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2)",
+          overflow: "hidden",
+          position: "relative",
+          WebkitFontSmoothing: "antialiased",
+          MozOsxFontSmoothing: "grayscale",
+        }}
+      >
+        <AnimatedGradientBg colors={card.gradientColors} duration={card.gradientDuration} />
+        <div style={{ position: "absolute", inset: 0, borderRadius: 20, background: "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.08) 0%, transparent 60%)", pointerEvents: "none", zIndex: 1 }} />
+        <div style={{ width: 52, height: 52, borderRadius: 14, background: card.tagBg, border: `1px solid ${card.iconStroke}30`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16, position: "relative", zIndex: 2 }}>
+          <IconComp stroke={card.iconStroke} />
+        </div>
+        <div style={{ display: "inline-flex", alignSelf: "flex-start", padding: "5px 14px", borderRadius: 999, background: card.tagBg, marginBottom: 12, position: "relative", zIndex: 2 }}>
+          <span style={{ fontSize: 10, fontWeight: 700, color: card.tagColor, letterSpacing: "2px", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>{card.tag}</span>
+        </div>
+        <h3 style={{ fontSize: 22, fontWeight: 700, color: "#F8FAFC", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", letterSpacing: "-0.3px", margin: "0 0 8px 0", position: "relative", zIndex: 2 }}>{card.title}</h3>
+        <p style={{ fontSize: 14, fontWeight: 400, color: "rgba(255,255,255,0.7)", lineHeight: 1.7, fontFamily: "var(--font-dm-sans), sans-serif", margin: 0, position: "relative", zIndex: 2, flex: 1 }}>{card.description}</p>
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 3, background: card.accentBar, borderRadius: "0 0 20px 20px", zIndex: 2 }} />
+      </div>
+    </motion.div>
+  );
+}
+
+// ── Carousel Card (desktop) ────────────────
 
 function CarouselCard({ card }: { card: (typeof cards)[0] }) {
   const IconComp = iconMap[card.icon];
@@ -372,8 +417,17 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
 // ── Main Section ────────────────────────────
 export default function WhatMakesDifferentSection() {
   const [isInView, setIsInView] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
+
+  // Detect mobile
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 767);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   // Touch drag state for mobile
   const dragRef = useRef({
@@ -517,37 +571,45 @@ export default function WhatMakesDifferentSection() {
           </p>
         </motion.div>
 
-        {/* ── 3D Carousel ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{
-            duration: 0.7,
-            delay: 0.2,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-        >
-          <div
-            className="carousel-scene"
-            style={{
-              height: "var(--carousel-height)",
-              overflow: "visible",
+        {/* ── Cards ── */}
+        {isMobile ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            {cards.map((card) => (
+              <StaticCard key={card.id} card={card} />
+            ))}
+          </div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{
+              duration: 0.7,
+              delay: 0.2,
+              ease: [0.16, 1, 0.3, 1],
             }}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
           >
             <div
-              ref={ringRef}
-              className={`carousel-ring${!isInView ? " paused" : ""}`}
+              className="carousel-scene"
+              style={{
+                height: "var(--carousel-height)",
+                overflow: "visible",
+              }}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
-              {cards.map((card) => (
-                <CarouselCard key={card.id} card={card} />
-              ))}
+              <div
+                ref={ringRef}
+                className={`carousel-ring${!isInView ? " paused" : ""}`}
+              >
+                {cards.map((card) => (
+                  <CarouselCard key={card.id} card={card} />
+                ))}
+              </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        )}
       </div>
     </section>
   );
