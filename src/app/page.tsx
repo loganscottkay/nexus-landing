@@ -276,12 +276,37 @@ const stickyNoteRotations = [-1, 0.5, -0.7, 1.2];
 function MatchingFlowSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [showHint, setShowHint] = useState(false);
+  const hintShownRef = useRef(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
+  }, []);
+
+  // Intersection observer for swirly arrow hint
+  useEffect(() => {
+    if (hintShownRef.current) return;
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hintShownRef.current) {
+          hintShownRef.current = true;
+          // 1s delay before showing
+          setTimeout(() => setShowHint(true), 1000);
+          // Hide after 3s total (1s delay + 0.5s fade in + 1.5s visible)
+          setTimeout(() => setShowHint(false), 3000);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   const goPrev = useCallback(() => {
@@ -293,7 +318,7 @@ function MatchingFlowSection() {
   }, []);
 
   return (
-    <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
+    <div ref={sectionRef} className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
       <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{}}>
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -406,7 +431,7 @@ function MatchingFlowSection() {
                               key={`card-${idx}`}
                               initial={isAhead ? { x: 300, opacity: 0 } : false}
                               animate={{
-                                x: isActive ? 0 : (isMobile ? 0 : stackOffset * 15),
+                                x: isActive ? 0 : (isMobile ? stackOffset * 20 : stackOffset * 40),
                                 y: isActive ? 0 : stackOffset * 6,
                                 opacity: isActive ? 1 : Math.max(0, 1 - stackOffset * 0.25),
                                 scale: isActive ? 1 : 1 - stackOffset * 0.03,
@@ -515,6 +540,64 @@ function MatchingFlowSection() {
                     })}
                   </div>
                 </div>
+
+                {/* Swirly arrow hint */}
+                <AnimatePresence>
+                  {showHint && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      style={{
+                        position: 'absolute',
+                        bottom: isMobile ? 50 : 40,
+                        right: isMobile ? 'calc(50% - 80px)' : 'calc(50% - 85px)',
+                        zIndex: 30,
+                        pointerEvents: 'none',
+                      }}
+                    >
+                      <motion.div
+                        animate={{ y: [-3, 3, -3] }}
+                        transition={{ duration: 0.6, repeat: 4, ease: 'easeInOut' }}
+                      >
+                        <svg width="70" height="60" viewBox="0 0 70 60" fill="none" style={{ overflow: 'visible' }}>
+                          <path
+                            d="M50 5C42 3 30 8 28 18C26 28 35 30 38 22C41 14 32 8 22 12C12 16 8 28 14 38C18 44 26 48 34 46"
+                            stroke="#6366F1"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            fill="none"
+                            strokeDasharray="2 4"
+                          />
+                          {/* Arrow head */}
+                          <path
+                            d="M30 42L35 47L39 43"
+                            stroke="#6366F1"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            fill="none"
+                          />
+                        </svg>
+                        <span
+                          style={{
+                            position: 'absolute',
+                            top: -4,
+                            right: -8,
+                            fontFamily: "'Caveat', cursive",
+                            fontSize: 14,
+                            color: '#6366F1',
+                            transform: 'rotate(-5deg)',
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          click me!
+                        </span>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
                 {/* Arrow buttons */}
                 <div className="flex items-center justify-center gap-4 mt-8 relative z-20">
