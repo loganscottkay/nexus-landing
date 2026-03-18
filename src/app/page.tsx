@@ -904,8 +904,8 @@ export default function Home() {
       </div>
 
       {/* ============ FINAL CTA ============ */}
-      <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 6, backgroundColor: '#FAF9F7', minHeight: '100vh' }}>
-      <Section className="relative z-10 w-full flex items-center justify-center py-20" style={{}}>
+      <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 6, backgroundColor: '#FAF9F7' }}>
+      <Section className="relative z-10 w-full flex items-center justify-center py-20 md:py-10" style={{}}>
         <motion.div
           variants={cardStagger}
           initial="hidden"
