@@ -219,7 +219,7 @@ function Section({
 }
 
 
-const narrativeText = "The startup world is full of ideas. The problem has never been building. It is getting in front of the right people.";
+const narrativeText = "The startup world is drowning in ideas. The current problem is not creating. It\u2019s how to prove your idea to the right investors.";
 
 function getWordVariants(mobile: boolean) {
   const yOffset = mobile ? 3 : 5;
@@ -249,8 +249,8 @@ function NarrativeLine() {
   const wordVariants = getWordVariants(isMobile);
   const words = narrativeText.split(" ");
 
-  // Accent "right" and "people."
-  const accentWords = new Set(["right", "people."]);
+  // Accent the phrases "your idea" and "right investors."
+  const accentWords = new Set(["your", "idea", "right", "investors."]);
 
   return (
     <section
