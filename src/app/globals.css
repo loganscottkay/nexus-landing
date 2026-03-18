@@ -2039,14 +2039,6 @@ html {
   }
 }
 
-/* Desktop: only hero section keeps sticky; all other sections scroll normally */
-@media (min-width: 768px) {
-  .scroll-stack-section:not(.scroll-stack-hero) {
-    position: relative !important;
-    top: auto !important;
-  }
-}
-
 /* PART 6: Page transitions */
 .page-transition-wrapper {
   animation: page-fade-in 0.3s ease forwards;
