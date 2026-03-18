@@ -822,14 +822,13 @@ export default function Home() {
               className="mb-12"
             >
               <div
-                className="text-[14px] md:text-[16px] max-w-full px-2 md:max-w-[600px] md:px-0 leading-[1.8] md:leading-[2.0] text-center"
+                className="text-[12.5px] md:text-[16px] max-w-full px-2 md:max-w-[600px] md:px-0 leading-[1.8] md:leading-[2.0] text-center"
                 style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 {[
-                  <>UrgenC is the first real fundraising app.</>,
+                  <>The only fundraising app where meetings are guaranteed.</>,
                   <>Founders pitch. Investors swipe.</>,
-                  <>Mutual interest means a guaranteed meeting.</>,
-                  <>If you don&apos;t show up, you don&apos;t stay.</>,
+                  <>Mutual interest unlocks a guaranteed meeting&mdash;no cold emails, no ghosting.</>,
                 ].map((line, i) => (
                   <motion.span
                     key={i}

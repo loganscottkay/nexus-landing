@@ -51,7 +51,7 @@ export default function HeroHeadline({ lines, prefersReduced }: HeroHeadlineProp
             initial={prefersReduced ? false : { opacity: 0, y: config.y }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: config.duration, delay: config.delay, ease: smoothDecel }}
-            className="text-[clamp(38px,10vw,44px)] sm:text-[44px] md:text-[56px] lg:text-[80px] xl:text-[88px] 2xl:text-[96px] font-normal leading-[1.05] md:leading-[1.0] tracking-[-0.02em]"
+            className="text-[clamp(42px,11vw,48px)] sm:text-[48px] md:text-[56px] lg:text-[80px] xl:text-[88px] 2xl:text-[96px] font-normal leading-[1.05] md:leading-[1.0] tracking-[-0.02em]"
             style={{
               color: '#0F172A',
               textShadow: '0 0 40px rgba(74,108,247,0.08)',
