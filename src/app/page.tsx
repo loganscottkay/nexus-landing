@@ -278,53 +278,7 @@ function MatchingFlowSection() {
   ];
 
   return (
-    <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 4, backgroundColor: '#0A0A14', minHeight: '100vh', overflow: 'hidden' }}>
-      {/* Animated liquid background */}
-      <div className="absolute inset-0 overflow-hidden" style={{ borderRadius: 'inherit' }}>
-        {[
-          { color: '#4338CA', duration: 14, delay: 0 },
-          { color: '#6366F1', duration: 18, delay: -6 },
-          { color: '#312E81', duration: 22, delay: -11 },
-        ].map((blob, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              width: '40%',
-              height: '40%',
-              background: `radial-gradient(circle, ${blob.color} 0%, transparent 70%)`,
-              filter: 'blur(80px) brightness(0.8)',
-              top: '30%',
-              left: '30%',
-            }}
-            animate={{
-              x: [
-                Math.cos(0) * 150,
-                Math.cos(Math.PI * 0.5) * 150,
-                Math.cos(Math.PI) * 150,
-                Math.cos(Math.PI * 1.5) * 150,
-                Math.cos(Math.PI * 2) * 150,
-              ],
-              y: [
-                Math.sin(0) * 150,
-                Math.sin(Math.PI * 0.5) * 150,
-                Math.sin(Math.PI) * 150,
-                Math.sin(Math.PI * 1.5) * 150,
-                Math.sin(Math.PI * 2) * 150,
-              ],
-            }}
-            transition={{
-              duration: blob.duration,
-              repeat: Infinity,
-              ease: 'linear',
-              delay: blob.delay,
-            }}
-          />
-        ))}
-        {/* Dark overlay */}
-        <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.7)' }} />
-      </div>
-
+    <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
       {/* Film grain overlay */}
       <div
         className="tv-grain-overlay absolute inset-0 pointer-events-none"
@@ -363,7 +317,7 @@ function MatchingFlowSection() {
               variants={tierTitle}
               transition={{ duration: 0.8, delay: 0.2, ease: smoothDecel }}
               className="text-[36px] md:text-[44px] font-normal text-center mb-4"
-              style={{ fontFamily: "'Instrument Serif', serif", color: '#E2E8F0' }}
+              style={{ fontFamily: "'Instrument Serif', serif" }}
             >
               Swipe. Match. Meet.
             </motion.h2>
@@ -371,7 +325,7 @@ function MatchingFlowSection() {
               variants={tierSubtitle}
               transition={{ duration: 0.5, delay: 0.4, ease }}
               className="text-center max-w-[600px] text-[17px] leading-[1.7] mb-16"
-              style={{ color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-dm-sans), sans-serif" }}
+              style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               The complete flow from pitch to meeting.
             </motion.p>
