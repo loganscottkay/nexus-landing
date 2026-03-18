@@ -991,9 +991,10 @@ function PhoneEnlargeModal({
         transition: "opacity 0.3s ease",
       }}
     >
-      {/* Close button */}
+      {/* Close button — larger tap target on mobile */}
       <button
         onClick={handleClose}
+        className="phone-enlarge-close"
         style={{
           position: "absolute",
           top: "20px",
@@ -1015,9 +1016,10 @@ function PhoneEnlargeModal({
         &#x2715;
       </button>
 
-      {/* Enlarged phone */}
+      {/* Enlarged phone — fullscreen on mobile */}
       <div
         onClick={(e) => e.stopPropagation()}
+        className="phone-enlarge-inner"
         style={{
           transform: show ? "scale(1)" : "scale(0.7)",
           opacity: show ? 1 : 0,
@@ -1285,9 +1287,9 @@ export default function IPhoneMockups() {
         Explore what the experience looks like for founders and investors.
       </p>
 
-      {/* Phones container */}
+      {/* Phones container — reversed on mobile so Founder phone shows first */}
       <div
-        className="iphone-phones-container relative flex items-start justify-center"
+        className="iphone-phones-container relative flex flex-col-reverse md:flex-row items-center md:items-start justify-center"
         style={{ gap: "var(--phone-gap)", flexWrap: "nowrap" }}
       >
         <SparkleParticles />
