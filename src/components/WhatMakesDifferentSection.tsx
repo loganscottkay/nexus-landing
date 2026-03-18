@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useState, useEffect, useCallback } from "react";
+import { motion, useAnimationFrame } from "framer-motion";
 
 /* ─────────────────────────────────────────────
    3D ROTATING CAROUSEL: "What Makes UrgenC Different"
 
    Three cards rotate continuously in 3D space.
-   Hover pauses rotation (desktop).
+   Never pauses — constant smooth rotation.
    Touch/drag rotates manually (mobile).
    ───────────────────────────────────────────── */
 
@@ -20,12 +20,12 @@ const cards = [
     tag: "CURATED",
     tagColor: "#818CF8",
     tagBg: "rgba(99,102,241,0.15)",
-    background:
-      "linear-gradient(160deg, #0F172A 0%, #1E1B4B 40%, #312E81 100%)",
     iconStroke: "#818CF8",
     accentBar: "linear-gradient(90deg, #6366F1, #818CF8)",
     icon: "shield" as const,
     rotateY: 0,
+    gradientColors: ["#4338CA", "#6366F1", "#312E81"] as [string, string, string],
+    gradientDuration: 14,
   },
   {
     id: "traction",
@@ -35,12 +35,12 @@ const cards = [
     tag: "EARN IT",
     tagColor: "#A78BFA",
     tagBg: "rgba(167,139,250,0.15)",
-    background:
-      "linear-gradient(160deg, #1E1B4B 0%, #4C1D95 40%, #6D28D9 100%)",
     iconStroke: "#A78BFA",
     accentBar: "linear-gradient(90deg, #7C3AED, #A78BFA)",
     icon: "pulse" as const,
     rotateY: 120,
+    gradientColors: ["#7C3AED", "#8B5CF6", "#4C1D95"] as [string, string, string],
+    gradientDuration: 16,
   },
   {
     id: "accountability",
@@ -49,12 +49,12 @@ const cards = [
     tag: "NO GHOSTING",
     tagColor: "#818CF8",
     tagBg: "rgba(99,102,241,0.15)",
-    background:
-      "linear-gradient(160deg, #312E81 0%, #4338CA 40%, #6366F1 100%)",
     iconStroke: "#818CF8",
     accentBar: "linear-gradient(90deg, #4338CA, #818CF8)",
     icon: "check" as const,
     rotateY: 240,
+    gradientColors: ["#4F46E5", "#6366F1", "#4338CA"] as [string, string, string],
+    gradientDuration: 18,
   },
 ];
 
@@ -140,7 +140,6 @@ const carouselCSS = `
   width: var(--card-width);
   height: var(--card-height);
   backface-visibility: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .carousel-card-slot:nth-child(1) {
@@ -151,20 +150,6 @@ const carouselCSS = `
 }
 .carousel-card-slot:nth-child(3) {
   transform: rotateY(240deg) translateZ(var(--tz));
-}
-
-/* Hover scale when paused */
-.carousel-ring.paused .carousel-card-slot:nth-child(1):hover {
-  transform: rotateY(0deg) translateZ(var(--tz)) scale(1.05);
-}
-.carousel-ring.paused .carousel-card-slot:nth-child(2):hover {
-  transform: rotateY(120deg) translateZ(var(--tz)) scale(1.05);
-}
-.carousel-ring.paused .carousel-card-slot:nth-child(3):hover {
-  transform: rotateY(240deg) translateZ(var(--tz)) scale(1.05);
-}
-.carousel-ring.paused .carousel-card-slot:hover .carousel-card-inner {
-  box-shadow: 0 12px 48px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
 }
 
 /* Responsive variables */
@@ -185,6 +170,66 @@ const carouselCSS = `
 }
 `;
 
+// ── Animated Gradient Background ────────────
+function AnimatedGradientBg({
+  colors,
+  duration,
+}: {
+  colors: [string, string, string];
+  duration: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useAnimationFrame((time) => {
+    if (!ref.current) return;
+    const phase = ((time / 1000) / duration) * 2 * Math.PI;
+    const r = 35;
+
+    const x1 = 50 + r * Math.cos(phase);
+    const y1 = 50 + r * Math.sin(phase);
+    const x2 = 50 + r * Math.cos(phase + (2 * Math.PI) / 3);
+    const y2 = 50 + r * Math.sin(phase + (2 * Math.PI) / 3);
+    const x3 = 50 + r * Math.cos(phase + (4 * Math.PI) / 3);
+    const y3 = 50 + r * Math.sin(phase + (4 * Math.PI) / 3);
+
+    ref.current.style.background = `
+      radial-gradient(circle at ${x1}% ${y1}%, ${colors[0]} 0%, transparent 55%),
+      radial-gradient(circle at ${x2}% ${y2}%, ${colors[1]} 0%, transparent 55%),
+      radial-gradient(circle at ${x3}% ${y3}%, ${colors[2]} 0%, transparent 55%)
+    `;
+  });
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        borderRadius: 20,
+        overflow: "hidden",
+        zIndex: 0,
+      }}
+    >
+      <div
+        ref={ref}
+        style={{
+          position: "absolute",
+          inset: -30,
+          filter: "blur(60px) brightness(1)",
+        }}
+      />
+      {/* Dark base so gradient blobs float on top of something */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "#0F172A",
+          zIndex: -1,
+        }}
+      />
+    </div>
+  );
+}
+
 // ── Carousel Card ──────────────────────────
 
 function CarouselCard({ card }: { card: (typeof cards)[0] }) {
@@ -199,15 +244,22 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
           height: "100%",
           borderRadius: 20,
           padding: "32px 28px",
-          background: card.background,
+          background: "#0F172A",
           display: "flex",
           flexDirection: "column",
           boxShadow: "0 8px 32px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2)",
           overflow: "hidden",
           position: "relative",
-          transition: "box-shadow 0.3s ease",
+          WebkitFontSmoothing: "antialiased",
+          MozOsxFontSmoothing: "grayscale",
         }}
       >
+        {/* Animated gradient background */}
+        <AnimatedGradientBg
+          colors={card.gradientColors}
+          duration={card.gradientDuration}
+        />
+
         {/* Inner glow overlay */}
         <div
           style={{
@@ -215,8 +267,9 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
             inset: 0,
             borderRadius: 20,
             background:
-              "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.12) 0%, transparent 60%)",
+              "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.08) 0%, transparent 60%)",
             pointerEvents: "none",
+            zIndex: 1,
           }}
         />
 
@@ -233,7 +286,7 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
             justifyContent: "center",
             marginBottom: 16,
             position: "relative",
-            zIndex: 1,
+            zIndex: 2,
           }}
         >
           <IconComp stroke={card.iconStroke} />
@@ -244,21 +297,21 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
           style={{
             display: "inline-flex",
             alignSelf: "flex-start",
-            padding: "4px 12px",
+            padding: "5px 14px",
             borderRadius: 999,
             background: card.tagBg,
             marginBottom: 12,
             position: "relative",
-            zIndex: 1,
+            zIndex: 2,
           }}
         >
           <span
             style={{
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: 700,
               color: card.tagColor,
-              letterSpacing: "1.5px",
-              fontFamily: "var(--font-dm-sans), DM Sans, sans-serif",
+              letterSpacing: "2px",
+              fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
             }}
           >
             {card.tag}
@@ -268,13 +321,14 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
         {/* Title */}
         <h3
           style={{
-            fontSize: 20,
+            fontSize: 22,
             fontWeight: 700,
-            color: "#FFFFFF",
-            fontFamily: "var(--font-dm-sans), DM Sans, sans-serif",
+            color: "#F8FAFC",
+            fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
+            letterSpacing: "-0.3px",
             margin: "0 0 8px 0",
             position: "relative",
-            zIndex: 1,
+            zIndex: 2,
           }}
         >
           {card.title}
@@ -284,12 +338,13 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
         <p
           style={{
             fontSize: 14,
-            color: "rgba(255,255,255,0.6)",
+            fontWeight: 400,
+            color: "rgba(255,255,255,0.7)",
             lineHeight: 1.7,
-            fontFamily: "var(--font-dm-sans), DM Sans, sans-serif",
+            fontFamily: "var(--font-dm-sans), sans-serif",
             margin: 0,
             position: "relative",
-            zIndex: 1,
+            zIndex: 2,
             flex: 1,
           }}
         >
@@ -306,6 +361,7 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
             height: 3,
             background: card.accentBar,
             borderRadius: "0 0 20px 20px",
+            zIndex: 2,
           }}
         />
       </div>
@@ -357,7 +413,6 @@ export default function WhatMakesDifferentSection() {
     const ring = ringRef.current;
     if (!ring) return;
 
-    // Get current computed rotation from the matrix
     const computed = window.getComputedStyle(ring);
     const matrix = computed.transform;
     let currentY = 0;
@@ -396,7 +451,6 @@ export default function WhatMakesDifferentSection() {
     const ring = ringRef.current;
     if (!ring) return;
 
-    // Resume CSS animation
     ring.style.transform = "";
     ring.classList.remove("paused");
   }, []);
@@ -479,14 +533,6 @@ export default function WhatMakesDifferentSection() {
             style={{
               height: "var(--carousel-height)",
               overflow: "visible",
-            }}
-            onMouseEnter={() => {
-              ringRef.current?.classList.add("paused");
-            }}
-            onMouseLeave={() => {
-              if (!dragRef.current.isDragging) {
-                ringRef.current?.classList.remove("paused");
-              }
             }}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
