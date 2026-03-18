@@ -10,9 +10,9 @@ import {
 } from "framer-motion";
 
 const BLOBS = [
-  { color: "rgba(99,102,241,0.04)", speed: 20, phaseOffset: 0 },
-  { color: "rgba(139,92,246,0.03)", speed: 26, phaseOffset: (Math.PI * 2) / 3 },
-  { color: "rgba(167,139,250,0.02)", speed: 32, phaseOffset: (Math.PI * 4) / 3 },
+  { color: "rgba(99,102,241,0.15)", speed: 20, phaseOffset: 0 },
+  { color: "rgba(139,92,246,0.12)", speed: 26, phaseOffset: (Math.PI * 2) / 3 },
+  { color: "rgba(167,139,250,0.08)", speed: 32, phaseOffset: (Math.PI * 4) / 3 },
 ];
 
 function OrbitBlob({ color, speed, phaseOffset }: { color: string; speed: number; phaseOffset: number }) {
@@ -72,7 +72,7 @@ function MouseBlob() {
         width: "40vw",
         height: "40vw",
         borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(99,102,241,0.03) 0%, transparent 70%)",
+        background: "radial-gradient(circle, rgba(99,102,241,0.10) 0%, transparent 70%)",
         left: springX,
         top: springY,
         x: "-50%",
