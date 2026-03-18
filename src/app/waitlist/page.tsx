@@ -15,7 +15,6 @@ export default function WaitlistPage() {
   const [loading, setLoading] = useState(false);
   // Form state
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [interest, setInterest] = useState("");
 
@@ -29,7 +28,6 @@ export default function WaitlistPage() {
 
   const allValid =
     name.trim() !== "" &&
-    phone.trim() !== "" &&
     email.trim() !== "" &&
     isValidEmail(email) &&
     interest !== "";
@@ -195,32 +193,6 @@ export default function WaitlistPage() {
                       />
                       <ValidationMessage
                         show={touched.name === true && name.trim() === ""}
-                        message="Required"
-                      />
-                    </div>
-
-                    {/* Phone */}
-                    <div>
-                      <label
-                        className="block text-[14px] font-semibold text-[#0F172A] mb-2"
-                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-                      >
-                        Phone Number
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        onBlur={() => handleBlur("phone")}
-                        placeholder="(555) 123-4567"
-                        className={inputBase}
-                        style={getInputStyle(touched.phone === true && phone.trim() === "")}
-                        onFocus={handleFocus}
-                        onBlurCapture={(e) => handleInputBlur(e, !!(touched.phone && phone.trim() === ""))}
-                      />
-                      <ValidationMessage
-                        show={touched.phone === true && phone.trim() === ""}
                         message="Required"
                       />
                     </div>
