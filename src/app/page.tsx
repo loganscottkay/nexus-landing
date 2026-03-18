@@ -401,7 +401,8 @@ function MatchingFlowSection() {
   };
 
   return (
-    <Section className="scroll-stack-section relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
+    <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
+    <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{}}>
       <div className="max-w-6xl mx-auto">
       <motion.div
         variants={cardStagger}
@@ -687,6 +688,7 @@ function MatchingFlowSection() {
       </motion.div>
       </div>
     </Section>
+    </div>
   );
 }
 
@@ -968,7 +970,8 @@ export default function Home() {
       </div>
 
       {/* ============ FINAL CTA ============ */}
-      <Section className="scroll-stack-section relative z-10 w-full flex items-center justify-center py-20" style={{ position: 'relative', zIndex: 6, backgroundColor: '#FAF9F7', minHeight: '100vh' }}>
+      <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 6, backgroundColor: '#FAF9F7', minHeight: '100vh' }}>
+      <Section className="relative z-10 w-full flex items-center justify-center py-20" style={{}}>
         <motion.div
           variants={cardStagger}
           initial="hidden"
@@ -1014,6 +1017,7 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </Section>
+      </div>
 
       {/* ============ FOOTER ============ */}
       <footer className="relative w-full" style={{ zIndex: 6, backgroundColor: '#FAF9F7', borderTop: "1px solid rgba(0,0,0,0.06)" }}>
