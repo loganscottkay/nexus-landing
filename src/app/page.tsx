@@ -280,17 +280,6 @@ function MatchingFlowSection() {
 
   return (
     <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
-      {/* Film grain overlay */}
-      <div
-        className="tv-grain-overlay absolute inset-0 pointer-events-none"
-        style={{
-          opacity: 0.08,
-          zIndex: 2,
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
-          backgroundSize: '128px 128px',
-        }}
-      />
-
       <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{}}>
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -344,8 +333,19 @@ function MatchingFlowSection() {
                   border: '3px solid #1a1a2e',
                   background: '#0F0F1A',
                   overflow: 'hidden',
+                  position: 'relative',
                 }}
               >
+                {/* Film grain overlay — contained inside TV frame */}
+                <div
+                  className="tv-grain-overlay absolute inset-0 pointer-events-none"
+                  style={{
+                    opacity: 0.08,
+                    zIndex: 2,
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
+                    backgroundSize: '128px 128px',
+                  }}
+                />
                 {/* Title bar */}
                 <div
                   className="flex items-center justify-center relative"
