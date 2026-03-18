@@ -432,9 +432,6 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
                 <div style={{ fontSize: "6.5px", color: "rgba(255,255,255,0.55)", fontFamily: font, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.desc}</div>
               </div>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "2px", flexShrink: 0 }}>
-                <svg width="34" height="10" viewBox="0 0 34 10" fill="none">
-                  <polyline points={c.sparkline} stroke={c.accent} strokeWidth="1" fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
-                </svg>
                 <span style={{
                   fontSize: "5.5px", color: c.statusColor, background: c.statusBg.replace("0.12", "0.18"),
                   borderRadius: "9999px", padding: "2px 7px", fontFamily: font, fontWeight: 600,
