@@ -958,11 +958,11 @@ export default function Home() {
       {/* ============ NARRATIVE HOOK ============ */}
       <NarrativeLine />
 
-      {/* ============ WHAT MAKES URGENC DIFFERENT ============ */}
-      <WhatMakesDifferentSection />
-
       {/* ============ HOW MATCHING WORKS ============ */}
       <MatchingFlowSection />
+
+      {/* ============ WHAT MAKES URGENC DIFFERENT ============ */}
+      <WhatMakesDifferentSection />
 
       {/* ============ IPHONE MOCKUPS ============ */}
       <div className="scroll-stack-section lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 5, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
