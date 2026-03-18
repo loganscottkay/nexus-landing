@@ -3,16 +3,18 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 
 // ---- Configuration ----
-const TYPING_SPEED = 80;
-const DELETING_SPEED = 40;
-const PAUSE_AFTER_TYPE = 1500;
+const FAKE_TYPING_SPEED = 50;
+const FAKE_DELETING_SPEED = 25;
+const FAKE_PAUSE_AFTER_TYPE = 800;
+const FINAL_TYPING_SPEED = 80;
 const PAUSE_BETWEEN_SENTENCES = 500;
 const CURSOR_BLINK_INTERVAL = 500;
 
-const FAKE_SENTENCES = [
-  "It's all about who you know.",
-  "Just send more cold emails.",
-  "The best ideas always get funded.",
+// Each fake sentence + how many characters to cut off early
+const FAKE_SENTENCES: { text: string; cutoff: number }[] = [
+  { text: "It's all about who you know.", cutoff: 3 },
+  { text: "Just send more cold emails.", cutoff: 2 },
+  { text: "There's no way my startup could find an investor.", cutoff: 3 },
 ];
 
 const FINAL_SENTENCE =
@@ -67,30 +69,32 @@ export default function TypewriterQuote() {
 
     switch (phase.kind) {
       case "typing-fake": {
-        const sentence = FAKE_SENTENCES[phase.sentenceIdx];
+        const { text, cutoff } = FAKE_SENTENCES[phase.sentenceIdx];
+        const maxChars = text.length - cutoff;
         const nextChar = phase.charIdx + 1;
-        setDisplayText(sentence.slice(0, nextChar));
-        if (nextChar >= sentence.length) {
+        setDisplayText(text.slice(0, nextChar));
+        if (nextChar >= maxChars) {
           phaseRef.current = { kind: "pause-after-fake", sentenceIdx: phase.sentenceIdx };
-          timerRef.current = setTimeout(tick, PAUSE_AFTER_TYPE);
+          timerRef.current = setTimeout(tick, FAKE_PAUSE_AFTER_TYPE);
         } else {
           phaseRef.current = { kind: "typing-fake", sentenceIdx: phase.sentenceIdx, charIdx: nextChar };
-          timerRef.current = setTimeout(tick, TYPING_SPEED);
+          timerRef.current = setTimeout(tick, FAKE_TYPING_SPEED);
         }
         break;
       }
 
       case "pause-after-fake": {
-        const sentence = FAKE_SENTENCES[phase.sentenceIdx];
-        phaseRef.current = { kind: "deleting-fake", sentenceIdx: phase.sentenceIdx, charIdx: sentence.length - 1 };
-        timerRef.current = setTimeout(tick, DELETING_SPEED);
+        const { text, cutoff } = FAKE_SENTENCES[phase.sentenceIdx];
+        const maxChars = text.length - cutoff;
+        phaseRef.current = { kind: "deleting-fake", sentenceIdx: phase.sentenceIdx, charIdx: maxChars - 1 };
+        timerRef.current = setTimeout(tick, FAKE_DELETING_SPEED);
         break;
       }
 
       case "deleting-fake": {
         const nextChar = phase.charIdx - 1;
-        const sentence = FAKE_SENTENCES[phase.sentenceIdx];
-        setDisplayText(sentence.slice(0, nextChar + 1));
+        const { text } = FAKE_SENTENCES[phase.sentenceIdx];
+        setDisplayText(text.slice(0, nextChar + 1));
         if (nextChar < 0) {
           setDisplayText("");
           const nextIdx = phase.sentenceIdx + 1;
@@ -102,7 +106,7 @@ export default function TypewriterQuote() {
           timerRef.current = setTimeout(tick, PAUSE_BETWEEN_SENTENCES);
         } else {
           phaseRef.current = { kind: "deleting-fake", sentenceIdx: phase.sentenceIdx, charIdx: nextChar };
-          timerRef.current = setTimeout(tick, DELETING_SPEED);
+          timerRef.current = setTimeout(tick, FAKE_DELETING_SPEED);
         }
         break;
       }
@@ -111,10 +115,11 @@ export default function TypewriterQuote() {
         if (phase.nextSentenceIdx === -1) {
           setIsFinal(true);
           phaseRef.current = { kind: "typing-final", charIdx: 0 };
+          timerRef.current = setTimeout(tick, FINAL_TYPING_SPEED);
         } else {
           phaseRef.current = { kind: "typing-fake", sentenceIdx: phase.nextSentenceIdx, charIdx: 0 };
+          timerRef.current = setTimeout(tick, FAKE_TYPING_SPEED);
         }
-        timerRef.current = setTimeout(tick, TYPING_SPEED);
         break;
       }
 
@@ -126,7 +131,7 @@ export default function TypewriterQuote() {
           timerRef.current = setTimeout(tick, CURSOR_BLINK_INTERVAL);
         } else {
           phaseRef.current = { kind: "typing-final", charIdx: nextChar };
-          timerRef.current = setTimeout(tick, TYPING_SPEED);
+          timerRef.current = setTimeout(tick, FINAL_TYPING_SPEED);
         }
         break;
       }
@@ -157,7 +162,7 @@ export default function TypewriterQuote() {
       (entries) => {
         if (entries[0].isIntersecting && !hasStarted.current) {
           hasStarted.current = true;
-          timerRef.current = setTimeout(tick, TYPING_SPEED);
+          timerRef.current = setTimeout(tick, FAKE_TYPING_SPEED);
         }
       },
       { threshold: 0.3 }
