@@ -9,6 +9,8 @@ import { motion, useAnimationFrame } from "framer-motion";
    Three cards rotate continuously in 3D space.
    Never pauses — constant smooth rotation.
    Touch/drag rotates manually (mobile).
+   Wrapped in a dark retro-TV container with
+   floating particles behind the carousel.
    ───────────────────────────────────────────── */
 
 // ── Card Data ──────────────────────────────
@@ -271,6 +273,118 @@ function StaticGradientBg({ colors }: { colors: [string, string, string] }) {
   );
 }
 
+// ── Floating Particles Canvas (inside TV container) ──
+function TVParticlesCanvas() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let raf = 0;
+    let running = true;
+    const isMobile = window.innerWidth < 768;
+    const count = isMobile ? 20 : 30;
+
+    interface P { x: number; y: number; r: number; o: number; dx: number; dy: number }
+    let particles: P[] = [];
+
+    function resize() {
+      if (!canvas) return;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = canvas.offsetWidth * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function seed() {
+      if (!canvas) return;
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      particles = Array.from({ length: count }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: 1 + Math.random(),
+        o: 0.2 + Math.random() * 0.3,
+        dx: (Math.random() - 0.5) * 0.3,
+        dy: (Math.random() - 0.5) * 0.3,
+      }));
+    }
+
+    function draw() {
+      if (!canvas || !ctx || !running) return;
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = "rgba(139,92,246,0.4)";
+
+      for (const p of particles) {
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x < 0) p.x += w;
+        if (p.x > w) p.x -= w;
+        if (p.y < 0) p.y += h;
+        if (p.y > h) p.y -= h;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${p.o})`;
+        ctx.fill();
+      }
+
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = "transparent";
+      raf = requestAnimationFrame(draw);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          running = true;
+          draw();
+        } else {
+          running = false;
+          cancelAnimationFrame(raf);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    resize();
+    seed();
+    observer.observe(canvas);
+
+    const handleResize = () => { resize(); seed(); };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      running = false;
+      cancelAnimationFrame(raf);
+      observer.disconnect();
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 0,
+        pointerEvents: "none",
+        background: "transparent",
+      }}
+    />
+  );
+}
+
 // ── Mobile Carousel Card (static gradient, inside 3D carousel) ──
 function MobileCarouselCard({ card }: { card: (typeof cards)[0] }) {
   const IconComp = iconMap[card.icon];
@@ -298,11 +412,11 @@ function MobileCarouselCard({ card }: { card: (typeof cards)[0] }) {
         <div style={{ width: 48, height: 48, borderRadius: 12, background: card.tagBg, border: `1px solid ${card.iconStroke}30`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14, position: "relative", zIndex: 2 }}>
           <IconComp stroke={card.iconStroke} />
         </div>
-        <div style={{ display: "inline-flex", alignSelf: "flex-start", padding: "4px 12px", borderRadius: 999, background: card.tagBg, marginBottom: 10, position: "relative", zIndex: 2 }}>
+        <div style={{ display: "inline-flex", alignSelf: "flex-start", padding: "4px 12px", borderRadius: 999, background: card.tagBg, border: `1px solid ${card.tagColor}30`, marginBottom: 10, position: "relative", zIndex: 2 }}>
           <span style={{ fontSize: 9, fontWeight: 700, color: card.tagColor, letterSpacing: "2px", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>{card.tag}</span>
         </div>
-        <h3 style={{ fontSize: 20, fontWeight: 700, color: "#F8FAFC", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", letterSpacing: "-0.3px", margin: "0 0 6px 0", position: "relative", zIndex: 2 }}>{card.title}</h3>
-        <p style={{ fontSize: 13, fontWeight: 400, color: "rgba(255,255,255,0.7)", lineHeight: 1.7, fontFamily: "var(--font-dm-sans), sans-serif", margin: 0, position: "relative", zIndex: 2, flex: 1 }}>{card.description}</p>
+        <h3 className="tv-gradient-title" style={{ fontSize: 20, fontWeight: 700, fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", letterSpacing: "-0.3px", margin: "0 0 6px 0", position: "relative", zIndex: 2 }}>{card.title}</h3>
+        <p style={{ fontSize: 13, fontWeight: 400, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, fontFamily: "var(--font-dm-sans), sans-serif", margin: 0, position: "relative", zIndex: 2, flex: 1 }}>{card.description}</p>
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 3, background: card.accentBar, borderRadius: "0 0 20px 20px", zIndex: 2 }} />
       </div>
     </div>
@@ -371,7 +485,7 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
           <IconComp stroke={card.iconStroke} />
         </div>
 
-        {/* Tag pill */}
+        {/* Tag pill — updated to match TV style with border */}
         <div
           style={{
             display: "inline-flex",
@@ -379,6 +493,7 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
             padding: "5px 14px",
             borderRadius: 999,
             background: card.tagBg,
+            border: `1px solid ${card.tagColor}30`,
             marginBottom: 12,
             position: "relative",
             zIndex: 2,
@@ -397,12 +512,12 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
           </span>
         </div>
 
-        {/* Title */}
+        {/* Title — animated gradient text */}
         <h3
+          className="tv-gradient-title"
           style={{
             fontSize: 22,
             fontWeight: 700,
-            color: "#F8FAFC",
             fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
             letterSpacing: "-0.3px",
             margin: "0 0 8px 0",
@@ -413,12 +528,12 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
           {card.title}
         </h3>
 
-        {/* Description */}
+        {/* Description — slightly dimmer to match TV style */}
         <p
           style={{
             fontSize: 14,
             fontWeight: 400,
-            color: "rgba(255,255,255,0.7)",
+            color: "rgba(255,255,255,0.6)",
             lineHeight: 1.7,
             fontFamily: "var(--font-dm-sans), sans-serif",
             margin: 0,
@@ -556,7 +671,7 @@ export default function WhatMakesDifferentSection() {
       }}
     >
       <div className="max-w-[1100px] mx-auto" style={{ padding: "0 24px" }}>
-        {/* ── Header ── */}
+        {/* ── Header (stays above TV container) ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -605,7 +720,7 @@ export default function WhatMakesDifferentSection() {
           </p>
         </motion.div>
 
-        {/* ── Cards — 3D carousel on all sizes ── */}
+        {/* ── Dark TV Container ── */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -615,28 +730,92 @@ export default function WhatMakesDifferentSection() {
             delay: 0.2,
             ease: [0.16, 1, 0.3, 1],
           }}
+          className="mx-auto"
+          style={{ maxWidth: 960 }}
         >
           <div
-            className="carousel-scene"
             style={{
-              height: "var(--carousel-height)",
-              overflow: "visible",
+              borderRadius: 12,
+              border: "3px solid #2a2a4a",
+              background: "#0F0F1A",
+              overflow: "hidden",
+              position: "relative",
             }}
-            onTouchStart={isMobile ? undefined : handleTouchStart}
-            onTouchMove={isMobile ? undefined : handleTouchMove}
-            onTouchEnd={isMobile ? undefined : handleTouchEnd}
           >
+            {/* ── TV Title Bar ── */}
             <div
-              ref={ringRef}
-              className={`carousel-ring${!isInView ? " paused" : ""}`}
+              className="flex items-center justify-center relative"
+              style={{
+                height: 36,
+                background:
+                  "repeating-linear-gradient(to bottom, #0F0F1A 0px, #0F0F1A 2px, #2a2a4a 2px, #2a2a4a 4px)",
+              }}
             >
-              {cards.map((card) =>
-                isMobile ? (
-                  <MobileCarouselCard key={card.id} card={card} />
-                ) : (
-                  <CarouselCard key={card.id} card={card} />
-                )
-              )}
+              {/* Small square button left */}
+              <div
+                className="absolute left-3"
+                style={{
+                  width: 12,
+                  height: 12,
+                  border: "1.5px solid #2a2a4a",
+                  borderRadius: 2,
+                  background: "#0F0F1A",
+                }}
+              />
+              {/* Title pill */}
+              <div
+                style={{
+                  padding: "2px 14px",
+                  border: "1px solid #2a2a4a",
+                  borderRadius: 9999,
+                  fontFamily: "monospace",
+                  fontSize: 10,
+                  color: "#c0c0e0",
+                  letterSpacing: 1.5,
+                  textTransform: "uppercase",
+                }}
+              >
+                Why UrgenC
+              </div>
+            </div>
+
+            {/* ── Screen Area with particles + carousel ── */}
+            <div
+              style={{
+                position: "relative",
+                overflow: "hidden",
+                padding: "20px 0",
+              }}
+            >
+              {/* Floating particles behind carousel */}
+              <TVParticlesCanvas />
+
+              {/* 3D Carousel */}
+              <div
+                className="carousel-scene"
+                style={{
+                  height: "var(--carousel-height)",
+                  overflow: "visible",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+                onTouchStart={isMobile ? undefined : handleTouchStart}
+                onTouchMove={isMobile ? undefined : handleTouchMove}
+                onTouchEnd={isMobile ? undefined : handleTouchEnd}
+              >
+                <div
+                  ref={ringRef}
+                  className={`carousel-ring${!isInView ? " paused" : ""}`}
+                >
+                  {cards.map((card) =>
+                    isMobile ? (
+                      <MobileCarouselCard key={card.id} card={card} />
+                    ) : (
+                      <CarouselCard key={card.id} card={card} />
+                    )
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
