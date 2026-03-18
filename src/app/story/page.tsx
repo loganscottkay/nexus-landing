@@ -145,22 +145,16 @@ const milestones = [
   {
     year: "2020",
     title: "The Problem",
-    body: "The startup world felt like a closed club. Cold emails went nowhere. Networking events were useless. And everyone around us felt the same FOMO.",
+    body: "Breaking into startups always felt impossible\u2014every idea already taken. But with AI flooding the market with new companies, the problem isn\u2019t building anymore, it\u2019s filtering. There\u2019s more capital than ever, but no efficient way to connect it to the right ideas.",
     side: "right" as const,
   },
   {
     year: "2024",
     title: "The Moment It Clicked",
-    body: "One night Benjamin said it: the problem is not finding an idea. The problem is that founders and investors literally cannot find each other. That was the moment.",
+    body: "If the real problem is discovery\u2014not creation\u2014then the opportunity is to build the system that connects the right ideas with the right capital.",
     side: "left" as const,
   },
-  {
-    year: "2025",
-    title: "What UrgenC Is",
-    body: "A matching app. Founders pitch. Investors swipe. Matches lead to real calls. Think Tinder but for startup deals.",
-    side: "right" as const,
-  },
-  {
+{
     year: "2026",
     title: "Why Now",
     body: "AI is lowering the barrier to build. More people than ever want in. UrgenC is the door.",
@@ -219,8 +213,8 @@ export default function StoryPage() {
   useEffect(() => {
     if (reducedMotion) {
       setScrollProgress(1);
-      setActivatedMilestones(new Set([0, 1, 2, 3, 4]));
-      setRevealedCards(new Set([0, 1, 2, 3, 4]));
+      setActivatedMilestones(new Set([0, 1, 2, 3]));
+      setRevealedCards(new Set([0, 1, 2, 3]));
       setFoundersRevealed(true);
       return;
     }
