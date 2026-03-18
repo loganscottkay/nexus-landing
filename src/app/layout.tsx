@@ -4,6 +4,7 @@ import "./globals.css";
 import PageAtmosphere from "@/components/PageAtmosphere";
 import CursorGlow from "@/components/CursorGlow";
 import MouseTrail from "@/components/MouseTrail";
+import PageTransition from "@/components/PageTransition";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default function RootLayout({
         <PageAtmosphere />
         <CursorGlow />
         <MouseTrail />
+        <PageTransition />
         {children}
       </body>
     </html>
