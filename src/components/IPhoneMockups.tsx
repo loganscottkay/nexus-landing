@@ -1030,13 +1030,10 @@ function PhoneEnlargeModal({
           position: "relative",
           ...(!show ? {
             opacity: 0,
-            filter: "blur(12px) brightness(0.8)",
-            clipPath: "inset(30% 30% 30% 30%)",
+            transform: "scale(0.9)",
           } : {}),
         }}
       >
-        {/* Venetian blinds overlay for modal */}
-        {show && <div className="glass-blinds-overlay-modal" />}
         <PhoneBody hovered={false} enlarged>
           {children}
         </PhoneBody>
@@ -1100,16 +1097,11 @@ function IPhoneFrame({
           position: "relative",
           ...(!visible ? {
             opacity: 0,
-            filter: "blur(12px) brightness(0.8)",
-            clipPath: "inset(30% 30% 30% 30%)",
+            transform: "translateY(40px)",
           } : {}),
           perspective: "1200px",
         }}
       >
-        {/* Venetian blinds overlay */}
-        {visible && (
-          <div className={index === 0 ? "glass-blinds-overlay" : "glass-blinds-overlay-delayed"} />
-        )}
         {/* Glow behind phone on hover */}
         <div style={{
           position: "absolute",
