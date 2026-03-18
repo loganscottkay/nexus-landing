@@ -154,20 +154,38 @@ const carouselCSS = `
   transform: rotateY(240deg) translateZ(var(--tz));
 }
 
+/* Neon flicker animation for TV title */
+@keyframes neonFlickerOn {
+  0%   { opacity: 0.3; text-shadow: none; }
+  10%  { opacity: 1; text-shadow: 0 0 7px rgba(99,102,241,0.8), 0 0 10px rgba(99,102,241,0.6), 0 0 21px rgba(99,102,241,0.4), 0 0 42px rgba(99,102,241,0.2); }
+  20%  { opacity: 0.4; text-shadow: none; }
+  35%  { opacity: 1; text-shadow: 0 0 7px rgba(99,102,241,0.8), 0 0 10px rgba(99,102,241,0.6), 0 0 21px rgba(99,102,241,0.4), 0 0 42px rgba(99,102,241,0.2); }
+  40%  { opacity: 0.5; text-shadow: 0 0 4px rgba(99,102,241,0.3); }
+  50%, 100% { opacity: 1; text-shadow: 0 0 7px rgba(99,102,241,0.8), 0 0 10px rgba(99,102,241,0.6), 0 0 21px rgba(99,102,241,0.4), 0 0 42px rgba(99,102,241,0.2); }
+}
+
+.neon-title-glow {
+  opacity: 0.3;
+}
+
+.neon-title-glow.active {
+  animation: neonFlickerOn 0.5s ease-out forwards;
+}
+
 /* Responsive variables */
 :root {
-  --card-width: 280px;
-  --card-height: 320px;
-  --tz: 300px;
-  --carousel-height: 420px;
+  --card-width: 240px;
+  --card-height: 290px;
+  --tz: 260px;
+  --carousel-height: 380px;
 }
 
 @media (max-width: 767px) {
   :root {
-    --card-width: 240px;
-    --card-height: 290px;
-    --tz: 160px;
-    --carousel-height: 360px;
+    --card-width: 210px;
+    --card-height: 260px;
+    --tz: 180px;
+    --carousel-height: 340px;
   }
 
   .carousel-ring {
@@ -396,7 +414,7 @@ function MobileCarouselCard({ card }: { card: (typeof cards)[0] }) {
           width: "100%",
           height: "100%",
           borderRadius: 20,
-          padding: "28px 24px",
+          padding: "22px 20px",
           background: "#0F172A",
           display: "flex",
           flexDirection: "column",
@@ -409,15 +427,14 @@ function MobileCarouselCard({ card }: { card: (typeof cards)[0] }) {
       >
         <StaticGradientBg colors={card.gradientColors} />
         <div style={{ position: "absolute", inset: 0, borderRadius: 20, background: "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.08) 0%, transparent 60%)", pointerEvents: "none", zIndex: 1 }} />
-        <div style={{ width: 48, height: 48, borderRadius: 12, background: card.tagBg, border: `1px solid ${card.iconStroke}30`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14, position: "relative", zIndex: 2 }}>
+        <div style={{ width: 42, height: 42, borderRadius: 10, background: card.tagBg, border: `1px solid ${card.iconStroke}30`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10, position: "relative", zIndex: 2 }}>
           <IconComp stroke={card.iconStroke} />
         </div>
         <div style={{ display: "inline-flex", alignSelf: "flex-start", padding: "4px 12px", borderRadius: 999, background: card.tagBg, border: `1px solid ${card.tagColor}30`, marginBottom: 10, position: "relative", zIndex: 2 }}>
           <span style={{ fontSize: 9, fontWeight: 700, color: card.tagColor, letterSpacing: "2px", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>{card.tag}</span>
         </div>
-        <h3 className="tv-gradient-title" style={{ fontSize: 20, fontWeight: 700, fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", letterSpacing: "-0.3px", margin: "0 0 6px 0", position: "relative", zIndex: 2 }}>{card.title}</h3>
-        <p style={{ fontSize: 13, fontWeight: 400, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, fontFamily: "var(--font-dm-sans), sans-serif", margin: 0, position: "relative", zIndex: 2, flex: 1 }}>{card.description}</p>
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 3, background: card.accentBar, borderRadius: "0 0 20px 20px", zIndex: 2 }} />
+        <h3 className="tv-gradient-title" style={{ fontSize: 18, fontWeight: 700, fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", letterSpacing: "-0.3px", margin: "0 0 5px 0", position: "relative", zIndex: 2 }}>{card.title}</h3>
+        <p style={{ fontSize: 12, fontWeight: 400, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, fontFamily: "var(--font-dm-sans), sans-serif", margin: 0, position: "relative", zIndex: 2, flex: 1 }}>{card.description}</p>
       </div>
     </div>
   );
@@ -436,7 +453,7 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
           width: "100%",
           height: "100%",
           borderRadius: 20,
-          padding: "32px 28px",
+          padding: "26px 22px",
           background: "#0F172A",
           display: "flex",
           flexDirection: "column",
@@ -469,15 +486,15 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
         {/* Icon container */}
         <div
           style={{
-            width: 52,
-            height: 52,
-            borderRadius: 14,
+            width: 46,
+            height: 46,
+            borderRadius: 12,
             background: card.tagBg,
             border: `1px solid ${card.iconStroke}30`,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            marginBottom: 16,
+            marginBottom: 12,
             position: "relative",
             zIndex: 2,
           }}
@@ -494,7 +511,7 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
             borderRadius: 999,
             background: card.tagBg,
             border: `1px solid ${card.tagColor}30`,
-            marginBottom: 12,
+            marginBottom: 10,
             position: "relative",
             zIndex: 2,
           }}
@@ -516,11 +533,11 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
         <h3
           className="tv-gradient-title"
           style={{
-            fontSize: 22,
+            fontSize: 20,
             fontWeight: 700,
             fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
             letterSpacing: "-0.3px",
-            margin: "0 0 8px 0",
+            margin: "0 0 6px 0",
             position: "relative",
             zIndex: 2,
           }}
@@ -528,10 +545,10 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
           {card.title}
         </h3>
 
-        {/* Description — slightly dimmer to match TV style */}
+        {/* Description */}
         <p
           style={{
-            fontSize: 14,
+            fontSize: 13,
             fontWeight: 400,
             color: "rgba(255,255,255,0.6)",
             lineHeight: 1.7,
@@ -544,20 +561,6 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
         >
           {card.description}
         </p>
-
-        {/* Accent bar at bottom */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 3,
-            background: card.accentBar,
-            borderRadius: "0 0 20px 20px",
-            zIndex: 2,
-          }}
-        />
       </div>
     </div>
   );
@@ -746,7 +749,7 @@ export default function WhatMakesDifferentSection() {
             <div
               className="flex items-center justify-center relative"
               style={{
-                height: 36,
+                height: 40,
                 background:
                   "repeating-linear-gradient(to bottom, #0F0F1A 0px, #0F0F1A 2px, #2a2a4a 2px, #2a2a4a 4px)",
               }}
@@ -762,17 +765,19 @@ export default function WhatMakesDifferentSection() {
                   background: "#0F0F1A",
                 }}
               />
-              {/* Title pill */}
+              {/* Title pill with neon glow */}
               <div
+                className={`neon-title-glow${isInView ? " active" : ""}`}
                 style={{
-                  padding: "2px 14px",
+                  padding: "2px 16px",
                   border: "1px solid #2a2a4a",
                   borderRadius: 9999,
                   fontFamily: "monospace",
-                  fontSize: 10,
-                  color: "#c0c0e0",
+                  fontSize: 14,
+                  color: "#818CF8",
                   letterSpacing: 1.5,
                   textTransform: "uppercase",
+                  fontWeight: 600,
                 }}
               >
                 Why UrgenC
@@ -784,7 +789,10 @@ export default function WhatMakesDifferentSection() {
               style={{
                 position: "relative",
                 overflow: "hidden",
-                padding: "20px 0",
+                padding: "24px 20px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
               {/* Floating particles behind carousel */}
