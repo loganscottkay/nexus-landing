@@ -240,155 +240,57 @@ const matchingSteps = [
   },
 ];
 
-/* ─── Floating particles inside TV screen ─── */
-function TVParticlesCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+/* ─── Hand-drawn SVG icons for sticky notes ─── */
+const stickyIcons = [
+  // Video camera (hand-drawn style)
+  <svg key="cam" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M23.2 7.1L16.1 11.8L22.8 17.1L23.2 7.1Z" />
+    <path d="M1.2 5.3C1 5.8 0.9 6.2 1 6.8L1.1 17.2C1 18.1 1.8 19.1 2.8 19.2L14.2 19C15.2 19.1 16.1 18.2 16 17.1L16.1 6C16.2 5 15.3 4.9 14.3 5L2.8 4.8C2 4.9 1.3 5 1.2 5.3Z" />
+  </svg>,
+  // Sliders/filter (hand-drawn style)
+  <svg key="sliders" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="4.1" y1="21.2" x2="3.9" y2="14.1" />
+    <line x1="4.2" y1="9.8" x2="3.8" y2="2.9" />
+    <line x1="12.1" y1="21.1" x2="11.9" y2="12.2" />
+    <line x1="12.2" y1="7.9" x2="11.8" y2="3.1" />
+    <line x1="20.1" y1="20.8" x2="19.9" y2="16.1" />
+    <line x1="20.2" y1="11.9" x2="19.8" y2="3.2" />
+    <line x1="1.1" y1="14.2" x2="6.9" y2="13.8" />
+    <line x1="9.2" y1="8.1" x2="14.8" y2="7.9" />
+    <line x1="17.1" y1="16.2" x2="22.9" y2="15.8" />
+  </svg>,
+  // Checkmark (hand-drawn style)
+  <svg key="check" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20.1 6.2L9.2 17.1L3.9 11.8" />
+    <circle cx="12" cy="12" r="10.5" strokeDasharray="3 3" opacity="0.3" />
+  </svg>,
+  // Phone (hand-drawn style)
+  <svg key="phone" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22.1 16.8v3.1a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6.1-5.9 19.8 19.8 0 01-3.1-8.7A2 2 0 014.2 2.1h2.9a2 2 0 012.1 1.7 12.8 12.8 0 00.7 2.8 2 2 0 01-.4 2.1L8.2 10a16 16 0 005.9 5.9l1.3-1.3a2 2 0 012.1-.4 12.8 12.8 0 002.8.7A2 2 0 0122.1 16.8z" />
+  </svg>,
+];
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let raf = 0;
-    let running = true;
-    const isMobile = window.innerWidth < 768;
-    const count = isMobile ? 20 : 30;
-
-    interface P { x: number; y: number; r: number; o: number; dx: number; dy: number }
-    let particles: P[] = [];
-
-    function resize() {
-      if (!canvas) return;
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = canvas.offsetWidth * dpr;
-      canvas.height = canvas.offsetHeight * dpr;
-      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-
-    function seed() {
-      if (!canvas) return;
-      const w = canvas.offsetWidth;
-      const h = canvas.offsetHeight;
-      particles = Array.from({ length: count }, () => ({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: 1 + Math.random(),               // 1-2px
-        o: 0.2 + Math.random() * 0.3,       // 0.2-0.5
-        dx: (Math.random() - 0.5) * 0.3,    // slow drift
-        dy: (Math.random() - 0.5) * 0.3,
-      }));
-    }
-
-    function draw() {
-      if (!canvas || !ctx || !running) return;
-      const w = canvas.offsetWidth;
-      const h = canvas.offsetHeight;
-      ctx.clearRect(0, 0, w, h);
-
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = "rgba(139,92,246,0.4)";
-
-      for (const p of particles) {
-        p.x += p.dx;
-        p.y += p.dy;
-        // wrap edges
-        if (p.x < 0) p.x += w;
-        if (p.x > w) p.x -= w;
-        if (p.y < 0) p.y += h;
-        if (p.y > h) p.y -= h;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${p.o})`;
-        ctx.fill();
-      }
-
-      ctx.shadowBlur = 0;
-      ctx.shadowColor = "transparent";
-      raf = requestAnimationFrame(draw);
-    }
-
-    // Only animate when section is in viewport
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          running = true;
-          draw();
-        } else {
-          running = false;
-          cancelAnimationFrame(raf);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    resize();
-    seed();
-    observer.observe(canvas);
-
-    window.addEventListener("resize", () => { resize(); seed(); });
-
-    return () => {
-      running = false;
-      cancelAnimationFrame(raf);
-      observer.disconnect();
-      window.removeEventListener("resize", () => { resize(); seed(); });
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        position: "absolute",
-        inset: 0,
-        width: "100%",
-        height: "100%",
-        zIndex: 0,
-        pointerEvents: "none",
-        background: "transparent",
-      }}
-    />
-  );
-}
+const stickyNoteColors = ['#FFF9C4', '#E8F5E9', '#E3F2FD', '#F3E5F5'];
+const stickyNoteRotations = [-1, 0.5, -0.7, 1.2];
 
 function MatchingFlowSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const labelColors: Record<string, { bg: string; text: string }> = {
-    "FOR FOUNDERS": { bg: "rgba(99, 102, 241, 0.15)", text: "#818CF8" },
-    "FOR INVESTORS": { bg: "rgba(99, 102, 241, 0.15)", text: "#A78BFA" },
-    "BOTH SIDES": { bg: "rgba(16, 185, 129, 0.15)", text: "#34D399" },
-  };
-
-  const resetTimer = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % 4);
-    }, 5000);
-  }, []);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    resetTimer();
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [resetTimer]);
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
-  const goTo = useCallback((dir: number) => {
-    setCurrentSlide((prev) => (prev + dir + 4) % 4);
-    resetTimer();
-  }, [resetTimer]);
+  const goPrev = useCallback(() => {
+    setCurrentSlide((prev) => Math.max(0, prev - 1));
+  }, []);
 
-  const step = matchingSteps[currentSlide];
-
-  // SVG icons with gradient stroke for the TV slides
-  const tvIcons = [
-    <svg key="cam" width="32" height="32" viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><defs><linearGradient id="tvIconGrad1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stopColor="#6366F1" /><stop offset="50%" stopColor="#A78BFA" /><stop offset="100%" stopColor="#8B5CF6" /></linearGradient></defs><polygon points="23 7 16 12 23 17 23 7" stroke="url(#tvIconGrad1)" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" stroke="url(#tvIconGrad1)" /></svg>,
-    <svg key="sliders" width="32" height="32" viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><defs><linearGradient id="tvIconGrad2" x1="0" y1="0" x2="24" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#6366F1" /><stop offset="50%" stopColor="#A78BFA" /><stop offset="100%" stopColor="#8B5CF6" /></linearGradient></defs><line x1="4" y1="21" x2="4" y2="14" stroke="url(#tvIconGrad2)" /><line x1="4" y1="10" x2="4" y2="3" stroke="url(#tvIconGrad2)" /><line x1="12" y1="21" x2="12" y2="12" stroke="url(#tvIconGrad2)" /><line x1="12" y1="8" x2="12" y2="3" stroke="url(#tvIconGrad2)" /><line x1="20" y1="21" x2="20" y2="16" stroke="url(#tvIconGrad2)" /><line x1="20" y1="12" x2="20" y2="3" stroke="url(#tvIconGrad2)" /><line x1="1" y1="14" x2="7" y2="14" stroke="url(#tvIconGrad2)" /><line x1="9" y1="8" x2="15" y2="8" stroke="url(#tvIconGrad2)" /><line x1="17" y1="16" x2="23" y2="16" stroke="url(#tvIconGrad2)" /></svg>,
-    <svg key="check" width="32" height="32" viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><defs><linearGradient id="tvIconGrad3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stopColor="#6366F1" /><stop offset="50%" stopColor="#A78BFA" /><stop offset="100%" stopColor="#8B5CF6" /></linearGradient></defs><polyline points="20 6 9 17 4 12" stroke="url(#tvIconGrad3)" /></svg>,
-    <svg key="phone" width="32" height="32" viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><defs><linearGradient id="tvIconGrad4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stopColor="#6366F1" /><stop offset="50%" stopColor="#A78BFA" /><stop offset="100%" stopColor="#8B5CF6" /></linearGradient></defs><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="url(#tvIconGrad4)" /></svg>,
-  ];
+  const goNext = useCallback(() => {
+    setCurrentSlide((prev) => Math.min(3, prev + 1));
+  }, []);
 
   return (
     <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
@@ -432,196 +334,238 @@ function MatchingFlowSection() {
               The complete flow from pitch to meeting.
             </motion.p>
 
-            {/* Retro TV frame */}
+            {/* Paper background container */}
             <motion.div
               variants={tierCard}
               transition={{ duration: 0.6, delay: 0.5, ease }}
               className="w-full mx-auto"
-              style={{ maxWidth: 700 }}
+              style={{ maxWidth: 800 }}
             >
               <div
+                className="relative mx-auto"
                 style={{
+                  maxWidth: 800,
                   borderRadius: 12,
-                  border: '3px solid #1a1a2e',
-                  background: '#0F0F1A',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                  padding: isMobile ? '24px 16px' : '40px',
+                  background: '#FFF8E7',
                   overflow: 'hidden',
-                  position: 'relative',
+                  margin: isMobile ? '0 -8px' : undefined,
                 }}
               >
-                {/* Title bar */}
+                {/* Lined paper pattern */}
+                <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
+                  <defs>
+                    <pattern id="lined-paper" patternUnits="userSpaceOnUse" width="100%" height="28">
+                      <line x1="0" y1="28" x2="100%" y2="28" stroke="rgba(180,160,140,0.2)" strokeWidth="1" />
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#lined-paper)" />
+                </svg>
+
+                {/* Vintage paper texture overlay */}
                 <div
-                  className="flex items-center justify-center relative"
                   style={{
-                    height: 36,
-                    background: 'repeating-linear-gradient(0deg, #1a1a2e 0px, #1a1a2e 2px, #12122a 2px, #12122a 4px)',
+                    position: 'absolute',
+                    inset: 0,
+                    pointerEvents: 'none',
+                    background: `
+                      radial-gradient(ellipse at 20% 30%, rgba(139,69,19,0.08) 0%, transparent 50%),
+                      radial-gradient(ellipse at 80% 70%, rgba(139,69,19,0.06) 0%, transparent 50%),
+                      radial-gradient(ellipse at 50% 10%, rgba(139,69,19,0.04) 0%, transparent 40%),
+                      radial-gradient(ellipse at 10% 80%, rgba(139,69,19,0.05) 0%, transparent 45%)
+                    `,
                   }}
-                >
-                  {/* Small square button left */}
+                />
+
+                {/* Noise texture overlay */}
+                <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', opacity: 0.15 }}>
+                  <filter id="paper-noise">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+                  </filter>
+                  <rect width="100%" height="100%" filter="url(#paper-noise)" />
+                </svg>
+
+                {/* Stacking slider area */}
+                <div className="relative" style={{ minHeight: isMobile ? 300 : 320 }}>
+                  {/* Stack of cards */}
                   <div
-                    className="absolute left-3"
-                    style={{
-                      width: 12,
-                      height: 12,
-                      border: '1.5px solid #2a2a4a',
-                      borderRadius: 2,
-                      background: '#0F0F1A',
-                    }}
-                  />
-                  {/* Title pill */}
-                  <div
-                    style={{
-                      padding: '2px 14px',
-                      border: '1px solid #2a2a4a',
-                      borderRadius: 9999,
-                      fontFamily: 'monospace',
-                      fontSize: 10,
-                      color: '#c0c0e0',
-                      letterSpacing: 1.5,
-                      textTransform: 'uppercase',
-                    }}
+                    className="relative mx-auto"
+                    style={{ width: '100%', maxWidth: isMobile ? '100%' : 380, height: isMobile ? 260 : 280 }}
                   >
-                    The Matching Flow
+                    {matchingSteps.map((step, idx) => {
+                      const isActive = idx === currentSlide;
+                      const isBehind = idx < currentSlide;
+                      const isAhead = idx > currentSlide;
+                      const stackOffset = (idx - currentSlide);
+
+                      return (
+                        <AnimatePresence key={idx} mode="popLayout">
+                          {!isBehind && (
+                            <motion.div
+                              key={`card-${idx}`}
+                              initial={isAhead ? { x: 300, opacity: 0 } : false}
+                              animate={{
+                                x: isActive ? 0 : (isMobile ? 0 : stackOffset * 15),
+                                y: isActive ? 0 : stackOffset * 6,
+                                opacity: isActive ? 1 : Math.max(0, 1 - stackOffset * 0.25),
+                                scale: isActive ? 1 : 1 - stackOffset * 0.03,
+                                rotate: isActive ? stickyNoteRotations[idx] : stickyNoteRotations[idx] * 0.5,
+                              }}
+                              exit={{ x: -300, opacity: 0 }}
+                              transition={{ duration: 0.35, ease: 'easeInOut' }}
+                              className="absolute inset-0"
+                              style={{
+                                width: '100%',
+                                height: isMobile ? 260 : 280,
+                                background: stickyNoteColors[idx],
+                                borderRadius: 4,
+                                boxShadow: '2px 4px 12px rgba(0,0,0,0.1)',
+                                zIndex: 10 - stackOffset,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                padding: '24px 20px',
+                                textAlign: 'center',
+                              }}
+                            >
+                              {/* Tape element */}
+                              <div
+                                style={{
+                                  position: 'absolute',
+                                  top: -6,
+                                  left: '50%',
+                                  transform: 'translateX(-50%)',
+                                  width: 40,
+                                  height: 12,
+                                  background: 'rgba(255,255,255,0.6)',
+                                  border: '1px solid rgba(200,200,200,0.4)',
+                                  borderRadius: 1,
+                                }}
+                              />
+
+                              {/* Hand-drawn icon */}
+                              <div className="mb-3">
+                                {stickyIcons[idx]}
+                              </div>
+
+                              {/* Label tag */}
+                              <span
+                                style={{
+                                  fontSize: 10,
+                                  letterSpacing: 2,
+                                  textTransform: 'uppercase',
+                                  color: '#1a1a1a',
+                                  fontWeight: 600,
+                                  fontFamily: "var(--font-dm-sans), sans-serif",
+                                  marginBottom: 4,
+                                }}
+                              >
+                                {step.label}
+                              </span>
+
+                              {/* Step number */}
+                              <span
+                                style={{
+                                  fontFamily: "'Caveat', cursive",
+                                  fontSize: 12,
+                                  color: '#666',
+                                  marginBottom: 6,
+                                }}
+                              >
+                                STEP {step.num}
+                              </span>
+
+                              {/* Title */}
+                              <h3
+                                style={{
+                                  fontFamily: "'Caveat', cursive",
+                                  fontSize: 24,
+                                  fontWeight: 700,
+                                  color: '#1a1a1a',
+                                  marginBottom: 8,
+                                  lineHeight: 1.2,
+                                }}
+                              >
+                                {step.title}
+                              </h3>
+
+                              {/* Hand-drawn underline decoration */}
+                              <svg width="60" height="6" viewBox="0 0 60 6" style={{ marginBottom: 10 }}>
+                                <path d="M2 4C10 2 20 3 30 2.5C40 2 50 3.5 58 2" stroke="#333" strokeWidth="1" fill="none" strokeLinecap="round" opacity="0.3" />
+                              </svg>
+
+                              {/* Description */}
+                              <p
+                                style={{
+                                  fontSize: 14,
+                                  color: '#555',
+                                  lineHeight: 1.6,
+                                  fontFamily: "var(--font-dm-sans), sans-serif",
+                                  maxWidth: 320,
+                                }}
+                              >
+                                {step.desc}
+                              </p>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      );
+                    })}
                   </div>
                 </div>
 
-                {/* Screen area */}
-                <div
-                  style={{
-                    margin: 6,
-                    border: '2px solid #2a2a4a',
-                    borderRadius: 4,
-                    boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.5)',
-                    background: '#0F0F1A',
-                    minHeight: 300,
-                    position: 'relative',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {/* Floating particles canvas */}
-                  <TVParticlesCanvas />
-
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={currentSlide}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5, ease: 'easeInOut' }}
-                      className="relative z-[1] flex flex-col items-center justify-center text-center px-6 py-10 md:px-10 md:py-10"
-                    >
-                      {/* Icon */}
-                      <div className="mb-5">
-                        {tvIcons[currentSlide]}
-                      </div>
-
-                      {/* Label pill */}
-                      <span
-                        className="inline-block rounded-full px-3 py-1 text-[10px] tracking-[2px] uppercase font-medium mb-4"
-                        style={{
-                          background: labelColors[step.label]?.bg || 'rgba(99,102,241,0.15)',
-                          color: labelColors[step.label]?.text || '#818CF8',
-                        }}
-                      >
-                        {step.label}
-                      </span>
-
-                      {/* Step number */}
-                      <p
-                        style={{
-                          fontFamily: 'monospace',
-                          fontSize: 11,
-                          color: 'rgba(255,255,255,0.4)',
-                          letterSpacing: 2,
-                          marginBottom: 8,
-                          textTransform: 'uppercase',
-                        }}
-                      >
-                        Step {step.num}
-                      </p>
-
-                      {/* Animated gradient title */}
-                      <h3
-                        className="tv-gradient-title mb-4"
-                        style={{
-                          fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
-                          fontSize: 28,
-                          fontWeight: 700,
-                        }}
-                      >
-                        {step.title}
-                      </h3>
-
-                      {/* Description */}
-                      <p
-                        style={{
-                          color: 'rgba(255,255,255,0.6)',
-                          fontSize: 15,
-                          lineHeight: 1.7,
-                          maxWidth: 480,
-                        }}
-                      >
-                        {step.desc}
-                      </p>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-
-                {/* Bottom control bar */}
-                <div
-                  className="flex items-center justify-between px-4"
-                  style={{
-                    height: 46,
-                    background: 'repeating-linear-gradient(0deg, #1a1a2e 0px, #1a1a2e 2px, #12122a 2px, #12122a 4px)',
-                  }}
-                >
-                  {/* Prev button */}
+                {/* Arrow buttons */}
+                <div className="flex items-center justify-center gap-4 mt-8 relative z-20">
                   <button
-                    onClick={() => goTo(-1)}
+                    onClick={goPrev}
+                    disabled={currentSlide === 0}
                     aria-label="Previous step"
                     style={{
-                      width: 30,
-                      height: 24,
-                      border: '1.5px solid #2a2a4a',
-                      borderRadius: 3,
-                      background: '#0F0F1A',
+                      width: 44,
+                      height: 44,
+                      borderRadius: '50%',
+                      background: '#fff',
+                      border: '1px solid #e0e0e0',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      cursor: 'pointer',
+                      cursor: currentSlide === 0 ? 'default' : 'pointer',
+                      opacity: currentSlide === 0 ? 0.3 : 1,
+                      transition: 'opacity 0.2s, background 0.2s',
                     }}
+                    onMouseEnter={(e) => { if (currentSlide !== 0) e.currentTarget.style.background = '#f3f3f3'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; }}
                   >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c0c0e0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
                   </button>
 
-                  {/* Counter */}
-                  <span
-                    style={{
-                      fontFamily: 'monospace',
-                      fontSize: 12,
-                      color: '#c0c0e0',
-                      letterSpacing: 1,
-                    }}
-                  >
-                    {currentSlide + 1}/4
+                  <span style={{ fontFamily: "'Caveat', cursive", fontSize: 16, color: '#666' }}>
+                    {currentSlide + 1} / 4
                   </span>
 
-                  {/* Next button */}
                   <button
-                    onClick={() => goTo(1)}
+                    onClick={goNext}
+                    disabled={currentSlide === 3}
                     aria-label="Next step"
                     style={{
-                      width: 30,
-                      height: 24,
-                      border: '1.5px solid #2a2a4a',
-                      borderRadius: 3,
-                      background: '#0F0F1A',
+                      width: 44,
+                      height: 44,
+                      borderRadius: '50%',
+                      background: '#fff',
+                      border: '1px solid #e0e0e0',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      cursor: 'pointer',
+                      cursor: currentSlide === 3 ? 'default' : 'pointer',
+                      opacity: currentSlide === 3 ? 0.3 : 1,
+                      transition: 'opacity 0.2s, background 0.2s',
                     }}
+                    onMouseEnter={(e) => { if (currentSlide !== 3) e.currentTarget.style.background = '#f3f3f3'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; }}
                   >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c0c0e0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
                   </button>
                 </div>
               </div>
