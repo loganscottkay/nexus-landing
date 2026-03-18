@@ -3,6 +3,46 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---- Retro TV matching flow styles ---- */
+@keyframes tvGradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes grainShift {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -20%); }
+  40% { transform: translate(-5%, 15%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 10%); }
+  80% { transform: translate(3%, -15%); }
+  90% { transform: translate(-10%, 5%); }
+  100% { transform: translate(0, 0); }
+}
+
+.tv-gradient-title {
+  background: linear-gradient(90deg, #6366F1, #A78BFA, #8B5CF6, #6366F1);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: tvGradientShift 6s ease-in-out infinite;
+}
+
+.tv-grain-overlay {
+  animation: grainShift 8s steps(10) infinite;
+}
+
+@media (max-width: 767px) {
+  .tv-gradient-title {
+    font-size: 22px !important;
+  }
+}
+
 
 /* ---- Announcement banner animations ---- */
 @keyframes bannerGradientShift {

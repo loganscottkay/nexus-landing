@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import IPhoneMockups from "@/components/IPhoneMockups";
@@ -57,11 +57,6 @@ const cardStagger = {
       staggerChildren: 0.08,
     },
   },
-};
-
-const mobileSlideFromLeft = {
-  hidden: { opacity: 0, x: -40 },
-  visible: { opacity: 1, x: 0 },
 };
 
 const viewportConfig = { once: true, amount: 0.2 as const };
@@ -178,20 +173,7 @@ function ArrowRight({ className = "" }: { className?: string }) {
 }
 
 /* Flow arrow SVG between cards (desktop only) */
-const FlowArrow = ({ delay = 0 }: { delay?: number }) => (
-  <div className="flex items-center justify-center shrink-0" style={{ width: 24 }}>
-    <svg
-      width="24"
-      height="16"
-      viewBox="0 0 24 16"
-      fill="none"
-      className="flow-arrow"
-      style={{ animationDelay: `${delay}s` }}
-    >
-      <path d="M2 8 L18 8 M14 4 L18 8 L14 12" stroke="rgba(99,102,241,0.25)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  </div>
-);
+
 
 const matchingSteps = [
   {
@@ -259,300 +241,334 @@ const matchingSteps = [
 ];
 
 function MatchingFlowSection() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
   const labelColors: Record<string, { bg: string; text: string }> = {
-    "FOR FOUNDERS": { bg: "rgba(124, 92, 252, 0.1)", text: "#7C5CFC" },
-    "FOR INVESTORS": { bg: "rgba(74, 108, 247, 0.1)", text: "#4A6CF7" },
-    "BOTH SIDES": { bg: "rgba(5, 150, 105, 0.12)", text: "#059669" },
+    "FOR FOUNDERS": { bg: "rgba(99, 102, 241, 0.15)", text: "#818CF8" },
+    "FOR INVESTORS": { bg: "rgba(99, 102, 241, 0.15)", text: "#A78BFA" },
+    "BOTH SIDES": { bg: "rgba(16, 185, 129, 0.15)", text: "#34D399" },
   };
 
+  const resetTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % 4);
+    }, 5000);
+  }, []);
+
+  useEffect(() => {
+    resetTimer();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [resetTimer]);
+
+  const goTo = useCallback((dir: number) => {
+    setCurrentSlide((prev) => (prev + dir + 4) % 4);
+    resetTimer();
+  }, [resetTimer]);
+
+  const step = matchingSteps[currentSlide];
+
+  // SVG icons with gradient stroke for the TV slides
+  const tvIcons = [
+    <svg key="cam" width="32" height="32" viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><defs><linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stopColor="#6366F1" /><stop offset="50%" stopColor="#A78BFA" /><stop offset="100%" stopColor="#8B5CF6" /></linearGradient></defs><polygon points="23 7 16 12 23 17 23 7" stroke="url(#iconGrad)" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" stroke="url(#iconGrad)" /></svg>,
+    <svg key="sliders" width="32" height="32" viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><defs><linearGradient id="iconGrad2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stopColor="#6366F1" /><stop offset="50%" stopColor="#A78BFA" /><stop offset="100%" stopColor="#8B5CF6" /></linearGradient></defs><line x1="4" y1="21" x2="4" y2="14" stroke="url(#iconGrad2)" /><line x1="4" y1="10" x2="4" y2="3" stroke="url(#iconGrad2)" /><line x1="12" y1="21" x2="12" y2="12" stroke="url(#iconGrad2)" /><line x1="12" y1="8" x2="12" y2="3" stroke="url(#iconGrad2)" /><line x1="20" y1="21" x2="20" y2="16" stroke="url(#iconGrad2)" /><line x1="20" y1="12" x2="20" y2="3" stroke="url(#iconGrad2)" /><line x1="1" y1="14" x2="7" y2="14" stroke="url(#iconGrad2)" /><line x1="9" y1="8" x2="15" y2="8" stroke="url(#iconGrad2)" /><line x1="17" y1="16" x2="23" y2="16" stroke="url(#iconGrad2)" /></svg>,
+    <svg key="check" width="32" height="32" viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><defs><linearGradient id="iconGrad3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stopColor="#6366F1" /><stop offset="50%" stopColor="#A78BFA" /><stop offset="100%" stopColor="#8B5CF6" /></linearGradient></defs><polyline points="20 6 9 17 4 12" stroke="url(#iconGrad3)" /></svg>,
+    <svg key="phone" width="32" height="32" viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><defs><linearGradient id="iconGrad4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stopColor="#6366F1" /><stop offset="50%" stopColor="#A78BFA" /><stop offset="100%" stopColor="#8B5CF6" /></linearGradient></defs><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="url(#iconGrad4)" /></svg>,
+  ];
+
   return (
-    <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
-    <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{}}>
-      <div className="max-w-6xl mx-auto">
-      <motion.div
-        variants={cardStagger}
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewportConfig}
-        className="flex flex-col items-center"
-      >
-        <motion.div
-          variants={tierGradientBar}
-          transition={{ duration: 0.4, delay: 0, ease }}
-          style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto', transformOrigin: 'center' }}
-        />
-        <motion.p
-          variants={tierEyebrow}
-          transition={{ duration: 0.5, delay: 0.1, ease }}
-          className="gradient-text text-[13px] tracking-[3px] uppercase mb-4"
-          style={{ fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", fontWeight: 700 }}
-        >
-          The Matching Flow
-        </motion.p>
-        <motion.h2
-          variants={tierTitle}
-          transition={{ duration: 0.8, delay: 0.2, ease: smoothDecel }}
-          className="text-[36px] md:text-[44px] font-normal text-center mb-4"
-          style={{ fontFamily: "'Instrument Serif', serif" }}
-        >
-          Swipe. Match. Meet.
-        </motion.h2>
-        <motion.p
-          variants={tierSubtitle}
-          transition={{ duration: 0.5, delay: 0.4, ease }}
-          className="text-center max-w-[600px] text-[17px] leading-[1.7] mb-16"
-          style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
-        >
-          The complete flow from pitch to meeting.
-        </motion.p>
-
-        {/* Desktop: horizontal flow with animated arrows */}
-        <motion.div
-          variants={cardStagger}
-          className="hidden lg:flex gap-0 w-full items-stretch"
-        >
-          {matchingSteps.map((step, i) => (
-            <React.Fragment key={step.num}>
-              {/* Animated flow arrow between steps */}
-              {i > 0 && <FlowArrow delay={(i - 1) * 0.5} />}
-
-              {/* Step card */}
-              <motion.div
-                variants={tierCard}
-                transition={{ duration: 0.5, delay: 0.6 + i * 0.08, ease }}
-                className="flex-1 max-w-[280px] w-full min-h-[240px]"
-              >
-                <div className={`glow-card-wrapper h-full matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
-                  <div
-                    className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300 flex flex-col"
-                    data-label={step.label}
-                    style={{
-                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(212,175,55,0.04), rgba(167,139,250,0.05), rgba(196,148,233,0.03))",
-                      backdropFilter: "blur(20px) saturate(1.8)",
-                      WebkitBackdropFilter: "blur(20px) saturate(1.8)",
-                      border: "1px solid rgba(255, 255, 255, 0.5)",
-                      boxShadow: "0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)",
-                    }}
-                  >
-                    <motion.div
-                      className="mb-4"
-                      initial={{ scale: 0.9 }}
-                      whileInView={{ scale: [0.9, 1.15, 1] }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
-                    >
-                      {step.icon}
-                    </motion.div>
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.2, delay: 0.2 + i * 0.1 }}
-                      className="inline-block rounded-full px-2.5 py-0.5 text-[10px] tracking-[2px] uppercase font-medium mb-1.5"
-                      style={{
-                        background: labelColors[step.label]?.bg || "rgba(124,92,252,0.1)",
-                        color: labelColors[step.label]?.text || step.labelColor,
-                      }}
-                    >
-                      {step.label}
-                    </motion.span>
-                    <p className="text-[11px] tracking-[2px] uppercase mb-2 font-medium" style={{ color: step.color }}>
-                      Step {step.num}
-                    </p>
-                    <div className="flex items-center gap-2 mb-2">
-                      <h3
-                        className="text-[17px] font-semibold text-text-primary"
-                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-                      >
-                        {step.title}
-                      </h3>
-                      {(step as { lottie?: string }).lottie && (
-                        <LottieAnimation
-                          src={(step as { lottie: string }).lottie}
-                          loop={true}
-                          className="lottie-brand w-[36px] h-[36px] shrink-0"
-                        />
-                      )}
-                    </div>
-                    <p className="text-[14px] text-text-muted leading-[1.6] flex-1">{step.desc}</p>
-                  </div>
-                </div>
-              </motion.div>
-            </React.Fragment>
-          ))}
-        </motion.div>
-
-        {/* Tablet: 2x2 grid with horizontal arrows */}
-        <motion.div
-          variants={cardStagger}
-          className="hidden md:grid lg:hidden grid-cols-2 gap-4 w-full"
-        >
-          {matchingSteps.map((step, i) => (
-            <React.Fragment key={step.num}>
-              {/* Horizontal arrow between card 1→2 and card 3→4 */}
-              {(i === 1 || i === 3) && (
-                <div className="absolute" style={{ display: 'none' }} />
-              )}
-              <motion.div
-                variants={tierCard}
-                transition={{ duration: 0.5, delay: 0.6 + i * 0.08, ease }}
-                className="w-full min-h-[240px]"
-              >
-                <div className={`glow-card-wrapper h-full matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
-                  <div
-                    className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300 flex flex-col"
-                    data-label={step.label}
-                    style={{
-                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(212,175,55,0.04), rgba(167,139,250,0.05), rgba(196,148,233,0.03))",
-                      backdropFilter: "blur(20px) saturate(1.8)",
-                      WebkitBackdropFilter: "blur(20px) saturate(1.8)",
-                      border: "1px solid rgba(255, 255, 255, 0.5)",
-                      boxShadow: "0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)",
-                    }}
-                  >
-                    <motion.div
-                      className="mb-4"
-                      initial={{ scale: 0.9 }}
-                      whileInView={{ scale: [0.9, 1.15, 1] }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
-                    >
-                      {step.icon}
-                    </motion.div>
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.2, delay: 0.2 + i * 0.1 }}
-                      className="inline-block rounded-full px-2.5 py-0.5 text-[10px] tracking-[2px] uppercase font-medium mb-1.5"
-                      style={{
-                        background: labelColors[step.label]?.bg || "rgba(124,92,252,0.1)",
-                        color: labelColors[step.label]?.text || step.labelColor,
-                      }}
-                    >
-                      {step.label}
-                    </motion.span>
-                    <p className="text-[11px] tracking-[2px] uppercase mb-2 font-medium" style={{ color: step.color }}>
-                      Step {step.num}
-                    </p>
-                    <div className="flex items-center gap-2 mb-2">
-                      <h3
-                        className="text-[17px] font-semibold text-text-primary"
-                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-                      >
-                        {step.title}
-                      </h3>
-                      {(step as { lottie?: string }).lottie && (
-                        <LottieAnimation
-                          src={(step as { lottie: string }).lottie}
-                          loop={true}
-                          className="lottie-brand w-[36px] h-[36px] shrink-0"
-                        />
-                      )}
-                    </div>
-                    <p className="text-[14px] text-text-muted leading-[1.6] flex-1">{step.desc}</p>
-                  </div>
-                </div>
-              </motion.div>
-            </React.Fragment>
-          ))}
-        </motion.div>
-
-        {/* Mobile: vertical timeline flow */}
-        <motion.div
-          variants={cardStagger}
-          className="md:hidden relative w-full"
-        >
-          {/* Vertical connecting line */}
-          <div
-            className="absolute left-[11px] top-[12px] bottom-[12px] w-[2px]"
+    <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 4, backgroundColor: '#0A0A14', minHeight: '100vh', overflow: 'hidden' }}>
+      {/* Animated liquid background */}
+      <div className="absolute inset-0 overflow-hidden" style={{ borderRadius: 'inherit' }}>
+        {[
+          { color: '#4338CA', duration: 14, delay: 0 },
+          { color: '#6366F1', duration: 18, delay: -6 },
+          { color: '#312E81', duration: 22, delay: -11 },
+        ].map((blob, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
             style={{
-              background: "linear-gradient(180deg, #4A6CF7, #7C5CFC)",
-              opacity: 0.25,
+              width: '40%',
+              height: '40%',
+              background: `radial-gradient(circle, ${blob.color} 0%, transparent 70%)`,
+              filter: 'blur(80px) brightness(0.8)',
+              top: '30%',
+              left: '30%',
+            }}
+            animate={{
+              x: [
+                Math.cos(0) * 150,
+                Math.cos(Math.PI * 0.5) * 150,
+                Math.cos(Math.PI) * 150,
+                Math.cos(Math.PI * 1.5) * 150,
+                Math.cos(Math.PI * 2) * 150,
+              ],
+              y: [
+                Math.sin(0) * 150,
+                Math.sin(Math.PI * 0.5) * 150,
+                Math.sin(Math.PI) * 150,
+                Math.sin(Math.PI * 1.5) * 150,
+                Math.sin(Math.PI * 2) * 150,
+              ],
+            }}
+            transition={{
+              duration: blob.duration,
+              repeat: Infinity,
+              ease: 'linear',
+              delay: blob.delay,
             }}
           />
+        ))}
+        {/* Dark overlay */}
+        <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.7)' }} />
+      </div>
 
-          <div className="flex flex-col gap-5">
-            {matchingSteps.map((step, i) => (
-              <motion.div
-                key={step.num}
-                variants={mobileSlideFromLeft}
-                transition={{ duration: 0.5, delay: 0.6 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="flex items-start gap-0"
+      {/* Film grain overlay */}
+      <div
+        className="tv-grain-overlay absolute inset-0 pointer-events-none"
+        style={{
+          opacity: 0.08,
+          zIndex: 2,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
+          backgroundSize: '128px 128px',
+        }}
+      />
+
+      <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{}}>
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            variants={cardStagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportConfig}
+            className="flex flex-col items-center"
+          >
+            {/* Section header */}
+            <motion.div
+              variants={tierGradientBar}
+              transition={{ duration: 0.4, delay: 0, ease }}
+              style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto', transformOrigin: 'center' }}
+            />
+            <motion.p
+              variants={tierEyebrow}
+              transition={{ duration: 0.5, delay: 0.1, ease }}
+              className="gradient-text text-[13px] tracking-[3px] uppercase mb-4"
+              style={{ fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", fontWeight: 700 }}
+            >
+              The Matching Flow
+            </motion.p>
+            <motion.h2
+              variants={tierTitle}
+              transition={{ duration: 0.8, delay: 0.2, ease: smoothDecel }}
+              className="text-[36px] md:text-[44px] font-normal text-center mb-4"
+              style={{ fontFamily: "'Instrument Serif', serif", color: '#E2E8F0' }}
+            >
+              Swipe. Match. Meet.
+            </motion.h2>
+            <motion.p
+              variants={tierSubtitle}
+              transition={{ duration: 0.5, delay: 0.4, ease }}
+              className="text-center max-w-[600px] text-[17px] leading-[1.7] mb-16"
+              style={{ color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-dm-sans), sans-serif" }}
+            >
+              The complete flow from pitch to meeting.
+            </motion.p>
+
+            {/* Retro TV frame */}
+            <motion.div
+              variants={tierCard}
+              transition={{ duration: 0.6, delay: 0.5, ease }}
+              className="w-full mx-auto"
+              style={{ maxWidth: 700 }}
+            >
+              <div
+                style={{
+                  borderRadius: 12,
+                  border: '3px solid #1a1a2e',
+                  background: '#0F0F1A',
+                  overflow: 'hidden',
+                }}
               >
-                {/* Numbered circle on the timeline */}
+                {/* Title bar */}
                 <div
-                  className="shrink-0 w-[24px] h-[24px] rounded-full flex items-center justify-center z-10 mt-5"
+                  className="flex items-center justify-center relative"
                   style={{
-                    background: `linear-gradient(135deg, ${step.color}, ${step.labelColor})`,
-                    boxShadow: `0 0 8px ${step.color}40`,
+                    height: 36,
+                    background: 'repeating-linear-gradient(0deg, #1a1a2e 0px, #1a1a2e 2px, #12122a 2px, #12122a 4px)',
                   }}
                 >
-                  <span className="text-white text-[11px] font-semibold leading-none">{i + 1}</span>
-                </div>
-
-                {/* Card */}
-                <div className={`flex-1 ml-4 matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
+                  {/* Small square button left */}
                   <div
-                    className="matching-flow-card rounded-2xl p-5"
-                    data-label={step.label}
+                    className="absolute left-3"
                     style={{
-                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(212,175,55,0.04), rgba(167,139,250,0.05), rgba(196,148,233,0.03))",
-                      backdropFilter: "blur(20px) saturate(1.8)",
-                      WebkitBackdropFilter: "blur(20px) saturate(1.8)",
-                      border: "1px solid rgba(255, 255, 255, 0.5)",
-                      boxShadow: "0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)",
+                      width: 12,
+                      height: 12,
+                      border: '1.5px solid #2a2a4a',
+                      borderRadius: 2,
+                      background: '#0F0F1A',
+                    }}
+                  />
+                  {/* Title pill */}
+                  <div
+                    style={{
+                      padding: '2px 14px',
+                      border: '1px solid #2a2a4a',
+                      borderRadius: 9999,
+                      fontFamily: 'monospace',
+                      fontSize: 10,
+                      color: '#c0c0e0',
+                      letterSpacing: 1.5,
+                      textTransform: 'uppercase',
                     }}
                   >
-                    <div className="flex items-center gap-3 mb-3">
-                      <motion.div
-                        className="shrink-0"
-                        initial={{ scale: 0.9 }}
-                        whileInView={{ scale: [0.9, 1.15, 1] }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
-                      >
-                        {step.icon}
-                      </motion.div>
-                      <motion.span
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.2, delay: 0.2 + i * 0.1 }}
-                        className="inline-block rounded-full px-2.5 py-0.5 text-[10px] tracking-[2px] uppercase font-medium"
+                    The Matching Flow
+                  </div>
+                </div>
+
+                {/* Screen area */}
+                <div
+                  style={{
+                    margin: 6,
+                    border: '2px solid #2a2a4a',
+                    borderRadius: 4,
+                    boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.5)',
+                    background: '#0F0F1A',
+                    minHeight: 300,
+                    position: 'relative',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentSlide}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5, ease: 'easeInOut' }}
+                      className="flex flex-col items-center justify-center text-center px-6 py-10 md:px-10 md:py-10"
+                    >
+                      {/* Icon */}
+                      <div className="mb-5">
+                        {tvIcons[currentSlide]}
+                      </div>
+
+                      {/* Label pill */}
+                      <span
+                        className="inline-block rounded-full px-3 py-1 text-[10px] tracking-[2px] uppercase font-medium mb-4"
                         style={{
-                          background: labelColors[step.label]?.bg || "rgba(124,92,252,0.1)",
-                          color: labelColors[step.label]?.text || step.labelColor,
+                          background: labelColors[step.label]?.bg || 'rgba(99,102,241,0.15)',
+                          color: labelColors[step.label]?.text || '#818CF8',
                         }}
                       >
                         {step.label}
-                      </motion.span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-1.5">
+                      </span>
+
+                      {/* Step number */}
+                      <p
+                        style={{
+                          fontFamily: 'monospace',
+                          fontSize: 11,
+                          color: 'rgba(255,255,255,0.4)',
+                          letterSpacing: 2,
+                          marginBottom: 8,
+                          textTransform: 'uppercase',
+                        }}
+                      >
+                        Step {step.num}
+                      </p>
+
+                      {/* Animated gradient title */}
                       <h3
-                        className="text-[16px] font-semibold text-text-primary"
-                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                        className="tv-gradient-title mb-4"
+                        style={{
+                          fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
+                          fontSize: 28,
+                          fontWeight: 700,
+                        }}
                       >
                         {step.title}
                       </h3>
-                      {(step as { lottie?: string }).lottie && (
-                        <LottieAnimation
-                          src={(step as { lottie: string }).lottie}
-                          loop={true}
-                          className="lottie-brand w-[36px] h-[36px] shrink-0"
-                        />
-                      )}
-                    </div>
-                    <p className="text-[13px] text-text-muted leading-[1.6]">{step.desc}</p>
-                  </div>
+
+                      {/* Description */}
+                      <p
+                        style={{
+                          color: 'rgba(255,255,255,0.6)',
+                          fontSize: 15,
+                          lineHeight: 1.7,
+                          maxWidth: 480,
+                        }}
+                      >
+                        {step.desc}
+                      </p>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </motion.div>
-      </div>
-    </Section>
+
+                {/* Bottom control bar */}
+                <div
+                  className="flex items-center justify-between px-4"
+                  style={{
+                    height: 46,
+                    background: 'repeating-linear-gradient(0deg, #1a1a2e 0px, #1a1a2e 2px, #12122a 2px, #12122a 4px)',
+                  }}
+                >
+                  {/* Prev button */}
+                  <button
+                    onClick={() => goTo(-1)}
+                    aria-label="Previous step"
+                    style={{
+                      width: 30,
+                      height: 24,
+                      border: '1.5px solid #2a2a4a',
+                      borderRadius: 3,
+                      background: '#0F0F1A',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c0c0e0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                  </button>
+
+                  {/* Counter */}
+                  <span
+                    style={{
+                      fontFamily: 'monospace',
+                      fontSize: 12,
+                      color: '#c0c0e0',
+                      letterSpacing: 1,
+                    }}
+                  >
+                    {currentSlide + 1}/4
+                  </span>
+
+                  {/* Next button */}
+                  <button
+                    onClick={() => goTo(1)}
+                    aria-label="Next step"
+                    style={{
+                      width: 30,
+                      height: 24,
+                      border: '1.5px solid #2a2a4a',
+                      borderRadius: 3,
+                      background: '#0F0F1A',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c0c0e0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </Section>
     </div>
   );
 }
