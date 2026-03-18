@@ -249,8 +249,8 @@ function NarrativeLine() {
   const wordVariants = getWordVariants(isMobile);
   const words = narrativeText.split(" ");
 
-  // "people." is the last word — find its index
-  const accentIndex = words.findIndex((w) => w.startsWith("people"));
+  // Accent "right" and "people."
+  const accentWords = new Set(["right", "people."]);
 
   return (
     <section
@@ -272,7 +272,7 @@ function NarrativeLine() {
           }}
         >
           {words.map((word, i) => {
-            const isAccent = i === accentIndex;
+            const isAccent = accentWords.has(word);
             return (
               <motion.span
                 key={i}
