@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import { motion, useAnimationFrame } from "framer-motion";
+import { motion } from "framer-motion";
 
 /* ─────────────────────────────────────────────
    3D ROTATING CAROUSEL: "What Makes UrgenC Different"
@@ -26,8 +26,7 @@ const cards = [
     accentBar: "linear-gradient(90deg, #6366F1, #818CF8)",
     icon: "shield" as const,
     rotateY: 0,
-    gradientColors: ["#4338CA", "#6366F1", "#312E81"] as [string, string, string],
-    gradientDuration: 14,
+    silkClass: "silk-card-1" as const,
   },
   {
     id: "traction",
@@ -41,8 +40,7 @@ const cards = [
     accentBar: "linear-gradient(90deg, #7C3AED, #A78BFA)",
     icon: "pulse" as const,
     rotateY: 120,
-    gradientColors: ["#7C3AED", "#8B5CF6", "#4C1D95"] as [string, string, string],
-    gradientDuration: 16,
+    silkClass: "silk-card-2" as const,
   },
   {
     id: "accountability",
@@ -55,8 +53,7 @@ const cards = [
     accentBar: "linear-gradient(90deg, #4338CA, #818CF8)",
     icon: "check" as const,
     rotateY: 240,
-    gradientColors: ["#4F46E5", "#6366F1", "#4338CA"] as [string, string, string],
-    gradientDuration: 18,
+    silkClass: "silk-card-3" as const,
   },
 ];
 
@@ -172,6 +169,92 @@ const carouselCSS = `
   animation: neonFlickerOn 0.5s ease-out forwards;
 }
 
+/* ── Silk Wave Keyframes ── */
+@keyframes silkFlow1 {
+  0%   { background-position: 0% 0%, 100% 100%, 50% 50%, 0% 0%; }
+  25%  { background-position: 100% 0%, 0% 100%, 30% 70%, 0% 0%; }
+  50%  { background-position: 100% 100%, 0% 0%, 70% 30%, 0% 0%; }
+  75%  { background-position: 0% 100%, 100% 0%, 50% 50%, 0% 0%; }
+  100% { background-position: 0% 0%, 100% 100%, 50% 50%, 0% 0%; }
+}
+@keyframes silkFlow2 {
+  0%   { background-position: 100% 100%, 0% 0%, 50% 50%, 0% 0%; }
+  25%  { background-position: 0% 100%, 100% 0%, 70% 30%, 0% 0%; }
+  50%  { background-position: 0% 0%, 100% 100%, 30% 70%, 0% 0%; }
+  75%  { background-position: 100% 0%, 0% 100%, 50% 50%, 0% 0%; }
+  100% { background-position: 100% 100%, 0% 0%, 50% 50%, 0% 0%; }
+}
+@keyframes silkFlow3 {
+  0%   { background-position: 50% 0%, 50% 100%, 50% 50%, 0% 0%; }
+  25%  { background-position: 0% 50%, 100% 50%, 30% 70%, 0% 0%; }
+  50%  { background-position: 50% 100%, 50% 0%, 70% 30%, 0% 0%; }
+  75%  { background-position: 100% 50%, 0% 50%, 50% 50%, 0% 0%; }
+  100% { background-position: 50% 0%, 50% 100%, 50% 50%, 0% 0%; }
+}
+
+/* Silk background base */
+.silk-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  z-index: 0;
+}
+.silk-bg-inner {
+  position: absolute;
+  inset: 0;
+  background-size: 200% 200%, 200% 200%, 150% 150%, 100% 100%;
+  filter: blur(1px) contrast(1.2);
+}
+/* Noise grain overlay */
+.silk-bg-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: repeating-conic-gradient(rgba(255,255,255,0.08) 0% 25%, transparent 0% 50%);
+  background-size: 4px 4px;
+  pointer-events: none;
+  z-index: 1;
+}
+/* Dark overlay for readability */
+.silk-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.1);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Card 1 — Deep Indigo Silk (135deg) */
+.silk-card-1 .silk-bg-inner {
+  background:
+    radial-gradient(ellipse at 30% 20%, #312E81 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, #4338CA 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, #1E1B4B 0%, transparent 60%),
+    linear-gradient(135deg, #3730A3, #1E1B4B);
+  animation: silkFlow1 9s ease-in-out infinite;
+}
+
+/* Card 2 — Royal Violet Silk (225deg) */
+.silk-card-2 .silk-bg-inner {
+  background:
+    radial-gradient(ellipse at 30% 20%, #6D28D9 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, #7C3AED 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, #4C1D95 0%, transparent 60%),
+    linear-gradient(225deg, #5B21B6, #4C1D95);
+  animation: silkFlow2 11s ease-in-out infinite;
+}
+
+/* Card 3 — Electric Indigo Silk (180deg) */
+.silk-card-3 .silk-bg-inner {
+  background:
+    radial-gradient(ellipse at 30% 20%, #4F46E5 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, #6366F1 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, #312E81 0%, transparent 60%),
+    linear-gradient(180deg, #4338CA, #312E81);
+  animation: silkFlow3 13s ease-in-out infinite;
+}
+
 /* Responsive variables */
 :root {
   --card-width: 240px;
@@ -195,98 +278,13 @@ const carouselCSS = `
 }
 `;
 
-// ── Animated Gradient Background ────────────
-function AnimatedGradientBg({
-  colors,
-  duration,
-}: {
-  colors: [string, string, string];
-  duration: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useAnimationFrame((time) => {
-    if (!ref.current) return;
-    const phase = ((time / 1000) / duration) * 2 * Math.PI;
-    const r = 35;
-
-    const x1 = 50 + r * Math.cos(phase);
-    const y1 = 50 + r * Math.sin(phase);
-    const x2 = 50 + r * Math.cos(phase + (2 * Math.PI) / 3);
-    const y2 = 50 + r * Math.sin(phase + (2 * Math.PI) / 3);
-    const x3 = 50 + r * Math.cos(phase + (4 * Math.PI) / 3);
-    const y3 = 50 + r * Math.sin(phase + (4 * Math.PI) / 3);
-
-    ref.current.style.background = `
-      radial-gradient(circle at ${x1}% ${y1}%, ${colors[0]} 0%, transparent 55%),
-      radial-gradient(circle at ${x2}% ${y2}%, ${colors[1]} 0%, transparent 55%),
-      radial-gradient(circle at ${x3}% ${y3}%, ${colors[2]} 0%, transparent 55%)
-    `;
-  });
-
+// ── Silk Wave Background (CSS-only, works on mobile + desktop) ──
+function SilkWaveBg() {
   return (
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        borderRadius: 20,
-        overflow: "hidden",
-        zIndex: 0,
-      }}
-    >
-      <div
-        ref={ref}
-        style={{
-          position: "absolute",
-          inset: -30,
-          filter: "blur(60px) brightness(1)",
-        }}
-      />
-      {/* Dark base so gradient blobs float on top of something */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "#0F172A",
-          zIndex: -1,
-        }}
-      />
-    </div>
-  );
-}
-
-// ── Static Gradient Background (mobile — no animation, GPU friendly) ──
-function StaticGradientBg({ colors }: { colors: [string, string, string] }) {
-  return (
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        borderRadius: 20,
-        overflow: "hidden",
-        zIndex: 0,
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          inset: -30,
-          filter: "blur(60px)",
-          background: `
-            radial-gradient(circle at 30% 30%, ${colors[0]} 0%, transparent 55%),
-            radial-gradient(circle at 70% 60%, ${colors[1]} 0%, transparent 55%),
-            radial-gradient(circle at 50% 80%, ${colors[2]} 0%, transparent 55%)
-          `,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "#0F172A",
-          zIndex: -1,
-        }}
-      />
+    <div className="silk-bg">
+      <div className="silk-bg-inner" />
+      <div className="silk-bg-grain" />
+      <div className="silk-bg-overlay" />
     </div>
   );
 }
@@ -403,19 +401,19 @@ function TVParticlesCanvas() {
   );
 }
 
-// ── Mobile Carousel Card (static gradient, inside 3D carousel) ──
+// ── Mobile Carousel Card (silk wave, inside 3D carousel) ──
 function MobileCarouselCard({ card }: { card: (typeof cards)[0] }) {
   const IconComp = iconMap[card.icon];
 
   return (
     <div className="carousel-card-slot">
       <div
+        className={card.silkClass}
         style={{
           width: "100%",
           height: "100%",
           borderRadius: 20,
           padding: "22px 20px",
-          background: "#0F172A",
           display: "flex",
           flexDirection: "column",
           boxShadow: "0 8px 32px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2)",
@@ -425,16 +423,16 @@ function MobileCarouselCard({ card }: { card: (typeof cards)[0] }) {
           MozOsxFontSmoothing: "grayscale",
         }}
       >
-        <StaticGradientBg colors={card.gradientColors} />
-        <div style={{ position: "absolute", inset: 0, borderRadius: 20, background: "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.08) 0%, transparent 60%)", pointerEvents: "none", zIndex: 1 }} />
-        <div style={{ width: 42, height: 42, borderRadius: 10, background: card.tagBg, border: `1px solid ${card.iconStroke}30`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10, position: "relative", zIndex: 2 }}>
+        <SilkWaveBg />
+        <div style={{ position: "absolute", inset: 0, borderRadius: 20, background: "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.08) 0%, transparent 60%)", pointerEvents: "none", zIndex: 3 }} />
+        <div style={{ width: 42, height: 42, borderRadius: 10, background: card.tagBg, border: `1px solid ${card.iconStroke}30`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10, position: "relative", zIndex: 4 }}>
           <IconComp stroke={card.iconStroke} />
         </div>
-        <div style={{ display: "inline-flex", alignSelf: "flex-start", padding: "4px 12px", borderRadius: 999, background: card.tagBg, border: `1px solid ${card.tagColor}30`, marginBottom: 10, position: "relative", zIndex: 2 }}>
+        <div style={{ display: "inline-flex", alignSelf: "flex-start", padding: "4px 12px", borderRadius: 999, background: card.tagBg, border: `1px solid ${card.tagColor}30`, marginBottom: 10, position: "relative", zIndex: 4 }}>
           <span style={{ fontSize: 9, fontWeight: 700, color: card.tagColor, letterSpacing: "2px", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>{card.tag}</span>
         </div>
-        <h3 className="tv-gradient-title" style={{ fontSize: 18, fontWeight: 700, fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", letterSpacing: "-0.3px", margin: "0 0 5px 0", position: "relative", zIndex: 2 }}>{card.title}</h3>
-        <p style={{ fontSize: 12, fontWeight: 400, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, fontFamily: "var(--font-dm-sans), sans-serif", margin: 0, position: "relative", zIndex: 2, flex: 1 }}>{card.description}</p>
+        <h3 className="tv-gradient-title" style={{ fontSize: 18, fontWeight: 700, fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", letterSpacing: "-0.3px", margin: "0 0 5px 0", position: "relative", zIndex: 4 }}>{card.title}</h3>
+        <p style={{ fontSize: 12, fontWeight: 400, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, fontFamily: "var(--font-dm-sans), sans-serif", margin: 0, position: "relative", zIndex: 4, flex: 1 }}>{card.description}</p>
       </div>
     </div>
   );
@@ -448,13 +446,12 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
   return (
     <div className="carousel-card-slot">
       <div
-        className="carousel-card-inner"
+        className={`carousel-card-inner ${card.silkClass}`}
         style={{
           width: "100%",
           height: "100%",
           borderRadius: 20,
           padding: "26px 22px",
-          background: "#0F172A",
           display: "flex",
           flexDirection: "column",
           boxShadow: "0 8px 32px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2)",
@@ -464,11 +461,8 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
           MozOsxFontSmoothing: "grayscale",
         }}
       >
-        {/* Animated gradient background */}
-        <AnimatedGradientBg
-          colors={card.gradientColors}
-          duration={card.gradientDuration}
-        />
+        {/* Silk wave background */}
+        <SilkWaveBg />
 
         {/* Inner glow overlay */}
         <div
@@ -479,7 +473,7 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
             background:
               "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.08) 0%, transparent 60%)",
             pointerEvents: "none",
-            zIndex: 1,
+            zIndex: 3,
           }}
         />
 
@@ -496,13 +490,13 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
             justifyContent: "center",
             marginBottom: 12,
             position: "relative",
-            zIndex: 2,
+            zIndex: 4,
           }}
         >
           <IconComp stroke={card.iconStroke} />
         </div>
 
-        {/* Tag pill — updated to match TV style with border */}
+        {/* Tag pill */}
         <div
           style={{
             display: "inline-flex",
@@ -513,7 +507,7 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
             border: `1px solid ${card.tagColor}30`,
             marginBottom: 10,
             position: "relative",
-            zIndex: 2,
+            zIndex: 4,
           }}
         >
           <span
@@ -529,7 +523,7 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
           </span>
         </div>
 
-        {/* Title — animated gradient text */}
+        {/* Title */}
         <h3
           className="tv-gradient-title"
           style={{
@@ -539,7 +533,7 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
             letterSpacing: "-0.3px",
             margin: "0 0 6px 0",
             position: "relative",
-            zIndex: 2,
+            zIndex: 4,
           }}
         >
           {card.title}
@@ -555,7 +549,7 @@ function CarouselCard({ card }: { card: (typeof cards)[0] }) {
             fontFamily: "var(--font-dm-sans), sans-serif",
             margin: 0,
             position: "relative",
-            zIndex: 2,
+            zIndex: 4,
             flex: 1,
           }}
         >
