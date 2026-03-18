@@ -240,6 +240,119 @@ const matchingSteps = [
   },
 ];
 
+/* ─── Floating particles inside TV screen ─── */
+function TVParticlesCanvas() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let raf = 0;
+    let running = true;
+    const isMobile = window.innerWidth < 768;
+    const count = isMobile ? 20 : 30;
+
+    interface P { x: number; y: number; r: number; o: number; dx: number; dy: number }
+    let particles: P[] = [];
+
+    function resize() {
+      if (!canvas) return;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = canvas.offsetWidth * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function seed() {
+      if (!canvas) return;
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      particles = Array.from({ length: count }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: 1 + Math.random(),               // 1-2px
+        o: 0.2 + Math.random() * 0.3,       // 0.2-0.5
+        dx: (Math.random() - 0.5) * 0.3,    // slow drift
+        dy: (Math.random() - 0.5) * 0.3,
+      }));
+    }
+
+    function draw() {
+      if (!canvas || !ctx || !running) return;
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = "rgba(139,92,246,0.4)";
+
+      for (const p of particles) {
+        p.x += p.dx;
+        p.y += p.dy;
+        // wrap edges
+        if (p.x < 0) p.x += w;
+        if (p.x > w) p.x -= w;
+        if (p.y < 0) p.y += h;
+        if (p.y > h) p.y -= h;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${p.o})`;
+        ctx.fill();
+      }
+
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = "transparent";
+      raf = requestAnimationFrame(draw);
+    }
+
+    // Only animate when section is in viewport
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          running = true;
+          draw();
+        } else {
+          running = false;
+          cancelAnimationFrame(raf);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    resize();
+    seed();
+    observer.observe(canvas);
+
+    window.addEventListener("resize", () => { resize(); seed(); });
+
+    return () => {
+      running = false;
+      cancelAnimationFrame(raf);
+      observer.disconnect();
+      window.removeEventListener("resize", () => { resize(); seed(); });
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 0,
+        pointerEvents: "none",
+        background: "transparent",
+      }}
+    />
+  );
+}
+
 function MatchingFlowSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -384,6 +497,9 @@ function MatchingFlowSection() {
                     overflow: 'hidden',
                   }}
                 >
+                  {/* Floating particles canvas */}
+                  <TVParticlesCanvas />
+
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={currentSlide}
@@ -391,7 +507,7 @@ function MatchingFlowSection() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.5, ease: 'easeInOut' }}
-                      className="flex flex-col items-center justify-center text-center px-6 py-10 md:px-10 md:py-10"
+                      className="relative z-[1] flex flex-col items-center justify-center text-center px-6 py-10 md:px-10 md:py-10"
                     >
                       {/* Icon */}
                       <div className="mb-5">
