@@ -151,14 +151,14 @@ const milestones = [
   {
     year: "2024",
     title: "The Moment It Clicked",
-    body: "If the real problem is discovery\u2014not creation\u2014then the opportunity is to build the system that connects the right ideas with the right capital.",
+    body: "If the real problem is discovery, not creation, then the opportunity is to build the system that connects the right ideas with the right capital.",
     side: "left" as const,
   },
 {
     year: "2026",
     title: "Why Now",
     body: "AI is lowering the barrier to build. More people than ever want in. UrgenC is the door.",
-    side: "left" as const,
+    side: "right" as const,
   },
 ];
 
