@@ -9,6 +9,7 @@ import LottieAnimation from "@/components/LottieAnimation";
 import HeroHeadline from "@/components/HeroHeadline";
 import WhatMakesDifferentSection from "@/components/WhatMakesDifferentSection";
 import TypewriterQuote from "@/components/TypewriterQuote";
+import ConicGradientButton from "@/components/ConicGradientButton";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 const smoothDecel = [0.16, 1, 0.3, 1] as const;
@@ -131,62 +132,6 @@ function ParallaxOrbs({ reduced }: { reduced: boolean }) {
       <div ref={orb1} className="parallax-orb parallax-orb-1" />
       <div ref={orb2} className="parallax-orb parallax-orb-2" />
       <div ref={orb3} className="parallax-orb parallax-orb-3" />
-    </div>
-  );
-}
-
-/* ---- Magnetic CTA Button ---- */
-function MagneticButton({
-  children,
-  href,
-  className = "",
-  style = {},
-}: {
-  children: React.ReactNode;
-  href: string;
-  className?: string;
-  style?: React.CSSProperties;
-}) {
-  const btnRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(hover: none)").matches) return;
-
-    const el = btnRef.current;
-    if (!el) return;
-
-    const handleMove = (e: MouseEvent) => {
-      const rect = el.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = e.clientX - cx;
-      const dy = e.clientY - cy;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 80) {
-        const x = Math.round(dx * 0.05 * 10) / 10;
-        const y = Math.round(dy * 0.05 * 10) / 10;
-        el.style.transform = `translate(${x}px, ${y}px)`;
-      } else {
-        el.style.transform = "translate(0, 0)";
-      }
-    };
-
-    window.addEventListener("mousemove", handleMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMove);
-  }, []);
-
-  return (
-    <div
-      ref={btnRef}
-      style={{
-        transition: "transform 0.2s ease-out",
-        display: "inline-block",
-      }}
-    >
-      <Link href={href} className={className} style={style}>
-        {children}
-      </Link>
     </div>
   );
 }
@@ -771,14 +716,15 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 1.8, ease: [0.34, 1.56, 0.64, 1] }}
               className="flex justify-center"
             >
-              <MagneticButton
+              <ConicGradientButton
                 href="/waitlist"
                 className="group btn-shimmer btn-auto-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-11 py-[18px] text-[16px] md:text-[17px] font-semibold text-white rounded-2xl"
                 style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.2), 0 0 20px rgba(74,108,247,0.2)" }}
+                borderRadius="1rem"
               >
                 Join the Waitlist
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
-              </MagneticButton>
+              </ConicGradientButton>
             </motion.div>
 
             {/* Credibility strip */}
@@ -927,13 +873,14 @@ export default function Home() {
             transition={{ duration: 0.4, delay: 0.8, ease }}
             className="mt-8"
           >
-            <Link
+            <ConicGradientButton
               href="/waitlist"
               className="group btn-shimmer btn-auto-shimmer btn-hero-glow inline-flex items-center justify-center gap-2 px-10 py-4 text-[16px] font-semibold text-white rounded-full transition-all duration-200 hover:scale-[1.03] hover:shadow-[0_8px_30px_rgba(74,108,247,0.25)]"
               style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", fontFamily: "var(--font-dm-sans), sans-serif" }}
+              borderRadius="9999px"
             >
               Join the Waitlist &rarr;
-            </Link>
+            </ConicGradientButton>
           </motion.div>
         </motion.div>
       </Section>

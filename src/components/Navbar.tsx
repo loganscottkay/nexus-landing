@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import LottieAnimation from "@/components/LottieAnimation";
+import ConicGradientButton from "@/components/ConicGradientButton";
 
 const navLinks = [
   { label: "Startup Qualifications", href: "/qualifications/startup" },
@@ -168,9 +169,9 @@ export default function Navbar() {
 
           {/* Far right: Join Waitlist */}
           <div className="hidden lg:flex items-center justify-self-end shrink-0">
-            <Link
+            <ConicGradientButton
               href="/waitlist"
-              className="nav-waitlist-btn font-semibold text-white rounded-full"
+              className="nav-waitlist-btn font-semibold text-white rounded-full inline-flex items-center justify-center"
               style={{
                 letterSpacing: "0.3px",
                 fontSize: "14px",
@@ -178,16 +179,17 @@ export default function Navbar() {
                 background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                 fontFamily: "var(--font-dm-sans), sans-serif",
               }}
+              borderRadius="9999px"
             >
               Join Waitlist
-            </Link>
+            </ConicGradientButton>
           </div>
 
           {/* Mobile: centered Join Waitlist (in center grid column) */}
           <div className="lg:hidden flex items-center justify-self-center">
-            <Link
+            <ConicGradientButton
               href="/waitlist"
-              className="font-semibold text-white rounded-full"
+              className="font-semibold text-white rounded-full inline-flex items-center justify-center"
               style={{
                 letterSpacing: "0.3px",
                 fontSize: "13px",
@@ -196,9 +198,10 @@ export default function Navbar() {
                 fontFamily: "var(--font-dm-sans), sans-serif",
                 whiteSpace: "nowrap",
               }}
+              borderRadius="9999px"
             >
               Join Waitlist
-            </Link>
+            </ConicGradientButton>
           </div>
 
           {/* Mobile: hamburger (in right grid column) */}
@@ -278,7 +281,7 @@ export default function Navbar() {
 
             {/* Large gradient Join Waitlist button */}
             <div className="mt-8 w-full flex justify-center">
-              <Link
+              <ConicGradientButton
                 href="/waitlist"
                 onClick={() => setMenuOpen(false)}
                 className="flex items-center justify-center w-full font-semibold text-white rounded-full"
@@ -289,9 +292,10 @@ export default function Navbar() {
                   fontFamily: "var(--font-dm-sans), sans-serif",
                   background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                 }}
+                borderRadius="9999px"
               >
                 Join Waitlist
-              </Link>
+              </ConicGradientButton>
             </div>
           </div>
         </div>

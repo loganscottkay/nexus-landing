@@ -6,6 +6,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import UnicornAnimation from "@/components/UnicornAnimation";
 import LottieAnimation from "@/components/LottieAnimation";
+import ConicGradientButton from "@/components/ConicGradientButton";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
@@ -317,28 +318,17 @@ export default function WaitlistPage() {
                     </div>
 
                     {/* Submit */}
-                    <button
+                    <ConicGradientButton
                       type="submit"
                       disabled={!allValid || loading}
-                      className="relative w-full h-[52px] md:h-[56px] rounded-2xl text-[16px] font-semibold text-white overflow-hidden transition-all duration-200"
+                      className="relative w-full h-[52px] md:h-[56px] rounded-2xl text-[16px] font-semibold text-white overflow-hidden transition-all duration-200 inline-flex items-center justify-center"
                       style={{
                         background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                         opacity: allValid ? 1 : 0.5,
                         cursor: allValid ? "pointer" : "not-allowed",
                         fontFamily: "var(--font-dm-sans), sans-serif",
-                        transform: "scale(1)",
                       }}
-                      onMouseEnter={(e) => {
-                        if (allValid && !loading) {
-                          e.currentTarget.style.transform = "scale(1.02)";
-                          e.currentTarget.style.boxShadow =
-                            "0 8px 30px rgba(74, 108, 247, 0.3)";
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = "scale(1)";
-                        e.currentTarget.style.boxShadow = "none";
-                      }}
+                      borderRadius="1rem"
                     >
                       {/* Shimmer sweep */}
                       {allValid && !loading && (
@@ -372,7 +362,7 @@ export default function WaitlistPage() {
                           "Join the Waitlist \u2192"
                         )}
                       </span>
-                    </button>
+                    </ConicGradientButton>
                   </form>
                 </motion.div>
               ) : (

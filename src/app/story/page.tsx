@@ -2,9 +2,9 @@
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
+import ConicGradientButton from "@/components/ConicGradientButton";
 
 const ease = [0.25, 0.4, 0.25, 1] as [number, number, number, number];
 
@@ -718,16 +718,17 @@ export default function StoryPage() {
 
               {/* CTA */}
               <div style={{ marginTop: "40px" }}>
-                <Link
+                <ConicGradientButton
                   href="/waitlist"
                   className="inline-flex items-center gap-2 px-8 py-3.5 text-[15px] font-semibold text-white rounded-full transition-all duration-300 hover:-translate-y-0.5"
                   style={{
                     background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                     boxShadow: "0 6px 25px rgba(74, 108, 247, 0.35)",
                   }}
+                  borderRadius="9999px"
                 >
                   Join the Waitlist &rarr;
-                </Link>
+                </ConicGradientButton>
               </div>
             </div>
           </div>

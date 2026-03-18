@@ -2,8 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import ConicGradientButton from "@/components/ConicGradientButton";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
@@ -453,16 +453,17 @@ export default function StartupQualifications() {
             transition={{ duration: 0.5, ease }}
             className="text-center mt-12"
           >
-            <Link
+            <ConicGradientButton
               href="/waitlist"
               className="inline-flex items-center gap-2 px-10 py-4 text-[16px] font-semibold text-white rounded-full transition-all duration-300 hover:-translate-y-0.5"
               style={{
                 background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                 boxShadow: "0 6px 25px rgba(74, 108, 247, 0.35)",
               }}
+              borderRadius="9999px"
             >
               Join the Waitlist &rarr;
-            </Link>
+            </ConicGradientButton>
           </motion.div>
         </div>
       </div>
