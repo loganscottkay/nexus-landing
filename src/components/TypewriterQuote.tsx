@@ -13,8 +13,8 @@ const CURSOR_BLINK_INTERVAL = 500;
 // Each fake sentence + how many characters to cut off early
 const FAKE_SENTENCES: { text: string; cutoff: number }[] = [
   { text: "It's all about who you know.", cutoff: 3 },
-  { text: "Just send more cold emails.", cutoff: 2 },
-  { text: "There's no way my startup could find an investor.", cutoff: 3 },
+  { text: "Just send more cold emails.", cutoff: 3 },
+  { text: "There's no way my startup could find an investor.", cutoff: 4 },
 ];
 
 const FINAL_SENTENCE =
