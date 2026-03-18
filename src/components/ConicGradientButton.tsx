@@ -48,23 +48,11 @@ export default function ConicGradientButton({
     position: "absolute",
     inset: "2px",
     borderRadius,
-    background: hovered
-      ? "rgba(255,255,255,0.25)"
-      : "rgba(255,255,255,0.15)",
-    backdropFilter: "blur(12px)",
-    WebkitBackdropFilter: "blur(12px)",
-    border: hovered
-      ? "1px solid rgba(255,255,255,0.35)"
-      : "1px solid rgba(255,255,255,0.25)",
-    boxShadow:
-      "0 4px 16px rgba(99,102,241,0.15), inset 0 1px 0 rgba(255,255,255,0.2)",
+    background: style.background || "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+    backdropFilter: "blur(8px)",
+    border: "1px solid rgba(139,92,246,0.3)",
     zIndex: 2,
-    transition: "background 0.3s ease, border 0.3s ease",
   };
-
-  // Strip background from passed-in style so it doesn't override frosted glass
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { background: _bg, backgroundColor: _bgc, boxShadow: _bs, ...passedStyle } = style as React.CSSProperties & Record<string, unknown>;
 
   const content: React.CSSProperties = {
     position: "relative",
@@ -93,7 +81,7 @@ export default function ConicGradientButton({
         <Link
           href={href}
           className={className}
-          style={{ ...passedStyle, ...content, background: "transparent", display: "inline-flex" }}
+          style={{ ...style, ...content, background: "transparent", display: "inline-flex" }}
           onClick={onClick}
         >
           {children}
@@ -103,7 +91,7 @@ export default function ConicGradientButton({
           type={type || "button"}
           disabled={disabled}
           className={className}
-          style={{ ...passedStyle, ...content, background: "transparent" }}
+          style={{ ...style, ...content, background: "transparent" }}
           onClick={onClick}
         >
           {children}
