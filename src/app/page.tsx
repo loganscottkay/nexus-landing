@@ -256,8 +256,7 @@ function NarrativeLine() {
     <section
       className="scroll-stack-section flex items-center justify-center px-4 pt-[80px] pb-[140px] md:px-6 md:py-[40px] w-full"
       style={{
-        position: 'sticky',
-        top: 0,
+        position: 'relative',
         zIndex: 2,
         backgroundColor: '#FAF9F7',
         minHeight: '100vh',
@@ -402,7 +401,7 @@ function MatchingFlowSection() {
   };
 
   return (
-    <Section className="scroll-stack-section relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'sticky', top: 0, zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
+    <Section className="scroll-stack-section relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
       <div className="max-w-6xl mx-auto">
       <motion.div
         variants={cardStagger}
@@ -964,7 +963,7 @@ export default function Home() {
       <MatchingFlowSection />
 
       {/* ============ IPHONE MOCKUPS ============ */}
-      <div className="scroll-stack-section lg:pb-[100px] w-full" style={{ position: 'sticky', top: 0, zIndex: 5, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
+      <div className="scroll-stack-section lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 5, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
         <IPhoneMockups />
       </div>
 
