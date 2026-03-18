@@ -860,12 +860,12 @@ function PhoneBody({
         width: enlarged ? "340px" : "260px",
         height: enlarged ? "694px" : "530px",
         borderRadius: "48px",
-        background: "#1C1C1E",
+        background: "linear-gradient(180deg, #2C2C2E 0%, #1C1C1E 15%, #2A2A2C 50%, #1C1C1E 85%, #2C2C2E 100%)",
         padding: enlarged ? "13px" : "10px",
         position: "relative",
         boxShadow: hovered
-          ? "0 35px 90px rgba(0,0,0,0.25), 0 12px 24px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.06)"
-          : "0 25px 50px rgba(0,0,0,0.12), 0 12px 24px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04)",
+          ? "inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(255,255,255,0.03), 0 35px 90px rgba(0,0,0,0.25), 0 12px 24px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.06)"
+          : "inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(255,255,255,0.03), 0 25px 50px rgba(0,0,0,0.12), 0 12px 24px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04)",
       }}
     >
       {/* Metallic sheen - top edge highlight */}
@@ -875,20 +875,25 @@ function PhoneBody({
         left: "20px",
         right: "20px",
         height: "1px",
+        background: "rgba(255,255,255,0.12)",
+        borderRadius: "1px",
+        zIndex: 5,
+        pointerEvents: "none",
+      }} />
+      {/* Bottom edge highlight */}
+      <div style={{
+        position: "absolute",
+        bottom: 0,
+        left: "20px",
+        right: "20px",
+        height: "1px",
         background: "rgba(255,255,255,0.05)",
         borderRadius: "1px",
         zIndex: 5,
         pointerEvents: "none",
       }} />
-      {/* Metallic sheen - diagonal gradient */}
-      <div style={{
-        position: "absolute",
-        inset: 0,
-        borderRadius: "48px",
-        background: "linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.03) 50%, transparent 70%)",
-        pointerEvents: "none",
-        zIndex: 5,
-      }} />
+      {/* Hover sheen overlay */}
+      <div className="iphone-frame-sheen" />
 
       {/* Side buttons - left (mute switch) */}
       <div style={{ position: "absolute", left: "-3px", top: "100px", width: "3px", height: "14px", background: "#2C2C2E", borderRadius: "2px 0 0 2px" }} />
@@ -1019,14 +1024,19 @@ function PhoneEnlargeModal({
       {/* Enlarged phone — fullscreen on mobile */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className="phone-enlarge-inner"
+        className={`phone-enlarge-inner ${show ? "glass-reveal-modal" : ""}`}
         style={{
-          transform: show ? "scale(1)" : "scale(0.7)",
-          opacity: show ? 1 : 0,
-          transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
           maxWidth: "85vw",
+          position: "relative",
+          ...(!show ? {
+            opacity: 0,
+            filter: "blur(12px) brightness(0.8)",
+            clipPath: "inset(30% 30% 30% 30%)",
+          } : {}),
         }}
       >
+        {/* Venetian blinds overlay for modal */}
+        {show && <div className="glass-blinds-overlay-modal" />}
         <PhoneBody hovered={false} enlarged>
           {children}
         </PhoneBody>
@@ -1075,8 +1085,6 @@ function IPhoneFrame({
     return () => observer.disconnect();
   }, [onVisible]);
 
-  const entranceDelay = index * 0.2;
-
   return (
     <div ref={ref} className="flex flex-col items-center">
       <div
@@ -1086,16 +1094,22 @@ function IPhoneFrame({
         role="button"
         tabIndex={0}
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onEnlarge(); }}
+        className={visible ? (index === 0 ? "glass-reveal-entrance" : "glass-reveal-entrance-delayed") : ""}
         style={{
           cursor: "pointer",
-          opacity: visible ? 1 : 0,
-          transform: visible
-            ? "translateY(0) translateX(0) rotateY(0deg)"
-            : `translateY(80px) translateX(${index === 0 ? "-20px" : "20px"}) rotateY(${index === 0 ? "5deg" : "-5deg"})`,
-          transition: `opacity 0.9s ease-out ${entranceDelay}s, transform 0.9s ease-out ${entranceDelay}s`,
+          position: "relative",
+          ...(!visible ? {
+            opacity: 0,
+            filter: "blur(12px) brightness(0.8)",
+            clipPath: "inset(30% 30% 30% 30%)",
+          } : {}),
           perspective: "1200px",
         }}
       >
+        {/* Venetian blinds overlay */}
+        {visible && (
+          <div className={index === 0 ? "glass-blinds-overlay" : "glass-blinds-overlay-delayed"} />
+        )}
         {/* Glow behind phone on hover */}
         <div style={{
           position: "absolute",
@@ -1178,7 +1192,7 @@ function IPhoneFrame({
         className="text-center mt-5"
         style={{
           opacity: visible ? 1 : 0,
-          transition: `opacity 0.8s ease-out ${entranceDelay + 0.2}s`,
+          transition: `opacity 0.8s ease-out ${index === 0 ? 0.4 : 0.7}s`,
         }}
       >
         <div
