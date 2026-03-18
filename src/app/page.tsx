@@ -10,7 +10,6 @@ import HeroHeadline from "@/components/HeroHeadline";
 import WhatMakesDifferentSection from "@/components/WhatMakesDifferentSection";
 import TypewriterQuote from "@/components/TypewriterQuote";
 import ConicGradientButton from "@/components/ConicGradientButton";
-import FloatingParticles from "@/components/FloatingParticles";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 const smoothDecel = [0.16, 1, 0.3, 1] as const;
@@ -336,16 +335,6 @@ function MatchingFlowSection() {
                   position: 'relative',
                 }}
               >
-                {/* Film grain overlay — contained inside TV frame */}
-                <div
-                  className="tv-grain-overlay absolute inset-0 pointer-events-none"
-                  style={{
-                    opacity: 0.08,
-                    zIndex: 2,
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
-                    backgroundSize: '128px 128px',
-                  }}
-                />
                 {/* Title bar */}
                 <div
                   className="flex items-center justify-center relative"
@@ -395,7 +384,6 @@ function MatchingFlowSection() {
                     overflow: 'hidden',
                   }}
                 >
-                  <FloatingParticles />
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={currentSlide}
@@ -403,7 +391,7 @@ function MatchingFlowSection() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.5, ease: 'easeInOut' }}
-                      className="relative z-[1] flex flex-col items-center justify-center text-center px-6 py-10 md:px-10 md:py-10"
+                      className="flex flex-col items-center justify-center text-center px-6 py-10 md:px-10 md:py-10"
                     >
                       {/* Icon */}
                       <div className="mb-5">
