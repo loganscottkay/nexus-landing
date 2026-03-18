@@ -10,6 +10,7 @@ import HeroHeadline from "@/components/HeroHeadline";
 import WhatMakesDifferentSection from "@/components/WhatMakesDifferentSection";
 import TypewriterQuote from "@/components/TypewriterQuote";
 import ConicGradientButton from "@/components/ConicGradientButton";
+import FloatingParticles from "@/components/FloatingParticles";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 const smoothDecel = [0.16, 1, 0.3, 1] as const;
@@ -394,6 +395,7 @@ function MatchingFlowSection() {
                     overflow: 'hidden',
                   }}
                 >
+                  <FloatingParticles />
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={currentSlide}
@@ -401,7 +403,7 @@ function MatchingFlowSection() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.5, ease: 'easeInOut' }}
-                      className="flex flex-col items-center justify-center text-center px-6 py-10 md:px-10 md:py-10"
+                      className="relative z-[1] flex flex-col items-center justify-center text-center px-6 py-10 md:px-10 md:py-10"
                     >
                       {/* Icon */}
                       <div className="mb-5">
