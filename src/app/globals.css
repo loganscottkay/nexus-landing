@@ -1314,13 +1314,14 @@ body {
   100% {
     filter: blur(0px) brightness(1);
     opacity: 1;
-    clip-path: inset(0% 0% 0% 0%);
+    clip-path: none;
   }
 }
 
 @keyframes glass-blinds-fade {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+  0% { opacity: 1; visibility: visible; }
+  99.9% { visibility: visible; }
+  100% { opacity: 0; visibility: hidden; }
 }
 
 .glass-reveal-entrance {
@@ -1377,13 +1378,14 @@ body {
   100% {
     filter: blur(0px) brightness(1);
     opacity: 1;
-    clip-path: inset(0% 0% 0% 0%);
+    clip-path: none;
   }
 }
 
 @keyframes glass-blinds-fade-modal {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+  0% { opacity: 1; visibility: visible; }
+  99.9% { visibility: visible; }
+  100% { opacity: 0; visibility: hidden; }
 }
 
 .glass-reveal-modal {
