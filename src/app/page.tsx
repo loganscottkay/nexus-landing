@@ -959,9 +959,7 @@ export default function Home() {
         className="relative w-full"
         style={{
           zIndex: 6,
-          background: "rgba(255,255,255,0.6)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
+          background: "#ffffff",
           borderTop: "1px solid rgba(99,102,241,0.08)",
         }}
       >

@@ -3,7 +3,6 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import PageAtmosphere from "@/components/PageAtmosphere";
 import CursorGlow from "@/components/CursorGlow";
-import PageTransition from "@/components/PageTransition";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -36,7 +35,6 @@ export default function RootLayout({
       >
         <PageAtmosphere />
         <CursorGlow />
-        <PageTransition />
         {children}
       </body>
     </html>
