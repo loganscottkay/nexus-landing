@@ -622,9 +622,9 @@ export default function WhatMakesDifferentSection() {
               height: "var(--carousel-height)",
               overflow: "visible",
             }}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+            onTouchStart={isMobile ? undefined : handleTouchStart}
+            onTouchMove={isMobile ? undefined : handleTouchMove}
+            onTouchEnd={isMobile ? undefined : handleTouchEnd}
           >
             <div
               ref={ringRef}
