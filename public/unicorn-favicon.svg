@@ -1,0 +1,87 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fBody" x1="20" y1="35" x2="60" y2="75">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F0E6FF"/>
+    </linearGradient>
+    <linearGradient id="fShadow" x1="40" y1="45" x2="40" y2="68">
+      <stop stop-color="#F0E6FF" stop-opacity="0"/>
+      <stop offset="1" stop-color="#E8E0F0"/>
+    </linearGradient>
+    <linearGradient id="fHorn" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#FF6B6B"/>
+      <stop offset="0.2" stop-color="#FFA94D"/>
+      <stop offset="0.4" stop-color="#F5D76E"/>
+      <stop offset="0.6" stop-color="#51CF66"/>
+      <stop offset="0.8" stop-color="#4A6CF7"/>
+      <stop offset="1" stop-color="#7C5CFC"/>
+    </linearGradient>
+    <linearGradient id="fMane" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF9A9A"/>
+      <stop offset="0.25" stop-color="#FFD480"/>
+      <stop offset="0.5" stop-color="#A8E6A3"/>
+      <stop offset="0.75" stop-color="#82B1FF"/>
+      <stop offset="1" stop-color="#B388FF"/>
+    </linearGradient>
+    <!-- Background circle gradient -->
+    <linearGradient id="fBg" x1="0" y1="0" x2="100" y2="100">
+      <stop offset="0" stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#7C5CFC"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle for visibility at small sizes -->
+  <circle cx="50" cy="50" r="50" fill="url(#fBg)"/>
+
+  <!-- Shift unicorn to center in the circle -->
+  <g transform="translate(5, 5) scale(0.9)">
+    <!-- TAIL -->
+    <path d="M14 52C8 44 3 46 6 52C9 58 7 55 10 60C8 56 4 48 7 44" stroke="url(#fMane)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+
+    <!-- BODY -->
+    <ellipse cx="42" cy="52" rx="24" ry="14" fill="url(#fBody)"/>
+    <ellipse cx="42" cy="55" rx="22" ry="10" fill="url(#fShadow)"/>
+
+    <!-- NECK -->
+    <path d="M58 46C60 40 63 34 62 28C60 24 57 26 57 30L54 46Z" fill="url(#fBody)"/>
+
+    <!-- HEAD -->
+    <ellipse cx="65" cy="27" rx="9" ry="7" fill="url(#fBody)"/>
+    <ellipse cx="72" cy="29" rx="4" ry="3.5" fill="url(#fBody)"/>
+
+    <!-- EAR -->
+    <path d="M62 20L59 13L63 19Z" fill="#E8E0F0" stroke="#D8D0E8" stroke-width="0.5"/>
+
+    <!-- HORN -->
+    <path d="M66 20L69 2L63 19Z" fill="url(#fHorn)"/>
+    <path d="M65.2 16L67.8 14" stroke="rgba(255,255,255,0.6)" stroke-width="0.7" stroke-linecap="round"/>
+    <path d="M65.5 12L68 10" stroke="rgba(255,255,255,0.6)" stroke-width="0.7" stroke-linecap="round"/>
+    <path d="M66 8L68.2 6" stroke="rgba(255,255,255,0.6)" stroke-width="0.7" stroke-linecap="round"/>
+    <!-- Sparkle -->
+    <path d="M69 2L69.6 0.4L70.2 2L71.8 2.6L70.2 3.2L69.6 4.8L69 3.2L67.4 2.6Z" fill="white"/>
+
+    <!-- EYE -->
+    <circle cx="68" cy="25" r="2" fill="#1E1B4B"/>
+    <circle cx="68.8" cy="24.2" r="0.7" fill="white"/>
+
+    <!-- NOSTRIL -->
+    <circle cx="75" cy="30" r="0.8" fill="#D8D0E8"/>
+
+    <!-- MANE -->
+    <path d="M62 18C59 14 55 18 52 14C49 10 46 16 43 12" stroke="url(#fMane)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+    <path d="M61 22C58 18 54 23 51 19C48 15 45 21 42 17" stroke="url(#fMane)" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+    <path d="M60 26C57 22 54 27 51 23C48 19 46 25 43 21" stroke="url(#fMane)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+
+    <!-- LEGS -->
+    <line x1="54" y1="63" x2="56" y2="82" stroke="#D8D0E8" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="48" y1="63" x2="46" y2="82" stroke="#D8D0E8" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="34" y1="63" x2="32" y2="82" stroke="#D8D0E8" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="28" y1="63" x2="30" y2="82" stroke="#D8D0E8" stroke-width="3.5" stroke-linecap="round"/>
+
+    <!-- HOOVES -->
+    <circle cx="56" cy="82" r="1.8" fill="#C4B5E0"/>
+    <circle cx="46" cy="82" r="1.8" fill="#C4B5E0"/>
+    <circle cx="32" cy="82" r="1.8" fill="#C4B5E0"/>
+    <circle cx="30" cy="82" r="1.8" fill="#C4B5E0"/>
+  </g>
+</svg>
