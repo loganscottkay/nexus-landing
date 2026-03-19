@@ -253,7 +253,6 @@ const matchingSteps = [
         <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
       </svg>
     ),
-    lottie: "/animations/chat-connect.json",
   },
 ];
 
@@ -717,6 +716,34 @@ export default function Home() {
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
               </ConicGradientButton>
             </motion.div>
+
+            {/* Mobile crest alignment overrides */}
+            <style>{`
+              @media (max-width: 767px) {
+                .crest-row {
+                  align-items: flex-end !important;
+                  gap: 2.5rem !important;
+                }
+                .crest-item {
+                  height: auto !important;
+                  justify-content: flex-start !important;
+                }
+                .crest-item-hbs {
+                  height: auto !important;
+                  justify-content: flex-start !important;
+                }
+                .crest-circle-hbs {
+                  width: 64px !important;
+                  height: 68px !important;
+                  margin-top: 0 !important;
+                }
+                .crest-img-hbs {
+                  width: 64px !important;
+                  height: 68px !important;
+                  margin-top: 6px !important;
+                }
+              }
+            `}</style>
 
             {/* Credibility strip */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", maxWidth: "100%", margin: "36px auto 20px", padding: 0 }}>
