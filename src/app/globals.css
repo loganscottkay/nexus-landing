@@ -2332,7 +2332,8 @@ html {
     align-items: center !important;
     margin: 0 !important;
     padding: 0 !important;
-    flex: 0 0 auto !important;
+    flex: 1 1 0% !important;
+    max-width: 90px !important;
   }
 
   /* BU and NEU circular crests */
