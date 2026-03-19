@@ -1232,7 +1232,7 @@ export default function IPhoneMockups() {
 
   return (
     <section
-      className="relative z-10 iphone-section pt-[80px] pb-[60px] lg:py-20"
+      className="relative z-10 iphone-section pt-[80px] pb-[60px] lg:pt-10 lg:pb-20"
       style={{
         /* CSS custom properties for responsive sizing */
         ["--phone-width" as string]: "230px",
