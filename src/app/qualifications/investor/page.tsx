@@ -37,13 +37,6 @@ const icons: Record<string, React.ReactNode> = {
       <polyline points="22 4 12 14.01 9 11.01" />
     </svg>
   ),
-  rejected: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <line x1="15" y1="9" x2="9" y2="15" />
-      <line x1="9" y1="9" x2="15" y2="15" />
-    </svg>
-  ),
 };
 
 const applicationCards = [
@@ -54,7 +47,6 @@ const applicationCards = [
       "Valid legal name matching government ID",
       "Verifiable LinkedIn profile (6+ months active)",
       "Verified email and phone",
-      "Location disclosure",
     ],
     why: "Every investor on UrgenC is a real, verified person.",
   },
@@ -104,25 +96,11 @@ const onAppCards = [
   },
 ];
 
-const rejectionCard = {
-  icon: "rejected",
-  title: "What Gets You Rejected",
-  items: [
-    "Unverifiable identity",
-    "No thesis or stated range",
-    "Fraudulent activity history",
-    "Accessing startup materials without genuine investment intent",
-  ],
-  why: null as string | null,
-  isRejection: true,
-};
-
 type CardData = {
   icon: string;
   title: string;
   items: string[];
   why: string | null;
-  isRejection?: boolean;
 };
 
 function QualCard({ card, index }: { card: CardData; index: number }) {
@@ -146,20 +124,16 @@ function QualCard({ card, index }: { card: CardData; index: number }) {
   }, []);
 
   const iconAnimationType =
-    card.icon === "rejected"
-      ? "shake"
-      : card.icon === "value"
-        ? "glow"
-        : "pulse";
+    card.icon === "value"
+      ? "glow"
+      : "pulse";
 
   const iconAnimationStyle: React.CSSProperties | undefined = inView
     ? {
         animation:
           iconAnimationType === "pulse"
             ? "icon-pulse 0.4s ease"
-            : iconAnimationType === "shake"
-              ? "icon-shake 0.3s ease"
-              : "icon-glow 0.5s ease",
+            : "icon-glow 0.5s ease",
       }
     : undefined;
 
@@ -181,9 +155,7 @@ function QualCard({ card, index }: { card: CardData; index: number }) {
             : "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.5)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
-          border: card.isRejection
-            ? `1px solid rgba(239, 68, 68, ${hovered ? 0.2 : 0.12})`
-            : `1px solid rgba(0, 0, 0, ${hovered ? 0.1 : 0.06})`,
+          border: `1px solid rgba(0, 0, 0, ${hovered ? 0.1 : 0.06})`,
           transform: hovered ? "translateY(-6px)" : "translateY(0)",
           boxShadow: hovered ? "0 20px 50px rgba(0, 0, 0, 0.08)" : "0 0 0 rgba(0, 0, 0, 0)",
           transition: "all 0.4s ease",
@@ -193,7 +165,7 @@ function QualCard({ card, index }: { card: CardData; index: number }) {
         <div className="flex items-center gap-3 mb-2">
           <span
             style={{
-              color: card.isRejection ? "rgba(239, 68, 68, 0.7)" : "#4A6CF7",
+              color: "#4A6CF7",
               ...iconAnimationStyle,
             }}
           >
@@ -204,7 +176,7 @@ function QualCard({ card, index }: { card: CardData; index: number }) {
             style={{
               fontFamily: "var(--font-dm-sans), sans-serif",
               fontSize: "20px",
-              color: card.isRejection ? "#DC2626" : "#0F172A",
+              color: "#0F172A",
             }}
           >
             {card.title}
@@ -242,9 +214,7 @@ function QualCard({ card, index }: { card: CardData; index: number }) {
                 style={{
                   width: "6px",
                   height: "6px",
-                  background: card.isRejection
-                    ? "rgba(239, 68, 68, 0.7)"
-                    : "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                  background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                 }}
               />
               <span
@@ -270,7 +240,6 @@ export default function InvestorQualifications() {
     <main className="relative min-h-screen text-[#0F172A]">
       <style>{`
         @keyframes icon-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-        @keyframes icon-shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-3px); } 40% { transform: translateX(3px); } 60% { transform: translateX(-2px); } 80% { transform: translateX(2px); } }
         @keyframes icon-glow { 0%, 100% { filter: drop-shadow(0 0 0px transparent); } 50% { filter: drop-shadow(0 0 8px rgba(74,108,247,0.5)); } }
       `}</style>
       <div className="noise-overlay" />
@@ -334,7 +303,7 @@ export default function InvestorQualifications() {
                   style={{
                     fontFamily: "var(--font-dm-sans), sans-serif",
                     fontSize: "16px",
-                    color: "#4A6CF7",
+                    color: "#B45309",
                   }}
                 >
                   Confidentiality Agreement
@@ -423,11 +392,6 @@ export default function InvestorQualifications() {
             {onAppCards.map((card, i) => (
               <QualCard key={card.title} card={card} index={i} />
             ))}
-          </div>
-
-          {/* What Gets You Rejected */}
-          <div className="mt-8">
-            <QualCard card={rejectionCard} index={0} />
           </div>
 
           {/* CTA */}
