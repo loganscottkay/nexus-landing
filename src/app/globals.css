@@ -144,8 +144,12 @@
   scroll-behavior: smooth;
 }
 
-body {
+html {
   background-color: #FAF9F7;
+}
+
+body {
+  background-color: transparent;
   position: relative;
   overflow-x: clip;
 }
