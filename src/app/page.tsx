@@ -7,7 +7,6 @@ import Navbar from "@/components/Navbar";
 import IPhoneMockups from "@/components/IPhoneMockups";
 import LottieAnimation from "@/components/LottieAnimation";
 import HeroHeadline from "@/components/HeroHeadline";
-import WhatMakesDifferentSection from "@/components/WhatMakesDifferentSection";
 import TypewriterQuote from "@/components/TypewriterQuote";
 import ConicGradientButton from "@/components/ConicGradientButton";
 
@@ -818,9 +817,6 @@ export default function Home() {
 
       {/* ============ HOW MATCHING WORKS ============ */}
       <MatchingFlowSection />
-
-      {/* ============ WHAT MAKES URGENC DIFFERENT ============ */}
-      <WhatMakesDifferentSection />
 
       {/* ============ IPHONE MOCKUPS ============ */}
       <div className="scroll-stack-section lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 5, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
