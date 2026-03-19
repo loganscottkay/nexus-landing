@@ -462,7 +462,7 @@ export default function StartupQualifications() {
               }}
               borderRadius="9999px"
             >
-              Join the Waitlist &rarr;
+              <span style={{ fontWeight: 700 }}>Join the Waitlist &rarr;</span>
             </ConicGradientButton>
           </motion.div>
         </div>

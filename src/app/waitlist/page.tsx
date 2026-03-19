@@ -331,7 +331,7 @@ export default function WaitlistPage() {
                             </svg>
                           </span>
                         ) : (
-                          "Join the Waitlist \u2192"
+                          <span style={{ fontWeight: 700 }}>{"Join the Waitlist \u2192"}</span>
                         )}
                       </span>
                     </ConicGradientButton>

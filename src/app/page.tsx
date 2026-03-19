@@ -734,7 +734,7 @@ export default function Home() {
                 style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.2), 0 0 20px rgba(74,108,247,0.2)" }}
                 borderRadius="1rem"
               >
-                Join the Waitlist
+                <span style={{ fontWeight: 700 }}>Join the Waitlist</span>
                 <ArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
               </ConicGradientButton>
             </motion.div>
@@ -891,7 +891,7 @@ export default function Home() {
               style={{ background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)", fontFamily: "var(--font-dm-sans), sans-serif" }}
               borderRadius="9999px"
             >
-              Join the Waitlist &rarr;
+              <span style={{ fontWeight: 700 }}>Join the Waitlist &rarr;</span>
             </ConicGradientButton>
           </motion.div>
         </motion.div>
@@ -957,7 +957,7 @@ export default function Home() {
                 Product
               </h4>
               <div className="flex flex-wrap justify-center gap-2">
-                <Link href="/waitlist" className="footer-link">
+                <Link href="/waitlist" className="footer-link" style={{ fontWeight: 700 }}>
                   Join the Waitlist
                 </Link>
                 <Link href="/qualifications/startup" className="footer-link">
@@ -1038,7 +1038,7 @@ export default function Home() {
                 Product
               </h4>
               <div className="flex flex-wrap gap-2">
-                <Link href="/waitlist" className="footer-link">
+                <Link href="/waitlist" className="footer-link" style={{ fontWeight: 700 }}>
                   Join the Waitlist
                 </Link>
                 <Link href="/qualifications/startup" className="footer-link">

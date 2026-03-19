@@ -181,7 +181,7 @@ export default function Navbar() {
               }}
               borderRadius="9999px"
             >
-              Join Waitlist
+              <span style={{ fontWeight: 700 }}>Join Waitlist</span>
             </ConicGradientButton>
           </div>
 
@@ -200,7 +200,7 @@ export default function Navbar() {
               }}
               borderRadius="9999px"
             >
-              Join Waitlist
+              <span style={{ fontWeight: 700 }}>Join Waitlist</span>
             </ConicGradientButton>
           </div>
 
@@ -294,7 +294,7 @@ export default function Navbar() {
                 }}
                 borderRadius="9999px"
               >
-                Join Waitlist
+                <span style={{ fontWeight: 700 }}>Join Waitlist</span>
               </ConicGradientButton>
             </div>
           </div>

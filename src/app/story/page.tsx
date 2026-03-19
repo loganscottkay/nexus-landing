@@ -721,7 +721,7 @@ export default function StoryPage() {
                   }}
                   borderRadius="9999px"
                 >
-                  Join the Waitlist &rarr;
+                  <span style={{ fontWeight: 700 }}>Join the Waitlist &rarr;</span>
                 </ConicGradientButton>
               </div>
             </div>
