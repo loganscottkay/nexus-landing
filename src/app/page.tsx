@@ -447,12 +447,14 @@ function MatchingFlowSection() {
           variants={cardStagger}
           className="md:hidden relative w-full"
         >
-          {/* Vertical connecting line */}
+          {/* Vertical connecting line — fades in/out, passes through circle centers */}
           <div
-            className="absolute left-[11px] top-[12px] bottom-[12px] w-[2px]"
+            className="absolute left-[11px] w-[2px] rounded-full"
             style={{
-              background: "linear-gradient(180deg, #4A6CF7, #7C5CFC)",
-              opacity: 0.25,
+              top: "32px",
+              bottom: "32px",
+              background: "linear-gradient(180deg, transparent 0%, #4A6CF7 8%, #6358E8 50%, #7C5CFC 92%, transparent 100%)",
+              opacity: 0.22,
             }}
           />
 
