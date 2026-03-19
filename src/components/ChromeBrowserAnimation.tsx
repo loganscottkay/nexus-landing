@@ -29,6 +29,7 @@ export default function ChromeBrowserAnimation() {
   const [fadeToWhite, setFadeToWhite] = useState(false);
   const [showLoadingBar, setShowLoadingBar] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [showGlitch, setShowGlitch] = useState(false);
   const [showBrand, setShowBrand] = useState(false);
 
   /* Responsive check */
@@ -73,6 +74,7 @@ export default function ChromeBrowserAnimation() {
     setFadeToWhite(false);
     setShowLoadingBar(false);
     setShowResults(false);
+    setShowGlitch(false);
     setShowBrand(false);
   }, []);
 
@@ -136,12 +138,18 @@ export default function ChromeBrowserAnimation() {
       setShowResults(true);
     }, 500);
 
-    // Show fake results briefly, then show brand inside browser
+    // Show fake results briefly, then trigger glitch transition
     at(() => {
       setShowResults(false);
       setShowCursor(false);
-      setShowBrand(true);
+      setShowGlitch(true);
     }, 1200);
+
+    // After glitch plays (~1.4s), resolve into brand/hero
+    at(() => {
+      setShowGlitch(false);
+      setShowBrand(true);
+    }, 1400);
 
     // Hold brand for 2.5 seconds, then fade out
     at(() => {
@@ -204,6 +212,98 @@ export default function ChromeBrowserAnimation() {
         @keyframes brandGlow {
           0%, 100% { transform: scale(1); opacity: 0.08; }
           50% { transform: scale(1.1); opacity: 0.12; }
+        }
+        @keyframes glitchSlice {
+          0% { clip-path: inset(0 0 100% 0); }
+          5% { clip-path: inset(80% 0 0 0); }
+          10% { clip-path: inset(10% 0 60% 0); }
+          15% { clip-path: inset(40% 0 20% 0); }
+          20% { clip-path: inset(0 0 70% 0); }
+          25% { clip-path: inset(60% 0 10% 0); }
+          30% { clip-path: inset(20% 0 40% 0); }
+          35% { clip-path: inset(70% 0 5% 0); }
+          40% { clip-path: inset(5% 0 80% 0); }
+          45% { clip-path: inset(50% 0 30% 0); }
+          50% { clip-path: inset(15% 0 50% 0); }
+          55% { clip-path: inset(65% 0 15% 0); }
+          60% { clip-path: inset(30% 0 35% 0); }
+          65% { clip-path: inset(0 0 55% 0); }
+          70% { clip-path: inset(45% 0 25% 0); }
+          75% { clip-path: inset(75% 0 0 0); }
+          80% { clip-path: inset(25% 0 45% 0); }
+          85% { clip-path: inset(55% 0 20% 0); }
+          90% { clip-path: inset(10% 0 30% 0); }
+          95% { clip-path: inset(35% 0 10% 0); }
+          100% { clip-path: inset(0 0 0 0); }
+        }
+        @keyframes glitchShiftR {
+          0%, 100% { transform: translate(0); }
+          10% { transform: translate(3px, -2px); }
+          20% { transform: translate(-4px, 1px); }
+          30% { transform: translate(2px, 3px); }
+          40% { transform: translate(-3px, -1px); }
+          50% { transform: translate(4px, 2px); }
+          60% { transform: translate(-2px, -3px); }
+          70% { transform: translate(3px, 1px); }
+          80% { transform: translate(-1px, 2px); }
+          90% { transform: translate(2px, -2px); }
+        }
+        @keyframes glitchShiftB {
+          0%, 100% { transform: translate(0); }
+          10% { transform: translate(-3px, 2px); }
+          20% { transform: translate(4px, -1px); }
+          30% { transform: translate(-2px, -3px); }
+          40% { transform: translate(3px, 1px); }
+          50% { transform: translate(-4px, -2px); }
+          60% { transform: translate(2px, 3px); }
+          70% { transform: translate(-3px, -1px); }
+          80% { transform: translate(1px, -2px); }
+          90% { transform: translate(-2px, 2px); }
+        }
+        @keyframes glitchFlicker {
+          0% { opacity: 1; }
+          5% { opacity: 0.6; }
+          10% { opacity: 1; }
+          15% { opacity: 0.3; }
+          20% { opacity: 1; }
+          25% { opacity: 0.8; }
+          30% { opacity: 0.4; }
+          35% { opacity: 1; }
+          40% { opacity: 0.7; }
+          45% { opacity: 1; }
+          50% { opacity: 0.5; }
+          55% { opacity: 0.9; }
+          60% { opacity: 1; }
+          65% { opacity: 0.6; }
+          70% { opacity: 1; }
+          75% { opacity: 0.8; }
+          80% { opacity: 1; }
+          85% { opacity: 0.4; }
+          90% { opacity: 0.9; }
+          95% { opacity: 1; }
+          100% { opacity: 1; }
+        }
+        @keyframes scanlineMove {
+          0% { transform: translateY(-100%); }
+          100% { transform: translateY(100%); }
+        }
+        @keyframes glitchNoise {
+          0% { background-position: 0 0; }
+          10% { background-position: -5% -10%; }
+          20% { background-position: 10% 5%; }
+          30% { background-position: -15% 15%; }
+          40% { background-position: 5% -5%; }
+          50% { background-position: -10% 10%; }
+          60% { background-position: 15% 0; }
+          70% { background-position: 0 15%; }
+          80% { background-position: -5% -15%; }
+          90% { background-position: 10% 5%; }
+          100% { background-position: 0 0; }
+        }
+        @keyframes heroMaterialize {
+          0% { opacity: 0; transform: scale(1.02); filter: brightness(1.8) blur(4px); }
+          40% { opacity: 0.7; transform: scale(1.005); filter: brightness(1.2) blur(1px); }
+          100% { opacity: 1; transform: scale(1); filter: brightness(1) blur(0); }
         }
       `}</style>
 
@@ -462,84 +562,275 @@ export default function ChromeBrowserAnimation() {
               <div style={{ height: 8, background: "#E8E8E8", borderRadius: 3, width: "70%" }} />
             </div>
 
-            {/* Brand reveal inside browser */}
+            {/* Glitch transition overlay */}
+            {showGlitch && (
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  zIndex: 7,
+                  background: "#0a0a0f",
+                  animation: "glitchFlicker 1.4s steps(1) forwards",
+                  overflow: "hidden",
+                }}
+              >
+                {/* RGB channel shift - Red */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "rgba(255,0,0,0.4)",
+                    fontFamily: "'Instrument Serif', serif",
+                    fontSize: isMobile ? 32 : 44,
+                    fontWeight: 400,
+                    mixBlendMode: "screen",
+                    animation: "glitchShiftR 0.3s steps(2) infinite",
+                  }}
+                >
+                  Urgen<span style={{ opacity: 0.8 }}>C</span>
+                </div>
+                {/* RGB channel shift - Blue */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "rgba(80,80,255,0.4)",
+                    fontFamily: "'Instrument Serif', serif",
+                    fontSize: isMobile ? 32 : 44,
+                    fontWeight: 400,
+                    mixBlendMode: "screen",
+                    animation: "glitchShiftB 0.25s steps(2) infinite",
+                  }}
+                >
+                  Urgen<span style={{ opacity: 0.8 }}>C</span>
+                </div>
+                {/* Center text with clip-path glitch */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "rgba(255,255,255,0.9)",
+                    fontFamily: "'Instrument Serif', serif",
+                    fontSize: isMobile ? 32 : 44,
+                    fontWeight: 400,
+                    animation: "glitchSlice 0.4s steps(1) infinite",
+                  }}
+                >
+                  Urgen<span style={{ color: "#6366F1" }}>C</span>
+                </div>
+                {/* Scan lines overlay */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px)",
+                    pointerEvents: "none",
+                    animation: "scanlineMove 0.8s linear infinite",
+                  }}
+                />
+                {/* Noise grain texture */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: "-50%",
+                    width: "200%",
+                    height: "200%",
+                    background: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E")`,
+                    backgroundSize: "128px 128px",
+                    opacity: 0.5,
+                    mixBlendMode: "overlay",
+                    animation: "glitchNoise 0.2s steps(3) infinite",
+                    pointerEvents: "none",
+                  }}
+                />
+                {/* Horizontal glitch bars */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "20%",
+                    left: 0,
+                    right: 0,
+                    height: "8%",
+                    background: "linear-gradient(90deg, transparent 0%, rgba(99,102,241,0.15) 20%, rgba(139,92,246,0.2) 50%, rgba(99,102,241,0.15) 80%, transparent 100%)",
+                    transform: "translateX(-10%)",
+                    animation: "glitchShiftR 0.15s steps(1) infinite",
+                  }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "55%",
+                    left: 0,
+                    right: 0,
+                    height: "5%",
+                    background: "linear-gradient(90deg, transparent 0%, rgba(99,102,241,0.1) 30%, rgba(139,92,246,0.15) 60%, transparent 100%)",
+                    transform: "translateX(15%)",
+                    animation: "glitchShiftB 0.2s steps(1) infinite",
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Brand reveal inside browser - mini hero */}
             <div
               style={{
                 position: "absolute",
                 inset: 0,
                 zIndex: 6,
                 background:
-                  "linear-gradient(135deg, #FAF9F7 0%, #F0EEFF 30%, #FAF9F7 60%, #F5F0FF 100%)",
+                  "linear-gradient(180deg, #FAF9F7 0%, #F0EEFF 30%, #EDE9FE 50%, #F5F0FF 70%, #FAF9F7 100%)",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
                 opacity: showBrand ? 1 : 0,
-                transition: "opacity 0.5s ease",
+                transition: "opacity 0.4s ease",
                 pointerEvents: showBrand ? "auto" : "none",
-                padding: "0 24px",
+                padding: isMobile ? "0 16px" : "0 24px",
+                overflow: "hidden",
+                animation: showBrand ? "heroMaterialize 0.6s ease-out forwards" : "none",
               }}
             >
-              {/* Animated glow behind logo */}
+              {/* Animated glow behind content */}
               <div
                 style={{
                   position: "absolute",
-                  width: 200,
-                  height: 200,
+                  width: isMobile ? 250 : 400,
+                  height: isMobile ? 150 : 250,
                   borderRadius: "50%",
-                  background: "radial-gradient(circle, #6366F1 0%, transparent 70%)",
-                  opacity: 0.08,
+                  background: "radial-gradient(ellipse, rgba(99,102,241,0.08) 0%, transparent 70%)",
                   animation: "brandGlow 3s ease-in-out infinite",
                   pointerEvents: "none",
                 }}
               />
 
-              {/* Top decorative line */}
-              <div
+              {/* Eyebrow */}
+              <span
                 style={{
-                  width: 60,
-                  height: 2,
-                  background: "linear-gradient(90deg, #6366F1, #8B5CF6)",
-                  borderRadius: 1,
-                  marginBottom: 24,
+                  fontFamily: "var(--font-dm-sans), sans-serif",
+                  fontSize: isMobile ? 10 : 12,
+                  fontWeight: 500,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "rgba(99,102,241,0.6)",
+                  marginBottom: isMobile ? 10 : 14,
                 }}
-              />
+              >
+                Founding Cohort Coming Soon
+              </span>
 
+              {/* Main headline */}
               <h2
                 style={{
                   fontFamily: "'Instrument Serif', serif",
-                  fontSize: isMobile ? 38 : 48,
+                  fontSize: isMobile ? 26 : 38,
                   color: "#0F172A",
                   fontWeight: 400,
                   textAlign: "center",
                   margin: 0,
-                  lineHeight: 1.1,
+                  lineHeight: 1.15,
                 }}
               >
-                Urgen<span style={{ color: "#6366F1" }}>C</span>
+                Where{" "}
+                <span
+                  style={{
+                    background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  Real Ideas
+                </span>
+                <br />
+                Meet{" "}
+                <span
+                  style={{
+                    background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  Real Capital.
+                </span>
               </h2>
+
+              {/* Tagline */}
               <p
                 style={{
                   fontFamily: "var(--font-dm-sans), sans-serif",
-                  fontSize: isMobile ? 13 : 16,
+                  fontSize: isMobile ? 11 : 14,
                   color: "#64748B",
-                  marginTop: 14,
+                  marginTop: isMobile ? 8 : 12,
                   textAlign: "center",
-                  maxWidth: 400,
-                  lineHeight: 1.7,
+                  maxWidth: 380,
+                  lineHeight: 1.6,
                 }}
               >
-                Where the only thing between your idea and capital is a 60-second pitch.
+                The only fundraising app where meetings are guaranteed.
               </p>
 
-              {/* Bottom decorative line */}
+              {/* Mini CTA button */}
+              <div
+                style={{
+                  marginTop: isMobile ? 14 : 18,
+                  padding: isMobile ? "8px 20px" : "10px 24px",
+                  background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
+                  borderRadius: 8,
+                  color: "white",
+                  fontFamily: "var(--font-dm-sans), sans-serif",
+                  fontSize: isMobile ? 11 : 13,
+                  fontWeight: 600,
+                  letterSpacing: "0.02em",
+                  boxShadow: "0 4px 16px rgba(99,102,241,0.3)",
+                }}
+              >
+                Join the Waitlist
+              </div>
+
+              {/* University crests row */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: isMobile ? 10 : 16,
+                  marginTop: isMobile ? 16 : 22,
+                }}
+              >
+                <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: isMobile ? 9 : 11, color: "#94A3B8" }}>
+                  Built in Boston
+                </span>
+                <div style={{ display: "flex", gap: isMobile ? 6 : 10, alignItems: "center" }}>
+                  <div style={{ width: isMobile ? 22 : 28, height: isMobile ? 22 : 28, borderRadius: "50%", overflow: "hidden" }}>
+                    <img src="/images/universities/bu-crest.png" alt="BU" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  </div>
+                  <div style={{ width: isMobile ? 22 : 28, height: isMobile ? 22 : 28, borderRadius: "50%", overflow: "hidden" }}>
+                    <img src="/images/universities/neu-crest.png" alt="NEU" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  </div>
+                  <div style={{ width: isMobile ? 22 : 28, height: isMobile ? 22 : 28, borderRadius: "50%", overflow: "hidden" }}>
+                    <img src="/images/universities/hbs-crest.png" alt="HBS" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom gradient accent line */}
               <div
                 style={{
                   width: 60,
                   height: 2,
                   background: "linear-gradient(90deg, #6366F1, #8B5CF6)",
                   borderRadius: 1,
-                  marginTop: 24,
+                  marginTop: isMobile ? 16 : 22,
                 }}
               />
             </div>
