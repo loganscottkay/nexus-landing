@@ -854,13 +854,8 @@ export default function Home() {
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          className="flex flex-col items-center text-center px-6 pt-20 pb-8 md:pt-24 md:pb-10"
+          className="flex flex-col items-center text-center px-6 pt-20 pb-2 md:pt-24 md:pb-4"
         >
-          <motion.div
-            variants={tierGradientBar}
-            transition={{ duration: 0.4, delay: 0, ease }}
-            style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto', transformOrigin: 'center' }}
-          />
           <motion.h2
             variants={tierTitle}
             transition={{ duration: 0.8, delay: 0.2, ease: smoothDecel }}
