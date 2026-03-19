@@ -165,8 +165,8 @@ function StatusBar() {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
-      padding: "4px 12px 0",
-      height: "16px",
+      padding: "14px 12px 0",
+      height: "28px",
     }}>
       <span style={{ fontSize: "7px", fontWeight: 600, color: "#F8FAFC", fontFamily: "var(--font-dm-sans), sans-serif" }}>9:41</span>
       <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
@@ -940,8 +940,8 @@ function PhoneBody({
           }} />
         </div>
 
-        {/* Screen content area (below dynamic island) */}
-        <div style={{ paddingTop: "38px", height: "100%", overflow: "hidden" }}>
+        {/* Screen content area (edge-to-edge) */}
+        <div style={{ height: "100%", overflow: "hidden" }}>
           {children}
         </div>
       </div>
