@@ -11,7 +11,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "UrgenC | Where Capital Meets Vision",
+  title: "UrgenC | Where Real Ideas Meet Real Capital",
   description:
     "A curated marketplace connecting vetted startups with accredited investors through intelligent matching.",
   icons: {
