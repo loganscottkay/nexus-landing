@@ -11,7 +11,7 @@ const PAUSE_BETWEEN = 250;
 const QUERIES = [
   "How to find investors for my startup",
   "How to find early stage startups to invest in",
-  "The app where founders pitch, investors swipe, and every match gets a guaranteed meeting",
+  "What is an app where founders pitch, investors swipe, and every match gets a guaranteed meeting?",
 ];
 
 /* ---- Component ---- */
