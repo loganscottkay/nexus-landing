@@ -286,9 +286,10 @@ export default function Navbar() {
                 onClick={() => setMenuOpen(false)}
                 className="flex items-center justify-center w-full font-semibold text-white rounded-full"
                 style={{
-                  maxWidth: "300px",
+                  maxWidth: "340px",
                   height: "56px",
                   fontSize: "18px",
+                  padding: "0 32px",
                   fontFamily: "var(--font-dm-sans), sans-serif",
                   background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
                 }}

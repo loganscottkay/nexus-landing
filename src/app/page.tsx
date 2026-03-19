@@ -613,7 +613,7 @@ export default function Home() {
       <Navbar />
 
       {/* ============ HERO ============ */}
-      <section className="scroll-stack-section relative z-10 pt-[150px] lg:pt-[220px] pb-[80px] lg:pb-[50px]" style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
+      <section className="scroll-stack-section relative z-10 pt-[150px] lg:pt-[220px] pb-[45px] lg:pb-[50px]" style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
         {/* Subtle abstract landscape-depth gradient */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -679,7 +679,7 @@ export default function Home() {
               className="mb-12"
             >
               <div
-                className="text-[11px] md:text-[16px] max-w-full px-2 md:max-w-[600px] md:px-0 leading-[1.8] md:leading-[2.0] text-center"
+                className="text-[14px] md:text-[16px] max-w-full px-2 md:max-w-[600px] md:px-0 leading-[1.8] md:leading-[2.0] text-center"
                 style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 {[
