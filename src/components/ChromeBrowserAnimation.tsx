@@ -139,31 +139,12 @@ export default function ChromeBrowserAnimation() {
       setShowResults(true);
     }, 500);
 
-    // Show fake results briefly, then show brand
+    // Show fake results briefly, then show brand and stay
     at(() => {
       setShowResults(false);
       setShowCursor(false);
       setShowBrand(true);
     }, 1200);
-
-    // Hold brand for 2.5 seconds, then fade out
-    at(() => {
-      setShowBrand(false);
-    }, 2500);
-
-    // Wait for fade out transition, then reset and loop
-    at(() => {
-      setFadeToWhite(false);
-    }, 400);
-
-    at(() => {
-      resetState();
-    }, 600);
-
-    // Restart
-    at(() => {
-      runAnimation();
-    }, 600);
   }, [schedule, cleanup, resetState]);
 
   /* IntersectionObserver to start on scroll */
