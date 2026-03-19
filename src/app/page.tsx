@@ -849,6 +849,29 @@ export default function Home() {
       </section>
 
       {/* ============ NARRATIVE HOOK ============ */}
+      <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 3, backgroundColor: '#FAF9F7' }}>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="flex flex-col items-center text-center px-6 pt-20 pb-8 md:pt-24 md:pb-10"
+        >
+          <motion.div
+            variants={tierGradientBar}
+            transition={{ duration: 0.4, delay: 0, ease }}
+            style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto', transformOrigin: 'center' }}
+          />
+          <motion.h2
+            variants={tierTitle}
+            transition={{ duration: 0.8, delay: 0.2, ease: smoothDecel }}
+            className="text-[28px] md:text-[40px] font-normal text-center max-w-[600px]"
+            style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", lineHeight: 1.3 }}
+          >
+            Everyone&apos;s been searching for this. No one&apos;s built it.{" "}
+            <span className="gradient-text-animate" style={{ fontWeight: 600 }}>Until now.</span>
+          </motion.h2>
+        </motion.div>
+      </div>
       <ChromeBrowserAnimation />
 
       {/* ============ HOW MATCHING WORKS ============ */}
