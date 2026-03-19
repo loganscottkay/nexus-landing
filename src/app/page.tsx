@@ -364,13 +364,6 @@ function MatchingFlowSection() {
                       >
                         {step.title}
                       </h3>
-                      {(step as { lottie?: string }).lottie && (
-                        <LottieAnimation
-                          src={(step as { lottie: string }).lottie}
-                          loop={true}
-                          className="lottie-brand w-[36px] h-[36px] shrink-0"
-                        />
-                      )}
                     </div>
                     <p className="text-[14px] text-text-muted leading-[1.6] flex-1">{step.desc}</p>
                   </div>
@@ -440,13 +433,6 @@ function MatchingFlowSection() {
                       >
                         {step.title}
                       </h3>
-                      {(step as { lottie?: string }).lottie && (
-                        <LottieAnimation
-                          src={(step as { lottie: string }).lottie}
-                          loop={true}
-                          className="lottie-brand w-[36px] h-[36px] shrink-0"
-                        />
-                      )}
                     </div>
                     <p className="text-[14px] text-text-muted leading-[1.6] flex-1">{step.desc}</p>
                   </div>
@@ -533,13 +519,6 @@ function MatchingFlowSection() {
                       >
                         {step.title}
                       </h3>
-                      {(step as { lottie?: string }).lottie && (
-                        <LottieAnimation
-                          src={(step as { lottie: string }).lottie}
-                          loop={true}
-                          className="lottie-brand w-[36px] h-[36px] shrink-0"
-                        />
-                      )}
                     </div>
                     <p className="text-[13px] text-text-muted leading-[1.6]">{step.desc}</p>
                   </div>
