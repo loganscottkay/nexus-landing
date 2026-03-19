@@ -2315,42 +2315,50 @@ html {
   }
 }
 
-/* Mobile-only: smaller university crests with tight overlapping spacing */
+/* Mobile-only: university crests — same height, equal spacing, centered labels */
 @media (max-width: 767px) {
   .crest-row {
-    gap: 0 !important;
+    gap: 2rem !important;
     justify-content: center !important;
+    align-items: flex-end !important;
     margin: 0 auto !important;
     padding: 0 !important;
   }
 
   .crest-item {
-    width: 50px !important;
-    height: 65px !important;
+    width: auto !important;
+    min-width: 50px !important;
+    height: auto !important;
     align-items: center !important;
-    margin: 0 -6px !important;
+    margin: 0 !important;
     padding: 0 !important;
+    flex: 0 0 auto !important;
   }
 
+  /* BU and NEU circular crests */
   .crest-circle {
-    width: 36px !important;
-    height: 36px !important;
+    width: 40px !important;
+    height: 40px !important;
   }
 
   .crest-img {
-    width: 36px !important;
-    height: 36px !important;
+    width: 40px !important;
+    height: 40px !important;
   }
 
+  /* HBS shield — same height as circles, natural width, no circular clip */
   .crest-circle-hbs {
-    width: 46px !important;
-    height: 46px !important;
-    margin-top: 5px !important;
+    width: auto !important;
+    height: 40px !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    margin-top: 0 !important;
   }
 
   .crest-img-hbs {
-    width: 46px !important;
-    height: 46px !important;
-    margin-top: 6px !important;
+    width: auto !important;
+    height: 40px !important;
+    margin-top: 0 !important;
+    object-fit: contain !important;
   }
 }
