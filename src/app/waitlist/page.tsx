@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import UnicornAnimation from "@/components/UnicornAnimation";
 import LottieAnimation from "@/components/LottieAnimation";
 import ConicGradientButton from "@/components/ConicGradientButton";
+import { supabase } from "@/lib/supabase";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
@@ -20,6 +21,8 @@ export default function WaitlistPage() {
 
   // Touched state for validation on blur
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  const [formError, setFormError] = useState("");
 
   // Clipboard tooltip
   const [copied, setCopied] = useState(false);
@@ -36,14 +39,28 @@ export default function WaitlistPage() {
     setTouched((prev) => ({ ...prev, [field]: true }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!allValid) return;
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-    }, 1500);
+    setFormError("");
+
+    const { error } = await supabase
+      .from("waitlist")
+      .insert({ name: name.trim(), email: email.trim().toLowerCase(), interest });
+
+    setLoading(false);
+
+    if (error) {
+      if (error.code === "23505") {
+        setFormError("This email is already on the waitlist.");
+      } else {
+        setFormError("Something went wrong. Please try again.");
+      }
+      return;
+    }
+
+    setSubmitted(true);
   };
 
   const copyLink = () => {
@@ -288,6 +305,16 @@ export default function WaitlistPage() {
                         message="Required"
                       />
                     </div>
+
+                    {/* Error message */}
+                    {formError && (
+                      <p
+                        className="text-[14px] text-center"
+                        style={{ color: "#EF4444", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                      >
+                        {formError}
+                      </p>
+                    )}
 
                     {/* Submit */}
                     <ConicGradientButton
