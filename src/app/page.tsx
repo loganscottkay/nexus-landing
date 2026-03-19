@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import IPhoneMockups from "@/components/IPhoneMockups";
@@ -256,6 +256,146 @@ const matchingSteps = [
   },
 ];
 
+/* ---- Mobile vertical timeline with centered circles ---- */
+function MobileTimeline({
+  matchingSteps,
+  labelColors,
+  cardStagger,
+  mobileSlideFromLeft,
+}: {
+  matchingSteps: { num: string; title: string; label: string; labelColor: string; desc: string; color: string; icon: React.ReactNode }[];
+  labelColors: Record<string, { bg: string; text: string }>;
+  cardStagger: Variants;
+  mobileSlideFromLeft: Variants;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const circleRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [lineStyle, setLineStyle] = useState<{ top: number; height: number } | null>(null);
+
+  useEffect(() => {
+    const measure = () => {
+      const container = containerRef.current;
+      if (!container) return;
+      const first = circleRefs.current[0];
+      const last = circleRefs.current[matchingSteps.length - 1];
+      if (!first || !last) return;
+
+      const containerRect = container.getBoundingClientRect();
+      const firstRect = first.getBoundingClientRect();
+      const lastRect = last.getBoundingClientRect();
+
+      const top = firstRect.top - containerRect.top + firstRect.height / 2;
+      const bottom = lastRect.top - containerRect.top + lastRect.height / 2;
+      setLineStyle({ top, height: bottom - top });
+    };
+
+    // Measure after layout settles (animations may shift things)
+    const t1 = setTimeout(measure, 100);
+    const t2 = setTimeout(measure, 600);
+    const t3 = setTimeout(measure, 1200);
+    window.addEventListener("resize", measure);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      window.removeEventListener("resize", measure);
+    };
+  }, [matchingSteps.length]);
+
+  return (
+    <motion.div
+      variants={cardStagger}
+      className="md:hidden relative w-full"
+      ref={containerRef}
+    >
+      {/* Vertical connecting line — spans from circle 1 center to circle 4 center */}
+      {lineStyle && (
+        <div
+          className="absolute left-[11px] w-[2px] rounded-full"
+          style={{
+            top: `${lineStyle.top}px`,
+            height: `${lineStyle.height}px`,
+            background: "linear-gradient(180deg, #4A6CF7 0%, #6358E8 50%, #7C5CFC 100%)",
+            opacity: 0.22,
+          }}
+        />
+      )}
+
+      <div className="flex flex-col gap-5">
+        {matchingSteps.map((step, i) => (
+          <motion.div
+            key={step.num}
+            variants={mobileSlideFromLeft}
+            transition={{ duration: 0.5, delay: 0.6 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center gap-0"
+          >
+            {/* Numbered circle on the timeline — vertically centered with card */}
+            <div
+              ref={(el) => { circleRefs.current[i] = el; }}
+              className="shrink-0 w-[24px] h-[24px] rounded-full flex items-center justify-center z-10"
+              style={{
+                background: `linear-gradient(135deg, ${step.color}, ${step.labelColor})`,
+                boxShadow: `0 0 8px ${step.color}40`,
+              }}
+            >
+              <span className="text-white text-[11px] font-semibold leading-none">{i + 1}</span>
+            </div>
+
+            {/* Card */}
+            <div className={`flex-1 ml-4 matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
+              <div
+                className="matching-flow-card rounded-2xl p-5"
+                data-label={step.label}
+                style={{
+                  background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(212,175,55,0.04), rgba(167,139,250,0.05), rgba(196,148,233,0.03))",
+                  backdropFilter: "blur(20px) saturate(1.8)",
+                  WebkitBackdropFilter: "blur(20px) saturate(1.8)",
+                  border: "1px solid rgba(255, 255, 255, 0.5)",
+                  boxShadow: "0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)",
+                }}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <motion.div
+                    className="shrink-0"
+                    initial={{ scale: 0.9 }}
+                    whileInView={{ scale: [0.9, 1.15, 1] }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
+                  >
+                    {step.icon}
+                  </motion.div>
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.2, delay: 0.2 + i * 0.1 }}
+                    className="inline-block rounded-full px-2.5 py-0.5 text-[10px] tracking-[2px] uppercase font-medium"
+                    style={{
+                      background: labelColors[step.label]?.bg || "rgba(124,92,252,0.1)",
+                      color: labelColors[step.label]?.text || step.labelColor,
+                    }}
+                  >
+                    {step.label}
+                  </motion.span>
+                </div>
+                <div className="flex items-center gap-2 mb-1.5">
+                  <h3
+                    className="text-[16px] font-semibold text-text-primary"
+                    style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                  >
+                    {step.title}
+                  </h3>
+                </div>
+                <p className="text-[13px] text-text-muted leading-[1.6]">{step.desc}</p>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
 function MatchingFlowSection() {
   const labelColors: Record<string, { bg: string; text: string }> = {
     "FOR FOUNDERS": { bg: "rgba(124, 92, 252, 0.1)", text: "#7C5CFC" },
@@ -443,92 +583,8 @@ function MatchingFlowSection() {
         </motion.div>
 
         {/* Mobile: vertical timeline flow */}
-        <motion.div
-          variants={cardStagger}
-          className="md:hidden relative w-full"
-        >
-          {/* Vertical connecting line — fades in/out, passes through circle centers */}
-          <div
-            className="absolute left-[11px] w-[2px] rounded-full"
-            style={{
-              top: "32px",
-              bottom: "32px",
-              background: "linear-gradient(180deg, transparent 0%, #4A6CF7 8%, #6358E8 50%, #7C5CFC 92%, transparent 100%)",
-              opacity: 0.22,
-            }}
-          />
+        <MobileTimeline matchingSteps={matchingSteps} labelColors={labelColors} cardStagger={cardStagger} mobileSlideFromLeft={mobileSlideFromLeft} />
 
-          <div className="flex flex-col gap-5">
-            {matchingSteps.map((step, i) => (
-              <motion.div
-                key={step.num}
-                variants={mobileSlideFromLeft}
-                transition={{ duration: 0.5, delay: 0.6 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="flex items-start gap-0"
-              >
-                {/* Numbered circle on the timeline */}
-                <div
-                  className="shrink-0 w-[24px] h-[24px] rounded-full flex items-center justify-center z-10 mt-5"
-                  style={{
-                    background: `linear-gradient(135deg, ${step.color}, ${step.labelColor})`,
-                    boxShadow: `0 0 8px ${step.color}40`,
-                  }}
-                >
-                  <span className="text-white text-[11px] font-semibold leading-none">{i + 1}</span>
-                </div>
-
-                {/* Card */}
-                <div className={`flex-1 ml-4 matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
-                  <div
-                    className="matching-flow-card rounded-2xl p-5"
-                    data-label={step.label}
-                    style={{
-                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(212,175,55,0.04), rgba(167,139,250,0.05), rgba(196,148,233,0.03))",
-                      backdropFilter: "blur(20px) saturate(1.8)",
-                      WebkitBackdropFilter: "blur(20px) saturate(1.8)",
-                      border: "1px solid rgba(255, 255, 255, 0.5)",
-                      boxShadow: "0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)",
-                    }}
-                  >
-                    <div className="flex items-center gap-3 mb-3">
-                      <motion.div
-                        className="shrink-0"
-                        initial={{ scale: 0.9 }}
-                        whileInView={{ scale: [0.9, 1.15, 1] }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
-                      >
-                        {step.icon}
-                      </motion.div>
-                      <motion.span
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.2, delay: 0.2 + i * 0.1 }}
-                        className="inline-block rounded-full px-2.5 py-0.5 text-[10px] tracking-[2px] uppercase font-medium"
-                        style={{
-                          background: labelColors[step.label]?.bg || "rgba(124,92,252,0.1)",
-                          color: labelColors[step.label]?.text || step.labelColor,
-                        }}
-                      >
-                        {step.label}
-                      </motion.span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <h3
-                        className="text-[16px] font-semibold text-text-primary"
-                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-                      >
-                        {step.title}
-                      </h3>
-                    </div>
-                    <p className="text-[13px] text-text-muted leading-[1.6]">{step.desc}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </motion.div>
       </div>
     </Section>
