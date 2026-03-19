@@ -2315,42 +2315,42 @@ html {
   }
 }
 
-/* Mobile-only: smaller university crests with tighter spacing */
+/* Mobile-only: smaller university crests with tight overlapping spacing */
 @media (max-width: 767px) {
   .crest-row {
-    gap: 2rem !important;
+    gap: 0 !important;
     justify-content: center !important;
     margin: 0 auto !important;
     padding: 0 !important;
   }
 
   .crest-item {
-    width: 62px !important;
-    height: 75px !important;
+    width: 50px !important;
+    height: 65px !important;
     align-items: center !important;
-    margin: 0 !important;
+    margin: 0 -6px !important;
     padding: 0 !important;
   }
 
   .crest-circle {
-    width: 42px !important;
-    height: 42px !important;
+    width: 36px !important;
+    height: 36px !important;
   }
 
   .crest-img {
-    width: 42px !important;
-    height: 42px !important;
+    width: 36px !important;
+    height: 36px !important;
   }
 
   .crest-circle-hbs {
-    width: 56px !important;
-    height: 56px !important;
-    margin-top: 7px !important;
+    width: 46px !important;
+    height: 46px !important;
+    margin-top: 5px !important;
   }
 
   .crest-img-hbs {
-    width: 56px !important;
-    height: 56px !important;
-    margin-top: 8px !important;
+    width: 46px !important;
+    height: 46px !important;
+    margin-top: 6px !important;
   }
 }
