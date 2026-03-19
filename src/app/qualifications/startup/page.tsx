@@ -43,13 +43,6 @@ const icons: Record<string, React.ReactNode> = {
       <polyline points="9 12 11 14 15 10" />
     </svg>
   ),
-  rejected: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <line x1="15" y1="9" x2="9" y2="15" />
-      <line x1="9" y1="9" x2="15" y2="15" />
-    </svg>
-  ),
 };
 
 const applicationCards = [
@@ -60,7 +53,7 @@ const applicationCards = [
       "At least one full-time committed founder",
       "Verifiable LinkedIn profiles",
       "Relevant experience or domain knowledge",
-      "Student founders welcome with enrollment proof",
+      "Student founders welcome and encouraged (just include your university affiliation)",
     ],
     why: "We bet on people first.",
   },
@@ -71,7 +64,7 @@ const applicationCards = [
       "Clearly defined problem and customer",
       "Why now is the right time",
       "What makes your approach hard to replicate",
-      "Realistic 3-year vision",
+      "Realistic 1-year vision",
     ],
     why: "Clarity of thought beats a perfect business plan.",
   },
@@ -81,7 +74,6 @@ const applicationCards = [
     items: [
       "Pitch deck (PDF, any stage of polish)",
       "60-second video pitch (required)",
-      "Registered entity or commit to incorporating in 30 days",
     ],
     why: "The video pitch is how investors evaluate you.",
   },
@@ -108,19 +100,6 @@ const onAppCards = [
     why: "This is what keeps UrgenC elite.",
   },
 ];
-
-const rejectionCard = {
-  icon: "rejected",
-  title: "What Gets You Rejected",
-  items: [
-    "No deck or video submitted",
-    "Unverifiable identity",
-    "No clear problem or customer",
-    "Misrepresentation of any kind",
-  ],
-  why: null as string | null,
-  isRejection: true,
-};
 
 type CardData = {
   icon: string;
@@ -438,11 +417,6 @@ export default function StartupQualifications() {
             {onAppCards.map((card, i) => (
               <QualCard key={card.title} card={card} index={i} />
             ))}
-          </div>
-
-          {/* What Gets You Rejected */}
-          <div className="mt-8">
-            <QualCard card={rejectionCard} index={0} />
           </div>
 
           {/* CTA */}
