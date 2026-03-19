@@ -303,7 +303,7 @@ export default function InvestorQualifications() {
                   style={{
                     fontFamily: "var(--font-dm-sans), sans-serif",
                     fontSize: "16px",
-                    color: "#D97706",
+                    color: "#EAB308",
                   }}
                 >
                   Confidentiality Agreement
