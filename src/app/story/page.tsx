@@ -628,7 +628,7 @@ export default function StoryPage() {
                         textAlign: "left",
                       }}
                     >
-                      Logan is a senior at Boston University and leads AI implementation across admissions and operations at Harvard Business School. At UrgenC, he built the scoring engine and runs all product development and engineering.
+                      Logan is a senior at Boston University and helps spearhead AI implementation across admissions and operations teams at Harvard Business School. At UrgenC, he runs all product development and engineering.
                     </p>
                   </div>
                 </div>
