@@ -152,7 +152,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className="nav-link whitespace-nowrap"
-                style={{ fontSize: "14px", fontWeight: 500, color: "#475569", letterSpacing: "0.3px" }}
+                style={{ fontSize: "14px", fontWeight: 500, color: "#64748B", letterSpacing: "0.3px" }}
               >
                 {link.label}
               </Link>
@@ -161,7 +161,7 @@ export default function Navbar() {
             <Link
               href="/story"
               className="nav-link whitespace-nowrap"
-              style={{ fontSize: "14px", fontWeight: 500, color: "#475569", letterSpacing: "0.3px" }}
+              style={{ fontSize: "14px", fontWeight: 500, color: "#64748B", letterSpacing: "0.3px" }}
             >
               About
             </Link>
@@ -272,7 +272,7 @@ export default function Navbar() {
                   fontSize: "18px",
                   fontWeight: 600,
                   fontFamily: "var(--font-dm-sans), sans-serif",
-                  color: "#0F172A",
+                  color: "#64748B",
                 }}
               >
                 {link.label}
