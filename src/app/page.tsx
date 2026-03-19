@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import IPhoneMockups from "@/components/IPhoneMockups";
@@ -57,6 +57,11 @@ const cardStagger = {
       staggerChildren: 0.08,
     },
   },
+};
+
+const mobileSlideFromLeft = {
+  hidden: { opacity: 0, x: -40 },
+  visible: { opacity: 1, x: 0 },
 };
 
 const viewportConfig = { once: true, amount: 0.2 as const };
@@ -173,7 +178,20 @@ function ArrowRight({ className = "" }: { className?: string }) {
 }
 
 /* Flow arrow SVG between cards (desktop only) */
-
+const FlowArrow = ({ delay = 0 }: { delay?: number }) => (
+  <div className="flex items-center justify-center shrink-0" style={{ width: 24 }}>
+    <svg
+      width="24"
+      height="16"
+      viewBox="0 0 24 16"
+      fill="none"
+      className="flow-arrow"
+      style={{ animationDelay: `${delay}s` }}
+    >
+      <path d="M2 8 L18 8 M14 4 L18 8 L14 12" stroke="rgba(99,102,241,0.25)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  </div>
+);
 
 const matchingSteps = [
   {
@@ -240,339 +258,301 @@ const matchingSteps = [
   },
 ];
 
-/* ─── Hand-drawn SVG icons for sticky notes ─── */
-const stickyIcons = [
-  // Video camera (hand-drawn style)
-  <svg key="cam" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M23.2 7.1L16.1 11.8L22.8 17.1L23.2 7.1Z" />
-    <path d="M1.2 5.3C1 5.8 0.9 6.2 1 6.8L1.1 17.2C1 18.1 1.8 19.1 2.8 19.2L14.2 19C15.2 19.1 16.1 18.2 16 17.1L16.1 6C16.2 5 15.3 4.9 14.3 5L2.8 4.8C2 4.9 1.3 5 1.2 5.3Z" />
-  </svg>,
-  // Sliders/filter (hand-drawn style)
-  <svg key="sliders" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="4.1" y1="21.2" x2="3.9" y2="14.1" />
-    <line x1="4.2" y1="9.8" x2="3.8" y2="2.9" />
-    <line x1="12.1" y1="21.1" x2="11.9" y2="12.2" />
-    <line x1="12.2" y1="7.9" x2="11.8" y2="3.1" />
-    <line x1="20.1" y1="20.8" x2="19.9" y2="16.1" />
-    <line x1="20.2" y1="11.9" x2="19.8" y2="3.2" />
-    <line x1="1.1" y1="14.2" x2="6.9" y2="13.8" />
-    <line x1="9.2" y1="8.1" x2="14.8" y2="7.9" />
-    <line x1="17.1" y1="16.2" x2="22.9" y2="15.8" />
-  </svg>,
-  // Checkmark (hand-drawn style)
-  <svg key="check" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M20.1 6.2L9.2 17.1L3.9 11.8" />
-    <circle cx="12" cy="12" r="10.5" strokeDasharray="3 3" opacity="0.3" />
-  </svg>,
-  // Phone (hand-drawn style)
-  <svg key="phone" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22.1 16.8v3.1a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6.1-5.9 19.8 19.8 0 01-3.1-8.7A2 2 0 014.2 2.1h2.9a2 2 0 012.1 1.7 12.8 12.8 0 00.7 2.8 2 2 0 01-.4 2.1L8.2 10a16 16 0 005.9 5.9l1.3-1.3a2 2 0 012.1-.4 12.8 12.8 0 002.8.7A2 2 0 0122.1 16.8z" />
-  </svg>,
-];
-
-const stickyNoteColors = ['#FFF9C4', '#E8F5E9', '#E3F2FD', '#F3E5F5'];
-const stickyNoteRotations = [-1, 0.5, -0.7, 1.2];
-
 function MatchingFlowSection() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-
-  const goPrev = useCallback(() => {
-    setCurrentSlide((prev) => Math.max(0, prev - 1));
-  }, []);
-
-  const goNext = useCallback(() => {
-    setCurrentSlide((prev) => Math.min(3, prev + 1));
-  }, []);
+  const labelColors: Record<string, { bg: string; text: string }> = {
+    "FOR FOUNDERS": { bg: "rgba(124, 92, 252, 0.1)", text: "#7C5CFC" },
+    "FOR INVESTORS": { bg: "rgba(74, 108, 247, 0.1)", text: "#4A6CF7" },
+    "BOTH SIDES": { bg: "rgba(5, 150, 105, 0.12)", text: "#059669" },
+  };
 
   return (
     <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
-      <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{}}>
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            variants={cardStagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewportConfig}
-            className="flex flex-col items-center"
-          >
-            {/* Section header */}
-            <motion.div
-              variants={tierGradientBar}
-              transition={{ duration: 0.4, delay: 0, ease }}
-              style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto', transformOrigin: 'center' }}
-            />
-            <motion.p
-              variants={tierEyebrow}
-              transition={{ duration: 0.5, delay: 0.1, ease }}
-              className="gradient-text text-[13px] tracking-[3px] uppercase mb-4"
-              style={{ fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", fontWeight: 700 }}
-            >
-              The Matching Flow
-            </motion.p>
-            <motion.h2
-              variants={tierTitle}
-              transition={{ duration: 0.8, delay: 0.2, ease: smoothDecel }}
-              className="text-[36px] md:text-[44px] font-normal text-center mb-4"
-              style={{ fontFamily: "'Instrument Serif', serif" }}
-            >
-              Swipe. Match. Meet.
-            </motion.h2>
-            <motion.p
-              variants={tierSubtitle}
-              transition={{ duration: 0.5, delay: 0.4, ease }}
-              className="text-center max-w-[600px] text-[17px] leading-[1.7] mb-16"
-              style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
-            >
-              The complete flow from pitch to meeting.
-            </motion.p>
+    <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{}}>
+      <div className="max-w-6xl mx-auto">
+      <motion.div
+        variants={cardStagger}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportConfig}
+        className="flex flex-col items-center"
+      >
+        <motion.div
+          variants={tierGradientBar}
+          transition={{ duration: 0.4, delay: 0, ease }}
+          style={{ width: 60, height: 4, borderRadius: 9999, background: 'linear-gradient(90deg, #6366F1, #8B5CF6, #A855F7)', margin: '0 auto 16px auto', transformOrigin: 'center' }}
+        />
+        <motion.p
+          variants={tierEyebrow}
+          transition={{ duration: 0.5, delay: 0.1, ease }}
+          className="gradient-text text-[13px] tracking-[3px] uppercase mb-4"
+          style={{ fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", fontWeight: 700 }}
+        >
+          The Matching Flow
+        </motion.p>
+        <motion.h2
+          variants={tierTitle}
+          transition={{ duration: 0.8, delay: 0.2, ease: smoothDecel }}
+          className="text-[36px] md:text-[44px] font-normal text-center mb-4"
+          style={{ fontFamily: "'Instrument Serif', serif" }}
+        >
+          Swipe. Match. Meet.
+        </motion.h2>
+        <motion.p
+          variants={tierSubtitle}
+          transition={{ duration: 0.5, delay: 0.4, ease }}
+          className="text-center max-w-[600px] text-[17px] leading-[1.7] mb-16"
+          style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
+        >
+          The complete flow from pitch to meeting.
+        </motion.p>
 
-            {/* Paper background container */}
-            <motion.div
-              variants={tierCard}
-              transition={{ duration: 0.6, delay: 0.5, ease }}
-              className="w-full mx-auto"
-              style={{ maxWidth: 800 }}
-            >
-              <div
-                className="relative mx-auto"
-                style={{
-                  maxWidth: 800,
-                  borderRadius: 12,
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-                  padding: isMobile ? '24px 16px' : '40px',
-                  background: '#FFF8E7',
-                  overflow: 'hidden',
-                  margin: isMobile ? '0 -8px' : undefined,
-                }}
+        {/* Desktop: horizontal flow with animated arrows */}
+        <motion.div
+          variants={cardStagger}
+          className="hidden lg:flex gap-0 w-full items-stretch"
+        >
+          {matchingSteps.map((step, i) => (
+            <React.Fragment key={step.num}>
+              {/* Animated flow arrow between steps */}
+              {i > 0 && <FlowArrow delay={(i - 1) * 0.5} />}
+
+              {/* Step card */}
+              <motion.div
+                variants={tierCard}
+                transition={{ duration: 0.5, delay: 0.6 + i * 0.08, ease }}
+                className="flex-1 max-w-[280px] w-full min-h-[240px]"
               >
-                {/* Lined paper pattern */}
-                <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
-                  <defs>
-                    <pattern id="lined-paper" patternUnits="userSpaceOnUse" width="100%" height="28">
-                      <line x1="0" y1="28" x2="100%" y2="28" stroke="rgba(180,160,140,0.2)" strokeWidth="1" />
-                    </pattern>
-                  </defs>
-                  <rect width="100%" height="100%" fill="url(#lined-paper)" />
-                </svg>
-
-                {/* Vintage paper texture overlay */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    pointerEvents: 'none',
-                    background: `
-                      radial-gradient(ellipse at 20% 30%, rgba(139,69,19,0.08) 0%, transparent 50%),
-                      radial-gradient(ellipse at 80% 70%, rgba(139,69,19,0.06) 0%, transparent 50%),
-                      radial-gradient(ellipse at 50% 10%, rgba(139,69,19,0.04) 0%, transparent 40%),
-                      radial-gradient(ellipse at 10% 80%, rgba(139,69,19,0.05) 0%, transparent 45%)
-                    `,
-                  }}
-                />
-
-                {/* Noise texture overlay */}
-                <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', opacity: 0.15 }}>
-                  <filter id="paper-noise">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-                  </filter>
-                  <rect width="100%" height="100%" filter="url(#paper-noise)" />
-                </svg>
-
-                {/* Stacking slider area */}
-                <div className="relative" style={{ minHeight: isMobile ? 300 : 320 }}>
-                  {/* Stack of cards */}
+                <div className={`glow-card-wrapper h-full matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
                   <div
-                    className="relative mx-auto"
-                    style={{ width: '100%', maxWidth: isMobile ? '100%' : 380, height: isMobile ? 260 : 280 }}
+                    className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300 flex flex-col"
+                    data-label={step.label}
+                    style={{
+                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(212,175,55,0.04), rgba(167,139,250,0.05), rgba(196,148,233,0.03))",
+                      backdropFilter: "blur(20px) saturate(1.8)",
+                      WebkitBackdropFilter: "blur(20px) saturate(1.8)",
+                      border: "1px solid rgba(255, 255, 255, 0.5)",
+                      boxShadow: "0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)",
+                    }}
                   >
-                    {matchingSteps.map((step, idx) => {
-                      const isActive = idx === currentSlide;
-                      const isBehind = idx < currentSlide;
-                      const isAhead = idx > currentSlide;
-                      const stackOffset = (idx - currentSlide);
-
-                      return (
-                        <AnimatePresence key={idx} mode="popLayout">
-                          {!isBehind && (
-                            <motion.div
-                              key={`card-${idx}`}
-                              initial={isAhead ? { x: 300, opacity: 0 } : false}
-                              animate={{
-                                x: isActive ? 0 : (isMobile ? stackOffset * 20 : stackOffset * 40),
-                                y: isActive ? 0 : stackOffset * 6,
-                                opacity: isActive ? 1 : Math.max(0, 1 - stackOffset * 0.25),
-                                scale: isActive ? 1 : 1 - stackOffset * 0.03,
-                                rotate: isActive ? stickyNoteRotations[idx] : stickyNoteRotations[idx] * 0.5,
-                              }}
-                              exit={{ x: -300, opacity: 0 }}
-                              transition={{ duration: 0.35, ease: 'easeInOut' }}
-                              className="absolute inset-0"
-                              style={{
-                                width: '100%',
-                                height: isMobile ? 260 : 280,
-                                background: stickyNoteColors[idx],
-                                borderRadius: 4,
-                                boxShadow: '2px 4px 12px rgba(0,0,0,0.1)',
-                                zIndex: 10 - stackOffset,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                padding: '24px 20px',
-                                textAlign: 'center',
-                              }}
-                            >
-                              {/* Tape element */}
-                              <div
-                                style={{
-                                  position: 'absolute',
-                                  top: -6,
-                                  left: '50%',
-                                  transform: 'translateX(-50%)',
-                                  width: 40,
-                                  height: 12,
-                                  background: 'rgba(255,255,255,0.6)',
-                                  border: '1px solid rgba(200,200,200,0.4)',
-                                  borderRadius: 1,
-                                }}
-                              />
-
-                              {/* Hand-drawn icon */}
-                              <div className="mb-3">
-                                {stickyIcons[idx]}
-                              </div>
-
-                              {/* Label tag */}
-                              <span
-                                style={{
-                                  fontSize: 10,
-                                  letterSpacing: 2,
-                                  textTransform: 'uppercase',
-                                  color: '#1a1a1a',
-                                  fontWeight: 600,
-                                  fontFamily: "var(--font-dm-sans), sans-serif",
-                                  marginBottom: 4,
-                                }}
-                              >
-                                {step.label}
-                              </span>
-
-                              {/* Step number */}
-                              <span
-                                style={{
-                                  fontFamily: "'Caveat', cursive",
-                                  fontSize: 12,
-                                  color: '#666',
-                                  marginBottom: 6,
-                                }}
-                              >
-                                STEP {step.num}
-                              </span>
-
-                              {/* Title */}
-                              <h3
-                                style={{
-                                  fontFamily: "'Caveat', cursive",
-                                  fontSize: 24,
-                                  fontWeight: 700,
-                                  color: '#1a1a1a',
-                                  marginBottom: 8,
-                                  lineHeight: 1.2,
-                                }}
-                              >
-                                {step.title}
-                              </h3>
-
-                              {/* Hand-drawn underline decoration */}
-                              <svg width="60" height="6" viewBox="0 0 60 6" style={{ marginBottom: 10 }}>
-                                <path d="M2 4C10 2 20 3 30 2.5C40 2 50 3.5 58 2" stroke="#333" strokeWidth="1" fill="none" strokeLinecap="round" opacity="0.3" />
-                              </svg>
-
-                              {/* Description */}
-                              <p
-                                style={{
-                                  fontSize: 14,
-                                  color: '#555',
-                                  lineHeight: 1.6,
-                                  fontFamily: "var(--font-dm-sans), sans-serif",
-                                  maxWidth: 320,
-                                }}
-                              >
-                                {step.desc}
-                              </p>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      );
-                    })}
+                    <motion.div
+                      className="mb-4"
+                      initial={{ scale: 0.9 }}
+                      whileInView={{ scale: [0.9, 1.15, 1] }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
+                    >
+                      {step.icon}
+                    </motion.div>
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.2, delay: 0.2 + i * 0.1 }}
+                      className="inline-block rounded-full px-2.5 py-0.5 text-[10px] tracking-[2px] uppercase font-medium mb-1.5"
+                      style={{
+                        background: labelColors[step.label]?.bg || "rgba(124,92,252,0.1)",
+                        color: labelColors[step.label]?.text || step.labelColor,
+                      }}
+                    >
+                      {step.label}
+                    </motion.span>
+                    <p className="text-[11px] tracking-[2px] uppercase mb-2 font-medium" style={{ color: step.color }}>
+                      Step {step.num}
+                    </p>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3
+                        className="text-[17px] font-semibold text-text-primary"
+                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                      >
+                        {step.title}
+                      </h3>
+                      {(step as { lottie?: string }).lottie && (
+                        <LottieAnimation
+                          src={(step as { lottie: string }).lottie}
+                          loop={true}
+                          className="lottie-brand w-[36px] h-[36px] shrink-0"
+                        />
+                      )}
+                    </div>
+                    <p className="text-[14px] text-text-muted leading-[1.6] flex-1">{step.desc}</p>
                   </div>
                 </div>
+              </motion.div>
+            </React.Fragment>
+          ))}
+        </motion.div>
 
-                {/* Arrow buttons */}
-                <div className="flex items-center justify-center gap-4 mt-8 relative z-20">
-                  <button
-                    onClick={goPrev}
-                    disabled={currentSlide === 0}
-                    aria-label="Previous step"
+        {/* Tablet: 2x2 grid with horizontal arrows */}
+        <motion.div
+          variants={cardStagger}
+          className="hidden md:grid lg:hidden grid-cols-2 gap-4 w-full"
+        >
+          {matchingSteps.map((step, i) => (
+            <React.Fragment key={step.num}>
+              {/* Horizontal arrow between card 1→2 and card 3→4 */}
+              {(i === 1 || i === 3) && (
+                <div className="absolute" style={{ display: 'none' }} />
+              )}
+              <motion.div
+                variants={tierCard}
+                transition={{ duration: 0.5, delay: 0.6 + i * 0.08, ease }}
+                className="w-full min-h-[240px]"
+              >
+                <div className={`glow-card-wrapper h-full matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
+                  <div
+                    className="matching-flow-card h-full rounded-2xl p-6 transition-all duration-300 flex flex-col"
+                    data-label={step.label}
                     style={{
-                      width: 44,
-                      height: 44,
-                      borderRadius: '50%',
-                      background: '#fff',
-                      border: '1px solid #e0e0e0',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: currentSlide === 0 ? 'default' : 'pointer',
-                      opacity: currentSlide === 0 ? 0.3 : 1,
-                      transition: 'opacity 0.2s, background 0.2s',
+                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(212,175,55,0.04), rgba(167,139,250,0.05), rgba(196,148,233,0.03))",
+                      backdropFilter: "blur(20px) saturate(1.8)",
+                      WebkitBackdropFilter: "blur(20px) saturate(1.8)",
+                      border: "1px solid rgba(255, 255, 255, 0.5)",
+                      boxShadow: "0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)",
                     }}
-                    onMouseEnter={(e) => { if (currentSlide !== 0) e.currentTarget.style.background = '#f3f3f3'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; }}
                   >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
-                  </button>
-
-                  <span style={{ fontFamily: "'Caveat', cursive", fontSize: 16, color: '#666' }}>
-                    {currentSlide + 1} / 4
-                  </span>
-
-                  <button
-                    onClick={goNext}
-                    disabled={currentSlide === 3}
-                    aria-label="Next step"
-                    style={{
-                      width: 44,
-                      height: 44,
-                      borderRadius: '50%',
-                      background: '#fff',
-                      border: '1px solid #e0e0e0',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: currentSlide === 3 ? 'default' : 'pointer',
-                      opacity: currentSlide === 3 ? 0.3 : 1,
-                      transition: 'opacity 0.2s, background 0.2s',
-                    }}
-                    onMouseEnter={(e) => { if (currentSlide !== 3) e.currentTarget.style.background = '#f3f3f3'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; }}
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
-                  </button>
+                    <motion.div
+                      className="mb-4"
+                      initial={{ scale: 0.9 }}
+                      whileInView={{ scale: [0.9, 1.15, 1] }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
+                    >
+                      {step.icon}
+                    </motion.div>
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.2, delay: 0.2 + i * 0.1 }}
+                      className="inline-block rounded-full px-2.5 py-0.5 text-[10px] tracking-[2px] uppercase font-medium mb-1.5"
+                      style={{
+                        background: labelColors[step.label]?.bg || "rgba(124,92,252,0.1)",
+                        color: labelColors[step.label]?.text || step.labelColor,
+                      }}
+                    >
+                      {step.label}
+                    </motion.span>
+                    <p className="text-[11px] tracking-[2px] uppercase mb-2 font-medium" style={{ color: step.color }}>
+                      Step {step.num}
+                    </p>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3
+                        className="text-[17px] font-semibold text-text-primary"
+                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                      >
+                        {step.title}
+                      </h3>
+                      {(step as { lottie?: string }).lottie && (
+                        <LottieAnimation
+                          src={(step as { lottie: string }).lottie}
+                          loop={true}
+                          className="lottie-brand w-[36px] h-[36px] shrink-0"
+                        />
+                      )}
+                    </div>
+                    <p className="text-[14px] text-text-muted leading-[1.6] flex-1">{step.desc}</p>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </Section>
+              </motion.div>
+            </React.Fragment>
+          ))}
+        </motion.div>
+
+        {/* Mobile: vertical timeline flow */}
+        <motion.div
+          variants={cardStagger}
+          className="md:hidden relative w-full"
+        >
+          {/* Vertical connecting line */}
+          <div
+            className="absolute left-[11px] top-[12px] bottom-[12px] w-[2px]"
+            style={{
+              background: "linear-gradient(180deg, #4A6CF7, #7C5CFC)",
+              opacity: 0.25,
+            }}
+          />
+
+          <div className="flex flex-col gap-5">
+            {matchingSteps.map((step, i) => (
+              <motion.div
+                key={step.num}
+                variants={mobileSlideFromLeft}
+                transition={{ duration: 0.5, delay: 0.6 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                className="flex items-start gap-0"
+              >
+                {/* Numbered circle on the timeline */}
+                <div
+                  className="shrink-0 w-[24px] h-[24px] rounded-full flex items-center justify-center z-10 mt-5"
+                  style={{
+                    background: `linear-gradient(135deg, ${step.color}, ${step.labelColor})`,
+                    boxShadow: `0 0 8px ${step.color}40`,
+                  }}
+                >
+                  <span className="text-white text-[11px] font-semibold leading-none">{i + 1}</span>
+                </div>
+
+                {/* Card */}
+                <div className={`flex-1 ml-4 matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
+                  <div
+                    className="matching-flow-card rounded-2xl p-5"
+                    data-label={step.label}
+                    style={{
+                      background: "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), linear-gradient(135deg, rgba(212,175,55,0.04), rgba(167,139,250,0.05), rgba(196,148,233,0.03))",
+                      backdropFilter: "blur(20px) saturate(1.8)",
+                      WebkitBackdropFilter: "blur(20px) saturate(1.8)",
+                      border: "1px solid rgba(255, 255, 255, 0.5)",
+                      boxShadow: "0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)",
+                    }}
+                  >
+                    <div className="flex items-center gap-3 mb-3">
+                      <motion.div
+                        className="shrink-0"
+                        initial={{ scale: 0.9 }}
+                        whileInView={{ scale: [0.9, 1.15, 1] }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
+                      >
+                        {step.icon}
+                      </motion.div>
+                      <motion.span
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.2, delay: 0.2 + i * 0.1 }}
+                        className="inline-block rounded-full px-2.5 py-0.5 text-[10px] tracking-[2px] uppercase font-medium"
+                        style={{
+                          background: labelColors[step.label]?.bg || "rgba(124,92,252,0.1)",
+                          color: labelColors[step.label]?.text || step.labelColor,
+                        }}
+                      >
+                        {step.label}
+                      </motion.span>
+                    </div>
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <h3
+                        className="text-[16px] font-semibold text-text-primary"
+                        style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                      >
+                        {step.title}
+                      </h3>
+                      {(step as { lottie?: string }).lottie && (
+                        <LottieAnimation
+                          src={(step as { lottie: string }).lottie}
+                          loop={true}
+                          className="lottie-brand w-[36px] h-[36px] shrink-0"
+                        />
+                      )}
+                    </div>
+                    <p className="text-[13px] text-text-muted leading-[1.6]">{step.desc}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </motion.div>
+      </div>
+    </Section>
     </div>
   );
 }
