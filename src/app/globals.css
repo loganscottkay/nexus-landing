@@ -2346,18 +2346,18 @@ html {
     height: 40px !important;
   }
 
-  /* HBS shield — same height as circles, natural width, no circular clip */
+  /* HBS shield — larger container so shield has same visual weight as 40px circles */
   .crest-circle-hbs {
-    width: 40px !important;
-    height: 40px !important;
+    width: 52px !important;
+    height: 52px !important;
     border-radius: 0 !important;
     overflow: visible !important;
     margin-top: 0 !important;
   }
 
   .crest-img-hbs {
-    width: 40px !important;
-    height: 40px !important;
+    width: 52px !important;
+    height: 52px !important;
     margin-top: 0 !important;
     object-fit: contain !important;
   }
