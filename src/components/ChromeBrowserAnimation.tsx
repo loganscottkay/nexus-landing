@@ -3,10 +3,10 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 
 /* ---- Config ---- */
-const TYPE_SPEED = 60;
-const DELETE_SPEED = 30;
-const PAUSE_AFTER_TYPE = 600;
-const PAUSE_BETWEEN = 400;
+const TYPE_SPEED = 35;
+const DELETE_SPEED = 18;
+const PAUSE_AFTER_TYPE = 400;
+const PAUSE_BETWEEN = 250;
 
 const QUERIES = [
   "How to find investors for my star",
@@ -88,7 +88,7 @@ export default function ChromeBrowserAnimation() {
     };
 
     // Show cursor after initial pause
-    at(() => setShowCursor(true), 800);
+    at(() => setShowCursor(true), 500);
 
     // --- Sequence 1: type, pause, delete ---
     const s1 = QUERIES[0];
@@ -143,24 +143,24 @@ export default function ChromeBrowserAnimation() {
       setShowBrand(true);
     }, 1200);
 
-    // Hold brand for 3 seconds, then fade out and restart
+    // Hold brand for 2.5 seconds, then fade out
     at(() => {
       setShowBrand(false);
-    }, 3000);
+    }, 2500);
 
     // Wait for fade out transition, then reset and loop
     at(() => {
       setFadeToWhite(false);
-    }, 600);
+    }, 400);
 
     at(() => {
       resetState();
-    }, 500);
+    }, 600);
 
-    // Pause 1 second then restart
+    // Restart
     at(() => {
       runAnimation();
-    }, 1000);
+    }, 600);
   }, [schedule, cleanup, resetState]);
 
   /* IntersectionObserver to start on scroll */
@@ -201,6 +201,10 @@ export default function ChromeBrowserAnimation() {
           0% { width: 0; }
           100% { width: 100%; }
         }
+        @keyframes brandGlow {
+          0%, 100% { transform: scale(1); opacity: 0.08; }
+          50% { transform: scale(1.1); opacity: 0.12; }
+        }
       `}</style>
 
       <div
@@ -222,10 +226,14 @@ export default function ChromeBrowserAnimation() {
           transition={{ duration: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
           style={{
             width: "100%",
-            maxWidth: isMobile ? 900 : 1000,
-            borderRadius: 10,
+            maxWidth: isMobile ? "100%" : 1000,
+            borderRadius: 12,
             overflow: "hidden",
-            boxShadow: "0 8px 30px rgba(0,0,0,0.12)",
+            boxShadow:
+              "0 20px 60px rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.08)",
+            transform: isMobile
+              ? "none"
+              : "perspective(2000px) rotateX(1deg) rotateY(-0.5deg)",
           }}
         >
           {/* == Title Bar == */}
@@ -240,9 +248,33 @@ export default function ChromeBrowserAnimation() {
           >
             {/* Traffic lights */}
             <div style={{ display: "flex", gap: 8, alignItems: "center", flexShrink: 0 }}>
-              <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#FF5F57" }} />
-              <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#FEBC2E" }} />
-              <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#28C840" }} />
+              <div
+                style={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: "50%",
+                  background: "radial-gradient(circle at 30% 30%, #FF8A80, #FF5F57)",
+                  boxShadow: "inset 0 -1px 2px rgba(0,0,0,0.15)",
+                }}
+              />
+              <div
+                style={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: "50%",
+                  background: "radial-gradient(circle at 30% 30%, #FFD98A, #FEBC2E)",
+                  boxShadow: "inset 0 -1px 2px rgba(0,0,0,0.15)",
+                }}
+              />
+              <div
+                style={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: "50%",
+                  background: "radial-gradient(circle at 30% 30%, #69F0AE, #28C840)",
+                  boxShadow: "inset 0 -1px 2px rgba(0,0,0,0.15)",
+                }}
+              />
             </div>
             {/* Tab */}
             <div
@@ -273,16 +305,26 @@ export default function ChromeBrowserAnimation() {
                 <span style={{ color: "white", fontSize: 7, fontWeight: 700 }}>G</span>
               </div>
               <span style={{ fontSize: 12, color: "#5F6368", whiteSpace: "nowrap" }}>Google</span>
-              <span style={{ fontSize: 14, color: "#9CA3AF", lineHeight: 1, cursor: "default", marginLeft: 4 }}>
-                &times;
-              </span>
+              <svg
+                width="8"
+                height="8"
+                viewBox="0 0 8 8"
+                fill="none"
+                stroke="#9CA3AF"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                style={{ marginLeft: 4, flexShrink: 0, cursor: "default" }}
+              >
+                <line x1="1" y1="1" x2="7" y2="7" />
+                <line x1="7" y1="1" x2="1" y2="7" />
+              </svg>
             </div>
           </div>
 
           {/* == Address Bar == */}
           <div
             style={{
-              height: isMobile ? 32 : 36,
+              height: isMobile ? 36 : 40,
               background: "#F1F3F4",
               display: "flex",
               alignItems: "center",
@@ -309,9 +351,9 @@ export default function ChromeBrowserAnimation() {
             <div
               style={{
                 flex: 1,
-                height: isMobile ? 24 : 28,
+                height: 32,
                 background: "white",
-                borderRadius: 18,
+                borderRadius: 6,
                 display: "flex",
                 alignItems: "center",
                 padding: "0 12px",
@@ -360,7 +402,7 @@ export default function ChromeBrowserAnimation() {
             style={{
               background: "white",
               position: "relative",
-              minHeight: isMobile ? 280 : 420,
+              minHeight: isMobile ? 350 : 480,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -426,7 +468,8 @@ export default function ChromeBrowserAnimation() {
                 position: "absolute",
                 inset: 0,
                 zIndex: 6,
-                background: "white",
+                background:
+                  "linear-gradient(135deg, #FAF9F7 0%, #F0EEFF 30%, #FAF9F7 60%, #F5F0FF 100%)",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -437,41 +480,80 @@ export default function ChromeBrowserAnimation() {
                 padding: "0 24px",
               }}
             >
+              {/* Animated glow behind logo */}
+              <div
+                style={{
+                  position: "absolute",
+                  width: 200,
+                  height: 200,
+                  borderRadius: "50%",
+                  background: "radial-gradient(circle, #6366F1 0%, transparent 70%)",
+                  opacity: 0.08,
+                  animation: "brandGlow 3s ease-in-out infinite",
+                  pointerEvents: "none",
+                }}
+              />
+
+              {/* Top decorative line */}
+              <div
+                style={{
+                  width: 60,
+                  height: 2,
+                  background: "linear-gradient(90deg, #6366F1, #8B5CF6)",
+                  borderRadius: 1,
+                  marginBottom: 24,
+                }}
+              />
+
               <h2
                 style={{
                   fontFamily: "'Instrument Serif', serif",
-                  fontSize: isMobile ? 42 : 60,
+                  fontSize: isMobile ? 38 : 48,
                   color: "#0F172A",
                   fontWeight: 400,
                   textAlign: "center",
+                  margin: 0,
+                  lineHeight: 1.1,
                 }}
               >
-                UrgenC
+                Urgen<span style={{ color: "#6366F1" }}>C</span>
               </h2>
               <p
                 style={{
                   fontFamily: "var(--font-dm-sans), sans-serif",
-                  fontSize: isMobile ? 14 : 18,
+                  fontSize: isMobile ? 13 : 16,
                   color: "#64748B",
-                  marginTop: 12,
+                  marginTop: 14,
                   textAlign: "center",
-                  maxWidth: 500,
+                  maxWidth: 400,
                   lineHeight: 1.7,
                 }}
               >
                 Where the only thing between your idea and capital is a 60-second pitch.
               </p>
+
+              {/* Bottom decorative line */}
+              <div
+                style={{
+                  width: 60,
+                  height: 2,
+                  background: "linear-gradient(90deg, #6366F1, #8B5CF6)",
+                  borderRadius: 1,
+                  marginTop: 24,
+                }}
+              />
             </div>
 
             {/* Google Homepage */}
             <div
               style={{
-                fontSize: isMobile ? 52 : 100,
+                fontSize: isMobile ? 60 : 92,
                 fontWeight: 400,
                 fontFamily: "'Product Sans', Arial, sans-serif",
                 marginBottom: isMobile ? 20 : 32,
                 lineHeight: 1,
                 userSelect: "none",
+                letterSpacing: "-1px",
               }}
             >
               <span style={{ color: "#4285F4" }}>G</span>
@@ -485,9 +567,9 @@ export default function ChromeBrowserAnimation() {
             {/* Search bar */}
             <div
               style={{
-                width: isMobile ? "92%" : "70%",
+                width: isMobile ? "85%" : "70%",
                 maxWidth: 600,
-                height: isMobile ? 42 : 48,
+                height: isMobile ? 42 : 46,
                 background: searchHighlight ? "#E8F0FE" : "white",
                 border: "1px solid #DFE1E5",
                 borderRadius: 24,
@@ -496,7 +578,9 @@ export default function ChromeBrowserAnimation() {
                 padding: "0 16px",
                 gap: 10,
                 transition: "background 0.15s ease, box-shadow 0.15s ease",
-                boxShadow: searchText ? "0 1px 6px rgba(32,33,36,0.1)" : "none",
+                boxShadow: searchText
+                  ? "0 1px 6px rgba(32,33,36,0.12)"
+                  : "none",
               }}
             >
               {/* Search icon */}
@@ -539,10 +623,15 @@ export default function ChromeBrowserAnimation() {
                 )}
               </div>
               {/* Mic icon */}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
+                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" fill="#4285F4" />
+                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" fill="#34A853" />
+              </svg>
+              {/* Camera icon */}
               {!isMobile && (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#4285F4" style={{ flexShrink: 0 }}>
-                  <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
-                  <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                  <rect x="2" y="5" width="20" height="14" rx="2" />
+                  <circle cx="12" cy="12" r="3" />
                 </svg>
               )}
             </div>
