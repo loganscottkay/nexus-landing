@@ -9,9 +9,9 @@ const PAUSE_AFTER_TYPE = 400;
 const PAUSE_BETWEEN = 250;
 
 const QUERIES = [
-  "How to find investors for my star",
-  "How to find early stage startups to inves",
-  "The app where founders pitch, investors swipe, and every match gets a meeting",
+  "How to find investors for my startup",
+  "How to find early stage startups to invest in",
+  "The app where founders pitch, investors swipe, and every match gets a guaranteed meeting",
 ];
 
 /* ---- Component ---- */
