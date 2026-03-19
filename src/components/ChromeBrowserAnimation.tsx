@@ -1,12 +1,15 @@
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
+import UnicornSVG from "./UnicornSVG";
 
 /* ---- Config ---- */
 const TYPE_SPEED = 27;
 const DELETE_SPEED = 14;
 const PAUSE_AFTER_TYPE = 400;
 const PAUSE_BETWEEN = 250;
+
+const SPARKLE_COLORS = ["#F5D76E", "#7C5CFC", "#4A6CF7", "#F5D76E", "#7C5CFC", "#4A6CF7", "#F5D76E", "#7C5CFC"];
 
 const QUERIES = [
   "How to find investors for my startup?",
@@ -29,7 +32,6 @@ export default function ChromeBrowserAnimation() {
   const [fadeToWhite, setFadeToWhite] = useState(false);
   const [showLoadingBar, setShowLoadingBar] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  const [showReveal, setShowReveal] = useState(false);
   const [showBrand, setShowBrand] = useState(false);
 
   /* Responsive check */
@@ -74,7 +76,6 @@ export default function ChromeBrowserAnimation() {
     setFadeToWhite(false);
     setShowLoadingBar(false);
     setShowResults(false);
-    setShowReveal(false);
     setShowBrand(false);
   }, []);
 
@@ -138,18 +139,12 @@ export default function ChromeBrowserAnimation() {
       setShowResults(true);
     }, 500);
 
-    // Show fake results briefly, then trigger cinematic reveal
+    // Show fake results briefly, then show brand
     at(() => {
       setShowResults(false);
       setShowCursor(false);
-      setShowReveal(true);
-    }, 1200);
-
-    // After reveal transition (~1.5s), show brand
-    at(() => {
-      setShowReveal(false);
       setShowBrand(true);
-    }, 1500);
+    }, 1200);
 
     // Hold brand for 2.5 seconds, then fade out
     at(() => {
@@ -213,21 +208,70 @@ export default function ChromeBrowserAnimation() {
           0%, 100% { transform: scale(1); opacity: 0.08; }
           50% { transform: scale(1.1); opacity: 0.12; }
         }
-        @keyframes revealFocus {
-          0% { filter: blur(20px) brightness(1.6); opacity: 0; }
-          30% { filter: blur(10px) brightness(1.3); opacity: 0.5; }
-          60% { filter: blur(4px) brightness(1.1); opacity: 0.8; }
-          100% { filter: blur(0) brightness(1); opacity: 1; }
+        /* Unicorn animations for browser mockup */
+        .cb-unicorn-left {
+          position: relative;
+          display: inline-block;
+          opacity: 0;
+          animation: cbFadeIn 0.2s ease-out 0.3s forwards, cbRunLeft 4s linear 0.3s forwards;
         }
-        @keyframes shimmerSweep {
-          0% { transform: translateX(-100%) skewX(-15deg); }
-          100% { transform: translateX(200%) skewX(-15deg); }
+        .cb-unicorn-right {
+          position: absolute;
+          right: 0;
+          display: inline-block;
+          opacity: 0;
+          animation: cbFadeIn 0.2s ease-out 0.3s forwards, cbRunRight 4s linear 0.3s forwards;
         }
-        @keyframes revealGlow {
-          0% { opacity: 0; transform: scale(0.8); }
-          50% { opacity: 0.15; transform: scale(1.1); }
-          100% { opacity: 0.08; transform: scale(1); }
+        @keyframes cbFadeIn {
+          0% { opacity: 0; }
+          100% { opacity: 1; }
         }
+        @keyframes cbRunLeft {
+          0% { transform: translateX(-80px); }
+          100% { transform: translateX(calc(100vw + 80px)); }
+        }
+        @keyframes cbRunRight {
+          0% { transform: translateX(80px); }
+          100% { transform: translateX(calc(-100vw - 80px)); }
+        }
+        .cb-sparkle {
+          position: absolute;
+          opacity: 0;
+          animation: cbSparkleFade 1s ease-out infinite;
+        }
+        @keyframes cbSparkleFade {
+          0% { opacity: 1; transform: translateY(0); }
+          100% { opacity: 0; transform: translateY(-12px); }
+        }
+        .cb-leg-fl { animation: cbLegF 0.3s ease-in-out infinite; transform-origin: center top; }
+        .cb-leg-fr { animation: cbLegF 0.3s ease-in-out infinite 0.15s; transform-origin: center top; }
+        .cb-leg-bl { animation: cbLegB 0.3s ease-in-out infinite; transform-origin: center top; }
+        .cb-leg-br { animation: cbLegB 0.3s ease-in-out infinite 0.15s; transform-origin: center top; }
+        @keyframes cbLegF {
+          0% { transform: rotate(-15deg); }
+          50% { transform: rotate(15deg); }
+          100% { transform: rotate(-15deg); }
+        }
+        @keyframes cbLegB {
+          0% { transform: rotate(15deg); }
+          50% { transform: rotate(-15deg); }
+          100% { transform: rotate(15deg); }
+        }
+        .cb-unicorn-mane {
+          animation: cbMane 0.3s ease-in-out infinite alternate;
+        }
+        @keyframes cbMane {
+          0% { transform: rotate(-3deg); }
+          100% { transform: rotate(3deg); }
+        }
+        .cbL-horn-sparkle, .cbR-horn-sparkle {
+          animation: cbHornSparkle 1.5s ease-in-out infinite;
+        }
+        @keyframes cbHornSparkle {
+          0%, 100% { opacity: 0.6; transform: scale(0.8); }
+          50% { opacity: 1; transform: scale(1.2); }
+        }
+
         @keyframes brandRevealIn {
           0% { opacity: 0; transform: scale(1.03); filter: blur(6px) brightness(1.4); }
           50% { opacity: 0.8; transform: scale(1.01); filter: blur(1px) brightness(1.1); }
@@ -490,70 +534,6 @@ export default function ChromeBrowserAnimation() {
               <div style={{ height: 8, background: "#E8E8E8", borderRadius: 3, width: "70%" }} />
             </div>
 
-            {/* Cinematic reveal transition */}
-            {showReveal && (
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  zIndex: 7,
-                  background: "linear-gradient(180deg, #FAF9F7 0%, #F0EEFF 40%, #EDE9FE 60%, #FAF9F7 100%)",
-                  animation: "revealFocus 1.5s cubic-bezier(0.25, 0.4, 0.25, 1) forwards",
-                  overflow: "hidden",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {/* Soft radial glow */}
-                <div
-                  style={{
-                    position: "absolute",
-                    width: isMobile ? 300 : 500,
-                    height: isMobile ? 300 : 500,
-                    borderRadius: "50%",
-                    background: "radial-gradient(circle, rgba(99,102,241,0.12) 0%, rgba(139,92,246,0.06) 40%, transparent 70%)",
-                    animation: "revealGlow 1.5s ease-out forwards",
-                    pointerEvents: "none",
-                  }}
-                />
-                {/* Shimmer sweep */}
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    overflow: "hidden",
-                    pointerEvents: "none",
-                  }}
-                >
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "50%",
-                      height: "100%",
-                      background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)",
-                      animation: "shimmerSweep 1.2s 0.2s ease-in-out forwards",
-                    }}
-                  />
-                </div>
-                {/* Brand name preview during transition */}
-                <span
-                  style={{
-                    fontFamily: "'Instrument Serif', serif",
-                    fontSize: isMobile ? 42 : 56,
-                    fontWeight: 400,
-                    color: "#0F172A",
-                    opacity: 0.6,
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  Urgen<span style={{ color: "#6366F1", fontStyle: "italic" }}>C</span>
-                </span>
-              </div>
-            )}
-
             {/* Brand reveal - premium cinematic moment */}
             <div
               style={{
@@ -599,17 +579,6 @@ export default function ChromeBrowserAnimation() {
                 }}
               />
 
-              {/* Top accent line */}
-              <div
-                style={{
-                  width: isMobile ? 40 : 60,
-                  height: 2,
-                  background: "linear-gradient(90deg, #6366F1, #8B5CF6)",
-                  borderRadius: 1,
-                  marginBottom: isMobile ? 16 : 24,
-                }}
-              />
-
               {/* Logo - large and properly styled */}
               <h2
                 style={{
@@ -631,7 +600,7 @@ export default function ChromeBrowserAnimation() {
                 style={{
                   fontFamily: "var(--font-dm-sans), sans-serif",
                   fontSize: isMobile ? 12 : 16,
-                  color: "#64748B",
+                  color: "#2D2D2D",
                   marginTop: isMobile ? 10 : 16,
                   textAlign: "center",
                   maxWidth: 400,
@@ -642,16 +611,100 @@ export default function ChromeBrowserAnimation() {
                 Where the only thing between your idea and capital is a 60-second pitch.
               </p>
 
-              {/* Bottom accent line */}
-              <div
-                style={{
-                  width: isMobile ? 40 : 60,
-                  height: 2,
-                  background: "linear-gradient(90deg, #6366F1, #8B5CF6)",
-                  borderRadius: 1,
-                  marginTop: isMobile ? 16 : 24,
-                }}
-              />
+              {/* Unicorn animations */}
+              {showBrand && (
+                <>
+                  {/* Left unicorn - runs left to right */}
+                  <div
+                    className="cb-unicorn-track"
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      bottom: isMobile ? 20 : 40,
+                      width: "100%",
+                      height: "80px",
+                      overflow: "hidden",
+                      pointerEvents: "none",
+                      zIndex: 2,
+                    }}
+                  >
+                    <div className="cb-unicorn-left" style={{ willChange: "transform" }}>
+                      {SPARKLE_COLORS.map((color, i) => (
+                        <div
+                          key={i}
+                          className="cb-sparkle"
+                          style={{
+                            animationDelay: `${i * 0.25}s`,
+                            left: `${-8 - i * 8}px`,
+                            top: `${20 + (i % 3) * 5}px`,
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: "4px",
+                              height: "4px",
+                              borderRadius: "50%",
+                              background: color,
+                            }}
+                          />
+                        </div>
+                      ))}
+                      <UnicornSVG
+                        size={isMobile ? 50 : 60}
+                        prefix="cbL"
+                        maneClass="cb-unicorn-mane"
+                        legClasses={{ fl: "cb-leg-fl", fr: "cb-leg-fr", bl: "cb-leg-bl", br: "cb-leg-br" }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Right unicorn - runs right to left (mirrored) */}
+                  <div
+                    className="cb-unicorn-track"
+                    style={{
+                      position: "absolute",
+                      right: 0,
+                      bottom: isMobile ? 20 : 40,
+                      width: "100%",
+                      height: "80px",
+                      overflow: "hidden",
+                      pointerEvents: "none",
+                      zIndex: 2,
+                    }}
+                  >
+                    <div className="cb-unicorn-right" style={{ willChange: "transform" }}>
+                      {SPARKLE_COLORS.map((color, i) => (
+                        <div
+                          key={i}
+                          className="cb-sparkle"
+                          style={{
+                            animationDelay: `${i * 0.25}s`,
+                            right: `${-8 - i * 8}px`,
+                            top: `${20 + (i % 3) * 5}px`,
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: "4px",
+                              height: "4px",
+                              borderRadius: "50%",
+                              background: color,
+                            }}
+                          />
+                        </div>
+                      ))}
+                      <div style={{ transform: "scaleX(-1)" }}>
+                        <UnicornSVG
+                          size={isMobile ? 50 : 60}
+                          prefix="cbR"
+                          maneClass="cb-unicorn-mane"
+                          legClasses={{ fl: "cb-leg-fl", fr: "cb-leg-fr", bl: "cb-leg-bl", br: "cb-leg-br" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Google Homepage */}
