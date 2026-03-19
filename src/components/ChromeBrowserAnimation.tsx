@@ -3,14 +3,14 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 
 /* ---- Config ---- */
-const TYPE_SPEED = 35;
-const DELETE_SPEED = 18;
+const TYPE_SPEED = 27;
+const DELETE_SPEED = 14;
 const PAUSE_AFTER_TYPE = 400;
 const PAUSE_BETWEEN = 250;
 
 const QUERIES = [
-  "How to find investors for my startup",
-  "How to find early stage startups to invest in",
+  "How to find investors for my startup?",
+  "How to find early stage startups to invest in?",
   "What is an app where founders pitch, investors swipe, and every match gets a guaranteed meeting?",
 ];
 
