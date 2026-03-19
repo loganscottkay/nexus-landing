@@ -2320,7 +2320,7 @@ html {
   .crest-row {
     gap: 2rem !important;
     justify-content: center !important;
-    align-items: center !important;
+    align-items: flex-end !important;
     margin: 0 auto !important;
     padding: 0 !important;
   }
@@ -2346,18 +2346,18 @@ html {
     height: 40px !important;
   }
 
-  /* HBS shield — larger container so shield has same visual weight as 40px circles */
+  /* HBS shield — 63px so shield has same visual weight as 40px circles */
   .crest-circle-hbs {
-    width: 52px !important;
-    height: 52px !important;
+    width: 63px !important;
+    height: 63px !important;
     border-radius: 0 !important;
     overflow: visible !important;
     margin-top: 0 !important;
   }
 
   .crest-img-hbs {
-    width: 52px !important;
-    height: 52px !important;
+    width: 63px !important;
+    height: 63px !important;
     margin-top: 0 !important;
     object-fit: contain !important;
   }
