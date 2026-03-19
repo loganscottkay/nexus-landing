@@ -712,13 +712,13 @@ export default function Home() {
                   justify-content: flex-start !important;
                 }
                 .crest-circle-hbs {
-                  width: 84px !important;
-                  height: 90px !important;
+                  width: 64px !important;
+                  height: 68px !important;
                   margin-top: 0 !important;
                 }
                 .crest-img-hbs {
-                  width: 84px !important;
-                  height: 90px !important;
+                  width: 64px !important;
+                  height: 68px !important;
                   margin-top: 6px !important;
                 }
               }
