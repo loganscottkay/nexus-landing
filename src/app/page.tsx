@@ -854,7 +854,7 @@ export default function Home() {
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          className="flex flex-col items-center text-center px-6 pt-20 pb-2 md:pt-24 md:pb-4"
+          className="flex flex-col items-center text-center px-6 pt-20 pb-0 md:pt-24 md:pb-0"
         >
           <motion.h2
             variants={tierTitle}
