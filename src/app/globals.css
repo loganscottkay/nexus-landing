@@ -2320,7 +2320,7 @@ html {
   .crest-row {
     gap: 2rem !important;
     justify-content: center !important;
-    align-items: flex-end !important;
+    align-items: center !important;
     margin: 0 auto !important;
     padding: 0 !important;
   }
@@ -2348,7 +2348,7 @@ html {
 
   /* HBS shield — same height as circles, natural width, no circular clip */
   .crest-circle-hbs {
-    width: auto !important;
+    width: 40px !important;
     height: 40px !important;
     border-radius: 0 !important;
     overflow: visible !important;
@@ -2356,7 +2356,7 @@ html {
   }
 
   .crest-img-hbs {
-    width: auto !important;
+    width: 40px !important;
     height: 40px !important;
     margin-top: 0 !important;
     object-fit: contain !important;

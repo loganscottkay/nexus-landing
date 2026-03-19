@@ -696,34 +696,6 @@ export default function Home() {
               </ConicGradientButton>
             </motion.div>
 
-            {/* Mobile crest alignment overrides */}
-            <style>{`
-              @media (max-width: 767px) {
-                .crest-row {
-                  align-items: flex-end !important;
-                  gap: 2.5rem !important;
-                }
-                .crest-item {
-                  height: auto !important;
-                  justify-content: flex-start !important;
-                }
-                .crest-item-hbs {
-                  height: auto !important;
-                  justify-content: flex-start !important;
-                }
-                .crest-circle-hbs {
-                  width: 84px !important;
-                  height: 90px !important;
-                  margin-top: 0 !important;
-                }
-                .crest-img-hbs {
-                  width: 84px !important;
-                  height: 90px !important;
-                  margin-top: 6px !important;
-                }
-              }
-            `}</style>
-
             {/* Credibility strip */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", maxWidth: "100%", margin: "36px auto 20px", padding: 0 }}>
               <div className="crest-row" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "4rem", width: "100%", maxWidth: "100%", margin: "0 auto", padding: 0 }}>
