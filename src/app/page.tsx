@@ -885,24 +885,24 @@ export default function Home() {
       >
         <style>{`
           .footer-link {
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 10px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(240,240,245,0.8) 100%);
-            border: 1px solid rgba(99,102,241,0.08);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.8);
+            display: block;
+            padding: 0;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
             font-size: 13px;
-            font-weight: 500;
-            color: #475569;
-            font-family: var(--font-dm-sans), sans-serif;
-            transition: all 0.2s ease;
+            font-weight: 400;
+            color: #424245;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: color 0.2s ease;
             text-decoration: none;
           }
           .footer-link:hover {
-            background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(245,245,250,0.95) 100%);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.9);
-            transform: translateY(-1px);
-            color: #6366F1;
+            background: transparent;
+            box-shadow: none;
+            transform: none;
+            color: #1D1D1F;
           }
         `}</style>
 
@@ -932,8 +932,8 @@ export default function Home() {
               >
                 Product
               </h4>
-              <div className="flex flex-wrap justify-center gap-2">
-                <Link href="/waitlist" className="footer-link" style={{ fontWeight: 700 }}>
+              <div className="flex flex-col items-center gap-[8px]">
+                <Link href="/waitlist" className="footer-link">
                   Join the Waitlist
                 </Link>
                 <Link href="/qualifications/startup" className="footer-link">
@@ -953,7 +953,7 @@ export default function Home() {
               >
                 Company
               </h4>
-              <div className="flex flex-wrap justify-center gap-2">
+              <div className="flex flex-col items-center gap-[8px]">
                 <Link href="/story" className="footer-link">
                   About
                 </Link>
@@ -968,7 +968,7 @@ export default function Home() {
               >
                 Legal
               </h4>
-              <div className="flex flex-wrap justify-center gap-2">
+              <div className="flex flex-col items-center gap-[8px]">
                 <span className="footer-link" style={{ cursor: "default" }}>
                   Terms of Service
                 </span>
@@ -1013,8 +1013,8 @@ export default function Home() {
               >
                 Product
               </h4>
-              <div className="flex flex-wrap gap-2">
-                <Link href="/waitlist" className="footer-link" style={{ fontWeight: 700 }}>
+              <div className="flex flex-col gap-[8px]">
+                <Link href="/waitlist" className="footer-link">
                   Join the Waitlist
                 </Link>
                 <Link href="/qualifications/startup" className="footer-link">
@@ -1034,7 +1034,7 @@ export default function Home() {
               >
                 Company
               </h4>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-col gap-[8px]">
                 <Link href="/story" className="footer-link">
                   About
                 </Link>
@@ -1049,7 +1049,7 @@ export default function Home() {
               >
                 Legal
               </h4>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-col gap-[8px]">
                 <span className="footer-link" style={{ cursor: "default" }}>
                   Terms of Service
                 </span>
