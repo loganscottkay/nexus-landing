@@ -285,12 +285,12 @@ export default function InvestorQualifications() {
             <div
               className="flex items-start gap-4 rounded-2xl"
               style={{
-                background: "rgba(74, 108, 247, 0.04)",
-                border: "1px solid rgba(74, 108, 247, 0.12)",
+                background: "rgba(234, 179, 8, 0.04)",
+                border: "1px solid rgba(234, 179, 8, 0.12)",
                 padding: "20px 28px",
               }}
             >
-              <span className="shrink-0 mt-0.5" style={{ color: "#4A6CF7" }}>
+              <span className="shrink-0 mt-0.5" style={{ color: "#EAB308" }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                   <rect x="9" y="9" width="6" height="7" rx="1" />
