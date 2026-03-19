@@ -293,7 +293,7 @@ function MatchingFlowSection() {
   }, []);
 
   return (
-    <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 4, backgroundColor: 'transparent', minHeight: '100vh', overflow: 'hidden' }}>
+    <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 4, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
       <Section className="relative z-10 px-6 py-20 lg:pt-20 lg:pb-[100px] w-full" style={{}}>
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -634,7 +634,7 @@ export default function Home() {
       <Navbar />
 
       {/* ============ HERO ============ */}
-      <section className="scroll-stack-section relative z-10 pt-[150px] lg:pt-[220px] pb-[80px] lg:pb-[50px]" style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: 'transparent', minHeight: '100vh', overflow: 'hidden' }}>
+      <section className="scroll-stack-section relative z-10 pt-[150px] lg:pt-[220px] pb-[80px] lg:pb-[50px]" style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
         {/* Subtle abstract landscape-depth gradient */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -843,12 +843,12 @@ export default function Home() {
       <WhatMakesDifferentSection />
 
       {/* ============ IPHONE MOCKUPS ============ */}
-      <div className="scroll-stack-section lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 5, backgroundColor: 'transparent', minHeight: '100vh', overflow: 'hidden' }}>
+      <div className="scroll-stack-section lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 5, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
         <IPhoneMockups />
       </div>
 
       {/* ============ FINAL CTA ============ */}
-      <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 6, backgroundColor: 'transparent' }}>
+      <div className="scroll-stack-section w-full" style={{ position: 'relative', zIndex: 6, backgroundColor: '#FAF9F7' }}>
       <Section className="relative z-10 w-full flex items-center justify-center py-20 md:py-10" style={{}}>
         <motion.div
           variants={cardStagger}
