@@ -749,12 +749,12 @@ export default function Home() {
                   className="crest-item crest-item-hbs"
                   style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", width: "80px", height: "95px", margin: 0, padding: 0 }}
                 >
-                  <div className="crest-circle crest-circle-hbs transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "74px", height: "74px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "9px" }}>
+                  <div className="crest-circle crest-circle-hbs transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "60px", height: "60px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <img
                       src="/images/universities/hbs-crest.png"
                       alt="Harvard Business School"
                       className="crest-img crest-img-hbs"
-                      style={{ width: "74px", height: "74px", objectFit: "contain", mixBlendMode: "multiply", marginTop: "10px" }}
+                      style={{ width: "60px", height: "60px", objectFit: "contain", mixBlendMode: "multiply" }}
                     />
                   </div>
                   <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
