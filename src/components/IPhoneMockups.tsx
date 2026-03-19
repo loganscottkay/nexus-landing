@@ -1076,7 +1076,7 @@ function IPhoneFrame({
           observer.disconnect();
         }
       },
-      { threshold: 0.05 }
+      { threshold: 0.1 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -1226,9 +1226,11 @@ function IPhoneFrame({
 
 /* ---- Main Component ---- */
 export default function IPhoneMockups() {
-  const [phonesVisible, setPhonesVisible] = useState(false);
+  const [investorVisible, setInvestorVisible] = useState(false);
+  const [founderVisible, setFounderVisible] = useState(false);
   const [enlargedPhone, setEnlargedPhone] = useState<string | null>(null);
-  const handleVisible = useCallback(() => setPhonesVisible(true), []);
+  const handleInvestorVisible = useCallback(() => setInvestorVisible(true), []);
+  const handleFounderVisible = useCallback(() => setFounderVisible(true), []);
 
   return (
     <section
@@ -1305,10 +1307,10 @@ export default function IPhoneMockups() {
           subtitle="Browse startups. Express interest. Get matched."
           index={0}
           accentColor="#22D3EE"
-          onVisible={handleVisible}
+          onVisible={handleInvestorVisible}
           onEnlarge={() => setEnlargedPhone("investor")}
         >
-          <InvestorScreen isVisible={phonesVisible} />
+          <InvestorScreen isVisible={investorVisible} />
         </IPhoneFrame>
 
         <IPhoneFrame
@@ -1316,9 +1318,10 @@ export default function IPhoneMockups() {
           subtitle="Track interest. Manage your queue. Schedule calls."
           index={1}
           accentColor="#A78BFA"
+          onVisible={handleFounderVisible}
           onEnlarge={() => setEnlargedPhone("founder")}
         >
-          <FounderScreen isVisible={phonesVisible} />
+          <FounderScreen isVisible={founderVisible} />
         </IPhoneFrame>
       </div>
 
