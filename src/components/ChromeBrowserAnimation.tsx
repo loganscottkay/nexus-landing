@@ -29,10 +29,7 @@ export default function ChromeBrowserAnimation() {
   const [fadeToWhite, setFadeToWhite] = useState(false);
   const [showLoadingBar, setShowLoadingBar] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  const [isZooming, setIsZooming] = useState(false);
   const [showBrand, setShowBrand] = useState(false);
-  const [brandVisible, setBrandVisible] = useState(false);
-  const [removed, setRemoved] = useState(false);
 
   /* Responsive check */
   useEffect(() => {
@@ -67,8 +64,23 @@ export default function ChromeBrowserAnimation() {
     timersRef.current = [];
   }, []);
 
+  /* Reset all state for looping */
+  const resetState = useCallback(() => {
+    setSearchText("");
+    setShowCursor(false);
+    setCursorBlink(true);
+    setSearchHighlight(false);
+    setFadeToWhite(false);
+    setShowLoadingBar(false);
+    setShowResults(false);
+    setShowBrand(false);
+  }, []);
+
   /* Main animation sequence */
   const runAnimation = useCallback(() => {
+    cleanup();
+    resetState();
+
     let t = 0;
     const at = (fn: () => void, ms: number) => {
       t += ms;
@@ -123,21 +135,35 @@ export default function ChromeBrowserAnimation() {
       setShowLoadingBar(false);
       setShowResults(true);
     }, 500);
+
+    // Show fake results briefly, then show brand inside browser
     at(() => {
       setShowResults(false);
-      setIsZooming(true);
       setShowCursor(false);
-    }, 400);
-    at(() => {
       setShowBrand(true);
-      setBrandVisible(true);
-    }, 500);
-    at(() => {}, 1000); // hold brand text
-    at(() => setBrandVisible(false), 0); // fade out
-    at(() => setRemoved(true), 600);
-  }, [schedule]);
+    }, 1200);
 
-  /* IntersectionObserver + fallback */
+    // Hold brand for 3 seconds, then fade out and restart
+    at(() => {
+      setShowBrand(false);
+    }, 3000);
+
+    // Wait for fade out transition, then reset and loop
+    at(() => {
+      setFadeToWhite(false);
+    }, 600);
+
+    at(() => {
+      resetState();
+    }, 500);
+
+    // Pause 1 second then restart
+    at(() => {
+      runAnimation();
+    }, 1000);
+  }, [schedule, cleanup, resetState]);
+
+  /* IntersectionObserver to start on scroll */
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
@@ -153,24 +179,12 @@ export default function ChromeBrowserAnimation() {
     );
     observer.observe(el);
 
-    // 15s fallback: if animation never started, skip section
-    const fallback = setTimeout(() => {
-      if (!hasStarted.current) setRemoved(true);
-    }, 15000);
-
     return () => {
       observer.disconnect();
-      clearTimeout(fallback);
       cleanup();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  /* If done, remove from DOM */
-  if (removed) return null;
-
-  const zoomScale = isMobile ? 2 : 3;
-  const zoomDur = isMobile ? 0.6 : 0.8;
 
   return (
     <section
@@ -208,17 +222,10 @@ export default function ChromeBrowserAnimation() {
           transition={{ duration: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
           style={{
             width: "100%",
-            maxWidth: 900,
+            maxWidth: isMobile ? 900 : 1000,
             borderRadius: 10,
             overflow: "hidden",
             boxShadow: "0 8px 30px rgba(0,0,0,0.12)",
-            willChange: "transform",
-            transform: isZooming ? `scale(${zoomScale})` : "scale(1)",
-            opacity: isZooming ? 0 : 1,
-            transition: isZooming
-              ? `transform ${zoomDur}s cubic-bezier(0.4,0,0.2,1), opacity ${zoomDur * 0.75}s ease ${zoomDur * 0.25}s`
-              : undefined,
-            transformOrigin: "center 65%",
           }}
         >
           {/* == Title Bar == */}
@@ -267,7 +274,7 @@ export default function ChromeBrowserAnimation() {
               </div>
               <span style={{ fontSize: 12, color: "#5F6368", whiteSpace: "nowrap" }}>Google</span>
               <span style={{ fontSize: 14, color: "#9CA3AF", lineHeight: 1, cursor: "default", marginLeft: 4 }}>
-                ×
+                &times;
               </span>
             </div>
           </div>
@@ -353,12 +360,12 @@ export default function ChromeBrowserAnimation() {
             style={{
               background: "white",
               position: "relative",
-              minHeight: isMobile ? 220 : 300,
+              minHeight: isMobile ? 280 : 420,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              padding: isMobile ? "24px 12px" : "40px 20px",
+              padding: isMobile ? "32px 16px" : "50px 24px",
               overflow: "hidden",
             }}
           >
@@ -389,36 +396,80 @@ export default function ChromeBrowserAnimation() {
             />
 
             {/* Fake search results overlay */}
-            {showResults && (
-              <div
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                zIndex: 4,
+                background: "white",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                padding: isMobile ? "20px 16px" : "30px 50px",
+                opacity: showResults ? 1 : 0,
+                transition: "opacity 0.3s ease",
+                pointerEvents: showResults ? "auto" : "none",
+              }}
+            >
+              <div style={{ height: 14, background: "#1A0DAB", borderRadius: 3, marginBottom: 6, width: "55%", opacity: 0.15 }} />
+              <div style={{ height: 10, background: "#006621", borderRadius: 3, marginBottom: 10, width: "35%", opacity: 0.12 }} />
+              <div style={{ height: 8, background: "#E8E8E8", borderRadius: 3, marginBottom: 6, width: "80%" }} />
+              <div style={{ height: 8, background: "#F0F0F0", borderRadius: 3, marginBottom: 20, width: "65%" }} />
+              <div style={{ height: 14, background: "#1A0DAB", borderRadius: 3, marginBottom: 6, width: "50%", opacity: 0.15 }} />
+              <div style={{ height: 10, background: "#006621", borderRadius: 3, marginBottom: 10, width: "40%", opacity: 0.12 }} />
+              <div style={{ height: 8, background: "#E8E8E8", borderRadius: 3, width: "70%" }} />
+            </div>
+
+            {/* Brand reveal inside browser */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                zIndex: 6,
+                background: "white",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                opacity: showBrand ? 1 : 0,
+                transition: "opacity 0.5s ease",
+                pointerEvents: showBrand ? "auto" : "none",
+                padding: "0 24px",
+              }}
+            >
+              <h2
                 style={{
-                  position: "absolute",
-                  inset: 0,
-                  zIndex: 4,
-                  background: "white",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-start",
-                  padding: isMobile ? "20px 16px" : "24px 40px",
+                  fontFamily: "'Instrument Serif', serif",
+                  fontSize: isMobile ? 42 : 60,
+                  color: "#0F172A",
+                  fontWeight: 400,
+                  textAlign: "center",
                 }}
               >
-                <div style={{ height: 14, background: "#1A0DAB", borderRadius: 3, marginBottom: 6, width: "55%", opacity: 0.15 }} />
-                <div style={{ height: 10, background: "#006621", borderRadius: 3, marginBottom: 10, width: "35%", opacity: 0.12 }} />
-                <div style={{ height: 8, background: "#E8E8E8", borderRadius: 3, marginBottom: 6, width: "80%" }} />
-                <div style={{ height: 8, background: "#F0F0F0", borderRadius: 3, marginBottom: 20, width: "65%" }} />
-                <div style={{ height: 14, background: "#1A0DAB", borderRadius: 3, marginBottom: 6, width: "50%", opacity: 0.15 }} />
-                <div style={{ height: 10, background: "#006621", borderRadius: 3, marginBottom: 10, width: "40%", opacity: 0.12 }} />
-                <div style={{ height: 8, background: "#E8E8E8", borderRadius: 3, width: "70%" }} />
-              </div>
-            )}
+                UrgenC
+              </h2>
+              <p
+                style={{
+                  fontFamily: "var(--font-dm-sans), sans-serif",
+                  fontSize: isMobile ? 14 : 18,
+                  color: "#64748B",
+                  marginTop: 12,
+                  textAlign: "center",
+                  maxWidth: 500,
+                  lineHeight: 1.7,
+                }}
+              >
+                Where the only thing between your idea and capital is a 60-second pitch.
+              </p>
+            </div>
 
             {/* Google Homepage */}
             <div
               style={{
-                fontSize: isMobile ? 48 : 90,
+                fontSize: isMobile ? 52 : 100,
                 fontWeight: 400,
                 fontFamily: "'Product Sans', Arial, sans-serif",
-                marginBottom: isMobile ? 16 : 24,
+                marginBottom: isMobile ? 20 : 32,
                 lineHeight: 1,
                 userSelect: "none",
               }}
@@ -434,22 +485,22 @@ export default function ChromeBrowserAnimation() {
             {/* Search bar */}
             <div
               style={{
-                width: isMobile ? "92%" : "65%",
-                maxWidth: 480,
-                height: isMobile ? 38 : 44,
+                width: isMobile ? "92%" : "70%",
+                maxWidth: 600,
+                height: isMobile ? 42 : 48,
                 background: searchHighlight ? "#E8F0FE" : "white",
                 border: "1px solid #DFE1E5",
                 borderRadius: 24,
                 display: "flex",
                 alignItems: "center",
-                padding: "0 14px",
-                gap: 8,
+                padding: "0 16px",
+                gap: 10,
                 transition: "background 0.15s ease, box-shadow 0.15s ease",
                 boxShadow: searchText ? "0 1px 6px rgba(32,33,36,0.1)" : "none",
               }}
             >
               {/* Search icon */}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
                 <circle cx="11" cy="11" r="8" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
@@ -466,7 +517,7 @@ export default function ChromeBrowserAnimation() {
               >
                 <span
                   style={{
-                    fontSize: isMobile ? 13 : 16,
+                    fontSize: isMobile ? 14 : 16,
                     color: "#202124",
                     fontFamily: "Arial, sans-serif",
                   }}
@@ -489,7 +540,7 @@ export default function ChromeBrowserAnimation() {
               </div>
               {/* Mic icon */}
               {!isMobile && (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="#4285F4" style={{ flexShrink: 0 }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#4285F4" style={{ flexShrink: 0 }}>
                   <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
                   <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
                 </svg>
@@ -498,15 +549,15 @@ export default function ChromeBrowserAnimation() {
 
             {/* Buttons */}
             {!isMobile && (
-              <div style={{ display: "flex", gap: 12, marginTop: 20 }}>
+              <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
                 <button
                   style={{
                     background: "#F8F9FA",
                     border: "1px solid #F8F9FA",
                     borderRadius: 4,
-                    fontSize: 13,
+                    fontSize: 14,
                     color: "#3C4043",
-                    padding: "8px 16px",
+                    padding: "10px 20px",
                     cursor: "default",
                     fontFamily: "Arial, sans-serif",
                   }}
@@ -518,9 +569,9 @@ export default function ChromeBrowserAnimation() {
                     background: "#F8F9FA",
                     border: "1px solid #F8F9FA",
                     borderRadius: 4,
-                    fontSize: 13,
+                    fontSize: 14,
                     color: "#3C4043",
-                    padding: "8px 16px",
+                    padding: "10px 20px",
                     cursor: "default",
                     fontFamily: "Arial, sans-serif",
                   }}
@@ -531,50 +582,6 @@ export default function ChromeBrowserAnimation() {
             )}
           </div>
         </motion.div>
-
-        {/* ---- Brand Reveal Overlay ---- */}
-        {showBrand && (
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              background: "#FAF9F7",
-              opacity: brandVisible ? 1 : 0,
-              transition: "opacity 0.5s ease",
-              zIndex: 10,
-              padding: "0 24px",
-            }}
-          >
-            <h2
-              style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontSize: isMobile ? 36 : 52,
-                color: "#0F172A",
-                fontWeight: 400,
-                textAlign: "center",
-              }}
-            >
-              UrgenC
-            </h2>
-            <p
-              style={{
-                fontFamily: "var(--font-dm-sans), sans-serif",
-                fontSize: isMobile ? 14 : 18,
-                color: "#64748B",
-                marginTop: 12,
-                textAlign: "center",
-                maxWidth: 500,
-                lineHeight: 1.7,
-              }}
-            >
-              Where the only thing between your idea and capital is a 60-second pitch.
-            </p>
-          </div>
-        )}
       </div>
     </section>
   );
