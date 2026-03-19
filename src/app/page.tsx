@@ -899,7 +899,7 @@ export default function Home() {
             box-shadow: none;
             font-size: 13px;
             font-weight: 400;
-            color: #424245;
+            color: #6B7280;
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
             transition: color 0.2s ease;
             text-decoration: none;
@@ -908,7 +908,7 @@ export default function Home() {
             background: transparent;
             box-shadow: none;
             transform: none;
-            color: #1D1D1F;
+            color: #4B5563;
           }
         `}</style>
 
@@ -934,7 +934,7 @@ export default function Home() {
             <div className="mb-[28px]">
               <h4
                 className="uppercase mb-3"
-                style={{ letterSpacing: "2px", fontWeight: 700, color: "#0F172A", fontSize: "11px", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                style={{ letterSpacing: "2px", fontWeight: 700, color: "#6B7280", fontSize: "11px", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 Product
               </h4>
@@ -955,7 +955,7 @@ export default function Home() {
             <div className="mb-[28px]">
               <h4
                 className="uppercase mb-3"
-                style={{ letterSpacing: "2px", fontWeight: 700, color: "#0F172A", fontSize: "11px", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                style={{ letterSpacing: "2px", fontWeight: 700, color: "#6B7280", fontSize: "11px", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 Company
               </h4>
@@ -970,7 +970,7 @@ export default function Home() {
             <div className="mb-[28px]">
               <h4
                 className="uppercase mb-3"
-                style={{ letterSpacing: "2px", fontWeight: 700, color: "#0F172A", fontSize: "11px", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                style={{ letterSpacing: "2px", fontWeight: 700, color: "#6B7280", fontSize: "11px", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 Legal
               </h4>
@@ -986,10 +986,10 @@ export default function Home() {
 
             {/* Disclaimer + Copyright */}
             <div style={{ borderTop: "1px solid rgba(99,102,241,0.06)", paddingTop: "24px", marginTop: "4px", width: "100%" }}>
-              <p className="text-center px-4 leading-[1.6]" style={{ fontSize: "12px", color: "#A0AEC0", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              <p className="text-center px-4 leading-[1.6]" style={{ fontSize: "12px", color: "#6B7280", fontFamily: "var(--font-dm-sans), sans-serif" }}>
                 UrgenC is a matching and meeting platform. We do not provide investment advice, facilitate financial transactions, or act as a broker-dealer. All investment decisions and transactions occur off-platform between the parties involved.
               </p>
-              <p className="text-center mt-4" style={{ fontSize: "12px", color: "#A0AEC0", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              <p className="text-center mt-4" style={{ fontSize: "12px", color: "#6B7280", fontFamily: "var(--font-dm-sans), sans-serif" }}>
                 &copy; 2026 UrgenC. All rights reserved.
               </p>
             </div>
@@ -1015,7 +1015,7 @@ export default function Home() {
             <div className="flex flex-col">
               <h4
                 className="uppercase mb-4"
-                style={{ letterSpacing: "2px", fontWeight: 700, color: "#0F172A", fontSize: "11px", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                style={{ letterSpacing: "2px", fontWeight: 700, color: "#6B7280", fontSize: "11px", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 Product
               </h4>
@@ -1036,7 +1036,7 @@ export default function Home() {
             <div className="flex flex-col">
               <h4
                 className="uppercase mb-4"
-                style={{ letterSpacing: "2px", fontWeight: 700, color: "#0F172A", fontSize: "11px", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                style={{ letterSpacing: "2px", fontWeight: 700, color: "#6B7280", fontSize: "11px", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 Company
               </h4>
@@ -1051,7 +1051,7 @@ export default function Home() {
             <div className="flex flex-col">
               <h4
                 className="uppercase mb-4"
-                style={{ letterSpacing: "2px", fontWeight: 700, color: "#0F172A", fontSize: "11px", fontFamily: "var(--font-dm-sans), sans-serif" }}
+                style={{ letterSpacing: "2px", fontWeight: 700, color: "#6B7280", fontSize: "11px", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 Legal
               </h4>
@@ -1068,10 +1068,10 @@ export default function Home() {
 
           {/* Divider + Disclaimer + Copyright (desktop) */}
           <div className="hidden md:block mt-12" style={{ borderTop: "1px solid rgba(99,102,241,0.06)", paddingTop: "32px" }}>
-            <p className="text-center max-w-[700px] mx-auto leading-[1.6]" style={{ fontSize: "12px", color: "#A0AEC0", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+            <p className="text-center max-w-[700px] mx-auto leading-[1.6]" style={{ fontSize: "12px", color: "#6B7280", fontFamily: "var(--font-dm-sans), sans-serif" }}>
               UrgenC is a matching and meeting platform. We do not provide investment advice, facilitate financial transactions, or act as a broker-dealer. All investment decisions and transactions occur off-platform between the parties involved.
             </p>
-            <p className="text-center mt-4" style={{ fontSize: "12px", color: "#A0AEC0", fontFamily: "var(--font-dm-sans), sans-serif" }}>
+            <p className="text-center mt-4" style={{ fontSize: "12px", color: "#6B7280", fontFamily: "var(--font-dm-sans), sans-serif" }}>
               &copy; 2026 UrgenC. All rights reserved.
             </p>
           </div>
