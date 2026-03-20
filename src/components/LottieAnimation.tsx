@@ -27,7 +27,7 @@ export default function LottieAnimation({ src, className, loop = true, autoplay 
     fetch(src)
       .then(res => res.json())
       .then(data => setAnimationData(data))
-      .catch(err => console.error('Failed to load animation:', err));
+      .catch(() => {});
   }, [src]);
 
   if (!animationData) return null;

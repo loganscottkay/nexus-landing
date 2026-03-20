@@ -1,15 +1,18 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, Suspense, lazy } from "react";
 import { motion, type Variants } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
-import IPhoneMockups from "@/components/IPhoneMockups";
 import LottieAnimation from "@/components/LottieAnimation";
 import HeroHeadline from "@/components/HeroHeadline";
-import ChromeBrowserAnimation from "@/components/ChromeBrowserAnimation";
 import ConicGradientButton from "@/components/ConicGradientButton";
 import PlejjLogo from "@/components/PlejjLogo";
+import SectionErrorBoundary from "@/components/SectionErrorBoundary";
+
+const ChromeBrowserAnimation = lazy(() => import("@/components/ChromeBrowserAnimation"));
+const IPhoneMockups = lazy(() => import("@/components/IPhoneMockups"));
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 const smoothDecel = [0.16, 1, 0.3, 1] as const;
@@ -795,11 +798,13 @@ export default function Home() {
                   style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", width: "80px", height: "95px", margin: 0, padding: 0 }}
                 >
                   <div className="crest-circle transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "55px", height: "55px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <img
+                    <Image
                       src="/images/universities/bu-crest.png"
                       alt="Boston University"
+                      width={55}
+                      height={55}
                       className="crest-img"
-                      style={{ width: "55px", height: "55px", objectFit: "cover", mixBlendMode: "multiply" }}
+                      style={{ objectFit: "cover", mixBlendMode: "multiply" }}
                     />
                   </div>
                   <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
@@ -816,11 +821,13 @@ export default function Home() {
                   style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", width: "80px", height: "95px", margin: 0, padding: 0 }}
                 >
                   <div className="crest-circle transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "55px", height: "55px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <img
+                    <Image
                       src="/images/universities/neu-crest.png"
                       alt="Northeastern University"
+                      width={55}
+                      height={55}
                       className="crest-img"
-                      style={{ width: "55px", height: "55px", objectFit: "contain", mixBlendMode: "multiply" }}
+                      style={{ objectFit: "contain", mixBlendMode: "multiply" }}
                     />
                   </div>
                   <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
@@ -837,11 +844,13 @@ export default function Home() {
                   style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", width: "80px", height: "95px", margin: 0, padding: 0 }}
                 >
                   <div className="crest-circle crest-circle-hbs transition-transform duration-300 md:hover:scale-[1.08] cursor-pointer" style={{ width: "74px", height: "74px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "9px" }}>
-                    <img
+                    <Image
                       src="/images/universities/hbs-crest.png"
                       alt="Harvard Business School"
+                      width={74}
+                      height={74}
                       className="crest-img crest-img-hbs"
-                      style={{ width: "74px", height: "74px", objectFit: "contain", mixBlendMode: "multiply", marginTop: "10px" }}
+                      style={{ objectFit: "contain", mixBlendMode: "multiply", marginTop: "10px" }}
                     />
                   </div>
                   <span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#475569", marginTop: "8px", textAlign: "center" }}>
@@ -896,14 +905,24 @@ export default function Home() {
           </motion.h2>
         </motion.div>
       </div>
-      <ChromeBrowserAnimation />
+      <SectionErrorBoundary>
+        <Suspense fallback={null}>
+          <ChromeBrowserAnimation />
+        </Suspense>
+      </SectionErrorBoundary>
 
       {/* ============ HOW MATCHING WORKS ============ */}
-      <MatchingFlowSection />
+      <SectionErrorBoundary>
+        <MatchingFlowSection />
+      </SectionErrorBoundary>
 
       {/* ============ IPHONE MOCKUPS ============ */}
       <div className="scroll-stack-section lg:pb-[100px] w-full" style={{ position: 'relative', zIndex: 5, backgroundColor: '#FAF9F7', minHeight: '100vh', overflow: 'hidden' }}>
-        <IPhoneMockups />
+        <SectionErrorBoundary>
+          <Suspense fallback={null}>
+            <IPhoneMockups />
+          </Suspense>
+        </SectionErrorBoundary>
       </div>
 
       {/* ============ FINAL CTA ============ */}

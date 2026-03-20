@@ -149,22 +149,26 @@ export default function WaitlistPage() {
     setLoading(true);
     setFormError("");
 
-    const { error } = await supabase
-      .from("waitlist")
-      .insert({ name: name.trim(), email: email.trim().toLowerCase(), interest });
+    try {
+      const { error } = await supabase
+        .from("waitlist")
+        .insert({ name: name.trim(), email: email.trim().toLowerCase(), interest });
 
-    setLoading(false);
-
-    if (error) {
-      if (error.code === "23505") {
-        setFormError("This email is already on the waitlist.");
-      } else {
-        setFormError("Something went wrong. Please try again.");
+      if (error) {
+        if (error.code === "23505") {
+          setFormError("This email is already on the waitlist.");
+        } else {
+          setFormError("Something went wrong. Please try again.");
+        }
+        return;
       }
-      return;
-    }
 
-    setSubmitted(true);
+      setSubmitted(true);
+    } catch {
+      setFormError("Could not connect. Check your internet and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const copyLink = () => {
