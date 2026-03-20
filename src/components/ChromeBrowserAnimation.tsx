@@ -59,7 +59,12 @@ export default function ChromeBrowserAnimation() {
 
   /* Timer helpers */
   const schedule = useCallback((fn: () => void, delay: number) => {
-    const t = setTimeout(fn, delay);
+    const t = setTimeout(() => {
+      fn();
+      // Remove completed timer from tracking array to prevent unbounded growth
+      const idx = timersRef.current.indexOf(t);
+      if (idx > -1) timersRef.current.splice(idx, 1);
+    }, delay);
     timersRef.current.push(t);
   }, []);
 
@@ -164,9 +169,18 @@ export default function ChromeBrowserAnimation() {
     );
     observer.observe(el);
 
+    // Clean up all timers when page becomes hidden (e.g. during zoom gestures)
+    const handleVisibility = () => {
+      if (document.visibilityState === "hidden") {
+        cleanup();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+
     return () => {
       observer.disconnect();
       cleanup();
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
