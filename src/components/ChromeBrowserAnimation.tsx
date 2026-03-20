@@ -344,21 +344,31 @@ export default function ChromeBrowserAnimation() {
                 alignSelf: "flex-end",
               }}
             >
-              <div
-                style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: 2,
-                  background: "#4285F4",
-                  flexShrink: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <span style={{ color: "white", fontSize: 7, fontWeight: 700 }}>G</span>
-              </div>
-              <span style={{ fontSize: 12, color: "#5F6368", whiteSpace: "nowrap" }}>Google</span>
+              {showBrand ? (
+                <img
+                  src="/unicorn-favicon.svg"
+                  alt="Plejj"
+                  width={12}
+                  height={12}
+                  style={{ flexShrink: 0 }}
+                />
+              ) : (
+                <div
+                  style={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: 2,
+                    background: "#4285F4",
+                    flexShrink: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <span style={{ color: "white", fontSize: 7, fontWeight: 700 }}>G</span>
+                </div>
+              )}
+              <span style={{ fontSize: 12, color: "#5F6368", whiteSpace: "nowrap" }}>{showBrand ? "Plejj" : "Google"}</span>
               <svg
                 width="8"
                 height="8"
