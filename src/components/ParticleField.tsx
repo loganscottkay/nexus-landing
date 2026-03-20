@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Particle {
   x: number;
@@ -13,14 +13,20 @@ interface Particle {
 
 export default function ParticleField() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Skip on mobile / reduced motion
+    // Skip on reduced motion
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (window.innerWidth < 768) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -125,7 +131,9 @@ export default function ParticleField() {
       clearTimeout(resizeTimer);
       window.removeEventListener("resize", debouncedResize);
     };
-  }, []);
+  }, [isMobile]);
+
+  if (isMobile) return null;
 
   return (
     <canvas
