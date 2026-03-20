@@ -747,7 +747,7 @@ export default function Home() {
               className="mb-12"
             >
               <div
-                className="text-[16px] md:text-[18px] max-w-full px-2 md:max-w-[600px] md:px-0 leading-[1.8] md:leading-[2.0] text-center"
+                className="text-[16px] md:text-[18px] max-w-full px-2 md:max-w-[700px] md:px-0 leading-[1.8] md:leading-[2.0] text-center"
                 style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 {[
