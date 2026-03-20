@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { createPortal } from "react-dom";
 
 /* ---- Tiny SVG Icons ---- */
 function BriefcaseIcon() {
@@ -847,21 +846,19 @@ function SparkleParticles() {
 function PhoneBody({
   children,
   hovered,
-  enlarged,
 }: {
   children: React.ReactNode;
   hovered: boolean;
-  enlarged?: boolean;
 }) {
   return (
     <div
       className="iphone-frame-outer"
       style={{
-        width: enlarged ? "340px" : "260px",
-        height: enlarged ? "694px" : "530px",
+        width: "260px",
+        height: "530px",
         borderRadius: "48px",
         background: "linear-gradient(180deg, #2C2C2E 0%, #1C1C1E 15%, #2A2A2C 50%, #1C1C1E 85%, #2C2C2E 100%)",
-        padding: enlarged ? "13px" : "10px",
+        padding: "10px",
         position: "relative",
         boxShadow: hovered
           ? "inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(255,255,255,0.03), 0 35px 90px rgba(0,0,0,0.25), 0 12px 24px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.06)"
@@ -949,100 +946,6 @@ function PhoneBody({
   );
 }
 
-/* ---- Enlarge Modal ---- */
-function PhoneEnlargeModal({
-  children,
-  onClose,
-}: {
-  children: React.ReactNode;
-  onClose: () => void;
-}) {
-  const [show, setShow] = useState(false);
-
-  const handleClose = useCallback(() => {
-    setShow(false);
-    setTimeout(onClose, 300);
-  }, [onClose]);
-
-  useEffect(() => {
-    // Trigger enter animation
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => setShow(true));
-    });
-  }, []);
-
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") handleClose();
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [handleClose]);
-
-  return createPortal(
-    <div
-      onClick={handleClose}
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.6)",
-        backdropFilter: "blur(8px)",
-        WebkitBackdropFilter: "blur(8px)",
-        zIndex: 100,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        opacity: show ? 1 : 0,
-        transition: "opacity 0.3s ease",
-      }}
-    >
-      {/* Close button — larger tap target on mobile */}
-      <button
-        onClick={handleClose}
-        className="phone-enlarge-close"
-        style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          width: "24px",
-          height: "24px",
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.1)",
-          border: "none",
-          color: "#fff",
-          fontSize: "14px",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: 101,
-        }}
-      >
-        &#x2715;
-      </button>
-
-      {/* Enlarged phone — fullscreen on mobile */}
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className={`phone-enlarge-inner ${show ? "glass-reveal-modal" : ""}`}
-        style={{
-          maxWidth: "85vw",
-          position: "relative",
-          ...(!show ? {
-            opacity: 0,
-            transform: "scale(0.9)",
-          } : {}),
-        }}
-      >
-        <PhoneBody hovered={false} enlarged>
-          {children}
-        </PhoneBody>
-      </div>
-    </div>,
-    document.body
-  );
-}
-
 /* ---- iPhone Frame ---- */
 function IPhoneFrame({
   children,
@@ -1051,7 +954,6 @@ function IPhoneFrame({
   index,
   accentColor,
   onVisible,
-  onEnlarge,
 }: {
   children: React.ReactNode;
   label: string;
@@ -1059,7 +961,6 @@ function IPhoneFrame({
   index: number;
   accentColor: string;
   onVisible?: () => void;
-  onEnlarge: () => void;
 }) {
   const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -1085,15 +986,10 @@ function IPhoneFrame({
   return (
     <div ref={ref} className="flex flex-col items-center">
       <div
-        onClick={onEnlarge}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onEnlarge(); }}
         className={visible ? (index === 0 ? "glass-reveal-entrance" : "glass-reveal-entrance-delayed") : ""}
         style={{
-          cursor: "pointer",
           position: "relative",
           ...(!visible ? {
             opacity: 0,
@@ -1207,18 +1103,6 @@ function IPhoneFrame({
         >
           {subtitle}
         </div>
-        <div
-          className="phone-enlarge-hint"
-          style={{
-            fontSize: "12px",
-            color: "rgba(0,0,0,0.3)",
-            fontFamily: "var(--font-dm-sans), sans-serif",
-            marginTop: "6px",
-          }}
-        >
-          <span className="hidden md:inline">Click to enlarge</span>
-          <span className="md:hidden">Tap to enlarge</span>
-        </div>
       </div>
     </div>
   );
@@ -1228,7 +1112,6 @@ function IPhoneFrame({
 export default function IPhoneMockups() {
   const [investorVisible, setInvestorVisible] = useState(false);
   const [founderVisible, setFounderVisible] = useState(false);
-  const [enlargedPhone, setEnlargedPhone] = useState<string | null>(null);
   const handleInvestorVisible = useCallback(() => setInvestorVisible(true), []);
   const handleFounderVisible = useCallback(() => setFounderVisible(true), []);
 
@@ -1308,7 +1191,6 @@ export default function IPhoneMockups() {
           index={0}
           accentColor="#22D3EE"
           onVisible={handleInvestorVisible}
-          onEnlarge={() => setEnlargedPhone("investor")}
         >
           <InvestorScreen isVisible={investorVisible} />
         </IPhoneFrame>
@@ -1319,23 +1201,11 @@ export default function IPhoneMockups() {
           index={1}
           accentColor="#A78BFA"
           onVisible={handleFounderVisible}
-          onEnlarge={() => setEnlargedPhone("founder")}
         >
           <FounderScreen isVisible={founderVisible} />
         </IPhoneFrame>
       </div>
 
-      {/* Enlarge modal */}
-      {enlargedPhone === "investor" && (
-        <PhoneEnlargeModal onClose={() => setEnlargedPhone(null)}>
-          <InvestorScreen isVisible={true} />
-        </PhoneEnlargeModal>
-      )}
-      {enlargedPhone === "founder" && (
-        <PhoneEnlargeModal onClose={() => setEnlargedPhone(null)}>
-          <FounderScreen isVisible={true} />
-        </PhoneEnlargeModal>
-      )}
     </section>
   );
 }
