@@ -32,11 +32,28 @@ export default function ZoomPrevention() {
       e.preventDefault();
     };
 
+    // Prevent desktop trackpad pinch-to-zoom and Ctrl+scroll wheel zoom
+    const onWheel = (e: WheelEvent) => {
+      if (e.ctrlKey) {
+        e.preventDefault();
+      }
+    };
+
+    // Prevent Ctrl/Cmd + plus/minus/zero keyboard zoom
+    const onKeyDown = (e: KeyboardEvent) => {
+      const mod = e.ctrlKey || e.metaKey;
+      if (mod && (e.key === "+" || e.key === "=" || e.key === "-" || e.key === "0")) {
+        e.preventDefault();
+      }
+    };
+
     document.addEventListener("touchmove", onTouchMove, { passive: false, capture: true });
     document.addEventListener("touchend", onTouchEnd, { passive: false });
     document.addEventListener("gesturestart", onGesture, { passive: false, capture: true });
     document.addEventListener("gesturechange", onGesture, { passive: false, capture: true });
     document.addEventListener("gestureend", onGesture, { passive: false, capture: true });
+    document.addEventListener("wheel", onWheel, { passive: false });
+    document.addEventListener("keydown", onKeyDown);
 
     return () => {
       document.removeEventListener("touchmove", onTouchMove, { capture: true });
@@ -44,6 +61,8 @@ export default function ZoomPrevention() {
       document.removeEventListener("gesturestart", onGesture, { capture: true });
       document.removeEventListener("gesturechange", onGesture, { capture: true });
       document.removeEventListener("gestureend", onGesture, { capture: true });
+      document.removeEventListener("wheel", onWheel);
+      document.removeEventListener("keydown", onKeyDown);
     };
   }, []);
 
