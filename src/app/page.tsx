@@ -210,7 +210,7 @@ const matchingSteps = [
     title: "Founders Pitch",
     label: "FOR FOUNDERS",
     labelColor: "#7C5CFC",
-    desc: "Record a 60-second video pitch and upload your deck. Our proprietary AI scoring engine \u2014 trained on institutional VC evaluation criteria \u2014 scores your startup holistically. Top 15% get accepted.",
+    desc: "Record a 60-second video pitch and upload your deck. Our proprietary AI scoring engine evaluates your startup holistically. Top 15% get accepted.",
     color: "#4A6CF7",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -224,7 +224,7 @@ const matchingSteps = [
     title: "AI Profile Standardization",
     label: "FOR FOUNDERS",
     labelColor: "#7C5CFC",
-    desc: "Once admitted, our AI synthesizes your materials into a clean, uniform, VC-ready format. Every startup on Plejj presents the same way so investors can evaluate and compare efficiently.",
+    desc: "Once admitted, our AI formats your materials into a clean, uniform, VC-ready profile so investors can evaluate and compare efficiently.",
     color: "#4A6CF7",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -594,7 +594,7 @@ function MatchingFlowSection() {
                     <p className="text-[11px] tracking-[2px] uppercase mb-2 font-medium" style={{ color: step.color }}>
                       Step {step.num}
                     </p>
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-2 min-h-[44px]">
                       <h3
                         className="text-[17px] font-semibold text-text-primary"
                         style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
