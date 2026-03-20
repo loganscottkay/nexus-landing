@@ -6,8 +6,12 @@ export default function ZoomPrevention() {
   useEffect(() => {
     let lastTouchEnd = 0;
 
-    // Prevent pinch-to-zoom on touchmove
+    // Prevent pinch-to-zoom on touchmove — block any multi-finger touch
     const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+        return;
+      }
       // @ts-expect-error -- scale exists on TouchEvent in Safari
       if (e.scale !== undefined && e.scale !== 1) {
         e.preventDefault();
@@ -28,18 +32,18 @@ export default function ZoomPrevention() {
       e.preventDefault();
     };
 
-    document.addEventListener("touchmove", onTouchMove, { passive: false });
+    document.addEventListener("touchmove", onTouchMove, { passive: false, capture: true });
     document.addEventListener("touchend", onTouchEnd, { passive: false });
-    document.addEventListener("gesturestart", onGesture, { passive: false });
-    document.addEventListener("gesturechange", onGesture, { passive: false });
-    document.addEventListener("gestureend", onGesture, { passive: false });
+    document.addEventListener("gesturestart", onGesture, { passive: false, capture: true });
+    document.addEventListener("gesturechange", onGesture, { passive: false, capture: true });
+    document.addEventListener("gestureend", onGesture, { passive: false, capture: true });
 
     return () => {
-      document.removeEventListener("touchmove", onTouchMove);
+      document.removeEventListener("touchmove", onTouchMove, { capture: true });
       document.removeEventListener("touchend", onTouchEnd);
-      document.removeEventListener("gesturestart", onGesture);
-      document.removeEventListener("gesturechange", onGesture);
-      document.removeEventListener("gestureend", onGesture);
+      document.removeEventListener("gesturestart", onGesture, { capture: true });
+      document.removeEventListener("gesturechange", onGesture, { capture: true });
+      document.removeEventListener("gestureend", onGesture, { capture: true });
     };
   }, []);
 
