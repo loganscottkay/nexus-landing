@@ -35,12 +35,20 @@ export default function ChromeBrowserAnimation() {
   const [showResults, setShowResults] = useState(false);
   const [showBrand, setShowBrand] = useState(false);
 
-  /* Responsive check */
+  /* Responsive check — debounced to avoid re-renders during pinch-to-zoom */
   useEffect(() => {
+    let debounceTimer: ReturnType<typeof setTimeout>;
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    const debouncedCheck = () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(check, 250);
+    };
+    window.addEventListener("resize", debouncedCheck);
+    return () => {
+      window.removeEventListener("resize", debouncedCheck);
+      clearTimeout(debounceTimer);
+    };
   }, []);
 
   /* Cursor blink */

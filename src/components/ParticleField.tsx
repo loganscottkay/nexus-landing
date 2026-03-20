@@ -55,13 +55,18 @@ export default function ParticleField() {
       });
     };
 
+    let resizeTimer: ReturnType<typeof setTimeout>;
     const handleResize = () => {
       resize();
       init();
     };
+    const debouncedResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(handleResize, 300);
+    };
 
     handleResize();
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", debouncedResize);
 
     // Throttle to ~30fps instead of 60fps
     let lastDraw = 0;
@@ -117,7 +122,8 @@ export default function ParticleField() {
 
     return () => {
       cancelAnimationFrame(animationId);
-      window.removeEventListener("resize", handleResize);
+      clearTimeout(resizeTimer);
+      window.removeEventListener("resize", debouncedResize);
     };
   }, []);
 

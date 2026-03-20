@@ -85,8 +85,12 @@ function ScrollProgressBar() {
   const barRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     let rafId: number;
+    let ticking = false;
     const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
       rafId = requestAnimationFrame(() => {
+        ticking = false;
         if (barRef.current) {
           const h = document.documentElement.scrollHeight - window.innerHeight;
           const p = h > 0 ? Math.min(window.scrollY / h, 1) : 0;
@@ -112,8 +116,12 @@ function ParallaxOrbs({ reduced }: { reduced: boolean }) {
   useEffect(() => {
     if (reduced) return;
     let rafId: number;
+    let ticking = false;
     const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
       rafId = requestAnimationFrame(() => {
+        ticking = false;
         const y = window.scrollY;
         if (orb1.current) orb1.current.style.transform = `translateY(${y * 0.05}px)`;
         if (orb2.current) orb2.current.style.transform = `translateY(${y * 0.08}px)`;
@@ -615,8 +623,12 @@ function ScrollDownIndicator() {
 
   useEffect(() => {
     let rafId: number;
+    let ticking = false;
     const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
       rafId = requestAnimationFrame(() => {
+        ticking = false;
         if (elRef.current) {
           elRef.current.style.opacity = window.scrollY > 200 ? "0" : "1";
         }
