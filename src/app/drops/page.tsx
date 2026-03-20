@@ -471,10 +471,10 @@ function FullProfileOverlay({
             </div>
           </div>
 
-          {/* UrgenC Score */}
+          {/* Plejj Score */}
           <div className="rounded-xl p-4 mb-8" style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.06)" }}>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[14px] font-semibold text-text-primary">UrgenC Score: {startup.nexusScore}/100</span>
+              <span className="text-[14px] font-semibold text-text-primary">Plejj Score: {startup.nexusScore}/100</span>
               <span className="text-[12px] font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: `${scoreColor}12`, color: scoreColor }}>
                 {startup.nexusScore >= 85 ? "Strong" : startup.nexusScore >= 75 ? "Promising" : "Early"}
               </span>
@@ -785,7 +785,7 @@ function StartupCard({
             {/* NEXUS SCORE */}
             <div className="hidden md:block rounded-xl p-4 mb-4" style={{ background: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.5)" }}>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[14px] font-semibold text-text-primary">UrgenC Score: {startup.nexusScore}/100</span>
+                <span className="text-[14px] font-semibold text-text-primary">Plejj Score: {startup.nexusScore}/100</span>
                 <span className="text-[12px] font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: `${scoreColor}12`, color: scoreColor }}>
                   {startup.nexusScore >= 85 ? "Strong" : startup.nexusScore >= 75 ? "Promising" : "Early"}
                 </span>

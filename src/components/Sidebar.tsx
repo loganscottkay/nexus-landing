@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import PlejjLogo from "@/components/PlejjLogo";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
@@ -126,7 +127,7 @@ export default function Sidebar({
         }}
       >
         <div className="px-6 pt-7 pb-8">
-          <Link href="/" className="text-[22px] font-normal text-text-primary" style={{ fontFamily: "'Instrument Serif', serif" }}>UrgenC</Link>
+          <Link href="/" className="flex items-center"><PlejjLogo size={22} /></Link>
         </div>
         <nav className="flex-1 px-3">
           {/* Home button */}

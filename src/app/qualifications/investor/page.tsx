@@ -48,7 +48,7 @@ const applicationCards = [
       "Verifiable LinkedIn profile (6+ months active)",
       "Verified email and phone",
     ],
-    why: "Every investor on UrgenC is a real, verified person.",
+    why: "Every investor on Plejj is a real, verified person.",
   },
   {
     icon: "readiness",
@@ -271,7 +271,7 @@ export default function InvestorQualifications() {
             className="text-[16px] md:text-[18px] text-center mb-10 max-w-lg mx-auto leading-[1.7]"
             style={{ color: "#94A3B8" }}
           >
-            UrgenC welcomes investors of all sizes. Here is how we verify you are serious.
+            Plejj welcomes investors of all sizes. Here is how we verify you are serious.
           </motion.p>
 
           {/* Confidentiality Notice Banner */}
@@ -316,7 +316,7 @@ export default function InvestorQualifications() {
                     lineHeight: 1.6,
                   }}
                 >
-                  By joining UrgenC, you agree to keep all startup information confidential. Pitch decks, financials, and strategies shared with you are for investment evaluation only. Misuse results in permanent removal and potential legal action.
+                  By joining Plejj, you agree to keep all startup information confidential. Pitch decks, financials, and strategies shared with you are for investment evaluation only. Misuse results in permanent removal and potential legal action.
                 </p>
               </div>
             </div>

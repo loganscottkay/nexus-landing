@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import LottieAnimation from "@/components/LottieAnimation";
 import ConicGradientButton from "@/components/ConicGradientButton";
+import PlejjLogo from "@/components/PlejjLogo";
 
 const navLinks = [
   { label: "Startup Qualifications", href: "/qualifications/startup" },
@@ -14,7 +15,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [bannerVisible, setBannerVisible] = useState(true);
-  const [logoHovered, setLogoHovered] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -114,35 +114,9 @@ export default function Navbar() {
           <Link
             href="/"
             className="shrink-0 justify-self-start flex items-center"
-            onMouseEnter={() => setLogoHovered(true)}
-            onMouseLeave={() => setLogoHovered(false)}
           >
-            <span
-              className="text-[22px] md:text-[26px] font-normal transition-all duration-300"
-              style={{
-                fontFamily: "'Instrument Serif', serif",
-                textShadow: logoHovered ? "0 0 20px rgba(74,108,247,0.15)" : "0 0 20px rgba(74,108,247,0)",
-              }}
-            >
-              <span
-                className="transition-all duration-300"
-                style={logoHovered ? {
-                  background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                } : {
-                  color: "#0F172A",
-                }}
-              >
-                Urgen
-              </span>
-              <span
-                className="gradient-text"
-              >
-                C
-              </span>
-            </span>
+            <PlejjLogo size={22} className="md:hidden" />
+            <PlejjLogo size={26} className="hidden md:inline-flex" />
           </Link>
 
           {/* Center: Nav links */}

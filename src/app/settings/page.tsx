@@ -255,11 +255,11 @@ function BillingTab() {
     <GlassCard className="p-7">
       <div className="rounded-xl p-5 mb-6" style={{ background: "rgba(255,255,255,0.25)", border: "1px solid rgba(255,255,255,0.4)" }}>
         <p className="text-[16px] font-semibold text-text-primary mb-1">Free Plan</p>
-        <p className="text-[14px] text-text-muted">Basic access to the UrgenC platform</p>
+        <p className="text-[14px] text-text-muted">Basic access to the Plejj platform</p>
       </div>
 
       <div className="rounded-2xl p-7" style={{ background: "rgba(255,255,255,0.3)", border: "1px solid rgba(74,108,247,0.15)", boxShadow: "0 0 0 1px rgba(124,92,252,0.08)" }}>
-        <h3 className="text-[20px] font-semibold text-text-primary mb-1">Upgrade to UrgenC Premium</h3>
+        <h3 className="text-[20px] font-semibold text-text-primary mb-1">Upgrade to Plejj Premium</h3>
         <p className="text-[28px] font-semibold text-text-primary">$149<span className="text-[14px] text-text-muted font-normal">/mo</span></p>
         <ul className="mt-4 space-y-2.5 mb-6">
           {["Featured placement in investor feeds", "Detailed deck analytics with viewer identity", "Priority call scheduling", "Profile boost (2x visibility)", "Monthly fundraising strategy report"].map((f) => (

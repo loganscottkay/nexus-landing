@@ -168,7 +168,7 @@ export default function WaitlistPage() {
   };
 
   const copyLink = () => {
-    navigator.clipboard.writeText("https://urgenc.com/waitlist");
+    navigator.clipboard.writeText("https://plejj.com/waitlist");
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };
@@ -199,10 +199,10 @@ export default function WaitlistPage() {
   return (
     <>
       <head>
-        <title>Join the Waitlist | UrgenC</title>
+        <title>Join the Waitlist | Plejj</title>
         <meta
           name="description"
-          content="Be first to know when UrgenC launches. Drop your info and we will notify you."
+          content="Be first to know when Plejj launches. Drop your info and we will notify you."
         />
       </head>
 
@@ -259,7 +259,7 @@ export default function WaitlistPage() {
               className="text-[17px] md:text-[18px] text-center mb-10 max-w-[500px] leading-[1.7] mx-auto"
               style={{ color: "#64748B", fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
-              UrgenC is launching soon. Drop your info and be the first to know when we go live.
+              Plejj is launching soon. Drop your info and be the first to know when we go live.
             </motion.p>
 
             {/* Unicorn animation — positioned relative to this container */}
@@ -506,7 +506,7 @@ export default function WaitlistPage() {
                       fontFamily: "var(--font-dm-sans), sans-serif",
                     }}
                   >
-                    We will notify you the moment UrgenC goes live.
+                    We will notify you the moment Plejj goes live.
                   </p>
 
                   {/* Copy link — centered */}

@@ -9,6 +9,7 @@ import LottieAnimation from "@/components/LottieAnimation";
 import HeroHeadline from "@/components/HeroHeadline";
 import ChromeBrowserAnimation from "@/components/ChromeBrowserAnimation";
 import ConicGradientButton from "@/components/ConicGradientButton";
+import PlejjLogo from "@/components/PlejjLogo";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 const smoothDecel = [0.16, 1, 0.3, 1] as const;
@@ -966,12 +967,8 @@ export default function Home() {
           <div className="flex flex-col items-center text-center md:hidden">
             {/* Brand */}
             <div className="mb-[32px]">
-              <Link
-                href="/"
-                className="text-[28px] font-normal"
-                style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
-              >
-                UrgenC
+              <Link href="/" className="inline-flex">
+                <PlejjLogo size={28} />
               </Link>
               <p className="text-[14px] mt-1.5" style={{ color: "#6366F1", fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 500 }}>
                 Where Real Ideas Meet Real Capital.
@@ -1035,10 +1032,10 @@ export default function Home() {
             {/* Disclaimer + Copyright */}
             <div style={{ borderTop: "1px solid rgba(99,102,241,0.06)", paddingTop: "24px", marginTop: "4px", width: "100%" }}>
               <p className="text-center px-4 leading-[1.6]" style={{ fontSize: "12px", color: "#6B7280", fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                UrgenC is a matching and meeting platform. We do not provide investment advice, facilitate financial transactions, or act as a broker-dealer. All investment decisions and transactions occur off-platform between the parties involved.
+                Plejj is a matching and meeting platform. We do not provide investment advice, facilitate financial transactions, or act as a broker-dealer. All investment decisions and transactions occur off-platform between the parties involved.
               </p>
               <p className="text-center mt-4" style={{ fontSize: "12px", color: "#6B7280", fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                &copy; 2026 UrgenC. All rights reserved.
+                &copy; 2026 Plejj. All rights reserved.
               </p>
             </div>
           </div>
@@ -1047,12 +1044,8 @@ export default function Home() {
           <div className="hidden md:grid grid-cols-4 gap-8">
             {/* Column 1 - Brand */}
             <div className="flex flex-col gap-2">
-              <Link
-                href="/"
-                className="text-[32px] font-normal"
-                style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A" }}
-              >
-                UrgenC
+              <Link href="/" className="inline-flex">
+                <PlejjLogo size={32} />
               </Link>
               <p className="text-[14px]" style={{ color: "#6366F1", fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 500, maxWidth: "220px" }}>
                 Where Real Ideas Meet Real Capital.
@@ -1117,10 +1110,10 @@ export default function Home() {
           {/* Divider + Disclaimer + Copyright (desktop) */}
           <div className="hidden md:block mt-12" style={{ borderTop: "1px solid rgba(99,102,241,0.06)", paddingTop: "32px" }}>
             <p className="text-center max-w-[700px] mx-auto leading-[1.6]" style={{ fontSize: "12px", color: "#6B7280", fontFamily: "var(--font-dm-sans), sans-serif" }}>
-              UrgenC is a matching and meeting platform. We do not provide investment advice, facilitate financial transactions, or act as a broker-dealer. All investment decisions and transactions occur off-platform between the parties involved.
+              Plejj is a matching and meeting platform. We do not provide investment advice, facilitate financial transactions, or act as a broker-dealer. All investment decisions and transactions occur off-platform between the parties involved.
             </p>
             <p className="text-center mt-4" style={{ fontSize: "12px", color: "#6B7280", fontFamily: "var(--font-dm-sans), sans-serif" }}>
-              &copy; 2026 UrgenC. All rights reserved.
+              &copy; 2026 Plejj. All rights reserved.
             </p>
           </div>
         </div>

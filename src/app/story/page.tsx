@@ -157,7 +157,7 @@ const milestones = [
 {
     year: "2026",
     title: "Why Now",
-    body: "AI is lowering the barrier to build. More people than ever want in. UrgenC is the door.",
+    body: "AI is lowering the barrier to build. More people than ever want in. Plejj is the door.",
     side: "right" as const,
   },
 ];
@@ -628,7 +628,7 @@ export default function StoryPage() {
                         textAlign: "left",
                       }}
                     >
-                      Logan is a senior at Boston University and helps spearhead AI implementation across admissions and operations teams at Harvard Business School. At UrgenC, he runs all product development and engineering.
+                      Logan is a senior at Boston University and helps spearhead AI implementation across admissions and operations teams at Harvard Business School. At Plejj, he runs all product development and engineering.
                     </p>
                   </div>
                 </div>
@@ -704,7 +704,7 @@ export default function StoryPage() {
                         textAlign: "left",
                       }}
                     >
-                      Benjamin studies at Northeastern University and works in institutional equities at Morgan Stanley. He was the first to articulate the core problem behind UrgenC. He leads scoring methodology and go-to-market strategy.
+                      Benjamin studies at Northeastern University and works in institutional equities at Morgan Stanley. He was the first to articulate the core problem behind Plejj. He leads scoring methodology and go-to-market strategy.
                     </p>
                   </div>
                 </div>

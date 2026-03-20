@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import UnicornSVG from "./UnicornSVG";
+import PlejjLogo from "./PlejjLogo";
 
 /* ---- Config ---- */
 const TYPE_SPEED = 27;
@@ -563,17 +564,12 @@ export default function ChromeBrowserAnimation() {
               {/* Logo - large and properly styled */}
               <h2
                 style={{
-                  fontFamily: "'Instrument Serif', serif",
-                  fontSize: isMobile ? 48 : 72,
-                  color: "#0F172A",
-                  fontWeight: 400,
                   textAlign: "center",
                   margin: 0,
                   lineHeight: 1,
-                  letterSpacing: "-0.02em",
                 }}
               >
-                Urgen<span style={{ color: "#6366F1", fontStyle: "italic" }}>C</span>
+                <PlejjLogo size={isMobile ? 48 : 72} />
               </h2>
 
               {/* Tagline */}

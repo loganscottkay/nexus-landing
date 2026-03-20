@@ -119,7 +119,7 @@ export default function SavedPage() {
                     <span className="text-[11px] px-2 py-0.5 rounded-full bg-black/[0.03] text-text-muted border border-black/[0.06]">{s.stage}</span>
                   </div>
 
-                  {/* UrgenC Score badge - hidden on mobile */}
+                  {/* Plejj Score badge - hidden on mobile */}
                   <div
                     className="hidden md:flex w-8 h-8 rounded-full items-center justify-center shrink-0"
                     style={{

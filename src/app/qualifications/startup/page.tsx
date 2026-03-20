@@ -97,7 +97,7 @@ const onAppCards = [
       "Respond to investor interest within 72 hours",
       "Startups that don't show progress within 30 days may be moved to inactive status",
     ],
-    why: "This is what keeps UrgenC elite.",
+    why: "This is what keeps Plejj elite.",
   },
 ];
 
@@ -341,7 +341,7 @@ export default function StartupQualifications() {
                     lineHeight: 1.6,
                   }}
                 >
-                  Every investor on UrgenC agrees to a platform-wide confidentiality agreement. Your pitch deck, financials, and strategy are protected. Investors who violate confidentiality are permanently removed and may face legal action.
+                  Every investor on Plejj agrees to a platform-wide confidentiality agreement. Your pitch deck, financials, and strategy are protected. Investors who violate confidentiality are permanently removed and may face legal action.
                 </p>
               </div>
             </div>
