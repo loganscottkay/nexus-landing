@@ -341,7 +341,7 @@ export default function StartupQualifications() {
                     lineHeight: 1.6,
                   }}
                 >
-                  Every investor on Plejj agrees to a platform-wide confidentiality agreement. Your pitch deck, financials, and strategy are protected. Investors who violate confidentiality are permanently removed and may face legal action.
+                  Every investor on Plejj agrees to a platform-wide confidentiality agreement. Your pitch deck, financials, and strategy are protected. Investors who violate confidentiality are permanently removed and may face legal action. Applications are evaluated by our proprietary AI scoring engine, trained on evaluation frameworks used by top accelerators and institutional VCs. Once admitted, Plejj&apos;s AI standardizes your pitch materials into a clean, uniform, VC-ready format so investors can evaluate startups consistently. Plejj facilitates meetings and introductions, not financial transactions. All investment decisions happen off-platform.
                 </p>
               </div>
             </div>

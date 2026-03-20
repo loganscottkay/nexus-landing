@@ -316,7 +316,7 @@ export default function InvestorQualifications() {
                     lineHeight: 1.6,
                   }}
                 >
-                  By joining Plejj, you agree to keep all startup information confidential. Pitch decks, financials, and strategies shared with you are for investment evaluation only. Misuse results in permanent removal and potential legal action.
+                  By joining Plejj, you agree to keep all startup information confidential. Pitch decks, financials, and strategies shared with you are for investment evaluation only. Misuse results in permanent removal and potential legal action. Every startup on Plejj has been pre-vetted by our proprietary AI scoring engine and their materials have been standardized into a uniform format for easy comparison. Our AI matching engine curates your feed based on your industry focus, stage preference, and investment thesis so you only see relevant deal flow. Plejj facilitates meetings and introductions, not financial transactions. All investment decisions happen off-platform.
                 </p>
               </div>
             </div>

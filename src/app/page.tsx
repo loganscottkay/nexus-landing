@@ -736,7 +736,7 @@ export default function Home() {
                 style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 {[
-                  <>The curated fundraising marketplace where meetings actually happen.</>,
+                  <>The AI-powered fundraising marketplace where meetings actually happen.</>,
                   <>Founders pitch, investors swipe.</>,
                   <>Mutual interest unlocks a meeting &mdash; don&apos;t show up, you&apos;re out.</>,
                 ].map((line, i) => (
