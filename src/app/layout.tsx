@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import PageAtmosphere from "@/components/PageAtmosphere";
 import CursorGlow from "@/components/CursorGlow";
+import ZoomPrevention from "@/components/ZoomPrevention";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -50,6 +51,7 @@ export default function RootLayout({
         className="font-sans antialiased overflow-x-clip"
         style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
       >
+        <ZoomPrevention />
         <PageAtmosphere />
         <CursorGlow />
         {children}

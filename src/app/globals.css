@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent pinch-to-zoom while allowing normal scroll */
+html, body {
+  touch-action: pan-x pan-y;
+}
+
 /* ---- Retro TV matching flow styles ---- */
 @keyframes tvGradientShift {
   0% { background-position: 0% 50%; }
