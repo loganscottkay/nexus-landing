@@ -210,7 +210,7 @@ const matchingSteps = [
     title: "Founders Pitch",
     label: "FOR FOUNDERS",
     labelColor: "#7C5CFC",
-    desc: "Record a 60-second video pitch and upload your deck. Our proprietary AI scoring engine evaluates your startup holistically. Top 15% get accepted.",
+    desc: "Record a 60-second video pitch and upload your deck. Our proprietary AI scoring engine, trained on institutional VC evaluation criteria, evaluates your startup holistically.",
     color: "#4A6CF7",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -221,10 +221,10 @@ const matchingSteps = [
   },
   {
     num: "02",
-    title: "AI Profile Standardization",
+    title: "We Evaluate You",
     label: "FOR FOUNDERS",
     labelColor: "#7C5CFC",
-    desc: "Once admitted, our AI formats your materials into a clean, uniform, VC-ready profile so investors can evaluate and compare efficiently.",
+    desc: "Our AI scores your idea and our team evaluates your drive, communication, and leadership. Once admitted, we standardize your materials into a clean, VC-ready format. Only the top 15% make it through.",
     color: "#4A6CF7",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
