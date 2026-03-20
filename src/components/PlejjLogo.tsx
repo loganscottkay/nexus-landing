@@ -28,9 +28,9 @@ export default function PlejjLogo({
     >
       <span style={{ color: dark }}>Ple</span>
       <span style={{ position: "relative", display: "inline" }}>
-        {/* Base layer: full "jj" in dark (shows the descender/hook) */}
-        <span style={{ color: dark }}>jj</span>
-        {/* Overlay: top portion of "jj" in purple (dot + stem above baseline) */}
+        {/* Base layer: bottom portion of "jj" in dark (hooks/descenders only) */}
+        <span style={{ color: dark, clipPath: "inset(68% 0 0 0)" }}>jj</span>
+        {/* Overlay: top portion of "jj" in purple (dot + stem) with gap below */}
         <span
           aria-hidden="true"
           style={{
@@ -38,7 +38,7 @@ export default function PlejjLogo({
             left: 0,
             top: 0,
             color: purple,
-            clipPath: "inset(0 0 32% 0)",
+            clipPath: "inset(0 0 38% 0)",
             pointerEvents: "none",
           }}
         >

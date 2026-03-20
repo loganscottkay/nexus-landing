@@ -113,10 +113,14 @@ export default function Navbar() {
           {/* Far left: Logo */}
           <Link
             href="/"
-            className="shrink-0 justify-self-start flex items-center"
+            className="shrink-0 justify-self-start flex items-center h-full"
           >
-            <PlejjLogo size={22} className="md:hidden" />
-            <PlejjLogo size={26} className="hidden md:inline-flex" />
+            <span className="md:hidden">
+              <PlejjLogo size={24} />
+            </span>
+            <span className="hidden md:inline-flex">
+              <PlejjLogo size={28} />
+            </span>
           </Link>
 
           {/* Center: Nav links */}
