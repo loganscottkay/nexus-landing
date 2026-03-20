@@ -719,9 +719,9 @@ export default function Home() {
                 style={{ color: "#475569", fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 {[
-                  <>The only fundraising app where meetings are guaranteed.</>,
-                  <>Founders pitch. Investors swipe.</>,
-                  <>Mutual interest unlocks a guaranteed meeting&mdash;no cold emails, no ghosting.</>,
+                  <>The curated fundraising marketplace where meetings actually happen.</>,
+                  <>Founders pitch, investors swipe.</>,
+                  <>Mutual interest unlocks a meeting &mdash; don&apos;t show up, you&apos;re out.</>,
                 ].map((line, i) => (
                   <motion.span
                     key={i}
