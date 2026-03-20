@@ -27,24 +27,26 @@ export default function PlejjLogo({
       }}
     >
       <span style={{ color: dark }}>Ple</span>
-      <span style={{ position: "relative", display: "inline" }}>
-        {/* Base layer: bottom portion of "jj" in dark (hooks/descenders only) */}
-        <span style={{ color: dark, clipPath: "inset(68% 0 0 0)" }}>jj</span>
-        {/* Overlay: top portion of "jj" in purple (dot + stem) with gap below */}
-        <span
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            color: purple,
-            clipPath: "inset(0 0 38% 0)",
-            pointerEvents: "none",
-          }}
-        >
-          jj
+      {["j", "j"].map((_, i) => (
+        <span key={i} style={{ position: "relative", display: "inline-block" }}>
+          {/* Base layer: bottom portion in dark */}
+          <span style={{ color: dark, clipPath: "inset(63% 0 0 0)" }}>j</span>
+          {/* Overlay: top portion in purple */}
+          <span
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              color: purple,
+              clipPath: "inset(0 0 39% 0)",
+              pointerEvents: "none",
+            }}
+          >
+            j
+          </span>
         </span>
-      </span>
+      ))}
     </span>
   );
 }
