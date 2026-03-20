@@ -15,7 +15,7 @@ const SPARKLE_COLORS = ["#F5D76E", "#7C5CFC", "#4A6CF7", "#F5D76E", "#7C5CFC", "
 const QUERIES = [
   "How to find investors for my startup?",
   "How to find early stage startups to invest in?",
-  "What is an app where founders pitch, investors swipe, and every match gets a guaranteed meeting?",
+  "Is there an app where startups can actually get in front of real investors and prove their vision?",
 ];
 
 /* ---- Component ---- */
