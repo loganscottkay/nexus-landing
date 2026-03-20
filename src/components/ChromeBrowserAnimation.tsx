@@ -418,7 +418,7 @@ export default function ChromeBrowserAnimation() {
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
               </svg>
-              <span style={{ fontSize: 13, color: "#5F6368", fontFamily: "Arial, sans-serif" }}>google.com</span>
+              <span style={{ fontSize: 13, color: "#5F6368", fontFamily: "Arial, sans-serif" }}>{showBrand ? "plejj.app" : "google.com"}</span>
             </div>
             {/* Profile circle */}
             <div style={{ width: 22, height: 22, borderRadius: "50%", background: "#C4C7CC", flexShrink: 0 }} />
