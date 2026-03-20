@@ -199,7 +199,7 @@ const matchingSteps = [
     title: "Founders Pitch",
     label: "FOR FOUNDERS",
     labelColor: "#7C5CFC",
-    desc: "Record a 60-second video pitch and upload your deck. The app scores you on five factors. Top 15% get accepted.",
+    desc: "Record a 60-second video pitch and upload your deck. Our proprietary AI scoring engine \u2014 trained on institutional VC evaluation criteria \u2014 scores your startup holistically. Top 15% get accepted.",
     color: "#4A6CF7",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -210,10 +210,26 @@ const matchingSteps = [
   },
   {
     num: "02",
+    title: "AI Profile Standardization",
+    label: "FOR FOUNDERS",
+    labelColor: "#7C5CFC",
+    desc: "Once admitted, our AI synthesizes your materials into a clean, uniform, VC-ready format. Every startup on Plejj presents the same way so investors can evaluate and compare efficiently.",
+    color: "#4A6CF7",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <path d="M9 15l2 2 4-4" />
+        <path d="M16 3l2-1.5M18 6l2.5-.5M16.5 1L17 3.5" />
+      </svg>
+    ),
+  },
+  {
+    num: "03",
     title: "Investors Set Filters",
     label: "FOR INVESTORS",
     labelColor: "#4A6CF7",
-    desc: "Choose your industries, stage preferences, and check size. Your daily feed only shows startups that match your criteria.",
+    desc: "Choose your industries, stage preferences, and check size. Our AI matching engine curates your daily feed to only show startups that fit your thesis.",
     color: "#7C5CFC",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -230,7 +246,7 @@ const matchingSteps = [
     ),
   },
   {
-    num: "03",
+    num: "04",
     title: "Swipe & Match",
     label: "BOTH SIDES",
     labelColor: "#059669",
@@ -243,7 +259,7 @@ const matchingSteps = [
     ),
   },
   {
-    num: "04",
+    num: "05",
     title: "Chemistry Call",
     label: "BOTH SIDES",
     labelColor: "#059669",
@@ -309,7 +325,7 @@ function MobileTimeline({
       className="md:hidden relative w-full"
       ref={containerRef}
     >
-      {/* Vertical connecting line — spans from circle 1 center to circle 4 center */}
+      {/* Vertical connecting line — spans from circle 1 center to last circle center */}
       {lineStyle && (
         <div
           className="absolute left-[11px] w-[2px] rounded-full"
@@ -459,7 +475,7 @@ function MatchingFlowSection() {
               <motion.div
                 variants={tierCard}
                 transition={{ duration: 0.5, delay: 0.6 + i * 0.08, ease }}
-                className="flex-1 max-w-[280px] w-full min-h-[240px]"
+                className="flex-1 max-w-[220px] w-full min-h-[240px]"
               >
                 <div className={`glow-card-wrapper h-full matching-card-${step.label === "FOR FOUNDERS" ? "founders" : step.label === "FOR INVESTORS" ? "investors" : "both"}`}>
                   <div
