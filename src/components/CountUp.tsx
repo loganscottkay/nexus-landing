@@ -31,9 +31,6 @@ export default function CountUp({
   useEffect(() => {
     if (!started) return;
 
-    let rafId: number;
-    let glowTimeout: ReturnType<typeof setTimeout>;
-
     const timeout = setTimeout(() => {
       const startTime = performance.now();
 
@@ -44,22 +41,18 @@ export default function CountUp({
         setValue(eased * target);
 
         if (progress < 1) {
-          rafId = requestAnimationFrame(tick);
+          requestAnimationFrame(tick);
         } else {
           setValue(target);
           setGlowFlash(true);
-          glowTimeout = setTimeout(() => setGlowFlash(false), 600);
+          setTimeout(() => setGlowFlash(false), 600);
         }
       };
 
-      rafId = requestAnimationFrame(tick);
+      requestAnimationFrame(tick);
     }, delay);
 
-    return () => {
-      clearTimeout(timeout);
-      clearTimeout(glowTimeout);
-      cancelAnimationFrame(rafId);
-    };
+    return () => clearTimeout(timeout);
   }, [started, target, duration, delay]);
 
   const display =

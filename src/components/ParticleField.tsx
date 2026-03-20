@@ -63,19 +63,11 @@ export default function ParticleField() {
     handleResize();
     window.addEventListener("resize", handleResize);
 
-    // Pause animation when tab is hidden or component is off-screen
-    let isPageVisible = true;
-    const handleVisibility = () => {
-      isPageVisible = document.visibilityState === "visible";
-    };
-    document.addEventListener("visibilitychange", handleVisibility);
-
     // Throttle to ~30fps instead of 60fps
     let lastDraw = 0;
     const draw = (time: number) => {
       animationId = requestAnimationFrame(draw);
 
-      if (!isPageVisible) return;
       if (time - lastDraw < 33) return; // ~30fps
       lastDraw = time;
 
@@ -126,7 +118,6 @@ export default function ParticleField() {
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener("resize", handleResize);
-      document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, []);
 

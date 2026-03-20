@@ -215,7 +215,6 @@ function TrendPill({ value, color = "#34D399" }: { value: string; color?: string
 function useCountUp(target: number, duration: number, shouldStart: boolean) {
   const [value, setValue] = useState(0);
   const hasRun = useRef(false);
-  const rafRef = useRef<number>(0);
 
   useEffect(() => {
     if (!shouldStart || hasRun.current) return;
@@ -228,13 +227,9 @@ function useCountUp(target: number, duration: number, shouldStart: boolean) {
       // Ease out quad
       const eased = 1 - (1 - progress) * (1 - progress);
       setValue(Math.round(eased * target));
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(step);
-      }
+      if (progress < 1) requestAnimationFrame(step);
     };
-    rafRef.current = requestAnimationFrame(step);
-
-    return () => cancelAnimationFrame(rafRef.current);
+    requestAnimationFrame(step);
   }, [shouldStart, target, duration]);
 
   return value;
@@ -263,18 +258,14 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
 
   // Crossfade: toggle showCurrent, then advance index
   useEffect(() => {
-    let fadeTimeout: ReturnType<typeof setTimeout>;
     const interval = setInterval(() => {
       setShowCurrent(false); // fade out current
-      fadeTimeout = setTimeout(() => {
+      setTimeout(() => {
         setFeedIndex((prev) => (prev + 1) % allStartups.length);
         setShowCurrent(true); // fade in next
       }, 400);
     }, 4000);
-    return () => {
-      clearInterval(interval);
-      clearTimeout(fadeTimeout);
-    };
+    return () => clearInterval(interval);
   }, [allStartups.length]);
 
   // Trigger stat pulse once on first visibility

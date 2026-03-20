@@ -17,15 +17,7 @@ export default function Navbar() {
   const [bannerVisible, setBannerVisible] = useState(true);
 
   useEffect(() => {
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        ticking = false;
-        setScrolled(window.scrollY > 80);
-      });
-    };
+    const onScroll = () => setScrolled(window.scrollY > 80);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
