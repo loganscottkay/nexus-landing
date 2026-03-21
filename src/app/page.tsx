@@ -237,31 +237,10 @@ const matchingSteps = [
   },
   {
     num: "03",
-    title: "Investors Set Filters",
-    label: "FOR INVESTORS",
-    labelColor: "#4A6CF7",
-    desc: "Choose your industries, stage preferences, and check size. Our AI matching engine curates your daily feed to only show startups that fit your thesis.",
-    color: "#7C5CFC",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <line x1="4" y1="21" x2="4" y2="14" />
-        <line x1="4" y1="10" x2="4" y2="3" />
-        <line x1="12" y1="21" x2="12" y2="12" />
-        <line x1="12" y1="8" x2="12" y2="3" />
-        <line x1="20" y1="21" x2="20" y2="16" />
-        <line x1="20" y1="12" x2="20" y2="3" />
-        <line x1="1" y1="14" x2="7" y2="14" />
-        <line x1="9" y1="8" x2="15" y2="8" />
-        <line x1="17" y1="16" x2="23" y2="16" />
-      </svg>
-    ),
-  },
-  {
-    num: "04",
     title: "Swipe & Match",
     label: "BOTH SIDES",
     labelColor: "#059669",
-    desc: "Investors browse and express interest. Founders see who is interested and accept or pass. Both say yes? It is a match.",
+    desc: "Our AI matching engine curates each investor's feed based on their thesis. Investors browse and express interest. Founders see who is interested and accept or pass. Both say yes? It is a match.",
     color: "#059669",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -270,7 +249,7 @@ const matchingSteps = [
     ),
   },
   {
-    num: "05",
+    num: "04",
     title: "Chemistry Call",
     label: "BOTH SIDES",
     labelColor: "#059669",
