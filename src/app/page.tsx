@@ -454,7 +454,7 @@ function MatchingFlowSection() {
         {/* Desktop: horizontal flow with animated arrows */}
         <motion.div
           variants={cardStagger}
-          className="hidden lg:flex gap-0 w-full items-stretch"
+          className="hidden lg:flex gap-0 w-full items-stretch justify-center"
         >
           {matchingSteps.map((step, i) => (
             <React.Fragment key={step.num}>
