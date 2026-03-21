@@ -211,9 +211,9 @@ const matchingSteps = [
     label: "FOR FOUNDERS",
     labelColor: "#7C5CFC",
     desc: "Record a 60-second video pitch and upload your deck. Our proprietary AI scoring engine, trained on institutional VC evaluation criteria, evaluates your startup holistically.",
-    color: "#4A6CF7",
+    color: "#7C5CFC",
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <polygon points="23 7 16 12 23 17 23 7" />
         <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
       </svg>
@@ -225,9 +225,9 @@ const matchingSteps = [
     label: "FOR FOUNDERS",
     labelColor: "#7C5CFC",
     desc: "Our AI scores your idea and our team evaluates your drive, communication, and leadership. Once admitted, we standardize your materials into a clean, VC-ready format. Only the top 15% make it through.",
-    color: "#4A6CF7",
+    color: "#7C5CFC",
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
         <polyline points="14 2 14 8 20 8" />
         <path d="M9 15l2 2 4-4" />
