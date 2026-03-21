@@ -731,7 +731,7 @@ export default function Home() {
               >
                 {[
                   <>The AI-powered fundraising marketplace where meetings actually happen.</>,
-                  <>Serious founders pitch, investors swipe.</>,
+                  <>Curated founders pitch, serious investors swipe.</>,
                   <>Mutual interest unlocks a meeting &mdash; don&apos;t show up, you&apos;re out.</>,
                 ].map((line, i) => (
                   <motion.span
