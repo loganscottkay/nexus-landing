@@ -7,7 +7,6 @@ import Navbar from "@/components/Navbar";
 import UnicornAnimation from "@/components/UnicornAnimation";
 import LottieAnimation from "@/components/LottieAnimation";
 import ConicGradientButton from "@/components/ConicGradientButton";
-import { supabase } from "@/lib/supabase";
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
@@ -115,6 +114,8 @@ function ConfettiEffect() {
   );
 }
 
+const maintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
+
 export default function WaitlistPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -145,21 +146,25 @@ export default function WaitlistPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!allValid) return;
+    if (!allValid || maintenanceMode) return;
     setLoading(true);
     setFormError("");
 
     try {
-      const { error } = await supabase
-        .from("waitlist")
-        .insert({ name: name.trim(), email: email.trim().toLowerCase(), interest });
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          interest,
+        }),
+      });
 
-      if (error) {
-        if (error.code === "23505") {
-          setFormError("This email is already on the waitlist.");
-        } else {
-          setFormError("Something went wrong. Please try again.");
-        }
+      const data = await res.json();
+
+      if (!res.ok) {
+        setFormError(data.error || "Something went wrong. Please try again.");
         return;
       }
 
@@ -288,7 +293,31 @@ export default function WaitlistPage() {
             }}
           >
             <AnimatePresence mode="wait">
-              {!submitted ? (
+              {maintenanceMode ? (
+                <motion.div
+                  key="maintenance"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.4 }}
+                  className="flex flex-col items-center text-center py-8"
+                >
+                  <p
+                    className="text-[18px] font-medium text-[#0F172A] mb-3"
+                    style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+                  >
+                    Temporarily Unavailable
+                  </p>
+                  <p
+                    className="text-[15px] leading-[1.7]"
+                    style={{
+                      color: "#64748B",
+                      fontFamily: "var(--font-dm-sans), sans-serif",
+                    }}
+                  >
+                    The waitlist is currently closed. Please check back soon.
+                  </p>
+                </motion.div>
+              ) : !submitted ? (
                 <motion.div
                   key="form"
                   exit={{ opacity: 0 }}
