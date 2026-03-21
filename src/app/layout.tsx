@@ -21,7 +21,29 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Plejj | Where Real Ideas Meet Real Capital",
   description:
-    "A curated marketplace connecting vetted startups with accredited investors through intelligent matching.",
+    "Plejj is the AI-powered fundraising marketplace where serious founders pitch, investors swipe, and mutual interest unlocks a real meeting. Join the waitlist.",
+  metadataBase: new URL("https://joinplejj.com"),
+  openGraph: {
+    title: "Plejj | Where Real Ideas Meet Real Capital",
+    description:
+      "Plejj is the AI-powered fundraising marketplace where serious founders pitch, investors swipe, and mutual interest unlocks a real meeting. Join the waitlist.",
+    url: "https://joinplejj.com",
+    siteName: "Plejj",
+    type: "website",
+    images: [
+      {
+        url: "/plejj-logo-white.png",
+        alt: "Plejj Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Plejj | Where Real Ideas Meet Real Capital",
+    description:
+      "Plejj is the AI-powered fundraising marketplace where serious founders pitch, investors swipe, and mutual interest unlocks a real meeting. Join the waitlist.",
+    images: ["/plejj-logo-white.png"],
+  },
   icons: {
     icon: [
       { url: "/unicorn-favicon.svg", type: "image/svg+xml" },
