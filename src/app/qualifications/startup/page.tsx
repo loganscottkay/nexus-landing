@@ -55,7 +55,7 @@ const applicationCards = [
       "Relevant experience or domain knowledge",
       "Student founders welcome and encouraged (just include your university affiliation)",
     ],
-    why: "We bet on people first.",
+    why: "We bet on people first. We evaluate both your idea and your team. A great team with a solid idea will always beat a great idea with a weak team.",
   },
   {
     icon: "idea",
@@ -341,140 +341,9 @@ export default function StartupQualifications() {
                     lineHeight: 1.6,
                   }}
                 >
-                  Every investor signs a platform-wide confidentiality agreement. Your pitch deck, financials, and strategy are protected. Violations result in permanent removal and potential legal action. Applications are evaluated by our proprietary AI scoring engine, trained on frameworks used by top accelerators and institutional VCs. Plejj facilitates meetings and introductions, not financial transactions.
+                  Every investor signs a platform-wide confidentiality agreement. Your pitch deck, financials, and strategy are protected. Violations result in permanent removal and potential legal action. Plejj facilitates meetings and introductions, not financial transactions.
                 </p>
               </div>
-            </div>
-          </motion.div>
-
-          {/* How We Evaluate You */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease, delay: 0.14 }}
-            className="mx-auto mb-12"
-            style={{ maxWidth: "700px" }}
-          >
-            <div
-              className="rounded-xl md:rounded-2xl p-6 md:p-8"
-              style={{
-                background: "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(196,148,233,0.06), rgba(130,180,237,0.05), rgba(167,139,250,0.04)), rgba(255, 255, 255, 0.5)",
-                backdropFilter: "blur(24px)",
-                WebkitBackdropFilter: "blur(24px)",
-                border: "1px solid rgba(0, 0, 0, 0.06)",
-              }}
-            >
-              <h3
-                className="font-semibold mb-1"
-                style={{
-                  fontFamily: "var(--font-dm-sans), sans-serif",
-                  fontSize: "20px",
-                  color: "#0F172A",
-                }}
-              >
-                How We Evaluate You
-              </h3>
-              <p
-                className="italic mb-6"
-                style={{
-                  fontFamily: "var(--font-dm-sans), sans-serif",
-                  fontSize: "14px",
-                  color: "#7C5CFC",
-                }}
-              >
-                Our proprietary AI scores your idea. Our team scores you.
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Your Idea */}
-                <div>
-                  <p
-                    className="font-semibold mb-3"
-                    style={{
-                      fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontSize: "15px",
-                      color: "#0F172A",
-                    }}
-                  >
-                    Your Idea (AI-Evaluated)
-                  </p>
-                  <div className="flex flex-col" style={{ gap: "10px" }}>
-                    {["Problem clarity and market opportunity", "Business model viability", "Traction or proof of concept"].map((item) => (
-                      <div key={item} className="flex items-start gap-3">
-                        <span
-                          className="shrink-0 rounded-full mt-[7px]"
-                          style={{
-                            width: "6px",
-                            height: "6px",
-                            background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                          }}
-                        />
-                        <span
-                          style={{
-                            fontFamily: "var(--font-dm-sans), sans-serif",
-                            fontSize: "15px",
-                            color: "#475569",
-                            lineHeight: 1.6,
-                          }}
-                        >
-                          {item}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Your Team */}
-                <div>
-                  <p
-                    className="font-semibold mb-3"
-                    style={{
-                      fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontSize: "15px",
-                      color: "#0F172A",
-                    }}
-                  >
-                    Your Team (Human-Evaluated)
-                  </p>
-                  <div className="flex flex-col" style={{ gap: "10px" }}>
-                    {["Drive and commitment (we watch your pitch video closely)", "Communication and leadership presence", "Relevant experience or domain knowledge"].map((item) => (
-                      <div key={item} className="flex items-start gap-3">
-                        <span
-                          className="shrink-0 rounded-full mt-[7px]"
-                          style={{
-                            width: "6px",
-                            height: "6px",
-                            background: "linear-gradient(135deg, #4A6CF7, #7C5CFC)",
-                          }}
-                        />
-                        <span
-                          style={{
-                            fontFamily: "var(--font-dm-sans), sans-serif",
-                            fontSize: "15px",
-                            color: "#475569",
-                            lineHeight: 1.6,
-                          }}
-                        >
-                          {item}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <p
-                className="mt-6"
-                style={{
-                  fontFamily: "var(--font-dm-sans), sans-serif",
-                  fontSize: "14px",
-                  color: "#475569",
-                  lineHeight: 1.7,
-                }}
-              >
-                Our AI scoring engine, trained on institutional VC evaluation criteria, handles the quantitative analysis. Our team handles the human side. A great team with a solid idea will always beat a great idea with a weak team. We evaluate both, but we bet on people first.
-              </p>
             </div>
           </motion.div>
 
