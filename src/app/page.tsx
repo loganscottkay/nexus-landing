@@ -879,8 +879,8 @@ export default function Home() {
             className="text-[28px] md:text-[40px] font-normal text-center max-w-[600px]"
             style={{ fontFamily: "'Instrument Serif', serif", color: "#0F172A", lineHeight: 1.3 }}
           >
-            Everyone&apos;s been searching for this. No one&apos;s built it.{" "}
-            <span className="gradient-text-animate" style={{ fontWeight: 600 }}>Until now.</span>
+            Startups need it, investors want it,{" "}
+            <span className="gradient-text-animate" style={{ fontWeight: 600 }}>we built it.</span>
           </motion.h2>
         </motion.div>
       </div>
