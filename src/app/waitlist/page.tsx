@@ -591,21 +591,12 @@ export default function WaitlistPage() {
                       Follow us on social media
                     </p>
                     <div className="flex items-center gap-4">
-                      {/* X / Twitter */}
-                      <div
-                        className="flex items-center justify-center w-[40px] h-[40px] rounded-full"
-                        style={{
-                          background: "rgba(255, 255, 255, 0.5)",
-                          border: "1px solid rgba(0, 0, 0, 0.06)",
-                        }}
-                      >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#334155">
-                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                        </svg>
-                      </div>
                       {/* Instagram */}
-                      <div
-                        className="flex items-center justify-center w-[40px] h-[40px] rounded-full"
+                      <a
+                        href="https://instagram.com/joinplejj"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center w-[40px] h-[40px] rounded-full transition-opacity duration-200 hover:opacity-70"
                         style={{
                           background: "rgba(255, 255, 255, 0.5)",
                           border: "1px solid rgba(0, 0, 0, 0.06)",
@@ -616,19 +607,7 @@ export default function WaitlistPage() {
                           <circle cx="12" cy="12" r="5" />
                           <circle cx="17.5" cy="6.5" r="1.5" fill="#334155" stroke="none" />
                         </svg>
-                      </div>
-                      {/* TikTok */}
-                      <div
-                        className="flex items-center justify-center w-[40px] h-[40px] rounded-full"
-                        style={{
-                          background: "rgba(255, 255, 255, 0.5)",
-                          border: "1px solid rgba(0, 0, 0, 0.06)",
-                        }}
-                      >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#334155">
-                          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.71a8.19 8.19 0 004.76 1.52V6.79a4.84 4.84 0 01-1-.1z" />
-                        </svg>
-                      </div>
+                      </a>
                     </div>
                   </div>
 
