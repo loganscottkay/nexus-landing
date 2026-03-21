@@ -30,7 +30,7 @@ export default function PlejjLogo({
       {["j", "j"].map((_, i) => (
         <span key={i} style={{ position: "relative", display: "inline-block" }}>
           {/* Base layer: bottom portion in dark */}
-          <span style={{ color: dark, clipPath: "inset(54% 0 0 0)" }}>j</span>
+          <span style={{ color: dark, clipPath: "inset(52% 0 0 0)" }}>j</span>
           {/* Overlay: top portion in purple */}
           <span
             aria-hidden="true"
@@ -39,7 +39,7 @@ export default function PlejjLogo({
               left: 0,
               top: 0,
               color: purple,
-              clipPath: "inset(0 0 50% 0)",
+              clipPath: "inset(0 0 46% 0)",
               pointerEvents: "none",
             }}
           >

@@ -1015,7 +1015,7 @@ export default function Home() {
             {/* Brand */}
             <div className="mb-[32px]">
               <Link href="/" className="inline-flex">
-                <PlejjLogo size={28} />
+                <PlejjLogo size={24} />
               </Link>
               <p className="text-[14px] mt-1.5" style={{ color: "#6366F1", fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 500 }}>
                 Where Real Ideas Meet Real Capital.
@@ -1092,7 +1092,7 @@ export default function Home() {
             {/* Column 1 - Brand */}
             <div className="flex flex-col gap-2">
               <Link href="/" className="inline-flex">
-                <PlejjLogo size={32} />
+                <PlejjLogo size={28} />
               </Link>
               <p className="text-[14px]" style={{ color: "#6366F1", fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 500, maxWidth: "220px" }}>
                 Where Real Ideas Meet Real Capital.
