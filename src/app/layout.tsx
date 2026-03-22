@@ -4,6 +4,7 @@ import "./globals.css";
 import PageAtmosphere from "@/components/PageAtmosphere";
 import CursorGlow from "@/components/CursorGlow";
 import ZoomPrevention from "@/components/ZoomPrevention";
+import { Analytics } from "@vercel/analytics/react";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -77,6 +78,7 @@ export default function RootLayout({
         <PageAtmosphere />
         <CursorGlow />
         {children}
+        <Analytics />
       </body>
     </html>
   );
