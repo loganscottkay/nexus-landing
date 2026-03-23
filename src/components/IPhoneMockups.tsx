@@ -133,18 +133,17 @@ function NotificationDot({ color }: { color: string }) {
 }
 
 /* ---- Animated Progress Bar ---- */
-function AnimatedBar({ targetWidth, color, isVisible }: { targetWidth: string; color: string; isVisible: boolean }) {
-  const [width, setWidth] = useState("0%");
+function AnimatedBar({ targetWidth, color, isVisible, staticMode }: { targetWidth: string; color: string; isVisible: boolean; staticMode?: boolean }) {
+  const [width, setWidth] = useState(staticMode ? targetWidth : "0%");
   const hasAnimated = useRef(false);
 
   useEffect(() => {
-    if (isVisible && !hasAnimated.current) {
-      hasAnimated.current = true;
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => setWidth(targetWidth));
-      });
-    }
-  }, [isVisible, targetWidth]);
+    if (staticMode || !isVisible || hasAnimated.current) return;
+    hasAnimated.current = true;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setWidth(targetWidth));
+    });
+  }, [isVisible, targetWidth, staticMode]);
 
   return (
     <div style={{
@@ -152,7 +151,7 @@ function AnimatedBar({ targetWidth, color, isVisible }: { targetWidth: string; c
       height: "100%",
       borderRadius: "9999px",
       background: color,
-      transition: "width 1.2s cubic-bezier(0.16, 1, 0.3, 1)",
+      transition: staticMode ? "none" : "width 1.2s cubic-bezier(0.16, 1, 0.3, 1)",
     }} />
   );
 }
@@ -212,13 +211,13 @@ function TrendPill({ value, color = "#34D399" }: { value: string; color?: string
 }
 
 /* ---- Animated Counter Hook ---- */
-function useCountUp(target: number, duration: number, shouldStart: boolean) {
-  const [value, setValue] = useState(0);
+function useCountUp(target: number, duration: number, shouldStart: boolean, staticMode?: boolean) {
+  const [value, setValue] = useState(staticMode ? target : 0);
   const hasRun = useRef(false);
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
-    if (!shouldStart || hasRun.current) return;
+    if (staticMode || !shouldStart || hasRun.current) return;
     hasRun.current = true;
 
     const startTime = performance.now();
@@ -235,7 +234,7 @@ function useCountUp(target: number, duration: number, shouldStart: boolean) {
     rafRef.current = requestAnimationFrame(step);
 
     return () => cancelAnimationFrame(rafRef.current);
-  }, [shouldStart, target, duration]);
+  }, [shouldStart, target, duration, staticMode]);
 
   return value;
 }
@@ -249,7 +248,7 @@ const glassCard = {
 };
 
 /* ---- Mini Dashboard Content (Investor - Dark Mode Teal) ---- */
-export function InvestorScreen({ isVisible }: { isVisible: boolean }) {
+export function InvestorScreen({ isVisible, staticMode }: { isVisible: boolean; staticMode?: boolean }) {
   const font = "var(--font-dm-sans), sans-serif";
   const [feedIndex, setFeedIndex] = useState(0);
   const [showCurrent, setShowCurrent] = useState(true);
@@ -291,10 +290,10 @@ export function InvestorScreen({ isVisible }: { isVisible: boolean }) {
   ];
 
   // Count-up stats
-  const stat14 = useCountUp(14, 1500, isVisible);
-  const stat5 = useCountUp(5, 1500, isVisible);
-  const stat3 = useCountUp(3, 1500, isVisible);
-  const stat2 = useCountUp(2, 1500, isVisible);
+  const stat14 = useCountUp(14, 1500, isVisible, staticMode);
+  const stat5 = useCountUp(5, 1500, isVisible, staticMode);
+  const stat3 = useCountUp(3, 1500, isVisible, staticMode);
+  const stat2 = useCountUp(2, 1500, isVisible, staticMode);
   const statNums = [stat14, stat5, stat3, stat2];
 
   return (
@@ -389,7 +388,7 @@ export function InvestorScreen({ isVisible }: { isVisible: boolean }) {
         <div style={{ display: "flex", alignItems: "center", gap: "5px", marginTop: "6px", paddingTop: "6px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
           <span style={{ fontSize: "6px", color: "rgba(255,255,255,0.55)", fontFamily: font, whiteSpace: "nowrap" }}>Engagement</span>
           <div style={{ flex: 1, height: "3px", borderRadius: "9999px", background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
-            <AnimatedBar targetWidth="84%" color="linear-gradient(90deg, #06B6D4, #22D3EE)" isVisible={isVisible} />
+            <AnimatedBar targetWidth="84%" color="linear-gradient(90deg, #06B6D4, #22D3EE)" isVisible={isVisible} staticMode={staticMode} />
           </div>
           <span style={{ fontSize: "6.5px", color: "#22D3EE", fontWeight: 700, fontFamily: font }}>84%</span>
         </div>
@@ -553,7 +552,7 @@ export function InvestorScreen({ isVisible }: { isVisible: boolean }) {
 }
 
 /* ---- Mini Dashboard Content (Founder - Dark Mode Violet) ---- */
-export function FounderScreen({ isVisible }: { isVisible: boolean }) {
+export function FounderScreen({ isVisible, staticMode }: { isVisible: boolean; staticMode?: boolean }) {
   const font = "var(--font-dm-sans), sans-serif";
   const [statsPulsed, setStatsPulsed] = useState(false);
 
@@ -565,10 +564,10 @@ export function FounderScreen({ isVisible }: { isVisible: boolean }) {
   }, [isVisible, statsPulsed]);
 
   // Count-up stats
-  const stat47 = useCountUp(47, 1500, isVisible);
-  const stat8 = useCountUp(8, 1500, isVisible);
-  const stat2 = useCountUp(2, 1500, isVisible);
-  const stat12 = useCountUp(12, 1500, isVisible);
+  const stat47 = useCountUp(47, 1500, isVisible, staticMode);
+  const stat8 = useCountUp(8, 1500, isVisible, staticMode);
+  const stat2 = useCountUp(2, 1500, isVisible, staticMode);
+  const stat12 = useCountUp(12, 1500, isVisible, staticMode);
   const statNums = [stat47, stat8, stat2, stat12];
 
   return (
@@ -663,7 +662,7 @@ export function FounderScreen({ isVisible }: { isVisible: boolean }) {
         <div style={{ display: "flex", alignItems: "center", gap: "5px", marginTop: "6px", paddingTop: "6px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
           <span style={{ fontSize: "6px", color: "rgba(255,255,255,0.55)", fontFamily: font, whiteSpace: "nowrap" }}>Profile Strength</span>
           <div style={{ flex: 1, height: "3px", borderRadius: "9999px", background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
-            <AnimatedBar targetWidth="78%" color="linear-gradient(90deg, #8B5CF6, #A78BFA)" isVisible={isVisible} />
+            <AnimatedBar targetWidth="78%" color="linear-gradient(90deg, #8B5CF6, #A78BFA)" isVisible={isVisible} staticMode={staticMode} />
           </div>
           <span style={{ fontSize: "6.5px", color: "#A78BFA", fontWeight: 700, fontFamily: font }}>78%</span>
         </div>

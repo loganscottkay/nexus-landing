@@ -7,6 +7,7 @@ import { PhoneBody, InvestorScreen, FounderScreen } from "@/components/IPhoneMoc
 function ExportContent() {
   const params = useSearchParams();
   const phone = params.get("phone");
+  const staticMode = params.get("static") === "true";
 
   if (phone === "investor") {
     return (
@@ -16,11 +17,11 @@ function ExportContent() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#00FF00",
+          background: "transparent",
         }}
       >
         <PhoneBody hovered={false}>
-          <InvestorScreen isVisible={true} />
+          <InvestorScreen isVisible={true} staticMode={staticMode} />
         </PhoneBody>
       </div>
     );
@@ -34,11 +35,11 @@ function ExportContent() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#00FF00",
+          background: "transparent",
         }}
       >
         <PhoneBody hovered={false}>
-          <FounderScreen isVisible={true} />
+          <FounderScreen isVisible={true} staticMode={staticMode} />
         </PhoneBody>
       </div>
     );
@@ -60,13 +61,13 @@ function ExportContent() {
     >
       <h1 style={{ fontSize: "24px", fontWeight: 600 }}>Export Phones</h1>
       <a
-        href="/export-phones?phone=investor"
+        href="/export-phones?phone=investor&static=true"
         style={{ color: "#7C5CFC", fontSize: "18px" }}
       >
         Investor Phone
       </a>
       <a
-        href="/export-phones?phone=founder"
+        href="/export-phones?phone=founder&static=true"
         style={{ color: "#7C5CFC", fontSize: "18px" }}
       >
         Founder Phone
@@ -77,7 +78,7 @@ function ExportContent() {
 
 export default function ExportPhonesPage() {
   return (
-    <Suspense fallback={<div style={{ background: "#00FF00", minHeight: "100vh" }} />}>
+    <Suspense fallback={<div style={{ background: "transparent", minHeight: "100vh" }} />}>
       <ExportContent />
     </Suspense>
   );

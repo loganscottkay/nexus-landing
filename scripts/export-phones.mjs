@@ -21,33 +21,67 @@ async function run() {
   await page.setViewport({ width: 1280, height: 800, deviceScaleFactor: 2 });
 
   for (const phone of phones) {
-    const url = `http://localhost:3000/export-phones?phone=${phone.name}`;
+    const url = `http://localhost:3000/export-phones?phone=${phone.name}&static=true`;
     console.log(`Navigating to ${url}...`);
     await page.goto(url, { waitUntil: "networkidle0" });
 
-    // Wait for animations to settle
-    console.log("Waiting 3s for animations...");
-    await new Promise((r) => setTimeout(r, 3000));
-
-    // Find the phone element bounding box
-    const clip = await page.evaluate(() => {
-      const el = document.querySelector(".iphone-outer-shell");
-      if (!el) throw new Error("Could not find .iphone-outer-shell");
-      const rect = el.getBoundingClientRect();
-      return {
-        x: rect.x,
-        y: rect.y,
-        width: rect.width,
-        height: rect.height,
-      };
+    // Force all backgrounds transparent so omitBackground produces true alpha
+    await page.evaluate(() => {
+      // Make html and body transparent
+      document.documentElement.style.background = "transparent";
+      document.body.style.background = "transparent";
+      // Walk all ancestors of the phone element and force transparent backgrounds
+      const phone = document.querySelector(".iphone-outer-shell");
+      if (phone) {
+        let el = phone.parentElement;
+        while (el && el !== document.documentElement) {
+          el.style.background = "transparent";
+          el.style.backgroundColor = "transparent";
+          el = el.parentElement;
+        }
+      }
+      // Remove any global style tags or elements that set body/html backgrounds
+      const allEls = document.querySelectorAll("*");
+      allEls.forEach((el) => {
+        if (el instanceof HTMLElement) {
+          const bg = getComputedStyle(el).backgroundColor;
+          // Skip the phone itself and its children
+          if (phone && (el === phone || phone.contains(el))) return;
+          // If this element has a non-transparent background and is an ancestor or sibling layer
+          if (bg && bg !== "transparent" && bg !== "rgba(0, 0, 0, 0)") {
+            // Only clear if it's not inside the phone
+            if (!phone || !phone.contains(el)) {
+              el.style.backgroundColor = "transparent";
+              el.style.background = "transparent";
+            }
+          }
+        }
+      });
     });
 
-    const outPath = resolve(exportsDir, phone.file);
-    console.log(`Screenshotting ${phone.name} phone (${clip.width}x${clip.height})...`);
+    // Wait for full render with static values
+    console.log("Waiting 5s for full render...");
+    await new Promise((r) => setTimeout(r, 5000));
 
+    // Find the outer shell element and get its bounding box
+    const el = await page.$(".iphone-outer-shell");
+    if (!el) throw new Error("Could not find .iphone-outer-shell element");
+
+    const box = await el.boundingBox();
+    if (!box) throw new Error("Could not get bounding box for .iphone-outer-shell");
+
+    const outPath = resolve(exportsDir, phone.file);
+    console.log(`Screenshotting ${phone.name} phone (${box.width}x${box.height})...`);
+
+    // Screenshot just the phone element's bounding box with transparent background
     await page.screenshot({
       path: outPath,
-      clip,
+      clip: {
+        x: box.x,
+        y: box.y,
+        width: box.width,
+        height: box.height,
+      },
       omitBackground: true,
     });
 
@@ -59,7 +93,7 @@ async function run() {
   }
 
   await browser.close();
-  console.log("\nDone! Both PNGs exported.");
+  console.log("\nDone! Both transparent PNGs exported.");
 }
 
 run().catch((err) => {
