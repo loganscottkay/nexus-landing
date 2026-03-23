@@ -249,7 +249,7 @@ const glassCard = {
 };
 
 /* ---- Mini Dashboard Content (Investor - Dark Mode Teal) ---- */
-function InvestorScreen({ isVisible }: { isVisible: boolean }) {
+export function InvestorScreen({ isVisible }: { isVisible: boolean }) {
   const font = "var(--font-dm-sans), sans-serif";
   const [feedIndex, setFeedIndex] = useState(0);
   const [showCurrent, setShowCurrent] = useState(true);
@@ -553,7 +553,7 @@ function InvestorScreen({ isVisible }: { isVisible: boolean }) {
 }
 
 /* ---- Mini Dashboard Content (Founder - Dark Mode Violet) ---- */
-function FounderScreen({ isVisible }: { isVisible: boolean }) {
+export function FounderScreen({ isVisible }: { isVisible: boolean }) {
   const font = "var(--font-dm-sans), sans-serif";
   const [statsPulsed, setStatsPulsed] = useState(false);
 
@@ -852,7 +852,7 @@ function SparkleParticles() {
 }
 
 /* ---- Phone Body (shared between inline + modal) ---- */
-function PhoneBody({
+export function PhoneBody({
   children,
   hovered,
 }: {
@@ -862,6 +862,7 @@ function PhoneBody({
   return (
     /* Outer shell — simulates the 3D titanium band edge that catches light differently */
     <div
+      className="iphone-outer-shell"
       style={{
         width: "264px",
         height: "534px",
