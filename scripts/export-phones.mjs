@@ -25,67 +25,52 @@ async function run() {
     console.log(`Navigating to ${url}...`);
     await page.goto(url, { waitUntil: "networkidle0" });
 
-    // Force all backgrounds transparent so omitBackground produces true alpha
-    await page.evaluate(() => {
-      // Make html and body transparent
-      document.documentElement.style.background = "transparent";
-      document.body.style.background = "transparent";
-      // Walk all ancestors of the phone element and force transparent backgrounds
-      const phone = document.querySelector(".iphone-outer-shell");
-      if (phone) {
-        let el = phone.parentElement;
-        while (el && el !== document.documentElement) {
-          el.style.background = "transparent";
-          el.style.backgroundColor = "transparent";
-          el = el.parentElement;
-        }
-      }
-      // Remove any global style tags or elements that set body/html backgrounds
-      const allEls = document.querySelectorAll("*");
-      allEls.forEach((el) => {
-        if (el instanceof HTMLElement) {
-          const bg = getComputedStyle(el).backgroundColor;
-          // Skip the phone itself and its children
-          if (phone && (el === phone || phone.contains(el))) return;
-          // If this element has a non-transparent background and is an ancestor or sibling layer
-          if (bg && bg !== "transparent" && bg !== "rgba(0, 0, 0, 0)") {
-            // Only clear if it's not inside the phone
-            if (!phone || !phone.contains(el)) {
-              el.style.backgroundColor = "transparent";
-              el.style.background = "transparent";
-            }
-          }
-        }
-      });
-    });
-
-    // Wait for full render with static values
     console.log("Waiting 5s for full render...");
     await new Promise((r) => setTimeout(r, 5000));
 
-    // Find the outer shell element and get its bounding box
-    const el = await page.$(".iphone-outer-shell");
-    if (!el) throw new Error("Could not find .iphone-outer-shell element");
+    // Nuclear option: rip the phone element out of the DOM, replace the entire
+    // body with just it, and kill every stylesheet rule that could paint a background
+    await page.evaluate(() => {
+      const phone = document.querySelector(".iphone-outer-shell");
+      if (!phone) throw new Error("No .iphone-outer-shell found");
 
-    const box = await el.boundingBox();
-    if (!box) throw new Error("Could not get bounding box for .iphone-outer-shell");
+      // Clone the phone so we keep it
+      const clone = phone.cloneNode(true);
+
+      // Wipe the entire body
+      document.body.innerHTML = "";
+
+      // Remove all non-essential stylesheets and style tags that might affect body/html
+      // Keep only the ones we need for the phone
+      document.body.style.cssText = "margin:0;padding:0;background:transparent!important;display:flex;align-items:center;justify-content:center;min-height:100vh;";
+      document.documentElement.style.cssText = "background:transparent!important;";
+
+      // Inject a nuke stylesheet that kills html/body backgrounds from any source
+      const nuke = document.createElement("style");
+      nuke.textContent = `
+        html, body { background: transparent !important; background-color: transparent !important; background-image: none !important; }
+        html::before, html::after, body::before, body::after { display: none !important; }
+      `;
+      document.head.appendChild(nuke);
+
+      // Add the phone back
+      document.body.appendChild(clone);
+    });
+
+    // Small delay for re-render after DOM manipulation
+    await new Promise((r) => setTimeout(r, 500));
+
+    const el = await page.$(".iphone-outer-shell");
+    if (!el) throw new Error("Could not find .iphone-outer-shell after DOM rebuild");
 
     const outPath = resolve(exportsDir, phone.file);
-    console.log(`Screenshotting ${phone.name} phone (${box.width}x${box.height})...`);
+    console.log(`Screenshotting ${phone.name} phone...`);
 
-    // Screenshot just the phone element's bounding box with transparent background
-    await page.screenshot({
+    await el.screenshot({
       path: outPath,
-      clip: {
-        x: box.x,
-        y: box.y,
-        width: box.width,
-        height: box.height,
-      },
       omitBackground: true,
     });
 
-    // Copy to Downloads
     const dlPath = resolve(downloadsDir, phone.file);
     copyFileSync(outPath, dlPath);
     console.log(`Saved: ${outPath}`);
