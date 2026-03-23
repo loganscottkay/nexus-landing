@@ -866,22 +866,39 @@ function PhoneBody({
         width: "260px",
         height: "530px",
         borderRadius: "48px",
-        background: "linear-gradient(180deg, #2C2C2E 0%, #1C1C1E 15%, #2A2A2C 50%, #1C1C1E 85%, #2C2C2E 100%)",
+        /* Brushed titanium: multi-stop gradient with subtle banding */
+        background: "linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 8%, #3D3D3F 18%, #2A2A2C 30%, #383838 42%, #2E2E30 55%, #3A3A3C 65%, #2C2C2E 78%, #3D3D3F 88%, #2A2A2C 100%)",
         padding: "10px",
         position: "relative",
+        /* Beveled 3D border: light top-left, dark bottom-right */
+        borderTop: "1px solid rgba(255,255,255,0.10)",
+        borderLeft: "1px solid rgba(255,255,255,0.08)",
+        borderBottom: "1px solid rgba(0,0,0,0.4)",
+        borderRight: "1px solid rgba(0,0,0,0.25)",
+        /* Chamfered edge highlights + studio layered shadows */
         boxShadow: hovered
-          ? "inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(255,255,255,0.03), 0 35px 90px rgba(0,0,0,0.25), 0 12px 24px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.06)"
-          : "inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(255,255,255,0.03), 0 25px 50px rgba(0,0,0,0.12), 0 12px 24px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04)",
+          ? "inset 0 1px 0 rgba(255,255,255,0.15), inset 1px 0 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.3), inset -1px 0 0 rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.2), 0 12px 28px rgba(0,0,0,0.18), 0 40px 80px rgba(0,0,0,0.12)"
+          : "inset 0 1px 0 rgba(255,255,255,0.15), inset 1px 0 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.3), inset -1px 0 0 rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.2), 0 12px 28px rgba(0,0,0,0.15), 0 40px 80px rgba(0,0,0,0.1)",
       }}
     >
-      {/* Metallic sheen - top edge highlight */}
+      {/* Studio lighting overlay — directional sheen at ~135deg */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        borderRadius: "48px",
+        background: "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 25%, transparent 50%, rgba(0,0,0,0.04) 75%, rgba(0,0,0,0.08) 100%)",
+        pointerEvents: "none",
+        zIndex: 4,
+      }} />
+
+      {/* Metallic sheen - top edge highlight (brighter chamfer) */}
       <div style={{
         position: "absolute",
         top: 0,
         left: "20px",
         right: "20px",
         height: "1px",
-        background: "rgba(255,255,255,0.12)",
+        background: "rgba(255,255,255,0.18)",
         borderRadius: "1px",
         zIndex: 5,
         pointerEvents: "none",
@@ -898,19 +915,41 @@ function PhoneBody({
         zIndex: 5,
         pointerEvents: "none",
       }} />
+      {/* Left edge highlight */}
+      <div style={{
+        position: "absolute",
+        left: 0,
+        top: "60px",
+        bottom: "60px",
+        width: "1px",
+        background: "linear-gradient(180deg, transparent, rgba(255,255,255,0.10) 30%, rgba(255,255,255,0.10) 70%, transparent)",
+        zIndex: 5,
+        pointerEvents: "none",
+      }} />
+      {/* Right edge highlight (darker, shadow side) */}
+      <div style={{
+        position: "absolute",
+        right: 0,
+        top: "60px",
+        bottom: "60px",
+        width: "1px",
+        background: "linear-gradient(180deg, transparent, rgba(0,0,0,0.15) 30%, rgba(0,0,0,0.15) 70%, transparent)",
+        zIndex: 5,
+        pointerEvents: "none",
+      }} />
       {/* Hover sheen overlay */}
       <div className="iphone-frame-sheen" />
 
-      {/* Side buttons - left (mute switch) */}
-      <div style={{ position: "absolute", left: "-3px", top: "100px", width: "3px", height: "14px", background: "#2C2C2E", borderRadius: "2px 0 0 2px" }} />
+      {/* Side buttons - left (mute switch) — 3D extruded metal */}
+      <div style={{ position: "absolute", left: "-3px", top: "100px", width: "3px", height: "14px", background: "linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 50%, #252527 100%)", borderRadius: "2px 0 0 2px", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.3), -1px 0 2px rgba(0,0,0,0.3)" }} />
       {/* Volume up */}
-      <div style={{ position: "absolute", left: "-3px", top: "122px", width: "3px", height: "28px", background: "#2C2C2E", borderRadius: "2px 0 0 2px" }} />
+      <div style={{ position: "absolute", left: "-3px", top: "122px", width: "3px", height: "28px", background: "linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 50%, #252527 100%)", borderRadius: "2px 0 0 2px", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.3), -1px 0 2px rgba(0,0,0,0.3)" }} />
       {/* Volume down */}
-      <div style={{ position: "absolute", left: "-3px", top: "154px", width: "3px", height: "28px", background: "#2C2C2E", borderRadius: "2px 0 0 2px" }} />
+      <div style={{ position: "absolute", left: "-3px", top: "154px", width: "3px", height: "28px", background: "linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 50%, #252527 100%)", borderRadius: "2px 0 0 2px", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.3), -1px 0 2px rgba(0,0,0,0.3)" }} />
       {/* Side button - right (power) */}
-      <div style={{ position: "absolute", right: "-3px", top: "145px", width: "3px", height: "36px", background: "#2C2C2E", borderRadius: "0 2px 2px 0" }} />
+      <div style={{ position: "absolute", right: "-3px", top: "145px", width: "3px", height: "36px", background: "linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 50%, #252527 100%)", borderRadius: "0 2px 2px 0", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.3), 1px 0 2px rgba(0,0,0,0.3)" }} />
 
-      {/* Screen area */}
+      {/* Screen area — with black bezel ring for glass depth */}
       <div
         style={{
           width: "100%",
@@ -919,9 +958,12 @@ function PhoneBody({
           overflow: "hidden",
           position: "relative",
           background: "#0A0E1A",
+          /* Black bezel ring + recessed screen shadow */
+          border: "2px solid #000",
+          boxShadow: "inset 0 0 8px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.8)",
         }}
       >
-        {/* Dynamic Island */}
+        {/* Dynamic Island — with depth and camera lens */}
         <div style={{
           position: "absolute",
           top: "10px",
@@ -932,19 +974,55 @@ function PhoneBody({
           borderRadius: "9999px",
           background: "#000",
           zIndex: 10,
+          boxShadow: "inset 0 1px 3px rgba(0,0,0,0.8), 0 0 0 0.5px #111",
         }}>
-          {/* Camera dot */}
+          {/* Camera lens — concentric rings */}
           <div style={{
             position: "absolute",
             top: "50%",
             left: "20px",
             transform: "translateY(-50%)",
-            width: "3px",
-            height: "3px",
+            width: "7px",
+            height: "7px",
             borderRadius: "50%",
-            background: "#1A1A1A",
-          }} />
+            background: "#111",
+            boxShadow: "inset 0 0 2px rgba(0,0,0,0.9)",
+          }}>
+            {/* Inner lens — dark blue-black */}
+            <div style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "4px",
+              height: "4px",
+              borderRadius: "50%",
+              background: "radial-gradient(circle, #0A0A1A 40%, #050510 100%)",
+              boxShadow: "inset 0 0 1px rgba(0,0,0,0.9)",
+            }}>
+              {/* Specular highlight dot */}
+              <div style={{
+                position: "absolute",
+                top: "1px",
+                right: "1px",
+                width: "1px",
+                height: "1px",
+                borderRadius: "50%",
+                background: "rgba(255,255,255,0.3)",
+              }} />
+            </div>
+          </div>
         </div>
+
+        {/* Screen glass reflection overlay — faint diagonal */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "36px",
+          background: "linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.03) 48%, rgba(255,255,255,0.04) 52%, transparent 70%)",
+          pointerEvents: "none",
+          zIndex: 9,
+        }} />
 
         {/* Screen content area (edge-to-edge) */}
         <div style={{ height: "100%", overflow: "hidden" }}>
@@ -1074,9 +1152,9 @@ function IPhoneFrame({
             top: "var(--phone-height)",
             left: "5%",
             width: "90%",
-            height: "40px",
-            background: "linear-gradient(180deg, rgba(0,0,0,0.03), transparent)",
-            filter: "blur(8px)",
+            height: "50px",
+            background: "linear-gradient(180deg, rgba(46,46,48,0.08) 0%, rgba(0,0,0,0.04) 30%, transparent 100%)",
+            filter: "blur(10px)",
             borderRadius: "50%",
             pointerEvents: "none",
             zIndex: 0,
