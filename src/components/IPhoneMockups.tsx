@@ -860,6 +860,17 @@ function PhoneBody({
   hovered: boolean;
 }) {
   return (
+    /* Outer shell — simulates the 3D titanium band edge that catches light differently */
+    <div
+      style={{
+        width: "264px",
+        height: "534px",
+        borderRadius: "50px",
+        padding: "2px",
+        background: "linear-gradient(160deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.10) 30%, rgba(80,80,82,0.6) 50%, rgba(0,0,0,0.3) 80%, rgba(0,0,0,0.45) 100%)",
+        position: "relative",
+      }}
+    >
     <div
       className="iphone-frame-outer"
       style={{
@@ -870,11 +881,6 @@ function PhoneBody({
         background: "linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 8%, #3D3D3F 18%, #2A2A2C 30%, #383838 42%, #2E2E30 55%, #3A3A3C 65%, #2C2C2E 78%, #3D3D3F 88%, #2A2A2C 100%)",
         padding: "10px",
         position: "relative",
-        /* Beveled 3D border: light top-left, dark bottom-right */
-        borderTop: "1px solid rgba(255,255,255,0.10)",
-        borderLeft: "1px solid rgba(255,255,255,0.08)",
-        borderBottom: "1px solid rgba(0,0,0,0.4)",
-        borderRight: "1px solid rgba(0,0,0,0.25)",
         /* Chamfered edge highlights + studio layered shadows */
         boxShadow: hovered
           ? "inset 0 1px 0 rgba(255,255,255,0.15), inset 1px 0 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.3), inset -1px 0 0 rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.2), 0 12px 28px rgba(0,0,0,0.18), 0 40px 80px rgba(0,0,0,0.12)"
@@ -887,6 +893,16 @@ function PhoneBody({
         inset: 0,
         borderRadius: "48px",
         background: "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 25%, transparent 50%, rgba(0,0,0,0.04) 75%, rgba(0,0,0,0.08) 100%)",
+        pointerEvents: "none",
+        zIndex: 4,
+      }} />
+
+      {/* Environmental reflection — studio softbox on upper-right quadrant */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        borderRadius: "48px",
+        background: "radial-gradient(ellipse 60% 50% at 75% 25%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 40%, transparent 70%)",
         pointerEvents: "none",
         zIndex: 4,
       }} />
@@ -937,19 +953,45 @@ function PhoneBody({
         zIndex: 5,
         pointerEvents: "none",
       }} />
+
+      {/* Antenna band breaks — left side */}
+      <div style={{ position: "absolute", left: 0, top: "25%", width: "3px", height: "1px", background: "rgba(0,0,0,0.3)", zIndex: 6, pointerEvents: "none" }} />
+      <div style={{ position: "absolute", left: 0, top: "75%", width: "3px", height: "1px", background: "rgba(0,0,0,0.3)", zIndex: 6, pointerEvents: "none" }} />
+      {/* Antenna band breaks — right side */}
+      <div style={{ position: "absolute", right: 0, top: "25%", width: "3px", height: "1px", background: "rgba(0,0,0,0.3)", zIndex: 6, pointerEvents: "none" }} />
+      <div style={{ position: "absolute", right: 0, top: "75%", width: "3px", height: "1px", background: "rgba(0,0,0,0.3)", zIndex: 6, pointerEvents: "none" }} />
+
       {/* Hover sheen overlay */}
       <div className="iphone-frame-sheen" />
 
-      {/* Side buttons - left (mute switch) — 3D extruded metal */}
-      <div style={{ position: "absolute", left: "-3px", top: "100px", width: "3px", height: "14px", background: "linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 50%, #252527 100%)", borderRadius: "2px 0 0 2px", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.3), -1px 0 2px rgba(0,0,0,0.3)" }} />
+      {/* Side buttons - left (mute switch) — inset style with orange indicator */}
+      <div style={{ position: "absolute", left: "-3px", top: "100px", width: "3px", height: "14px", background: "linear-gradient(180deg, #353537 0%, #2A2A2C 50%, #222224 100%)", borderRadius: "2px 0 0 2px", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(0,0,0,0.4), inset 0 0 1px rgba(0,0,0,0.3), -1px 0 2px rgba(0,0,0,0.3)" }}>
+        {/* Orange mute indicator */}
+        <div style={{ position: "absolute", top: "1px", left: "0px", width: "1px", height: "3px", background: "#FF6B2C", borderRadius: "0 1px 1px 0", opacity: 0.9 }} />
+      </div>
       {/* Volume up */}
-      <div style={{ position: "absolute", left: "-3px", top: "122px", width: "3px", height: "28px", background: "linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 50%, #252527 100%)", borderRadius: "2px 0 0 2px", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.3), -1px 0 2px rgba(0,0,0,0.3)" }} />
+      <div style={{ position: "absolute", left: "-3px", top: "122px", width: "3px", height: "28px", background: "linear-gradient(180deg, #3E3E40 0%, #333335 30%, #2C2C2E 60%, #252527 100%)", borderRadius: "2px 0 0 2px", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.4), -1px 0 2px rgba(0,0,0,0.3)" }} />
       {/* Volume down */}
-      <div style={{ position: "absolute", left: "-3px", top: "154px", width: "3px", height: "28px", background: "linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 50%, #252527 100%)", borderRadius: "2px 0 0 2px", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.3), -1px 0 2px rgba(0,0,0,0.3)" }} />
+      <div style={{ position: "absolute", left: "-3px", top: "154px", width: "3px", height: "28px", background: "linear-gradient(180deg, #3E3E40 0%, #333335 30%, #2C2C2E 60%, #252527 100%)", borderRadius: "2px 0 0 2px", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.4), -1px 0 2px rgba(0,0,0,0.3)" }} />
       {/* Side button - right (power) */}
-      <div style={{ position: "absolute", right: "-3px", top: "145px", width: "3px", height: "36px", background: "linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 50%, #252527 100%)", borderRadius: "0 2px 2px 0", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.3), 1px 0 2px rgba(0,0,0,0.3)" }} />
+      <div style={{ position: "absolute", right: "-3px", top: "145px", width: "3px", height: "36px", background: "linear-gradient(180deg, #3E3E40 0%, #333335 30%, #2C2C2E 60%, #252527 100%)", borderRadius: "0 2px 2px 0", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.4), 1px 0 2px rgba(0,0,0,0.3)" }} />
 
-      {/* Screen area — with black bezel ring for glass depth */}
+      {/* Bottom speaker grill — left set */}
+      <div style={{ position: "absolute", bottom: "3px", left: "50%", transform: "translateX(-50%) translateX(-18px)", display: "flex", gap: "3px", zIndex: 6, pointerEvents: "none" }}>
+        {[...Array(6)].map((_, i) => (
+          <div key={`spk-${i}`} style={{ width: "1.5px", height: "1.5px", borderRadius: "50%", background: "rgba(255,255,255,0.06)" }} />
+        ))}
+      </div>
+      {/* Bottom microphone grill — right set */}
+      <div style={{ position: "absolute", bottom: "3px", left: "50%", transform: "translateX(-50%) translateX(18px)", display: "flex", gap: "3px", zIndex: 6, pointerEvents: "none" }}>
+        {[...Array(6)].map((_, i) => (
+          <div key={`mic-${i}`} style={{ width: "1.5px", height: "1.5px", borderRadius: "50%", background: "rgba(255,255,255,0.06)" }} />
+        ))}
+      </div>
+      {/* USB-C port indication */}
+      <div style={{ position: "absolute", bottom: "2px", left: "50%", transform: "translateX(-50%)", width: "8px", height: "3px", borderRadius: "1.5px", background: "rgba(0,0,0,0.4)", boxShadow: "inset 0 0.5px 0 rgba(255,255,255,0.04)", zIndex: 6, pointerEvents: "none" }} />
+
+      {/* Screen area — with 3px black adhesive bezel ring for glass depth */}
       <div
         style={{
           width: "100%",
@@ -958,12 +1000,13 @@ function PhoneBody({
           overflow: "hidden",
           position: "relative",
           background: "#0A0E1A",
-          /* Black bezel ring + recessed screen shadow */
-          border: "2px solid #000",
-          boxShadow: "inset 0 0 8px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.8)",
+          /* 3px black bezel ring (adhesive border around display) */
+          border: "3px solid #000",
+          /* Recessed glass depth shadow */
+          boxShadow: "inset 0 2px 6px rgba(0,0,0,0.6), inset 0 0 20px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.8)",
         }}
       >
-        {/* Dynamic Island — with depth and camera lens */}
+        {/* Dynamic Island — with depth and full camera system */}
         <div style={{
           position: "absolute",
           top: "10px",
@@ -976,50 +1019,88 @@ function PhoneBody({
           zIndex: 10,
           boxShadow: "inset 0 1px 3px rgba(0,0,0,0.8), 0 0 0 0.5px #111",
         }}>
-          {/* Camera lens — concentric rings */}
+          {/* Front camera — 3 concentric rings */}
           <div style={{
             position: "absolute",
             top: "50%",
-            left: "20px",
+            left: "18px",
             transform: "translateY(-50%)",
-            width: "7px",
-            height: "7px",
+            width: "8px",
+            height: "8px",
             borderRadius: "50%",
-            background: "#111",
-            boxShadow: "inset 0 0 2px rgba(0,0,0,0.9)",
+            background: "#222",
+            boxShadow: "inset 0 0 1px rgba(0,0,0,0.9)",
           }}>
-            {/* Inner lens — dark blue-black */}
+            {/* Middle ring — dark lens housing */}
             <div style={{
               position: "absolute",
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: "4px",
-              height: "4px",
+              width: "6px",
+              height: "6px",
               borderRadius: "50%",
-              background: "radial-gradient(circle, #0A0A1A 40%, #050510 100%)",
-              boxShadow: "inset 0 0 1px rgba(0,0,0,0.9)",
+              background: "#0A0A1A",
+              boxShadow: "inset 0 0 2px rgba(0,0,0,0.9)",
             }}>
-              {/* Specular highlight dot */}
+              {/* Inner lens — deepest blue-black */}
               <div style={{
                 position: "absolute",
-                top: "1px",
-                right: "1px",
-                width: "1px",
-                height: "1px",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "3.5px",
+                height: "3.5px",
                 borderRadius: "50%",
-                background: "rgba(255,255,255,0.3)",
+                background: "radial-gradient(circle, #0A0A1A 30%, #050510 100%)",
+                boxShadow: "inset 0 0 1px rgba(0,0,0,0.9)",
               }} />
             </div>
+            {/* Specular highlight — 10 o'clock position */}
+            <div style={{
+              position: "absolute",
+              top: "1px",
+              left: "1.5px",
+              width: "1.5px",
+              height: "1.5px",
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.45)",
+            }} />
           </div>
+
+          {/* Ambient light sensor — tiny dot between camera and IR */}
+          <div style={{
+            position: "absolute",
+            top: "50%",
+            left: "30px",
+            transform: "translateY(-50%)",
+            width: "2px",
+            height: "2px",
+            borderRadius: "50%",
+            background: "#0D0D0D",
+            boxShadow: "inset 0 0 0.5px rgba(0,0,0,0.8)",
+          }} />
+
+          {/* IR sensor / flood illuminator — smaller dot with faint red-brown tint */}
+          <div style={{
+            position: "absolute",
+            top: "50%",
+            left: "36px",
+            transform: "translateY(-50%)",
+            width: "3px",
+            height: "3px",
+            borderRadius: "50%",
+            background: "radial-gradient(circle, #1A0A0A 40%, #0A0505 100%)",
+            boxShadow: "inset 0 0 1px rgba(0,0,0,0.8)",
+          }} />
         </div>
 
-        {/* Screen glass reflection overlay — faint diagonal */}
+        {/* Screen glass reflection overlay — curved overhead light bounce */}
         <div style={{
           position: "absolute",
           inset: 0,
-          borderRadius: "36px",
-          background: "linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.03) 48%, rgba(255,255,255,0.04) 52%, transparent 70%)",
+          borderRadius: "35px",
+          background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 30%, transparent 50%)",
           pointerEvents: "none",
           zIndex: 9,
         }} />
@@ -1029,6 +1110,7 @@ function PhoneBody({
           {children}
         </div>
       </div>
+    </div>
     </div>
   );
 }
